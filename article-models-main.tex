@@ -1,0 +1,125 @@
+\documentclass{article}
+
+\input{preamble-articles}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Internal models of type theory}
+\author{Egbert Rijke}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\begin{comment}
+\section*{Introduction\phantomsection\addcontentsline{toc}{section}{Introduction}}
+This paper contributes to the univalent homotopy type theory~\cite{kapulkin2012univalence,awodey2012type,pelayo2012homotopy}
+program which connects and extends a number of topics such as type theory, (elementary) topos
+theory~\cite{MacLaneMoerdijk,johnstone:elephant}, homotopy theory, higher category theory and higher topos
+theory~\cite{rezk2010toposes,lurie2009higher}.
+A key missing ingredient is a first-order (`elementary') definition of a higher topos. It has been
+conjectured~\cite{awodey2012type,shulman2012univalence} that homotopy type theory can be used as the internal language, and thus may
+provide an elementary definition of a higher topos; see also~\cite{LumsdaineWarren}.
+
+A main ingredient in the theory of higher toposes is the descent property, which
+is described in~\cite{rezk2010toposes,lurie2009higher}. The (weak) descent property
+of an ordinary topos $\mathcal{E}$ is the property that
+\begin{enumerate}
+\item For any family $\{X_i\}_{i\in I}$ of objects of $\mathcal{E}$ with coproduct
+$X:=\coprod_{i\in I}X_i$ and any function $f:Y\to X$ we get an isomorphism
+\begin{equation*}
+Y\cong\coprod_{i\in I} Y\times_X X_i
+\end{equation*}
+given by the canonical map.
+\item Conversely, for any family $\{f_i:X_i\to Y_i\}_{i\in I}$ of maps inducing
+$f:\coprod_{i\in I}X_i\to\coprod_{i\in I}Y_i$, the canonical map determines an
+isomporphism
+\begin{equation*}
+Y_i\cong Y\times_X X_i.
+\end{equation*}
+\item
+\item
+\end{enumerate}
+In model toposes, the descent property can be strengthened considerably, but
+ordinary limits and colimits are to be replaced by \emph{homotopy} limits and
+colimits. Since the only notion of limits and colimits in type theory is that
+of homotopy limit and colimit, this is no restriction for us. The descent
+property of model toposes as formulated by Rezk~\cite{rezk2010toposes} is: Let
+$X:\mathbf{I}\to\mathcal{E}$ be a functor from a small category into a
+model topos $\mathcal{E}$, with homotopy colimit $\bar{X}$. Then we have
+\begin{enumerate}
+\item Let $\bar{Y}$ be an object and let $f:\bar{Y}\to\bar{X}$ 
+be any map in $\mathcal{E}$. Define
+the functor $Y:\mathbf{I}\to\mathcal{E}$ by $Y(i):=Y\times_{\bar{X}} X_i$. Then
+the canonical map $\typefont{hocolim}(Y)\to\bar{Y}$ is a weak equivalence.
+\item Let $Y:\mathbf{I}\to\mathcal{E}$ be a functor and let $f:Y\to X$ be an
+equifibered transformation from $Y$ to $X$. Define $\bar{f}:\bar{Y}\to\bar{X}$
+be the homotopy colimit of $f$. Then the canonical map 
+$Y_i\to \bar{Y}\times^h_{\bar{X}} X_i$ is a weak equivalence.
+\end{enumerate}
+These two properties are two sides of the same coin and in our type theoretical
+setting it is natural to stress this. Given a diagram $D$, we will be able
+to summarize the entire descent property in an equivalence between the type
+$\typefont{equiFib}(D)$ of equifibered diagrams over $D$ and the type of functions
+into $\typefont{colim}(D)$. We prove the descent property in 
+theorem~\ref{thm:descent}.
+
+We use universes ala Russell, universe polymorphism and typical ambiguity and hence create the illusion that $\type:\type$;
+see~\cite{TheBook}. There are only a few places where we need to be explicit about universe levels.
+As is common in HoTT, we will freely use the axiom of function extensionality.
+Using this axiom, all limits can be constructed in type theory~\cite{Avigad:limits}.
+We use higher inductive types (HITs) to construct co-limits; see~\cite{LumsdaineShulman,Shulman:HIT}.
+Using the univalence axiom one can show that $\type$ is an object classifier~\cite{RijkeSpitters:Sets}.
+An important feature property of $\infty$-toposes is the descent property. We prove this property in theorem~\ref{thm:descent}.
+
+In the previous paragraph we have used informal categorical terminology such as `limits' to refer to what would be interpreted as homotopy
+limits in the $\infty$-category of $\infty$-groupoids. We will continue to use this naive $\infty$-category style without any rigorous
+claims to their interpretation in the model.
+
+The paper is organized as follows. We start by defining limits and colimits of over graph. This is the most general case, as we
+do not include the possibility of including higher coherence conditions.
+We introduce diagrams and (co)limits in section~\ref{sec:diagram}. In section~\ref{sec:suspensions} we study suspensions.
+Functions with contractible mapping cones are the same as epimorphisms, as we will see in section~\ref{sec:mapping}.
+Finally, we prove the descent property.
+
+\subsection{Notation}
+A typical way we write a type in this article is:
+\begin{equation}\label{eq:notation_example}
+\prd{x,y:A}{p:B(x,y)}C(x,y,p)\to D(x,y,p).
+\end{equation}
+Assuming that $A$, $B$, $C$ and $D$ have been introduced, this type denotes a
+dependent product, where the product ranges over $x,y:A$ and $p:B(x,y)$ and
+the factors are the (non-dependent) function types $C(x,y,p)\to D(x,y,p)$. A
+more common notation for the same type in mathematics would be
+\begin{equation*}
+\prod_{x,y:A}\prod_{p:B(x,y)}C(x,y,p)\to D(x,y,p),
+\end{equation*}
+like a big product of function spaces. Nevertheless we have chosen to use this
+less common notation, because the types $A$ or $B$ can become quite complex.
+% and formulas would become messy as as complex information starts `dancing
+% around'. 
+
+Another thing we notice in formula \eqref{eq:notation_example} is the use of
+curly braces around $x,y:A$. This indicates that whenever we have a term
+\begin{equation*}
+f:\prd{x,y:A}{p:B(x,y)}C(x,y,p)\to D(x,y,p),
+\end{equation*}
+we will omit reference to $x$ and $y$ whenever $f$ is applied to $x,y:A$ and
+$p:B(x,y)$. In other words, we will write down $f(p):C(x,y,p)\to D(x,y,p)$
+instead of $f(x,y,p)$. We will do this whenever it is possible to retrieve
+the terms $x$ and $y$ from the term $p$, and in many similar situations like
+this. Back to formula \autoref{eq:notation_example}, it is quite possible 
+that we would have used the curly braces in the introduction
+of $C$ and $D$ as well, and if we had done that we would have written $C(p)$
+and $D(p)$.
+\end{comment}
+
+\input{article-models-defn}
+
+\bibliographystyle{hplain}
+%\phantomsection\addcontentsline{toc}{section}{References}
+\bibliography{refs}
+
+\end{document}

@@ -1,0 +1,1674 @@
+\section{Introduction}
+In this paper we define a notion of internal model which is adapted to
+the univalent setting in which we work. Thus, we only describe what it means
+to be an internal model when the ambient type theory is univalent. Our
+presentation is derived from the definition of~\cite{Dybjer1996}. There,
+an internal model is defined to be a category with families with interpretations
+for the basic type constructors $\Pi$, $\Sigma$ and $\idtypevar{}$. However,
+a category in~\cite{Dybjer1996} has a set of objects and for every two objects
+a setoid of morphisms. This is too restrictive for our purpose. Ideally, we
+would start with an $\infty$-category of contexts and an $\infty$-presheaf
+of families over it. This presents us with the problem that a notion of
+$\infty$-category has not been formulated \emph{in} type theory. Therefore,
+we make a deviation from the approach in~\cite{Dybjer1996}. We shall
+start with a type $\tfctx$ of contexts, a family $\mftypfunc:\tfctx\to\type$
+of families over it and a family $\terms{\blank}:\prd*{\Gamma:\tfctx}\mftyp{\mfM}{\Gamma}
+\to\type$ sending a type $A$ in context $\Gamma$ to its type $\terms{A}$ of
+terms; then we shall directly interpret $\Pi$-types, declaring
+$\terms{A\to B}$ to be $\ctxhom[\Gamma]{A}{B}$. The idea is that by letting
+$\Pi$ play a fundamental role in the definition of a category with families
+$\mathcal{C}$,
+the morphisms get their properties directly from the internal type theory
+of $\mathcal{C}$.
+
+\begin{comment}
+We briefly list the data of which an internal model of type theory consits. We
+consider internal models in the style of~\cite{Dybjer1996}. Thus we will
+describe a model $\mfM$ as a category with families. However, since our setting is
+univalent type theory we will deviate from~\cite{Dybjer1996} in the following
+respects: first of all, we make use of typical ambiguity and hence omit
+reference to a thing called \emph{sort}. 
+
+We organize the definition of an internal model $\mfM$ as follows: in
+\autoref{internal-model-contexts} we describe the category of contexts itself;
+in \autoref{internal-model-families} we describe the families over a given context
+and the related operations; in \autoref{internal-model-constructors} we
+describe the basic constructors in the internal model.
+\end{comment}
+
+\section{Ideas in the definition}
+An internal model of type theory is like a category with families, but we want
+to avoid having to state higher coherences. In fact, we don't even start our
+definition with a category of contexts; instead we just take a \emph{type} of contexts. 
+The morphisms will come from the terms, evaluation of a function at a given
+term will come from substitution. We recognize three basic ingredients to models:
+first there is a type of contexts; second, for every context there is a model of types in
+that context and third, for every type in a given context there is a type of its
+terms. Then there are three basic attributes: context extension, weakening and
+substitution. Context extension provides us with families over types as well as
+with an interpretation of dependent pair types. We need weakening 
+so that families can depend on the same type multiple times (the way the
+identity type of a type depends two times on that type) and to be able
+to talk about non-dependent function types,
+the morphims of our category. Substitution will give us a way
+to work with fibers of families as well as composition of functions and evaluation
+of functions at terms.
+
+Because we require a \emph{model} of types in a context, all the structure
+which we require at the bottom level will be required to exist higher up as well.
+Thus, the model of types in a given context $\Gamma$ will have a type of contexts
+itself, which can be seen as the type of types in $\Gamma$; it will have its
+own notion of types in a context, its own notion of terms, context extension,
+weakening and substitution together with all the structure require for it. For
+instance, when $A$ is a type in context $\Gamma$ in a model $\mfM$, then there
+is the model of types in context $A$, which is the model of families over $A$. 
+This model is required to be \emph{definitionally equal to} the model of types
+in the context $\ctxext{\Gamma}A$, the context extension of $\Gamma$ and $A$.
+In this way we protect ourselves from the need to dig an infinitely deep structure
+of models when we want to consider examples.
+
+To give the definition of a model we shall also need to consider certain morphisms
+of internal models. Those should preserve all the structure: contexts are mapped
+to contexts; for every context a morphism of models mapping the model of types
+in that context to the model of types in the image of that context; there should
+be a mapping of terms and context extension, weakening and substitution should be
+preserved. We need to consider those morphisms because we require context extension,
+weakening and substitution to be of that kind, thereby respecting each other
+in all possible ways.
+
+When we have this framework set up, we can interpret the basic type constructors
+such as $\Pi$, $\Sigma$ and $\idtypevar{}$.
+The higher categorical structure then comes from the
+result that we have an interpretation of type theory.
+
+\begingroup
+\color{red}
+\begin{rmk}
+Currently, the definition seems to be circular. To define a model we need that
+context extension, weakening and substitution be morphisms of models. A morphism
+of models needs to preserve context extension, weakening and substitution.
+Moreover, its definition requires the notion of composition of morphisms.
+
+I've done it this way because it guides me to what the rules should be, trusting
+that I can work my way back to give a (possibly less transparent) definition
+which contains no circularities without doubt.
+\end{rmk}
+\endgroup
+
+\section{Univalent universes as internal models}
+
+Before we give the definition we illustrate the concepts that go into it in
+the case of a univalent universe $\UU$.
+Regardless of the definition of an internal model, a univalent universe should
+be an example of one.
+
+The type of contexts is $\UU$ itself and for every $\Gamma:\UU$, a type in
+context $\Gamma$ is simply a family $A:\Gamma\to\UU$. The type $\terms{A}$ of terms of a type $A$
+in context $\Gamma$ is defined to be $\prd{i:\Gamma}A(i)$. Note that $\Gamma\to
+\UU$ itself also interprets type theory where a type in context $A:\Gamma\to\UU$
+is a family $P:(\sm{i:\Gamma}A(i))\to\UU$. We may denote this model by
+$\mftyp{\UU}{\Gamma}$. The terms of a type $P$ in context $A$ in the model
+$\Gamma\to\UU$ are the terms of $\prd{i:\Gamma}{x:A(i)}P(i,x)$.
+
+When $A$ is a type in context
+$\Gamma$ we define the context extension $\ctxext{\Gamma}A$ to be
+$\sm{i:\Gamma}A(i)$. Note that context extension $\ctxext{\Gamma}\blank$
+can be seen acting not only as a function from the context of the model
+$\Gamma\to\UU$ to the context of the model $\UU$, but it also acts on the types 
+and terms: when $A$ is a type in context $\Gamma$ we may take the identity map
+from $\mftyp{\Gamma\to\UU}{A}\to\mftyp{\UU}{\ctxext{\Gamma}A}$ because
+$\mftyp{\Gamma\to\UU}{A}$ is taken to be $\mftyp{\UU}{\ctxext{\Gamma}A}$;
+thus, $\ctxext{\Gamma}P\defeq P$ for every family $P$ over $A$ in context 
+$\Gamma$. Likewise, when $P$ is a type in context $A$ in the model 
+$\Gamma\to\UU$ then context extension should act on the terms of $P$ via a
+function $\terms{P}\to\terms{\ctxext{\Gamma}P}$, which we take to be
+the identity map once more.
+
+Since $\mftyp{\UU}{\Gamma}$ is a model of type theory it
+has it's own notion of context extension: when $P$ is a type in context $A$ in
+the model $\mftyp{\UU}{\Gamma}$ then $\ctxext{A}P$ is the family
+$\lam{i}\sm{x:A(i)}P(i,x):\Gamma\to\UU$. Also the context extension of
+$\Gamma\to\UU$ acts trivially on the types and terms. Context extension is
+analoguous to the Grothendieck construction that associates the category of
+elements to a presheaf and it gives us $\Sigma$-types.
+
+When $A$ and $B$ are types in context
+$\Gamma$, the weakening $\ctxwk{A}{B}$ of $B$ along $A$ is defined to be
+$\lam{\pairr{i,x}}B(i):(\sm{i:\Gamma}A(i))\to\UU$. Weakening along a type $A$ 
+in context $\Gamma$ also acts on types and terms. When $Q$ is a type in context
+$B$ in the model $\Gamma\to\UU$, we define $\ctxwk{A}{Q}$ to be 
+$\lam{\pairr{i,x}}{y}Q(i,y)$. When $g:\terms{Q}$ we define $\ctxwk{A}{g}$ to
+be $\lam{\pairr{i,x}}{y}g(i,y)$.
+
+Note that for two types $A$ and $B$ in context $\Gamma$, the terms of
+$\ctxwk{A}{B}$ are the terms of $\prd{i:\Gamma}A(i)\to B(i)$, i.e.~they are
+the fiberwise maps from $A$ to $B$. We shall take the type $\terms{\ctxwk{A}{B}}$
+of terms of $\ctxwk{A}{B}$ to be the type of morphisms from $A$ to $B$. Also,
+any context of $\UU$ may be seen as a type in the empty context $\unit$. Thus
+the type of terms of a context $\Gamma$ is $\unit\to\Gamma$, which is
+equivalent to $\Gamma$. A context morphism from $\Delta$ to $\Gamma$ is a term
+of $\ctxwk{\Gamma}{\Delta}$, i.e.~a function from $\Gamma$ to $\Delta$. We denote
+the type $\terms{\ctxwk{\Gamma}{\Delta}}$ by $\ctxhom{\Delta}{\Gamma}$. 
+
+When $P$ is a family over
+$A$ in context $\Gamma$ and $x$ is a term of $A$ we define the type $\subst{x}{P}$
+in context $\Gamma$ to be $\lam{i}P(i,x(i))$. Like extension 
+
+We will interpret the dependent product $\mprd{A}{P}$ of a family $P$ over
+$A$ in context $\Gamma$ by
+\begin{equation*}
+\mprd{A}{P}(i)\defeq \prd{x:A(i)}P(i,x)
+\end{equation*}
+With this interpretation there is an equivalence 
+$\lambda:\eqv{\terms{P}}{\terms{\mprd{A}{P}}}$. This is lambda-abstraction; its
+inverse being evaluation. We should note however, that the rule for evaluation
+we interpret here is
+\begin{equation*}
+\inference{\Gamma\vdash f:\mprd{A}{P}}{\ctxext{\Gamma}A\vdash\tfev(f):P}
+\end{equation*}
+which is different than the usual rule
+\begin{equation*}
+\inference{\Gamma\vdash f:\mprd{A}{P} \qquad \Gamma\vdash a:A}{\Gamma \vdash \tfev(f,a):\subst{a}{P}}
+\end{equation*}
+The reason for this is that the interpretation of the usual rule would give a
+function of type $\terms{\mprd{A}{P}}\to\prd{x:\terms{A}}\terms{\subst{x}{P}}$,
+but this does not describe the terms of $\mprd{A}{P}$ by any means. Moreover,
+since we have implemented substitution, we obtain from $\ctxext{\Gamma}A\vdash\tfev(f):P$ 
+and $\Gamma\vdash x:A$ a term $\Gamma\vdash\subst{x}{\tfev(f)}:\subst{x}{P}$ and
+therefore we do not loose anything with this approach.
+
+{\color{red} point to example}
+
+\section{A variable-free presentation of type theory}
+We have seen in the example of $\UU$ that we will not need to refer to variables
+when we are manipulating contexts. In fact, it is more natural not to.
+This suggests that there is a presentation
+of type theory where contexts do not mention variables. The first small gain is that such a presentation
+would not be burdened with comments about variables being bounded or not, or fresh or
+not occuring at all.
+
+\subsection{The basic judgments}
+The judgments we can make are the standard six basic judgments involving contexts, types and terms and
+judgmental equality in each of these three cases.
+\begin{align*}
+\jctx*{\Gamma} & \jctxeq*{\Gamma}{\Gamma'}\\
+\jtype*{\Gamma}{A} & \jtypeeq*{\Gamma}{A}{B}\\
+\jterm*{\Gamma}{A}{x} & \jtermeq*{\Gamma}{A}{x}{y}.
+\end{align*}
+
+In contrast with standard practise, we don't assume that there is an empty context. The idea is that
+if we interpret only the syntax of contexts, types and terms with extension, weakening and
+substitution, we do not have a full model of type theory but we still have a 
+structure resembling a category and categories need not have terminal objects. Therefore,
+the rules that follow will describe only how to manipulate contexts, types and terms.
+Of most of the inferences that we give there are two versions: one introducing an operation, the other asserting that the operation in question preserves judgmental equality. 
+
+\subsection{The basic rules for judgmental equality}
+The rules for judgmental equality establish that it is an equivalence relation
+in all three cases (contexts, types and terms).
+%\begingroup
+%\renewcommand*{\arraystretch}{3}
+%\begin{equation*}
+%\begin{array}{ccc}
+\begin{infarray}{ccc}
+\inference{\jctx{\Gamma}}{\jctxeq{\Gamma}{\Gamma}} & \inference{\jctxeq{\Gamma}{\Delta}}{\jctxeq{\Delta}{\Gamma}} & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jctxeq{\Delta}{\Theta}}{\jctxeq{\Gamma}{\Theta}}\\
+\inference{\jtype{\Gamma}{A}}{\jtypeeq{\Gamma}{A}{A}} &
+\inference{\jtypeeq{\Gamma}{A}{B}}{\jtypeeq{\Gamma}{B}{A}} & 
+\inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\Gamma}{B}{C}}{\jtypeeq{\Gamma}{A}{C}}\\
+\inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{x}{x}} & 
+\inference{\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Gamma}{A}{y}{x}} &
+\inference{\jtermeq{\Gamma}{A}{x}{y}\qquad\jtermeq{\Gamma}{A}{y}{z}}{\jtermeq{\Gamma}{A}{x}{z}}
+\end{infarray}
+%\end{array}
+%\end{equation*}
+\begin{infarray}{cc}
+\inference{\jctxeq{\Gamma}{\Delta}\qquad\jtype{\Gamma}{A}}{\jtype{\Delta}{A}}
+& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtypeeq{\Gamma}{A}{B}}{\jtypeeq{\Delta}{A}{B}}\\
+\inference{\jctxeq{\Gamma}{\Delta}\qquad\jterm{\Gamma}{A}{x}}{\jterm{\Delta}{A}{x}}
+& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Delta}{A}{x}{y}}\\
+\inference{\jtypeeq{\Gamma}{A}{B}\qquad \jterm{\Gamma}{A}{x}}{\jterm{\Gamma}{B}{x}}
+& \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Gamma}{B}{x}{y}}
+\end{infarray}
+
+\subsection{Extension}
+We introduce extension which not only extends a context $\Gamma$ and a type
+$A$ over it to a context $\ctxext{\Gamma}A$, but which also extends a type $A$
+in context $\Gamma$ and a family $P$ over it to a type $\ctxext{A}P$ in context
+$\Gamma$. We do this to ensure that all of type theory can be done in a context.
+For instance, we could say (1) that a context in context $\Gamma$ is the same thing
+as a type in context $\Gamma$; (2) When $A$ is a context in this sense, a type in
+context $A$ is the same thing as a family $P$ over $A$ and (3) when $P$ is a type
+in context $A$ in this sense, a term of $P$ keeps its original meaning.
+
+Note that by introducing extension on the level of types and families,
+we introduce $\Sigma$-types at a very early stage.
+However, we need substitution to make this precise.
+\begin{infarray}{cc}
+\inference{\jtype{\Gamma}{A}}{\jctx{\ctxext{\Gamma}A}}
+& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtypeeq{\Gamma}{A}{B}}{\jctxeq{\ctxext{\Gamma}A}{\ctxext{\Delta}B}}\\
+\inference{\jtype{\ctxext{\Gamma}A}{P}}{\jtype{\Gamma}{\ctxext{A}P}}
+& \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\ctxext{\Gamma}A}{P}{Q}}{\jtypeeq{\Gamma}{\ctxext{A}P}{\ctxext{B}Q}}
+\end{infarray}
+
+\subsection{Weakening}
+We first define weakening by a context $\Gamma$. Since weakening by $\Gamma$
+should in principle be a functor, it acts on contexts, types and terms alike.
+Note that it is because of the weakening $\ctxwk{\Gamma}{\Delta}$ of a context
+$\Delta$ by $\Gamma$ that we can speak of context morphisms from $\Gamma$ to $\Delta$: they are the terms
+of $\ctxwk{\Gamma}{\Delta}$.
+\begin{infarray}{cc}
+\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jtype{\Gamma}{\ctxwk{\Gamma}{\Delta}}} 
+& \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jctxeq{\Delta}{\Delta'}}{\jtypeeq{\Gamma}{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma'}{\Delta'}}}\\
+\inference{\jctx{\Gamma}\qquad\jtype{\Delta}{B}}{\jtype{\ctxext{\Gamma}\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}} & \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtypeeq{\Delta}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma'}{B'}}}\\
+\inference{\jctx{\Gamma}\qquad\jterm{\Delta}{B}{y}}{\jterm{\ctxext{\Gamma}\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}} 
+& \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtermeq{\Delta}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}{\ctxwk{\Gamma'}{y'}}} 
+\end{infarray}
+
+A weakening operation is also defined for types. When $A$ and $B$ are both types
+ in context $\Gamma$, the weakened type $\ctxwk{A}{B}$ in context $\ctxext{\Gamma}A$
+ is the family which `doesn't really depend on $A$'. The terms of $\ctxwk{A}{B}$
+ are the functions from $A$ to $B$. Likewise, the terms $\ctxwk{A}y$ are the
+ constant maps at $y$ from $A$ to $B$, for $y:B$.
+\begin{infarray}{cc}
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}}{\jtype{\ctxext{\Gamma}A}{\ctxwk{A}{B}}}
+& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtypeeq{\Gamma}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}A}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}}\\
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}B}{Q}}
+{\jtype{\ctxext({\Gamma}{A})\ctxwk{A}{B}}{\ctxwk{A}{Q}}}
+& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtypeeq{\ctxext{\Gamma}B}{Q}{Q'}}
+{\jtypeeq{\ctxext({\Gamma}{A})\ctxwk{A}{B}}{\ctxwk{A}{Q}}{\ctxwk{A'}{Q'}}}\\
+\inference{\jtype{\Gamma}{A}\qquad\jterm{\Gamma}{B}{y}}{\jterm{\ctxext{\Gamma}A}{\ctxwk{A}{B}}{\ctxwk{A}{y}}}
+& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtermeq{\Gamma}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}A}{\ctxwk{A}{B}}{\ctxwk{A}{y}}{\ctxwk{A'}{y'}}}
+\end{infarray}
+
+\subsection{Substitution}
+\begin{infarray}{cc}
+\inference{\jterm{\Gamma}{A}{x}\qquad\jtype{\ctxext{\Gamma}A}{P}}{\jtype{\Gamma}{\subst{x}{P}}}
+& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtypeeq{\ctxext{\Gamma}A}{P}{P'}}{\jtypeeq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}}\\
+\inference{\jterm{\Gamma}{A}{x}\qquad\jtype{\ctxext({\Gamma}{A})P}{Q}}{\jtype{\ctxext{\Gamma}\subst{x}{P}}{\subst{x}{Q}}}
+& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtypeeq{\ctxext({\Gamma}{A})P}{Q}{Q'}}{\jtypeeq{\ctxext{\Gamma}\subst{x}{P}}{\subst{x}{Q}}{\subst{x'}{Q'}}}\\
+\inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}A}{P}{f}}{\jterm{\Gamma}{\subst{x}{P}}{\subst{x}{f}}}
+& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtermeq{\ctxext{\Gamma}A}{P}{f}{f'}}{\jtermeq{\Gamma}{\subst{x}{P}}{\subst{x}{f}}{\subst{x'}{f'}}}\\
+\inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext({\Gamma}{A}){P}}{Q}{g}}{\jterm{\ctxext{\Gamma}\subst{x}{P}}{\subst{x}{Q}}{\subst{x}{g}}}
+& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtermeq{\ctxext({\Gamma}{A})P}{Q}{g}{g'}}{\jtermeq{\ctxext{\Gamma}\subst{x}{P}}{\subst{x}{Q}}{\subst{x}{g}}{\subst{x'}{g'}}}
+\end{infarray}
+
+\subsection{Compatibility of extension, weakening and substitution}
+We describe the compatibility of extension, weakening and substitution. These
+compatibility rules are formulated in a weak sense.
+
+Extension is compatible with extension:
+\begin{infarray}{c}
+\inference
+{ \jtype{\ctxext{\Gamma}A}{P}
+}{\jterm
+  {\ctxext{\Gamma}({A}P)}
+  {\ctxwk{\ctxext{\Gamma}({A}P)}{(\ctxext({\Gamma}{A})P)}}{\typefont{extext}_0(A,P)}
+}\\
+\inference
+{ \jtype{\ctxext({\Gamma}{A})P}{Q}
+}{\jterm
+  {\ctxext{\Gamma}({A}({P}Q))}
+  {\ctxwk{\ctxext{A}({P}Q)}{(\ctxext({A}{P})Q)}}
+  {\typefont{extext}_1(A,P,Q)}
+}
+\end{infarray}
+
+Weakening is compatible with extension:
+\begin{infarray}{c}
+\inference{
+  \jctx{\Gamma}
+  \qquad
+  \jtype{\Delta}{B}}
+  {\jterm
+    {\ctxext{\Gamma}\ctxwk{\Gamma}{(\ctxext{\Delta}B)}}
+    {\ctxwk{\ctxwk{\Gamma}{(\ctxext{\Delta}B)}}{\ctxext{(\ctxwk{\Gamma}{\Delta})}(\ctxwk{\Gamma}{B})}}
+    {\typefont{wkext}_0(\Gamma,B)}}
+\end{infarray}
+
+\subsection{More stuff in the type theory}
+\begin{infarray}{c}
+\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}A}{\ctxwk{A}{A}}{\idfunc[A]}}
+\end{infarray}
+
+\subsection{Leibniz equality on terms}
+Occasionally we shall need a weaker version of equality than judgmental equality.
+Our choice here is Leibniz equality, since it implies propositional equality when
+identity types are present.
+
+Let $P$ be a family over $A$ in context $\Gamma$. Then we can weaken
+$\ctxwk{A}{P}$, which is a family over $\ctxwk{A}{A}$ in context $\ctxext{\Gamma}A$.
+We also have the family $\ctxwk{\ctxwk{A}{A}}{P}$ over $\ctxwk{A}{A}$ in context
+$\ctxext{\Gamma}A$ and thus we have the inference
+\begin{equation*}
+\inference{\jtype{\ctxext{\Gamma}A}{P}}{\jtype{\ctxext(({\Gamma}{A}){\ctxwk{A}{A}})\ctxwk{A}{P}}{\ctxwk{\ctxwk{A}{P}}{(\ctxwk{\ctxwk{A}{A}}{P})}}}
+\end{equation*}
+This family plays the role of the family $\jtype{\Gamma,x,y:A}{P(x)\to P(y)}$
+in the type theory of \cite{TheBook}.
+
+
+\subsection{Trivial cofibrations and weak equivalences of types}
+We describe a relation between types that expresses when they are weakly equivalent.
+Weak equivalence is introduced because we need a weaker notion of judgmental 
+equality which also makes sense when identity types are not present, since that
+would allow us to state that context extension, weakening and substitution
+commute with each other.
+
+A term $f:\ctxwk{A}{B}$ is a trivial cofibration if it has the
+property that for any fibration $Q$ over $B$,
+to find a section of $Q$ it suffices to find a section of the fibration
+$f^\ast Q$ over $A$. In our type theoretical setting, the rôle of fibrations
+is played by families, the rôle of the function type $A\to B$ is played by
+$\ctxwk{A}{B}$ and our version of the pullback $f^\ast Q$ is $\subst{f}{(\ctxwk{A}{Q})}$.
+
+\begin{defn}
+Let $f$ be a term of $\ctxwk{A}{B}$ in context $\Gamma$.
+\begin{enumerate}
+\item For a family $Q$ over $B$ in context $\Gamma$ we define $f^\ast Q\jdeq\subst{f}{(\ctxwk{A}{Q})}$.
+\item For a term $g$ of $Q$ in context $\ctxext{\Gamma}B$ we define $f^\ast g\jdeq\subst{f}{(\ctxwk{A}{g})}$.
+\end{enumerate} 
+\end{defn}
+\begin{rmk}
+The type $f^\ast(\ctxwk{B}{C})$ in context $\ctxext{\Gamma}A$ is can be viewed as the
+type of functions from $A$ to $C$ which factor through $f$. Thus there should be
+a function from $f^\ast(\ctxwk{B}{C})$ to $\ctxwk{A}{C}$.
+\end{rmk}
+
+\begin{rmk}
+Every term $\jterm{\ctxext{\Gamma}A}{\ctxwk{A}{B}}{f}$ allows us to infer the following:
+\begin{equation*}
+\inference{\jtype{\ctxext{\Gamma}B}{Q}}{\jtype{\ctxext{\Gamma}A}{f^\ast Q}}
+\qquad
+\inference{\jterm{\ctxext{\Gamma}B}{Q}{g}}{\jterm{\ctxext{\Gamma}A}{f^\ast Q}{f^\ast g}}
+\end{equation*}
+\end{rmk}
+
+
+\begin{defn}
+A term $f:\ctxwk{A}{B}$ in context $\ctxext{\Gamma}A$ is said to be a trivial
+cofibration if we can infer
+\begin{equation*}
+\inference{\jterm{\ctxext{\Gamma}A}{f^\ast Q}{t}}{\jterm{\ctxext{\Gamma}B}{Q}{\tilde{t}}}\qquad
+\inference{\jterm{\ctxext{\Gamma}A}{f^\ast Q}{t}}{\jtermeq{\ctxext{\Gamma}A}{f^\ast Q}{f^\ast \tilde{t}}{t}}
+\end{equation*}
+{\color{red}This statement should be reformulated so that it only involves a single judgment...
+but I don't see directly how to do that.}
+\end{defn}
+
+We have the following theorem in the type theory of \cite{TheBook}, which supports
+our claim that we may indeed speak of a trivial cofibration. 
+
+\begin{thm}
+Suppose $f:A\to B$ is a function. Then $f$ is an equivalence if and only if
+for every $Q:B\to\type$ and every $g:\prd{x:A}Q(f(x))$ there is a section
+$h:\prd{y:B}Q(b)$ with the property that $h\circ f\htpy g$. 
+\end{thm}
+
+\begin{proof}
+We can first take $Q$ to be the constant family $\lam{y}A$. Furthermore, we may
+take $g\defeq\idfunc[A]$. Then we get a term of type
+\begin{equation*}
+\sm{h:B\to A}h\circ f\htpy \idfunc[A],
+\end{equation*}
+i.e.~we get a left inverse $h$ for $f$. To show that $h$ is also a right inverse
+of $f$, let $Q$ be the family $\lam{y}\id{f(h(y))}{y}$. To find a section of
+$Q$, which is the homotopy we aim for, it suffices to find a section of
+$Q\circ f$. In other words, we have to show that $\id{f(h(f(x)))}{f(x)}$ for
+every $x:A$. This follows from the fact that $h$ is a left inverse for $f$.
+
+The reverse direction is immediate.
+\end{proof}
+
+Another approach would be to define $f:\ctxwk{A}{B}$ to be left invertible
+if there is a term $\ctxext({\Gamma}{A})P$
+
+\subsection{The interactions of extension, weakening and substitution}
+
+\subsection{The basic constructors of type theory}
+\subsubsection{Dependent function types}
+\begin{infarray}{cc}
+\inference{\jtype{\ctxext{\Gamma}A}{P}}{\jtype{\Gamma}{\mprd{A}{P}}}
+& \inference{\jtypeeq{\ctxext{\Gamma}A}{P}{P'}}{\jtypeeq{\Gamma}{\mprd{A}{P}}{\mprd{A}{P'}}}\\
+\inference{\jterm{\ctxext{\Gamma}A}{P}{f}}{\jterm{\Gamma}{\mprd{A}{P}}{\lambda(f)}}
+& \inference{\jtermeq{\ctxext{\Gamma}A}{P}{f}{f'}}{\jtermeq{\Gamma}{\mprd{A}{P}}{\lambda(f)}{\lambda(f')}}\\
+\inference{\jterm{\Gamma}{\mprd{A}{P}}{g}}{\jterm{\ctxext{\Gamma}A}{P}{\tfev(g)}}
+& \inference{\jtermeq{\Gamma}{\mprd{A}{P}}{g}{g'}}{\jtermeq{\ctxext{\Gamma}A}{P}{\tfev(g)}{\tfev(g')}}\\
+\inference{\jterm{\ctxext{\Gamma}A}{P}{f}}{\jtermeq{\Gamma}{A}{\tfev(\lambda(f))}{f}}
+\end{infarray}
+
+With these rules we will not get the weak $\eta$-rule when identity types are present.
+So it might be better to state that $\lambda$ is a trivial cofibration
+
+\subsection{Identity types}
+We need to define the diagonal function $\jterm{\ctxext{\Gamma}A}{\ctxwk{A}{(\ctxext{A}\ctxwk{A}{A})}}{\delta}$
+\begin{infarray}{c}
+\inference{\jtype{\Gamma}{A}}{\jtype{\ctxext({\Gamma}{A})\ctxwk{A}{A}}{\idtypevar{A}}}\\
+\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}A}{\delta^\ast\idtypevar{A}}{\reflsym}}\\
+\inference{\jtype{\ctxext(({\Gamma}{A}){\ctxwk{A}{A}})\idtypevar{A}}{P}\qquad
+\jterm{\ctxext{\Gamma}A}{\pairr{\delta,\reflsym}^\ast P}{d}}
+{\jterm{\ctxext(({\Gamma}{A}){\ctxwk{A}{A}})\idtypevar{A}}{P}{J}}
+\end{infarray}
+
+\section{The category with families $\mfM$}\label{internal-model-contexts}
+\begin{defn}\label{defn:premodel}
+An internal model $\mfM$ of type theory consists of the following data. 
+\begin{enumerate}
+\item A type $\tfctx(\mfM)$ of \emph{contexts}.
+\item A function $\mftypfunc{\mfM}$ assigning to each context $\Gamma$ of $\mfM$ an internal model
+$\mftyp{\mfM}{\Gamma}$ of type theory.
+\begin{defn}
+The type $\tfctx(\mftyp{\mfM}{\Gamma})$ is denoted by $\mftyp{\mfM}{\Gamma}$. A
+term of $\mftyp{\mfM}{\Gamma}$ is called a \emph{type in context $\Gamma$}. To indicate
+that $A$ is a type in context $\Gamma$ we also write $\Gamma\vdash A:\mfM$. 
+When $P:\mftyp{\mftyp{\mfM}{\Gamma}}{A}$ for some type $A$ in context $\Gamma$, we
+also speak of \emph{a family $P$ over $A$ in context $\Gamma$.}
+\end{defn}
+\item A family $\terms{\blank}:\prd*{\Gamma:\ctx(\mfM)}\mftyp{\mfM}{\Gamma}\to\type$
+assigning to every type $A$ in context $\Gamma$ the type $\terms{A}$ of its
+terms.
+\begin{defn}
+When $A$ is a type in context $\Gamma$, we define $\Gamma\vdash x:A$ 
+to mean $x:\terms{A}$.
+\end{defn}
+\item Context extension: a morphism
+\begin{equation*}
+\tfext^\Gamma:\mftyp{\mfM}{\Gamma}\to\mfM
+\end{equation*}
+of internal models for every context $\Gamma$.
+\begin{defn}
+When $A$ is a type in context $\Gamma$, we also denote
+the context $\tfext^\Gamma_0(A)$ of $\mfM$ by $\ctxext{\Gamma}A$.
+We will write
+$\ctxext({\Gamma}{A})P$ for $\ctxext({\Gamma}{A})P$.
+\end{defn}
+\item The judgmental equalities:
+\begin{align*}
+\mftyp{\mftyp{\mfM}{\Gamma}}{A} & \jdeq\mftyp{\mfM}{\ctxext{\Gamma}A}\\
+\mftyp{\tfext^\Gamma}{A} & \jdeq \modelfont{id}_{\mftyp{\mfM}{\ctxext{\Gamma}A}}\\
+\terms[{\tfext^\Gamma}]{P} & \jdeq \idfunc[\terms{P}].
+\end{align*}
+\begin{rmk}
+In particular, we will have the judgmental equalities:
+\begin{enumerate}
+\item When $A$ is a type in context $\Gamma$ we have
+\begin{equation*}
+\mftyp{\mftyp{\mfM}{\Gamma}}{A}\jdeq\mftyp{\mfM}{\ctxext{\Gamma}A},
+\end{equation*}
+ensuring that a context in the model $\mftyp{\mftyp{\mfM}{\Gamma}}{A}$ is the same thing as a
+context in the model $\mftyp{\mfM}{\ctxext{\Gamma}A}$.
+\item If $Q$ is a family over $P$ where $P$ is a family over $A$ in context $\Gamma$, then
+\begin{equation*}
+\tfext^{\protect{\mftyp{\mftyp{\mfM}{\Gamma}}{A}}}(P,Q)
+\jdeq
+\tfext^{\protect{\mftyp{\mfM}{\ctxext{\Gamma}A}}}(P,Q)
+\end{equation*}
+ensuring that twe two possible notion of context extension are the same.
+\end{enumerate}
+Other judgmental equalities will be required with the ingredients that follow.
+We will not list them all.
+\end{rmk}
+\item Weakening: a morphism
+\begin{equation*}
+\tfwk^A:\mftyp{\mfM}{\Gamma}\to\mftyp{\mfM}{\ctxext{\Gamma}A}
+\end{equation*}
+of internal models for every type $A$ in context $\Gamma$. When $B$ is a type
+in context $\Gamma$, we denote $\tfwk^A(B)$ by $\ctxwk{A}{B}$. 
+\item Substitution: a morphism
+\begin{equation*}
+\tfsubst^x:\mftyp{\mfM}{\ctxext{\Gamma}A}\to\mftyp{\mfM}{\Gamma}
+\end{equation*}
+of internal models for any $x:A$ in context $\Gamma$. When $P$ is a family over $A$ in context
+$\Gamma$, we denote $\tfsubst^x(P)$ also by $\subst{x}{P}$. 
+\item A judgmental equality
+\begin{equation*}
+\tfsubst^x\circ\tfwk^A\jdeq\modelfont{id}_{\mftyp{\mfM}{\Gamma}}
+\end{equation*}
+for any $x:A$ and $B$ in context $\Gamma$.
+\item A context $\unit^\mfM:\tfctx(\mfM)$ and a term of type $\isequiv(\ctxext{\unit^\mfM}\blank)$. We will denote
+this equivalence by $e_\unit$. The context $\unit^\mfM$ is also
+called the \emph{empty context}.
+\begin{defn}
+For any context $\Gamma$, type $\terms{\Gamma}$ is defined to mean
+$\terms{e_\unit^{-1}(\Gamma)}$. 
+\end{defn}
+\item A section $\unit^{\blank}:\prd{\Gamma:\ctx(\mfM)}\mftyp{\mfM}{\Gamma}$ assigning
+a type $\unit^\Gamma$ in context $\Gamma$ to every context $\Gamma$ and
+an identification $\alpha_\unit(\Gamma):\id{\ctxext{\Gamma}\unit^\Gamma}{\Gamma}$
+for every context $\Gamma$. We also require that there is an identification
+$\id{\trans{\alpha_\unit(\Gamma)}{\ctxwk{\unit^\Gamma}{A}}}{A}$ for every
+type $A$ in context $\Gamma$.
+\item For any type $A$ in context $\Gamma$, a term $\idfunc[A]:\terms{\ctxwk{A}{A}}$
+\end{enumerate}
+\begin{flushright}
+\textsl{End of \autoref{defn:premodel}.}
+\end{flushright}
+\end{defn}
+
+\begin{defn}
+In an internal model $\mfM$ we define
+\begin{equation*}
+\ctxhom{\Delta}{\Gamma}\defeq \terms{\ctxwk{e_\unit^{-1}(\Delta)}{e_\unit^{-1}(\Gamma)}}
+\end{equation*}
+\end{defn}
+
+\section{Morphisms of internal models}
+\begin{defn}\label{defn:premodel-morphism}
+A morphism $f:\mfM\to \mfN$ of internal models consists of
+\begin{enumerate}
+\item a function $\ctx(f):\ctx(\mfM)\to\ctx(\mfN)$. The function $\ctx(f)$ is also
+denoted by $f_0$.
+\item a morphism $\mftyp{f}{\Gamma}:\mftyp{\mfM}{\Gamma}\to\mftyp{\mfN}{f_0(\Gamma)}$ of internal models for every
+$\Gamma:\ctx(M)$.
+\item the judgmental equality
+\begin{equation*}
+\mftyp{\mftyp{f}{\Gamma}}{A}\jdeq\mftyp{f}{\ctxext{\Gamma}A}
+\end{equation*}
+\item a function $\terms[f]{A}:\terms[\mfM]{A}\to\terms[\mfN]{\mftyp{f}{\Gamma}_0(A)}$ for
+every type $A$ in context $\Gamma$. 
+\item preservation of context extension: 
+\begin{align*}
+\alpha^f_0 & :\id{f\circ\tfext^\Gamma}{\tfext^{f_0(\Gamma)}\circ\mftyp{f}{\Gamma}}\\
+\alpha^f_1 & :\id{\mftyp{f}{\Gamma}_0\circ\tfext^A}{\tfext^{\mftyp{f}{\Gamma}_0(A)}\circ\mftyp{f}{\ctxext{\Gamma}A}}.
+\end{align*}
+\begin{comment}
+the judgmental equality
+\begin{equation*}
+f_0(\ctxext{\Gamma}A)\jdeq\ctxext{f_0(\Gamma)}\mftyp{f}{\Gamma}_0(A)
+\end{equation*}
+for every type $A$ in context $\Gamma$.
+\end{comment}
+\item preservation of weakening: 
+\begin{align*}
+\beta^f_0 & :\id{\mftyp{f}{\Gamma}\circ\tfwk^\Gamma}{\tfwk^{f_0(\Gamma)}\circ f}\\
+\beta^f_1 & :\id{\mftyp{f}{\ctxext{\Gamma}A}\circ\tfwk^A}{\tfwk^\protect{\mftyp{f}{\Gamma}_0(A)}\circ\mftyp{f}{\Gamma}}.
+\end{align*}
+\begin{comment}
+This gives the following three judgmental equalities:
+\begin{enumerate}
+\item the judgmental equality
+\begin{equation*}
+\mftyp{f}{\ctxext{\Gamma}A}_0(\ctxwk{A}{B})\jdeq\ctxwk{\mftyp{f}{\Gamma}_0(A)}{\mftyp{f}{\Gamma}_0(B)}
+\end{equation*}
+for every two types $A$ and $B$ in context $\Gamma$.
+\item the judgmental equality
+\begin{equation*}
+\mftyp{f}{\ctxext({\Gamma}{A})\ctxwk{A}{B}}\circ\tfwk^A\jdeq\tfwk^{\protect{\mftyp{f}{\Gamma}_0(A)}}\circ\mftyp{f}{\ctxext{\Gamma}B}
+\end{equation*}
+\item the judgmental equality
+\begin{equation*}
+\terms[f]{\ctxwk{A}{B}}(\ctxwk{A}{y})\jdeq\ctxwk{\mftyp{f}\Gamma_0(A)}{(\terms[f]{B}(y))}
+\end{equation*}
+\end{enumerate}
+\end{comment}
+\item preservation of substitution: 
+\begin{equation*}
+\gamma^f:\id{\mftyp{f}\Gamma_0\circ\tfsubst^x}{\tfsubst^\protect{\terms[f]{A}(x)}\circ\mftyp{f}{\ctxext{\Gamma}A}}.
+\end{equation*}
+\begin{comment}
+\begin{enumerate}
+\item the judgmental equality
+\begin{equation*}
+\mftyp{f}\Gamma_0(\subst{x}{P})\jdeq\subst{\terms[f]{A}(x)}{\mftyp{f}{\ctxext{\Gamma}A}_0(P)}
+\end{equation*}
+for every family $P$ over $A$ in context $\Gamma$ and every term $x:A$.
+\item the judgmental equality
+\begin{equation*}
+\mftyp{f}\Gamma_0(\subst{x}{Q})\jdeq\subst{\terms[f]{A}(x)}{\mftyp{f}{\ctxext({\Gamma}{A})P}_0(Q)}
+\end{equation*}
+for every family $Q$ over $P$ over $A$ in context $\Gamma$ and every term $x:A$.
+\end{enumerate}
+\end{comment}
+\end{enumerate}
+\begin{flushright}
+\textsl{End of \autoref{defn:premodel-morphism}.}
+\end{flushright}
+\end{defn}
+
+\begin{defn}
+Suppose that $f:\mfM\to\mfN$ and $g:\mfN\to\mfN'$ are morphisms of internal models.
+We define the composition $g\circ f:\mfM\to\mfN'$ to be the morphism given by
+\begin{enumerate}
+\item $(g\circ f)_0\defeq g_0\circ f_0$
+\item $\mftypfunc{g\circ f}(\Gamma)\defeq\mftypfunc{g}(f_0(\Gamma))\circ\mftypfunc{f}(\Gamma)$
+\item $\terms[g\circ f]{A}\defeq\terms[g]{\mftyp{f}{\Gamma}_0(A)}\circ\terms[f]{A}$.
+\item a definition of $\alpha^{g\circ f}_0$ and $\alpha^{g\circ f}_1$.
+\item a definition of $\beta^{g\circ f}_0$ and $\beta^{f\circ f}_1$.
+\item a definition of $\gamma^{g\circ f}$. 
+\end{enumerate}
+\end{defn}
+
+\begin{rmk}
+The requirement that a morphism of models acts on terms is reminiscent of the requirement
+that a functor acts on morphisms. In this fasion, the requirement that a morphism of
+models preserves substitution is the counterpart of a functor preserving composition.
+\end{rmk}
+Context extension, weakening and substitution are required to be such morphims
+of models. Thus they must be extended for this purpose.
+
+\begin{description}
+\item[Context extension] We will extend context extension to a morphism 
+$\tfext(\Gamma):\mftyp{\mfM}{\Gamma}\to M$. Thus, we already have
+$\tfext(\Gamma)_0\defeq\ctxext{\Gamma}\blank$. We also require 
+\begin{align*}
+\mftyp{\tfext(\Gamma)}{A} & : \mftyp{\mftyp{\mfM}{\Gamma}}{A}\to \mftyp{\mfM}{\ctxext{\Gamma}A}\\
+\terms[\tfext(\Gamma)]{P} & : \terms[\mftyp{\mfM}{\Gamma}]{P}\to\terms[\mfM]{\mftyp{\tfext(\Gamma)}{A}_0(P)}
+\end{align*}
+For both of these we take the identity function.
+We require furthermore that context extension preserves context extension,
+weakening and substitution:
+\begin{enumerate}
+\item Extension preserves extension: for every family $P$ over $A$ in context
+$\Gamma$ an identification $\id{\ctxext({\Gamma}{A})P}{\ctxext{\Gamma}({A}P)}$.
+\item Extension preserves weakening:
+\item Extension preserves substitution:
+Because context extension is the identity on the levels of types and terms,
+the rules are easier.
+\end{enumerate}
+\item[Weakening] is a morphism $\tfwk:\mftyp{\mfM}{\Gamma}\to\mftyp{\mfM}{\ctxext{\Gamma}A}$, so we must have
+\begin{align*}
+\tfwk^A_0 & : \mftyp{\mfM}{\Gamma}\to\mftyp{\mfM}{\ctxext{\Gamma}A}
+\intertext{which is denoted by $\ctxwk{A}{\blank}$,}
+\mftypfunc{\tfwk^A} & : \mftyp{\mfM}{\ctxext{\Gamma}B}\to\mftyp{\mfM}{\ctxext({\Gamma}{A})\ctxwk{A}{B}}\\
+\terms[\tfwk^A]{B} & : \terms[\mftyp{\mfM}{\Gamma}]{B}\to\terms[\mftyp{\mfM}{\ctxext{\Gamma}A}]{\ctxwk{A}{B}}
+\end{align*}
+for a term $y:B$, the term $\terms[{\tfwk^A}]{B}(y)$ is the constant map from
+$A$ to $B$, assigning $y$ to every term of $A$.
+\item[Substitution] is a morphism $\tfsubst^x:\mftyp{\mfM}{\ctxext{\Gamma}A}
+\to\mftyp{\mfM}{\Gamma}$ for every $x:A$ in context $\Gamma$, so we must have
+\begin{align*}
+\tfsubst^x_0 & : \mftyp{\mfM}{\ctxext{\Gamma}A}\to\mftyp{\mfM}{\Gamma}
+\intertext{which is denoted by $\subst{x}{\blank}$,}
+\mftyp{\tfsubst^x}{P} & : \mftyp{\mfM}{\ctxext({\Gamma}{A})P}\to\mftyp{\mfM}{\ctxext{\Gamma}\subst{x}{P}}\\
+\terms[\tfsubst^x]{P} & : \terms{P}\to\terms{\subst{x}{P}}
+\end{align*}
+The function $\terms[\tfsubst^x]{P}$ is usually denoted by $\tfev(\blank,x)$. 
+\end{description}
+
+\section{The basic type constructors in internal models}
+
+\begin{defn}
+\begin{enumerate}
+\item A type $\mprd{A}{P}$ for every type $A$ in context $\Gamma$ and every type
+$P$ in context $\ctxext{\Gamma}A$.
+\begin{defn}
+Suppose $A$ and $B$ are types in context $\Gamma$. We define
+\begin{align*}
+A\to B & \defeq\mprd{A}{\ctxwk{A}{B}}.
+\intertext{For any two contexts $\Delta$ and $\Gamma$, we define}
+\Delta\to\Gamma & \defeq e_\unit^{-1}(\Delta)\to e_\unit^{-1}(\Gamma)
+\end{align*}
+and furthermore we define $\ctxhom{\Delta}{\Gamma}\defeq\terms{\Delta\to\Gamma}$.
+\end{defn}
+\item An equivalence $\lambda:\eqv{\terms{P}}{\terms{\mprd{A}{P}}}$ for every
+family $P$ over $A$ in context $\Gamma$. When $\ctxext{\Gamma}A\vdash 
+u:P$, we call $\lambda(u)$ the \emph{$\lambda$-abstraction of $u$.}
+\begin{rmk}
+Note that we get an equivalence $\eqv{\terms{\unit^\Gamma\to A}}{\terms{A}}$ 
+for every type $A$ in context $\Gamma$.
+\end{rmk}
+\begin{rmk}
+Thus we see that $\eqv{\terms{A\to B}}{\terms{\ctxwk{A}{B}}}$
+by $\lambda$-abstraction. 
+\end{rmk}
+%\item A function $\tfev:\terms{\mprd{A}{P}}\to\prd{x:\terms{A}}\terms{\subst{x}{P}}$.
+\item A term $\pi^A:\ctxext{\Gamma}A\to \Gamma$ for every type $A$ in context
+$\Gamma$.
+\item A term $\iota^x:\ctxext{\Gamma}\subst{x}{P}\to\ctxext({\Gamma}{A})P$
+for every family $P$ of types over $A$ in context $\Gamma$ and every
+term $x:A$.
+\item A type $A[f]$ in context $\Delta$ for every $f:\ctxhom{\Delta}{\Gamma}$ 
+and every type $A$ in context $\Gamma$. {\color{blue}Could this be defined
+in terms of the substitution $\subst{x}{P}$ we already have? It seems so. If this is
+indeed the case we need either some identifications or we could just omit
+this part of the definition.}
+\item an identification $\id{B[\pi^A]}{\ctxwk{A}{B}}$ for any two types $A$
+and $B$ in context $\Gamma$.
+\item A type $\msm{A}{P}$ in context $\Gamma$ for every family $P$ over $A$
+in context $\Gamma$, with an equivalence $\pairr{\blank,\blank}:\eqv{\sm{x:\terms{A}}\terms{\subst{x}{P}}}
+{\terms{\msm{A}{P}}}$.
+\item A family $\idtypevar{A}$ over $\ctxwk{A}{A}$ in context $\ctxext{\Gamma}A$ for
+every type $A$ in context $\Gamma$ and a term of type.
+\begin{rmk}
+If $A$ and $B$ are types in context $\Gamma$, we may denote the type 
+$\msm{A}{\ctxwk{A}{B}}$ by $A\times B$. By the end of the current definition
+there will be an identification $\id{\ctxext({\Gamma}{A})P}
+{\ctxext{\Gamma}\msm{A}{P}}$.
+
+There is a term $\delta:\ctxhom{\ctxext{\Gamma}A}{\ctxext({\Gamma}{A})\ctxwk{A}{A}}$
+defined by...
+\end{rmk}
+\item For any family $Q$ over $\idtypevar{A}$ in context $\ctxext({\Gamma}{A})\ctxwk{A}{A}$ an equivalence
+$J:\eqv{\terms{Q}}{}$
+\end{enumerate}
+\end{defn}
+
+\begingroup
+\color{blue}
+\subsubsection*{More desiderata}
+Some of which hopefully follow from more elegant or general rules, but
+this list is to keep them in mind:
+\begin{enumerate}
+\item $\id{e_\unit^{-1}(\Gamma.A)}{\msm{e_\unit^{-1}(\Gamma)}{\trans{(\eta_\Gamma)}{A}}}$, where
+$\eta_\Gamma:\id{\Gamma}{e_\unit(e_\unit^{-1}(\Gamma))}$ is the unit of the
+equivalence $e_\unit$.  
+\item $\id{(\msm{A}{P}\to B)}{(P\to \ctxwk{A}{B})}$, expressing that $\Sigma$ is
+left adjoint to weakening.
+\item $\id{(\ctxwk{A}{B}\to P)}{(B\to\mprd{A}{P})}$ expressing that $\Pi$ is
+right adjoint to weakening.
+\item a term $\Gamma\vdash\idfunc[A]:A\to A$ for every type $A$ in context $\Gamma$.
+\item a context $\UU$ for the universe.
+\item an identification $\id{\pi^A\circ \pi^P\circ\iota^x}{\pi^{\subst{x}{P}}}$ for every
+family $P$ of types over $A$ in context $\Gamma$ and every term $x:A$. In other
+words, the diagram
+\begin{equation*}
+\begin{tikzcd}
+\ctxext({\Gamma}{A})P \ar{r}{\pi^P} & \ctxext{\Gamma}A \ar{d}{\pi^A}\\
+\ctxext{\Gamma}\subst{x}{P} \ar{u}{\iota^x} \ar{r}[swap]{\pi^{\subst{x}{P}}} & \Gamma
+\end{tikzcd}
+\end{equation*}
+should commute.
+\begin{comment}
+\item For $\Gamma:\ctx$, $\Gamma\vdash A:\type$, $\ctxext{\Gamma}A\vdash P
+:\type$ and $\ctxext({\Gamma}{A})P\vdash Q:\type$, $x:A$ and $u:P$
+we desire that $\typefont{nat{-}ev{-}subst}(Q,u,x):\id{Q[\iota^x][\tfev(u,x)]}{Q[u][x]}$.
+\item A function
+\begin{equation*}
+\tfcomp:\terms{\mprd{P}{Q}}\to\prd{x:\terms{A}}\terms{\mprd{\subst{x}{P}}{Q[\iota^x]}}
+\end{equation*}
+which could possibly replace $\tfev$ because it could be that $\tfev$ is
+definable in terms of $\tfcomp$. It should satisfy
+\begin{equation*}
+\id{\trans{\typefont{nat{-}ev{-}subst}(Q,u,x)}{\tfev(\tfcomp(f,x),\tfev(u,x))}}{\tfev(\lambda(\tfev(f,u)),x)},
+\end{equation*}
+which is a naturality condition. There should be an equivalence between
+$\terms{\mprd{A}{P}}$ and a type consisting of those terms of $\prd{x:\terms{A}}\terms{\subst{x}{P}}$ which satisfy
+a certain naturality condition. One could hope that by formulating this dependently
+enough, it is possible to write down such a naturality in one line.
+\end{comment}
+\end{enumerate}
+\endgroup
+
+\begin{comment}
+\begingroup
+\color{darkgreen}
+\subsubsection*{The problem with evaluation.}
+...or why I'm doing such strange things. It seems that evaluation is of a
+different nature. At first sight, one might expect that evaluation compares
+to $\lambda$-abstraction the same way that first and second projection compare
+to the pairing function $\pairr{\blank,\blank}$. However, this is not the case
+because evaluation cannot be seen as an inverse to $\lambda$-abstraction. The
+$\lambda$-abstraction is of type $\terms{P}\to\terms{\mprd{A}{P}}$ whereas
+evaluation is of type $\terms{\mprd{A}{P}}\to\prd{x:\terms{A}}\terms{\subst{x}{P}}$. There
+are a few things to note about $\tfev$:
+\begin{enumerate}
+\item There's no function back so in particular $\tfev$ is not an equivalence.
+My guess is that there should be a naturality condition playing a role.
+\item Evaluation tells how functions interact with substitution of terms.
+\end{enumerate}
+So it seems that evaluation is like a variable binder in the same way
+that quantifiers are binding variables. If I remember right, Voevodsky mentioned
+something like this at the Formal Topology conference in Ljubljana, though I
+forgot what exactly he said.
+\endgroup
+\end{comment}
+
+\begin{comment}
+\begingroup
+\color{gray}
+\subsubsection*{Old stuff below:}
+\begin{enumerate}
+\item a context morphism $\catid{\Gamma}:\ctxhom{\Gamma}{\Gamma}$ for every
+context $\Gamma$.
+\item a context morphism $f\circ g:\ctxhom{E}{\Gamma}$ for every two context
+morphisms $f:\ctxhom{\Delta}{\Gamma}$ and $g:\ctxhom{E}{\Delta}$. 
+\item paths $\id{f\circ\catid{\Delta}}{f}$ and $\id{\catid{\Gamma}\circ f}{f}$
+for every $f:\ctxhom{\Delta}{\Gamma}$.
+\item a path $\id{f\circ (g\circ h)}{(f\circ g)\circ h}$ for every
+$f:\ctxhom{\Delta}{\Gamma}$, $g:\ctxhom{E}{\Delta}$ and $h:\ctxhom{Z}{E}$. 
+\item a context morphism $\Gamma_!:\ctxhom{\Gamma}{\unit^\mfM}$ 
+for every context $\Gamma$.
+\item a path $\id{(\unit^\mfM)_!}{\catid{\unit^\mfM}}$.
+\item a path $\id{\Gamma_!\circ f}{\Delta_!}$ for every $f:\ctxhom{\Delta}{\Gamma}$. 
+\item a path $\id{A[\catid{\Gamma}]}{A}$ for every object $A$ in context $\Gamma$.
+\item a path $\id{A[f][g]}{A[f\circ g]}$ for every object $A$ in context $\Gamma$
+and every $f:\ctxhom{\Delta}{\Gamma}$ and $g:\ctxhom{E}{\Delta}$. 
+\end{enumerate}
+\endgroup
+\end{comment}
+
+\begin{desiderata}
+We should have a theorem stating that our internal model indeed interprets
+the rules of type theory.
+\end{desiderata}
+
+\begin{comment}
+\section{Continuity of functions}
+We wish to find a condition under which we have
+\begin{equation*}
+\eqv{\terms{\mprd{A}{P}}}{\sm{f:\prd{x:\terms{A}}\terms{\subst{x}{P}}}\text{``$f$ is continuous''}}.
+\end{equation*}
+for all families $P$ over $A$. 
+Needless to say, we first need to formulate what we mean by ``$f$ is continuous''.
+Thus, we need to find the family $\pairr{p,u,v}\mapsto \id{\trans{p}{u}}{v}$,
+which also requires us to define transportation.
+
+Let $P$ be a family over $A$ in context $\Gamma$. Then we can weaken
+$\ctxwk{A}{P}$, which is a family over $\ctxwk{A}{A}$ in context $\ctxext{\Gamma}A$.
+We also have the family $\ctxwk{\ctxwk{A}{A}}{P}$ over $\ctxwk{A}{A}$ in context
+$\ctx{\Gamma}{A}$ and thus we can form the family
+\begin{equation*}
+\ctxwk{\ctxwk{A}{A}}{P}\to\ctxwk{A}{P}.
+\end{equation*}
+This family plays the role of the family $x,y:A\vdash P(x)\to P(y):\type$.
+{\color{red}Explain this by performing the relevant substitution.}
+Transportation is a term of the family
+\begin{equation*}
+\idtypevar{A}\to\ctxwk{\ctxwk{A}{A}}{P}\to\ctxwk{A}{P}
+\end{equation*}
+obtained by identity elimination, as usual. Thus we obtain a term
+\begin{equation*}
+\mathcal{T}rans_{x,y}:\terms{\id{x}{y}\to\subst{x}{P}\to\subst{y}{P}}.
+\end{equation*}
+for every $x,y:A$.
+
+Now let $x,y:A$. Then we have the type $\subst{y}{P}$
+in context $\Gamma$ and the family $\ctxwk{\subst{y}{P}}{\subst{x}{P}}$
+over $\subst{y}{P}$ in context $\Gamma$. We could weaken $\subst{y}{P}$ subsequently by $A$, $\ctxwk{A}{A}$
+and $\idtypevar{A}$ to obtain the family $\ctxwk{\idtypevar{A}}{\ctxwk{\ctxwk{A}{A}}{\ctxwk{A}{\subst{y}{P}}}}$ over $\idtypevar{A}$ in context $\ctxext({\Gamma}{A})\ctxwk{A}{A}$. We will
+denote this family simply by $\ctxwk{\idtypevar{A}}{\subst{y}{P}}$. Likewise,
+we obtain the family $\ctxwk{\idtypevar{A}}{\ctxwk{\subst{y}{P}}{\subst{x}{P}}}$ over
+$\ctxwk{\idtypevar{A}}{\subst{y}{P}}$ in context $\ctxext(({\Gamma}{A}){\ctxwk{A}{A}})\idtypevar{A}$ and we obtain the family $\ctxwk{\idtypevar{A}}{\idtypevar{\subst{y}{P}}}$
+over $\ctxwk{\idtypevar{A}}{\ctxwk{\subst{y}{P}}{\subst{y}{P}}}$. Now we
+have the family $\subst{\ctxwk{A}{\mathcal{T}rans_{x,y}}}{\ctxwk{\idtypevar{A}}{\idtypevar{\subst{y}{P}}}}$ over
+$\ctxwk{\idtypevar{A}}{\ctxwk{\subst{y}{P}}{\subst{x}{P}}}$, which is
+the desired family to state the continuity condition:
+
+\begin{defn}
+A function $f:\prd{x:\terms{A}}\terms{\subst{x}{P}}$ is said to be \emph{continuous}
+if there is a term of type
+\begin{equation*}
+\prd{x,y:\terms{A}}\terms{\subst{\ctxwk{A}{\mathcal{T}rans_{x,y}}}{\ctxwk{\idtypevar{A}}{\idtypevar{\subst{y}{P}}}}}.
+\end{equation*}
+\end{defn}
+
+\begin{lem}
+If all functions are ``continuous mappings of terms'' then types without terms
+are empty, i.e.\ we have
+\begin{equation*}
+(\terms{A}\to\emptyt)\to\terms{A\to\emptyt^\mfGraph}
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+Any function from a type without terms is vacuously continuous.
+\end{proof}
+
+We will see that in the graph model functions are not just continuous mappings
+of terms, since there is a graph $\tilde{\emptyt}$ which has no terms but which
+differs from the empty graph nevertheless.
+
+\begin{desiderata}
+The following may relate to functions being continuous mappings of terms (it
+seems to be a very strong condition):
+\begin{enumerate}
+\item We have the adjunctions $\tfcolim\dashv\Delta\dashv\tflim$ in which the
+two monads are idempotent (we don't even have the adjunctions for $\mfGraph$).
+\item $\eqv{\terms{\Omega}}{\ctx}$
+\end{enumerate}
+We also need to check whether all functions in the reflexive graphs have this
+property (if not, ditch this section).
+\end{desiderata}
+\end{comment}
+
+\section{The graph model of type theory}
+In this section we define the graph model of type theory, denoted by
+$\mfGraph$.  In our presentation, we follow that of the definition internal
+models. After we have established the graph model, we show how the graph
+model can be seen as a presheaf model, namely over the category $\cdot
+{\rightrightarrows}\cdot$.
+
+\begin{defn}
+A \emph{(directed) graph} $\Gamma$ is a pair $\pairr{\Gamma_0,\Gamma_1}$ 
+consisting of a type $\Gamma_0$ of vertices and a family 
+$\Gamma_1:\Gamma_0\to\Gamma_0\to\type$ of edges. The type $\ctx(\mfGraph)$
+is defined to be the type of all graphs; we will usually denote it by
+$\tfGraph$. Explicitly, we have
+\begin{equation*}
+\tfGraph\defeq\sm{\Gamma_0:\type}\Gamma_0\to\Gamma_0\to\type.
+\end{equation*}
+\end{defn}
+
+\begin{eg}\label{ex:pb}
+The underlying graph of the diagram
+\begin{equation*}
+\begin{tikzcd}
+{} & A \ar{d}{f} \\
+B \ar{r}[swap]{g} & C
+\end{tikzcd}
+\begin{comment}
+\begin{tikzpicture}
+\matrix (m) [std] { & A \\ B & C \\};
+\draw[ar] (m-1-2) -- node[right] {$f$} (m-2-2);
+\draw[ar] (m-2-1) -- node[below] {$g$} (m-2-2);
+\end{tikzpicture}
+\end{comment}
+\end{equation*}
+is $I\defeq\mathbf{3}$ and has $J(1,3)\defeq J(2,3)\defeq \unit $ 
+and $J(x,y)\defeq\emptyt$ otherwise (it is defined using the induction 
+principle of $\mathbf{3}$ and a universe).
+\end{eg}
+
+
+\begin{defn}
+A \emph{graph $A$ in the context $\Gamma$} is a pair $\pairr{A_0,A_1}$ consisting
+of 
+\begin{align*}
+A_0 & :\Gamma_0\to\type\\
+A_1 & :\prd*{i,j:\Gamma_0}\Gamma_1(i,j)\to A_0(i)\to A_0(j)\to\type.
+\end{align*}
+Thus, for a graph $\Gamma$, the type $\mftyp{\mfGraph}{\Gamma}$ is the type
+\begin{equation*}
+\sm{A_0:\Gamma_0\to\type}\prd*{i,j:\Gamma_0}\Gamma_1(i,j)\to A_0(i)\to A_0(j)\to\type.
+\end{equation*}
+We will also write $\Gamma\vdash A:\mfGraph$ when $A$ is a graph in context
+$\Gamma$.
+\end{defn}
+
+\begin{defn}
+Suppose that $\Gamma\vdash A:\mfGraph$. Then we define the graph $\ctxext{\Gamma}A$
+by
+\begin{align*}
+\ctxext{\Gamma}A_0 & \defeq \sm{i:\Gamma_0}A_0(i)\\
+\ctxext{\Gamma}A_1(\pairr{i,x},\pairr{j,y}) & \defeq \sm{q:\Gamma_1(i,j)}A_1(q,x,y).
+\end{align*}
+\end{defn}
+
+\begin{defn}
+Suppose that $\Gamma\vdash A:\mfGraph$ and $\Gamma\vdash B:\mfGraph$. Then we
+define the graph $\ctxwk{A}{B}$ in context $\ctxext{\Gamma}A$ by
+\begin{align*}
+(\ctxwk{A}{B})_0(\pairr{i,x}) & \defeq B_0(i)\\
+(\ctxwk{A}{B})_1(\pairr{q,e},u,v) & \defeq B_1(q,u,v).
+\end{align*}
+\end{defn}
+
+\begin{defn}
+Suppose that $\Gamma\vdash A:\mfGraph$. A term $x$ of $A$ consists of a pair
+$\pairr{x_0,x_1}$ where
+\begin{align*}
+x_0 & : \prd{i:\Gamma_0}A_0(i)\\
+x_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1}A_1(q,x_0(i),x_0(j)).
+\end{align*}
+Thus we define
+\begin{equation*}
+\terms{A}\defeq\sm{x_0:\prd{i:\Gamma_0}A_0(i)}\prd*{i,j:\Gamma_0}{q:\Gamma_1}A_1(q,x_0(i),x_0(j)).
+\end{equation*}
+We also write $\Gamma\vdash x:A$ when $x$ is a term of the graph $A$ in context
+$\Gamma$.
+\end{defn}
+
+\begin{defn}
+Suppose that $P$ is a family of graphs over $A$ in context $\Gamma$ and let
+$x$ be a term of $A$. Then we define the graph $\subst{x}{P}$ 
+in context $\Gamma$ by
+\begin{align*}
+\subst{x}{P}_0(i) & \defeq P_0(\pairr{i,x_0(i)})\\
+\subst{x}{P}_1(q,u,v) & \defeq P_1(\pairr{q,x_1(q)},u,v)
+\end{align*}
+\end{defn}
+
+\begin{rmk}
+Note that we have the judgmental equality $\subst{x}{\ctxwk{A}{B}}\jdeq B$
+for every two graphs $A$ and $B$ in context $\Gamma$ and every term $x$ of $A$.
+\end{rmk}
+
+\begin{defn}
+The terminal graph $\unit^\mfGraph$, which we shall often denote simply 
+by $\unit$, is defined by
+\begin{align*}
+{\unit^\mfGraph}_0 & \defeq \unit\\
+{\unit^\mfGraph}_1(x,y) & \defeq \unit.
+\end{align*}
+\end{defn}
+
+\begin{rmk}
+We note that the function $\ctxext{\unit}\blank$ is an equivalence
+from $\mftyp{\mfGraph}{\unit}$ to $\tfGraph$. It's inverse is the function which maps
+a graph $\Gamma$ to the pair $\pairr{A_0,A_1}$ where $A_0$ is defined by
+$A_0(\ttt)\defeq\Gamma_0$ and where $A_1$ is defined by $A_1(\ttt)\defeq
+\Gamma_1$. 
+
+Note that we only have an equivalence here, not a judgmental equality.
+\end{rmk}
+
+\subsubsection{The contexts of $\mfGraph$}
+
+
+The category $\psh(\cdot{\rightrightarrows}\cdot)$ of presheaves over
+$\cdot{\rightrightarrows}\cdot$ is given by
+\begin{equation*}
+\sm{A_0,A_1:\type}(A_1\to A_0)\times(A_1\to A_0).
+\end{equation*}
+To see that $\psh(\cdot{\rightrightarrows}\cdot)$ is indeed equivalent to
+the type $\tfGraph$ of all graphs, note that we have the equivalences
+\begin{align*}
+\psh(\cdot{\rightrightarrows}\cdot) & \eqvsym \sm{A_0,A_1:\type}A_1\to A_0\times A_0\\
+& \eqvsym \sm{A_0:\type} A_0\times A_0\to\type\\
+& \eqvsym \tfGraph.
+\end{align*}
+
+\begin{defn}
+Suppose that $\Delta\defeq \pairr{\Delta_0,\Delta_1}$ and $\Gamma\defeq \pairr{\Gamma_0,
+\Gamma_1}$ are graphs. A morphism $f$ from $\Delta$ to $\Gamma$ is a pair
+$\pairr{f_0,f_1}$ consisting of
+\begin{align*}
+f_0 & : \Delta_0\to\Gamma_0\\
+f_1 & : \prd*{u,v:\Delta_0}\Delta_1(u,v)\to\Gamma_1(f_0(u),f_0(v))
+\end{align*}
+We write $\ctxhom{\Delta}{\Gamma}$ for the type of morphisms of graphs.
+\end{defn}
+
+The terminal graph $\unit^\mfGraph$ plays the role of the empty context.
+
+\begin{defn}
+The terminal graph $\unit^\mfGraph$, which we shall often denote simply 
+by $\unit$, is defined by
+\begin{align*}
+{\unit^\mfGraph}_0 & \defeq \unit\\
+{\unit^\mfGraph}_1(x,y) & \defeq \unit.
+\end{align*}
+\end{defn}
+
+It is immediate that the type of graph morphisms $\Gamma\to\unit^\mfGraph$ is
+contractible for every graph $\Gamma$. The terms of a graph $\Gamma$ are the
+global elements of $\Gamma$, i.e.~they are the morphisms of type 
+$\ctxhom{\unit^\mfGraph}{\Gamma}$.
+
+\begin{defn}
+Let $\Gamma$ be a graph. The type $\terms[\mfGraph]{\Gamma}$ of terms of $\Gamma$ is
+defined to be
+\begin{equation*}
+\sm{x_0:\Gamma_0}\Gamma_1(x_0,x_0).
+\end{equation*}
+\end{defn}
+
+We now turn to the description of the universe $\gobjclass$ of graphs. Note
+that for the category $I\defeq 0{\rightrightarrows}1$, we have
+$I/0\defeq\catid{0}$ and $I/1\defeq s\rightarrow\catid{1}\leftarrow t$, where
+$s$ and $t$ are the morphisms $0\to 1$. Thus we have 
+\begin{align*}
+\psh(I/0) & \eqvsym \type\\
+\psh(I/1) & \eqvsym \sm{X,Y:\type}X\to Y\to\type.
+\end{align*}
+The functors $\psh(\Sigma_s)$ and $\psh(\Sigma_t)$ map a presheaf 
+$\pairr{X,Y,R}$ to $X$ and $Y$, respectively. 
+Thus we obtain the following graph $\gobjclass$.
+
+\begin{defn}
+The universe $\gobjclass$ of graphs is defined to be
+\begin{align*}
+{\gobjclass}_0 & \defeq \type\\
+{\gobjclass}_1(X,Y) & \defeq X\to Y\to\type.
+\end{align*}
+\end{defn}
+
+Note that the type $\terms{\gobjclass}$ of terms of $\gobjclass$ is 
+exactly $\tfGraph$. 
+
+\subsubsection{Families of graphs}
+Using $\gobjclass$, we obtain a description of what
+it means to be a graph in a context $\Gamma$, where $\Gamma$ is itself a
+graph. The notion of ``a graph in a context $\Gamma$'' is the interpretation
+of ``a type in a context $\Gamma$''.
+
+\begin{defn}
+A \emph{graph $A$ in the context $\Gamma$} is a pair $\pairr{A_0,A_1}$ consisting
+of 
+\begin{align*}
+A_0 & :\Gamma_0\to\type\\
+A_1 & :\prd*{i,j:\Gamma_0}\Gamma_1(i,j)\to A_0(i)\to A_0(j)\to\type.
+\end{align*}
+We will also write $\Gamma\vdash A:\mfGraph$ when $A$ is a graph in context
+$\Gamma$.
+\end{defn}
+
+\begin{rmk}
+Note that every graph can be seen as a graph in context $\unit^\mfGraph$.
+\end{rmk}
+
+\begin{defn}
+Let $A$ be a graph in context $\Gamma$ and let $f:\ctxhom{\Delta}{\Gamma}$
+be a graph morphism. We define the graph $A[f]$ in context $\Delta$ by
+\begin{align*}
+A[f]_0(u) & \defeq A_0(f_0(u))\\
+A[f]_1(p,x,y) & \defeq A_1(f_1(p),x,y).
+\end{align*}
+\end{defn}
+
+\begin{defn}
+Let $\Gamma\vdash A:\mfGraph$ and $\Gamma\vdash B:\mfGraph$ be two graphs in
+the context $\Gamma$. A morphism $f$ from $A$ to $B$ is a pair $\pairr{f_0,f_1}$
+consisting of
+\begin{align*}
+f_0 & : \prd*{i:\Gamma_0} A_0(i)\to B_0(i)\\
+f_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_0}*{x:A_0(i)}*{y:A_0{j}}A_1(q,x,y)\to B_1(q,f_0(x),f_0(y)).
+\end{align*}
+We write $\ctxhom[\Gamma]{A}{B}$ for the type of morphisms between graphs in
+context $\Gamma$.
+\end{defn}
+
+\begin{defn}
+The unit graph $\unit^\Gamma$ in context $\Gamma$ consists of
+\begin{align*}
+(\unit^\Gamma)_0 & \defeq \lam{i}\unit\\
+(\unit^\Gamma)_1(q) & \defeq \lam{x}{y}\unit.
+\end{align*}
+\end{defn}
+
+As was the case with graphs, terms of graphs in a context are described by
+morphisms from $\unit$. Explicating this in more detail, we get
+
+\begin{defn}
+Let $A$ be a graph in context $\Gamma$. A term $x$ of $A$ is a pair
+$\pairr{x_0,x_1}$ consisting of
+\begin{align*}
+x_0 & : \prd{i:\Gamma_0}A_0(i)\\
+x_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}A_1(q,x_0(i),x_0(j)).
+\end{align*}
+We define $\terms[\mfGraph]{A}$ to be the type of terms of $A$.
+\end{defn}
+
+\begin{rmk}
+Note that the type of terms of a graph $\Gamma$ is equivalent to the type
+of terms of the graph $\Gamma$ in context $\unit^\mfGraph$.
+\end{rmk}
+
+\begin{defn}
+Suppose that $\Gamma\vdash A:\mfGraph$. Then we define the graph $\ctxext{\Gamma}A$
+by
+\begin{align*}
+(\ctxext{\Gamma}A)_0 & \defeq \sm{i:\Gamma_0}A_0(i)\\
+(\ctxext{\Gamma}A)_1(\pairr{i,x},\pairr{j,y}) & \defeq \sm{q:\Gamma_1(i,j)}A_1(q,x,y).
+\end{align*}
+There is a morphism $\pi^A:\ctxhom{\ctxext{\Gamma}A,\Gamma}$ given by
+\begin{align*}
+\pi^A_0 & \defeq \lam{\pairr{i,x}}i && : (\sm{i:\Gamma_0}A_0(i))\to \Gamma_0\\
+\pi^A_1(\pairr{i,x},\pairr{j,y}) & \defeq \lam{\pairr{q,e}}q && : (\sm{q:\Gamma_1(i,j)}A_1(q,x,y))\to\Gamma_1(i,j).
+\end{align*}
+\end{defn}
+
+\begin{rmk}
+The construction of $\ctxext{\Gamma}A$ is similar to the Grothendieck
+construction of the category of elements for a presheaf.
+\end{rmk}
+
+\begin{defn}
+Let $\Gamma\vdash A:\mfGraph$. A family $P$ of graphs over $A$ is by
+definition a graph $P$ in the context $\ctxext{\Gamma}A$. More explicitly, a family
+$P$ of graphs over $A$ in context $\Gamma$ consists of
+\begin{align*}
+P_0 & : \prd*{i:\Gamma_0}A_0(i)\to\type\\
+P_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}*{x:A_0(i)}*{y:A_0(j)} A_1(q,x,y)\to P_0(x)\to P_0(y)\to\type
+%P_1 & : \prd{\pairr{i,x},\pairr{j,y}:(\ctxext{\Gamma}A)_0}(\ctxext{\Gamma}A)_1(\pairr{i,x},\pairr{j,y})\to P_0(i,x)\to P_0(j,y)\to\type.
+\end{align*}
+\end{defn}
+
+\begin{defn}
+When $P$ is a family of graphs over $A$ in context $\Gamma$ and $x:A$, we
+get a graph $\subst{x}{P}$ in context $\Gamma$ given by
+\begin{align*}
+\subst{x}{P}_0(i) & \defeq P_0(x_0(i))\\
+\subst{x}{P}_1(q,u,v) & \defeq P_1(\pairr{q,x_1(q)},u,v)
+\end{align*}
+\end{defn}
+
+\subsubsection{The basic type constructors for graphs}
+With families of graphs being available, we can give the interpretations of
+dependent products, dependent sums and identity types. In the following, we
+shall introduce the graph interpretations of dependent products, dependent
+sums and identity types and describe the terms of the resulting graphs.\note{These definitions
+should be connected to Mike's article but I don't really know how to do this}
+
+\begin{defn}
+Let $P$ be a family of graphs over $A$, where $\Gamma\vdash A:\mfGraph$. 
+The dependent function graph $\mprd{A}{P}$ in context $\Gamma$ consists of
+\begin{align*}
+\mprd{A}{P}_0(i) & \defeq \prd{x:A_0(i)}P_0(x)\\
+\mprd{A}{P}_1(q,f,g) & \defeq \prd*{x:A_0(i)}*{y:A_0(j)}{e:A_1(q,x,y)}P_1(\pairr{q,e},f(x),g(y)).
+\end{align*}
+\end{defn}
+
+\begin{rmk}
+A term $f:\mprd{A}{P}$ consists of
+\begin{align*}
+f_0 & : \prd*{i:\Gamma_0}{x:A_0(i)}P_0(x)\\
+f_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}*{x:A_0(i)}*{y:A_0(j)}{e:A_1(q,x,y)}P_1(\pairr{q,e},f_0(x),f_0(y))
+\end{align*}
+Therefore, we see that $\eqv{\terms{\mprd{A}{P}}}{\terms{P}}$. \emph{Warning:} it
+is by no means the case that $\eqv{\terms{\mprd{A}{P}}}{\prd{x:\terms{A}}
+\terms{\subst{x}{P}}}$ for all families $P$ over $A$. For instance, the graph
+$\tilde{\emptyt}$ defined by $\tilde{\emptyt}_0\defeq\unit$ and 
+$\tilde{\emptyt}_1(\ttt,\ttt)\defeq\emptyt$ has no terms and neither does
+$\tilde{\emptyt}+\tilde{\emptyt}$. Nevertheless, there are two graph morphisms
+from $\tilde{\emptyt}$ to $\tilde{\emptyt}+\tilde{\emptyt}$. More generally,
+when $\Gamma$ is a graph such that $\Gamma_1(i,j)\jdeq\emptyt$ for all $i,j:\Gamma_0$,
+then $\eqv{{\terms{\Gamma\to\Gamma'}}}{\Gamma_0\to\Gamma^\prime_0}$.
+\end{rmk}
+
+\begin{defn}
+If $P$ is a family of graphs over $\Gamma$, the dependent pair graph
+$\msm{A}{P}$ consists of
+\begin{align*}
+\msm{A}{P}_0(i) & \defeq \sm{x:A_0(i)}P_0(x)\\
+\msm{A}{P}_1(q,\pairr{x,u},\pairr{y,v}) & \defeq \sm{e:A_1(q,x,y)}P_1(\pairr{q,e},u,v).
+\end{align*}
+\end{defn}
+
+\begin{rmk}
+A term $w:\msm{A}{P}$ consists of
+\begin{align*}
+w_0 & : \prd{i:\Gamma_0}\sm{x:A_0(i)}P_0(x)
+\intertext{and, writing $\lam{i}\proj1(w_0(i))$ and $\lam{i}\proj2(w_0(i))$ as
+$w_{00}$ and $w_{01}$ respectively,}
+w_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}\sm{e:A_1(q,w_{00}(i),w_{00}(j)}P_1(\pairr{q,e},w_{01}(i),w_{01}(j)).
+\end{align*}
+By $\choice{\infty}$ it follows that
+\begin{equation*}
+\eqv{\terms{\msm{A}{P}}}{\sm{x:\terms{A}}\terms{\subst{x}{P}}}.
+\end{equation*}
+\end{rmk}
+
+\begin{rmk}
+For any two graphs $A$ and $B$ in a context $\Gamma$, we have the graph
+$B[\pi^A]$ in the context $\ctxext{\Gamma}A$, which we may just write
+as $B$. Therefore, we can
+consider the graphs $\mprd{A}{B}$ and $\msm{A}{B}$. As usually those shall be
+denoted  by $A\to B$ and $A\times B$, respectively. 
+
+A term $f$ of $A\to B$ consists of
+\begin{align*}
+f_0 & : \prd*{i:\Gamma_0}A_0(i)\to B_0(i)\\
+f_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}*{x:A_0(i)}*{y:A_0(j)}A_1(q,x,y)\to B_1(q,f_0(x),f_0(y)),
+\end{align*}
+so we see that $\terms{A\to B}\jdeq\ctxhom[\Gamma]{A}{B}\jdeq\terms{B[\pi^A]}$. 
+
+A term $\pairr{x,y}$ of $A\times B$ consists of
+\begin{align*}
+\pairr{x,y}_0 & : \prd*{i:\Gamma_0} A_0(i)\times B_0(i)\\
+\pairr{x,y}_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)} A_1(q,x_0(i),x_0(j))\times B_1(q,y_0(i),y_0(j))
+\end{align*}
+so we see that $\eqv{\terms{A\times B}}{\terms{A}\times\terms{B}}$. 
+
+Note that we also obtain
+a \emph{graph} $\Delta\to\Gamma$ this way, for every two graphs $\Delta$ and
+$\Gamma$ seen as graphs in the context $\unit^\mfGraph$. 
+The type $\terms{\Delta\to\Gamma}$ of terms of $\Delta\to\Gamma$ is just
+$\ctxhom{\Delta}{\Gamma}$.
+\end{rmk}
+
+\begin{defn}
+For any graph $\Gamma$ there is a graph $\tffam{\Gamma}$ in context 
+$\gobjclass$ defined by
+\begin{align*}
+(\tffam{\Gamma})_0 & \defeq \lam{X}X\to\Gamma_0\\
+(\tffam{\Gamma})_1(X,Y,R) & \defeq \lam{f}{g}\prd*{x:X}*{y:Y}R(x,y)\to\Gamma_1(f(x),g(y)).
+\end{align*}
+\end{defn}
+
+\begin{rmk}
+A term $D$ of $\msm{\gobjclass}{\tffam{\Gamma}}$ consists of a term
+$\pairr{\Delta_0,f_0}$ of type
+\begin{equation*}
+\msm{\gobjclass}{\tffam{\Gamma}}_0\jdeq \sm{\Delta_0:\type}\Delta_0\to\Gamma_0
+\end{equation*}
+and a term $\pairr{\Delta_1,f_1}$ of type
+\begin{equation*}
+\msm{\gobjclass}{\tffam{\Gamma}}_1(q)\jdeq \sm{\Delta_1}
+\end{equation*}
+\end{rmk}
+
+\begin{defn}
+There is a graph morphism
+\begin{equation*}
+\graphcharmapfunc{\Gamma} : \sm{\gobjclass}
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+Let $A$ be a graph in context $\Gamma$. We define the family $\idtypevar{A}$ over $\ctxwk{A}{A}$ in
+context $\ctxext{\Gamma}A$ by
+\begin{align*}
+(\idtypevar{A})_0(\pairr{i,x},y) & \defeq \id{x}{y}\\
+(\idtypevar{A}){}_1(\pairr{q,e},d,\alpha,\alpha') & \defeq \id{\trans{\pairr{\alpha,\alpha'}}{e}}{d}
+\end{align*}
+where $q:\Gamma_1(i,j)$, $e:A_1(q,x,x')$, $d:A_1(q,y,y')$, $\alpha:\id{x}{y}$
+and $\alpha':\id{x'}{y'}$. The transportation along the path 
+$\pairr{\alpha,\alpha'}:\id{\pairr{x,x'}}{\pairr{y,y'}}$ in $A_0(i)\times A_0(j)$
+is taken with respect to the family $\lam{x}{x'}A_1(q,x,x')$.
+
+We define the term $\refl{A}$ of the family 
+$\subst{\idfunc[A]}{\idtypevar{A}}$ over $A$ in context $\Gamma$ by
+\begin{align*}
+(\reflf{A})_0(i) & \defeq \lam{x}\refl{x}\\
+(\reflf{A})_1(q) & \defeq \lam{e}\refl{e}
+\end{align*}
+\end{defn}
+
+\begin{defn}
+Let $D$ be a family over $\idtypevar{A}$ in context 
+$\ctxext({\Gamma}{A})\ctxwk{A}{A}$. Then we have the family
+$\subst{\idfunc[A]}{D}$ over $\subst{\idfunc[A]}{\idtypevar{A}}$ in
+context $\ctxext{\Gamma}A$ given by
+\begin{align*}
+\subst{\idfunc[A]}{D}_0(\pairr{i,x},\alpha) & \defeq D_0(\pairr{i,x,x},\alpha)\\
+\subst{\idfunc[A]}{D}_1(\pairr{q,e},\gamma) & \defeq D_1(\pairr{q,e,e},\gamma).
+\end{align*}
+The family $\subst{\reflf{A}}{\subst{\idfunc[A]}{D}}$ over $A$ in
+context $\Gamma$ is given by
+\begin{align*}
+\subst{\reflf{A}}{\subst{\idfunc[A]}{D}}_0(i,x) & \defeq D_0(i,x,x,\refl{x})\\
+\subst{\reflf{A}}{\subst{\idfunc[A]}{D}}_1(q,e) & \defeq D_1(q,e,e,\refl{e}).
+\end{align*}
+To show that the identity graphs correctly interpret the identity elimination
+rule, we must give a function
+\begin{equation*}
+\tfJ : \terms{\subst{\reflf{A}}{\subst{\idfunc[A]}{D}}}\to\terms{D}.
+\end{equation*}
+Note that a term $d$ of $\subst{\reflf{A}}{\subst{\idfunc[A]}{D}}$
+consists of
+\begin{align*}
+d_0 & : \prd*{i:\Gamma_0}{x:A_0(i)}D_0(i,x,x,\refl{x})\\
+d_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}*{x:A_0(i)}*{y:A_0(j)}{e:A_1(q,x,y)}D_1(q,e,e,\refl{e})
+\end{align*}
+A simple argument using path induction reveals that terms of
+$\subst{\reflf{A}}{\subst{\idfunc[A]}{D}}$ indeed yield terms of $D$. 
+\end{defn}
+
+\begin{rmk}
+Using the identity graph $\idtypevar{A}$ we can describe the identity
+graph $\id[A]{x}{y}$ in context $\Gamma$ for any two terms $x,y:A$. 
+The graph $\id[A]{x}{y}$ in context $\Gamma$ consists of
+\begin{align*}
+(\id[A]{x}{y})_0(i) & \defeq \id{x_0(i)}{y_0(i)}\\
+(\id[A]{x}{y})_1(q,\alpha,\beta) & \defeq \id{\trans{\pairr{\alpha,\beta}}{x_1(q)}}{y_1(q)}
+\end{align*}
+From this, we see that a term of $p:\id[A]{x}{y}$ consists of
+\begin{align*}
+p_0 & : \prd{i:\Gamma_0}\id{x_0(i)}{y_0(i)}\\
+p_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}\id{\trans{\pairr{p_0(i),p_0(j)}}{x_1(q)}}{y_1(q)}.
+\end{align*}
+\end{rmk}
+
+\subsection{Properties of graphs}
+
+\subsubsection{Contractibility and equivalences of graphs}
+
+\begin{defn}
+A graph $A$ in context $\Gamma$ is said to be \emph{contractible} if there
+is a term of the graph
+\begin{equation*}
+\msm{A}{\mprd{\ctxwk{A}{A}}{\idtypevar{A}}}
+\end{equation*}
+in context $\Gamma$.
+\end{defn}
+
+\begin{lem}\label{lem:contractible-graphs}
+Let $A$ be a graph in context $\Gamma$. The following are equivalent:
+\begin{enumerate}
+\item $A$ is a contractible graph.
+\item Both $A_0(i)$ and $A_1(q,x,y)$ are always contractible.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+Let $H:\msm{A}{\mprd{\ctxwk{A}{A}}{\idtypevar{A}}}$. Unfolding the definitions, we have
+an element $H_0(i)$ of type
+\begin{align*}
+\msm{A}{\mprd{\ctxwk{A}{A}}{\idtypevar{A}}}_0(i) & \jdeq \sm{x:A_0(i)}\mprd{\ctxwk{A}{A}}{\idtypevar{A}}_0(i,x)\\
+& \jdeq \sm{x:A_0(i)}\prd{y:A_0(i)}(\idtypevar{A})_0(\pairr{i,x},y)\\
+& \jdeq \sm{x:A_0(i)}\prd{y:A_0(i)}\id{x}{y}
+\end{align*}
+for all $i:\Gamma_0$ and, writing $H_{00}(i)$ for $\proj1 H_0(i)$ and
+$H_{01}(i)$ for $\lam{y}(\proj2 H_0(i))(y)$, we have $H_1(q)$ of type
+\begin{align*}
+& \msm{A}{\mprd{\ctxwk{A}{A}}{\idtypevar{A}}}_1(q,H_0(i),H_0(j)) \\
+& \jdeq \sm{e:A_1(q,H_{00}(i),H_{00}(j))}\mprd{\ctxwk{A}{A}}{\idtypevar{A}}_1(\pairr{q,e},H_{01}(i),H_{01}(j))\\
+& \jdeq \sm{e:A_1(q,H_{00}(i),H_{00}(j))}\prd*{x:A_0(i)}*{y:A_0(j)}{d:A_1(q,x,y)}(\idtypevar{A})_1(\pairr{q,e},d,H_{01}(x),H_{01}(y))\\
+& \jdeq \sm{e:A_1(q,H_{00}(i),H_{00}(j))}\prd*{x:A_0(i)}*{y:A_0(j)}{d:A_1(q,x,y)}\id{\trans{\pairr{H_{01}(x),H_{01}(y)}}{e}}{d}.
+\end{align*}
+By $H_0$, it follows that each $A_0(i)$ is contractible. By the contractibility
+of each $A_0(i)$, it follows that the type of $H_1(q)$ is equivalent to
+\begin{equation*}
+\sm{e:A_1(q,H_{00}(i),H_{00}(j))}\prd{d:A_1(q,H_{00}(i),H_{00}(j))}\id{e}{d}
+\end{equation*}
+which asserts that $A_1(q,H_{00}(i),H_{00}(j))$ is contractible. By 
+the contractibility of each $A_0(i)$, is is equivalent to the assertion
+that each $A_1(q,x,y)$ is contractible.
+\end{proof}
+
+\begin{rmk}
+We address the question whether it is the case that a graph $A$ in context
+$\Gamma$ is contractible if and only if $\terms{A}$ is contractible. As a
+consequence of \autoref{lem:contractible-graphs}, it is indeed the case
+that $\terms{A}$ is contractible whenever $A$ is. However, the converse
+does not hold.
+
+To see this, we first construct a counter example to the converse of the
+weak function extensionality principle, which states that there is a function
+of type
+\begin{equation}
+\iscontr(\prd{x:X}P(x))\to\prd{x:X}\iscontr(P(x))\label{eq:wfe-converse}
+\end{equation}
+for any type family $P:X\to\type$. In the proof of \autoref{thm:wfe-converse}, 
+we will find a family
+$P:X\to\type$ with the property that $\prd{x:X}P(x)$ is contractible and for
+which there is a term $x:A$ with $P(x)$ not contractible. Disproving the
+converse of the weak function extensionality principle suffices for our
+purposes, because if $P:X\to\type$ is a counter example to \autoref{eq:wfe-converse},
+then we can take $\Gamma\defeq\pairr{\Gamma_0,\Gamma_1}$ to be given by
+$\Gamma_0\defeq X$ and $\Gamma_1(i,j)\defeq\emptyt$ and we take
+$A\defeq\pairr{A_0,A_1}$ to be given by $A_0\defeq P$ and $A_1(q,u,v)
+\defeq\emptyt$.
+\end{rmk}
+
+We define the family $\mathcal{T}:\Sn^1\to\UU$ by
+We define $\mathcal{T}(\base)\defeq\mathbf{3}$. To define $\mathcal{T}(\lloop):
+\id{\mathbf{3}}{\mathbf{3}}$ we apply the univalence axiom. Hence it suffices to find an
+equivalence $\eqv{\mathbf{3}}{\mathbf{3}}$, for which we take the function
+$e$ defined by
+\begin{equation*}
+e(x)\defeq\begin{cases}
+0_\mathbf{3} & \text{if }x\jdeq 0_\mathbf{3}\\
+2_\mathbf{3} & \text{if }x\jdeq 1_\mathbf{3}\\
+1_\mathbf{3} & \text{if }x\jdeq 2_\mathbf{3}.
+\end{cases}
+\end{equation*}
+
+\begin{lem}
+The type $\terms{\mathcal{T}}\defeq\prd{x:\Sn^1}\mathcal{T}(x)$ is contractible.
+\end{lem}
+
+\begin{proof}
+The type of sections of $\mathcal{T}$ is equivalent to $\sm{u:\mathcal{T}(\base)}\id{e(u)}{u}$.
+If we have a term $\pairr{u,\alpha}$ of the latter type, it follows by induction
+on $\mathbf{3}$ that $\id{\pairr{u,\alpha}}
+{\pairr{0_\mathbf{3},\refl{0_\mathbf{3}}}}$ for all $\pairr{u,\alpha}:
+\sm{x:\mathcal{T}(\base)}\id{e(u)}{u}$,
+which shows that the type of sections of $\mathcal{T}$ is contractible.
+\end{proof}
+
+\begin{thm}\label{thm:wfe-converse}
+There is a type family $P:A\to\type$ for which
+\begin{equation*}
+\neg\Big(\iscontr(\prd{x:A}P(x))\to\prd{x:A}\iscontr(P(x))\Big).
+\end{equation*}
+\end{thm}
+
+\begin{proof}
+The type family of our counter example is $\mathcal{T}$: the fiber $\mathcal{T}(\base)$ isn't contractible.
+\end{proof}
+
+\begin{defn}
+A graph morphism $f:\ctxhom{\Delta}{\Gamma}$ is an equivalence of graphs when
+$\graphcharmap[\Gamma]{f}$ is a contractible graph in the context $\Gamma$.
+\end{defn}
+
+\begin{lem}
+Let $A$ and $B$ be graphs in a context $\Gamma$ and let $f:A\to B$. The following are equivalent:
+\begin{enumerate}
+\item $f[i]:A[i]\to B[i]$ is an equivalence of graphs for every term $i:\Gamma$.
+\item $\ctxext{\Gamma}f:\ctxext{\Gamma}A\to\ctxext{\Gamma}B$ is an equivalence of graphs.
+\item Both $f_0(i)$ and $f_1(q,x,y)$ are always equivalences.
+\item $\terms{f}:\terms{\Delta}\to\terms{\Gamma}$ is an equivalence.
+\end{enumerate}
+\end{lem}
+
+\begin{rmk}
+It follows that there is an equivalence
+\begin{equation*}
+\ctxext{\Gamma}\msm{A}{P}\simeq\ctxext({\Gamma}{A})P
+\end{equation*}
+for every family $P$ of graphs over a graph $A$ in context $\Gamma$.
+\end{rmk}
+
+\subsubsection{Homotopy levels}
+\begin{itemize}
+\item A graph $A$ in context $\Gamma$ is of homotopy level $n$ precisely when each
+$A_0(i)$ and each $A_1(q,x,y)$ are of homotopy level $n$. 
+\item We can name at least three different propositions in the empty context:
+\begin{enumerate}
+\item $\Gamma_0\defeq\emptyt$.
+\item $\Gamma_0\defeq\unit$ and $\Gamma_1(\ttt,\ttt)\defeq\emptyt$.
+\item $\Gamma_0\defeq\unit$ and $\Gamma_1(\ttt,\ttt)\defeq\unit$.
+\end{enumerate}
+Therefore $\mfGraph$ does not satisfy the law of excluded middle.
+\end{itemize}
+
+
+
+\subsubsection{Univalence for the graph model}
+In the other direction, we also obtain a graph morphism $\graphcharmap[\Gamma]{f}:
+\ctxhom{\Gamma}{\gobjclass}$ for every graph morphism $f:\ctxhom{\Delta}{\Gamma}$.
+In \autoref{graph-object-classifier} we will prove that the maps
+$\int_\Gamma:\ctxhom{\Gamma}{\gobjclass}\to\sm{\Delta:\tfGraph}\ctxhom{\Delta}{\Gamma}$
+is an equivalence with iverse $\graphcharmapfunc{\Gamma}$. 
+
+\begin{defn}
+Let $f:\Delta\to\Gamma$ be a graph morphism. We define the graph morphism
+$\graphcharmap[\Gamma]{f}$ by
+\begin{align*}
+\graphcharmap[\Gamma]{f}_0 & \defeq \lam{i}\hfib{f_0}{i}\\
+\graphcharmap[\Gamma]{f}_1(i,j) & \defeq \lam{q}\hfib{f_1(i,j)}{q}.
+\end{align*}
+\end{defn}
+
+
+\begin{thm}\label{graph-object-classifier}
+Main theorem here.
+\end{thm}
+
+\begin{comment}
+To describe the object classifier for graphs, we will follow Streicher. Thus
+we have to look at presheaves over $I/i$ for each object $i$ of the category
+$I\defeq 0{\rightrightarrows}1$ with the morphisms named $s$ and $t$ for source
+and target. The category $I/0$ is the terminal category;
+the category $I/1$ looks like $\cdot{\rightarrow}\cdot{\leftarrow}\cdot$.
+Therefore, we have
+\begin{align*}
+\type^{\op{(I/0)}} & \eqv{}{\type},\\
+\type^{\op{(I/1)}} & \eqv{}{\sm{X,Y,A:\type}(A\to X)\times(A\to Y)}\\
+& \eqv{}{\sm{X,Y:\type}X\to Y\to\type}.
+\end{align*}
+The functors $\type^\op{\Sigma_s}$ and $\type^\op{\Sigma_t}$ are given by
+$\pi_1$ and $\pi_2$ respectively. This leads to our following definition
+of the object classifier $\gobjclass$:
+
+\begin{defn}
+Define $\gobjclass$ to be the graph consisting of
+\begin{align*}
+\gobjclass_0 & \defeq  \type\\
+\gobjclass_1(X,Y) & \defeq  X\to Y\to\type
+\end{align*}
+and define $\pointed{\gobjclass}$ by
+\begin{align*}
+(\pointed{\gobjclass})_0 & \defeq  \pointed{\type}\\
+(\pointed{\gobjclass})_1(\pairr{X,x},\pairr{Y,y}) & \defeq  \sm{R:X\to Y\to\type}R(x,y)
+\end{align*}
+There is the obvious forgetful graph morphism $t:\pointed{\gobjclass}\to\gobjclass$,
+given by projection on the first coordinate.
+
+For any morphism $f:\Delta\to\Gamma$ of graphs we define a morphism
+$\graphcharmap(f):\Gamma\to\gobjclass$ of graphs by
+\begin{align*}
+\graphcharmap(f)_0(i) & \defeq  \hfiber{f_0}{i}\\
+\graphcharmap(f)_1(q,\pairr{u,\alpha},\pairr{v,\beta}) & \defeq  \sm{p:\Delta_1(u,v)}
+\id{\trans{\pairr{\alpha,\beta}}{f_1(p)}}{q}
+\end{align*}
+where $\pairr{u,\alpha}:\graphcharmap(f)_0(i)$ and $\pairr{v,\beta}:\graphcharmap(f)_0(j)$. The
+morphism $\graphcharmap(f)$ is called the \emph{characteristic map of $f$}. We obtain a function
+\begin{equation*}
+\graphcharmap : \big(\sm{\Delta:\tfGraph }\Delta\to\Gamma\big)\to\big(\Gamma\to\gobjclass\big)
+\end{equation*}
+for every graph $\Gamma$.
+\end{defn}
+
+\begin{thm}\label{thm:graph-classifier1}
+The function $\graphcharmap$ is an equivalence for any graph $\Gamma$.
+\end{thm}
+
+\begin{proof}
+We have to find a quasi-inverse
+\begin{align*}
+\Sigma : (\Gamma\to\gobjclass)\to\big(\sm{\Delta:\tfGraph}\Delta\to\Gamma\big)
+\end{align*}
+of $\graphcharmap$. Thus, we have to define $\Sigma_0:(\Gamma\to\gobjclass)\to\tfGraph$ and
+$\Sigma_1:\prd{P:\Gamma\to\gobjclass}\Sigma_0(P)\to\Gamma$. For $P:\Gamma\to\gobjclass$ we define
+\begin{align*}
+\Sigma_0(P)_0 & \defeq \sm{i:\Gamma_0}P_0(i)\\
+\Sigma_0(P)_1(\pairr{i,u},\pairr{j,v}) & \defeq \sm{q:\Gamma_1(i,j)}P_1(q,u,v)\\
+\Sigma_1(P)_0 & \defeq \proj1\\
+\Sigma_1(P)_1(\pairr{i,u},\pairr{j,v}) & \defeq \proj1.
+\end{align*}
+\end{proof}
+
+\begin{thm}\label{conj:graph_classifier2}
+For any graph morphism $f:\Delta\to\Gamma$, the diagram
+\begin{equation*}
+\begin{tikzcd}
+\Delta \ar{r}{} \ar{d}[swap]{f} & \pointed{\gobjclass} \ar{d}{t} \\ 
+\Gamma \ar{r}[swap]{\graphcharmap(f)} & \gobjclass 
+\end{tikzcd}
+\end{equation*}
+is a pullback square.
+\end{thm}
+\note{We would like it to be a pb \emph{in} the graph model}
+\end{comment}
+
+\begingroup\color{blue}
+\subsubsection{The adjunctions $\tfcolim\dashv\Delta\dashv\tflim$}
+We define $\Delta:\type\to\tfGraph$ by
+\begin{equation*}
+\Delta(X)\defeq\pairr{X,\lam{x}{x'}\id{x}{x'}}
+\end{equation*}
+for $X:\type$. For $A:X\to\type$ we define $\Delta(A):\mftyp(\Delta(X))$ by
+\begin{align*}
+\Delta(A)_0(x) & \defeq A(x)\\
+\Delta(A)_1(p,a,b) & \defeq \id{\trans{p}{a}}{b}.
+\end{align*}
+
+\begin{lem}
+For any type $X$ and any graph $\Gamma$ there is an equivalence
+\begin{equation*}
+\eqv{(X\to\terms{\Gamma})}{\terms{\Delta(X)\to\Gamma}}.
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+We have to find functions
+\begin{align*}
+\varphi & : (X\to\terms{\Gamma})\to\terms{\Delta(X)\to\Gamma}\\
+\psi & : \terms{\Delta(X)\to\Gamma}\to X\to\terms{\Gamma}
+\end{align*}
+which are each others homotopy inverse. To define $\varphi$, let
+\end{proof}
+\endgroup
+
