@@ -1,0 +1,96 @@
+\section{Introduction}
+In this paper we define a notion of internal model which is adapted to
+the univalent setting in which we work. Thus, we only describe what it means
+to be an internal model when the ambient type theory is univalent. Our
+presentation is derived from the definition of~\cite{Dybjer1996}. There,
+an internal model is defined to be a category with families with interpretations
+for the basic type constructors $\Pi$, $\Sigma$ and $\idtypevar{}$. However,
+a category in~\cite{Dybjer1996} has a set of objects and for every two objects
+a setoid of morphisms. This is too restrictive for our purpose. Ideally, we
+would start with an $\infty$-category of contexts and an $\infty$-presheaf
+of families over it. This presents us with the problem that a notion of
+$\infty$-category has not been formulated \emph{in} type theory. Therefore,
+we make a deviation from the approach in~\cite{Dybjer1996}. We shall
+start with a type $\tfctx$ of contexts, a family $\mftypfunc:\tfctx\to\type$
+of families over it and a family $\terms{\blank}:\prd*{\Gamma:\tfctx}\mftyp{\mfM}{\Gamma}
+\to\type$ sending a type $A$ in context $\Gamma$ to its type $\terms{A}$ of
+terms; then we shall directly interpret $\Pi$-types, declaring
+$\terms{A\to B}$ to be $\ctxhom[\Gamma]{A}{B}$. The idea is that by letting
+$\Pi$ play a fundamental role in the definition of a category with families
+$\mathcal{C}$,
+the morphisms get their properties directly from the internal type theory
+of $\mathcal{C}$.
+
+\begin{comment}
+We briefly list the data of which an internal model of type theory consits. We
+consider internal models in the style of~\cite{Dybjer1996}. Thus we will
+describe a model $\mfM$ as a category with families. However, since our setting is
+univalent type theory we will deviate from~\cite{Dybjer1996} in the following
+respects: first of all, we make use of typical ambiguity and hence omit
+reference to a thing called \emph{sort}. 
+
+We organize the definition of an internal model $\mfM$ as follows: in
+\autoref{internal-model-contexts} we describe the category of contexts itself;
+in \autoref{internal-model-families} we describe the families over a given context
+and the related operations; in \autoref{internal-model-constructors} we
+describe the basic constructors in the internal model.
+\end{comment}
+
+\subsection{Ideas in the definition}
+An internal model of type theory is like a category with families, but we want
+to avoid having to state higher coherences. In fact, we don't even start our
+definition with a category of contexts; instead we just take a \emph{type} of contexts. 
+The morphisms will come from the terms, evaluation of a function at a given
+term will come from substitution. We recognize three basic ingredients to models:
+first there is a type of contexts; second, for every context there is a model of types in
+that context and third, for every type in a given context there is a type of its
+terms. Then there are three basic attributes: context extension, weakening and
+substitution. Context extension provides us with families over types as well as
+with an interpretation of dependent pair types. We need weakening 
+so that families can depend on the same type multiple times (the way the
+identity type of a type depends two times on that type) and to be able
+to talk about non-dependent function types,
+the morphims of our category. Substitution will give us a way
+to work with fibers of families as well as composition of functions and evaluation
+of functions at terms.
+
+Because we require a \emph{model} of types in a context, all the structure
+which we require at the bottom level will be required to exist higher up as well.
+Thus, the model of types in a given context $\Gamma$ will have a type of contexts
+itself, which can be seen as the type of types in $\Gamma$; it will have its
+own notion of types in a context, its own notion of terms, context extension,
+weakening and substitution together with all the structure require for it. For
+instance, when $A$ is a type in context $\Gamma$ in a model $\mfM$, then there
+is the model of types in context $A$, which is the model of families over $A$. 
+This model is required to be \emph{definitionally equal to} the model of types
+in the context $\ctxext{\Gamma}A$, the context extension of $\Gamma$ and $A$.
+In this way we protect ourselves from the need to dig an infinitely deep structure
+of models when we want to consider examples.
+
+To give the definition of a model we shall also need to consider certain morphisms
+of internal models. Those should preserve all the structure: contexts are mapped
+to contexts; for every context a morphism of models mapping the model of types
+in that context to the model of types in the image of that context; there should
+be a mapping of terms and context extension, weakening and substitution should be
+preserved. We need to consider those morphisms because we require context extension,
+weakening and substitution to be of that kind, thereby respecting each other
+in all possible ways.
+
+When we have this framework set up, we can interpret the basic type constructors
+such as $\Pi$, $\Sigma$ and $\idtypevar{}$.
+The higher categorical structure then comes from the
+result that we have an interpretation of type theory.
+
+\begingroup
+\color{red}
+\begin{rmk}
+Currently, the definition seems to be circular. To define a model we need that
+context extension, weakening and substitution be morphisms of models. A morphism
+of models needs to preserve context extension, weakening and substitution.
+Moreover, its definition requires the notion of composition of morphisms.
+
+I've done it this way because it guides me to what the rules should be, trusting
+that I can work my way back to give a (possibly less transparent) definition
+which contains no circularities without doubt.
+\end{rmk}
+\endgroup
