@@ -144,6 +144,13 @@ Weakening is compatible with extension:
     {\typefont{wkext}_0(\Gamma,B)}}
 \end{infarray}
 
+
+Substitution is compatible with substitution:
+\begin{infarray}{c}
+\inference{\jtype{\ctxext({\Gamma}{A})P}{Q}\qquad\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}A}{P}{f}}
+{\jtypeeq{\Gamma}{\subst{x}{\subst{f}{Q}}}{\subst{\subst{x}{f}}{\subst{x}{Q}}}}
+\end{infarray}
+
 \subsection{More stuff in the type theory}
 \begin{infarray}{c}
 \inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}A}{\ctxwk{A}{A}}{\idfunc[A]}}
