@@ -51,8 +51,8 @@ in all three cases (contexts, types and terms).
 
 \subsection{Extension}
 We introduce extension which not only extends a context $\Gamma$ and a type
-$A$ over it to a context $\ctxext{\Gamma}A$, but which also extends a type $A$
-in context $\Gamma$ and a family $P$ over it to a type $\ctxext{A}P$ in context
+$A$ over it to a context $\ctxext{\Gamma}{A}$, but which also extends a type $A$
+in context $\Gamma$ and a family $P$ over it to a type $\ctxext{A}{P}$ in context
 $\Gamma$. We do this to ensure that all of type theory can be done in a context.
 For instance, we could say (1) that a context in context $\Gamma$ is the same thing
 as a type in context $\Gamma$; (2) When $A$ is a context in this sense, a type in
@@ -63,10 +63,10 @@ Note that by introducing extension on the level of types and families,
 we introduce $\Sigma$-types at a very early stage.
 However, we need substitution to make this precise.
 \begin{infarray}{cc}
-\inference{\jtype{\Gamma}{A}}{\jctx{\ctxext{\Gamma}A}}
-& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtypeeq{\Gamma}{A}{B}}{\jctxeq{\ctxext{\Gamma}A}{\ctxext{\Delta}B}}\\
-\inference{\jtype{\ctxext{\Gamma}A}{P}}{\jtype{\Gamma}{\ctxext{A}P}}
-& \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\ctxext{\Gamma}A}{P}{Q}}{\jtypeeq{\Gamma}{\ctxext{A}P}{\ctxext{B}Q}}
+\inference{\jtype{\Gamma}{A}}{\jctx{\ctxext{\Gamma}{A}}}
+& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtypeeq{\Gamma}{A}{B}}{\jctxeq{\ctxext{\Gamma}{A}}{\ctxext{\Delta}{B}}}\\
+\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\ctxext{A}{P}}}
+& \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\ctxext{\Gamma}{A}}{P}{Q}}{\jtypeeq{\Gamma}{\ctxext{A}{P}}{\ctxext{B}{Q}}}
 \end{infarray}
 
 \subsection{Weakening}
@@ -78,37 +78,37 @@ of $\ctxwk{\Gamma}{\Delta}$.
 \begin{infarray}{cc}
 \inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jtype{\Gamma}{\ctxwk{\Gamma}{\Delta}}} 
 & \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jctxeq{\Delta}{\Delta'}}{\jtypeeq{\Gamma}{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma'}{\Delta'}}}\\
-\inference{\jctx{\Gamma}\qquad\jtype{\Delta}{B}}{\jtype{\ctxext{\Gamma}\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}} & \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtypeeq{\Delta}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma'}{B'}}}\\
-\inference{\jctx{\Gamma}\qquad\jterm{\Delta}{B}{y}}{\jterm{\ctxext{\Gamma}\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}} 
-& \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtermeq{\Delta}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}{\ctxwk{\Gamma'}{y'}}} 
+\inference{\jctx{\Gamma}\qquad\jtype{\Delta}{B}}{\jtype{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}} & \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtypeeq{\Delta}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma'}{B'}}}\\
+\inference{\jctx{\Gamma}\qquad\jterm{\Delta}{B}{y}}{\jterm{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}} 
+& \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtermeq{\Delta}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}{\ctxwk{\Gamma'}{y'}}} 
 \end{infarray}
 
 A weakening operation is also defined for types. When $A$ and $B$ are both types
- in context $\Gamma$, the weakened type $\ctxwk{A}{B}$ in context $\ctxext{\Gamma}A$
+ in context $\Gamma$, the weakened type $\ctxwk{A}{B}$ in context $\ctxext{\Gamma}{A}$
  is the family which `doesn't really depend on $A$'. The terms of $\ctxwk{A}{B}$
- are the functions from $A$ to $B$. Likewise, the terms $\ctxwk{A}y$ are the
+ are the functions from $A$ to $B$. Likewise, the terms $\ctxwk{A}{y}$ are the
  constant maps at $y$ from $A$ to $B$, for $y:B$.
 \begin{infarray}{cc}
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}}{\jtype{\ctxext{\Gamma}A}{\ctxwk{A}{B}}}
-& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtypeeq{\Gamma}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}A}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}}\\
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}B}{Q}}
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}}{\jtype{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}}
+& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtypeeq{\Gamma}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}}\\
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}{B}}{Q}}
 {\jtype{\ctxext({\Gamma}{A})\ctxwk{A}{B}}{\ctxwk{A}{Q}}}
-& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtypeeq{\ctxext{\Gamma}B}{Q}{Q'}}
+& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtypeeq{\ctxext{\Gamma}{B}}{Q}{Q'}}
 {\jtypeeq{\ctxext({\Gamma}{A})\ctxwk{A}{B}}{\ctxwk{A}{Q}}{\ctxwk{A'}{Q'}}}\\
-\inference{\jtype{\Gamma}{A}\qquad\jterm{\Gamma}{B}{y}}{\jterm{\ctxext{\Gamma}A}{\ctxwk{A}{B}}{\ctxwk{A}{y}}}
-& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtermeq{\Gamma}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}A}{\ctxwk{A}{B}}{\ctxwk{A}{y}}{\ctxwk{A'}{y'}}}
+\inference{\jtype{\Gamma}{A}\qquad\jterm{\Gamma}{B}{y}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}}
+& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtermeq{\Gamma}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}{\ctxwk{A'}{y'}}}
 \end{infarray}
 
 \subsection{Substitution}
 \begin{infarray}{cc}
-\inference{\jterm{\Gamma}{A}{x}\qquad\jtype{\ctxext{\Gamma}A}{P}}{\jtype{\Gamma}{\subst{x}{P}}}
-& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtypeeq{\ctxext{\Gamma}A}{P}{P'}}{\jtypeeq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}}\\
-\inference{\jterm{\Gamma}{A}{x}\qquad\jtype{\ctxext({\Gamma}{A})P}{Q}}{\jtype{\ctxext{\Gamma}\subst{x}{P}}{\subst{x}{Q}}}
-& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtypeeq{\ctxext({\Gamma}{A})P}{Q}{Q'}}{\jtypeeq{\ctxext{\Gamma}\subst{x}{P}}{\subst{x}{Q}}{\subst{x'}{Q'}}}\\
-\inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}A}{P}{f}}{\jterm{\Gamma}{\subst{x}{P}}{\subst{x}{f}}}
-& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtermeq{\ctxext{\Gamma}A}{P}{f}{f'}}{\jtermeq{\Gamma}{\subst{x}{P}}{\subst{x}{f}}{\subst{x'}{f'}}}\\
-\inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext({\Gamma}{A}){P}}{Q}{g}}{\jterm{\ctxext{\Gamma}\subst{x}{P}}{\subst{x}{Q}}{\subst{x}{g}}}
-& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtermeq{\ctxext({\Gamma}{A})P}{Q}{g}{g'}}{\jtermeq{\ctxext{\Gamma}\subst{x}{P}}{\subst{x}{Q}}{\subst{x}{g}}{\subst{x'}{g'}}}
+\inference{\jterm{\Gamma}{A}{x}\qquad\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\subst{x}{P}}}
+& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}}\\
+\inference{\jterm{\Gamma}{A}{x}\qquad\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}{\jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtypeeq{\ctxext{{\Gamma}{A}}{P}}{Q}{Q'}}{\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x'}{Q'}}}\\
+\inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jterm{\Gamma}{\subst{x}{P}}{\subst{x}{f}}}
+& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtermeq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermeq{\Gamma}{\subst{x}{P}}{\subst{x}{f}}{\subst{x'}{f'}}}\\
+\inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}{\jterm{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}}
+& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtermeq{\ctxext{{\Gamma}{A}}{P}}{Q}{g}{g'}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}{\subst{x'}{g'}}}
 \end{infarray}
 
 \subsection{Compatibility of extension, weakening and substitution}
@@ -118,16 +118,16 @@ compatibility rules are formulated in a weak sense.
 Extension is compatible with extension:
 \begin{infarray}{c}
 \inference
-{ \jtype{\ctxext{\Gamma}A}{P}
+{ \jtype{\ctxext{\Gamma}{A}}{P}
 }{\jterm
-  {\ctxext{\Gamma}({A}P)}
-  {\ctxwk{\ctxext{\Gamma}({A}P)}{(\ctxext({\Gamma}{A})P)}}{\typefont{extext}_0(A,P)}
+  {\ctxext{\Gamma}{{A}{P}}}
+  {\ctxwk{\ctxext{\Gamma}{{A}{P}}}{(\ctxext{{\Gamma}{A}}{P})}}{\typefont{extext}_0(A,P)}
 }\\
 \inference
-{ \jtype{\ctxext({\Gamma}{A})P}{Q}
+{ \jtype{\ctxext{{\Gamma}{A}}{P}}{Q}
 }{\jterm
-  {\ctxext{\Gamma}({A}({P}Q))}
-  {\ctxwk{\ctxext{A}({P}Q)}{(\ctxext({A}{P})Q)}}
+  {\ctxext{\Gamma}{{A}{{P}{Q}}}}
+  {\ctxwk{\ctxext{A}{{P}{Q}}}{(\ctxext{{A}{P}}{Q})}}
   {\typefont{extext}_1(A,P,Q)}
 }
 \end{infarray}
@@ -139,21 +139,21 @@ Weakening is compatible with extension:
   \qquad
   \jtype{\Delta}{B}}
   {\jterm
-    {\ctxext{\Gamma}\ctxwk{\Gamma}{(\ctxext{\Delta}B)}}
-    {\ctxwk{\ctxwk{\Gamma}{(\ctxext{\Delta}B)}}{\ctxext{(\ctxwk{\Gamma}{\Delta})}(\ctxwk{\Gamma}{B})}}
+    {\ctxext{\Gamma}{\ctxwk{\Gamma}{(\ctxext{\Delta}{B})}}}
+    {\ctxwk{{\Gamma}{(\ctxext{\Delta}{B})}}{\ctxext{(\ctxwk{\Gamma}{\Delta})}{(\ctxwk{\Gamma}{B})}}}
     {\typefont{wkext}_0(\Gamma,B)}}
 \end{infarray}
 
 
 Substitution is compatible with substitution:
 \begin{infarray}{c}
-\inference{\jtype{\ctxext({\Gamma}{A})P}{Q}\qquad\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}A}{P}{f}}
-{\jtypeeq{\Gamma}{\subst{x}{\subst{f}{Q}}}{\subst{\subst{x}{f}}{\subst{x}{Q}}}}
+\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}\qquad\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{A}}{P}{f}}
+{\jtypeeq{\Gamma}{\subst{x}{\subst{f}{Q}}}{\subst{{x}{f}}{\subst{x}{Q}}}}
 \end{infarray}
 
 \subsection{More stuff in the type theory}
 \begin{infarray}{c}
-\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}A}{\ctxwk{A}{A}}{\idfunc[A]}}
+\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}
 \end{infarray}
 
 \subsection{Leibniz equality on terms}
@@ -162,11 +162,11 @@ Our choice here is Leibniz equality, since it implies propositional equality whe
 identity types are present.
 
 Let $P$ be a family over $A$ in context $\Gamma$. Then we can weaken
-$\ctxwk{A}{P}$, which is a family over $\ctxwk{A}{A}$ in context $\ctxext{\Gamma}A$.
-We also have the family $\ctxwk{\ctxwk{A}{A}}{P}$ over $\ctxwk{A}{A}$ in context
-$\ctxext{\Gamma}A$ and thus we have the inference
+$\ctxwk{A}{P}$, which is a family over $\ctxwk{A}{A}$ in context $\ctxext{\Gamma}{A}$.
+We also have the family $\ctxwk{{A}{A}}{P}$ over $\ctxwk{A}{A}$ in context
+$\ctxext{\Gamma}{A}$ and thus we have the inference
 \begin{equation*}
-\inference{\jtype{\ctxext{\Gamma}A}{P}}{\jtype{\ctxext(({\Gamma}{A}){\ctxwk{A}{A}})\ctxwk{A}{P}}{\ctxwk{\ctxwk{A}{P}}{(\ctxwk{\ctxwk{A}{A}}{P})}}}
+\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\ctxext(({\Gamma}{A}){\ctxwk{A}{A}})\ctxwk{A}{P}}{\ctxwk{{A}{P}}{(\ctxwk{{A}{A}}{P})}}}
 \end{equation*}
 This family plays the role of the family $\jtype{\Gamma,x,y:A}{P(x)\to P(y)}$
 in the type theory of \cite{TheBook}.
@@ -190,31 +190,31 @@ $\ctxwk{A}{B}$ and our version of the pullback $f^\ast Q$ is $\subst{f}{(\ctxwk{
 Let $f$ be a term of $\ctxwk{A}{B}$ in context $\Gamma$.
 \begin{enumerate}
 \item For a family $Q$ over $B$ in context $\Gamma$ we define $f^\ast Q\jdeq\subst{f}{(\ctxwk{A}{Q})}$.
-\item For a term $g$ of $Q$ in context $\ctxext{\Gamma}B$ we define $f^\ast g\jdeq\subst{f}{(\ctxwk{A}{g})}$.
+\item For a term $g$ of $Q$ in context $\ctxext{\Gamma}{B}$ we define $f^\ast g\jdeq\subst{f}{(\ctxwk{A}{g})}$.
 \end{enumerate} 
 \end{defn}
 \begin{rmk}
-The type $f^\ast(\ctxwk{B}{C})$ in context $\ctxext{\Gamma}A$ is can be viewed as the
+The type $f^\ast(\ctxwk{B}{C})$ in context $\ctxext{\Gamma}{A}$ is can be viewed as the
 type of functions from $A$ to $C$ which factor through $f$. Thus there should be
 a function from $f^\ast(\ctxwk{B}{C})$ to $\ctxwk{A}{C}$.
 \end{rmk}
 
 \begin{rmk}
-Every term $\jterm{\ctxext{\Gamma}A}{\ctxwk{A}{B}}{f}$ allows us to infer the following:
+Every term $\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{f}$ allows us to infer the following:
 \begin{equation*}
-\inference{\jtype{\ctxext{\Gamma}B}{Q}}{\jtype{\ctxext{\Gamma}A}{f^\ast Q}}
+\inference{\jtype{\ctxext{\Gamma}{B}}{Q}}{\jtype{\ctxext{\Gamma}{A}}{f^\ast Q}}
 \qquad
-\inference{\jterm{\ctxext{\Gamma}B}{Q}{g}}{\jterm{\ctxext{\Gamma}A}{f^\ast Q}{f^\ast g}}
+\inference{\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jterm{\ctxext{\Gamma}{A}}{f^\ast Q}{f^\ast g}}
 \end{equation*}
 \end{rmk}
 
 
 \begin{defn}
-A term $f:\ctxwk{A}{B}$ in context $\ctxext{\Gamma}A$ is said to be a trivial
+A term $f:\ctxwk{A}{B}$ in context $\ctxext{\Gamma}{A}$ is said to be a trivial
 cofibration if we can infer
 \begin{equation*}
-\inference{\jterm{\ctxext{\Gamma}A}{f^\ast Q}{t}}{\jterm{\ctxext{\Gamma}B}{Q}{\tilde{t}}}\qquad
-\inference{\jterm{\ctxext{\Gamma}A}{f^\ast Q}{t}}{\jtermeq{\ctxext{\Gamma}A}{f^\ast Q}{f^\ast \tilde{t}}{t}}
+\inference{\jterm{\ctxext{\Gamma}{A}}{f^\ast Q}{t}}{\jterm{\ctxext{\Gamma}{B}}{Q}{\tilde{t}}}\qquad
+\inference{\jterm{\ctxext{\Gamma}{A}}{f^\ast Q}{t}}{\jtermeq{\ctxext{\Gamma}{A}}{f^\ast Q}{f^\ast \tilde{t}}{t}}
 \end{equation*}
 {\color{red}This statement should be reformulated so that it only involves a single judgment...
 but I don't see directly how to do that.}
@@ -245,33 +245,33 @@ The reverse direction is immediate.
 \end{proof}
 
 Another approach would be to define $f:\ctxwk{A}{B}$ to be left invertible
-if there is a term $\ctxext({\Gamma}{A})P$
+if there is a term $\ctxext{{\Gamma}{A}}{P}$
 
 \subsection{The interactions of extension, weakening and substitution}
 
 \subsection{The basic constructors of type theory}
 \subsubsection{Dependent function types}
 \begin{infarray}{cc}
-\inference{\jtype{\ctxext{\Gamma}A}{P}}{\jtype{\Gamma}{\mprd{A}{P}}}
-& \inference{\jtypeeq{\ctxext{\Gamma}A}{P}{P'}}{\jtypeeq{\Gamma}{\mprd{A}{P}}{\mprd{A}{P'}}}\\
-\inference{\jterm{\ctxext{\Gamma}A}{P}{f}}{\jterm{\Gamma}{\mprd{A}{P}}{\lambda(f)}}
-& \inference{\jtermeq{\ctxext{\Gamma}A}{P}{f}{f'}}{\jtermeq{\Gamma}{\mprd{A}{P}}{\lambda(f)}{\lambda(f')}}\\
-\inference{\jterm{\Gamma}{\mprd{A}{P}}{g}}{\jterm{\ctxext{\Gamma}A}{P}{\tfev(g)}}
-& \inference{\jtermeq{\Gamma}{\mprd{A}{P}}{g}{g'}}{\jtermeq{\ctxext{\Gamma}A}{P}{\tfev(g)}{\tfev(g')}}\\
-\inference{\jterm{\ctxext{\Gamma}A}{P}{f}}{\jtermeq{\Gamma}{A}{\tfev(\lambda(f))}{f}}
+\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\mprd{A}{P}}}
+& \inference{\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\mprd{A}{P}}{\mprd{A}{P'}}}\\
+\inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jterm{\Gamma}{\mprd{A}{P}}{\lambda(f)}}
+& \inference{\jtermeq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermeq{\Gamma}{\mprd{A}{P}}{\lambda(f)}{\lambda(f')}}\\
+\inference{\jterm{\Gamma}{\mprd{A}{P}}{g}}{\jterm{\ctxext{\Gamma}{A}}{P}{\tfev(g)}}
+& \inference{\jtermeq{\Gamma}{\mprd{A}{P}}{g}{g'}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\tfev(g)}{\tfev(g')}}\\
+\inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\Gamma}{A}{\tfev(\lambda(f))}{f}}
 \end{infarray}
 
 With these rules we will not get the weak $\eta$-rule when identity types are present.
 So it might be better to state that $\lambda$ is a trivial cofibration
 
 \subsection{Identity types}
-We need to define the diagonal function $\jterm{\ctxext{\Gamma}A}{\ctxwk{A}{(\ctxext{A}\ctxwk{A}{A})}}{\delta}$
+We need to define the diagonal function $\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{(\ctxext{A}{\ctxwk{A}{A}})}}{\delta}$
 \begin{infarray}{c}
-\inference{\jtype{\Gamma}{A}}{\jtype{\ctxext({\Gamma}{A})\ctxwk{A}{A}}{\idtypevar{A}}}\\
-\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}A}{\delta^\ast\idtypevar{A}}{\reflsym}}\\
-\inference{\jtype{\ctxext(({\Gamma}{A}){\ctxwk{A}{A}})\idtypevar{A}}{P}\qquad
-\jterm{\ctxext{\Gamma}A}{\pairr{\delta,\reflsym}^\ast P}{d}}
-{\jterm{\ctxext(({\Gamma}{A}){\ctxwk{A}{A}})\idtypevar{A}}{P}{J}}
+\inference{\jtype{\Gamma}{A}}{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}\\
+\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\delta^\ast\idtypevar{A}}{\reflsym}}\\
+\inference{\jtype{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}\qquad
+\jterm{\ctxext{\Gamma}{A}}{\pairr{\delta,\reflsym}^\ast P}{d}}
+{\jterm{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}{J}}
 \end{infarray}
 
 \section{Internal models of type theory}
@@ -303,14 +303,14 @@ to mean $x:\terms{A}$.
 of internal models for every context $\Gamma$.
 \begin{defn}
 When $A$ is a type in context $\Gamma$, we also denote
-the context $\tfext^\Gamma_0(A)$ of $\mfM$ by $\ctxext{\Gamma}A$.
+the context $\tfext^\Gamma_0(A)$ of $\mfM$ by $\ctxext{\Gamma}{A}$.
 We will write
-$\ctxext({\Gamma}{A})P$ for $\ctxext({\Gamma}{A})P$.
+$\ctxext{{\Gamma}{A}}{P}$ for $\ctxext{{\Gamma}{A}}{P}$.
 \end{defn}
 \item The judgmental equalities:
 \begin{align*}
-\mftyp{\mftyp{\mfM}{\Gamma}}{A} & \jdeq\mftyp{\mfM}{\ctxext{\Gamma}A}\\
-\mftyp{\tfext^\Gamma}{A} & \jdeq \modelfont{id}_{\mftyp{\mfM}{\ctxext{\Gamma}A}}\\
+\mftyp{\mftyp{\mfM}{\Gamma}}{A} & \jdeq\mftyp{\mfM}{\ctxext{\Gamma}{A}}\\
+\mftyp{\tfext^\Gamma}{A} & \jdeq \modelfont{id}_{\mftyp{\mfM}{\ctxext{\Gamma}{A}}}\\
 \terms[{\tfext^\Gamma}]{P} & \jdeq \idfunc[\terms{P}].
 \end{align*}
 \begin{rmk}
@@ -318,15 +318,15 @@ In particular, we will have the judgmental equalities:
 \begin{enumerate}
 \item When $A$ is a type in context $\Gamma$ we have
 \begin{equation*}
-\mftyp{\mftyp{\mfM}{\Gamma}}{A}\jdeq\mftyp{\mfM}{\ctxext{\Gamma}A},
+\mftyp{\mftyp{\mfM}{\Gamma}}{A}\jdeq\mftyp{\mfM}{\ctxext{\Gamma}{A}},
 \end{equation*}
 ensuring that a context in the model $\mftyp{\mftyp{\mfM}{\Gamma}}{A}$ is the same thing as a
-context in the model $\mftyp{\mfM}{\ctxext{\Gamma}A}$.
+context in the model $\mftyp{\mfM}{\ctxext{\Gamma}{A}}$.
 \item If $Q$ is a family over $P$ where $P$ is a family over $A$ in context $\Gamma$, then
 \begin{equation*}
 \tfext^{\protect{\mftyp{\mftyp{\mfM}{\Gamma}}{A}}}(P,Q)
 \jdeq
-\tfext^{\protect{\mftyp{\mfM}{\ctxext{\Gamma}A}}}(P,Q)
+\tfext^{\protect{\mftyp{\mfM}{\ctxext{\Gamma}{A}}}}(P,Q)
 \end{equation*}
 ensuring that twe two possible notion of context extension are the same.
 \end{enumerate}
@@ -335,13 +335,13 @@ We will not list them all.
 \end{rmk}
 \item Weakening: a morphism
 \begin{equation*}
-\tfwk^A:\mftyp{\mfM}{\Gamma}\to\mftyp{\mfM}{\ctxext{\Gamma}A}
+\tfwk^A:\mftyp{\mfM}{\Gamma}\to\mftyp{\mfM}{\ctxext{\Gamma}{A}}
 \end{equation*}
 of internal models for every type $A$ in context $\Gamma$. When $B$ is a type
 in context $\Gamma$, we denote $\tfwk^A(B)$ by $\ctxwk{A}{B}$. 
 \item Substitution: a morphism
 \begin{equation*}
-\tfsubst^x:\mftyp{\mfM}{\ctxext{\Gamma}A}\to\mftyp{\mfM}{\Gamma}
+\tfsubst^x:\mftyp{\mfM}{\ctxext{\Gamma}{A}}\to\mftyp{\mfM}{\Gamma}
 \end{equation*}
 of internal models for any $x:A$ in context $\Gamma$. When $P$ is a family over $A$ in context
 $\Gamma$, we denote $\tfsubst^x(P)$ also by $\subst{x}{P}$. 
@@ -350,7 +350,7 @@ $\Gamma$, we denote $\tfsubst^x(P)$ also by $\subst{x}{P}$.
 \tfsubst^x\circ\tfwk^A\jdeq\modelfont{id}_{\mftyp{\mfM}{\Gamma}}
 \end{equation*}
 for any $x:A$ and $B$ in context $\Gamma$.
-\item A context $\unit^\mfM:\tfctx(\mfM)$ and a term of type $\isequiv(\ctxext{\unit^\mfM}\blank)$. We will denote
+\item A context $\unit^\mfM:\tfctx(\mfM)$ and a term of type $\isequiv(\ctxext{\unit^\mfM}{\blank})$. We will denote
 this equivalence by $e_\unit$. The context $\unit^\mfM$ is also
 called the \emph{empty context}.
 \begin{defn}
@@ -359,7 +359,7 @@ $\terms{e_\unit^{-1}(\Gamma)}$.
 \end{defn}
 \item A section $\unit^{\blank}:\prd{\Gamma:\ctx(\mfM)}\mftyp{\mfM}{\Gamma}$ assigning
 a type $\unit^\Gamma$ in context $\Gamma$ to every context $\Gamma$ and
-an identification $\alpha_\unit(\Gamma):\id{\ctxext{\Gamma}\unit^\Gamma}{\Gamma}$
+an identification $\alpha_\unit(\Gamma):\id{\ctxext{\Gamma}{\unit^\Gamma}}{\Gamma}$
 for every context $\Gamma$. We also require that there is an identification
 $\id{\trans{\alpha_\unit(\Gamma)}{\ctxwk{\unit^\Gamma}{A}}}{A}$ for every
 type $A$ in context $\Gamma$.
@@ -387,38 +387,38 @@ denoted by $f_0$.
 $\Gamma:\ctx(M)$.
 \item the judgmental equality
 \begin{equation*}
-\mftyp{\mftyp{f}{\Gamma}}{A}\jdeq\mftyp{f}{\ctxext{\Gamma}A}
+\mftyp{\mftyp{f}{\Gamma}}{A}\jdeq\mftyp{f}{\ctxext{\Gamma}{A}}
 \end{equation*}
 \item a function $\terms[f]{A}:\terms[\mfM]{A}\to\terms[\mfN]{\mftyp{f}{\Gamma}_0(A)}$ for
 every type $A$ in context $\Gamma$. 
 \item preservation of context extension: 
 \begin{align*}
 \alpha^f_0 & :\id{f\circ\tfext^\Gamma}{\tfext^{f_0(\Gamma)}\circ\mftyp{f}{\Gamma}}\\
-\alpha^f_1 & :\id{\mftyp{f}{\Gamma}_0\circ\tfext^A}{\tfext^{\mftyp{f}{\Gamma}_0(A)}\circ\mftyp{f}{\ctxext{\Gamma}A}}.
+\alpha^f_1 & :\id{\mftyp{f}{\Gamma}_0\circ\tfext^A}{\tfext^{\mftyp{f}{\Gamma}_0(A)}\circ\mftyp{f}{\ctxext{\Gamma}{A}}}.
 \end{align*}
 \begin{comment}
 the judgmental equality
 \begin{equation*}
-f_0(\ctxext{\Gamma}A)\jdeq\ctxext{f_0(\Gamma)}\mftyp{f}{\Gamma}_0(A)
+f_0(\ctxext{\Gamma}{A})\jdeq\ctxext{f_0(\Gamma)}\mftyp{f}{\Gamma}_0(A)
 \end{equation*}
 for every type $A$ in context $\Gamma$.
 \end{comment}
 \item preservation of weakening: 
 \begin{align*}
 \beta^f_0 & :\id{\mftyp{f}{\Gamma}\circ\tfwk^\Gamma}{\tfwk^{f_0(\Gamma)}\circ f}\\
-\beta^f_1 & :\id{\mftyp{f}{\ctxext{\Gamma}A}\circ\tfwk^A}{\tfwk^\protect{\mftyp{f}{\Gamma}_0(A)}\circ\mftyp{f}{\Gamma}}.
+\beta^f_1 & :\id{\mftyp{f}{\ctxext{\Gamma}{A}}\circ\tfwk^A}{\tfwk^\protect{\mftyp{f}{\Gamma}_0(A)}\circ\mftyp{f}{\Gamma}}.
 \end{align*}
 \begin{comment}
 This gives the following three judgmental equalities:
 \begin{enumerate}
 \item the judgmental equality
 \begin{equation*}
-\mftyp{f}{\ctxext{\Gamma}A}_0(\ctxwk{A}{B})\jdeq\ctxwk{\mftyp{f}{\Gamma}_0(A)}{\mftyp{f}{\Gamma}_0(B)}
+\mftyp{f}{\ctxext{\Gamma}{A}}_0(\ctxwk{A}{B})\jdeq\ctxwk{\mftyp{f}{\Gamma}_0(A)}{\mftyp{f}{\Gamma}_0(B)}
 \end{equation*}
 for every two types $A$ and $B$ in context $\Gamma$.
 \item the judgmental equality
 \begin{equation*}
-\mftyp{f}{\ctxext({\Gamma}{A})\ctxwk{A}{B}}\circ\tfwk^A\jdeq\tfwk^{\protect{\mftyp{f}{\Gamma}_0(A)}}\circ\mftyp{f}{\ctxext{\Gamma}B}
+\mftyp{f}{\ctxext({\Gamma}{A})\ctxwk{A}{B}}\circ\tfwk^A\jdeq\tfwk^{\protect{\mftyp{f}{\Gamma}_0(A)}}\circ\mftyp{f}{\ctxext{\Gamma}{B}}
 \end{equation*}
 \item the judgmental equality
 \begin{equation*}
@@ -428,18 +428,18 @@ for every two types $A$ and $B$ in context $\Gamma$.
 \end{comment}
 \item preservation of substitution: 
 \begin{equation*}
-\gamma^f:\id{\mftyp{f}\Gamma_0\circ\tfsubst^x}{\tfsubst^\protect{\terms[f]{A}(x)}\circ\mftyp{f}{\ctxext{\Gamma}A}}.
+\gamma^f:\id{\mftyp{f}\Gamma_0\circ\tfsubst^x}{\tfsubst^\protect{\terms[f]{A}(x)}\circ\mftyp{f}{\ctxext{\Gamma}{A}}}.
 \end{equation*}
 \begin{comment}
 \begin{enumerate}
 \item the judgmental equality
 \begin{equation*}
-\mftyp{f}\Gamma_0(\subst{x}{P})\jdeq\subst{\terms[f]{A}(x)}{\mftyp{f}{\ctxext{\Gamma}A}_0(P)}
+\mftyp{f}\Gamma_0(\subst{x}{P})\jdeq\subst{\terms[f]{A}(x)}{\mftyp{f}{\ctxext{\Gamma}{A}}_0(P)}
 \end{equation*}
 for every family $P$ over $A$ in context $\Gamma$ and every term $x:A$.
 \item the judgmental equality
 \begin{equation*}
-\mftyp{f}\Gamma_0(\subst{x}{Q})\jdeq\subst{\terms[f]{A}(x)}{\mftyp{f}{\ctxext({\Gamma}{A})P}_0(Q)}
+\mftyp{f}\Gamma_0(\subst{x}{Q})\jdeq\subst{\terms[f]{A}(x)}{\mftyp{f}{\ctxext{{\Gamma}{A}}{P}}_0(Q)}
 \end{equation*}
 for every family $Q$ over $P$ over $A$ in context $\Gamma$ and every term $x:A$.
 \end{enumerate}
@@ -474,9 +474,9 @@ of models. Thus they must be extended for this purpose.
 \begin{description}
 \item[Context extension] We will extend context extension to a morphism 
 $\tfext(\Gamma):\mftyp{\mfM}{\Gamma}\to M$. Thus, we already have
-$\tfext(\Gamma)_0\defeq\ctxext{\Gamma}\blank$. We also require 
+$\tfext(\Gamma)_0\defeq\ctxext{\Gamma}{\blank}$. We also require 
 \begin{align*}
-\mftyp{\tfext(\Gamma)}{A} & : \mftyp{\mftyp{\mfM}{\Gamma}}{A}\to \mftyp{\mfM}{\ctxext{\Gamma}A}\\
+\mftyp{\tfext(\Gamma)}{A} & : \mftyp{\mftyp{\mfM}{\Gamma}}{A}\to \mftyp{\mfM}{\ctxext{\Gamma}{A}}\\
 \terms[\tfext(\Gamma)]{P} & : \terms[\mftyp{\mfM}{\Gamma}]{P}\to\terms[\mfM]{\mftyp{\tfext(\Gamma)}{A}_0(P)}
 \end{align*}
 For both of these we take the identity function.
@@ -484,27 +484,27 @@ We require furthermore that context extension preserves context extension,
 weakening and substitution:
 \begin{enumerate}
 \item Extension preserves extension: for every family $P$ over $A$ in context
-$\Gamma$ an identification $\id{\ctxext({\Gamma}{A})P}{\ctxext{\Gamma}({A}P)}$.
+$\Gamma$ an identification $\id{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}$.
 \item Extension preserves weakening:
 \item Extension preserves substitution:
 Because context extension is the identity on the levels of types and terms,
 the rules are easier.
 \end{enumerate}
-\item[Weakening] is a morphism $\tfwk:\mftyp{\mfM}{\Gamma}\to\mftyp{\mfM}{\ctxext{\Gamma}A}$, so we must have
+\item[Weakening] is a morphism $\tfwk:\mftyp{\mfM}{\Gamma}\to\mftyp{\mfM}{\ctxext{\Gamma}{A}}$, so we must have
 \begin{align*}
-\tfwk^A_0 & : \mftyp{\mfM}{\Gamma}\to\mftyp{\mfM}{\ctxext{\Gamma}A}
+\tfwk^A_0 & : \mftyp{\mfM}{\Gamma}\to\mftyp{\mfM}{\ctxext{\Gamma}{A}}
 \intertext{which is denoted by $\ctxwk{A}{\blank}$,}
-\mftypfunc{\tfwk^A} & : \mftyp{\mfM}{\ctxext{\Gamma}B}\to\mftyp{\mfM}{\ctxext({\Gamma}{A})\ctxwk{A}{B}}\\
-\terms[\tfwk^A]{B} & : \terms[\mftyp{\mfM}{\Gamma}]{B}\to\terms[\mftyp{\mfM}{\ctxext{\Gamma}A}]{\ctxwk{A}{B}}
+\mftypfunc{\tfwk^A} & : \mftyp{\mfM}{\ctxext{\Gamma}{B}}\to\mftyp{\mfM}{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}\\
+\terms[\tfwk^A]{B} & : \terms[\mftyp{\mfM}{\Gamma}]{B}\to\terms[\mftyp{\mfM}{\ctxext{\Gamma}{A}}]{\ctxwk{A}{B}}
 \end{align*}
 for a term $y:B$, the term $\terms[{\tfwk^A}]{B}(y)$ is the constant map from
 $A$ to $B$, assigning $y$ to every term of $A$.
-\item[Substitution] is a morphism $\tfsubst^x:\mftyp{\mfM}{\ctxext{\Gamma}A}
+\item[Substitution] is a morphism $\tfsubst^x:\mftyp{\mfM}{\ctxext{\Gamma}{A}}
 \to\mftyp{\mfM}{\Gamma}$ for every $x:A$ in context $\Gamma$, so we must have
 \begin{align*}
-\tfsubst^x_0 & : \mftyp{\mfM}{\ctxext{\Gamma}A}\to\mftyp{\mfM}{\Gamma}
+\tfsubst^x_0 & : \mftyp{\mfM}{\ctxext{\Gamma}{A}}\to\mftyp{\mfM}{\Gamma}
 \intertext{which is denoted by $\subst{x}{\blank}$,}
-\mftyp{\tfsubst^x}{P} & : \mftyp{\mfM}{\ctxext({\Gamma}{A})P}\to\mftyp{\mfM}{\ctxext{\Gamma}\subst{x}{P}}\\
+\mftyp{\tfsubst^x}{P} & : \mftyp{\mfM}{\ctxext{{\Gamma}{A}}{P}}\to\mftyp{\mfM}{\ctxext{\Gamma}{\subst{x}{P}}}\\
 \terms[\tfsubst^x]{P} & : \terms{P}\to\terms{\subst{x}{P}}
 \end{align*}
 The function $\terms[\tfsubst^x]{P}$ is usually denoted by $\tfev(\blank,x)$. 
@@ -515,7 +515,7 @@ The function $\terms[\tfsubst^x]{P}$ is usually denoted by $\tfev(\blank,x)$.
 \begin{defn}
 \begin{enumerate}
 \item A type $\mprd{A}{P}$ for every type $A$ in context $\Gamma$ and every type
-$P$ in context $\ctxext{\Gamma}A$.
+$P$ in context $\ctxext{\Gamma}{A}$.
 \begin{defn}
 Suppose $A$ and $B$ are types in context $\Gamma$. We define
 \begin{align*}
@@ -526,7 +526,7 @@ A\to B & \defeq\mprd{A}{\ctxwk{A}{B}}.
 and furthermore we define $\ctxhom{\Delta}{\Gamma}\defeq\terms{\Delta\to\Gamma}$.
 \end{defn}
 \item An equivalence $\lambda:\eqv{\terms{P}}{\terms{\mprd{A}{P}}}$ for every
-family $P$ over $A$ in context $\Gamma$. When $\ctxext{\Gamma}A\vdash 
+family $P$ over $A$ in context $\Gamma$. When $\ctxext{\Gamma}{A}\vdash 
 u:P$, we call $\lambda(u)$ the \emph{$\lambda$-abstraction of $u$.}
 \begin{rmk}
 Note that we get an equivalence $\eqv{\terms{\unit^\Gamma\to A}}{\terms{A}}$ 
@@ -537,9 +537,9 @@ Thus we see that $\eqv{\terms{A\to B}}{\terms{\ctxwk{A}{B}}}$
 by $\lambda$-abstraction. 
 \end{rmk}
 %\item A function $\tfev:\terms{\mprd{A}{P}}\to\prd{x:\terms{A}}\terms{\subst{x}{P}}$.
-\item A term $\pi^A:\ctxext{\Gamma}A\to \Gamma$ for every type $A$ in context
+\item A term $\pi^A:\ctxext{\Gamma}{A}\to \Gamma$ for every type $A$ in context
 $\Gamma$.
-\item A term $\iota^x:\ctxext{\Gamma}\subst{x}{P}\to\ctxext({\Gamma}{A})P$
+\item A term $\iota^x:\ctxext{\Gamma}{\subst{x}{P}}\to\ctxext{{\Gamma}{A}}{P}$
 for every family $P$ of types over $A$ in context $\Gamma$ and every
 term $x:A$.
 \item A type $A[f]$ in context $\Delta$ for every $f:\ctxhom{\Delta}{\Gamma}$ 
@@ -552,18 +552,18 @@ and $B$ in context $\Gamma$.
 \item A type $\msm{A}{P}$ in context $\Gamma$ for every family $P$ over $A$
 in context $\Gamma$, with an equivalence $\pairr{\blank,\blank}:\eqv{\sm{x:\terms{A}}\terms{\subst{x}{P}}}
 {\terms{\msm{A}{P}}}$.
-\item A family $\idtypevar{A}$ over $\ctxwk{A}{A}$ in context $\ctxext{\Gamma}A$ for
+\item A family $\idtypevar{A}$ over $\ctxwk{A}{A}$ in context $\ctxext{\Gamma}{A}$ for
 every type $A$ in context $\Gamma$ and a term of type.
 \begin{rmk}
 If $A$ and $B$ are types in context $\Gamma$, we may denote the type 
 $\msm{A}{\ctxwk{A}{B}}$ by $A\times B$. By the end of the current definition
-there will be an identification $\id{\ctxext({\Gamma}{A})P}
-{\ctxext{\Gamma}\msm{A}{P}}$.
+there will be an identification $\id{\ctxext{{\Gamma}{A}}{P}}
+{\ctxext{\Gamma}{\msm{A}{P}}}$.
 
-There is a term $\delta:\ctxhom{\ctxext{\Gamma}A}{\ctxext({\Gamma}{A})\ctxwk{A}{A}}$
+There is a term $\delta:\ctxhom{\ctxext{\Gamma}{A}}{\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}}$
 defined by...
 \end{rmk}
-\item For any family $Q$ over $\idtypevar{A}$ in context $\ctxext({\Gamma}{A})\ctxwk{A}{A}$ an equivalence
+\item For any family $Q$ over $\idtypevar{A}$ in context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}$ an equivalence
 $J:\eqv{\terms{Q}}{}$
 \end{enumerate}
 \end{defn}
@@ -588,14 +588,14 @@ family $P$ of types over $A$ in context $\Gamma$ and every term $x:A$. In other
 words, the diagram
 \begin{equation*}
 \begin{tikzcd}
-\ctxext({\Gamma}{A})P \ar{r}{\pi^P} & \ctxext{\Gamma}A \ar{d}{\pi^A}\\
-\ctxext{\Gamma}\subst{x}{P} \ar{u}{\iota^x} \ar{r}[swap]{\pi^{\subst{x}{P}}} & \Gamma
+\ctxext{{\Gamma}{A}}{P} \ar{r}{\pi^P} & \ctxext{\Gamma}{A} \ar{d}{\pi^A}\\
+\ctxext{\Gamma}{\subst{x}{P}} \ar{u}{\iota^x} \ar{r}[swap]{\pi^{\subst{x}{P}}} & \Gamma
 \end{tikzcd}
 \end{equation*}
 should commute.
 \begin{comment}
-\item For $\Gamma:\ctx$, $\Gamma\vdash A:\type$, $\ctxext{\Gamma}A\vdash P
-:\type$ and $\ctxext({\Gamma}{A})P\vdash Q:\type$, $x:A$ and $u:P$
+\item For $\Gamma:\ctx$, $\Gamma\vdash A:\type$, $\ctxext{\Gamma}{A}\vdash P
+:\type$ and $\ctxext{{\Gamma}{A}}{P}\vdash Q:\type$, $x:A$ and $u:P$
 we desire that $\typefont{nat{-}ev{-}subst}(Q,u,x):\id{Q[\iota^x][\tfev(u,x)]}{Q[u][x]}$.
 \item A function
 \begin{equation*}
@@ -679,7 +679,7 @@ Thus, we need to find the family $\pairr{p,u,v}\mapsto \id{\trans{p}{u}}{v}$,
 which also requires us to define transportation.
 
 Let $P$ be a family over $A$ in context $\Gamma$. Then we can weaken
-$\ctxwk{A}{P}$, which is a family over $\ctxwk{A}{A}$ in context $\ctxext{\Gamma}A$.
+$\ctxwk{A}{P}$, which is a family over $\ctxwk{A}{A}$ in context $\ctxext{\Gamma}{A}$.
 We also have the family $\ctxwk{\ctxwk{A}{A}}{P}$ over $\ctxwk{A}{A}$ in context
 $\ctx{\Gamma}{A}$ and thus we can form the family
 \begin{equation*}

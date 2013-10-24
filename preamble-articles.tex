@@ -77,6 +77,8 @@
 %%%%
 \input{macros}
 
+\newcommand{\idsymbin}{=}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Our commands which are not part of the macros.tex file.
 %%%% We should keep these commands separate, because we will
@@ -148,6 +150,7 @@
 %%%% brace, but also for a star. We introduce an auxiliary command that
 %%%% determines whether the next character is a star or brace.
 \newcommand{\@ifnextchar@starorbrace}[2]
+%  {\@ifnextcharamong{#1}{#2}{*}{\bgroup};}
   {\@ifnextchar*{#1}{\@ifnextchar\bgroup{#1}{#2}}}
   
 %%%% When encountering the \prd command, latex should determine whether it
@@ -259,7 +262,7 @@
 \newcommand{\sbrck}[1]{\Vert #1\Vert}
 \newcommand{\strunc}[2]{\Vert #2\Vert_{#1}}
 \newcommand{\gobjclass}{{\typefont{U}^\mfGraph}}
-\newcommand{\gcharmap}{\chi}
+\newcommand{\gcharmap}{\typefont{fib}}
 \newcommand{\diagclass}{\typefont{T}}
 \newcommand{\opdiagclass}{\op{\diagclass}}
 \newcommand{\equifibclass}{\diagclass^{\eqv{}{}}}
@@ -279,51 +282,63 @@
              {\int_{#1}#2}%
              {\int_{#1}#2}}
 \newcommand{\ctxhom}[3][]{\typefont{hom}_{#1}(#2,#3)}
-\newcommand{\graphcharmapfunc}[1]{\chi_{#1}}
+\newcommand{\graphcharmapfunc}[1]{\gcharmap_{#1}}
 \newcommand{\graphcharmap}[2][]{\graphcharmapfunc{#1}(#2)}
 \newcommand{\tfexp}[1]{\typefont{exp}_{#1}}
 \newcommand{\tffamfunc}{\typefont{fam}}
 \newcommand{\tffam}[1]{\tffamfunc(#1)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% CONTEXT EXTENSION 
+%%%%
+%%%% explicit context extension notation which we will use only rarely
+
+\newcommand{\tfext}{\typefont{ext}}
+
 %%%% The context extension command.
 %%%%
 %%%% To get a feeling of how the command works, here are a few examples.
-%%%% \ctxext{A}B will print A.B
-%%%% \ctxext{A}{B}{C}D will print A.B.C.D
-%%%% \ctxext({A}{B})C will print (A.B).C
-%%%% \ctxext{A}({B}C) wil print A.(B.C)
-%%%% \ctxext({A}({B}{C}))D will print (A.(B.C)).D
+%%%% \ctxext{A}{B} will print A.B
+%%%% \ctxext{{A}{B}}{C} will print (A.B).C
+%%%% \ctxext{{{A}{B}}{C}}{{D}{E}} will print ((A.B).C).(D.E)
 
 \makeatletter
-\newcommand{\ctxext}{
-  \@ifnextchar\bgroup
-  % then perform the context extension operation
-  { \@ctxext}
-  % else test whether the next token is an opening parenthesis
-  { \@ifnextchar{(}
-    % then place an opening parenthesis and return to \ctxext
-    { (\@ctxextskipnextchar}
-    % else test whether the next token is a closing parenthesis
-    { \@ifnextchar{)}
-      % then ignore rhe closing parenthesis and return to \ctxext
-      { \@ctxextskipnextchar}
-      % else do nothing
-      {}
-    }
-  }
-}
-\newcommand{\@ctxext}[1]{#1\@ctxextgatherparensthendot}
-\newcommand{\@ctxextskipnextchar}[1]{\ctxext}
-\newcommand{\@ctxextgatherparensthendot}{\@ifnextchar{)}{)\@@ctxextgatherparensthendot}{.\ctxext}}
-\newcommand{\@@ctxextgatherparensthendot}[1]{\@ctxextgatherparensthendot}
+\newcommand{\ctxext}[2]{\@ctxext #1.\@ctxext #2}
+\newcommand{\@ctxext}{\@ifnextchar\bgroup{\@@ctxext}{}}
+\newcommand{\@@ctxext}[1]{\@ifnextchar\bgroup{(\@ctxext@paren{#1}}{#1}}
+\newcommand{\@ctxext@paren}[2]{\ctxext{#1}{#2})}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\tfext}{\typefont{ext}}
-\newcommand{\ctxwk}[2]{{\langle #1\rangle#2}}
+\newcommand{\tfsubst}{\typefont{subst}}
+
+%%%% The substitution command will act the following way
+%%%%
+%%%% \subst{x}{P} will print P[x]
+%%%% \subst{x}{{f}{Q}} will print Q[f][x]
+%%%% \subst{{x}{f}}{{x}{Q}} will print Q[x][f[x]]
+
+\makeatletter
+\newcommand{\subst}[2]{\@subst #2[\@subst #1]}
+\newcommand{\@subst}{\@ifnextchar\bgroup{\@@subst}{}}
+\newcommand{\@@subst}[1]{\@ifnextchar\bgroup{\subst{#1}}{#1}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand{\tfwk}{\typefont{wk}}
+
+%%%% The weakening command is very much like the substitution command.
+
+\makeatletter
+\newcommand{\ctxwk}[2]{\langle\@ctxwk #1\rangle\@ctxwk #2}
+\newcommand{\@ctxwk}{\@ifnextchar\bgroup{\@@ctxwk}{}}
+\newcommand{\@@ctxwk}[1]{\@ifnextchar\bgroup{\ctxwk{#1}}{#1}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand{\tfev}{\typefont{ev}}
 \newcommand{\tfcomp}{\typefont{comp}}
 \newcommand{\isDec}[1]{\typefont{isDecidable}(#1)}
@@ -335,14 +350,13 @@
 \newcommand{\mprd}[2]{\Pi(#1,#2)}
 \newcommand{\msm}[2]{\Sigma(#1,#2)}
 \newcommand{\midt}[1]{\idvartype_#1}
-\newcommand{\famsubst}[2]{{#2[#1]}}
 \newcommand{\reflf}[1]{\typefont{refl}^{#1}}
 \newcommand{\tfJ}{\typefont{J}}
 \newcommand{\tftrans}{\typefont{trans}}
-\newcommand{\tfsubst}{\typefont{subst}}
-\newcommand{\subst}[2]{\famsubst{#1}{#2}}
+
 \newcommand{\tfT}{\typefont{T}}
 \newcommand{\reflsym}{{\mathsf{refl}}}
+\newcommand{\strans}[2]{\ensuremath{{#1}_{*}({#2})}}
 
 \makeatletter
 \newcommand{\jctx}{\@ifnextchar*{\@jctxAlignTrue}{\@jctxAlignFalse}}

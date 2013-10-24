@@ -16,22 +16,22 @@ $\mftyp{\UU}{\Gamma}$. The terms of a type $P$ in context $A$ in the model
 $\Gamma\to\UU$ are the terms of $\prd{i:\Gamma}{x:A(i)}P(i,x)$.
 
 When $A$ is a type in context
-$\Gamma$ we define the context extension $\ctxext{\Gamma}A$ to be
-$\sm{i:\Gamma}A(i)$. Note that context extension $\ctxext{\Gamma}\blank$
+$\Gamma$ we define the context extension $\ctxext{\Gamma}{A}$ to be
+$\sm{i:\Gamma}A(i)$. Note that context extension $\ctxext{\Gamma}{\blank}$
 can be seen acting not only as a function from the context of the model
 $\Gamma\to\UU$ to the context of the model $\UU$, but it also acts on the types 
 and terms: when $A$ is a type in context $\Gamma$ we may take the identity map
-from $\mftyp{\Gamma\to\UU}{A}\to\mftyp{\UU}{\ctxext{\Gamma}A}$ because
-$\mftyp{\Gamma\to\UU}{A}$ is taken to be $\mftyp{\UU}{\ctxext{\Gamma}A}$;
-thus, $\ctxext{\Gamma}P\defeq P$ for every family $P$ over $A$ in context 
+from $\mftyp{\Gamma\to\UU}{A}\to\mftyp{\UU}{\ctxext{\Gamma}{A}}$ because
+$\mftyp{\Gamma\to\UU}{A}$ is taken to be $\mftyp{\UU}{\ctxext{\Gamma}{A}}$;
+thus, $\ctxext{\Gamma}{P}\defeq P$ for every family $P$ over $A$ in context 
 $\Gamma$. Likewise, when $P$ is a type in context $A$ in the model 
 $\Gamma\to\UU$ then context extension should act on the terms of $P$ via a
-function $\terms{P}\to\terms{\ctxext{\Gamma}P}$, which we take to be
+function $\terms{P}\to\terms{\ctxext{\Gamma}{P}}$, which we take to be
 the identity map once more.
 
 Since $\mftyp{\UU}{\Gamma}$ is a model of type theory it
 has it's own notion of context extension: when $P$ is a type in context $A$ in
-the model $\mftyp{\UU}{\Gamma}$ then $\ctxext{A}P$ is the family
+the model $\mftyp{\UU}{\Gamma}$ then $\ctxext{A}{P}$ is the family
 $\lam{i}\sm{x:A(i)}P(i,x):\Gamma\to\UU$. Also the context extension of
 $\Gamma\to\UU$ acts trivially on the types and terms. Context extension is
 analoguous to the Grothendieck construction that associates the category of
@@ -69,7 +69,7 @@ $\lambda:\eqv{\terms{P}}{\terms{\mprd{A}{P}}}$. This is lambda-abstraction; its
 inverse being evaluation. We should note however, that the rule for evaluation
 we interpret here is
 \begin{equation*}
-\inference{\Gamma\vdash f:\mprd{A}{P}}{\ctxext{\Gamma}A\vdash\tfev(f):P}
+\inference{\Gamma\vdash f:\mprd{A}{P}}{\ctxext{\Gamma}{A}\vdash\tfev(f):P}
 \end{equation*}
 which is different than the usual rule
 \begin{equation*}
@@ -78,7 +78,7 @@ which is different than the usual rule
 The reason for this is that the interpretation of the usual rule would give a
 function of type $\terms{\mprd{A}{P}}\to\prd{x:\terms{A}}\terms{\subst{x}{P}}$,
 but this does not describe the terms of $\mprd{A}{P}$ by any means. Moreover,
-since we have implemented substitution, we obtain from $\ctxext{\Gamma}A\vdash\tfev(f):P$ 
+since we have implemented substitution, we obtain from $\ctxext{\Gamma}{A}\vdash\tfev(f):P$ 
 and $\Gamma\vdash x:A$ a term $\Gamma\vdash\subst{x}{\tfev(f)}:\subst{x}{P}$ and
 therefore we do not loose anything with this approach.
 
@@ -142,17 +142,17 @@ $\Gamma$.
 \end{defn}
 
 \begin{defn}
-Suppose that $\Gamma\vdash A:\mfGraph$. Then we define the graph $\ctxext{\Gamma}A$
+Suppose that $\Gamma\vdash A:\mfGraph$. Then we define the graph $\ctxext{\Gamma}{A}$
 by
 \begin{align*}
-\ctxext{\Gamma}A_0 & \defeq \sm{i:\Gamma_0}A_0(i)\\
-\ctxext{\Gamma}A_1(\pairr{i,x},\pairr{j,y}) & \defeq \sm{q:\Gamma_1(i,j)}A_1(q,x,y).
+\ctxext{\Gamma}{A}_0 & \defeq \sm{i:\Gamma_0}A_0(i)\\
+\ctxext{\Gamma}{A}_1(\pairr{i,x},\pairr{j,y}) & \defeq \sm{q:\Gamma_1(i,j)}A_1(q,x,y).
 \end{align*}
 \end{defn}
 
 \begin{defn}
 Suppose that $\Gamma\vdash A:\mfGraph$ and $\Gamma\vdash B:\mfGraph$. Then we
-define the graph $\ctxwk{A}{B}$ in context $\ctxext{\Gamma}A$ by
+define the graph $\ctxwk{A}{B}$ in context $\ctxext{\Gamma}{A}$ by
 \begin{align*}
 (\ctxwk{A}{B})_0(\pairr{i,x}) & \defeq B_0(i)\\
 (\ctxwk{A}{B})_1(\pairr{q,e},u,v) & \defeq B_1(q,u,v).
@@ -199,7 +199,7 @@ by $\unit$, is defined by
 \end{defn}
 
 \begin{rmk}
-We note that the function $\ctxext{\unit}\blank$ is an equivalence
+We note that the function $\ctxext{\unit}{\blank}$ is an equivalence
 from $\mftyp{\mfGraph}{\unit}$ to $\tfGraph$. It's inverse is the function which maps
 a graph $\Gamma$ to the pair $\pairr{A_0,A_1}$ where $A_0$ is defined by
 $A_0(\ttt)\defeq\Gamma_0$ and where $A_1$ is defined by $A_1(\ttt)\defeq
@@ -351,13 +351,13 @@ of terms of the graph $\Gamma$ in context $\unit^\mfGraph$.
 \end{rmk}
 
 \begin{defn}
-Suppose that $\Gamma\vdash A:\mfGraph$. Then we define the graph $\ctxext{\Gamma}A$
+Suppose that $\Gamma\vdash A:\mfGraph$. Then we define the graph $\ctxext{\Gamma}{A}$
 by
 \begin{align*}
-(\ctxext{\Gamma}A)_0 & \defeq \sm{i:\Gamma_0}A_0(i)\\
-(\ctxext{\Gamma}A)_1(\pairr{i,x},\pairr{j,y}) & \defeq \sm{q:\Gamma_1(i,j)}A_1(q,x,y).
+(\ctxext{\Gamma}{A})_0 & \defeq \sm{i:\Gamma_0}A_0(i)\\
+(\ctxext{\Gamma}{A})_1(\pairr{i,x},\pairr{j,y}) & \defeq \sm{q:\Gamma_1(i,j)}A_1(q,x,y).
 \end{align*}
-There is a morphism $\pi^A:\ctxhom{\ctxext{\Gamma}A,\Gamma}$ given by
+There is a morphism $\pi^A:\ctxhom{\ctxext{\Gamma}{A},\Gamma}$ given by
 \begin{align*}
 \pi^A_0 & \defeq \lam{\pairr{i,x}}i && : (\sm{i:\Gamma_0}A_0(i))\to \Gamma_0\\
 \pi^A_1(\pairr{i,x},\pairr{j,y}) & \defeq \lam{\pairr{q,e}}q && : (\sm{q:\Gamma_1(i,j)}A_1(q,x,y))\to\Gamma_1(i,j).
@@ -365,18 +365,18 @@ There is a morphism $\pi^A:\ctxhom{\ctxext{\Gamma}A,\Gamma}$ given by
 \end{defn}
 
 \begin{rmk}
-The construction of $\ctxext{\Gamma}A$ is similar to the Grothendieck
+The construction of $\ctxext{\Gamma}{A}$ is similar to the Grothendieck
 construction of the category of elements for a presheaf.
 \end{rmk}
 
 \begin{defn}
 Let $\Gamma\vdash A:\mfGraph$. A family $P$ of graphs over $A$ is by
-definition a graph $P$ in the context $\ctxext{\Gamma}A$. More explicitly, a family
+definition a graph $P$ in the context $\ctxext{\Gamma}{A}$. More explicitly, a family
 $P$ of graphs over $A$ in context $\Gamma$ consists of
 \begin{align*}
 P_0 & : \prd*{i:\Gamma_0}A_0(i)\to\type\\
 P_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}*{x:A_0(i)}*{y:A_0(j)} A_1(q,x,y)\to P_0(x)\to P_0(y)\to\type
-%P_1 & : \prd{\pairr{i,x},\pairr{j,y}:(\ctxext{\Gamma}A)_0}(\ctxext{\Gamma}A)_1(\pairr{i,x},\pairr{j,y})\to P_0(i,x)\to P_0(j,y)\to\type.
+%P_1 & : \prd{\pairr{i,x},\pairr{j,y}:(\ctxext{\Gamma}{A})_0}(\ctxext{\Gamma}{A})_1(\pairr{i,x},\pairr{j,y})\to P_0(i,x)\to P_0(j,y)\to\type.
 \end{align*}
 \end{defn}
 
@@ -447,7 +447,7 @@ By $\choice{\infty}$ it follows that
 
 \begin{rmk}
 For any two graphs $A$ and $B$ in a context $\Gamma$, we have the graph
-$B[\pi^A]$ in the context $\ctxext{\Gamma}A$, which we may just write
+$B[\pi^A]$ in the context $\ctxext{\Gamma}{A}$, which we may just write
 as $B$. Therefore, we can
 consider the graphs $\mprd{A}{B}$ and $\msm{A}{B}$. As usually those shall be
 denoted  by $A\to B$ and $A\times B$, respectively. 
@@ -503,7 +503,7 @@ There is a graph morphism
 
 \begin{defn}
 Let $A$ be a graph in context $\Gamma$. We define the family $\idtypevar{A}$ over $\ctxwk{A}{A}$ in
-context $\ctxext{\Gamma}A$ by
+context $\ctxext{\Gamma}{A}$ by
 \begin{align*}
 (\idtypevar{A})_0(\pairr{i,x},y) & \defeq \id{x}{y}\\
 (\idtypevar{A}){}_1(\pairr{q,e},d,\alpha,\alpha') & \defeq \id{\trans{\pairr{\alpha,\alpha'}}{e}}{d}
@@ -523,9 +523,9 @@ $\subst{\idfunc[A]}{\idtypevar{A}}$ over $A$ in context $\Gamma$ by
 
 \begin{defn}
 Let $D$ be a family over $\idtypevar{A}$ in context 
-$\ctxext({\Gamma}{A})\ctxwk{A}{A}$. Then we have the family
+$\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}$. Then we have the family
 $\subst{\idfunc[A]}{D}$ over $\subst{\idfunc[A]}{\idtypevar{A}}$ in
-context $\ctxext{\Gamma}A$ given by
+context $\ctxext{\Gamma}{A}$ given by
 \begin{align*}
 \subst{\idfunc[A]}{D}_0(\pairr{i,x},\alpha) & \defeq D_0(\pairr{i,x,x},\alpha)\\
 \subst{\idfunc[A]}{D}_1(\pairr{q,e},\gamma) & \defeq D_1(\pairr{q,e,e},\gamma).
@@ -684,7 +684,7 @@ $\graphcharmap[\Gamma]{f}$ is a contractible graph in the context $\Gamma$.
 Let $A$ and $B$ be graphs in a context $\Gamma$ and let $f:A\to B$. The following are equivalent:
 \begin{enumerate}
 \item $f[i]:A[i]\to B[i]$ is an equivalence of graphs for every term $i:\Gamma$.
-\item $\ctxext{\Gamma}f:\ctxext{\Gamma}A\to\ctxext{\Gamma}B$ is an equivalence of graphs.
+\item $\ctxext{\Gamma}{f}:\ctxext{\Gamma}{A}\to\ctxext{\Gamma}{B}$ is an equivalence of graphs.
 \item Both $f_0(i)$ and $f_1(q,x,y)$ are always equivalences.
 \item $\terms{f}:\terms{\Delta}\to\terms{\Gamma}$ is an equivalence.
 \end{enumerate}
@@ -693,7 +693,7 @@ Let $A$ and $B$ be graphs in a context $\Gamma$ and let $f:A\to B$. The followin
 \begin{rmk}
 It follows that there is an equivalence
 \begin{equation*}
-\ctxext{\Gamma}\msm{A}{P}\simeq\ctxext({\Gamma}{A})P
+\ctxext{\Gamma}\msm{A}{P}\simeq\ctxext{{\Gamma}{A}}{P}
 \end{equation*}
 for every family $P$ of graphs over a graph $A$ in context $\Gamma$.
 \end{rmk}
