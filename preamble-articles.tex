@@ -335,9 +335,13 @@
 \newcommand{\@jtypeAlignFalse}[2]{#1\vdash #2~type}
 \newcommand{\@jtypeAlignTrue}[3]{#2 & \vdash #3~type}
 
-\newcommand{\jterm}{\@ifnextchar*{\@jtermAlignTrue}{\@jtermAlignFalse}}
-\newcommand{\@jtermAlignTrue}[4]{#2 & \vdash #4:#3}
-\newcommand{\@jtermAlignFalse}[3]{#1 \vdash #3:#2}
+\newcommand{\jtermc}{\@ifnextchar*{\@jtermcAlignTrue}{\@jtermcAlignFalse}}
+\newcommand{\@jtermcAlignTrue}[3]{ & \vdash #3:#2}
+\newcommand{\@jtermcAlignFalse}[2]{\vdash #2:#1}
+
+\newcommand{\jtermt}{\@ifnextchar*{\@jtermtAlignTrue}{\@jtermtAlignFalse}}
+\newcommand{\@jtermtAlignTrue}[4]{#2 & \vdash #4:#3}
+\newcommand{\@jtermtAlignFalse}[3]{#1 \vdash #3:#2}
 
 \newcommand{\jctxeq}{\@ifnextchar*{\@jctxeqAlignTrue}{\@jctxeqAlignFalse}}
 \newcommand{\@jctxeqAlignTrue}[3]{& \vdash #2\jdeq #3~ctx}
@@ -347,9 +351,13 @@
 \newcommand{\@jtypeeqAlignTrue}[4]{#2 & \vdash #3\jdeq #4~type}
 \newcommand{\@jtypeeqAlignFalse}[3]{#1\vdash #2\jdeq #3~type}
 
-\newcommand{\jtermeq}{\@ifnextchar*{\@jtermeqAlignTrue}{\@jtermeqAlignFalse}}
-\newcommand{\@jtermeqAlignTrue}[5]{#2 & \vdash #4\jdeq #5:#3}
-\newcommand{\@jtermeqAlignFalse}[4]{#1\vdash #3\jdeq #4:#2}
+\newcommand{\jtermceq}{\@ifnextchar*{\@jtermceqAlignTrue}{\@jtermceqAlignFalse}}
+\newcommand{\@jtermceqAlignTrue}[5]{#2 & \vdash #4\jdeq #5:#3}
+\newcommand{\@jtermceqAlignFalse}[4]{#1\vdash #3\jdeq #4:#2}
+
+\newcommand{\jtermteq}{\@ifnextchar*{\@jtermteqAlignTrue}{\@jtermteqAlignFalse}}
+\newcommand{\@jtermteqAlignTrue}[5]{#2 & \vdash #4\jdeq #5:#3}
+\newcommand{\@jtermteqAlignFalse}[4]{#1\vdash #3\jdeq #4:#2}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
