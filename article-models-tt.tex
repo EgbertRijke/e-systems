@@ -1,0 +1,277 @@
+\section{A variable-free presentation of type theory}
+We have seen in the example of $\UU$ that we will not need to refer to variables
+when we are manipulating contexts. In fact, it is more natural not to.
+This suggests that there is a presentation
+of type theory where contexts do not mention variables. The first small gain is that such a presentation
+would not be burdened with comments about variables being bounded or not, or fresh or
+not occuring at all.
+
+\subsection{The basic judgments}
+The judgments we can make are the standard six basic judgments involving contexts, types and terms and
+judgmental equality in each of these three cases.
+\begin{align*}
+\jctx*{\Gamma} & \jctxeq*{\Gamma}{\Gamma'}\\
+\jtype*{\Gamma}{A} & \jtypeeq*{\Gamma}{A}{B}\\
+\jterm*{\Gamma}{A}{x} & \jtermeq*{\Gamma}{A}{x}{y}.
+\end{align*}
+
+In contrast with standard practise, we don't assume that there is an empty context. The idea is that
+if we interpret only the syntax of contexts, types and terms with extension, weakening and
+substitution, we do not have a full model of type theory but we still have a 
+structure resembling a category and categories need not have terminal objects. Therefore,
+the rules that follow will describe only how to manipulate contexts, types and terms.
+Of most of the inferences that we give there are two versions: one introducing an operation, the other asserting that the operation in question preserves judgmental equality. 
+
+\subsection{The basic rules for judgmental equality}
+The rules for judgmental equality establish that it is an equivalence relation
+in all three cases (contexts, types and terms).
+%\begingroup
+%\renewcommand*{\arraystretch}{3}
+%\begin{equation*}
+%\begin{array}{ccc}
+\begin{infarray}{ccc}
+\inference{\jctx{\Gamma}}{\jctxeq{\Gamma}{\Gamma}} & \inference{\jctxeq{\Gamma}{\Delta}}{\jctxeq{\Delta}{\Gamma}} & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jctxeq{\Delta}{\Theta}}{\jctxeq{\Gamma}{\Theta}}\\
+\inference{\jtype{\Gamma}{A}}{\jtypeeq{\Gamma}{A}{A}} &
+\inference{\jtypeeq{\Gamma}{A}{B}}{\jtypeeq{\Gamma}{B}{A}} & 
+\inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\Gamma}{B}{C}}{\jtypeeq{\Gamma}{A}{C}}\\
+\inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{x}{x}} & 
+\inference{\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Gamma}{A}{y}{x}} &
+\inference{\jtermeq{\Gamma}{A}{x}{y}\qquad\jtermeq{\Gamma}{A}{y}{z}}{\jtermeq{\Gamma}{A}{x}{z}}
+\end{infarray}
+%\end{array}
+%\end{equation*}
+\begin{infarray}{cc}
+\inference{\jctxeq{\Gamma}{\Delta}\qquad\jtype{\Gamma}{A}}{\jtype{\Delta}{A}}
+& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtypeeq{\Gamma}{A}{B}}{\jtypeeq{\Delta}{A}{B}}\\
+\inference{\jctxeq{\Gamma}{\Delta}\qquad\jterm{\Gamma}{A}{x}}{\jterm{\Delta}{A}{x}}
+& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Delta}{A}{x}{y}}\\
+\inference{\jtypeeq{\Gamma}{A}{B}\qquad \jterm{\Gamma}{A}{x}}{\jterm{\Gamma}{B}{x}}
+& \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Gamma}{B}{x}{y}}
+\end{infarray}
+
+\subsection{Extension}
+We introduce extension which not only extends a context $\Gamma$ and a type
+$A$ over it to a context $\ctxext{\Gamma}{A}$, but which also extends a type $A$
+in context $\Gamma$ and a family $P$ over it to a type $\ctxext{A}{P}$ in context
+$\Gamma$. We do this to ensure that all of type theory can be done in a context.
+For instance, we could say (1) that a context in context $\Gamma$ is the same thing
+as a type in context $\Gamma$; (2) When $A$ is a context in this sense, a type in
+context $A$ is the same thing as a family $P$ over $A$ and (3) when $P$ is a type
+in context $A$ in this sense, a term of $P$ keeps its original meaning.
+
+Note that by introducing extension on the level of types and families,
+we introduce $\Sigma$-types at a very early stage.
+However, we need substitution to make this precise.
+\begin{infarray}{cc}
+\inference{\jtype{\Gamma}{A}}{\jctx{\ctxext{\Gamma}{A}}}
+& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtypeeq{\Gamma}{A}{B}}{\jctxeq{\ctxext{\Gamma}{A}}{\ctxext{\Delta}{B}}}\\
+\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\ctxext{A}{P}}}
+& \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\ctxext{\Gamma}{A}}{P}{Q}}{\jtypeeq{\Gamma}{\ctxext{A}{P}}{\ctxext{B}{Q}}}
+\end{infarray}
+
+\subsection{Weakening}
+We first define weakening by a context $\Gamma$. Since weakening by $\Gamma$
+should in principle be a functor, it acts on contexts, types and terms alike.
+Note that it is because of the weakening $\ctxwk{\Gamma}{\Delta}$ of a context
+$\Delta$ by $\Gamma$ that we can speak of context morphisms from $\Gamma$ to $\Delta$: they are the terms
+of $\ctxwk{\Gamma}{\Delta}$.
+\begin{infarray}{cc}
+\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jtype{\Gamma}{\ctxwk{\Gamma}{\Delta}}} 
+& \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jctxeq{\Delta}{\Delta'}}{\jtypeeq{\Gamma}{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma'}{\Delta'}}}\\
+\inference{\jctx{\Gamma}\qquad\jtype{\Delta}{B}}{\jtype{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}} & \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtypeeq{\Delta}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma'}{B'}}}\\
+\inference{\jctx{\Gamma}\qquad\jterm{\Delta}{B}{y}}{\jterm{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}} 
+& \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtermeq{\Delta}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}{\ctxwk{\Gamma'}{y'}}} 
+\end{infarray}
+
+A weakening operation is also defined for types. When $A$ and $B$ are both types
+ in context $\Gamma$, the weakened type $\ctxwk{A}{B}$ in context $\ctxext{\Gamma}{A}$
+ is the family which `doesn't really depend on $A$'. The terms of $\ctxwk{A}{B}$
+ are the functions from $A$ to $B$. Likewise, the terms $\ctxwk{A}{y}$ are the
+ constant maps at $y$ from $A$ to $B$, for $y:B$.
+\begin{infarray}{cc}
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}}{\jtype{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}}
+& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtypeeq{\Gamma}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}}\\
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}{B}}{Q}}
+{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
+& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtypeeq{\ctxext{\Gamma}{B}}{Q}{Q'}}
+{\jtypeeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}{\ctxwk{A'}{Q'}}}\\
+\inference{\jtype{\Gamma}{A}\qquad\jterm{\Gamma}{B}{y}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}}
+& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtermeq{\Gamma}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}{\ctxwk{A'}{y'}}}
+\end{infarray}
+
+\subsection{Substitution}
+\begin{infarray}{cc}
+\inference{\jterm{\Gamma}{A}{x}\qquad\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\subst{x}{P}}}
+& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}}\\
+\inference{\jterm{\Gamma}{A}{x}\qquad\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}{\jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtypeeq{\ctxext{{\Gamma}{A}}{P}}{Q}{Q'}}{\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x'}{Q'}}}\\
+\inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jterm{\Gamma}{\subst{x}{P}}{\subst{x}{f}}}
+& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtermeq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermeq{\Gamma}{\subst{x}{P}}{\subst{x}{f}}{\subst{x'}{f'}}}\\
+\inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}{\jterm{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}}
+& \inference{\jtermeq{\Gamma}{A}{x}{x'}\qquad\jtermeq{\ctxext{{\Gamma}{A}}{P}}{Q}{g}{g'}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}{\subst{x'}{g'}}}
+\end{infarray}
+
+\subsection{Compatibility of extension, weakening and substitution}
+We describe the compatibility of extension, weakening and substitution. These
+compatibility rules are formulated in a weak sense.
+
+Extension is compatible with extension:
+\begin{infarray}{c}
+\inference
+{ \jtype{\ctxext{\Gamma}{A}}{P}
+}{\jterm
+  {\ctxext{\Gamma}{{A}{P}}}
+  {\ctxwk{\ctxext{\Gamma}{{A}{P}}}{\ctxext{{\Gamma}{A}}{P}}}{\typefont{extext}_0(A,P)}
+}\\
+\inference
+{ \jtype{\ctxext{{\Gamma}{A}}{P}}{Q}
+}{\jterm
+  {\ctxext{\Gamma}{{A}{{P}{Q}}}}
+  {\ctxwk{\ctxext{A}{{P}{Q}}}{\ctxext{{A}{P}}{Q}}}
+  {\typefont{extext}_1(A,P,Q)}
+}
+\end{infarray}
+
+Weakening is compatible with extension:
+\begin{infarray}{c}
+\inference{
+  \jctx{\Gamma}
+  \qquad
+  \jtype{\Delta}{B}}
+  {\jterm
+    {\ctxext{\Gamma}{\ctxwk{\Gamma}{\ctxext{\Delta}{B}}}}
+    {\ctxwk{{\Gamma}{\ctxext{\Delta}{B}}}{\ctxext{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}}}
+    {\typefont{wkext}_0(\Gamma,B)}}
+\end{infarray}
+
+
+Substitution is compatible with substitution:
+\begin{infarray}{c}
+\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}\qquad\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{A}}{P}{f}}
+{\jtypeeq{\Gamma}{\subst{x}{\subst{f}{Q}}}{\subst{{x}{f}}{\subst{x}{Q}}}}
+\end{infarray}
+
+\subsection{More stuff in the type theory}
+\begin{infarray}{c}
+\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}
+\end{infarray}
+
+\subsection{Leibniz equality on terms}
+Occasionally we shall need a weaker version of equality than judgmental equality.
+Our choice here is Leibniz equality, since it implies propositional equality when
+identity types are present.
+
+Let $P$ be a family over $A$ in context $\Gamma$. Then we can weaken
+$\ctxwk{A}{P}$, which is a family over $\ctxwk{A}{A}$ in context $\ctxext{\Gamma}{A}$.
+We also have the family $\ctxwk{{A}{A}}{P}$ over $\ctxwk{A}{A}$ in context
+$\ctxext{\Gamma}{A}$ and thus we have the inference
+\begin{equation*}
+\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\ctxwk{A}{P}}}{\ctxwk{{A}{P}}{\ctxwk{{A}{A}}{P}}}}
+\end{equation*}
+This family plays the role of the family $\jtype{\Gamma,x,y:A}{P(x)\to P(y)}$
+in the type theory of \cite{TheBook}.
+
+
+\subsection{Trivial cofibrations and weak equivalences of types}
+We describe a relation between types that expresses when they are weakly equivalent.
+Weak equivalence is introduced because we need a weaker notion of judgmental 
+equality which also makes sense when identity types are not present, since that
+would allow us to state that context extension, weakening and substitution
+commute with each other.
+
+A term $f:\ctxwk{A}{B}$ is a trivial cofibration if it has the
+property that for any fibration $Q$ over $B$,
+to find a section of $Q$ it suffices to find a section of the fibration
+$f^\ast Q$ over $A$. In our type theoretical setting, the rôle of fibrations
+is played by families, the rôle of the function type $A\to B$ is played by
+$\ctxwk{A}{B}$ and our version of the pullback $f^\ast Q$ is $\subst{f}{\ctxwk{A}{Q}}$.
+
+\begin{defn}
+Let $f$ be a term of $\ctxwk{A}{B}$ in context $\Gamma$.
+\begin{enumerate}
+\item For a family $Q$ over $B$ in context $\Gamma$ we define $f^\ast Q\jdeq\subst{f}{\ctxwk{A}{Q}}$.
+\item For a term $g$ of $Q$ in context $\ctxext{\Gamma}{B}$ we define $f^\ast g\jdeq\subst{f}{\ctxwk{A}{g}}$.
+\end{enumerate} 
+\end{defn}
+\begin{rmk}
+The type $f^\ast(\ctxwk{B}{C})$ in context $\ctxext{\Gamma}{A}$ is can be viewed as the
+type of functions from $A$ to $C$ which factor through $f$. Thus there should be
+a function from $f^\ast(\ctxwk{B}{C})$ to $\ctxwk{A}{C}$.
+\end{rmk}
+
+\begin{rmk}
+Every term $\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{f}$ allows us to infer the following:
+\begin{equation*}
+\inference{\jtype{\ctxext{\Gamma}{B}}{Q}}{\jtype{\ctxext{\Gamma}{A}}{f^\ast Q}}
+\qquad
+\inference{\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jterm{\ctxext{\Gamma}{A}}{f^\ast Q}{f^\ast g}}
+\end{equation*}
+\end{rmk}
+
+
+\begin{defn}
+A term $f:\ctxwk{A}{B}$ in context $\ctxext{\Gamma}{A}$ is said to be a trivial
+cofibration if we can infer
+\begin{equation*}
+\inference{\jterm{\ctxext{\Gamma}{A}}{f^\ast Q}{t}}{\jterm{\ctxext{\Gamma}{B}}{Q}{\tilde{t}}}\qquad
+\inference{\jterm{\ctxext{\Gamma}{A}}{f^\ast Q}{t}}{\jtermeq{\ctxext{\Gamma}{A}}{f^\ast Q}{f^\ast \tilde{t}}{t}}
+\end{equation*}
+{\color{red}This statement should be reformulated so that it only involves a single judgment...
+but I don't see directly how to do that.}
+\end{defn}
+
+We have the following theorem in the type theory of \cite{TheBook}, which supports
+our claim that we may indeed speak of a trivial cofibration. 
+
+\begin{thm}
+Suppose $f:A\to B$ is a function. Then $f$ is an equivalence if and only if
+for every $Q:B\to\type$ and every $g:\prd{x:A}Q(f(x))$ there is a section
+$h:\prd{y:B}Q(b)$ with the property that $h\circ f\htpy g$. 
+\end{thm}
+
+\begin{proof}
+We can first take $Q$ to be the constant family $\lam{y}A$. Furthermore, we may
+take $g\defeq\idfunc[A]$. Then we get a term of type
+\begin{equation*}
+\sm{h:B\to A}h\circ f\htpy \idfunc[A],
+\end{equation*}
+i.e.~we get a left inverse $h$ for $f$. To show that $h$ is also a right inverse
+of $f$, let $Q$ be the family $\lam{y}\id{f(h(y))}{y}$. To find a section of
+$Q$, which is the homotopy we aim for, it suffices to find a section of
+$Q\circ f$. In other words, we have to show that $\id{f(h(f(x)))}{f(x)}$ for
+every $x:A$. This follows from the fact that $h$ is a left inverse for $f$.
+
+The reverse direction is immediate.
+\end{proof}
+
+Another approach would be to define $f:\ctxwk{A}{B}$ to be left invertible
+if there is a term $\ctxext{{\Gamma}{A}}{P}$
+
+\subsection{The interactions of extension, weakening and substitution}
+
+\subsection{The basic constructors of type theory}
+\subsubsection{Dependent function types}
+\begin{infarray}{cc}
+\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\mprd{A}{P}}}
+& \inference{\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\mprd{A}{P}}{\mprd{A}{P'}}}\\
+\inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jterm{\Gamma}{\mprd{A}{P}}{\lambda(f)}}
+& \inference{\jtermeq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermeq{\Gamma}{\mprd{A}{P}}{\lambda(f)}{\lambda(f')}}\\
+\inference{\jterm{\Gamma}{\mprd{A}{P}}{g}}{\jterm{\ctxext{\Gamma}{A}}{P}{\tfev(g)}}
+& \inference{\jtermeq{\Gamma}{\mprd{A}{P}}{g}{g'}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\tfev(g)}{\tfev(g')}}\\
+\inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\Gamma}{A}{\tfev(\lambda(f))}{f}}
+\end{infarray}
+
+With these rules we will not get the weak $\eta$-rule when identity types are present.
+So it might be better to state that $\lambda$ is a trivial cofibration
+
+\subsection{Identity types}
+We need to define the diagonal function $\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{\ctxext{A}{\ctxwk{A}{A}}}}{\delta}$
+\begin{infarray}{c}
+\inference{\jtype{\Gamma}{A}}{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}\\
+\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\delta^\ast\idtypevar{A}}{\reflsym}}\\
+\inference{\jtype{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}\qquad
+\jterm{\ctxext{\Gamma}{A}}{\pairr{\delta,\reflsym}^\ast P}{d}}
+{\jterm{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}{J}}
+\end{infarray}
+
+

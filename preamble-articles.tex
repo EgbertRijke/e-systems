@@ -303,10 +303,13 @@
 %%%% \ctxext{{{A}{B}}{C}}{{D}{E}} will print ((A.B).C).(D.E)
 
 \makeatletter
-\newcommand{\ctxext}[2]{\@ctxext #1.\@ctxext #2}
+\newcommand{\ctxext}[2]{\@ctxext@ctx #1.\@ctxext@type #2}
 \newcommand{\@ctxext}{\@ifnextchar\bgroup{\@@ctxext}{}}
-\newcommand{\@@ctxext}[1]{\@ifnextchar\bgroup{(\@ctxext@paren{#1}}{#1}}
-\newcommand{\@ctxext@paren}[2]{\ctxext{#1}{#2})}
+\newcommand{\@ctxext@ctx}{\@ifnextchar\ctxext{\@ctxext@nested}{\@ifnextchar\ctxwk{\@ctxwk@nested}{\@ctxext}}}
+\newcommand{\@ctxext@type}{\@ifnextchar\ctxext{\@ctxext@nested}{\@ifnextchar\subst{\@subst@nested}{\@ctxext}}}
+\newcommand{\@@ctxext}[1]{\@ifnextchar\bgroup{\@ctxext@parens{#1}}{#1}}
+\newcommand{\@ctxext@parens}[2]{(\ctxext{#1}{#2})}
+\newcommand{\@ctxext@nested}[3]{\@ctxext@parens{#2}{#3}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -320,9 +323,13 @@
 %%%% \subst{{x}{f}}{{x}{Q}} will print Q[x][f[x]]
 
 \makeatletter
-\newcommand{\subst}[2]{\@subst #2[\@subst #1]}
+\newcommand{\subst}[2]{\@subst@type #2[\@subst@term #1]}
 \newcommand{\@subst}{\@ifnextchar\bgroup{\@@subst}{}}
 \newcommand{\@@subst}[1]{\@ifnextchar\bgroup{\subst{#1}}{#1}}
+\newcommand{\@subst@term}{\@subst}
+\newcommand{\@subst@type}{\@ifnextchar\ctxext{\@ctxext@nested}{\@ifnextchar\ctxwk{\@ctxwk@nested}{\@subst}}}
+\newcommand{\@subst@nested}[3]{\@subst@parens{#2}{#3}}
+\newcommand{\@subst@parens}[2]{(\subst{#1}{#2})}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -332,9 +339,13 @@
 %%%% The weakening command is very much like the substitution command.
 
 \makeatletter
-\newcommand{\ctxwk}[2]{\langle\@ctxwk #1\rangle\@ctxwk #2}
+\newcommand{\ctxwk}[2]{\langle\@ctxwk@act #1\rangle\@ctxwk@pass #2}
 \newcommand{\@ctxwk}{\@ifnextchar\bgroup{\@@ctxwk}{}}
 \newcommand{\@@ctxwk}[1]{\@ifnextchar\bgroup{\ctxwk{#1}}{#1}}
+\newcommand{\@ctxwk@act}{\@ctxwk}
+\newcommand{\@ctxwk@pass}{\@ifnextchar\ctxext{\@ctxext@nested}{\@ifnextchar\subst{\@subst@nested}{\@ctxwk}}}
+\newcommand{\@ctxwk@parens}[2]{(\ctxwk{#1}{#2})}
+\newcommand{\@ctxwk@nested}[3]{\@ctxwk@parens{#2}{#3}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
