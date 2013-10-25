@@ -352,8 +352,8 @@
 \newcommand{\@jtypeeqAlignFalse}[3]{#1\vdash #2\jdeq #3~type}
 
 \newcommand{\jtermceq}{\@ifnextchar*{\@jtermceqAlignTrue}{\@jtermceqAlignFalse}}
-\newcommand{\@jtermceqAlignTrue}[5]{#2 & \vdash #4\jdeq #5:#3}
-\newcommand{\@jtermceqAlignFalse}[4]{#1\vdash #3\jdeq #4:#2}
+\newcommand{\@jtermceqAlignTrue}[4]{& \vdash #3\jdeq #4:#2}
+\newcommand{\@jtermceqAlignFalse}[3]{\vdash #2\jdeq #3:#1}
 
 \newcommand{\jtermteq}{\@ifnextchar*{\@jtermteqAlignTrue}{\@jtermteqAlignFalse}}
 \newcommand{\@jtermteqAlignTrue}[5]{#2 & \vdash #4\jdeq #5:#3}
