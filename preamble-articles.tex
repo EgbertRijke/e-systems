@@ -219,12 +219,20 @@
 \newcommand{\typefont}{\mathsf} % use 'tf' in command to indicate type font
 \newcommand{\catfont}{\mathrm} % use 'cf' in command to indicate cat font
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Some macros of the book are redefined.
+
 \renewcommand{\UU}{\typefont{U}}
 \renewcommand{\isequiv}{\typefont{isEquiv}}
 \renewcommand{\happly}{\typefont{hApply}}
 \renewcommand{\pairr}[1]{{\mathopen{}\langle #1\rangle\mathclose{}}}
 \renewcommand{\type}{\typefont{Type}}
 \renewcommand{\op}[1]{{{#1}^\typefont{op}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% The following is a big unorganized list of new macros that we use in the
+%%%% notes. 
+
 \newcommand{\mfM}{\modelfont{M}}
 \newcommand{\mfN}{\modelfont{N}}
 \newcommand{\tfctx}{\typefont{ctx}}
@@ -287,6 +295,76 @@
 \newcommand{\tfexp}[1]{\typefont{exp}_{#1}}
 \newcommand{\tffamfunc}{\typefont{fam}}
 \newcommand{\tffam}[1]{\tffamfunc(#1)}
+\newcommand{\tfev}{\typefont{ev}}
+\newcommand{\tfcomp}{\typefont{comp}}
+\newcommand{\isDec}[1]{\typefont{isDecidable}(#1)}
+\newcommand{\smal}{\mathcal{S}}
+\renewcommand{\modal}{{\ensuremath{\ocircle}}}
+\newcommand{\eqrel}{\typefont{EqRel}}
+\newcommand{\piw}{\ensuremath{\Pi\typefont{W}}} %% to be used in conjunction with -pretopos.
+\renewcommand{\sslash}{/\!\!/}
+\newcommand{\mprd}[2]{\Pi(#1,#2)}
+\newcommand{\msm}[2]{\Sigma(#1,#2)}
+\newcommand{\midt}[1]{\idvartype_#1}
+\newcommand{\reflf}[1]{\typefont{refl}^{#1}}
+\newcommand{\tfJ}{\typefont{J}}
+\newcommand{\tftrans}{\typefont{trans}}
+
+\newcommand{\tfT}{\typefont{T}}
+\newcommand{\reflsym}{{\mathsf{refl}}}
+\newcommand{\strans}[2]{\ensuremath{{#1}_{*}({#2})}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% JUDGMENTS
+%%%%
+%%%% Below we define several commands for the judgments of type theory. There
+%%%% are commands
+%%%% * \jctx for the judgment that something is a context.
+%%%% * \jctxeq for the judgment that two contexts are the same
+%%%% * \jtype for the judgment that something is a type in a context
+%%%% * \jtypeeq for the judgment that two types in the same context are the same
+%%%% * \jterm for the judgment that something is a term of a type in a context
+%%%% * \jtermeq for the judgment that two terms of the same type are the same
+
+\makeatletter
+\newcommand{\jctx}{\@ifnextchar*{\@jctxAlignTrue}{\@jctxAlignFalse}}
+\newcommand{\@jctxAlignTrue}[2]{& \vdash #2~ctx}
+\newcommand{\@jctxAlignFalse}[1]{\vdash #1~ctx}
+
+\newcommand{\jtype}{\@ifnextchar*{\@jtypeAlignTrue}{\@jtypeAlignFalse}}
+\newcommand{\@jtypeAlignFalse}[2]{#1\vdash #2~type}
+\newcommand{\@jtypeAlignTrue}[3]{#2 & \vdash #3~type}
+
+\newcommand{\jterm}{\@ifnextchar*{\@jtermAlignTrue}{\@jtermAlignFalse}}
+\newcommand{\@jtermAlignTrue}[4]{#2 & \vdash #4:#3}
+\newcommand{\@jtermAlignFalse}[3]{#1 \vdash #3:#2}
+
+\newcommand{\jctxeq}{\@ifnextchar*{\@jctxeqAlignTrue}{\@jctxeqAlignFalse}}
+\newcommand{\@jctxeqAlignTrue}[3]{& \vdash #2\jdeq #3~ctx}
+\newcommand{\@jctxeqAlignFalse}[2]{\vdash #1\jdeq #2~ctx}
+
+\newcommand{\jtypeeq}{\@ifnextchar*{\@jtypeeqAlignTrue}{\@jtypeeqAlignFalse}}
+\newcommand{\@jtypeeqAlignTrue}[4]{#2 & \vdash #3\jdeq #4~type}
+\newcommand{\@jtypeeqAlignFalse}[3]{#1\vdash #2\jdeq #3~type}
+
+\newcommand{\jtermeq}{\@ifnextchar*{\@jtermeqAlignTrue}{\@jtermeqAlignFalse}}
+\newcommand{\@jtermeqAlignTrue}[5]{#2 & \vdash #4\jdeq #5:#3}
+\newcommand{\@jtermeqAlignFalse}[4]{#1\vdash #3\jdeq #4:#2}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Often we shall need to display lists of inference rules. This environment
+%%%% adjusts the array environment so that there is enough vertical space
+%%%% between two inference rules
+%%%%
+%%%% bug: there's two much space above the array.
+
+\newenvironment{infarray}[1]{\begingroup\renewcommand*{\arraystretch}{3}
+\begin{equation*}
+\begin{array}{#1}}{
+\end{array}
+\end{equation*}
+\endgroup}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% CONTEXT EXTENSION 
@@ -313,6 +391,7 @@
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% SUBSTITUTION
 
 \newcommand{\tfsubst}{\typefont{subst}}
 
@@ -333,6 +412,7 @@
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% WEAKENING
 
 \newcommand{\tfwk}{\typefont{wk}}
 
@@ -349,73 +429,6 @@
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\tfev}{\typefont{ev}}
-\newcommand{\tfcomp}{\typefont{comp}}
-\newcommand{\isDec}[1]{\typefont{isDecidable}(#1)}
-\newcommand{\smal}{\mathcal{S}}
-\renewcommand{\modal}{{\ensuremath{\ocircle}}}
-\newcommand{\eqrel}{\typefont{EqRel}}
-\newcommand{\piw}{\ensuremath{\Pi\typefont{W}}} %% to be used in conjunction with -pretopos.
-\renewcommand{\sslash}{/\!\!/}
-\newcommand{\mprd}[2]{\Pi(#1,#2)}
-\newcommand{\msm}[2]{\Sigma(#1,#2)}
-\newcommand{\midt}[1]{\idvartype_#1}
-\newcommand{\reflf}[1]{\typefont{refl}^{#1}}
-\newcommand{\tfJ}{\typefont{J}}
-\newcommand{\tftrans}{\typefont{trans}}
-
-\newcommand{\tfT}{\typefont{T}}
-\newcommand{\reflsym}{{\mathsf{refl}}}
-\newcommand{\strans}[2]{\ensuremath{{#1}_{*}({#2})}}
-
-\makeatletter
-\newcommand{\jctx}{\@ifnextchar*{\@jctxAlignTrue}{\@jctxAlignFalse}}
-\newcommand{\@jctxAlignTrue}[2]{& \vdash #2~ctx}
-\newcommand{\@jctxAlignFalse}[1]{\vdash #1~ctx}
-\newcommand{\jtype}{\@ifnextchar*{\@jtypeAlignTrue}{\@jtypeAlignFalse}}
-\newcommand{\@jtypeAlignFalse}[2]{#1\vdash #2~type}
-\newcommand{\@jtypeAlignTrue}[3]{#2 & \vdash #3~type}
-\newcommand{\jterm}{\@ifnextchar*{\@jtermAlignTrue}{\@jtermAlignFalse}}
-\newcommand{\@jtermAlignTrue}[4]{#2 & \vdash #4:#3}
-\newcommand{\@jtermAlignFalse}[3]{#1 \vdash #3:#2}
-\newcommand{\jctxeq}{\@ifnextchar*{\@jctxeqAlignTrue}{\@jctxeqAlignFalse}}
-\newcommand{\@jctxeqAlignTrue}[3]{& \vdash #2\jdeq #3~ctx}
-\newcommand{\@jctxeqAlignFalse}[2]{\vdash #1\jdeq #2~ctx}
-\newcommand{\jtypeeq}{\@ifnextchar*{\@jtypeeqAlignTrue}{\@jtypeeqAlignFalse}}
-\newcommand{\@jtypeeqAlignTrue}[4]{#2 & \vdash #3\jdeq #4~type}
-\newcommand{\@jtypeeqAlignFalse}[3]{#1\vdash #2\jdeq #3~type}
-\newcommand{\jtermeq}{\@ifnextchar*{\@jtermeqAlignTrue}{\@jtermeqAlignFalse}}
-\newcommand{\@jtermeqAlignTrue}[5]{#2 & \vdash #4\jdeq #5:#3}
-\newcommand{\@jtermeqAlignFalse}[4]{#1\vdash #3\jdeq #4:#2}
-\makeatother
-
-\newenvironment{infarray}[1]{\begingroup\renewcommand*{\arraystretch}{3}
-\begin{equation*}
-\begin{array}{#1}}{
-\end{array}
-\end{equation*}
-\endgroup}
-
-%\newcounter{modelenumi}
-%\makeatletter
-%\@addtoreset{modelenumi}{enumi}
-%\makeatother
-%\newenvironment{modelenumerate}
-%{ \begingroup
-%  \renewcommand{\theenumi}{(M.\arabic{enumi})}
-%  \renewcommand{\labelenumi}{\theenumi}
-%  \begin{enumerate}
-%  \setcounter{enumi}{modelenumi}
-%}
-%{ %\setcounter{modelenumi}{enumi}
-%  \end{enumerate}\endgroup
-%}
-
-%% New theorem environment. This should ultimately be removed.
-\defthm{conj}{Conjecture}{Conjectures}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Some tikz macros to typeset diagrams uniformly.
 
 \tikzset{patharrow/.style={double,double equal sign distance,-,font=\scriptsize}}
@@ -423,6 +436,15 @@
 
 %% Used for extra wide diagrams, e.g. when the label is too large otherwise.
 \tikzset{commutative diagrams/column sep/Huge/.initial=18ex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% New theorem environment for conjectures.
+
+\defthm{conj}{Conjecture}{Conjectures}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% The following environment for desiderata should not be there. It is better
+%%%% to use the issue tracker for desiderata.
 
 \newenvironment{desiderata}{\begingroup\color{blue}\textbf{Desiderata.}}
 {\endgroup}
