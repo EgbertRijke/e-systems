@@ -14,7 +14,7 @@ and ``$i$ and $j$ are equal terms of context $\Gamma$''. Thus, we have eight bas
 
 \begin{align*}
 \jctx*{\Gamma} & \jctxeq*{\Gamma}{\Gamma'}\\
-\jtermc*{\Gamma}{i} & \jtermc*{\Gamma}{i}{j}\\
+\jtermc*{\Gamma}{i} & \jtermceq*{\Gamma}{i}{j}\\
 \jtype*{\Gamma}{A} & \jtypeeq*{\Gamma}{A}{B}\\
 \jtermt*{\Gamma}{A}{x} & \jtermteq*{\Gamma}{A}{x}{y}.
 \end{align*}
@@ -116,6 +116,10 @@ A weakening operation is also defined for types. When $A$ and $B$ are both types
 \end{infarray}
 
 \subsection{Definitional equality rules for weakening and substitution}
+
+%\begin{infarray}{c}
+%\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}\qquad\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{A
+%\end{infarray}{c}
 
 \subsection{Compatibility of extension, weakening and substitution}
 We describe the compatibility of extension, weakening and substitution. These

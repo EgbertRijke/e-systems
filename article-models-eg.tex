@@ -84,9 +84,6 @@ therefore we do not loose anything with this approach.
 
 {\color{red} point to example}
 
-\subsection{The Sierpinsky model}.
-In the Sierpinsky model, contexts are interpreted by dependent types $A\to\type$.
-
 \subsection{The graph model of type theory}
 In this section we define the graph model of type theory, denoted by
 $\mfGraph$.  In our presentation, we follow that of the definition internal
@@ -840,3 +837,88 @@ which are each others homotopy inverse. To define $\varphi$, let
 \end{proof}
 \endgroup
 
+\subsection{The model of equifibered families of graphs}
+We describe the model $\equifib$ of equifibered families of graphs. The contexts
+are still the graphs. However, the types of $\equifib$ are not just the
+families of graphs, but the equifibered families of graphs. This will have
+far-reaching consequences for the rest of the structure of the model. As an
+example, a morphism of graphs will no longer be a pair consisting of a map of
+vertices and a map of edges.
+
+\begin{defn}
+Let $\Gamma$ be a graph. A type in context $\Gamma$ is a triple 
+$\pairr{A_0,A_1,A_2}$ consisting of
+\begin{align*}
+A_0 & : \Gamma_0\to\type\\
+A_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}A_0(i)\to A_0(j)\\
+A_2 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}\isequiv{A_1(q)}
+\end{align*}
+A type in context $\Gamma$ is also called an equifibered family over $\Gamma$.
+\end{defn}
+
+\begin{defn}
+Let $\Gamma$ be a graph. A term of $\Gamma$ is a term of $\Gamma_0$.
+\end{defn}
+
+\begin{defn}
+Let $A$ be an equifibered family over $\Gamma$. A term $x$ of $A$ is a pair
+$\pairr{x_0,x_1}$ consisting of
+\begin{align*}
+x_0 & : \prd{i:\Gamma_0}A_0(i)\\
+x_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}\id{A_1(q,x_0(i))}{x_0(j)}
+\end{align*}
+\end{defn}
+
+\begin{defn}
+Suppose that $A$ is an equifibered family over $\Gamma$. We define the graph
+$\ctxext{\Gamma}{A}$ to consist of
+\begin{align*}
+\ctxext{\Gamma}{A}_0 & \defeq\sm{i:\Gamma_0}A_0(i)\\
+\ctxext{\Gamma}{A}_1(\pairr{i,x},\pairr{j,y}) & \defeq \sm{q:\Gamma_1(i,j)}\id{A_1(q,x)}{y}.
+\end{align*}
+\end{defn}
+
+\begin{defn}
+Suppose $\Gamma$ and $\Delta$ are graphs. We define the equifibered family
+$\ctxwk{\Gamma}{\Delta}$ over $\Gamma$ to consist of
+\begin{align*}
+\ctxwk{\Gamma}{\Delta}_0(i) & \defeq \Delta\\
+\ctxwk{\Gamma}{\Delta}_1(q) & \defeq \idfunc[\Delta]\\
+\ctxwk{\Gamma}{\Delta}_2(q) & \defeq \nameless.
+\end{align*}
+The proof $\ctxwk{\Gamma}{\Delta}_2(q)$ that $\ctxwk{\Gamma}{\Delta}_1(q)$ is an
+equivalence is the canonical proof that $\idfunc[\Delta]$ is an equivalence, for
+which we don't have a name.
+\end{defn}
+
+\begin{defn}
+Suppose $A$ and $B$ are equifibered families over $\Gamma$. We define the equifibered
+diagram $\ctxwk{A}{B}$ over $\ctxext{\Gamma}{A}$ to consist of
+\begin{align*}
+\ctxwk{A}{B}_0(\pairr{i,x}) & \defeq B_0(i)\\
+\ctxwk{A}{B}_1(\pairr{q,\alpha}) & \defeq B_1(q)\\
+\ctxwk{A}{B}_2(\pairr{q,\alpha}) & \defeq B_2(q).
+\end{align*}
+\end{defn}
+
+\begin{defn}
+Suppose $A$ is an equifibered family over $\Gamma$ with $x:A$ and that $P$ is an equifibered
+family over $\ctxext{\Gamma}{A}$. Then we define the equifibered family $\subst{x}{P}$
+over $\Gamma$ to consist of
+\begin{align*}
+\pts{\subst{x}{P}}(i) & \defeq \pts{P}(\pts{x}(i))\\
+\edg{\subst{x}{P}}(q,u) & \defeq \edg{P}(\pairr{q,\edg{x}(q)},u)\\
+\subst{x}{P}_2(q) & \defeq P_2(\pairr{q,\edg{x}(q)}).
+\end{align*}
+\end{defn}
+
+\begin{defn}
+Suppose that $A$ is an equifibered family over $\Gamma$ and that $P$ is an
+equifibered family over $\ctxext{\Gamma}{A}$. Then we define the equifibered
+family $\msm{A}{P}$ over $\Gamma$ by
+\begin{align*}
+\pts{\msm{A}{P}}(i) & \defeq \sm{x:\pts{A}(i)}\pts{P}(x)\\
+\edg{\msm{A}{P}}(q,\pairr{x,u}) & \defeq \pairr{\edg{A}(q,x),\edg{P}(\pairr{q,\refl{\edg{A}(q,x)}},u)}\\
+\msm{A}{P}_2(q,\pairr{x,u}) & \defeq \nameless.
+\end{align*}
+\end{defn}
