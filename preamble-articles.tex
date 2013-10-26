@@ -437,6 +437,55 @@
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% When investigation pointed structures we use the \pt macro.
+
+\makeatletter
+\newcommand{\pt}[1][]{*_{
+  \@ifnextchar\undergraph{\@undergraph@nested}
+    {\@ifnextchar\underovergraph{\@underovergraph@nested}{}}#1}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% OPERATIONS ON GRAPHS
+%%%%
+%%%% First of all, each graph has a type of vertices and a type of edges. The
+%%%% type of vertices of a graph $\Gamma$ is denoted by $\pts{\Gamma}$;
+%%%% and likewise for the type of edges.
+
+\makeatletter
+\newcommand{\pts}[1]{{\@graphop@nested{#1}}_{0}}
+\newcommand{\edg}[1]{{\@graphop@nested{#1}}_{1}}
+\newcommand{\@graphop@nested}[1]
+  {\@ifnextchar\ctxext{\@ctxext@nested}
+      {\@ifnextchar\undergraph{\@undergraph@nested}
+         {\@ifnextchar\underovergraph{\@underovergraph@nested}{}}}
+    #1}
+\makeatother
+
+%%%% The following operations of \undergraph and \underovergraph are used to
+%%%% define the free category and the free groupoid of a graph, respectively
+
+\makeatletter
+\newcommand{\@undergraphtest}[2]{\@ifnextchar({#1}{#2}}
+\newcommand{\undergraph}[2]{\@undergraphtest{\@undergraph@parens{#1}{#2}}{\@undergraph{#1}{#2}}}
+\newcommand{\@undergraph}[2]{{#2/#1}}
+\newcommand{\@undergraph@nested}[3]{\@undergraph@parens{#2}{#3}}
+\newcommand{\@undergraph@parens}[2]{(\@undergraph{#1}{#2})}
+\makeatother
+
+\makeatletter
+\newcommand{\underovergraph}[2]{\@underovergraphtest{\@underovergraph@parens{#1}{#2}}{\@underovergraph{#1}{#2}}}
+\newcommand{\@underovergraph}[2]{{#2}\,{\parallel}\,{#1}}
+\newcommand{\@underovergraphtest}{\@undergraphtest}
+\newcommand{\@underovergraph@parens}[2]{(\@underovergraph{#1}{#2})}
+\newcommand{\@underovergraph@nested}[3]{\@underovergraph@parens{#2}{#3}}
+\makeatother
+
+\newcommand{\graphid}[1]{\mathrm{id}_{#1}}
+\newcommand{\freecat}[1]{\mathcal{C}(#1)}
+\newcommand{\freegrpd}[1]{\mathcal{G}(#1)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Some tikz macros to typeset diagrams uniformly.
 
 \tikzset{patharrow/.style={double,double equal sign distance,-,font=\scriptsize}}
