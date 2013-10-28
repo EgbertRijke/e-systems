@@ -116,9 +116,39 @@ A weakening operation is also defined for types. When $A$ and $B$ are both types
 \end{infarray}
 
 \subsection{Definitional equality rules for weakening and substitution}
+The judgmental equalities we're about to describe assert that weakening followed
+by substitution leaves everything untouched. Thus, we get that each fiber
+$\subst{x}{\ctxwk{A}{B}}$ is just $B$, that $\ctxwk{A}{y}$ is the constant function
+mapping everything to $y:B$ and similar properties for families and terms thereof.
+
+\begin{infarray}{c}
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jtermt{\Gamma}{A}{x}}{\jtypeeq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\\
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}{B}}{Q}\qquad\jtermt{A}{x}}{\jtypeeq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\\
+\inference{\jtermt{\Gamma}{A}{x}\qquad\jtermt{\Gamma}{B}{y}}{\jtermteq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\\
+\inference{\jtermt{\Gamma}{A}{x}\qquad\jtermt{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermteq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
+\end{infarray}
+
+\subsection{The variable rule -- identity functions}
+In the usual presentation of type theory, the variable rule asserts that ``in
+the context $x_1:A_1,...,x_n:A_n$ we have a term $x_i:A_i$ when $1\leq i\leq n$''.
+
+In our current system, we don't need this generality. Instead, it suffices for
+us to assert that there are identity morphisms. We get arbitrary projections
+from weakening.
+
+\begin{infarray}{c}
+\inference{\jtype{\Gamma}{A}}{\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}\\
+\inference{\jtermt{\Gamma}{A}{x}}{\jtermteq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}\\
+\inference{\jtermt{\ctxext{\Gamma}{A}}{P}{f}}{\jtermteq{\ctxext{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{A}{f}}}{f}}\\
+\inference{\jtermt{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{g}}{\jtermteq{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{\subst{g}{\ctxwk{B}{\idfunc[A]}}}{g}}
+\end{infarray}
+
+Using these rules we can derive that there is a judgmental equality $\jtypeeq{\ctxext{\Gamma}{A}}{\subst{x}{{\idfunc[A]}{B}}}
+{\subst{x}{{x}{B}}}$.
+
 
 %\begin{infarray}{c}
-%\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}\qquad\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{A
+%\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}\qquad\jtermt{\Gamma}{A}{x}\qquad\jtermt{\ctxext{A
 %\end{infarray}{c}
 
 \subsection{Compatibility of extension, weakening and substitution}
