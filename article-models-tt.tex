@@ -103,19 +103,95 @@ A weakening operation is also defined for types. When $A$ and $B$ are both types
 & \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtermteq{\Gamma}{B}{y}{y'}}{\jtermteq{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}{\ctxwk{A'}{y'}}}
 \end{infarray}
 
-\subsection{Substitution}
-\begin{infarray}{cc}
-\inference{\jtermt{\Gamma}{A}{x}\qquad\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\subst{x}{P}}}
-& \inference{\jtermteq{\Gamma}{A}{x}{x'}\qquad\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}}\\
-\inference{\jtermt{\Gamma}{A}{x}\qquad\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}{\jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
-& \inference{\jtermteq{\Gamma}{A}{x}{x'}\qquad\jtypeeq{\ctxext{{\Gamma}{A}}{P}}{Q}{Q'}}{\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x'}{Q'}}}\\
-\inference{\jtermt{\Gamma}{A}{x}\qquad\jtermt{\ctxext{\Gamma}{A}}{P}{f}}{\jtermt{\Gamma}{\subst{x}{P}}{\subst{x}{f}}}
-& \inference{\jtermteq{\Gamma}{A}{x}{x'}\qquad\jtermteq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermteq{\Gamma}{\subst{x}{P}}{\subst{x}{f}}{\subst{x'}{f'}}}\\
-\inference{\jtermt{\Gamma}{A}{x}\qquad\jtermt{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}{\jtermt{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}}
-& \inference{\jtermteq{\Gamma}{A}{x}{x'}\qquad\jtermteq{\ctxext{{\Gamma}{A}}{P}}{Q}{g}{g'}}{\jtermteq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}{\subst{x'}{g'}}}
+\subsubsection{Weakening is compatible with itself}
+Suppose $\jtype{\ctxext{\Gamma}{A}}{P}$ and $\jtype{\Gamma}{B}$. Then we can
+consider the weakening $\ctxwk{A}{B}$ over $A$ and consecutively the weakening
+$\ctxwk{P}{{A}{B}}$. This should be isomorphic to $\ctxwk{\ctxext{A}{P}}{B}$.
+
+\subsection{The universal property of extension}
+
+Using weakening and substitution we are able to state the universal property
+for extension. It looks a bit more involved, since we cannot directly refer
+to the variables in the contexts. On the other hand, we can now plainly see
+were there were secretly weakenings going on.
+
+In all of the following inference rules we assume that $\jtype{\ctxext{\Gamma}{A}}{P}$
+is among the hypothesis. The induction principle for extension consists of three
+inference rules:
+
+\begin{infarray}{c}
+\inference{}
+{\jtermt{\ctxext{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{\ctxext{A}{P}}}}{\pair^P}}\\
+\inference{
+  \jtype{\ctxext{\Gamma}{{A}{P}}}{Q}
+  \qquad
+  \jtermt{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair^P}{\ctxwk{P}{{A}{Q}}}}{f}}
+  {\jtermt{\ctxext{\Gamma}{{A}{P}}}{Q}{\ind{ext}(f)}}\\
+\inference{
+  \jtype{\ctxext{\Gamma}{{A}{P}}}{Q}
+  \qquad
+  \jtermt{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair^P}{\ctxwk{P}{{A}{Q}}}}{f}}
+  {\jtermteq{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair^P}{\ctxwk{P}{{A}{Q}}}}{\subst{\pair^P}{\ctxwk{P}{{A}{\ind{ext}(f)}}}}{f}}
 \end{infarray}
 
-\subsection{Definitional equality rules for weakening and substitution}
+\subsubsection{Weakening is compatible with extension}
+Suppose $\jtype{\Gamma}{A}$ and $\jtype{\ctxext{\Gamma}{B}}{Q}$. Then
+\begin{equation*}
+s:\ctxwk{{A}{\ctxext{B}{Q}}}{\ctxext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}}
+\end{equation*}
+
+\subsection{Substitution}
+Given a family $P$ over $A$ and a term $x$ of $A$, substitution gives a way to
+consider the fiber $\subst{x}{P}$ of $P$ at $x$. Also, we get a way to evaluate
+terms $f$ of $P$ at $x$. This will give us ways to compose functions too. In
+this section, we shall first introduce the operations `substitution of a term $x$'
+for types, terms and families. Then we shall explain how substitution interacts
+with itself, extension and weakening.
+
+In the rules introducing the various substitutions we assume $\jtermt{\Gamma}{A}{x}$;
+in the rules introducing the definitional equalities we assume $\jtermteq{\Gamma}{A}{x}{x'}$.
+
+\begin{infarray}{cc}
+\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\subst{x}{P}}}
+& \inference{\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}}\\
+\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}{\jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+& \inference{\jtypeeq{\ctxext{{\Gamma}{A}}{P}}{Q}{Q'}}{\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x'}{Q'}}}\\
+\inference{\jtermt{\ctxext{\Gamma}{A}}{P}{f}}{\jtermt{\Gamma}{\subst{x}{P}}{\subst{x}{f}}}
+& \inference{\jtermteq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermteq{\Gamma}{\subst{x}{P}}{\subst{x}{f}}{\subst{x'}{f'}}}\\
+\inference{\jtermt{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}{\jtermt{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}}
+& \inference{\jtermteq{\ctxext{{\Gamma}{A}}{P}}{Q}{g}{g'}}{\jtermteq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}{\subst{x'}{g'}}}
+\end{infarray}
+
+\subsubsection{Substitution is compatible with substitution}
+
+We require that substitution is compatible with itself, which is roughly the
+assertion that substitution is associative. However, we cannot just state that
+$\subst{x}{{f}{g}}\jdeq\subst{{x}{f}}{g}$ since the expression $\subst{{x}{f}}{g}$
+is not well-formed. The term $\subst{x}{f}$ can be substituted in (terms of) families over
+$\subst{x}{P}$; the term $\subst{x}{g}$ is such. Therefore, associativity of
+substitution takes the form $\subst{x}{{f}{g}}\jdeq\subst{{x}{f}}{{x}{g}}$.
+
+In the following inference rules we assume
+$\jtermt{\Gamma}{A}{x}$ and $\jtermt{\ctxext{\Gamma}{A}}{P}{f}$.
+
+\begin{infarray}{c}
+\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}
+{\jtypeeq{\Gamma}{\subst{x}{{f}{Q}}}{\subst{{x}{f}}{{x}{Q}}}}\\
+\inference{\jtype{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
+{\jtypeeq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{{x}{f}}{{x}{R}}}}\\
+\inference{\jtermt{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
+{\jtermteq{\Gamma}{\subst{x}{{f}{Q}}}{\subst{x}{{f}{g}}}{\subst{{x}{f}}{{x}{g}}}}\\
+\inference{\jtermt{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}{h}}
+{\jtermteq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{x}{{f}{h}}}{\subst{{x}{f}}{{x}{h}}}}
+\end{infarray}
+
+\subsubsection{Substitution is compatible with extension}
+Suppose $\jtermt{\Gamma}{A}{x}$ in all of the following inference rules.
+\begin{infarray}{c}
+\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}{\jtypeeq{\Gamma}{\subst{x}{\ctxext{P}{Q}}}{\ctxext{\subst{x}{P}}{\subst{x}{Q}}}}
+\end{infarray}
+
+\subsubsection{Substitution is compatible with weakening}
 The judgmental equalities we're about to describe assert that weakening followed
 by substitution leaves everything untouched. Thus, we get that each fiber
 $\subst{x}{\ctxwk{A}{B}}$ is just $B$, that $\ctxwk{A}{y}$ is the constant function
@@ -123,7 +199,7 @@ mapping everything to $y:B$ and similar properties for families and terms thereo
 
 \begin{infarray}{c}
 \inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jtermt{\Gamma}{A}{x}}{\jtypeeq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\\
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}{B}}{Q}\qquad\jtermt{A}{x}}{\jtypeeq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\\
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}{B}}{Q}\qquad\jtermt{\Gamma}{A}{x}}{\jtypeeq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\\
 \inference{\jtermt{\Gamma}{A}{x}\qquad\jtermt{\Gamma}{B}{y}}{\jtermteq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\\
 \inference{\jtermt{\Gamma}{A}{x}\qquad\jtermt{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermteq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
 \end{infarray}
