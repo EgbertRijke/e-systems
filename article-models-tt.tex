@@ -108,52 +108,6 @@ Suppose $\jtype{\ctxext{\Gamma}{A}}{P}$ and $\jtype{\Gamma}{B}$. Then we can
 consider the weakening $\ctxwk{A}{B}$ over $A$ and consecutively the weakening
 $\ctxwk{P}{{A}{B}}$. This should be isomorphic to $\ctxwk{\ctxext{A}{P}}{B}$.
 
-\subsection{The universal property of extension}
-
-Using weakening and substitution we are able to state the universal property
-for extension. It looks a bit more involved, since we cannot directly refer
-to the variables in the contexts. On the other hand, we can now plainly see
-were there were secretly weakenings going on.
-
-We begin with stating the universal property of the extension $\ctxext{\Gamma}{A}$.
-In these rules we assume we have $\jtype{\Gamma}{A}$ in the hypotheses.
-
-\begin{infarray}{c}
-\inference{}
-{\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{{\Gamma}{\ctxext{\Gamma}{A}}}}{\pair^A}}\\
-\inference{
-  \jtype{\ctxext{\Gamma}{A}}{P}
-  \qquad
-  \jtermt{\ctxext{\Gamma}{A}}{\subst{\pair^A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
-  {\jtermt{\ctxext{\Gamma}{A}}{P}{\ind{ext}(f)}}\\
-\inference{
-  \jtype{\ctxext{\Gamma}{A}}{P}
-  \qquad
-  \jtermt{\ctxext{\Gamma}{A}}{\subst{\pair^A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
-  {\jtermteq{\ctxext{\Gamma}{A}}{\subst{\pair^A}{\ctxwk{A}{{\Gamma}{P}}}}{\subst{\pair^A}{\ctxwk{A}{{\Gamma}{\ind{ext}(f)}}}}{f}}
-\end{infarray}
-
-Next, we give the universal property of the extension $\ctxext{A}{P}$ in context
-$\Gamma$.
-In all of the following inference rules we assume that $\jtype{\ctxext{\Gamma}{A}}{P}$
-is among the hypothesis. The induction principle for extension consists of three
-inference rules:
-
-\begin{infarray}{c}
-\inference{}
-{\jtermt{\ctxext{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{\ctxext{A}{P}}}}{\pair^P}}\\
-\inference{
-  \jtype{\ctxext{\Gamma}{{A}{P}}}{Q}
-  \qquad
-  \jtermt{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair^P}{\ctxwk{P}{{A}{Q}}}}{f}}
-  {\jtermt{\ctxext{\Gamma}{{A}{P}}}{Q}{\ind{ext}(f)}}\\
-\inference{
-  \jtype{\ctxext{\Gamma}{{A}{P}}}{Q}
-  \qquad
-  \jtermt{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair^P}{\ctxwk{P}{{A}{Q}}}}{f}}
-  {\jtermteq{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair^P}{\ctxwk{P}{{A}{Q}}}}{\subst{\pair^P}{\ctxwk{P}{{A}{\ind{ext}(f)}}}}{f}}
-\end{infarray}
-
 \subsubsection{Weakening is compatible with extension}
 Suppose $\jtype{\Gamma}{A}$ and $\jtype{\ctxext{\Gamma}{B}}{Q}$. Then
 \begin{equation*}
@@ -224,14 +178,77 @@ mapping everything to $y:B$ and similar properties for families and terms thereo
 \inference{\jtermt{\Gamma}{A}{x}\qquad\jtermt{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermteq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
 \end{infarray}
 
+\subsection{The universal property of extension}
+
+Using weakening and substitution we are able to state the universal property
+for extension. It looks a bit more involved, since we cannot directly refer
+to the variables in the contexts. On the other hand, we can now plainly see
+were there were secretly weakenings going on.
+
+We begin with stating the universal property of the extension $\ctxext{\Gamma}{A}$.
+In these rules we assume we have $\jtype{\Gamma}{A}$ in the hypotheses.
+
+\begin{infarray}{c}
+\inference{}
+{\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{{\Gamma}{\ctxext{\Gamma}{A}}}}{\pair_A}}\\
+\inference{
+  \jtype{\ctxext{\Gamma}{A}}{P}
+  \qquad
+  \jtermt{\ctxext{\Gamma}{A}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
+  {\jtermt{\ctxext{\Gamma}{A}}{P}{\ind{\tfext_\Gamma(A)}(f)}}\\
+\inference{
+  \jtype{\ctxext{\Gamma}{A}}{P}
+  \qquad
+  \jtermt{\ctxext{\Gamma}{A}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
+  {\jtermteq{\ctxext{\Gamma}{A}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{P}}}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{\ind{\tfext_\Gamma(A)}(f)}}}}{f}}
+\end{infarray}
+
+Under the hypothesis that $\jtypeeq{\Gamma}{A}{A'}$
+we will also have the rules
+
+\begin{infarray}{c}
+\inference{}{\jtermteq{\ctxext{\Gamma}{A}}{\ctxwk{A}{{\Gamma}{\ctxext{\Gamma}{A}}}}{\pair_A}{\pair_{A'}}}\\
+\inference{\jtype{\ctxext{\Gamma}{A}}{P}\qquad\jtermt{\ctxext{\Gamma}{A}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
+{\jtermteq{\ctxext{\Gamma}{A}}{P}{\ind{\tfext_\Gamma(A)}(f)}{\ind{\tfext_\Gamma(A')}(f)}}
+\end{infarray}
+
+Note that we don't need the notion of terms for contexts to state the universal
+property of context extension (which is a good thing, for we don't assume to have them).
+
+Next, we give the universal property of the extension $\ctxext{A}{P}$ in context
+$\Gamma$.
+In all of the following inference rules we assume that $\jtype{\ctxext{\Gamma}{A}}{P}$
+is among the hypothesis. The induction principle for extension consists of three
+inference rules:
+
+\begin{infarray}{c}
+\inference{}
+{\jtermt{\ctxext{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{\ctxext{A}{P}}}}{\pair_P}}\\
+\inference{
+  \jtype{\ctxext{\Gamma}{{A}{P}}}{Q}
+  \qquad
+  \jtermt{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair_P}{\ctxwk{P}{{A}{Q}}}}{f}}
+  {\jtermt{\ctxext{\Gamma}{{A}{P}}}{Q}{\ind{\tfext_A(P)}(f)}}\\
+\inference{
+  \jtype{\ctxext{\Gamma}{{A}{P}}}{Q}
+  \qquad
+  \jtermt{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair_P}{\ctxwk{P}{{A}{Q}}}}{f}}
+  {\jtermteq{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair_P}{\ctxwk{P}{{A}{Q}}}}{\subst{\pair_P}{\ctxwk{P}{{A}{\ind{\tfext_A(P)}(f)}}}}{f}}
+\end{infarray}
+
+As with context extension, we shall require two more inference rules stating that
+$\pair_P$ and $\ind{\tfext_A(P)}$ are invariant under judgmental equality.
+
 \subsection{The variable rule -- identity functions}
-In the usual presentation of type theory, the variable rule asserts that ``in
-the context $x_1:A_1,...,x_n:A_n$ we have a term $x_i:A_i$ when $1\leq i\leq n$''.
+The variable rule for contexts:
+\begin{infarray}{c}
+\inference{\jctx{\Gamma}}{\jtermt{\Gamma}{\ctxwk{\Gamma}{\Gamma}}{\idfunc[\Gamma]}}\\
+\inference{\jtermt{\Gamma}{A}{x}}{\jtermteq{\Gamma}{A}{\subst{\idfunc[\Gamma]}{\ctxwk{\Gamma}{x}}}{x}}\\
+\inference{\jtermt{\Delta}{\ctxwk{\Delta}{\Gamma}}{g}}{\jtermteq{\Delta}{\ctxwk{\Delta}{\Gamma}}{\subst{g}{\ctxwk{\Delta}{\idfunc[\Gamma]}}}{g}}
+\end{infarray}
 
-In our current system, we don't need this generality. Instead, it suffices for
-us to assert that there are identity morphisms. We get arbitrary projections
-from weakening.
 
+The variable rule for types:
 \begin{infarray}{c}
 \inference{\jtype{\Gamma}{A}}{\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}\\
 \inference{\jtermt{\Gamma}{A}{x}}{\jtermteq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}\\
@@ -242,55 +259,36 @@ from weakening.
 Using these rules we can derive that there is a judgmental equality $\jtypeeq{\ctxext{\Gamma}{A}}{\subst{x}{{\idfunc[A]}{B}}}
 {\subst{x}{{x}{B}}}$.
 
-
-%\begin{infarray}{c}
-%\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}\qquad\jtermt{\Gamma}{A}{x}\qquad\jtermt{\ctxext{A
-%\end{infarray}{c}
-
-\subsection{Compatibility of extension, weakening and substitution}
-We describe the compatibility of extension, weakening and substitution. These
-compatibility rules are formulated in a weak sense.
-
-Extension is compatible with extension:
+\subsection{Identity types}
+We need to define the diagonal function $\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{\ctxext{A}{\ctxwk{A}{A}}}}{\delta}$
 \begin{infarray}{c}
-\inference
-{ \jtype{\ctxext{\Gamma}{A}}{P}
-}{\jtermt
-  {\ctxext{\Gamma}{{A}{P}}}
-  {\ctxwk{\ctxext{\Gamma}{{A}{P}}}{\ctxext{{\Gamma}{A}}{P}}}{\typefont{extext}_0(A,P)}
-}\\
-\inference
-{ \jtype{\ctxext{{\Gamma}{A}}{P}}{Q}
-}{\jtermt
-  {\ctxext{\Gamma}{{A}{{P}{Q}}}}
-  {\ctxwk{\ctxext{A}{{P}{Q}}}{\ctxext{{A}{P}}{Q}}}
-  {\typefont{extext}_1(A,P,Q)}
-}
+\inference{\jtype{\Gamma}{A}}{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}\\
+\inference{\jtype{\Gamma}{A}}{\jtermt{\ctxext{\Gamma}{A}}{\delta^\ast\idtypevar{A}}{\reflsym}}\\
+\inference{\jtype{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}\qquad
+\jtermt{\ctxext{\Gamma}{A}}{\pairr{\delta,\reflsym}^\ast P}{d}}
+{\jtermt{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}{J}}
 \end{infarray}
 
-Weakening is compatible with extension:
-\begin{infarray}{c}
-\inference{
-  \jctx{\Gamma}
-  \qquad
-  \jtype{\Delta}{B}}
-  {\jtermt
-    {\ctxext{\Gamma}{\ctxwk{\Gamma}{\ctxext{\Delta}{B}}}}
-    {\ctxwk{{\Gamma}{\ctxext{\Delta}{B}}}{\ctxext{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}}}
-    {\typefont{wkext}_0(\Gamma,B)}}
+\subsection{Other type constructors}
+We will now describe the rules for the type constructors that we don't assume
+in our type theory by default. The first of these are the dependent function
+types. We also discuss $\tfW$-types, suspensions, truncations. More general higher inductive
+types will have to wait until we have introduced models, for the models of the
+basic type theory because we will use them as index categories of the diagrams.
+
+\subsubsection{Dependent function types}
+\begin{infarray}{cc}
+\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\mprd{A}{P}}}
+& \inference{\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\mprd{A}{P}}{\mprd{A}{P'}}}\\
+\inference{\jtermt{\ctxext{\Gamma}{A}}{P}{f}}{\jtermt{\Gamma}{\mprd{A}{P}}{\lambda(f)}}
+& \inference{\jtermteq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermteq{\Gamma}{\mprd{A}{P}}{\lambda(f)}{\lambda(f')}}\\
+\inference{\jtermt{\Gamma}{\mprd{A}{P}}{g}}{\jtermt{\ctxext{\Gamma}{A}}{P}{\tfev(g)}}
+& \inference{\jtermteq{\Gamma}{\mprd{A}{P}}{g}{g'}}{\jtermteq{\ctxext{\Gamma}{A}}{P}{\tfev(g)}{\tfev(g')}}\\
+\inference{\jtermt{\ctxext{\Gamma}{A}}{P}{f}}{\jtermteq{\Gamma}{A}{\tfev(\lambda(f))}{f}}
 \end{infarray}
 
-
-Substitution is compatible with substitution:
-\begin{infarray}{c}
-\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}\qquad\jtermt{\Gamma}{A}{x}\qquad\jtermt{\ctxext{\Gamma}{A}}{P}{f}}
-{\jtypeeq{\Gamma}{\subst{x}{\subst{f}{Q}}}{\subst{{x}{f}}{\subst{x}{Q}}}}
-\end{infarray}
-
-\subsection{More stuff in the type theory}
-\begin{infarray}{c}
-\inference{\jtype{\Gamma}{A}}{\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}
-\end{infarray}
+With these rules we will not get the weak $\eta$-rule when identity types are present.
+So it might be better to state that $\lambda$ is a trivial cofibration
 
 \subsection{Leibniz equality on terms}
 Occasionally we shall need a weaker version of equality than judgmental equality.
@@ -306,7 +304,6 @@ $\ctxext{\Gamma}{A}$ and thus we have the inference
 \end{equation*}
 This family plays the role of the family $\jtype{\Gamma,x,y:A}{P(x)\to P(y)}$
 in the type theory of \cite{TheBook}.
-
 
 \subsection{Trivial cofibrations and weak equivalences of types}
 We describe a relation between types that expresses when they are weakly equivalent.
@@ -382,32 +379,3 @@ The reverse direction is immediate.
 
 Another approach would be to define $f:\ctxwk{A}{B}$ to be left invertible
 if there is a term $\ctxext{{\Gamma}{A}}{P}$
-
-\subsection{The interactions of extension, weakening and substitution}
-
-\subsection{The basic constructors of type theory}
-\subsubsection{Dependent function types}
-\begin{infarray}{cc}
-\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\mprd{A}{P}}}
-& \inference{\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\mprd{A}{P}}{\mprd{A}{P'}}}\\
-\inference{\jtermt{\ctxext{\Gamma}{A}}{P}{f}}{\jtermt{\Gamma}{\mprd{A}{P}}{\lambda(f)}}
-& \inference{\jtermteq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermteq{\Gamma}{\mprd{A}{P}}{\lambda(f)}{\lambda(f')}}\\
-\inference{\jtermt{\Gamma}{\mprd{A}{P}}{g}}{\jtermt{\ctxext{\Gamma}{A}}{P}{\tfev(g)}}
-& \inference{\jtermteq{\Gamma}{\mprd{A}{P}}{g}{g'}}{\jtermteq{\ctxext{\Gamma}{A}}{P}{\tfev(g)}{\tfev(g')}}\\
-\inference{\jtermt{\ctxext{\Gamma}{A}}{P}{f}}{\jtermteq{\Gamma}{A}{\tfev(\lambda(f))}{f}}
-\end{infarray}
-
-With these rules we will not get the weak $\eta$-rule when identity types are present.
-So it might be better to state that $\lambda$ is a trivial cofibration
-
-\subsection{Identity types}
-We need to define the diagonal function $\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{\ctxext{A}{\ctxwk{A}{A}}}}{\delta}$
-\begin{infarray}{c}
-\inference{\jtype{\Gamma}{A}}{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}\\
-\inference{\jtype{\Gamma}{A}}{\jtermt{\ctxext{\Gamma}{A}}{\delta^\ast\idtypevar{A}}{\reflsym}}\\
-\inference{\jtype{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}\qquad
-\jtermt{\ctxext{\Gamma}{A}}{\pairr{\delta,\reflsym}^\ast P}{d}}
-{\jtermt{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}{J}}
-\end{infarray}
-
-
