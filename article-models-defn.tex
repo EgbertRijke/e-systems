@@ -470,7 +470,12 @@ property (if not, ditch this section).
 \end{desiderata}
 \end{comment}
 
-\subsection*{Weak $\omega$-groupoids}
+\subsection{Weak $\omega$-groupoids}
 
 A weak omega groupoid is a model of type theory with $\Sigma$ and $\idtypevar{}$
 in which there is a term of $\terms{A}$ for every type $A$ in context $\Gamma$.
+
+We could also state that for every term $f:\terms{\ctxwk{A}{B}}$ and every
+family $Q:\tftyp{\mfM}{\ctxext{\Gamma}{B}}$ there is a function
+$\terms{\subst{f}{\ctxwk{A}{Q}}}\to\terms{Q}$ (asserting that $f$ is a trival
+cofibration). This should be equivalent to the previous condition.
