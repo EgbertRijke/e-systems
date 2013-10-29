@@ -115,6 +115,26 @@ for extension. It looks a bit more involved, since we cannot directly refer
 to the variables in the contexts. On the other hand, we can now plainly see
 were there were secretly weakenings going on.
 
+We begin with stating the universal property of the extension $\ctxext{\Gamma}{A}$.
+In these rules we assume we have $\jtype{\Gamma}{A}$ in the hypotheses.
+
+\begin{infarray}{c}
+\inference{}
+{\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{{\Gamma}{\ctxext{\Gamma}{A}}}}{\pair^A}}\\
+\inference{
+  \jtype{\ctxext{\Gamma}{A}}{P}
+  \qquad
+  \jtermt{\ctxext{\Gamma}{A}}{\subst{\pair^A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
+  {\jtermt{\ctxext{\Gamma}{A}}{P}{\ind{ext}(f)}}\\
+\inference{
+  \jtype{\ctxext{\Gamma}{A}}{P}
+  \qquad
+  \jtermt{\ctxext{\Gamma}{A}}{\subst{\pair^A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
+  {\jtermteq{\ctxext{\Gamma}{A}}{\subst{\pair^A}{\ctxwk{A}{{\Gamma}{P}}}}{\subst{\pair^A}{\ctxwk{A}{{\Gamma}{\ind{ext}(f)}}}}{f}}
+\end{infarray}
+
+Next, we give the universal property of the extension $\ctxext{A}{P}$ in context
+$\Gamma$.
 In all of the following inference rules we assume that $\jtype{\ctxext{\Gamma}{A}}{P}$
 is among the hypothesis. The induction principle for extension consists of three
 inference rules:
