@@ -474,8 +474,38 @@ property (if not, ditch this section).
 
 A weak omega groupoid is a model of type theory with $\Sigma$ and $\idtypevar{}$
 in which there is a term of $\terms{A}$ for every type $A$ in context $\Gamma$.
+This should work when univalence is around (so that functions can be replaced
+by families).
 
 We could also state that for every term $f:\terms{\ctxwk{A}{B}}$ and every
 family $Q:\tftyp{\mfM}{\ctxext{\Gamma}{B}}$ there is a function
 $\terms{\subst{f}{\ctxwk{A}{Q}}}\to\terms{Q}$ (asserting that $f$ is a trival
-cofibration). This should be equivalent to the previous condition.
+cofibration). This should always give that each $f$ is an equivalence and
+this should be equivalent to the previous condition when univalence is around.
+
+Another option arises when we see the identity type as an operation on a certain class of
+terms. Usually, $\idtypevar{}$ is defined using the class of identity functions.
+Let's take the class of all terms instead:
+
+\begin{infarray}{c}
+\inference{\jtermt{\Gamma}{A}{x}}{\jtype{\ctxext{\Gamma}{A}}{\eqtype{x}}}\\
+\inference{\jtermt{\Gamma}{A}{x}}{\jtermt{\Gamma}{\subst{x}{\eqtype{x}}}{\refl{x}}}\\
+\inference{\jtype{\ctxext{\Gamma}{A}}{P}\qquad\jtermt{\Gamma}{\subst{\refl{x}}{{x}{P}}}{d}}
+          {\jtermt{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{P}{\ind{\eqtype{x}}(d)}}\\
+\inference{\jtype{\ctxext{\Gamma}{A}}{P}\qquad\jtermt{\Gamma}{\subst{\refl{x}}{{x}{P}}}{d}}
+          {\jtermteq{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{\subst{\refl{x}}{{x}{P}}}{\subst{\refl{x}}{{x}{\ind{\eqtype{x}}(d)}}}{d}}
+\end{infarray}
+We get something that looks like Paulin-Mohring equality. But we can use it to
+show that every $\jtermt{\Gamma}{\ctxwk{\Gamma}{\Delta}}{f}$ is a trivial cofibration.
+
+Suppose that $\jtype{\Delta}{Q}$. Then we have $\jtype{\Gamma}{\subst{f}{\ctxwk{\Gamma}{Q}}}$. 
+For any term $\jtermt{\Gamma}{\subst{f}{\ctxwk{\Gamma}{Q}}}{d}$ we get a term 
+$\jtermt{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\eqtype{f}}}{\ctxwk{\Gamma}{Q}}{\ind{\eqtype{f}}(d)}$.
+
+However, we could take other classes of terms, such as the projections
+$\proj1:\ctxwk{\ctxext{\Gamma}{A}}{\Gamma}$. Let's see how that goes:
+
+\begin{infarray}{c}
+\inference{\jtype{\Gamma}{A}}{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{\ctxext{\Gamma}{A}}{\Gamma}}}{\eqtype{\proj1^A}}}\\
+\inference{\jtype{\Gamma}{A}}{\jtermt{\ctxext{\Gamma}{A}}{\subst{\proj1^A}{\eqtype{\proj1^A}}}{\refl{\proj1^A}}}
+\end{infarray}
