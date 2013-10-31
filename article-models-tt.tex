@@ -104,15 +104,45 @@ A weakening operation is also defined for types. When $A$ and $B$ are both types
 \end{infarray}
 
 \subsubsection{Weakening is compatible with itself}
-Suppose $\jtype{\ctxext{\Gamma}{A}}{P}$ and $\jtype{\Gamma}{B}$. Then we can
-consider the weakening $\ctxwk{A}{B}$ over $A$ and consecutively the weakening
-$\ctxwk{P}{{A}{B}}$. This should be isomorphic to $\ctxwk{\ctxext{A}{P}}{B}$.
-
-\subsubsection{Weakening is compatible with extension}
-Suppose $\jtype{\Gamma}{A}$ and $\jtype{\ctxext{\Gamma}{B}}{Q}$. Then
+To conclude the rules for weakening, we state judgmental equality rules expressing
+that weakening is compatible with itself. These rules state that the following
+diagram commutes given any two contexts $\Gamma$ and $\Delta$:
 \begin{equation*}
-s:\ctxwk{{A}{\ctxext{B}{Q}}}{\ctxext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}}
+\begin{tikzcd}[column sep=huge]
+\jctx{\blank} \ar{r}{\greek{E}\mapsto\ctxwk{\Delta}{E}} \ar{d}[swap]{\greek{E}\mapsto\ctxwk{\Gamma}{E}} & \jtype{\Delta}{\blank} \ar{d}{B\mapsto\ctxwk{\Gamma}{B}}\\
+\jtype{\Gamma}{\blank} \ar{r}[swap]{A\mapsto\ctxwk{{\Gamma}{\Delta}}{A}} & \jtype{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\blank}
+\end{tikzcd}
 \end{equation*}
+There is also a version of this diagram in which all happens in a context. Thus,
+we get two sets of inference rules. For weakening by contexts we get:
+
+\begin{infarray}{c}
+\inference{\jctx{\Gamma}\qquad\jctx{\Delta}\qquad\jctx{\greek{E}}}
+          {\jtypeeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{{\Delta}{\greek{E}}}}
+            {\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{\greek{E}}}}}\\
+\inference{\jctx{\Gamma}\qquad\jctx{\Delta}\qquad\jtype{\greek{E}}{C}}
+          {\jtypeeq{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{\greek{E}}}}}
+            {\ctxwk{\Gamma}{{\Delta}{C}}}
+            {\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{C}}}}\\
+\inference{\jctx{\Gamma}\qquad\jctx{\Delta}\qquad\jtermt{\greek{E}}{C}{t}}
+          {\jtermteq{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{\greek{E}}}}}
+            {\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{C}}}{\ctxwk{\Gamma}{{\Delta}{t}}}{\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{t}}}}
+\end{infarray}
+
+For weakening by types we get:
+
+\begin{infarray}{c}
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jtype{\Gamma}{C}}
+          {\jtypeeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{{B}{C}}}
+            {\ctxwk{{A}{B}}{{A}{C}}}}\\
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jtype{\ctxext{\Gamma}{C}}{R}}
+          {\jtypeeq{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
+            {\ctxwk{A}{{B}{R}}}
+            {\ctxwk{{A}{B}}{{A}{R}}}}\\
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jtermt{\Gamma}{R}{t}}
+          {\jtermteq{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
+            {\ctxwk{{A}{B}}{{A}{R}}}{\ctxwk{A}{{B}{t}}}{\ctxwk{{A}{B}}{{A}{t}}}}
+\end{infarray}
 
 \subsection{Substitution}
 Given a family $P$ over $A$ and a term $x$ of $A$, substitution gives a way to
