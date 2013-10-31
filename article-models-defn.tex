@@ -500,11 +500,11 @@ a function from $f^\ast(\ctxwk{B}{C})$ to $\ctxwk{A}{C}$.
 \end{rmk}
 
 \begin{rmk}
-Every term $\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{f}$ allows us to infer the following:
+Every term $\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{f}$ allows us to infer the following:
 \begin{equation*}
 \inference{\jtype{\ctxext{\Gamma}{B}}{Q}}{\jtype{\ctxext{\Gamma}{A}}{f^\ast Q}}
 \qquad
-\inference{\jtermt{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermt{\ctxext{\Gamma}{A}}{f^\ast Q}{f^\ast g}}
+\inference{\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jterm{\ctxext{\Gamma}{A}}{f^\ast Q}{f^\ast g}}
 \end{equation*}
 \end{rmk}
 
@@ -513,8 +513,8 @@ Every term $\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{f}$ allows us to infer the
 A term $f:\ctxwk{A}{B}$ in context $\ctxext{\Gamma}{A}$ is said to be a trivial
 cofibration if we can infer
 \begin{equation*}
-\inference{\jtermt{\ctxext{\Gamma}{A}}{f^\ast Q}{t}}{\jtermt{\ctxext{\Gamma}{B}}{Q}{\tilde{t}}}\qquad
-\inference{\jtermt{\ctxext{\Gamma}{A}}{f^\ast Q}{t}}{\jtermteq{\ctxext{\Gamma}{A}}{f^\ast Q}{f^\ast \tilde{t}}{t}}
+\inference{\jterm{\ctxext{\Gamma}{A}}{f^\ast Q}{t}}{\jterm{\ctxext{\Gamma}{B}}{Q}{\tilde{t}}}\qquad
+\inference{\jterm{\ctxext{\Gamma}{A}}{f^\ast Q}{t}}{\jtermeq{\ctxext{\Gamma}{A}}{f^\ast Q}{f^\ast \tilde{t}}{t}}
 \end{equation*}
 {\color{red}This statement should be reformulated so that it only involves a single judgment...
 but I don't see directly how to do that.}
@@ -565,18 +565,18 @@ terms. Usually, $\idtypevar{}$ is defined using the class of identity functions.
 Let's take the class of all terms instead:
 
 \begin{infarray}{c}
-\inference{\jtermt{\Gamma}{A}{x}}{\jtype{\ctxext{\Gamma}{A}}{\eqtype{x}}}\\
-\inference{\jtermt{\Gamma}{A}{x}}{\jtermt{\Gamma}{\subst{x}{\eqtype{x}}}{\refl{x}}}\\
-\inference{\jtype{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{P}\qquad\jtermt{\Gamma}{\subst{\refl{x}}{{x}{P}}}{d}}
-          {\jtermt{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{P}{\ind{\eqtype{x}}(d)}}\\
-\inference{\jtype{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{P}\qquad\jtermt{\Gamma}{\subst{\refl{x}}{{x}{P}}}{d}}
-          {\jtermteq{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{\subst{\refl{x}}{{x}{P}}}{\subst{\refl{x}}{{x}{\ind{\eqtype{x}}(d)}}}{d}}
+\inference{\jterm{\Gamma}{A}{x}}{\jtype{\ctxext{\Gamma}{A}}{\eqtype{x}}}\\
+\inference{\jterm{\Gamma}{A}{x}}{\jterm{\Gamma}{\subst{x}{\eqtype{x}}}{\refl{x}}}\\
+\inference{\jtype{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{P}\qquad\jterm{\Gamma}{\subst{\refl{x}}{{x}{P}}}{d}}
+          {\jterm{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{P}{\ind{\eqtype{x}}(d)}}\\
+\inference{\jtype{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{P}\qquad\jterm{\Gamma}{\subst{\refl{x}}{{x}{P}}}{d}}
+          {\jtermeq{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{\subst{\refl{x}}{{x}{P}}}{\subst{\refl{x}}{{x}{\ind{\eqtype{x}}(d)}}}{d}}
 \end{infarray}
 
 We get something that looks like Paulin-Mohring equality. But we should be able to use it to
-show that every $\jtermt{\Gamma}{\ctxwk{\Gamma}{\Delta}}{f}$ is a trivial cofibration.
+show that every $\jterm{\Gamma}{\ctxwk{\Gamma}{\Delta}}{f}$ is a trivial cofibration.
 
-For the following conjecture, note that if we have $\jtermt{\Gamma}{\ctxwk{\Gamma}{\Delta}}{f}$
+For the following conjecture, note that if we have $\jterm{\Gamma}{\ctxwk{\Gamma}{\Delta}}{f}$
 Then we may consider the type $\jtype{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{{\Delta}{\Delta}}}}
 {\ctxwk{\Gamma}{\idtypevar{\Delta}}}$ and we may substitute $f$ to obtain the type
 \begin{equation*}
@@ -600,7 +600,7 @@ whether this is a trivial cofibration. This is the content of the following conj
 \begin{conj}
 There is a term
 \begin{equation*}
-\jtermt{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\eqtype{f}}}{\ctxwk{\eqtype{f}}{\subst{f}{\ctxwk{\Gamma}{\idtypevar{\Delta}}}}}{\eqtoid{f}}
+\jterm{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\eqtype{f}}}{\ctxwk{\eqtype{f}}{\subst{f}{\ctxwk{\Gamma}{\idtypevar{\Delta}}}}}{\eqtoid{f}}
 \end{equation*}
 Moreover, $\eqtoid{f}$ is a trivial cofibration.
 \end{conj}
@@ -609,7 +609,7 @@ Moreover, $\eqtoid{f}$ is a trivial cofibration.
 We use the induction principle of $\eqtype{f}$ to construct $\eqtoid{f}$. Thus, we
 have to find a term
 \begin{equation*}
-\jtermt
+\jterm
   {\Gamma}
   {\subst{\refl{f}}{{f}{\ctxwk{\eqtype{f}}{\subst{f}{\ctxwk{\Gamma}{\idtypevar{\Delta}}}}}}}
   {\subst{\refl{f}}{{f}{\eqtoid{f}}}}
@@ -624,26 +624,26 @@ where we find the term $\subst{f}{\ctxwk{\Gamma}{\subst{f}{\ctxwk{\Gamma}{\refl{
 \end{proof}
 
 \begin{conj}
-Suppose we have a type $\eqtype{x}$ for every term $\jtermt{\Gamma}{A}{x}$. Then
-every term $\jtermt{\Gamma}{\ctxwk{\Gamma}{\Delta}}{f}$ is a trivial cofibration.
+Suppose we have a type $\eqtype{x}$ for every term $\jterm{\Gamma}{A}{x}$. Then
+every term $\jterm{\Gamma}{\ctxwk{\Gamma}{\Delta}}{f}$ is a trivial cofibration.
 \end{conj}
 
 \begin{proof}
 Suppose that $Q$ is a type in context $\Delta$. We want to show that
 \begin{equation*}
-\inference{\jtermt{\Gamma}{\subst{f}{\ctxwk{\Gamma}{Q}}}{g}}{\jtermt{\Delta}{Q}{\tilde{g}}}
+\inference{\jterm{\Gamma}{\subst{f}{\ctxwk{\Gamma}{Q}}}{g}}{\jterm{\Delta}{Q}{\tilde{g}}}
 \end{equation*}
 Let $g$ be a term of $\subst{f}{\ctxwk{\Gamma}{Q}}$ in context $\Gamma$. We get
 the term
 \begin{equation*}
-\jtermt{\Gamma}{\subst{\refl{f}}{{f}{\ctxwk{\eqtype{f}}{{\Gamma}{Q}}}}}{\subst{\refl{f}}{\ctxwk{\eqtype{f}}{g}}}
+\jterm{\Gamma}{\subst{\refl{f}}{{f}{\ctxwk{\eqtype{f}}{{\Gamma}{Q}}}}}{\subst{\refl{f}}{\ctxwk{\eqtype{f}}{g}}}
 \end{equation*}
 which is judgmentally equal to $g$; the types
 
-For any term $\jtermt{\Gamma}{\subst{f}{\ctxwk{\Gamma}{Q}}}{g}$ we get a term 
-$\jtermt{\Gamma}{\subst{\refl{x}}{{x}{P}}}{d}$.
+For any term $\jterm{\Gamma}{\subst{f}{\ctxwk{\Gamma}{Q}}}{g}$ we get a term 
+$\jterm{\Gamma}{\subst{\refl{x}}{{x}{P}}}{d}$.
 
-$\jtermt{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\eqtype{f}}}{\ctxwk{\Gamma}{Q}}{\ind{\eqtype{f}}(d)}$.
+$\jterm{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\eqtype{f}}}{\ctxwk{\Gamma}{Q}}{\ind{\eqtype{f}}(d)}$.
 \end{proof}
 
 However, we could take other classes of terms, such as the projections
@@ -651,5 +651,5 @@ $\proj1:\ctxwk{\ctxext{\Gamma}{A}}{\Gamma}$. Let's see how that goes:
 
 \begin{infarray}{c}
 \inference{\jtype{\Gamma}{A}}{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{\ctxext{\Gamma}{A}}{\Gamma}}}{\eqtype{\proj1^A}}}\\
-\inference{\jtype{\Gamma}{A}}{\jtermt{\ctxext{\Gamma}{A}}{\subst{\proj1^A}{\eqtype{\proj1^A}}}{\refl{\proj1^A}}}
+\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\subst{\proj1^A}{\eqtype{\proj1^A}}}{\refl{\proj1^A}}}
 \end{infarray}

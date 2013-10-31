@@ -16,7 +16,7 @@ and ``$i$ and $j$ are equal terms of context $\Gamma$''. Thus, we have eight bas
 \jctx*{\Gamma} & \jctxeq*{\Gamma}{\Gamma'}\\
 \jtermc*{\Gamma}{i} & \jtermceq*{\Gamma}{i}{j}\\
 \jtype*{\Gamma}{A} & \jtypeeq*{\Gamma}{A}{B}\\
-\jtermt*{\Gamma}{A}{x} & \jtermteq*{\Gamma}{A}{x}{y}.
+\jterm*{\Gamma}{A}{x} & \jtermeq*{\Gamma}{A}{x}{y}.
 \end{align*}
 
 In contrast with standard practise, we don't assume that there is an empty context. The idea is that
@@ -38,19 +38,19 @@ in all three cases (contexts, types and terms).
 \inference{\jtype{\Gamma}{A}}{\jtypeeq{\Gamma}{A}{A}} &
 \inference{\jtypeeq{\Gamma}{A}{B}}{\jtypeeq{\Gamma}{B}{A}} & 
 \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\Gamma}{B}{C}}{\jtypeeq{\Gamma}{A}{C}}\\
-\inference{\jtermt{\Gamma}{A}{x}}{\jtermteq{\Gamma}{A}{x}{x}} & 
-\inference{\jtermteq{\Gamma}{A}{x}{y}}{\jtermteq{\Gamma}{A}{y}{x}} &
-\inference{\jtermteq{\Gamma}{A}{x}{y}\qquad\jtermteq{\Gamma}{A}{y}{z}}{\jtermteq{\Gamma}{A}{x}{z}}
+\inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{x}{x}} & 
+\inference{\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Gamma}{A}{y}{x}} &
+\inference{\jtermeq{\Gamma}{A}{x}{y}\qquad\jtermeq{\Gamma}{A}{y}{z}}{\jtermeq{\Gamma}{A}{x}{z}}
 \end{infarray}
 %\end{array}
 %\end{equation*}
 \begin{infarray}{cc}
 \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtype{\Gamma}{A}}{\jtype{\Delta}{A}}
 & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtypeeq{\Gamma}{A}{B}}{\jtypeeq{\Delta}{A}{B}}\\
-\inference{\jctxeq{\Gamma}{\Delta}\qquad\jtermt{\Gamma}{A}{x}}{\jtermt{\Delta}{A}{x}}
-& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtermteq{\Gamma}{A}{x}{y}}{\jtermteq{\Delta}{A}{x}{y}}\\
-\inference{\jtypeeq{\Gamma}{A}{B}\qquad \jtermt{\Gamma}{A}{x}}{\jtermt{\Gamma}{B}{x}}
-& \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtermteq{\Gamma}{A}{x}{y}}{\jtermteq{\Gamma}{B}{x}{y}}
+\inference{\jctxeq{\Gamma}{\Delta}\qquad\jterm{\Gamma}{A}{x}}{\jterm{\Delta}{A}{x}}
+& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Delta}{A}{x}{y}}\\
+\inference{\jtypeeq{\Gamma}{A}{B}\qquad \jterm{\Gamma}{A}{x}}{\jterm{\Gamma}{B}{x}}
+& \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Gamma}{B}{x}{y}}
 \end{infarray}
 
 \subsection{Extension}
@@ -83,8 +83,8 @@ of $\ctxwk{\Gamma}{\Delta}$.
 \inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jtype{\Gamma}{\ctxwk{\Gamma}{\Delta}}} 
 & \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jctxeq{\Delta}{\Delta'}}{\jtypeeq{\Gamma}{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma'}{\Delta'}}}\\
 \inference{\jctx{\Gamma}\qquad\jtype{\Delta}{B}}{\jtype{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}} & \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtypeeq{\Delta}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma'}{B'}}}\\
-\inference{\jctx{\Gamma}\qquad\jtermt{\Delta}{B}{y}}{\jtermt{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}} 
-& \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtermteq{\Delta}{B}{y}{y'}}{\jtermteq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}{\ctxwk{\Gamma'}{y'}}} 
+\inference{\jctx{\Gamma}\qquad\jterm{\Delta}{B}{y}}{\jterm{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}} 
+& \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtermeq{\Delta}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}{\ctxwk{\Gamma'}{y'}}} 
 \end{infarray}
 
 A weakening operation is also defined for types. When $A$ and $B$ are both types
@@ -99,8 +99,8 @@ A weakening operation is also defined for types. When $A$ and $B$ are both types
 {\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
 & \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtypeeq{\ctxext{\Gamma}{B}}{Q}{Q'}}
 {\jtypeeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}{\ctxwk{A'}{Q'}}}\\
-\inference{\jtype{\Gamma}{A}\qquad\jtermt{\Gamma}{B}{y}}{\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}}
-& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtermteq{\Gamma}{B}{y}{y'}}{\jtermteq{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}{\ctxwk{A'}{y'}}}
+\inference{\jtype{\Gamma}{A}\qquad\jterm{\Gamma}{B}{y}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}}
+& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtermeq{\Gamma}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}{\ctxwk{A'}{y'}}}
 \end{infarray}
 
 \subsubsection{Weakening is compatible with itself}
@@ -124,8 +124,8 @@ we get two sets of inference rules. For weakening by contexts we get:
           {\jtypeeq{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{\greek{E}}}}}
             {\ctxwk{\Gamma}{{\Delta}{C}}}
             {\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{C}}}}\\
-\inference{\jctx{\Gamma}\qquad\jctx{\Delta}\qquad\jtermt{\greek{E}}{C}{t}}
-          {\jtermteq{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{\greek{E}}}}}
+\inference{\jctx{\Gamma}\qquad\jctx{\Delta}\qquad\jterm{\greek{E}}{C}{t}}
+          {\jtermeq{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{\greek{E}}}}}
             {\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{C}}}{\ctxwk{\Gamma}{{\Delta}{t}}}{\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{t}}}}
 \end{infarray}
 
@@ -139,8 +139,8 @@ For weakening by types we get:
           {\jtypeeq{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
             {\ctxwk{A}{{B}{R}}}
             {\ctxwk{{A}{B}}{{A}{R}}}}\\
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jtermt{\Gamma}{R}{t}}
-          {\jtermteq{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jterm{\Gamma}{R}{t}}
+          {\jtermeq{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
             {\ctxwk{{A}{B}}{{A}{R}}}{\ctxwk{A}{{B}{t}}}{\ctxwk{{A}{B}}{{A}{t}}}}
 \end{infarray}
 
@@ -152,18 +152,18 @@ this section, we shall first introduce the operations `substitution of a term $x
 for types, terms and families. Then we shall explain how substitution interacts
 with itself, extension and weakening.
 
-In the rules introducing the various substitutions we assume $\jtermt{\Gamma}{A}{x}$;
-in the rules introducing the definitional equalities we assume $\jtermteq{\Gamma}{A}{x}{x'}$.
+In the rules introducing the various substitutions we assume $\jterm{\Gamma}{A}{x}$;
+in the rules introducing the definitional equalities we assume $\jtermeq{\Gamma}{A}{x}{x'}$.
 
 \begin{infarray}{cc}
 \inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\subst{x}{P}}}
 & \inference{\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}}\\
 \inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}{\jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
 & \inference{\jtypeeq{\ctxext{{\Gamma}{A}}{P}}{Q}{Q'}}{\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x'}{Q'}}}\\
-\inference{\jtermt{\ctxext{\Gamma}{A}}{P}{f}}{\jtermt{\Gamma}{\subst{x}{P}}{\subst{x}{f}}}
-& \inference{\jtermteq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermteq{\Gamma}{\subst{x}{P}}{\subst{x}{f}}{\subst{x'}{f'}}}\\
-\inference{\jtermt{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}{\jtermt{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}}
-& \inference{\jtermteq{\ctxext{{\Gamma}{A}}{P}}{Q}{g}{g'}}{\jtermteq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}{\subst{x'}{g'}}}
+\inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jterm{\Gamma}{\subst{x}{P}}{\subst{x}{f}}}
+& \inference{\jtermeq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermeq{\Gamma}{\subst{x}{P}}{\subst{x}{f}}{\subst{x'}{f'}}}\\
+\inference{\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}{\jterm{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}}
+& \inference{\jtermeq{\ctxext{{\Gamma}{A}}{P}}{Q}{g}{g'}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}{\subst{x'}{g'}}}
 \end{infarray}
 
 \subsubsection{Substitution is compatible with substitution}
@@ -176,21 +176,21 @@ $\subst{x}{P}$; the term $\subst{x}{g}$ is such. Therefore, associativity of
 substitution takes the form $\subst{x}{{f}{g}}\jdeq\subst{{x}{f}}{{x}{g}}$.
 
 In the following inference rules we assume
-$\jtermt{\Gamma}{A}{x}$ and $\jtermt{\ctxext{\Gamma}{A}}{P}{f}$.
+$\jterm{\Gamma}{A}{x}$ and $\jterm{\ctxext{\Gamma}{A}}{P}{f}$.
 
 \begin{infarray}{c}
 \inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}
 {\jtypeeq{\Gamma}{\subst{x}{{f}{Q}}}{\subst{{x}{f}}{{x}{Q}}}}\\
 \inference{\jtype{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
 {\jtypeeq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{{x}{f}}{{x}{R}}}}\\
-\inference{\jtermt{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
-{\jtermteq{\Gamma}{\subst{x}{{f}{Q}}}{\subst{x}{{f}{g}}}{\subst{{x}{f}}{{x}{g}}}}\\
-\inference{\jtermt{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}{h}}
-{\jtermteq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{x}{{f}{h}}}{\subst{{x}{f}}{{x}{h}}}}
+\inference{\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
+{\jtermeq{\Gamma}{\subst{x}{{f}{Q}}}{\subst{x}{{f}{g}}}{\subst{{x}{f}}{{x}{g}}}}\\
+\inference{\jterm{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}{h}}
+{\jtermeq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{x}{{f}{h}}}{\subst{{x}{f}}{{x}{h}}}}
 \end{infarray}
 
 \subsubsection{Substitution is compatible with extension}
-Suppose $\jtermt{\Gamma}{A}{x}$ in all of the following inference rules.
+Suppose $\jterm{\Gamma}{A}{x}$ in all of the following inference rules.
 \begin{infarray}{c}
 \inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}{\jtypeeq{\Gamma}{\subst{x}{\ctxext{P}{Q}}}{\ctxext{\subst{x}{P}}{\subst{x}{Q}}}}
 \end{infarray}
@@ -202,10 +202,10 @@ $\subst{x}{\ctxwk{A}{B}}$ is just $B$, that $\ctxwk{A}{y}$ is the constant funct
 mapping everything to $y:B$ and similar properties for families and terms thereof.
 
 \begin{infarray}{c}
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jtermt{\Gamma}{A}{x}}{\jtypeeq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\\
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}{B}}{Q}\qquad\jtermt{\Gamma}{A}{x}}{\jtypeeq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\\
-\inference{\jtermt{\Gamma}{A}{x}\qquad\jtermt{\Gamma}{B}{y}}{\jtermteq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\\
-\inference{\jtermt{\Gamma}{A}{x}\qquad\jtermt{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermteq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jterm{\Gamma}{A}{x}}{\jtypeeq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\\
+\inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}{B}}{Q}\qquad\jterm{\Gamma}{A}{x}}{\jtypeeq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\\
+\inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\Gamma}{B}{y}}{\jtermeq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\\
+\inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
 \end{infarray}
 
 \subsection{The universal property of extension}
@@ -220,26 +220,26 @@ In these rules we assume we have $\jtype{\Gamma}{A}$ in the hypotheses.
 
 \begin{infarray}{c}
 \inference{}
-{\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{{\Gamma}{\ctxext{\Gamma}{A}}}}{\pair_A}}\\
+{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{{\Gamma}{\ctxext{\Gamma}{A}}}}{\pair_A}}\\
 \inference{
   \jtype{\ctxext{\Gamma}{A}}{P}
   \qquad
-  \jtermt{\ctxext{\Gamma}{A}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
-  {\jtermt{\ctxext{\Gamma}{A}}{P}{\ind{\tfext_\Gamma(A)}(f)}}\\
+  \jterm{\ctxext{\Gamma}{A}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
+  {\jterm{\ctxext{\Gamma}{A}}{P}{\ind{\tfext_\Gamma(A)}(f)}}\\
 \inference{
   \jtype{\ctxext{\Gamma}{A}}{P}
   \qquad
-  \jtermt{\ctxext{\Gamma}{A}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
-  {\jtermteq{\ctxext{\Gamma}{A}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{P}}}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{\ind{\tfext_\Gamma(A)}(f)}}}}{f}}
+  \jterm{\ctxext{\Gamma}{A}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
+  {\jtermeq{\ctxext{\Gamma}{A}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{P}}}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{\ind{\tfext_\Gamma(A)}(f)}}}}{f}}
 \end{infarray}
 
 Under the hypothesis that $\jtypeeq{\Gamma}{A}{A'}$
 we will also have the rules
 
 \begin{infarray}{c}
-\inference{}{\jtermteq{\ctxext{\Gamma}{A}}{\ctxwk{A}{{\Gamma}{\ctxext{\Gamma}{A}}}}{\pair_A}{\pair_{A'}}}\\
-\inference{\jtype{\ctxext{\Gamma}{A}}{P}\qquad\jtermt{\ctxext{\Gamma}{A}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
-{\jtermteq{\ctxext{\Gamma}{A}}{P}{\ind{\tfext_\Gamma(A)}(f)}{\ind{\tfext_\Gamma(A')}(f)}}
+\inference{}{\jtermeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{{\Gamma}{\ctxext{\Gamma}{A}}}}{\pair_A}{\pair_{A'}}}\\
+\inference{\jtype{\ctxext{\Gamma}{A}}{P}\qquad\jterm{\ctxext{\Gamma}{A}}{\subst{\pair_A}{\ctxwk{A}{{\Gamma}{P}}}}{f}}
+{\jtermeq{\ctxext{\Gamma}{A}}{P}{\ind{\tfext_\Gamma(A)}(f)}{\ind{\tfext_\Gamma(A')}(f)}}
 \end{infarray}
 
 Note that we don't need the notion of terms for contexts to state the universal
@@ -253,17 +253,17 @@ inference rules:
 
 \begin{infarray}{c}
 \inference{}
-{\jtermt{\ctxext{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{\ctxext{A}{P}}}}{\pair_P}}\\
+{\jterm{\ctxext{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{\ctxext{A}{P}}}}{\pair_P}}\\
 \inference{
   \jtype{\ctxext{\Gamma}{{A}{P}}}{Q}
   \qquad
-  \jtermt{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair_P}{\ctxwk{P}{{A}{Q}}}}{f}}
-  {\jtermt{\ctxext{\Gamma}{{A}{P}}}{Q}{\ind{\tfext_A(P)}(f)}}\\
+  \jterm{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair_P}{\ctxwk{P}{{A}{Q}}}}{f}}
+  {\jterm{\ctxext{\Gamma}{{A}{P}}}{Q}{\ind{\tfext_A(P)}(f)}}\\
 \inference{
   \jtype{\ctxext{\Gamma}{{A}{P}}}{Q}
   \qquad
-  \jtermt{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair_P}{\ctxwk{P}{{A}{Q}}}}{f}}
-  {\jtermteq{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair_P}{\ctxwk{P}{{A}{Q}}}}{\subst{\pair_P}{\ctxwk{P}{{A}{\ind{\tfext_A(P)}(f)}}}}{f}}
+  \jterm{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair_P}{\ctxwk{P}{{A}{Q}}}}{f}}
+  {\jtermeq{\ctxext{{\Gamma}{A}}{P}}{\subst{\pair_P}{\ctxwk{P}{{A}{Q}}}}{\subst{\pair_P}{\ctxwk{P}{{A}{\ind{\tfext_A(P)}(f)}}}}{f}}
 \end{infarray}
 
 As with context extension, we shall require two more inference rules stating that
@@ -272,18 +272,18 @@ $\pair_P$ and $\ind{\tfext_A(P)}$ are invariant under judgmental equality.
 \subsection{The variable rule -- identity functions}
 The variable rule for contexts:
 \begin{infarray}{c}
-\inference{\jctx{\Gamma}}{\jtermt{\Gamma}{\ctxwk{\Gamma}{\Gamma}}{\idfunc[\Gamma]}}\\
-\inference{\jtermt{\Gamma}{A}{x}}{\jtermteq{\Gamma}{A}{\subst{\idfunc[\Gamma]}{\ctxwk{\Gamma}{x}}}{x}}\\
-\inference{\jtermt{\Delta}{\ctxwk{\Delta}{\Gamma}}{g}}{\jtermteq{\Delta}{\ctxwk{\Delta}{\Gamma}}{\subst{g}{\ctxwk{\Delta}{\idfunc[\Gamma]}}}{g}}
+\inference{\jctx{\Gamma}}{\jterm{\Gamma}{\ctxwk{\Gamma}{\Gamma}}{\idfunc[\Gamma]}}\\
+\inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{\idfunc[\Gamma]}{\ctxwk{\Gamma}{x}}}{x}}\\
+\inference{\jterm{\Delta}{\ctxwk{\Delta}{\Gamma}}{g}}{\jtermeq{\Delta}{\ctxwk{\Delta}{\Gamma}}{\subst{g}{\ctxwk{\Delta}{\idfunc[\Gamma]}}}{g}}
 \end{infarray}
 
 
 The variable rule for types:
 \begin{infarray}{c}
-\inference{\jtype{\Gamma}{A}}{\jtermt{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}\\
-\inference{\jtermt{\Gamma}{A}{x}}{\jtermteq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}\\
-\inference{\jtermt{\ctxext{\Gamma}{A}}{P}{f}}{\jtermteq{\ctxext{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{A}{f}}}{f}}\\
-\inference{\jtermt{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{g}}{\jtermteq{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{\subst{g}{\ctxwk{B}{\idfunc[A]}}}{g}}
+\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}\\
+\inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}\\
+\inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{A}{f}}}{f}}\\
+\inference{\jterm{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{\subst{g}{\ctxwk{B}{\idfunc[A]}}}{g}}
 \end{infarray}
 
 Using these rules we can derive that there is a judgmental equality $\jtypeeq{\ctxext{\Gamma}{A}}{\subst{x}{{\idfunc[A]}{B}}}
@@ -301,14 +301,14 @@ path at $x$ (which would have been denoted by $\refl{x}$ in the book).
 
 \begin{infarray}{c}
 \inference{\jctx{\Gamma}}{\jtype{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}\\
-\inference{\jctx{\Gamma}}{\jtermt{\Gamma}{\subst{\idfunc[\Gamma]}{\idtypevar{\Gamma}}}{\refl{\Gamma}}}\\
+\inference{\jctx{\Gamma}}{\jterm{\Gamma}{\subst{\idfunc[\Gamma]}{\idtypevar{\Gamma}}}{\refl{\Gamma}}}\\
 \inference{\jtype{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}
            \qquad
-           \jtermt{\Gamma}{\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{P}}}{d}}
-           {\jtermt{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}{\tfJ(d)}}\\
+           \jterm{\Gamma}{\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{P}}}{d}}
+           {\jterm{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}{\tfJ(d)}}\\
 \inference{\jtype{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}\qquad
-\jtermt{\Gamma}{\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{P}}}{d}}
-{\jtermteq
+\jterm{\Gamma}{\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{P}}}{d}}
+{\jtermeq
   {\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}
   {\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{P}}}
   {\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{\tfJ(d)}}}
@@ -317,13 +317,13 @@ path at $x$ (which would have been denoted by $\refl{x}$ in the book).
 
 \begin{infarray}{c}
 \inference{\jtype{\Gamma}{A}}{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}\\
-\inference{\jtype{\Gamma}{A}}{\jtermt{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\idtypevar{A}}}{\refl{A}}}\\
+\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\idtypevar{A}}}{\refl{A}}}\\
 \inference{\jtype{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}\qquad
-\jtermt{\ctxext{\Gamma}{A}}{\subst{\refl{A}}{{\idfunc[A]}{P}}}{d}}
-{\jtermt{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}{\tfJ(d)}}\\
+\jterm{\ctxext{\Gamma}{A}}{\subst{\refl{A}}{{\idfunc[A]}{P}}}{d}}
+{\jterm{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}{\tfJ(d)}}\\
 \inference{\jtype{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}\qquad
-\jtermt{\ctxext{\Gamma}{A}}{\subst{\refl{A}}{{\idfunc[A]}{P}}}{d}}
-{\jtermteq
+\jterm{\ctxext{\Gamma}{A}}{\subst{\refl{A}}{{\idfunc[A]}{P}}}{d}}
+{\jtermeq
   {\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}
   {\subst{\refl{A}}{{\idfunc[A]}{P}}}
   {\subst{\refl{A}}{{\idfunc[A]}{\tfJ(d)}}}
@@ -341,11 +341,11 @@ basic type theory because we will use them as index categories of the diagrams.
 \begin{infarray}{cc}
 \inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\mprd{A}{P}}}
 & \inference{\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\mprd{A}{P}}{\mprd{A}{P'}}}\\
-\inference{\jtermt{\ctxext{\Gamma}{A}}{P}{f}}{\jtermt{\Gamma}{\mprd{A}{P}}{\lambda(f)}}
-& \inference{\jtermteq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermteq{\Gamma}{\mprd{A}{P}}{\lambda(f)}{\lambda(f')}}\\
-\inference{\jtermt{\Gamma}{\mprd{A}{P}}{g}}{\jtermt{\ctxext{\Gamma}{A}}{P}{\tfev(g)}}
-& \inference{\jtermteq{\Gamma}{\mprd{A}{P}}{g}{g'}}{\jtermteq{\ctxext{\Gamma}{A}}{P}{\tfev(g)}{\tfev(g')}}\\
-\inference{\jtermt{\ctxext{\Gamma}{A}}{P}{f}}{\jtermteq{\Gamma}{A}{\tfev(\lambda(f))}{f}}
+\inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jterm{\Gamma}{\mprd{A}{P}}{\lambda(f)}}
+& \inference{\jtermeq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermeq{\Gamma}{\mprd{A}{P}}{\lambda(f)}{\lambda(f')}}\\
+\inference{\jterm{\Gamma}{\mprd{A}{P}}{g}}{\jterm{\ctxext{\Gamma}{A}}{P}{\tfev(g)}}
+& \inference{\jtermeq{\Gamma}{\mprd{A}{P}}{g}{g'}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\tfev(g)}{\tfev(g')}}\\
+\inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\Gamma}{A}{\tfev(\lambda(f))}{f}}
 \end{infarray}
 
 With these rules we will not get the weak $\eta$-rule when identity types are present.

@@ -339,12 +339,12 @@
 \newcommand{\@jtypeAlignTrue}[3]{#2 & \vdash #3~type}
 
 \newcommand{\jtermc}{\@ifnextchar*{\@jtermcAlignTrue}{\@jtermcAlignFalse}}
-\newcommand{\@jtermcAlignTrue}[3]{ & \vdash #3:#2}
-\newcommand{\@jtermcAlignFalse}[2]{\vdash #2:#1}
+\newcommand{\@jtermcAlignTrue}[3]{\@jtermAlignTrue{#1}{}{#2}{#3}}
+\newcommand{\@jtermcAlignFalse}[2]{\@jtermAlignFalse{}{#1}{#2}}
 
-\newcommand{\jtermt}{\@ifnextchar*{\@jtermtAlignTrue}{\@jtermtAlignFalse}}
-\newcommand{\@jtermtAlignTrue}[4]{#2 & \vdash #4:#3}
-\newcommand{\@jtermtAlignFalse}[3]{#1 \vdash #3:#2}
+\newcommand{\jterm}{\@ifnextchar*{\@jtermAlignTrue}{\@jtermAlignFalse}}
+\newcommand{\@jtermAlignTrue}[4]{#2 & \vdash #4:#3}
+\newcommand{\@jtermAlignFalse}[3]{#1 \vdash #3:#2}
 
 \newcommand{\jctxeq}{\@ifnextchar*{\@jctxeqAlignTrue}{\@jctxeqAlignFalse}}
 \newcommand{\@jctxeqAlignTrue}[3]{& \vdash #2\jdeq #3~ctx}
@@ -355,12 +355,12 @@
 \newcommand{\@jtypeeqAlignFalse}[3]{#1\vdash #2\jdeq #3~type}
 
 \newcommand{\jtermceq}{\@ifnextchar*{\@jtermceqAlignTrue}{\@jtermceqAlignFalse}}
-\newcommand{\@jtermceqAlignTrue}[4]{& \vdash #3\jdeq #4:#2}
-\newcommand{\@jtermceqAlignFalse}[3]{\vdash #2\jdeq #3:#1}
+\newcommand{\@jtermceqAlignTrue}[4]{\@jtermeqAlignTrue{#1}{}{#2}{#3}{#4}}
+\newcommand{\@jtermceqAlignFalse}[3]{\@jtermeqAlignFalse{}{#1}{#2}{#3}}
 
-\newcommand{\jtermteq}{\@ifnextchar*{\@jtermteqAlignTrue}{\@jtermteqAlignFalse}}
-\newcommand{\@jtermteqAlignTrue}[5]{#2 & \vdash #4\jdeq #5:#3}
-\newcommand{\@jtermteqAlignFalse}[4]{#1\vdash #3\jdeq #4:#2}
+\newcommand{\jtermeq}{\@ifnextchar*{\@jtermeqAlignTrue}{\@jtermeqAlignFalse}}
+\newcommand{\@jtermeqAlignTrue}[5]{#2 & \vdash #4\jdeq #5:#3}
+\newcommand{\@jtermeqAlignFalse}[4]{#1\vdash #3\jdeq #4:#2}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
