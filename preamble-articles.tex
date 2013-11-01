@@ -370,6 +370,9 @@
 %%%%
 %%%% bug: there's two much space above the array.
 
+\let\inferenceold\inference
+\renewcommand{\inference}[2]{\bgroup\renewcommand*{\arraystretch}{1}\inferenceold{#1}{#2}\egroup}
+
 \newenvironment{infarray}[1]{\begingroup\renewcommand*{\arraystretch}{3}
 \begin{equation*}
 \begin{array}{#1}}{

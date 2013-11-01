@@ -1,4 +1,4 @@
-\section{A variable-free presentation of type theory}
+\section{Variable-free type theory -- the basic theory}
 We have seen in the example of $\UU$ that we will not need to refer to variables
 when we are manipulating contexts. In fact, it is more natural not to.
 This suggests that there is a presentation
@@ -144,6 +144,79 @@ For weakening by types we get:
             {\ctxwk{{A}{B}}{{A}{R}}}{\ctxwk{A}{{B}{t}}}{\ctxwk{{A}{B}}{{A}{t}}}}
 \end{infarray}
 
+\subsubsection{A game of trees}
+We prove a little meta theorem about the type system we have so far. It is not
+really of importance to the development of the theory. 
+
+Let's say
+that a binary tree of contexts is a pair $\pair{T,f}$ consisting of a binary 
+tree $T$ together with a function $f$ assigning to each leaf a context. The set
+of all binary trees of contexts is denoted by $B$. Such
+binary trees may be defined inductively: $(\unit,f):B$ for any $f:\unit\to ctx$
+and given any $(T_1,f_1)$ and $(T_2,f_2)$ in $B$ we have $(T_1,f_1)*(T_2,f_2)$
+in $B$.
+
+We simultaneously define
+the following two functions:
+\begin{align*}
+\trext & : B\to ctx\\
+\trwk_0 & : \prd{X:B} ctx\to typ(\trext(X))\\
+\trwk_1 & : \prd{X:B}{\Gamma~ctx} typ(\Gamma)\to typ(\ctxext{\trext(X)}{\trwk_0(X,\Gamma)})
+\end{align*}
+Both these functions are defined by induction on binary trees. We set
+\begin{align*}
+\trext((\unit,f)) & \defeq f(\unit)\\
+\trext((T_1,f_1)*(T_2,f_2)) & \defeq \ctxext{\trext((T_1,f_1))}
+{\trwk_0((T_1,f_1),\trext((T_2,f_2)))}
+\end{align*}
+and for any context $\Gamma$
+\begin{align*}
+\trwk_0((\unit,f),\Gamma) & \defeq \ctxwk{f(\unit)}{\Gamma}\\
+\trwk_0((T_1,f_1)*(T_2,f_2),\Gamma) 
+  & \defeq \trwk_1((T_1,f_1),\trwk_0((T_2,f_2)),\Gamma))
+\end{align*}
+and for any type $A$ in context $\Gamma$
+\begin{align*}
+\trwk_1((\unit,f),A) & \defeq \ctxwk{f(\unit)}{A}\\
+\trwk_1((T_1,f_1)*(T_2,f_2),A) & \defeq
+  \trwk_1((T_1,f_1),\trwk_1((T_2,f_2)),A))
+\end{align*}
+
+\begin{lem}
+$\trwk_0((T,f),\Gamma)$ is a type in context $\trext((T,f))$ and
+$\trwk_1((T,f),A)$ is a type in context $\ctxext{\trext((T,f))}{\trwk_0((T,f),\Gamma)}$
+for any type $A$ in context $\Gamma$.
+\end{lem}
+
+\begin{proof}
+It is immediate that $\trwk_0((\unit,f),\Gamma)$ is a type in context $\trext((\unit,f))$
+and that $\trwk_1((\unit,f),A)$ is a type in context $\ctxext{\trext((\unit,f))}
+{\trwk_0((\unit,f),\Gamma)}$ for any type $A$ in context $\Gamma$.
+
+Suppose that $(T_1,f_1)$ and $(T_2,f_2)$ are binary trees of contexts such that
+$\trwk_0((T_i,f_i),\Gamma)$ is a type in context
+$\trext((T_i,f_i))$ for $i\jdeq 1$ and $i\jdeq 2$, and such that
+$\trwk_1((T_i,f_1),A)$ is a type in context $\ctxext{\trext((T_i,f_i))}{\trwk_0((T_i,f_i),\Gamma)}$
+for $i\jdeq 1$ and $i\jdeq 2$. Then
+\begin{equation*}
+\trwk_0((T_1,f_1)*(T_2,f_2),\Gamma) 
+\jdeq \trwk_1((T_1,f_1),\trwk_0((T_2,f_2),\Gamma))
+\end{equation*}
+is a type in context
+\begin{equation*}
+\ctxext{\trext((T_1,f_1))}{\trwk_0((T_1,f_1),\trext((T_2,f_2)))}
+\jdeq \trext((T_1,f_1)*(T_2,f_2)).
+\end{equation*}
+Also,
+\begin{equation*}
+\trwk_1((T_1,f_1)*(T_2,f_2),A) \jdeq \trwk_1((T_1,f_1),\trwk_1((T_2,f_2),A))
+\end{equation*}
+is a type in context
+\begin{equation*}
+\ctxext{\trext((T_1,f_1))}{\trwk_0((T_1,f_1),\ctxext{\trext((T_2,f_2))}{\trwk_0((T_2,f_2),\Gamma))}}
+\end{equation*}
+\end{proof}
+
 \subsection{Substitution}
 Given a family $P$ over $A$ and a term $x$ of $A$, substitution gives a way to
 consider the fiber $\subst{x}{P}$ of $P$ at $x$. Also, we get a way to evaluate
@@ -207,6 +280,18 @@ mapping everything to $y:B$ and similar properties for families and terms thereo
 \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\Gamma}{B}{y}}{\jtermeq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\\
 \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
 \end{infarray}
+
+Using the rules of the compatibility of substitution with weakening and of the
+compatibility of weakening with itself, we see that we can show
+\begin{equation*}
+\jtypeeq{\Gamma}{\subst{f}{\ctxwk{\Gamma}{{\Delta}{\greek{E}}}}}{\ctxwk{\Gamma}{E}}
+\end{equation*}
+for any three contexts $\Gamma$, $\Delta$ and $\greek{E}$ and any $\jhom{\Gamma}{\Delta}{f}$.
+It follows that for $\jhom{\Delta}{\greek{E}}{g}$ we have
+\begin{equation*}
+\jhom{\Gamma}{\greek{E}}{\subst{f}{\ctxwk{\Gamma}{g}}}
+\end{equation*}
+The term $\jcomp{\Gamma}{f}{g}$ is the composition of $g$ with $f$.
 
 \subsection{The universal property of extension}
 
@@ -330,14 +415,106 @@ path at $x$ (which would have been denoted by $\refl{x}$ in the book).
   {d}}
 \end{infarray}
 
-\subsection{Other type constructors}
+\section{Variable-free type theory -- other type constructors}
 We will now describe the rules for the type constructors that we don't assume
 in our type theory by default. The first of these are the dependent function
 types. We also discuss $\tfW$-types, suspensions, truncations. More general higher inductive
 types will have to wait until we have introduced models, for the models of the
 basic type theory because we will use them as index categories of the diagrams.
 
-\subsubsection{Dependent function types}
+\subsection{The unit type}
+Since we don't have a notion of terms of a context, we just say that the context
+$\unit$ is the terminal context.
+
+\begin{infarray}{c}
+\inference{}{\jctx{\unit}}\\
+\inference{\jctx{\Gamma}}{\jhom{\Gamma}{\unit}{\tounit{\Gamma}}}\\
+\inference{\jctx{\Gamma}\qquad\jhom{\Gamma}{\unit}{f}}{\jhomeq{\Gamma}{\unit}{f}{\tounit{\Gamma}}}
+\end{infarray}
+
+Note that we don't have to require that $\jhomeq{\Gamma}{\unit}{\tounit{\Gamma}}{\tounit{\Delta}}$
+whenever we have a judgmental equality $\jctxeq{\Gamma}{\Delta}$, since this already follows from the third rule.
+
+When the context $\unit$ is present, we may use the expression $\jtype{}{\Gamma}$
+as a shorthand for the judgment $\jtype{\unit}{\ctxwk{\unit}{\Gamma}}$. Likewise,
+we may use the expression $\jtermc{\Gamma}{i}$ as a shorthand
+for the judgment $\jhom{\unit}{\Gamma}{i}$. If we have a type $A$ in context
+$\Gamma$, we may use the expression $\jtype{}{\subst{i}{A}}$ to stand for
+the judgment $\jtype{\unit}{\subst{i}{\ctxwk{\unit}{A}}}$. We see that in every
+respect, contexts are types in the empty context.
+
+We have created a strictly terminal object $\unit$. This is not necessary when
+we're working in a context. We introduce the unit type $\unit_\Gamma$ in context
+$\Gamma$ in the familiar type theoretical way.
+
+\begin{infarray}{c}
+\inference{\jctx{\Gamma}}{\jtype{\Gamma}{\unit_\Gamma}}\\
+\inference{\jctx{\Gamma}}{\jterm{\Gamma}{\unit_\Gamma}{\ttt_\Gamma}}\\
+\inference{\jtype{\ctxext{\Gamma}{\unit_\Gamma}}{P}\qquad\jterm{\Gamma}{\subst{\ttt_\Gamma}{P}}{u}}
+          {\jterm{\ctxext{\Gamma}{\unit_\Gamma}}{P}{\ind{\unit_\Gamma}(u)}}\\
+\inference{\jtype{\ctxext{\Gamma}{\unit_\Gamma}}{P}\qquad\jterm{\Gamma}{\subst{\ttt_\Gamma}{P}}{u}}
+          {\jtermeq{\Gamma}{\subst{\ttt_\Gamma}{P}}{\subst{\ttt_\Gamma}{\ind{\unit_\Gamma}(u)}}{u}}
+\end{infarray}
+
+\subsection{Product types}
+
+\subsubsection{Products}
+\begin{infarray}{c}
+\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jctx{\product{\Gamma}{\Delta}}}\\
+\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jhom{{\Gamma}{\Delta}}{\product{\Gamma}{\Delta}}{\pair}}
+\end{infarray}
+
+\subsubsection{Strict products}
+As with the unit type, we may use the categorical description of the product
+for our type theoretical definition. If we do that, we get strict products.
+
+\begin{infarray}{cc}
+\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jctx{\product{\Gamma}{\Delta}}}
+ & \inference{\jhom{\greek{E}}{\Gamma}{f}\qquad\jhom{\greek{E}}{\Delta}{g}}
+          {\jhom{\greek{E}}{\product{\Gamma}{\Delta}}{\pairp{f,g}}}\\
+\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jhom{\product{\Gamma}{\Delta}}{\Gamma}{\proj1}}
+ & \inference{\jhom{\greek{E}}{\Gamma}{f}\qquad\jhom{\greek{E}}{\Delta}{g}}
+          {\jhomeq{\greek{E}}{\Gamma}{\jcomp{\greek{E}}{\pairp{f,g}}{\proj1}}{f}}\\
+\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jhom{\product{\Gamma}{\Delta}}{\Delta}{\proj2}} 
+ & \inference{\jhom{\greek{E}}{\Gamma}{f}\qquad\jhom{\greek{E}}{\Delta}{g}}
+          {\jhomeq{\greek{E}}{\Delta}{\jcomp{\greek{E}}{\pairp{f,g}}{\proj2}}{g}}
+\end{infarray}
+\begin{equation*}
+\inference{\jhom{\greek{E}}{\product{\Gamma}{\Delta}}{h}
+           \qquad
+           \jhomeq{\greek{E}}{\Gamma}{\jcomp{E}{h}{\proj1}}{f}
+           \qquad
+           \jhomeq{\greek{E}}{\Delta}{\jcomp{E}{h}{\proj2}}{g}}
+          {\jhomeq{\greek{E}}{\product{\Gamma}{\Delta}}{h}{\pairp{f,g}}}
+\end{equation*}
+
+\subsection{Equalizer types}
+Now that we have introduced a terminal object and products the categorical way,
+we may just continue and present (strict) equalizers and pullbacks too, just to
+see where we get. These notions are probably just not very useful in a univalent
+setting until we got a good computational interpretation.
+
+\begin{infarray}{c}
+\inference{\jhom{\Gamma}{\Delta}{f}\qquad\jhom{\Gamma}{\Delta}{g}}{\jctx{\jequalizer{\Gamma}{f}{g}}}\\
+\inference{\jhom{\Gamma}{\Delta}{f}\qquad\jhom{\Gamma}{\Delta}{g}}{\jhom{\jequalizer{\Gamma}{f}{g}}{\Gamma}{\jequalizerin{f}{g}}}\\
+\inference{\jhom{\greek{E}}{\Gamma}{h}\qquad\jhomeq{\greek{E}}{\Delta}{\jcomp{\greek{E}}{h}{f}}{\jcomp{\greek{E}}{h}{g}}}{\jhom{\greek{E}}{\jequalizer{\Gamma}{f}{g}}{\jequalizer{h}{f}{g}}}\\
+\inference{
+  {\begin{array}{l}
+    \jhom{\greek{E}}{\Gamma}{h}\\
+    \jhomeq{\greek{E}}{\Delta}{\jcomp{\greek{E}}{h}{f}}{\jcomp{\greek{E}}{h}{g}}
+  \end{array}}
+  \qquad
+  {\begin{array}{l}
+    \jhom{\greek{E}}{\jequalizer{\Gamma}{f}{g}}{k}\\
+    \jhomeq{\greek{E}}{\Gamma}{\jcomp{\greek{E}}{k}{\jequalizerin{f}{g}}}{h}
+  \end{array}}
+}
+  {\jhom{\greek{E}}{\jequalizer{\Gamma}{f}{g}}{\jequalizer{h}{f}{g}}}
+\end{infarray}
+
+\subsection{Pullback types}
+
+\subsection{Dependent function types}
 \begin{infarray}{cc}
 \inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\mprd{A}{P}}}
 & \inference{\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\mprd{A}{P}}{\mprd{A}{P'}}}\\
@@ -350,3 +527,9 @@ basic type theory because we will use them as index categories of the diagrams.
 
 With these rules we will not get the weak $\eta$-rule when identity types are present.
 So it might be better to state that $\lambda$ is a trivial cofibration.
+
+\subsection{The empty type}
+
+\subsection{Coproduct types}
+
+\subsection{The natural numbers}
