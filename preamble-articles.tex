@@ -316,6 +316,18 @@
 \newcommand{\tfT}{\typefont{T}}
 \newcommand{\reflsym}{{\mathsf{refl}}}
 \newcommand{\strans}[2]{\ensuremath{{#1}_{*}({#2})}}
+\newcommand{\eqtype}[1]{\typefont{Eq}_{#1}}
+\newcommand{\eqtoid}[1]{\typefont{eqtoid}(#1)}
+\newcommand{\greek}{\mathrm}
+\newcommand{\product}[2]{{#1}\times{#2}}
+\newcommand{\pairp}[1]{(#1)}
+\newcommand{\jcomp}[3]{\subst{#2}{\ctxwk{#1}{#3}}}
+\newcommand{\jequalizer}[3]{\{#1|#2\jdeq #3\}}
+\newcommand{\jequalizerin}[2]{\iota_{#1,#2}}
+\newcommand{\tounit}[1]{{!_{#1}}}
+\newcommand{\trwk}{\typefont{trwk}}
+\newcommand{\trext}{\typefont{trext}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% JUDGMENTS
@@ -441,6 +453,50 @@
 \newcommand{\@ctxwk@parens}[2]{(\ctxwk{#1}{#2})}
 \newcommand{\@ctxwk@nested}[3]{\@ctxwk@parens{#2}{#3}}
 \makeatother
+
+%%%% Not sure if we're gonna need the following.
+\newcommand{\ctxwkop}[2]{\ctxwk{#2}{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% JUDGMENTAL MORPHISMS
+
+\makeatletter
+\newcommand{\jhom}[3]{\jterm{\jhom@dom@ctx #1}{\jhom@dom@wk{#1}{#2}}{#3}}
+
+\newcommand{\jhom@dom@ctx}{\@ifnextchar\bgroup{\@jhom@dom@ctx}{}}
+\newcommand{\@jhom@dom@ctx}[1]{\@ifnextchar\bgroup{\@@jhom@dom@ctx{#1}}{#1}}
+\newcommand{\@@jhom@dom@ctx}[2]{\ctxext{\jhom@dom@ctx #1}{\jhom@dom@wk{#1}{#2}}}
+
+\newcommand{\jhom@dom@wk}[2]{
+  \jhom@dom@choice{\jhom@dom@wk@root #1\protect\null}
+                  {\jhom@dom@wk@branchone #1\protect\null}
+                  {\jhom@dom@wk@branchtwo #1\protect\null}
+                  {#2}}
+\newcommand{\jhom@dom@choice}[4]{
+  \ifx {#1\protect\null}{\protect\null}
+  \@jhom@dom@wk@branches{#2}{#3}{#4}
+  \else
+  \@jhom@dom@wk@root{#1}{#4}
+  \fi
+}
+\newcommand{\@jhom@dom@wk@branches}[3]{\expandafter{\expandafter{\jhom@dom@wk}{#1}}{\jhom@dom@wk{#2}{#3}}}
+\newcommand{\@jhom@dom@wk@root}[2]{\ctxwk{#1}{#2}}
+
+\newcommand{\jhom@dom@wk@root}{\@ifnextchar\bgroup{\jhom@dom@wk@eat}{}}
+
+\newcommand{\jhom@dom@wk@branchone}{\@ifnextchar\bgroup{\@jhom@dom@wk@branchone}{\jhom@dom@wk@eat}}
+\newcommand{\@jhom@dom@wk@branchone}[1]{#1\jhom@dom@wk@eat}
+
+\newcommand{\jhom@dom@wk@branchtwo}{\@ifnextchar\bgroup{\@jhom@dom@wk@branchtwo}{\jhom@dom@wk@eat}}
+\newcommand{\@jhom@dom@wk@branchtwo}[1]{\@ifnextchar\bgroup{\@@jhom@dom@wk@branchtwo}{\jhom@dom@wk@eat}}
+\newcommand{\@@jhom@dom@wk@branchtwo}[1]{#1\jhom@dom@wk@eat}
+
+\newcommand{\jhom@dom@wk@eat}[1]{\@ifnextchar{\@let@token\null}{}{\jhom@dom@wk@eat}}
+\makeatother
+
+
+%\newcommand{\jhom}[3]{\jterm{#1}{\ctxwk{#1}{#2}}{#3}}
+\newcommand{\jhomeq}[4]{\jtermeq{#1}{\ctxwk{#1}{#2}}{#3}{#4}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% When investigation pointed structures we use the \pt macro.

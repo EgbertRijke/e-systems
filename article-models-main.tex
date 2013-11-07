@@ -2,29 +2,6 @@
 
 \input{preamble-articles}
 
-\newcommand{\eqtype}[1]{\typefont{Eq}_{#1}}
-\newcommand{\eqtoid}[1]{\typefont{eqtoid}(#1)}
-\newcommand{\greek}{\mathrm}
-\newcommand{\product}[2]{{#1}\times{#2}}
-\newcommand{\pairp}[1]{(#1)}
-\newcommand{\ctxwkop}[2]{\ctxwk{#2}{#1}}
-\makeatletter
-\newcommand{\jhom}[3]{\jterm{\jhom@dom@ctx #1}{\jhom@dom@wk{#1}{#2}}{#3}}
-\newcommand{\jhom@dom@ctx}{\@ifnextchar\bgroup{\@jhom@dom@ctx}{}}
-\newcommand{\@jhom@dom@ctx}[1]{\@ifnextchar\bgroup{\@@jhom@dom@ctx{#1}}{#1}}
-\newcommand{\@@jhom@dom@ctx}[2]{\ctxext{\jhom@dom@ctx #1}{\jhom@dom@wk{#1}{#2}}}
-\newcommand{\jhom@dom@wk}[2]{{\@ifnextchar\bgroup{\@jhom@dom@wk{#2}}{\ctxwkop{#2}\bgroup\aftergroup{\aftergroup{\egroup}}}#1}}
-\newcommand{\@jhom@dom@wk}[2]{\@ifnextchar\bgroup{\@@jhom@dom@wk{#2}{#1}}{\ctxwk{#1}{#2}}}
-\newcommand{\@@jhom@dom@wk}[3]{\jhom@dom@wk{#2}{\ctxwk{\jhom@dom@ctx #3}{#1}}}
-\makeatother
-\newcommand{\jhomeq}[4]{\jtermeq{#1}{\ctxwk{#1}{#2}}{#3}{#4}}
-\newcommand{\jcomp}[3]{\subst{#2}{\ctxwk{#1}{#3}}}
-\newcommand{\jequalizer}[3]{\{#1|#2\jdeq #3\}}
-\newcommand{\jequalizerin}[2]{\iota_{#1,#2}}
-\newcommand{\tounit}[1]{{!_{#1}}}
-\newcommand{\trwk}{\typefont{trwk}}
-\newcommand{\trext}{\typefont{trext}}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{Internal models of type theory}
 \author{Egbert Rijke}
