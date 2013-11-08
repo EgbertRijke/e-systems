@@ -6,15 +6,16 @@ of type theory where contexts do not mention variables. The first small gain is 
 would not be burdened with comments about variables being bounded or not, or fresh or
 not occuring at all.
 
+Perhaps a bigger gain is that we obtain an algebraic theory for categories with
+fibrations and sections. 
+
 \subsection{The basic judgments}
-The judgments we wish to make are not the standad six judgments for ``$\Gamma$ is a context'', ``$A$ is
+The judgments we wish to make are the standad six judgments for ``$\Gamma$ is a context'', ``$A$ is
 a type in context $\Gamma$'' and ``$x$ is a term of $A$ in context $\Gamma$'' and the three equality
-judgments coming with them. We have those, but we also add a judgment for ``$i$ is a term of context $\Gamma$''
-and ``$i$ and $j$ are equal terms of context $\Gamma$''. Thus, we have eight basic judgments we can make:
+judgments coming with them.
 
 \begin{align*}
 \jctx*{\Gamma} & \jctxeq*{\Gamma}{\Gamma'}\\
-\jtermc*{\Gamma}{i} & \jtermceq*{\Gamma}{i}{j}\\
 \jtype*{\Gamma}{A} & \jtypeeq*{\Gamma}{A}{B}\\
 \jterm*{\Gamma}{A}{x} & \jtermeq*{\Gamma}{A}{x}{y}.
 \end{align*}
@@ -29,29 +30,26 @@ Of most of the inferences that we give there are two versions: one introducing a
 \subsection{The basic rules for judgmental equality}
 The rules for judgmental equality establish that it is an equivalence relation
 in all three cases (contexts, types and terms).
-%\begingroup
-%\renewcommand*{\arraystretch}{3}
-%\begin{equation*}
-%\begin{array}{ccc}
-\begin{infarray}{ccc}
-\inference{\jctx{\Gamma}}{\jctxeq{\Gamma}{\Gamma}} & \inference{\jctxeq{\Gamma}{\Delta}}{\jctxeq{\Delta}{\Gamma}} & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jctxeq{\Delta}{\Theta}}{\jctxeq{\Gamma}{\Theta}}\\
-\inference{\jtype{\Gamma}{A}}{\jtypeeq{\Gamma}{A}{A}} &
-\inference{\jtypeeq{\Gamma}{A}{B}}{\jtypeeq{\Gamma}{B}{A}} & 
-\inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\Gamma}{B}{C}}{\jtypeeq{\Gamma}{A}{C}}\\
-\inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{x}{x}} & 
-\inference{\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Gamma}{A}{y}{x}} &
-\inference{\jtermeq{\Gamma}{A}{x}{y}\qquad\jtermeq{\Gamma}{A}{y}{z}}{\jtermeq{\Gamma}{A}{x}{z}}
-\end{infarray}
-%\end{array}
-%\end{equation*}
-\begin{infarray}{cc}
-\inference{\jctxeq{\Gamma}{\Delta}\qquad\jtype{\Gamma}{A}}{\jtype{\Delta}{A}}
-& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtypeeq{\Gamma}{A}{B}}{\jtypeeq{\Delta}{A}{B}}\\
-\inference{\jctxeq{\Gamma}{\Delta}\qquad\jterm{\Gamma}{A}{x}}{\jterm{\Delta}{A}{x}}
-& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Delta}{A}{x}{y}}\\
-\inference{\jtypeeq{\Gamma}{A}{B}\qquad \jterm{\Gamma}{A}{x}}{\jterm{\Gamma}{B}{x}}
-& \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Gamma}{B}{x}{y}}
-\end{infarray}
+\begin{align}
+& \inference{\jctx{\Gamma}}{\jctxeq{\Gamma}{\Gamma}} 
+& & \inference{\jctxeq{\Gamma}{\Delta}}{\jctxeq{\Delta}{\Gamma}} 
+& & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jctxeq{\Delta}{\Theta}}{\jctxeq{\Gamma}{\Theta}}\\
+& \inference{\jtype{\Gamma}{A}}{\jtypeeq{\Gamma}{A}{A}} 
+& & \inference{\jtypeeq{\Gamma}{A}{B}}{\jtypeeq{\Gamma}{B}{A}}
+& & \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\Gamma}{B}{C}}{\jtypeeq{\Gamma}{A}{C}}\\
+& \inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{x}{x}}
+& & \inference{\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Gamma}{A}{y}{x}}
+& & \inference{\jtermeq{\Gamma}{A}{x}{y}\qquad\jtermeq{\Gamma}{A}{y}{z}}{\jtermeq{\Gamma}{A}{x}{z}}
+\end{align}
+
+\begin{align}
+& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtype{\Gamma}{A}}{\jtype{\Delta}{A}}
+& & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtypeeq{\Gamma}{A}{B}}{\jtypeeq{\Delta}{A}{B}}\\
+& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jterm{\Gamma}{A}{x}}{\jterm{\Delta}{A}{x}}
+& & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Delta}{A}{x}{y}}\\
+& \inference{\jtypeeq{\Gamma}{A}{B}\qquad \jterm{\Gamma}{A}{x}}{\jterm{\Gamma}{B}{x}}
+& & \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Gamma}{B}{x}{y}}
+\end{align}
 
 \subsection{Extension}
 We introduce extension which not only extends a context $\Gamma$ and a type
@@ -265,7 +263,10 @@ $\jterm{\Gamma}{A}{x}$ and $\jterm{\ctxext{\Gamma}{A}}{P}{f}$.
 \subsubsection{Substitution is compatible with extension}
 Suppose $\jterm{\Gamma}{A}{x}$ in all of the following inference rules.
 \begin{infarray}{c}
-\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}{\jtypeeq{\Gamma}{\subst{x}{\ctxext{P}{Q}}}{\ctxext{\subst{x}{P}}{\subst{x}{Q}}}}
+\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}
+  {\jtypeeq{\Gamma}{\subst{x}{\ctxext{P}{Q}}}{\ctxext{\subst{x}{P}}{\subst{x}{Q}}}}\\
+\inference{\jtype{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
+  {\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxext{Q}{R}}}{\ctxext{\subst{x}{Q}}{\subst{x}{R}}}}
 \end{infarray}
 
 \subsubsection{Substitution is compatible with weakening}
@@ -359,28 +360,49 @@ inference rules:
 As with context extension, we shall require two more inference rules stating that
 $\pair_P$ and $\ind{\tfext_A(P)}$ are invariant under judgmental equality.
 
-\subsection{The variable rule -- identity functions}
-The variable rule for contexts:
-\begin{infarray}{c}
-\inference{\jctx{\Gamma}}{\jterm{\Gamma}{\ctxwk{\Gamma}{\Gamma}}{\idfunc[\Gamma]}}\\
-\inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{\idfunc[\Gamma]}{\ctxwk{\Gamma}{x}}}{x}}\\
-\inference{\jterm{\Delta}{\ctxwk{\Delta}{\Gamma}}{g}}{\jtermeq{\Delta}{\ctxwk{\Delta}{\Gamma}}{\subst{g}{\ctxwk{\Delta}{\idfunc[\Gamma]}}}{g}}
-\end{infarray}
+\subsubsection{Extension is compatible with weakening}
 
+\begin{equation*}
+\jterm{\ctxext{\Gamma}{\ctxwk{\Gamma}{\ctxext{\Delta}{B}}}}{\ctxwk{{\Gamma}{\ctxext{\Delta}{B}}}{\ctxext{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}}}{ac}
+\end{equation*}
 
-The variable rule for types:
-\begin{infarray}{c}
-\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}\\
-\inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}\\
-\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtypeeq{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}{P}}\\
-\inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{A}{f}}}{f}}\\
-\inference{\jterm{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{\subst{g}{\ctxwk{B}{\idfunc[A]}}}{g}}
-\end{infarray}
+\subsection{The identity functions}
+Without a rule explicitly asserting the existence of an identity morphism we don't
+get one, hence we do that here. The identity morphism is a term which introduced
+in ordinary type theory via the variable rule. The variable rule is a bit more
+general: it asserts that
+\begin{equation*}
+\jterm{\Gamma,\,x_1:A_1,\ldots,\,x_n:A_n}{A_i}{x_i}
+\end{equation*}
+for every $1\leq i\leq n$. Thus, it establishes the projections. In our setting,
+we get the projections from the identity morphisms together with weakening. We
+already have weakening, so here it suffices to introduce the identity morphisms.
+They are determined by their behavior with respect to substitution combined with
+weakening.
+
+\begin{align}
+&\inference{\jctx{\Gamma}}{\jterm{\Gamma}{\ctxwk{\Gamma}{\Gamma}}{\idfunc[\Gamma]}}\label{ctxIdFuncForm}\\
+&\inference{\jtype{\Gamma}{A}}{\jtypeeq{\Gamma}{\subst{\idfunc[\Gamma]}{\ctxwk{\Gamma}{A}}}{A}}\label{ctxIdFuncPbInvType}\\
+&\inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{\idfunc[\Gamma]}{\ctxwk{\Gamma}{x}}}{x}}\label{ctxIdFuncPbInvTerm}\\
+&\inference{\jterm{\Delta}{\ctxwk{\Delta}{\Gamma}}{g}}{\jtermeq{\Delta}{\ctxwk{\Delta}{\Gamma}}{\subst{g}{\ctxwk{\Delta}{\idfunc[\Gamma]}}}{g}}\label{ctxIdFuncSubstInvTerm}
+\end{align}
+
+The identity morphisms for types are introduced analogously to the identity
+morphisms of contexts, the only difference being that we have a rule asserting
+that $\subst{x}{\idfunc[A]}\jdeq x$ for every term $x:A$ in context $\Gamma$.
+
+\begin{align}
+& \inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}\\
+& \inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}\\
+& \inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtypeeq{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}{P}}\\
+& \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{A}{f}}}{f}} \\
+& \inference{\jterm{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{\subst{g}{\ctxwk{B}{\idfunc[A]}}}{g}}
+\end{align}
 
 Using these rules we can derive that there is a judgmental equality $\jtypeeq{\ctxext{\Gamma}{A}}{\subst{x}{{\idfunc[A]}{B}}}
 {\subst{x}{{x}{B}}}$.
 
-\subsection{Identity types}
+\section{Identity types}
 The identity types may now be formulated just as in ordinary Martin\nobreakdash-L\"of
 type theory. However, since all model categories have path objects, we will also
 introduce identity types for contexts.
@@ -400,25 +422,25 @@ in a context. Secretly, a reason is that we don't have dependent function types.
 We wouldn't even be able to find the transport maps if we didn't state the
 identity elimination in an extended context.
 
-\begin{infarray}{c}
-\inference{\jctx{\Gamma}}{\jtype{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}\\
-\inference{\jctx{\Gamma}}{\jterm{\Gamma}{\subst{\idfunc[\Gamma]}{\idtypevar{\Gamma}}}{\refl{\Gamma}}}\\
-\inference{\jtype{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}
+\begin{align}
+& \inference{\jctx{\Gamma}}{\jtype{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}\\
+& \inference{\jctx{\Gamma}}{\jterm{\Gamma}{\subst{\idfunc[\Gamma]}{\idtypevar{\Gamma}}}{\refl{\Gamma}}}\\
+& \inference{\jtype{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}
            \qquad
            \jterm{\Gamma}{\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{P}}}{d}}
            {\jterm{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}{\tfJ(d)}}\\
-\inference{\jtype{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}\qquad
+& \inference{\jtype{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}\qquad
 \jterm{\Gamma}{\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{P}}}{d}}
 {\jtermeq
   {\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}
   {\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{P}}}
   {\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{\tfJ(d)}}}
   {d}}\\
-\inference{\jtype{\ctxext{{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}}{Q}
+& \inference{\jtype{\ctxext{{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}}{Q}
            \qquad
            \jterm{\ctxext{\Gamma}{\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{P}}}}{\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{Q}}}{d}}
            {\jterm{\ctxext{{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}}{Q}{\tfJ(d)}}\\
-\inference
+& \inference
   {\jtype
     {\ctxext{{{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\idtypevar{\Gamma}}}{P}}
     {Q}
@@ -432,24 +454,24 @@ identity elimination in an extended context.
     {\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{Q}}}
     {\subst{\refl{\Gamma}}{{\idfunc[\Gamma]}{\tfJ(d)}}}
     {d}}
-\end{infarray}
+\end{align}
 
 Likewise, we introduce identity types in a context.
 
-\begin{infarray}{c}
-\inference{\jtype{\Gamma}{A}}{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}\\
-\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\idtypevar{A}}}{\refl{A}}}\\
-\inference{\jtype{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}\qquad
+\begin{align}
+& \inference{\jtype{\Gamma}{A}}{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}\\
+& \inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\idtypevar{A}}}{\refl{A}}}\\
+& \inference{\jtype{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}\qquad
 \jterm{\ctxext{\Gamma}{A}}{\subst{\refl{A}}{{\idfunc[A]}{P}}}{d}}
 {\jterm{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}{\tfJ(d)}}\\
-\inference{\jtype{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}\qquad
+& \inference{\jtype{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}{P}\qquad
 \jterm{\ctxext{\Gamma}{A}}{\subst{\refl{A}}{{\idfunc[A]}{P}}}{d}}
 {\jtermeq
   {\ctxext{{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}
   {\subst{\refl{A}}{{\idfunc[A]}{P}}}
   {\subst{\refl{A}}{{\idfunc[A]}{\tfJ(d)}}}
   {d}}
-\end{infarray}
+\end{align}
 
 Suppose we have terms $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{A}{y}$. Then
 we may define $\id[A]{x}{y}\defeq\subst{y}{{x}{\idtypevar{A}}}$. A term
@@ -501,6 +523,51 @@ a left inverse $\jhom{\Delta}{\Gamma}{g}$ by asserting that there is an identifi
 ..
 \end{equation*}
 
+\subsubsection{Compatibility of identity types with extension}
+
+\subsubsection{Compatibility of identity types with weakening}
+Suppose $A$ and $B$ are types in context $\Gamma$. Then we can consider the types
+\begin{align*}
+\jtype*{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{{B}{B}}}}{\ctxwk{A}{\idtypevar{B}}}\\
+\jtype*{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{B}}}}{\idtypevar{\ctxwk{A}{B}}}
+\end{align*}
+Note that we have the judgmental equality
+\begin{equation*}
+\jtypeeq
+  {\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}
+  {\ctxwk{A}{{B}{B}}}
+  {\ctxwk{{A}{B}}{{A}{B}}}
+\end{equation*}
+so $\ctxwk{A}{\idtypevar{B}}$ and $\idtypevar{\ctxwk{A}{B}}$ are types in the
+same context. 
+
+\begin{lem}
+There is a term of type
+\begin{equation*}
+\jterm
+  {\ctxext{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{B}}}}{\idtypevar{\ctxwk{A}{B}}}}
+  {\ctxwk{\idtypevar{\ctxwk{A}{B}}}{\ctxwk{A}{\idtypevar{B}}}}
+  {\typefont{idwktowkid}}
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+By the identity elimination rule it suffices to find a term
+\begin{equation*}
+\jterm
+  {\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}
+  {\subst{\refl{\ctxwk{A}{B}}}{{\idfunc[\ctxwk{A}{B}]}{\ctxwk{\idtypevar{\ctxwk{A}{B}}}{\ctxwk{A}{\idtypevar{B}}}}}}
+  {i}
+\end{equation*}
+We may simplify the type $\subst{\refl{\ctxwk{A}{B}}}{{\idfunc[\ctxwk{A}{B}]}{\ctxwk{\idtypevar{\ctxwk{A}{B}}}{\ctxwk{A}{\idtypevar{B}}}}}$ as follows:
+\begin{align*}
+& \subst{\refl{\ctxwk{A}{B}}}{{\idfunc[\ctxwk{A}{B}]}{\ctxwk{\idtypevar{\ctxwk{A}{B}}}{\ctxwk{A}{\idtypevar{B}}}}}\\
+& \qquad\jdeq \subst{\idfunc[\ctxwk{A}{B}]}{{\ctxwk{..}{\refl{\ctxwk{A}{B}}}}{\ctxwk{\idtypevar{\ctxwk{A}{B}}}{\ctxwk{A}{\idtypevar{B}}}}}
+\end{align*}
+\end{proof}
+
+\subsubsection{Compatibility of identity types with substitution}
+
 \section{Variable-free type theory -- other type constructors}
 We will now describe the rules for the type constructors that we don't assume
 in our type theory by default. The first of these are the dependent function
@@ -512,11 +579,11 @@ basic type theory because we will use them as index categories of the diagrams.
 Since we don't have a notion of terms of a context, we just say that the context
 $\unit$ is the terminal context.
 
-\begin{infarray}{c}
-\inference{}{\jctx{\unit}}\\
-\inference{\jctx{\Gamma}}{\jhom{\Gamma}{\unit}{\tounit{\Gamma}}}\\
-\inference{\jctx{\Gamma}\qquad\jhom{\Gamma}{\unit}{f}}{\jhomeq{\Gamma}{\unit}{f}{\tounit{\Gamma}}}
-\end{infarray}
+\begin{align}
+& \inference{}{\jctx{\unit}}\\
+& \inference{\jctx{\Gamma}}{\jhom{\Gamma}{\unit}{\tounit{\Gamma}}}\\
+& \inference{\jctx{\Gamma}\qquad\jhom{\Gamma}{\unit}{f}}{\jhomeq{\Gamma}{\unit}{f}{\tounit{\Gamma}}}
+\end{align}
 
 Note that we don't have to require that $\jhomeq{\Gamma}{\unit}{\tounit{\Gamma}}{\tounit{\Delta}}$
 whenever we have a judgmental equality $\jctxeq{\Gamma}{\Delta}$, since this already follows from the third rule.
@@ -533,14 +600,14 @@ We have created a strictly terminal object $\unit$. This is not necessary when
 we're working in a context. We introduce the unit type $\unit_\Gamma$ in context
 $\Gamma$ in the familiar type theoretical way.
 
-\begin{infarray}{c}
-\inference{\jctx{\Gamma}}{\jtype{\Gamma}{\unit_\Gamma}}\\
-\inference{\jctx{\Gamma}}{\jterm{\Gamma}{\unit_\Gamma}{\ttt_\Gamma}}\\
-\inference{\jtype{\ctxext{\Gamma}{\unit_\Gamma}}{P}\qquad\jterm{\Gamma}{\subst{\ttt_\Gamma}{P}}{u}}
+\begin{align}
+& \inference{\jctx{\Gamma}}{\jtype{\Gamma}{\unit_\Gamma}}\\
+& \inference{\jctx{\Gamma}}{\jterm{\Gamma}{\unit_\Gamma}{\ttt_\Gamma}}\\
+& \inference{\jtype{\ctxext{\Gamma}{\unit_\Gamma}}{P}\qquad\jterm{\Gamma}{\subst{\ttt_\Gamma}{P}}{u}}
           {\jterm{\ctxext{\Gamma}{\unit_\Gamma}}{P}{\ind{\unit_\Gamma}(u)}}\\
-\inference{\jtype{\ctxext{\Gamma}{\unit_\Gamma}}{P}\qquad\jterm{\Gamma}{\subst{\ttt_\Gamma}{P}}{u}}
+& \inference{\jtype{\ctxext{\Gamma}{\unit_\Gamma}}{P}\qquad\jterm{\Gamma}{\subst{\ttt_\Gamma}{P}}{u}}
           {\jtermeq{\Gamma}{\subst{\ttt_\Gamma}{P}}{\subst{\ttt_\Gamma}{\ind{\unit_\Gamma}(u)}}{u}}
-\end{infarray}
+\end{align}
 
 \subsection{Subterminal types}
 The subterminal types we're about to present are strict, so they're more like \verb+Prop+
@@ -572,14 +639,14 @@ can be derived.
 \end{defn}
 
 \begin{defn}
-\begin{infarray}{c}
-\inference{\jctx{\Gamma}}{\jctx{\tau\Gamma}}\\
-\inference{\jctx{\Gamma}}{\jhom{\Gamma}{\tau\Gamma}{t}}\\
-\inference{\jctx{\Gamma}}{\jtermeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\ctxwk{{\Gamma}{\Gamma}}{{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{t}}{\ctxwk{{\Gamma}{\Gamma}}{t}}}\\
-\inference{\jhom{\Gamma}{\Delta}{f}\qquad\jtermeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\ctxwk{{\Gamma}{\Gamma}}{{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{f}}{\ctxwk{{\Gamma}{\Gamma}}{f}}}{\jhom{\tau\Gamma}{\Delta}{\tilde{f}}}\\
-\inference{\jhom{\Gamma}{\Delta}{f}\qquad\jtermeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\ctxwk{{\Gamma}{\Gamma}}{{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{f}}{\ctxwk{{\Gamma}{\Gamma}}{f}}}
+\begin{align}
+& \inference{\jctx{\Gamma}}{\jctx{\tau\Gamma}}\\
+& \inference{\jctx{\Gamma}}{\jhom{\Gamma}{\tau\Gamma}{t}}\\
+& \inference{\jctx{\Gamma}}{\jtermeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\ctxwk{{\Gamma}{\Gamma}}{{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{t}}{\ctxwk{{\Gamma}{\Gamma}}{t}}}\\
+& \inference{\jhom{\Gamma}{\Delta}{f}\qquad\jtermeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\ctxwk{{\Gamma}{\Gamma}}{{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{f}}{\ctxwk{{\Gamma}{\Gamma}}{f}}}{\jhom{\tau\Gamma}{\Delta}{\tilde{f}}}\\
+& \inference{\jhom{\Gamma}{\Delta}{f}\qquad\jtermeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Gamma}}}{\ctxwk{{\Gamma}{\Gamma}}{{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{f}}{\ctxwk{{\Gamma}{\Gamma}}{f}}}
 {\jtermeq{\Gamma}{\ctxwk{\Gamma}{\Delta}}{\jcomp{\Gamma}{t}{\tilde{f}}}{f}}
-\end{infarray}
+\end{align}
 \end{defn}
 
 \begin{lem}
@@ -593,34 +660,35 @@ Any term $\jhom{\unit}{\Gamma}{i}$ is judgmentally constant.
 \subsection{Product types}
 
 \subsubsection{Products}
-\begin{infarray}{c}
-\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jctx{\product{\Gamma}{\Delta}}}\\
-\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jhom{{\Gamma}{\Delta}}{\product{\Gamma}{\Delta}}{\pair}}
-\end{infarray}
+\begin{align}
+& \inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jctx{\product{\Gamma}{\Delta}}}\\
+& \inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jhom{{\Gamma}{\Delta}}{\product{\Gamma}{\Delta}}{\pair}}
+\end{align}
 
 \subsubsection{Strict products}
 As with the unit type, we may use the categorical description of the product
 for our type theoretical definition. If we do that, we get strict products.
 
-\begin{infarray}{cc}
-\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jctx{\product{\Gamma}{\Delta}}}
- & \inference{\jhom{\greek{E}}{\Gamma}{f}\qquad\jhom{\greek{E}}{\Delta}{g}}
+\begin{align}
+& \inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jctx{\product{\Gamma}{\Delta}}}\\
+& \inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jhom{\product{\Gamma}{\Delta}}{\Gamma}{\proj1}}\\
+& \inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jhom{\product{\Gamma}{\Delta}}{\Delta}{\proj2}}\\
+& \inference{\jhom{\greek{E}}{\Gamma}{f}\qquad\jhom{\greek{E}}{\Delta}{g}}
           {\jhom{\greek{E}}{\product{\Gamma}{\Delta}}{\pairp{f,g}}}\\
-\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jhom{\product{\Gamma}{\Delta}}{\Gamma}{\proj1}}
- & \inference{\jhom{\greek{E}}{\Gamma}{f}\qquad\jhom{\greek{E}}{\Delta}{g}}
+& \inference{\jhom{\greek{E}}{\Gamma}{f}\qquad\jhom{\greek{E}}{\Delta}{g}}
           {\jhomeq{\greek{E}}{\Gamma}{\jcomp{\greek{E}}{\pairp{f,g}}{\proj1}}{f}}\\
-\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jhom{\product{\Gamma}{\Delta}}{\Delta}{\proj2}} 
- & \inference{\jhom{\greek{E}}{\Gamma}{f}\qquad\jhom{\greek{E}}{\Delta}{g}}
+& \inference{\jhom{\greek{E}}{\Gamma}{f}\qquad\jhom{\greek{E}}{\Delta}{g}}
           {\jhomeq{\greek{E}}{\Delta}{\jcomp{\greek{E}}{\pairp{f,g}}{\proj2}}{g}}
-\end{infarray}
-\begin{equation*}
+\end{align}
+
+\begin{equation}
 \inference{\jhom{\greek{E}}{\product{\Gamma}{\Delta}}{h}
            \qquad
            \jhomeq{\greek{E}}{\Gamma}{\jcomp{E}{h}{\proj1}}{f}
            \qquad
            \jhomeq{\greek{E}}{\Delta}{\jcomp{E}{h}{\proj2}}{g}}
           {\jhomeq{\greek{E}}{\product{\Gamma}{\Delta}}{h}{\pairp{f,g}}}
-\end{equation*}
+\end{equation}
 
 \subsection{Equalizer types}
 Now that we have introduced a terminal object and products the categorical way,
@@ -628,11 +696,11 @@ we may just continue and present (strict) equalizers and pullbacks too, just to
 see where we get. These notions are probably just not very useful in a univalent
 setting until we got a good computational interpretation.
 
-\begin{infarray}{c}
-\inference{\jhom{\Gamma}{\Delta}{f}\qquad\jhom{\Gamma}{\Delta}{g}}{\jctx{\jequalizer{\Gamma}{f}{g}}}\\
-\inference{\jhom{\Gamma}{\Delta}{f}\qquad\jhom{\Gamma}{\Delta}{g}}{\jhom{\jequalizer{\Gamma}{f}{g}}{\Gamma}{\jequalizerin{f}{g}}}\\
-\inference{\jhom{\greek{E}}{\Gamma}{h}\qquad\jhomeq{\greek{E}}{\Delta}{\jcomp{\greek{E}}{h}{f}}{\jcomp{\greek{E}}{h}{g}}}{\jhom{\greek{E}}{\jequalizer{\Gamma}{f}{g}}{\jequalizer{h}{f}{g}}}\\
-\inference{
+\begin{align}
+& \inference{\jhom{\Gamma}{\Delta}{f}\qquad\jhom{\Gamma}{\Delta}{g}}{\jctx{\jequalizer{\Gamma}{f}{g}}}\\
+& \inference{\jhom{\Gamma}{\Delta}{f}\qquad\jhom{\Gamma}{\Delta}{g}}{\jhom{\jequalizer{\Gamma}{f}{g}}{\Gamma}{\jequalizerin{f}{g}}}\\
+& \inference{\jhom{\greek{E}}{\Gamma}{h}\qquad\jhomeq{\greek{E}}{\Delta}{\jcomp{\greek{E}}{h}{f}}{\jcomp{\greek{E}}{h}{g}}}{\jhom{\greek{E}}{\jequalizer{\Gamma}{f}{g}}{\jequalizer{h}{f}{g}}}\\
+& \inference{
   {\begin{array}{l}
     \jhom{\greek{E}}{\Gamma}{h}\\
     \jhomeq{\greek{E}}{\Delta}{\jcomp{\greek{E}}{h}{f}}{\jcomp{\greek{E}}{h}{g}}
@@ -644,20 +712,20 @@ setting until we got a good computational interpretation.
   \end{array}}
 }
   {\jhom{\greek{E}}{\jequalizer{\Gamma}{f}{g}}{\jequalizer{h}{f}{g}}}
-\end{infarray}
+\end{align}
 
 \subsection{Pullback types}
 
 \subsection{Dependent function types}
-\begin{infarray}{cc}
-\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\mprd{A}{P}}}
-& \inference{\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\mprd{A}{P}}{\mprd{A}{P'}}}\\
-\inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jterm{\Gamma}{\mprd{A}{P}}{\lambda(f)}}
+\begin{align}
+& \inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\mprd{A}{P}}}\\
+& \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jterm{\Gamma}{\mprd{A}{P}}{\lambda(f)}}\\
+& \inference{\jterm{\Gamma}{\mprd{A}{P}}{g}}{\jterm{\ctxext{\Gamma}{A}}{P}{\tfev(g)}}\\
+& \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\Gamma}{A}{\tfev(\lambda(f))}{f}}\\
 & \inference{\jtermeq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermeq{\Gamma}{\mprd{A}{P}}{\lambda(f)}{\lambda(f')}}\\
-\inference{\jterm{\Gamma}{\mprd{A}{P}}{g}}{\jterm{\ctxext{\Gamma}{A}}{P}{\tfev(g)}}
 & \inference{\jtermeq{\Gamma}{\mprd{A}{P}}{g}{g'}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\tfev(g)}{\tfev(g')}}\\
-\inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\Gamma}{A}{\tfev(\lambda(f))}{f}}
-\end{infarray}
+& \inference{\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\mprd{A}{P}}{\mprd{A}{P'}}}\\
+\end{align}
 
 With these rules we will not get the weak $\eta$-rule when identity types are present.
 So it might be better to state that $\lambda$ is a trivial cofibration.
@@ -675,3 +743,19 @@ in context $\ctxwk{\Gamma}{\Gamma}$ and we have the terms
 \subsection{Coproduct types}
 
 \subsection{The natural numbers}
+
+\section{A categorical explanation of the variable-free type theory}
+
+The categorical interpretation of type theory is a category $\catfont{C}$ of
+contexts, for each object $\Gamma$ of $\catfont{C}$ a class $\catfont{type}(\Gamma)$
+of morphisms into $\Gamma$ and for each $A\in\catfont{type}(\Gamma)$ a category
+$\catfont{term}(A)$ of sections of $A$. 
+
+\begin{itemize}
+\item The context extension $\ctxext{\Gamma}{A}$ is the domain of $A$.
+\item There is a choice of $\Gamma\times\Delta$ for each $\Gamma$ and $\Delta$
+      for which the first projection $\pi_1:\Gamma\times\Delta\to\Gamma$ is in $\catfont{type}(\Gamma)$;
+      this is the weakening $\ctxwk{\Gamma}{\Delta}$.
+\item For each $A\in\catfont{type}(\Gamma)$ and $x:A$ there is a choice of
+      $\pi_1:\Gamma\times_A P\to\Gamma$ which is in $\catfont{type}(\Gamma)$.
+\end{itemize}

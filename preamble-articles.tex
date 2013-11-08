@@ -567,3 +567,46 @@
 
 \newenvironment{desiderata}{\begingroup\color{blue}\textbf{Desiderata.}}
 {\endgroup}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% The following piece of code from tex.stackexchange:
+%%%%
+%%%% http://tex.stackexchange.com/a/55180/14653
+%%%%
+%%%% We include it so that inference rules in align environments have enough
+%%%% vertical space.
+
+\newlength\minalignvsep
+
+\makeatletter
+\def\align@preamble{%
+   &\hfil
+    \setboxz@h{\@lign$\m@th\displaystyle{##}$}%
+    \ifnum\row@>\@ne
+    \ifdim\ht\z@>\ht\strutbox@
+    \dimen@\ht\z@
+    \advance\dimen@\minalignvsep
+    \ht\strutbox\dimen@
+    \fi\fi
+    \strut@
+    \ifmeasuring@\savefieldlength@\fi
+    \set@field
+    \tabskip\z@skip
+   &\setboxz@h{\@lign$\m@th\displaystyle{{}##}$}%
+    \ifnum\row@>\@ne
+    \ifdim\ht\z@>\ht\strutbox@
+    \dimen@\ht\z@
+    \advance\dimen@\minalignvsep
+    \ht\strutbox@\dimen@
+    \fi\fi
+    \strut@
+    \ifmeasuring@\savefieldlength@\fi
+    \set@field
+    \hfil
+    \tabskip\alignsep@
+}
+\makeatother
+
+\minalignvsep.15em
+
+\allowdisplaybreaks
