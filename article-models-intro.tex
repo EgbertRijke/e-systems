@@ -1,42 +1,38 @@
 \section{Introduction}
-In this paper we define a notion of internal model which is adapted to
-the univalent setting in which we work. Thus, we only describe what it means
-to be an internal model when the ambient type theory is univalent. Our
-presentation is derived from the definition of~\cite{Dybjer1996}. There,
-an internal model is defined to be a category with families with interpretations
-for the basic type constructors $\Pi$, $\Sigma$ and $\idtypevar{}$. However,
-a category in~\cite{Dybjer1996} has a set of objects and for every two objects
-a setoid of morphisms. This is too restrictive for our purpose. Ideally, we
-would start with an $\infty$-category of contexts and an $\infty$-presheaf
-of families over it. This presents us with the problem that a notion of
-$\infty$-category has not been formulated \emph{in} type theory. Therefore,
-we make a deviation from the approach in~\cite{Dybjer1996}. We shall
-start with a type $\tfctx$ of contexts, a family $\mftypfunc:\tfctx\to\type$
-of families over it and a family $\terms{\blank}:\prd*{\Gamma:\tfctx}\mftyp{\mfM}{\Gamma}
-\to\type$ sending a type $A$ in context $\Gamma$ to its type $\terms{A}$ of
-terms; then we shall directly interpret $\Pi$-types, declaring
-$\terms{A\to B}$ to be $\ctxhom[\Gamma]{A}{B}$. The idea is that by letting
-$\Pi$ play a fundamental role in the definition of a category with families
-$\mathcal{C}$,
-the morphisms get their properties directly from the internal type theory
-of $\mathcal{C}$.
+This project has its origins in the beginning of 2013, when I proved a version
+of the descent theorem for homotopy colimits in type theory while I was working
+with Bas Spitters to develop notions from higher category theory in the
+univalent foundations. To arrive at a
+notion of diagram general enough to capture the higher inductive types described
+in chapter 6 of \cite{TheBook} excluding the truncations we needed type
+theoretical graphs. The graphs form a model of type theory and indeed we needed
+several of the basic type theoretical operations to give an efficient approach
+to the descent theorem. However it was not an issue to describe the graph model
+and the sense in which it was a model, the presentation of it was unsystematic
+and in that sense unsatisfactory too. 
 
-\begin{comment}
-We briefly list the data of which an internal model of type theory consits. We
-consider internal models in the style of~\cite{Dybjer1996}. Thus we will
-describe a model $\mfM$ as a category with families. However, since our setting is
-univalent type theory we will deviate from~\cite{Dybjer1996} in the following
-respects: first of all, we make use of typical ambiguity and hence omit
-reference to a thing called \emph{sort}. 
+From the experience of working with the graph model it became appearent that the
+answer we had of the question of what it models, i.e.~Martin L\"of type theory
+with the univalence axiom, could have been different if we were to describe a
+type theory based on the mechanism on which the model was built. The particular
+featueres of the graph model were that there was a type of graphs resembling a category
+of contexts, for each context a notion of what it means to be a family of graphs
+and a term thereof; there are the operations of context extension, weakening and
+substitution. In other words, the graph model is an instance of type theretical
+categories with families, an invention of Peter Dybjer.
 
-We organize the definition of an internal model $\mfM$ as follows: in
-\autoref{internal-model-contexts} we describe the category of contexts itself;
-in \autoref{internal-model-families} we describe the families over a given context
-and the related operations; in \autoref{internal-model-constructors} we
-describe the basic constructors in the internal model.
-\end{comment}
+As we know however, the type theoretical description of a category as given in
+chapter 11 of \cite{TheBook} is restricted to categories which have a $1$-type
+as the type of objects and for every two objects a $0$-type of morphisms.
+Although categories with families are like that too, these are not very natural
+restrictions when one is concerned about internal models of type theory. It
+seems we're in the need of a higher categorical formulation of what an internal
+model, or a category with family, is. But type theory has the tendency to take
+care of it's own higher categorical structure and one could hope that type
+theory is an elementary theory of the category with families of category with
+families.
 
-\subsection{Ideas in the definition}
+\subsection{Ideas in the definition of internal models}
 An internal model of type theory is like a category with families, but we want
 to avoid having to state higher coherences. In fact, we don't even start our
 definition with a category of contexts; instead we just take a \emph{type} of contexts. 
@@ -81,16 +77,98 @@ such as $\Pi$, $\Sigma$ and $\idtypevar{}$.
 The higher categorical structure then comes from the
 result that we have an interpretation of type theory.
 
-\begingroup
-\color{red}
-\begin{rmk}
-Currently, the definition seems to be circular. To define a model we need that
-context extension, weakening and substitution be morphisms of models. A morphism
-of models needs to preserve context extension, weakening and substitution.
-Moreover, its definition requires the notion of composition of morphisms.
+\subsection{The elementary theory of the category with families of categories
+with families}
 
-I've done it this way because it guides me to what the rules should be, trusting
-that I can work my way back to give a (possibly less transparent) definition
-which contains no circularities without doubt.
-\end{rmk}
-\endgroup
+Thus the idea was born to give a new description of Martin-L\"of type theory
+which is more faithful to the idea that type theory is an algebraic description
+of higher category theory. The features we have in mind for this description
+is that:
+\begin{enumerate}
+\item As in Martin-L\"of type theory there are the three basic judgments
+      \begin{align*}
+        & \Gamma\text{ is a context:} & \jctx*{\Gamma}\\
+        & A\text{ is a type in context }\Gamma\text{:} & \jtype*{\Gamma}{A}\\
+        & x\text{ is a term of $A$ in context }\Gamma\text{:} & \jterm*{\Gamma}{A}{x}
+      \end{align*}
+      together with the three accompanying judgments for judgmental equality.
+      Our new description of type theory should be such that we can faithfully
+      make the translation to the three assertions
+      \begin{enumerate}
+      \item $\Gamma$ is an object\\
+      \item $A$ is a fibration over $\Gamma$\\
+      \item $x$ is a section of the fibration $A$. 
+      \end{enumerate}
+\item There is a basic type theory which has just the operations
+      \begin{description}
+      \item[extension] taking the domain of the fibration $A$ over $\Gamma$.
+      \item[weakening] given an object $\Gamma$, weakening assigns to an object
+      $\Delta$ trivial fibration with $\Delta$ as its fibers.
+      \item[substitution] taking the fiber at a point. Fibers should always
+      be equivalent to homotopy fibers.
+      \end{description}
+      Thus we aim for a closer connection between the syntactic operations and
+      the operations of models.
+\item Models of this basic type theory should be weak $\omega$-categories. Thus,
+      it should not be necessary to start the definition of a model with a bunch
+      of contexts and substitution morphisms between them: these and the
+      operations on them, such as composition and associativity thereof, should
+      be a consequence of the interpretation of the basic type theory.
+\item There shouldn't be an empty context and dependent function types right
+      from the start. These correspond to having a terminal object and the
+      models of type theory with dependent function types are the locally
+      cartesian closed models.
+\item Contexts should not be lists of variable declarations and all the
+      operations should be explicitly invariant under context extension.
+\item There should be a large zoo of extensions of the basic type theory. First
+      off, we can extend the basic type theory with identity types, dependent
+      function types and inductive types. We want a general description of
+      homotopy colimits in type theory, which should become available once we
+      know what categories (models of the basic type theory) are. Other types
+      such as the truncations could be added as well.
+      
+      An extension of a different kind is the addition of the univalence axiom.
+\end{enumerate}
+
+\subsection{The further goals of the project}
+The first aim of this project is thus to give this new description of type
+theory with these properties. The second aim is to define a general notion of
+an internal model and provide several examples thereof. Among the examples
+should be
+\begin{enumerate}
+\item The setoid model. This is a classical one so it should be there. It might
+      be a bit different in our case. We'll want to construct a setoid model
+      of the basic type theory to interpret identity types without necessarily
+      interpreting dependent function types (but that should remain possible).
+\item The graph model. This is the model that leads to the first version of the
+      descent theorem.
+\item A univalent universe should be a model.
+\item Equifibered diagrams over a graph should be the fibrations in some model.
+\item The model of all models. Very likely, we will even define this simultaneously
+      with the notion of model.
+\item The model of weak $\omega$-groupoids. Since we think of models of the
+      basic type theory as weak $\omega$-categories, it is not too hard to
+      provide a condition on those models which enables us to talk about
+      weak $\omega$-categories. In fact, we have several options for such a
+      condition. We investigate those; we also investigate how they relate to
+      Brunerie's weak $\omega$-groupoids. Presumably, they form an internal
+      model without too much fuss (because we already have an internal model
+      of internal models at this stage) and we can ask whether this models
+      the univalence axiom. In fact, the model of internal models might already
+      have modeled the univalence axiom. 
+\end{enumerate}
+
+We also wish to extend the descent property to a more general class of homotopy
+colimits. The general recipe has already been implicit in the first descent
+property where we have used diagrams over graphs. We have the following in mind:
+\begin{enumerate}
+\item Give an internal description of a diagram. Probably this is the same thing
+      as an internal model of the basic type theory with or without identity types.
+\item Define the notion of homotopy colimit thereof.
+\item Define the notion if equifibered diagrams.
+\item Formulate and prove descent.
+\end{enumerate}
+
+Using the descent property we can view $\tfcolim$ as an operation of type theory
+It should preserve all the basic operations, identity types, dependent function
+types, itself, etc.
