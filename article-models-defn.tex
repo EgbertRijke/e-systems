@@ -547,7 +547,7 @@ The reverse direction is immediate.
 Another approach would be to define $f:\ctxwk{A}{B}$ to be left invertible
 if there is a term $\ctxext{{\Gamma}{A}}{P}$
 
-\subsection{Possible definitions of weak $\omega$-groupoids}
+\subsection{Some possibilities}
 
 A weak omega groupoid is a model of type theory with $\Sigma$ and $\idtypevar{}$
 in which there is a term of $\terms{A}$ for every type $A$ in context $\Gamma$.
@@ -563,93 +563,3 @@ this should be equivalent to the previous condition when univalence is around.
 Another option arises when we see the identity type as an operation on a certain class of
 terms. Usually, $\idtypevar{}$ is defined using the class of identity functions.
 Let's take the class of all terms instead:
-
-\begin{infarray}{c}
-\inference{\jterm{\Gamma}{A}{x}}{\jtype{\ctxext{\Gamma}{A}}{\eqtype{x}}}\\
-\inference{\jterm{\Gamma}{A}{x}}{\jterm{\Gamma}{\subst{x}{\eqtype{x}}}{\refl{x}}}\\
-\inference{\jtype{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{P}\qquad\jterm{\Gamma}{\subst{\refl{x}}{{x}{P}}}{d}}
-          {\jterm{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{P}{\ind{\eqtype{x}}(d)}}\\
-\inference{\jtype{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{P}\qquad\jterm{\Gamma}{\subst{\refl{x}}{{x}{P}}}{d}}
-          {\jtermeq{\ctxext{{\Gamma}{A}}{\eqtype{x}}}{\subst{\refl{x}}{{x}{P}}}{\subst{\refl{x}}{{x}{\ind{\eqtype{x}}(d)}}}{d}}
-\end{infarray}
-
-We get something that looks like Paulin-Mohring equality. But we should be able to use it to
-show that every $\jterm{\Gamma}{\ctxwk{\Gamma}{\Delta}}{f}$ is a trivial cofibration.
-
-For the following conjecture, note that if we have $\jterm{\Gamma}{\ctxwk{\Gamma}{\Delta}}{f}$
-Then we may consider the type $\jtype{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{{\Delta}{\Delta}}}}
-{\ctxwk{\Gamma}{\idtypevar{\Delta}}}$ and we may substitute $f$ to obtain the type
-\begin{equation*}
-\jtype{\ctxext{\Gamma}{\subst{f}{\ctxwk{\Gamma}{{\Delta}{\Delta}}}}}
-{\subst{f}{\ctxwk{\Gamma}{\idtypevar{\Delta}}}}
-\end{equation*}
-Note that we have the judgmental equality
-\begin{equation*}
-\jtypeeq{\Gamma}{\subst{f}{\ctxwk{\Gamma}{{\Delta}{\Delta}}}}{\ctxwk{\Gamma}{\Delta}}
-\end{equation*}
-so we obtain the type
-\begin{equation*}
-\jtype{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}
-{\subst{f}{\ctxwk{\Gamma}{\idtypevar{\Delta}}}}
-\end{equation*}
-We also have $\jtype{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\eqtype{f}}$, so we
-may ask for a term of type $\ctxwk{\eqtype{f}}{\subst{f}{\ctxwk{\Gamma}{\idtypevar{\Delta}}}}$
-in context $\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}$ and we can ask ourselves the question
-whether this is a trivial cofibration. This is the content of the following conjecture.
-
-\begin{conj}
-There is a term
-\begin{equation*}
-\jterm{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\eqtype{f}}}{\ctxwk{\eqtype{f}}{\subst{f}{\ctxwk{\Gamma}{\idtypevar{\Delta}}}}}{\eqtoid{f}}
-\end{equation*}
-Moreover, $\eqtoid{f}$ is a trivial cofibration.
-\end{conj}
-
-\begin{proof}
-We use the induction principle of $\eqtype{f}$ to construct $\eqtoid{f}$. Thus, we
-have to find a term
-\begin{equation*}
-\jterm
-  {\Gamma}
-  {\subst{\refl{f}}{{f}{\ctxwk{\eqtype{f}}{\subst{f}{\ctxwk{\Gamma}{\idtypevar{\Delta}}}}}}}
-  {\subst{\refl{f}}{{f}{\eqtoid{f}}}}
-\end{equation*}
-Note that we have the judgmental equalities
-\begin{align*}
-\subst{\refl{f}}{{f}{\ctxwk{\eqtype{f}}{\subst{f}{\ctxwk{\Gamma}{\idtypevar{\Delta}}}}}}
-& \jdeq \subst{f}{{\ctxwk{{\Gamma}{\Delta}}{\refl{f}}}{\ctxwk{\eqtype{f}}{\subst{f}{\ctxwk{\Gamma}{\idtypevar{\Delta}}}}}} \\
-& \jdeq \subst{f}{\ctxwk{\Gamma}{\subst{f}{\ctxwk{\Gamma}{\idtypevar{\Delta}}}}}
-\end{align*}
-where we find the term $\subst{f}{\ctxwk{\Gamma}{\subst{f}{\ctxwk{\Gamma}{\refl{\Delta}}}}}$.
-\end{proof}
-
-\begin{conj}
-Suppose we have a type $\eqtype{x}$ for every term $\jterm{\Gamma}{A}{x}$. Then
-every term $\jterm{\Gamma}{\ctxwk{\Gamma}{\Delta}}{f}$ is a trivial cofibration.
-\end{conj}
-
-\begin{proof}
-Suppose that $Q$ is a type in context $\Delta$. We want to show that
-\begin{equation*}
-\inference{\jterm{\Gamma}{\subst{f}{\ctxwk{\Gamma}{Q}}}{g}}{\jterm{\Delta}{Q}{\tilde{g}}}
-\end{equation*}
-Let $g$ be a term of $\subst{f}{\ctxwk{\Gamma}{Q}}$ in context $\Gamma$. We get
-the term
-\begin{equation*}
-\jterm{\Gamma}{\subst{\refl{f}}{{f}{\ctxwk{\eqtype{f}}{{\Gamma}{Q}}}}}{\subst{\refl{f}}{\ctxwk{\eqtype{f}}{g}}}
-\end{equation*}
-which is judgmentally equal to $g$; the types
-
-For any term $\jterm{\Gamma}{\subst{f}{\ctxwk{\Gamma}{Q}}}{g}$ we get a term 
-$\jterm{\Gamma}{\subst{\refl{x}}{{x}{P}}}{d}$.
-
-$\jterm{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\eqtype{f}}}{\ctxwk{\Gamma}{Q}}{\ind{\eqtype{f}}(d)}$.
-\end{proof}
-
-However, we could take other classes of terms, such as the projections
-$\proj1:\ctxwk{\ctxext{\Gamma}{A}}{\Gamma}$. Let's see how that goes:
-
-\begin{infarray}{c}
-\inference{\jtype{\Gamma}{A}}{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{\ctxext{\Gamma}{A}}{\Gamma}}}{\eqtype{\proj1^A}}}\\
-\inference{\jtype{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\subst{\proj1^A}{\eqtype{\proj1^A}}}{\refl{\proj1^A}}}
-\end{infarray}

@@ -133,20 +133,31 @@ is that:
 \subsection{The further goals of the project}
 The first aim of this project is thus to give this new description of type
 theory with these properties. The second aim is to define a general notion of
-an internal model and provide several examples thereof. Among the examples
-should be
-\begin{enumerate}
-\item The setoid model. This is a classical one so it should be there. It might
+an internal model and provide several examples thereof. In the definition of
+internal models we envision that all the operations of type theory become
+morphisms of type theory: they are compatible with each and every morphism
+of type theory. The compatibility of extension, weakening and substitution is
+already part of the basic type theory. The compatibility of identity types
+with weakening for instance, is a form of function extensionality. The 
+compatibility of dependent function types with identity types is the usual
+funchtion extensionality principle. The
+compatibility of a universe operation with identity types should be univalence.
+The descent theorem implies that the colimit operation is also compatible with
+all the type theoretic operations (sigma and id are checked).
+
+Among the examples of internal models we should have:
+\begin{description}
+\item[The setoid model] This is a classical one so it should be there. It might
       be a bit different in our case. We'll want to construct a setoid model
       of the basic type theory to interpret identity types without necessarily
       interpreting dependent function types (but that should remain possible).
-\item The graph model. This is the model that leads to the first version of the
+\item[The graph model] This is the model that leads to the first version of the
       descent theorem.
-\item A univalent universe should be a model.
-\item Equifibered diagrams over a graph should be the fibrations in some model.
-\item The model of all models. Very likely, we will even define this simultaneously
+\item[Univalent unvirses] A univalent universe should be a model.
+\item[Equifibered diagrams over a graph] should be the fibrations in some model.
+\item[The model of all models] Very likely, we will even define this simultaneously
       with the notion of model.
-\item The model of weak $\omega$-groupoids. Since we think of models of the
+\item[The model of weak $\omega$-groupoids] Since we think of models of the
       basic type theory as weak $\omega$-categories, it is not too hard to
       provide a condition on those models which enables us to talk about
       weak $\omega$-categories. In fact, we have several options for such a
@@ -156,7 +167,7 @@ should be
       of internal models at this stage) and we can ask whether this models
       the univalence axiom. In fact, the model of internal models might already
       have modeled the univalence axiom. 
-\end{enumerate}
+\end{description}
 
 We also wish to extend the descent property to a more general class of homotopy
 colimits. The general recipe has already been implicit in the first descent
@@ -166,9 +177,17 @@ property where we have used diagrams over graphs. We have the following in mind:
       as an internal model of the basic type theory with or without identity types.
 \item Define the notion of homotopy colimit thereof.
 \item Define the notion if equifibered diagrams.
-\item Formulate and prove descent.
+\item Formulate and prove descent: the map defined by substitution
+ from families over the colimit to the equifibered diagrams is an equivalence.
 \end{enumerate}
 
 Using the descent property we can view $\tfcolim$ as an operation of type theory
 It should preserve all the basic operations, identity types, dependent function
 types, itself, etc.
+
+Another thing we must keep in mind is that the compatibility rules in the basic
+type theory are strict. We should look to the possibility to weaken them.
+
+\subsection{Overview of the document}
+In \autoref{eg} we begin the project with exploring internal models of type theory
+in type theoretical setting of \cite{TheBook}.
