@@ -30,26 +30,31 @@ Of most of the inferences that we give there are two versions: one introducing a
 \subsection{The basic rules for judgmental equality}
 The rules for judgmental equality establish that it is an equivalence relation
 in all three cases (contexts, types and terms).
-\begin{align}
+\bgroup\small
+\begin{align*}
 & \inference{\jctx{\Gamma}}{\jctxeq{\Gamma}{\Gamma}} 
 & & \inference{\jctxeq{\Gamma}{\Delta}}{\jctxeq{\Delta}{\Gamma}} 
-& & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jctxeq{\Delta}{\Theta}}{\jctxeq{\Gamma}{\Theta}}\\
+& & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jctxeq{\Delta}{\greek{E}}}{\jctxeq{\Gamma}{\greek{E}}}\\
 & \inference{\jtype{\Gamma}{A}}{\jtypeeq{\Gamma}{A}{A}} 
 & & \inference{\jtypeeq{\Gamma}{A}{B}}{\jtypeeq{\Gamma}{B}{A}}
 & & \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\Gamma}{B}{C}}{\jtypeeq{\Gamma}{A}{C}}\\
 & \inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{x}{x}}
 & & \inference{\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Gamma}{A}{y}{x}}
 & & \inference{\jtermeq{\Gamma}{A}{x}{y}\qquad\jtermeq{\Gamma}{A}{y}{z}}{\jtermeq{\Gamma}{A}{x}{z}}
-\end{align}
+\end{align*}
+\egroup
 
-\begin{align}
+The following convertibility rules are responsible for the strictness
+of judgmental equality, which sets it apart from equivalences or identifications:
+
+\begin{align*}
 & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtype{\Gamma}{A}}{\jtype{\Delta}{A}}
 & & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtypeeq{\Gamma}{A}{B}}{\jtypeeq{\Delta}{A}{B}}\\
 & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jterm{\Gamma}{A}{x}}{\jterm{\Delta}{A}{x}}
 & & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Delta}{A}{x}{y}}\\
 & \inference{\jtypeeq{\Gamma}{A}{B}\qquad \jterm{\Gamma}{A}{x}}{\jterm{\Gamma}{B}{x}}
 & & \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtermeq{\Gamma}{A}{x}{y}}{\jtermeq{\Gamma}{B}{x}{y}}
-\end{align}
+\end{align*}
 
 \subsection{Extension}
 We introduce extension which not only extends a context $\Gamma$ and a type
@@ -64,12 +69,12 @@ in context $A$ in this sense, a term of $P$ keeps its original meaning.
 Note that by introducing extension on the level of types and families,
 we introduce $\Sigma$-types at a very early stage.
 However, we need substitution to make this precise.
-\begin{infarray}{cc}
-\inference{\jtype{\Gamma}{A}}{\jctx{\ctxext{\Gamma}{A}}}
-& \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtypeeq{\Gamma}{A}{B}}{\jctxeq{\ctxext{\Gamma}{A}}{\ctxext{\Delta}{B}}}\\
-\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\ctxext{A}{P}}}
-& \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\ctxext{\Gamma}{A}}{P}{Q}}{\jtypeeq{\Gamma}{\ctxext{A}{P}}{\ctxext{B}{Q}}}
-\end{infarray}
+\begin{align}
+& \inference{\jtype{\Gamma}{A}}{\jctx{\ctxext{\Gamma}{A}}}
+& & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jtypeeq{\Gamma}{A}{B}}{\jctxeq{\ctxext{\Gamma}{A}}{\ctxext{\Delta}{B}}}\\
+& \inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\ctxext{A}{P}}}
+& & \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\ctxext{\Gamma}{A}}{P}{Q}}{\jtypeeq{\Gamma}{\ctxext{A}{P}}{\ctxext{B}{Q}}}
+\end{align}
 
 \subsection{Weakening}
 We first define weakening by a context $\Gamma$. Since weakening by $\Gamma$
@@ -77,29 +82,82 @@ should in principle be a functor, it acts on contexts, types and terms alike.
 Note that it is because of the weakening $\ctxwk{\Gamma}{\Delta}$ of a context
 $\Delta$ by $\Gamma$ that we can speak of context morphisms from $\Gamma$ to $\Delta$: they are the terms
 of $\ctxwk{\Gamma}{\Delta}$.
-\begin{infarray}{cc}
-\inference{\jctx{\Gamma}\qquad\jctx{\Delta}}{\jtype{\Gamma}{\ctxwk{\Gamma}{\Delta}}} 
-& \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jctxeq{\Delta}{\Delta'}}{\jtypeeq{\Gamma}{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma'}{\Delta'}}}\\
-\inference{\jctx{\Gamma}\qquad\jtype{\Delta}{B}}{\jtype{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}} & \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtypeeq{\Delta}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma'}{B'}}}\\
-\inference{\jctx{\Gamma}\qquad\jterm{\Delta}{B}{y}}{\jterm{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}} 
-& \inference{\jctxeq{\Gamma}{\Gamma'}\qquad\jtermeq{\Delta}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}{\ctxwk{\Gamma'}{y'}}} 
-\end{infarray}
+
+In the following inference rules we assume $\jctx{\Gamma}$ and in the rules
+asserting a judgmental equality we furthermore assume $\jctxeq{\Gamma}{\Gamma'}$.
+\begin{align}
+& \inference{\jctx{\Delta}}{\jtype{\Gamma}{\ctxwk{\Gamma}{\Delta}}} 
+& & \inference{\jctxeq{\Delta}{\Delta'}}{\jtypeeq{\Gamma}{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma'}{\Delta'}}}\\
+& \inference{\jtype{\Delta}{B}}{\jtype{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}}
+& & \inference{\jtypeeq{\Delta}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma'}{B'}}}\\
+& \inference{\jterm{\Delta}{B}{y}}{\jterm{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}} 
+& & \inference{\jtermeq{\Delta}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{y}}{\ctxwk{\Gamma'}{y'}}} 
+\end{align}
 
 A weakening operation is also defined for types. When $A$ and $B$ are both types
  in context $\Gamma$, the weakened type $\ctxwk{A}{B}$ in context $\ctxext{\Gamma}{A}$
  is the family which `doesn't really depend on $A$'. The terms of $\ctxwk{A}{B}$
  are the functions from $A$ to $B$. Likewise, the terms $\ctxwk{A}{y}$ are the
  constant maps at $y$ from $A$ to $B$, for $y:B$.
-\begin{infarray}{cc}
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}}{\jtype{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}}
-& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtypeeq{\Gamma}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}}\\
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}{B}}{Q}}
+ 
+ In the following inference rules we assume that $\jtype{\Gamma}{A}$ and in the
+ rules asserting a judgmental equality we assume furthermore that 
+ $\jtypeeq{\Gamma}{A}{A'}$.
+\begin{align}
+& \inference{\jtype{\Gamma}{B}}{\jtype{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}}
+& & \inference{\jtypeeq{\Gamma}{B}{B'}}{\jtypeeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}}\\
+& \inference{\jtype{\ctxext{\Gamma}{B}}{Q}}
 {\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
-& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtypeeq{\ctxext{\Gamma}{B}}{Q}{Q'}}
+& & \inference{\jtypeeq{\ctxext{\Gamma}{B}}{Q}{Q'}}
 {\jtypeeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}{\ctxwk{A'}{Q'}}}\\
-\inference{\jtype{\Gamma}{A}\qquad\jterm{\Gamma}{B}{y}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}}
-& \inference{\jtypeeq{\Gamma}{A}{A'}\qquad\jtermeq{\Gamma}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}{\ctxwk{A'}{y'}}}
-\end{infarray}
+& \inference{\jterm{\Gamma}{B}{y}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}}
+& & \inference{\jtermeq{\Gamma}{B}{y}{y'}}{\jtermeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}{\ctxwk{A'}{y'}}}\\
+& \inference{\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jterm{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}{\ctxwk{A}{g}}}
+& & \inference{\jtermeq{\ctxext{\Gamma}{B}}{Q}{g}{g'}}
+{\jtermeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}{\ctxwk{A}{g}}{\ctxwk{A'}{g'}}}
+\end{align}
+
+\subsubsection{Weakening is compatible with extension}
+
+The following rules assert the compatibility of extension with weakening: for
+every context $\Gamma$ and every type $B$ in context $\Delta$ there is a
+judgmental equality $\ctxwk{\Gamma}{\ctxext{\Delta}{B}}\jdeq\ctxext{\ctxwk{\Gamma}{\Delta}}
+{\ctxwk{\Gamma}{B}}$. When thinking of terms of $\ctxwk{\Gamma}{\Delta}$ as
+functions from $\Gamma$ to $\Delta$, this looks awfully lot like the type
+theoretical axiom of choice, of which it seems absurd to ask to hold judgmentally.
+But the rule should be there because in ordinary Martin-L\"of type theory
+there is no syntax for weakening, i.e.~weakening is invisible. 
+And thus both $\ctxwk{\Gamma}{\ctxext{\Delta}{B}}$ 
+and $\ctxext{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}$ is the type
+$\ctxext{\Delta}{B}$ in context $\Gamma$.
+
+In the following inference rules we assume that $\jctx{\Gamma}$. 
+
+\begin{align}
+& \inference
+  {\jtype{\Delta}{B}}
+  {\jtypeeq{\Gamma}{\ctxwk{\Gamma}{\ctxext{\Delta}{B}}}{\ctxext{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}}}\\
+& \inference
+  {\jtype{\Delta}{B}\qquad\jtype{\ctxext{\Delta}{B}}{Q}}
+  {\jtypeeq
+    {\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}
+    {\ctxwk{\Gamma}{\ctxext{B}{Q}}}
+    {\ctxext{\ctxwk{\Gamma}{B}}{\ctxwk{\Gamma}{Q}}}}
+\end{align}
+
+In the following inference rules we assume that $\jtype{\Gamma}{A}$.
+
+\begin{align}
+& \inference
+  {\jtype{\ctxext{\Gamma}{B}}{Q}}
+  {\jtypeeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{\ctxext{B}{Q}}}{\ctxext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}}}\\
+& \inference
+  {\jtype{\ctxext{{\Gamma}{B}}{Q}}{R}}
+  {\jtypeeq
+    {\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}
+    {\ctxwk{A}{\ctxext{Q}{R}}}
+    {\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}}
+\end{align}
 
 \subsubsection{Weakening is compatible with itself}
 To conclude the rules for weakening, we state judgmental equality rules expressing
@@ -113,107 +171,31 @@ diagram commutes given any two contexts $\Gamma$ and $\Delta$:
 \end{equation*}
 There is also a version of this diagram in which all happens in a context. Thus,
 we get two sets of inference rules. For weakening by contexts we get:
-
-\begin{infarray}{c}
-\inference{\jctx{\Gamma}\qquad\jctx{\Delta}\qquad\jctx{\greek{E}}}
+\begin{align}
+& \inference{\jctx{\Gamma}\qquad\jctx{\Delta}\qquad\jctx{\greek{E}}}
           {\jtypeeq{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{{\Delta}{\greek{E}}}}
             {\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{\greek{E}}}}}\\
-\inference{\jctx{\Gamma}\qquad\jctx{\Delta}\qquad\jtype{\greek{E}}{C}}
+& \inference{\jctx{\Gamma}\qquad\jctx{\Delta}\qquad\jtype{\greek{E}}{C}}
           {\jtypeeq{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{\greek{E}}}}}
             {\ctxwk{\Gamma}{{\Delta}{C}}}
             {\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{C}}}}\\
-\inference{\jctx{\Gamma}\qquad\jctx{\Delta}\qquad\jterm{\greek{E}}{C}{t}}
+& \inference{\jctx{\Gamma}\qquad\jctx{\Delta}\qquad\jterm{\greek{E}}{C}{t}}
           {\jtermeq{\ctxext{{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{\greek{E}}}}}
             {\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{C}}}{\ctxwk{\Gamma}{{\Delta}{t}}}{\ctxwk{{\Gamma}{\Delta}}{{\Gamma}{t}}}}
-\end{infarray}
-
+\end{align}
 For weakening by types we get:
-
-\begin{infarray}{c}
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jtype{\Gamma}{C}}
+\begin{align}
+& \inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jtype{\Gamma}{C}}
           {\jtypeeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{{B}{C}}}
             {\ctxwk{{A}{B}}{{A}{C}}}}\\
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jtype{\ctxext{\Gamma}{C}}{R}}
+& \inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jtype{\ctxext{\Gamma}{C}}{R}}
           {\jtypeeq{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
             {\ctxwk{A}{{B}{R}}}
             {\ctxwk{{A}{B}}{{A}{R}}}}\\
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jterm{\Gamma}{R}{t}}
+& \inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jterm{\Gamma}{R}{t}}
           {\jtermeq{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
             {\ctxwk{{A}{B}}{{A}{R}}}{\ctxwk{A}{{B}{t}}}{\ctxwk{{A}{B}}{{A}{t}}}}
-\end{infarray}
-
-\subsubsection{A game of trees}
-We prove a little meta theorem about the type system we have so far. It is not
-really of importance to the development of the theory. 
-
-Let's say
-that a binary tree of contexts is a pair $\pair{T,f}$ consisting of a binary 
-tree $T$ together with a function $f$ assigning to each leaf a context. The set
-of all binary trees of contexts is denoted by $B$. Such
-binary trees may be defined inductively: $(\unit,f):B$ for any $f:\unit\to ctx$
-and given any $(T_1,f_1)$ and $(T_2,f_2)$ in $B$ we have $(T_1,f_1)*(T_2,f_2)$
-in $B$.
-
-We simultaneously define
-the following two functions:
-\begin{align*}
-\trext & : B\to ctx\\
-\trwk_0 & : \prd{X,Y:B} typ(\trext(X))\\
-\trwk_1 & : \prd{X:B}{\Gamma~ctx} typ(\Gamma)\to typ(\ctxext{\trext(X)}{\trwk_0(X,\Gamma)})
-\end{align*}
-Both these functions are defined by induction on binary trees. We set
-\begin{align*}
-\trext((\unit,f)) & \defeq f(\unit)\\
-\trext((T_1,f_1)*(T_2,f_2)) & \defeq \ctxext{\trext((T_1,f_1))}
-{\trwk_0((T_1,f_1),\trext((T_2,f_2)))}
-\end{align*}
-and for any context $\Gamma$
-\begin{align*}
-\trwk_0((\unit,f),(\unit,g)) & \defeq \ctxwk{f(\unit)}{g(\unit)}\\
-\trwk_0((T_1,f_1)*(T_2,f_2),\Gamma) 
-  & \defeq \trwk_1((T_1,f_1),\trwk_0((T_2,f_2)),\Gamma))
-\end{align*}
-and for any type $A$ in context $\Gamma$
-\begin{align*}
-\trwk_1((\unit,f),A) & \defeq \ctxwk{f(\unit)}{A}\\
-\trwk_1((T_1,f_1)*(T_2,f_2),A) & \defeq
-  \trwk_1((T_1,f_1),\trwk_1((T_2,f_2)),A))
-\end{align*}
-
-\begin{lem}
-$\trwk_0((T,f),\Gamma)$ is a type in context $\trext((T,f))$ and
-$\trwk_1((T,f),A)$ is a type in context $\ctxext{\trext((T,f))}{\trwk_0((T,f),\Gamma)}$
-for any type $A$ in context $\Gamma$.
-\end{lem}
-
-\begin{proof}
-It is immediate that $\trwk_0((\unit,f),\Gamma)$ is a type in context $\trext((\unit,f))$
-and that $\trwk_1((\unit,f),A)$ is a type in context $\ctxext{\trext((\unit,f))}
-{\trwk_0((\unit,f),\Gamma)}$ for any type $A$ in context $\Gamma$.
-
-Suppose that $(T_1,f_1)$ and $(T_2,f_2)$ are binary trees of contexts such that
-$\trwk_0((T_i,f_i),\Gamma)$ is a type in context
-$\trext((T_i,f_i))$ for $i\jdeq 1$ and $i\jdeq 2$, and such that
-$\trwk_1((T_i,f_1),A)$ is a type in context $\ctxext{\trext((T_i,f_i))}{\trwk_0((T_i,f_i),\Gamma)}$
-for $i\jdeq 1$ and $i\jdeq 2$. Then
-\begin{equation*}
-\trwk_0((T_1,f_1)*(T_2,f_2),\Gamma) 
-\jdeq \trwk_1((T_1,f_1),\trwk_0((T_2,f_2),\Gamma))
-\end{equation*}
-is a type in context
-\begin{equation*}
-\ctxext{\trext((T_1,f_1))}{\trwk_0((T_1,f_1),\trext((T_2,f_2)))}
-\jdeq \trext((T_1,f_1)*(T_2,f_2)).
-\end{equation*}
-Also,
-\begin{equation*}
-\trwk_1((T_1,f_1)*(T_2,f_2),A) \jdeq \trwk_1((T_1,f_1),\trwk_1((T_2,f_2),A))
-\end{equation*}
-is a type in context
-\begin{equation*}
-\ctxext{\trext((T_1,f_1))}{\trwk_0((T_1,f_1),\ctxext{\trext((T_2,f_2))}{\trwk_0((T_2,f_2),\Gamma))}}
-\end{equation*}
-\end{proof}
+\end{align}
 
 \subsection{Substitution}
 Given a family $P$ over $A$ and a term $x$ of $A$, substitution gives a way to
@@ -226,16 +208,60 @@ with itself, extension and weakening.
 In the rules introducing the various substitutions we assume $\jterm{\Gamma}{A}{x}$;
 in the rules introducing the definitional equalities we assume $\jtermeq{\Gamma}{A}{x}{x'}$.
 
-\begin{infarray}{cc}
-\inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\subst{x}{P}}}
-& \inference{\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}}\\
-\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}{\jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
-& \inference{\jtypeeq{\ctxext{{\Gamma}{A}}{P}}{Q}{Q'}}{\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x'}{Q'}}}\\
-\inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jterm{\Gamma}{\subst{x}{P}}{\subst{x}{f}}}
-& \inference{\jtermeq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermeq{\Gamma}{\subst{x}{P}}{\subst{x}{f}}{\subst{x'}{f'}}}\\
-\inference{\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}{\jterm{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}}
-& \inference{\jtermeq{\ctxext{{\Gamma}{A}}{P}}{Q}{g}{g'}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}{\subst{x'}{g'}}}
-\end{infarray}
+\begin{align}
+& \inference{\jtype{\ctxext{\Gamma}{A}}{P}}{\jtype{\Gamma}{\subst{x}{P}}}
+& & \inference{\jtypeeq{\ctxext{\Gamma}{A}}{P}{P'}}{\jtypeeq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}}\\
+& \inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}{\jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+& & \inference{\jtypeeq{\ctxext{{\Gamma}{A}}{P}}{Q}{Q'}}{\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x'}{Q'}}}\\
+& \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jterm{\Gamma}{\subst{x}{P}}{\subst{x}{f}}}
+& & \inference{\jtermeq{\ctxext{\Gamma}{A}}{P}{f}{f'}}{\jtermeq{\Gamma}{\subst{x}{P}}{\subst{x}{f}}{\subst{x'}{f'}}}\\
+& \inference{\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}{\jterm{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}}
+& &\inference{\jtermeq{\ctxext{{\Gamma}{A}}{P}}{Q}{g}{g'}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}{\subst{x'}{g'}}}
+\end{align}
+
+\subsubsection{Substitution is compatible with extension}
+Suppose $\jterm{\Gamma}{A}{x}$ in all of the following inference rules.
+\begin{align}
+& \inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}
+  {\jtypeeq{\Gamma}{\subst{x}{\ctxext{P}{Q}}}{\ctxext{\subst{x}{P}}{\subst{x}{Q}}}}\\
+& \inference{\jtype{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
+  {\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxext{Q}{R}}}{\ctxext{\subst{x}{Q}}{\subst{x}{R}}}}
+\end{align}
+
+\subsubsection{Substitution is compatible with weakening}
+The rules asserting the compatibility of substitution with weakening assert
+that the following diagram commutes for any $\jterm{\Gamma}{A}{x}$ and any
+$\jtype{\ctxext{\Gamma}{A}}{P}$:
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\jtype{\ctxext{\Gamma}{A}}{\blank} \ar{d}[swap]{Q\mapsto\subst{x}{Q}} \ar{r}{Q\mapsto\ctxwk{P}{Q}} & \jtype{\ctxext{{\Gamma}{A}}{P}}{\blank} \ar{d}{R\mapsto\subst{x}{R}}\\ 
+\jtype{\Gamma}{\blank} \ar{r}[swap]{B\mapsto\ctxwk{\subst{x}{P}}{B}} & \jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\blank}
+\end{tikzcd}
+\end{equation*}
+In the following inference rules we assume that $\jterm{\Gamma}{A}{x}$ and
+$\jtype{\ctxext{\Gamma}{A}}{P}$:
+\begin{align}
+& \inference
+    {\jtype{\ctxext{\Gamma}{A}}{Q}}
+    {\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}{\ctxwk{\subst{x}{P}}{\subst{x}{Q}}}}\\
+& \inference
+    {\jtype{\ctxext{{\Gamma}{A}}{Q}}{R}}
+    {\jtypeeq{\ctxext{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{\ctxwk{P}{R}}}{\ctxwk{\subst{x}{P}}{\subst{x}{R}}}}\\
+& \inference
+    {\jterm{\ctxext{\Gamma}{A}}{Q}{g}}
+    {\jtermeq
+      {\ctxext{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\ctxwk{P}{Q}}}
+      {\subst{x}{\ctxwk{P}{g}}}
+      {\ctxwk{\subst{x}{P}}{\subst{x}{g}}}}\\
+& \inference
+    {\jterm{\ctxext{{\Gamma}{A}}{Q}}{R}{h}}
+    {\jtermeq
+      {\ctxext{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+      {\subst{x}{\ctxwk{P}{R}}}
+      {\subst{x}{\ctxwk{P}{h}}}
+      {\ctxwk{\subst{x}{P}}{\subst{x}{h}}}}
+\end{align}
 
 \subsubsection{Substitution is compatible with substitution}
 
@@ -249,43 +275,45 @@ substitution takes the form $\subst{x}{{f}{g}}\jdeq\subst{{x}{f}}{{x}{g}}$.
 In the following inference rules we assume
 $\jterm{\Gamma}{A}{x}$ and $\jterm{\ctxext{\Gamma}{A}}{P}{f}$.
 
-\begin{infarray}{c}
-\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}
+\begin{align}
+&\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}
 {\jtypeeq{\Gamma}{\subst{x}{{f}{Q}}}{\subst{{x}{f}}{{x}{Q}}}}\\
-\inference{\jtype{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
+&\inference{\jtype{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
 {\jtypeeq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{{x}{f}}{{x}{R}}}}\\
-\inference{\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
+&\inference{\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
 {\jtermeq{\Gamma}{\subst{x}{{f}{Q}}}{\subst{x}{{f}{g}}}{\subst{{x}{f}}{{x}{g}}}}\\
-\inference{\jterm{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}{h}}
+&\inference{\jterm{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}{h}}
 {\jtermeq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{x}{{f}{h}}}{\subst{{x}{f}}{{x}{h}}}}
-\end{infarray}
+\end{align}
 
-\subsubsection{Substitution is compatible with extension}
-Suppose $\jterm{\Gamma}{A}{x}$ in all of the following inference rules.
-\begin{infarray}{c}
-\inference{\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}
-  {\jtypeeq{\Gamma}{\subst{x}{\ctxext{P}{Q}}}{\ctxext{\subst{x}{P}}{\subst{x}{Q}}}}\\
-\inference{\jtype{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
-  {\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxext{Q}{R}}}{\ctxext{\subst{x}{Q}}{\subst{x}{R}}}}
-\end{infarray}
+\subsubsection{Weakening is compatible with substitution}
+We already have rules for the compatibility of substitution with weakening, but
+we still need the rules the other way around, asserting that there is a 
+judgmental equality $\ctxwk{A}{\subst{y}{Q}}\jdeq\subst{\ctxwk{A}{y}}{\ctxwk{A}{Q}}$
+together with all its variants.
 
-\subsubsection{Substitution is compatible with weakening}
-\begin{equation*}
-\inference{\jterm{\Gamma}{A}{x}\qquad\jtype{\ctxext{\Gamma}{A}}{P}\qquad\jtype{\ctxext{\Gamma}{A}}{Q}}
-          {\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}{\ctxwk{\subst{x}{P}}{\subst{x}{Q}}}}
-\end{equation*}
+In the following inference rules we assume that $\jtype{\Gamma}{A}$ and that
+$\jterm{\Gamma}{B}{y}$.
 
+\begin{align}
+& \inference{\jtype{\ctxext{\Gamma}{B}}{Q}}{\jtypeeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}{\subst{\ctxwk{A}{y}}{\ctxwk{A}{Q}}}}\\
+& \inference{\jtype{\ctxext{{\Gamma}{B}}{Q}}{R}}{\jtypeeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{Q}}}{\ctxwk{A}{\subst{y}{R}}}{\subst{\ctxwk{A}{y}}{\ctxwk{A}{R}}}}\\
+& \inference{\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}{\ctxwk{A}{\subst{y}{g}}}{\subst{\ctxwk{A}{y}}{\ctxwk{A}{g}}}}\\
+& \inference{\jterm{\ctxext{{\Gamma}{B}}{Q}}{R}{h}}{\jtermeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}{\ctxwk{A}{\subst{y}{R}}}{\ctxwk{A}{\subst{y}{h}}}{\subst{\ctxwk{A}{y}}{\ctxwk{A}{h}}}}
+\end{align}
+
+\subsection{The defining property of weakening}
 The judgmental equalities we're about to describe assert that weakening followed
 by substitution leaves everything untouched. Thus, we get that each fiber
 $\subst{x}{\ctxwk{A}{B}}$ is just $B$, that $\ctxwk{A}{y}$ is the constant function
 mapping everything to $y:B$ and similar properties for families and terms thereof.
 
-\begin{infarray}{c}
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jterm{\Gamma}{A}{x}}{\jtypeeq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\\
-\inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}{B}}{Q}\qquad\jterm{\Gamma}{A}{x}}{\jtypeeq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\\
-\inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\Gamma}{B}{y}}{\jtermeq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\\
-\inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
-\end{infarray}
+\begin{align}
+& \inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jterm{\Gamma}{A}{x}}{\jtypeeq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\\
+& \inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}{B}}{Q}\qquad\jterm{\Gamma}{A}{x}}{\jtypeeq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\\
+& \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\Gamma}{B}{y}}{\jtermeq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\\
+& \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
+\end{align}
 
 Using the rules of the compatibility of substitution with weakening and of the
 compatibility of weakening with itself, we see that we can show
@@ -297,7 +325,8 @@ It follows that for $\jhom{\Delta}{\greek{E}}{g}$ we have
 \begin{equation*}
 \jhom{\Gamma}{\greek{E}}{\subst{f}{\ctxwk{\Gamma}{g}}}
 \end{equation*}
-The term $\jcomp{\Gamma}{f}{g}$ is the composition of $g$ with $f$.
+The term $\jcomp{\Gamma}{f}{g}$ is the composition of $g$ with $f$. We may call
+a term $\jhom{\Gamma}{\Delta}{f}$ a morphism from $\Gamma$ to $\Delta$.
 
 \subsection{The universal property of extension}
 
@@ -359,12 +388,6 @@ inference rules:
 As with context extension, we shall require two more inference rules stating that
 $\pair_P$ and $\ind{\tfext_A(P)}$ are invariant under judgmental equality.
 
-\subsubsection{Extension is compatible with weakening}
-
-\begin{equation*}
-\jterm{\ctxext{\Gamma}{\ctxwk{\Gamma}{\ctxext{\Delta}{B}}}}{\ctxwk{{\Gamma}{\ctxext{\Delta}{B}}}{\ctxext{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma}{B}}}}{ac}
-\end{equation*}
-
 \subsection{The identity functions}
 Without a rule explicitly asserting the existence of an identity morphism we don't
 get one, hence we do that here. The identity morphism is a term which introduced
@@ -406,6 +429,15 @@ We need to come up with a suitable notion of stability under extension, which
 is to be the type theoretical analogue of category theoretical stability under
 slicing. When we have done this, we have to show that the constructions we have
 so far are indeed stable under extension.
+
+We can make weakening stable under extension by the following
+process. Suppose we have a context $\Gamma$. For a context $\Delta$ we add the
+judgment
+\begin{equation*}
+\vdash \Delta~\tfwk(\Gamma)-admissible
+\end{equation*}
+for the assertion that $\Delta$ is allowed as a subject for the action of
+$\tfwk(\Gamma)$. If $\Delta$ is a $\tfwk(\Gamma)$ admissible context and
 
 \input{article-models-idtypes}
 
@@ -600,3 +632,77 @@ $\catfont{term}(A)$ of sections of $A$.
 \item For each $A\in\catfont{type}(\Gamma)$ and $x:A$ there is a choice of
       $\pi_1:\Gamma\times_A P\to\Gamma$ which is in $\catfont{type}(\Gamma)$.
 \end{itemize}
+
+\section{Binary trees}
+We prove a little meta theorem about the type system we have so far. It is not
+really of importance to the development of the theory. 
+
+Let's say
+that a binary tree of contexts is a pair $\pair{T,f}$ consisting of a binary 
+tree $T$ together with a function $f$ assigning to each leaf a context. The set
+of all binary trees of contexts is denoted by $B$. Such
+binary trees may be defined inductively: $(\unit,f):B$ for any $f:\unit\to ctx$
+and given any $(T_1,f_1)$ and $(T_2,f_2)$ in $B$ we have $(T_1,f_1)*(T_2,f_2)$
+in $B$.
+
+We simultaneously define
+the following two functions:
+\begin{align*}
+\trext & : B\to ctx\\
+\trwk_0 & : \prd{X,Y:B} typ(\trext(X))\\
+\trwk_1 & : \prd{X:B}{\Gamma~ctx} typ(\Gamma)\to typ(\ctxext{\trext(X)}{\trwk_0(X,\Gamma)})
+\end{align*}
+Both these functions are defined by induction on binary trees. We set
+\begin{align*}
+\trext((\unit,f)) & \defeq f(\unit)\\
+\trext((T_1,f_1)*(T_2,f_2)) & \defeq \ctxext{\trext((T_1,f_1))}
+{\trwk_0((T_1,f_1),\trext((T_2,f_2)))}
+\end{align*}
+and for any context $\Gamma$
+\begin{align*}
+\trwk_0((\unit,f),(\unit,g)) & \defeq \ctxwk{f(\unit)}{g(\unit)}\\
+\trwk_0((T_1,f_1)*(T_2,f_2),\Gamma) 
+  & \defeq \trwk_1((T_1,f_1),\trwk_0((T_2,f_2)),\Gamma))
+\end{align*}
+and for any type $A$ in context $\Gamma$
+\begin{align*}
+\trwk_1((\unit,f),A) & \defeq \ctxwk{f(\unit)}{A}\\
+\trwk_1((T_1,f_1)*(T_2,f_2),A) & \defeq
+  \trwk_1((T_1,f_1),\trwk_1((T_2,f_2)),A))
+\end{align*}
+
+\begin{lem}
+$\trwk_0((T,f),\Gamma)$ is a type in context $\trext((T,f))$ and
+$\trwk_1((T,f),A)$ is a type in context $\ctxext{\trext((T,f))}{\trwk_0((T,f),\Gamma)}$
+for any type $A$ in context $\Gamma$.
+\end{lem}
+
+\begin{proof}
+It is immediate that $\trwk_0((\unit,f),\Gamma)$ is a type in context $\trext((\unit,f))$
+and that $\trwk_1((\unit,f),A)$ is a type in context $\ctxext{\trext((\unit,f))}
+{\trwk_0((\unit,f),\Gamma)}$ for any type $A$ in context $\Gamma$.
+
+Suppose that $(T_1,f_1)$ and $(T_2,f_2)$ are binary trees of contexts such that
+$\trwk_0((T_i,f_i),\Gamma)$ is a type in context
+$\trext((T_i,f_i))$ for $i\jdeq 1$ and $i\jdeq 2$, and such that
+$\trwk_1((T_i,f_1),A)$ is a type in context $\ctxext{\trext((T_i,f_i))}{\trwk_0((T_i,f_i),\Gamma)}$
+for $i\jdeq 1$ and $i\jdeq 2$. Then
+\begin{equation*}
+\trwk_0((T_1,f_1)*(T_2,f_2),\Gamma) 
+\jdeq \trwk_1((T_1,f_1),\trwk_0((T_2,f_2),\Gamma))
+\end{equation*}
+is a type in context
+\begin{equation*}
+\ctxext{\trext((T_1,f_1))}{\trwk_0((T_1,f_1),\trext((T_2,f_2)))}
+\jdeq \trext((T_1,f_1)*(T_2,f_2)).
+\end{equation*}
+Also,
+\begin{equation*}
+\trwk_1((T_1,f_1)*(T_2,f_2),A) \jdeq \trwk_1((T_1,f_1),\trwk_1((T_2,f_2),A))
+\end{equation*}
+is a type in context
+\begin{equation*}
+\ctxext{\trext((T_1,f_1))}{\trwk_0((T_1,f_1),\ctxext{\trext((T_2,f_2))}{\trwk_0((T_2,f_2),\Gamma))}}
+\end{equation*}
+\end{proof}
+
