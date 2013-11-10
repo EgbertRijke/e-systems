@@ -401,6 +401,12 @@ that $\subst{x}{\idfunc[A]}\jdeq x$ for every term $x:A$ in context $\Gamma$.
 Using these rules we can derive that there is a judgmental equality $\jtypeeq{\ctxext{\Gamma}{A}}{\subst{x}{{\idfunc[A]}{B}}}
 {\subst{x}{{x}{B}}}$.
 
+\subsection{Stability under extension}
+We need to come up with a suitable notion of stability under extension, which
+is to be the type theoretical analogue of category theoretical stability under
+slicing. When we have done this, we have to show that the constructions we have
+so far are indeed stable under extension.
+
 \input{article-models-idtypes}
 
 \section{Variable-free type theory -- other type constructors}
