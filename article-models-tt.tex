@@ -76,6 +76,19 @@ However, we need substitution to make this precise.
 & & \inference{\jtypeeq{\Gamma}{A}{B}\qquad\jtypeeq{\ctxext{\Gamma}{A}}{P}{Q}}{\jtypeeq{\Gamma}{\ctxext{A}{P}}{\ctxext{B}{Q}}}
 \end{align}
 
+\subsubsection{Extension is compatible with itself}
+The inference rules asserting that extension is compatible with itself assert
+that contexts are unstructured lists of type declarations. This rule is
+unavoidable if we want that for a type $A$ in context $\Gamma$, a type
+in context $A$ is the same thing as a type in context $\ctxext{\Gamma}{A}$. 
+
+\begin{align}
+& \inference{\jtype{\Gamma}{A}\qquad\jtype{\ctxext{\Gamma}{A}}{P}}
+  {\jctxeq{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}}\\
+& \inference{\jtype{\ctxext{\Gamma}{A}}{P}\qquad\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}
+  {\jtypeeq{\Gamma}{\ctxext{{A}{P}}{Q}}{\ctxext{A}{{P}{Q}}}}
+\end{align}
+
 \subsection{Weakening}
 We first define weakening by a context $\Gamma$. Since weakening by $\Gamma$
 should in principle be a functor, it acts on contexts, types and terms alike.
