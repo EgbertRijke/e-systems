@@ -341,7 +341,9 @@ It follows that for $\jhom{\Delta}{\greek{E}}{g}$ we have
 The term $\jcomp{\Gamma}{f}{g}$ is the composition of $g$ with $f$. We may call
 a term $\jhom{\Gamma}{\Delta}{f}$ a morphism from $\Gamma$ to $\Delta$.
 
-\subsection{The identity functions}
+\subsection{Terms in the basic type theory}
+
+\subsubsection{Identity functions}
 Without a rule explicitly asserting the existence of an identity morphism we don't
 get one, hence we do that here. The identity morphism is a term which introduced
 in ordinary type theory via the variable rule. The variable rule is a bit more
@@ -377,17 +379,34 @@ that $\subst{x}{\idfunc[A]}\jdeq x$ for every term $x:A$ in context $\Gamma$.
 Using these rules we can derive that there is a judgmental equality $\jtypeeq{\ctxext{\Gamma}{A}}{\subst{x}{{\idfunc[A]}{B}}}
 {\subst{x}{{x}{B}}}$.
 
-\subsection{Stability under extension}
-We need to come up with a suitable notion of stability under extension, which
-is to be the type theoretical analogue of category theoretical stability under
-slicing. When we have done this, we have to show that the constructions we have
-so far are indeed stable under extension.
+The identity functions in combination with weakening give rise to the projections.
+We define
 
-We can make weakening stable under extension by the following
-process. Suppose we have a context $\Gamma$. For a context $\Delta$ we add the
-judgment
 \begin{equation*}
-\vdash \Delta~\tfwk(\Gamma)-admissible
+\proj A \defeq \ctxwk{A}{\idfunc[\Gamma]}:\ctxwk{A}{{\Gamma}{\Gamma}}.
 \end{equation*}
-for the assertion that $\Delta$ is allowed as a subject for the action of
-$\tfwk(\Gamma)$. If $\Delta$ is a $\tfwk(\Gamma)$ admissible context and
+
+\subsubsection{Inclusions}
+In ordinary type theory, there is a rule
+\begin{equation*}
+\inference{\jterm{\Gamma}{A}{x}\qquad\jtype{\Gamma,\,a:A}{P(a)}}
+  {\Gamma,\,u:P(x/a)\vdash x:A, u:P(x/a)}
+\end{equation*}
+This rule gives the inclusion of the fiber $\subst{x}{P}$ into $\ctxext{A}{P}$.
+
+Thus, we require
+\begin{equation}
+\inference{\jterm{\Gamma}{A}{x}\qquad\jtype{\ctxext{\Gamma}{A}}{P}}
+  {\jterm{\ctxext{\Gamma}{\subst{x}{P}}}{\ctxwk{\subst{x}{P}}{\ctxext{A}{P}}}{\typefont{in}^P_x}}
+\end{equation}
+
+The terms $\typefont{in}^P_x$ have the following behavior:
+
+\begin{align}
+& \inference
+    {\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}
+    {\jtypeeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{\typefont{in}^P_x}{\ctxwk{\subst{x}{P}}{Q}}}{\subst{x}{Q}}}\\
+& \inference
+    {\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
+    {\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{\typefont{in}^P_x}{\ctxwk{\subst{x}{P}}{g}}}{\subst{x}{g}}}
+\end{align}

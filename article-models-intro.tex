@@ -1,5 +1,5 @@
 \section{Introduction}
-This project has its origins in the beginning of 2013, when I proved a version
+The project I propose here has its origins in the beginning of 2013, when I proved a version
 of the descent theorem for homotopy colimits in type theory while I was working
 with Bas Spitters to develop notions from higher category theory in the
 univalent foundations. To arrive at a
@@ -7,30 +7,35 @@ notion of diagram general enough to capture the higher inductive types described
 in chapter 6 of \cite{TheBook} excluding the truncations we needed type
 theoretical graphs. The graphs form a model of type theory and indeed we needed
 several of the basic type theoretical operations to give an efficient approach
-to the descent theorem. However it was not an issue to describe the graph model
-and the sense in which it was a model, the presentation of it was unsystematic
-and in that sense unsatisfactory too. 
+to the descent theorem. Although it was not an issue to describe the graph model
+and the sense in which it models the type constructors, 
+not all of type theory is interpreted very well. To start with, context
+extension isn't strictly associative if dependent pair types are used for
+its interpretation. Also, if $A$ and $B$ are families of graphs
+over a graph $\Gamma$, then $B$ isn't also a family of graphs over the extended
+graph $\ctxext{\Gamma}{A}$ (interfering with a good interpretation of weakening).
+There are no issues with the interpretation of substitution though. Actually
+it is not so straightforward to describe what it models!
 
-From the experience of working with the graph model it became appearent that the
-answer we had of the question of what it models, i.e.~Martin L\"of type theory
-with the univalence axiom, could have been different if we were to describe a
-type theory based on the mechanism on which the model was built. The particular
-featueres of the graph model were that there was a type of graphs resembling a category
-of contexts, for each context a notion of what it means to be a family of graphs
-and a term thereof; there are the operations of context extension, weakening and
-substitution. In other words, the graph model is an instance of type theretical
-categories with families, an invention of Peter Dybjer.
-
-As we know however, the type theoretical description of a category as given in
-chapter 11 of \cite{TheBook} is restricted to categories which have a $1$-type
-as the type of objects and for every two objects a $0$-type of morphisms.
-Although categories with families are like that too, these are not very natural
-restrictions when one is concerned about internal models of type theory. It
-seems we're in the need of a higher categorical formulation of what an internal
-model, or a category with family, is. But type theory has the tendency to take
-care of it's own higher categorical structure and one could hope that type
-theory is an elementary theory of the category with families of category with
-families.
+The graph model
+shows three operations: extension, weakening and substitution. All of them
+can be defined such that they act not only on contexts, but also on families
+and terms. Moreover, they are all compatible with each other. In fact, along
+with asserting the existence of identity morphisms (which is done in type
+theory), it seems
+that this structure is enough to establish some of the structure of a category.
+We might even go so far as to boldly assert that
+\begin{quote}
+\emph{Category theory is dependent type theory without type constructors.}
+\end{quote}
+It is a part of this proposal to test this hypothesis, with the note that by
+`category theory' we mean a theory of weak higher categories which does not
+have any of the truncatedness restrictions -- in particular not those appearing
+in the theory of AKS-categories as
+described in \cite{TheBook} in chapter 11. We note that even Dybjers theory
+of internal categories with families has such restrictions: he relies on setoids.
+It needs not much arguing that these are very unnatural from a univalent point
+of view.
 
 \subsection{Ideas in the definition of internal models}
 An internal model of type theory is like a category with families, but we want
