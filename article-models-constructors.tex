@@ -1,4 +1,4 @@
-\section{Variable-free type theory -- other type constructors}
+\section{Introducing the type constructors}
 We will now describe the rules for the type constructors that we don't assume
 in our type theory by default. The first of these are the dependent function
 types. We also discuss $\tfW$-types, suspensions, truncations. More general higher inductive
@@ -251,6 +251,7 @@ $\catfont{term}(A)$ of sections of $A$.
       $\pi_1:\Gamma\times_A P\to\Gamma$ which is in $\catfont{type}(\Gamma)$.
 \end{itemize}
 
+\begin{comment}
 \section{Binary trees}
 We prove a little meta theorem about the type system we have so far. It is not
 really of importance to the development of the theory. 
@@ -323,4 +324,5 @@ is a type in context
 \ctxext{\trext((T_1,f_1))}{\trwk_0((T_1,f_1),\ctxext{\trext((T_2,f_2))}{\trwk_0((T_2,f_2),\Gamma))}}
 \end{equation*}
 \end{proof}
+\end{comment}
 

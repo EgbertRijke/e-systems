@@ -122,9 +122,8 @@ and $J(x,y)\defeq\emptyt$ otherwise (it is defined using the induction
 principle of $\mathbf{3}$ and a universe).
 \end{eg}
 
-
 \begin{defn}
-A \emph{graph $A$ in the context $\Gamma$} is a pair $\pairr{A_0,A_1}$ consisting
+A \emph{family $A$ of graphs in the context $\Gamma$} is a pair $\pairr{A_0,A_1}$ consisting
 of 
 \begin{align*}
 A_0 & :\Gamma_0\to\type\\
@@ -138,6 +137,22 @@ We will also write $\Gamma\vdash A:\mfGraph$ when $A$ is a graph in context
 $\Gamma$.
 \end{defn}
 
+\begin{defn}
+Suppose that $\Gamma\vdash A:\mfGraph$. A term $x$ of $A$ consists of a pair
+$\pairr{x_0,x_1}$ where
+\begin{align*}
+x_0 & : \prd{i:\Gamma_0}A_0(i)\\
+x_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1}A_1(q,x_0(i),x_0(j)).
+\end{align*}
+Thus we define
+\begin{equation*}
+\terms{A}\defeq\sm{x_0:\prd{i:\Gamma_0}A_0(i)}\prd*{i,j:\Gamma_0}{q:\Gamma_1}A_1(q,x_0(i),x_0(j)).
+\end{equation*}
+We also write $\Gamma\vdash x:A$ when $x$ is a term of the graph $A$ in context
+$\Gamma$.
+\end{defn}
+
+\subsubsection{The interpretations of extension, weakening and substitution}
 \begin{defn}
 Suppose that $\Gamma\vdash A:\mfGraph$. Then we define the graph $\ctxext{\Gamma}{A}$
 by
@@ -157,21 +172,6 @@ define the graph $\ctxwk{A}{B}$ in context $\ctxext{\Gamma}{A}$ by
 \end{defn}
 
 \begin{defn}
-Suppose that $\Gamma\vdash A:\mfGraph$. A term $x$ of $A$ consists of a pair
-$\pairr{x_0,x_1}$ where
-\begin{align*}
-x_0 & : \prd{i:\Gamma_0}A_0(i)\\
-x_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1}A_1(q,x_0(i),x_0(j)).
-\end{align*}
-Thus we define
-\begin{equation*}
-\terms{A}\defeq\sm{x_0:\prd{i:\Gamma_0}A_0(i)}\prd*{i,j:\Gamma_0}{q:\Gamma_1}A_1(q,x_0(i),x_0(j)).
-\end{equation*}
-We also write $\Gamma\vdash x:A$ when $x$ is a term of the graph $A$ in context
-$\Gamma$.
-\end{defn}
-
-\begin{defn}
 Suppose that $P$ is a family of graphs over $A$ in context $\Gamma$ and let
 $x$ be a term of $A$. Then we define the graph $\subst{x}{P}$ 
 in context $\Gamma$ by
@@ -185,6 +185,31 @@ in context $\Gamma$ by
 Note that we have the judgmental equality $\subst{x}{\ctxwk{A}{B}}\jdeq B$
 for every two graphs $A$ and $B$ in context $\Gamma$ and every term $x$ of $A$.
 \end{rmk}
+
+\begin{rmk}
+Using weakening we can describe the graph morphisms. Suppose that $\Delta$ and
+$\Gamma$ are graphs. A graph morphism from $\Gamma$ to $\Delta$ is a term of 
+the family $\ctxwk{\Gamma}{\Delta}$ of graphs over $\Gamma$. More explicitly,
+a graph morphism $f$ is a pair
+\begin{align*}
+\pts{f} & : \pts{\Gamma}\pts{\Delta}\\
+\edg{f} & : \prd*{i,j:\pts{\Gamma}} \edg{\Gamma}(i,j)\to\edg{\Delta}(\pts{f}(i),\pts{f}(j))
+\end{align*}
+just as expected.
+
+We may also describe morphisms of families of graphs this way.
+Let $A$ and $B$ be two families of graphs over a graph $\Gamma$. 
+A morphism from $A$ to $B$ is a term of $\ctxwk{A}{B}$. More explicitly,
+a morphism $f$ from $A$ to $B$ is a pair $\pairr{f_0,f_1}$
+consisting of
+\begin{align*}
+\pts{f} & : \prd*{i:\Gamma_0} A_0(i)\to B_0(i)\\
+\edg{f} & : \prd{\pairr{i,x},\pairr{j,y}:\pts{\ctxext{\Gamma}{A}}}{\pairr{q,e}:\edg{\ctxext{\Gamma}{A}}(\pairr{i,x},\pairr{j,y})} \edg{B}(q,f_0(x),f_0(y)).
+\end{align*}
+Here we have suppressed the notation for the projections.
+\end{rmk}
+
+\subsubsection{The interpretations of the type constructors}
 
 \begin{defn}
 The terminal graph $\unit^\mfGraph$, which we shall often denote simply 
@@ -205,188 +230,6 @@ $A_0(\ttt)\defeq\Gamma_0$ and where $A_1$ is defined by $A_1(\ttt)\defeq
 Note that we only have an equivalence here, not a judgmental equality.
 \end{rmk}
 
-\subsubsection{The contexts of $\mfGraph$}
-
-
-The category $\psh(\cdot{\rightrightarrows}\cdot)$ of presheaves over
-$\cdot{\rightrightarrows}\cdot$ is given by
-\begin{equation*}
-\sm{A_0,A_1:\type}(A_1\to A_0)\times(A_1\to A_0).
-\end{equation*}
-To see that $\psh(\cdot{\rightrightarrows}\cdot)$ is indeed equivalent to
-the type $\tfGraph$ of all graphs, note that we have the equivalences
-\begin{align*}
-\psh(\cdot{\rightrightarrows}\cdot) & \eqvsym \sm{A_0,A_1:\type}A_1\to A_0\times A_0\\
-& \eqvsym \sm{A_0:\type} A_0\times A_0\to\type\\
-& \eqvsym \tfGraph.
-\end{align*}
-
-\begin{defn}
-Suppose that $\Delta\defeq \pairr{\Delta_0,\Delta_1}$ and $\Gamma\defeq \pairr{\Gamma_0,
-\Gamma_1}$ are graphs. A morphism $f$ from $\Delta$ to $\Gamma$ is a pair
-$\pairr{f_0,f_1}$ consisting of
-\begin{align*}
-f_0 & : \Delta_0\to\Gamma_0\\
-f_1 & : \prd*{u,v:\Delta_0}\Delta_1(u,v)\to\Gamma_1(f_0(u),f_0(v))
-\end{align*}
-We write $\ctxhom{\Delta}{\Gamma}$ for the type of morphisms of graphs.
-\end{defn}
-
-The terminal graph $\unit^\mfGraph$ plays the role of the empty context.
-
-\begin{defn}
-The terminal graph $\unit^\mfGraph$, which we shall often denote simply 
-by $\unit$, is defined by
-\begin{align*}
-{\unit^\mfGraph}_0 & \defeq \unit\\
-{\unit^\mfGraph}_1(x,y) & \defeq \unit.
-\end{align*}
-\end{defn}
-
-It is immediate that the type of graph morphisms $\Gamma\to\unit^\mfGraph$ is
-contractible for every graph $\Gamma$. The terms of a graph $\Gamma$ are the
-global elements of $\Gamma$, i.e.~they are the morphisms of type 
-$\ctxhom{\unit^\mfGraph}{\Gamma}$.
-
-\begin{defn}
-Let $\Gamma$ be a graph. The type $\terms[\mfGraph]{\Gamma}$ of terms of $\Gamma$ is
-defined to be
-\begin{equation*}
-\sm{x_0:\Gamma_0}\Gamma_1(x_0,x_0).
-\end{equation*}
-\end{defn}
-
-We now turn to the description of the universe $\gobjclass$ of graphs. Note
-that for the category $I\defeq 0{\rightrightarrows}1$, we have
-$I/0\defeq\catid{0}$ and $I/1\defeq s\rightarrow\catid{1}\leftarrow t$, where
-$s$ and $t$ are the morphisms $0\to 1$. Thus we have 
-\begin{align*}
-\psh(I/0) & \eqvsym \type\\
-\psh(I/1) & \eqvsym \sm{X,Y:\type}X\to Y\to\type.
-\end{align*}
-The functors $\psh(\Sigma_s)$ and $\psh(\Sigma_t)$ map a presheaf 
-$\pairr{X,Y,R}$ to $X$ and $Y$, respectively. 
-Thus we obtain the following graph $\gobjclass$.
-
-\begin{defn}
-The universe $\gobjclass$ of graphs is defined to be
-\begin{align*}
-{\gobjclass}_0 & \defeq \type\\
-{\gobjclass}_1(X,Y) & \defeq X\to Y\to\type.
-\end{align*}
-\end{defn}
-
-Note that the type $\terms{\gobjclass}$ of terms of $\gobjclass$ is 
-exactly $\tfGraph$. 
-
-\subsubsection{Families of graphs}
-Using $\gobjclass$, we obtain a description of what
-it means to be a graph in a context $\Gamma$, where $\Gamma$ is itself a
-graph. The notion of ``a graph in a context $\Gamma$'' is the interpretation
-of ``a type in a context $\Gamma$''.
-
-\begin{defn}
-A \emph{graph $A$ in the context $\Gamma$} is a pair $\pairr{A_0,A_1}$ consisting
-of 
-\begin{align*}
-A_0 & :\Gamma_0\to\type\\
-A_1 & :\prd*{i,j:\Gamma_0}\Gamma_1(i,j)\to A_0(i)\to A_0(j)\to\type.
-\end{align*}
-We will also write $\Gamma\vdash A:\mfGraph$ when $A$ is a graph in context
-$\Gamma$.
-\end{defn}
-
-\begin{rmk}
-Note that every graph can be seen as a graph in context $\unit^\mfGraph$.
-\end{rmk}
-
-\begin{defn}
-Let $A$ be a graph in context $\Gamma$ and let $f:\ctxhom{\Delta}{\Gamma}$
-be a graph morphism. We define the graph $A[f]$ in context $\Delta$ by
-\begin{align*}
-A[f]_0(u) & \defeq A_0(f_0(u))\\
-A[f]_1(p,x,y) & \defeq A_1(f_1(p),x,y).
-\end{align*}
-\end{defn}
-
-\begin{defn}
-Let $\Gamma\vdash A:\mfGraph$ and $\Gamma\vdash B:\mfGraph$ be two graphs in
-the context $\Gamma$. A morphism $f$ from $A$ to $B$ is a pair $\pairr{f_0,f_1}$
-consisting of
-\begin{align*}
-f_0 & : \prd*{i:\Gamma_0} A_0(i)\to B_0(i)\\
-f_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_0}*{x:A_0(i)}*{y:A_0{j}}A_1(q,x,y)\to B_1(q,f_0(x),f_0(y)).
-\end{align*}
-We write $\ctxhom[\Gamma]{A}{B}$ for the type of morphisms between graphs in
-context $\Gamma$.
-\end{defn}
-
-\begin{defn}
-The unit graph $\unit^\Gamma$ in context $\Gamma$ consists of
-\begin{align*}
-(\unit^\Gamma)_0 & \defeq \lam{i}\unit\\
-(\unit^\Gamma)_1(q) & \defeq \lam{x}{y}\unit.
-\end{align*}
-\end{defn}
-
-As was the case with graphs, terms of graphs in a context are described by
-morphisms from $\unit$. Explicating this in more detail, we get
-
-\begin{defn}
-Let $A$ be a graph in context $\Gamma$. A term $x$ of $A$ is a pair
-$\pairr{x_0,x_1}$ consisting of
-\begin{align*}
-x_0 & : \prd{i:\Gamma_0}A_0(i)\\
-x_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}A_1(q,x_0(i),x_0(j)).
-\end{align*}
-We define $\terms[\mfGraph]{A}$ to be the type of terms of $A$.
-\end{defn}
-
-\begin{rmk}
-Note that the type of terms of a graph $\Gamma$ is equivalent to the type
-of terms of the graph $\Gamma$ in context $\unit^\mfGraph$.
-\end{rmk}
-
-\begin{defn}
-Suppose that $\Gamma\vdash A:\mfGraph$. Then we define the graph $\ctxext{\Gamma}{A}$
-by
-\begin{align*}
-(\ctxext{\Gamma}{A})_0 & \defeq \sm{i:\Gamma_0}A_0(i)\\
-(\ctxext{\Gamma}{A})_1(\pairr{i,x},\pairr{j,y}) & \defeq \sm{q:\Gamma_1(i,j)}A_1(q,x,y).
-\end{align*}
-There is a morphism $\pi^A:\ctxhom{\ctxext{\Gamma}{A},\Gamma}$ given by
-\begin{align*}
-\pi^A_0 & \defeq \lam{\pairr{i,x}}i && : (\sm{i:\Gamma_0}A_0(i))\to \Gamma_0\\
-\pi^A_1(\pairr{i,x},\pairr{j,y}) & \defeq \lam{\pairr{q,e}}q && : (\sm{q:\Gamma_1(i,j)}A_1(q,x,y))\to\Gamma_1(i,j).
-\end{align*}
-\end{defn}
-
-\begin{rmk}
-The construction of $\ctxext{\Gamma}{A}$ is similar to the Grothendieck
-construction of the category of elements for a presheaf.
-\end{rmk}
-
-\begin{defn}
-Let $\Gamma\vdash A:\mfGraph$. A family $P$ of graphs over $A$ is by
-definition a graph $P$ in the context $\ctxext{\Gamma}{A}$. More explicitly, a family
-$P$ of graphs over $A$ in context $\Gamma$ consists of
-\begin{align*}
-P_0 & : \prd*{i:\Gamma_0}A_0(i)\to\type\\
-P_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}*{x:A_0(i)}*{y:A_0(j)} A_1(q,x,y)\to P_0(x)\to P_0(y)\to\type
-%P_1 & : \prd{\pairr{i,x},\pairr{j,y}:(\ctxext{\Gamma}{A})_0}(\ctxext{\Gamma}{A})_1(\pairr{i,x},\pairr{j,y})\to P_0(i,x)\to P_0(j,y)\to\type.
-\end{align*}
-\end{defn}
-
-\begin{defn}
-When $P$ is a family of graphs over $A$ in context $\Gamma$ and $x:A$, we
-get a graph $\subst{x}{P}$ in context $\Gamma$ given by
-\begin{align*}
-\subst{x}{P}_0(i) & \defeq P_0(x_0(i))\\
-\subst{x}{P}_1(q,u,v) & \defeq P_1(\pairr{q,x_1(q)},u,v)
-\end{align*}
-\end{defn}
-
-\subsubsection{The basic type constructors for graphs}
 With families of graphs being available, we can give the interpretations of
 dependent products, dependent sums and identity types. In the following, we
 shall introduce the graph interpretations of dependent products, dependent
@@ -441,62 +284,6 @@ By $\choice{\infty}$ it follows that
 \eqv{\terms{\msm{A}{P}}}{\sm{x:\terms{A}}\terms{\subst{x}{P}}}.
 \end{equation*}
 \end{rmk}
-
-\begin{rmk}
-For any two graphs $A$ and $B$ in a context $\Gamma$, we have the graph
-$B[\pi^A]$ in the context $\ctxext{\Gamma}{A}$, which we may just write
-as $B$. Therefore, we can
-consider the graphs $\mprd{A}{B}$ and $\msm{A}{B}$. As usually those shall be
-denoted  by $A\to B$ and $A\times B$, respectively. 
-
-A term $f$ of $A\to B$ consists of
-\begin{align*}
-f_0 & : \prd*{i:\Gamma_0}A_0(i)\to B_0(i)\\
-f_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}*{x:A_0(i)}*{y:A_0(j)}A_1(q,x,y)\to B_1(q,f_0(x),f_0(y)),
-\end{align*}
-so we see that $\terms{A\to B}\jdeq\ctxhom[\Gamma]{A}{B}\jdeq\terms{B[\pi^A]}$. 
-
-A term $\pairr{x,y}$ of $A\times B$ consists of
-\begin{align*}
-\pairr{x,y}_0 & : \prd*{i:\Gamma_0} A_0(i)\times B_0(i)\\
-\pairr{x,y}_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)} A_1(q,x_0(i),x_0(j))\times B_1(q,y_0(i),y_0(j))
-\end{align*}
-so we see that $\eqv{\terms{A\times B}}{\terms{A}\times\terms{B}}$. 
-
-Note that we also obtain
-a \emph{graph} $\Delta\to\Gamma$ this way, for every two graphs $\Delta$ and
-$\Gamma$ seen as graphs in the context $\unit^\mfGraph$. 
-The type $\terms{\Delta\to\Gamma}$ of terms of $\Delta\to\Gamma$ is just
-$\ctxhom{\Delta}{\Gamma}$.
-\end{rmk}
-
-\begin{defn}
-For any graph $\Gamma$ there is a graph $\tffam{\Gamma}$ in context 
-$\gobjclass$ defined by
-\begin{align*}
-(\tffam{\Gamma})_0 & \defeq \lam{X}X\to\Gamma_0\\
-(\tffam{\Gamma})_1(X,Y,R) & \defeq \lam{f}{g}\prd*{x:X}*{y:Y}R(x,y)\to\Gamma_1(f(x),g(y)).
-\end{align*}
-\end{defn}
-
-\begin{rmk}
-A term $D$ of $\msm{\gobjclass}{\tffam{\Gamma}}$ consists of a term
-$\pairr{\Delta_0,f_0}$ of type
-\begin{equation*}
-\msm{\gobjclass}{\tffam{\Gamma}}_0\jdeq \sm{\Delta_0:\type}\Delta_0\to\Gamma_0
-\end{equation*}
-and a term $\pairr{\Delta_1,f_1}$ of type
-\begin{equation*}
-\msm{\gobjclass}{\tffam{\Gamma}}_1(q)\jdeq \sm{\Delta_1}
-\end{equation*}
-\end{rmk}
-
-\begin{defn}
-There is a graph morphism
-\begin{equation*}
-\graphcharmapfunc{\Gamma} : \sm{\gobjclass}
-\end{equation*}
-\end{defn}
 
 \begin{defn}
 Let $A$ be a graph in context $\Gamma$. We define the family $\idtypevar{A}$ over $\ctxwk{A}{A}$ in
@@ -563,7 +350,77 @@ p_1 & : \prd*{i,j:\Gamma_0}{q:\Gamma_1(i,j)}\id{\trans{\pairr{p_0(i),p_0(j)}}{x_
 \end{align*}
 \end{rmk}
 
-\subsubsection{Properties of graphs}
+
+\begin{comment}
+\subsubsection{The contexts of $\mfGraph$}
+
+
+The category $\psh(\cdot{\rightrightarrows}\cdot)$ of presheaves over
+$\cdot{\rightrightarrows}\cdot$ is given by
+\begin{equation*}
+\sm{A_0,A_1:\type}(A_1\to A_0)\times(A_1\to A_0).
+\end{equation*}
+To see that $\psh(\cdot{\rightrightarrows}\cdot)$ is indeed equivalent to
+the type $\tfGraph$ of all graphs, note that we have the equivalences
+\begin{align*}
+\psh(\cdot{\rightrightarrows}\cdot) & \eqvsym \sm{A_0,A_1:\type}A_1\to A_0\times A_0\\
+& \eqvsym \sm{A_0:\type} A_0\times A_0\to\type\\
+& \eqvsym \tfGraph.
+\end{align*}
+
+We now turn to the description of the universe $\gobjclass$ of graphs. Note
+that for the category $I\defeq 0{\rightrightarrows}1$, we have
+$I/0\defeq\catid{0}$ and $I/1\defeq s\rightarrow\catid{1}\leftarrow t$, where
+$s$ and $t$ are the morphisms $0\to 1$. Thus we have 
+\begin{align*}
+\psh(I/0) & \eqvsym \type\\
+\psh(I/1) & \eqvsym \sm{X,Y:\type}X\to Y\to\type.
+\end{align*}
+The functors $\psh(\Sigma_s)$ and $\psh(\Sigma_t)$ map a presheaf 
+$\pairr{X,Y,R}$ to $X$ and $Y$, respectively. 
+Thus we obtain the following graph $\gobjclass$.
+
+\begin{defn}
+The universe $\gobjclass$ of graphs is defined to be
+\begin{align*}
+{\gobjclass}_0 & \defeq \type\\
+{\gobjclass}_1(X,Y) & \defeq X\to Y\to\type.
+\end{align*}
+\end{defn}
+
+Note that the type $\terms{\gobjclass}$ of terms of $\gobjclass$ is 
+exactly $\tfGraph$. 
+
+\subsubsection{The basic type constructors for graphs}
+
+\begin{defn}
+For any graph $\Gamma$ there is a graph $\tffam{\Gamma}$ in context 
+$\gobjclass$ defined by
+\begin{align*}
+(\tffam{\Gamma})_0 & \defeq \lam{X}X\to\Gamma_0\\
+(\tffam{\Gamma})_1(X,Y,R) & \defeq \lam{f}{g}\prd*{x:X}*{y:Y}R(x,y)\to\Gamma_1(f(x),g(y)).
+\end{align*}
+\end{defn}
+
+\begin{rmk}
+A term $D$ of $\msm{\gobjclass}{\tffam{\Gamma}}$ consists of a term
+$\pairr{\Delta_0,f_0}$ of type
+\begin{equation*}
+\msm{\gobjclass}{\tffam{\Gamma}}_0\jdeq \sm{\Delta_0:\type}\Delta_0\to\Gamma_0
+\end{equation*}
+and a term $\pairr{\Delta_1,f_1}$ of type
+\begin{equation*}
+\msm{\gobjclass}{\tffam{\Gamma}}_1(q)\jdeq \sm{\Delta_1}
+\end{equation*}
+\end{rmk}
+
+\begin{defn}
+There is a graph morphism
+\begin{equation*}
+\graphcharmapfunc{\Gamma} : \sm{\gobjclass}
+\end{equation*}
+\end{defn}
+\end{comment}
 
 \subsubsection{Contractibility and equivalences of graphs}
 
