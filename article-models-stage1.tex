@@ -1,0 +1,167 @@
+\section{Stage one: establishing internal higher categories and internal models}\label{stage1}
+The project I propose here has its origins in the beginning of 2013, when I proved a version
+of the descent theorem for homotopy colimits in type theory while I was working
+with Bas Spitters to develop notions from higher category theory in the
+univalent foundations. To arrive at a
+notion of diagram general enough to capture all the higher inductive types described
+in chapter 6 of \cite{TheBook} excluding the truncations we needed type
+theoretical graphs. The graphs form a model of type theory and indeed we needed
+the interpretations of several of the basic type constructors to give an efficient approach
+to the descent property and its proof. Although it was not an issue to describe the graph model
+and the sense in which it models the type constructors, 
+not all of type theory is interpreted very well. To start with, if $A$ and $B$ 
+are families of graphs over a graph $\Gamma$, then $B$ isn't also a family of 
+graphs over the extended graph $\ctxext{\Gamma}{A}$ (interfering with a good 
+interpretation of weakening). Since there are such issues, it is actually
+not so straightforward to describe what it models!
+
+Apart from all the type constructors like dependent function and pair types and
+identity types, the graph model shows three basic operations that should come
+before those type constructors. They are extension, weakening and substitution.
+All three of them can be defined such that they act not only on contexts (the graphs), 
+but also on families and terms. Moreover, they are all compatible with each 
+other. In fact, any structure which has a notion of contexts, families and terms
+and which models extension, weakening and substitution and which has identity
+functions is in a weak sense a category, hypothesizing that
+\begin{quote}
+\emph{Category theory is dependent type theory without type constructors.}
+\end{quote}
+In \autoref{tt} we sketch how type theory without type constructors but with
+\emph{explicit} extension, weakening and substitution might look like. This
+theory is written down keeping the guiding principle in mind that type theory
+without basic constructors should be a generalized algebraic theory of higher
+categories.
+
+Thus, models of this theory should be higher categories with some strictness
+built in, such as the strictness of associativity of substitution. But the
+theory really only talks about contexts, families and sections. The interpretation
+of this as a category works as follows: The objects are going to be the contexts.
+Then we may consider the terms of the weakening $\ctxwk{\Gamma}{\Delta}$ of a
+context $\Delta$ by a context $\Gamma$: they are the morphisms of the category.
+The composition of morphisms follows from the action of substitution and
+weakening on terms. 
+
+In the proposed approach, a model of type theory isn't a category by assumption. Rather,
+a model of type theory \emph{becomes} a category because it interprets type
+theory. In other words, type theory does all the work for us concerning the
+categorical structure. In particular, we have neither started our notion of models
+with AKS-categories as described in \cite{1categories} nor with Dybjer's notion
+of internal categories with families. We should gain that we get rid of
+truncatedness assumptions that are present in both AKS-categories, where the
+type of objects has to be a $1$-type, and internal categories with families,
+where the type of morphisms has to be a setoid. It needs not much arguing that any way to impose
+conditions on internal models beyond the interpretations of the rules of
+type theory stands in the way of a clear understanding of what an internal
+model should be and it is a main goal of the project to design
+an internal type theory without the described deficiencies. 
+
+\begin{comment}
+\subsection{Ideas in the definition of internal models}
+An internal model of type theory is like a category with families, but we want
+to avoid having to state higher coherences. In fact, we don't even start our
+definition with a category of contexts; instead we just take a \emph{type} of contexts. 
+The morphisms will come from the terms, evaluation of a function at a given
+term will come from substitution. We recognize three basic ingredients to models:
+first there is a type of contexts; second, for every context there is a model of types in
+that context and third, for every type in a given context there is a type of its
+terms. Then there are three basic attributes: context extension, weakening and
+substitution. Context extension provides us with families over types as well as
+with an interpretation of dependent pair types. We need weakening 
+so that families can depend on the same type multiple times (the way the
+identity type of a type depends two times on that type) and to be able
+to talk about non-dependent function types,
+the morphims of our category. Substitution will give us a way
+to work with fibers of families as well as composition of functions and evaluation
+of functions at terms.
+
+Because we require a \emph{model} of types in a context, all the structure
+which we require at the bottom level will be required to exist higher up as well.
+Thus, the model of types in a given context $\Gamma$ will have a type of contexts
+itself, which can be seen as the type of types in $\Gamma$; it will have its
+own notion of types in a context, its own notion of terms, context extension,
+weakening and substitution together with all the structure require for it. For
+instance, when $A$ is a type in context $\Gamma$ in a model $\mfM$, then there
+is the model of types in context $A$, which is the model of families over $A$. 
+This model is required to be \emph{definitionally equal to} the model of types
+in the context $\ctxext{\Gamma}{A}$, the context extension of $\Gamma$ and $A$.
+In this way we protect ourselves from the need to dig an infinitely deep structure
+of models when we want to consider examples.
+
+To give the definition of a model we shall also need to consider certain morphisms
+of internal models. Those should preserve all the structure: contexts are mapped
+to contexts; for every context a morphism of models mapping the model of types
+in that context to the model of types in the image of that context; there should
+be a mapping of terms and context extension, weakening and substitution should be
+preserved. We need to consider those morphisms because we require context extension,
+weakening and substitution to be of that kind, thereby respecting each other
+in all possible ways.
+
+When we have this framework set up, we can interpret the basic type constructors
+such as $\Pi$, $\Sigma$ and $\idtypevar{}$.
+The higher categorical structure then comes from the
+result that we have an interpretation of type theory.
+\end{comment}
+
+Of course there is no way of studying internal models or categories without
+also studying the morphisms between them. In fact, we already have three of them
+right from the start: the interpretations of extension, weakening and substitution
+act on contexts, families and terms and preserve each of extension, weakening and
+substitution. These have to be ingredients of morphisms of models as well. A
+morphism of models should act on contexts because those are the contexts; it
+should act on terms because that is how it acts on the morphisms; it should
+preserve extension, weakening and substitution because that is exactly what
+makes it functorial (in particular: preserve composition).
+
+In fact, now that we have arrived at the idea that categorical structure should
+come from the interpretation of type theory, the prettier (and necessary) way to go is to
+describe a model of models of type theory. Thus, we should find a way to express
+the notions of dependent model and terms thereof and explain what extension,
+weakening and substitution mean. Then we should be able to derive that a morphism
+of models coincides with a term of a weakened object.
+
+The idea that morphisms of models preserve the basic type theoretical structure
+can be carried further. Ideally, we would have the interpretations of the type
+constructors as morphisms of models. Thus, when interpreting the operations 
+$\Pi$, $\Sigma$, $\idtypevar{}$ or the universe operator 
+(such as described in \cite{Palmgren1998}) we will require that
+they act not only on objects, but also on families, terms and preserve extension,
+weakening and substitution. And when two or more type constructors are interpreted,
+they should furthermore be compatible with each other. In the case of
+dependent pair types and identity types, this means function extensionality. It
+should be investigated whether the compatibility of identity types and the
+universe operator with each other indeed means univalence. We should note,
+however, that we intend the compatibility with extension, weakening and substitution
+should be strict, whereas the compatibility with the other type constructors will
+not be strict. To give an exact meaning to these ideas is part of the proposal.
+
+Among the examples of internal models we should have:
+\begin{description}
+\item[The setoid model] This is a classical one so it should be there. It might
+      be a bit different in our case. We'll want to construct a setoid model
+      of the basic type theory to interpret identity types without necessarily
+      interpreting dependent function types (but that should remain possible).
+\item[The graph model] This is the model that leads to the first version of the
+      descent theorem.
+\item[Univalent unvirses] A univalent universe should be a model.
+\item[Equifibered diagrams over a graph] should be the fibrations in some model.
+\item[The model of all models] The objects in the model of models should be
+      the models of type theory itself. There should be various flavors of the
+      model of models. In the case of type theory without type constructors,
+      this would be the model of all (small) higher categories. The model of
+      models of type theory with several type constructors should interpret
+      these type constructors as well. (This might get interesting in the case
+      of type theory with a universe operator.)
+\item[The model of weak $\omega$-groupoids] Since we think of models of the
+      basic type theory as weak $\omega$-categories, it is not too hard to
+      provide a condition on those models which enables us to talk about
+      weak $\omega$-groupoids. In fact, we might have several options for such a
+      condition. We investigate those; we also investigate how they relate to
+      Brunerie's weak $\omega$-groupoids. Presumably, they form an internal
+      model without too much fuss (because we already have an internal model
+      of internal models at this stage) and we can ask whether this models
+      the univalence axiom. In fact, the model of internal models might already
+      have modeled the univalence axiom. 
+\item[The set model] See \cite{RijkeSpitters:Sets}.
+\item[Polynomial functors] The theory of polynomial functors is essential to the
+      theory of $\tfW$-types, see 
+\end{description}

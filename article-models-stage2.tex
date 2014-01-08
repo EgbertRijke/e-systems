@@ -1,0 +1,33 @@
+\section{Stage two: extending the basic theory}\label{stage2}
+The first aim of this project is thus to give this new description of type
+theory with these properties. The second aim is to define a general notion of
+an internal model and provide several examples thereof. In the definition of
+internal models we envision that all the operations of type theory become
+morphisms of type theory: they are compatible with each and every morphism
+of type theory. The compatibility of extension, weakening and substitution is
+already part of the basic type theory. The compatibility of identity types
+with weakening for instance, is a form of function extensionality. The 
+compatibility of dependent function types with identity types is the usual
+funchtion extensionality principle. The
+compatibility of a universe operation with identity types should be univalence.
+The descent theorem implies that the colimit operation is also compatible with
+all the type theoretic operations (sigma and id are checked).
+
+We also wish to extend the descent property to a more general class of homotopy
+colimits. The general recipe has already been implicit in the first descent
+property where we have used diagrams over graphs. We have the following in mind:
+\begin{enumerate}
+\item Give an internal description of a diagram. Probably this is the same thing
+      as an internal model of the basic type theory with or without identity types.
+\item Define the notion of homotopy colimit thereof.
+\item Define the notion if equifibered diagrams.
+\item Formulate and prove descent: the map defined by substitution
+ from families over the colimit to the equifibered diagrams is an equivalence.
+\end{enumerate}
+
+Using the descent property we can view $\tfcolim$ as an operation of type theory
+It should preserve all the basic operations, identity types, dependent function
+types, itself, etc.
+
+Another thing we must keep in mind is that the compatibility rules in the basic
+type theory are strict. We should look to the possibility to weaken them.

@@ -1,13 +1,20 @@
 \section{Type theory without type constructors}\label{tt}
-We have seen in the example of $\UU$ that we will not need to refer to variables
-when we are manipulating contexts. In fact, it is more natural not to.
-This suggests that there is a presentation
-of type theory where contexts do not mention variables. The first small gain is that such a presentation
-would not be burdened with comments about variables being bounded or not, or fresh or
+In this appendix we give a possible description of type theory without basic
+constructors and with explicit extension, weakening and substitution. We will
+formulate the type theory in such a way that contexts aren't lists of variable
+declarations. The reasons for this are twofold: (1) in the models of type theory
+such as a univalent universe or the graph model, contexts are types and graphs
+respectively -- they are objects rather than lists of variable declarations; we
+intend to give a general algebraic description of higher categories. Besides,
+we will not have to be burdened with comments about variables being bounded or not, or fresh or
 not occuring at all.
 
-Perhaps a bigger gain is that we obtain an algebraic theory for categories with
-fibrations and sections. 
+It should be noted that this is just a prototype description. It may be the case
+that various other elements have to be added yet, such as terms
+$\jterm{\ctxext{\Gamma}{\subst{x}{P}}}{\ctxwk{\subst{x}{P}}{\ctxext{A}{P}}}{i}$
+including the fiber $\subst{x}{P}$ into the extended family $\ctxext{A}{P}$ over
+$\Gamma$. Moreover, it hasn't been thoroughly tested whether the theory presented
+here lives up to its promise.
 
 \subsection{The basic judgments}
 The judgments we wish to make are the standad six judgments for ``$\Gamma$ is a context'', ``$A$ is
@@ -316,10 +323,13 @@ $\jterm{\Gamma}{B}{y}$.
 \end{align}
 
 \subsection{The defining property of weakening}
-The judgmental equalities we're about to describe assert that weakening followed
-by substitution leaves everything untouched. Thus, we get that each fiber
-$\subst{x}{\ctxwk{A}{B}}$ is just $B$, that $\ctxwk{A}{y}$ is the constant function
-mapping everything to $y:B$ and similar properties for families and terms thereof.
+The judgmental equalities we're about to describe assert that substituting a term
+in the weakening a thing gives you the thing back. In the case of contexts we get that each fiber
+$\subst{x}{\ctxwk{A}{B}}$ is just $B$ and in the case of terms we get 
+that $\ctxwk{A}{y}$ is the constant function
+mapping everything to $y:B$. Thus, these rules actually establish the weakening
+as the weakening. After stating the rules we will describe what it means to
+compose context morphisms (terms of weakened contexts).
 
 \begin{align}
 & \inference{\jtype{\Gamma}{A}\qquad\jtype{\Gamma}{B}\qquad\jterm{\Gamma}{A}{x}}{\jtypeeq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\\
@@ -341,9 +351,7 @@ It follows that for $\jhom{\Delta}{\greek{E}}{g}$ we have
 The term $\jcomp{\Gamma}{f}{g}$ is the composition of $g$ with $f$. We may call
 a term $\jhom{\Gamma}{\Delta}{f}$ a morphism from $\Gamma$ to $\Delta$.
 
-\subsection{Terms in the basic type theory}
-
-\subsubsection{Identity functions}
+\subsection{Identity functions}
 Without a rule explicitly asserting the existence of an identity morphism we don't
 get one, hence we do that here. The identity morphism is a term which introduced
 in ordinary type theory via the variable rule. The variable rule is a bit more
@@ -377,7 +385,8 @@ that $\subst{x}{\idfunc[A]}\jdeq x$ for every term $x:A$ in context $\Gamma$.
 \end{align}
 
 Using these rules we can derive that there is a judgmental equality $\jtypeeq{\ctxext{\Gamma}{A}}{\subst{x}{{\idfunc[A]}{B}}}
-{\subst{x}{{x}{B}}}$.
+{\subst{x}{{x}{B}}}$. Note that $\subst{x}{{x}{B}}$ may just be denoted by
+$\subst{x,x}{B}$.
 
 The identity functions in combination with weakening give rise to the projections.
 We define
@@ -386,6 +395,7 @@ We define
 \proj A \defeq \ctxwk{A}{\idfunc[\Gamma]}:\ctxwk{A}{{\Gamma}{\Gamma}}.
 \end{equation*}
 
+\begin{comment}
 \subsubsection{Inclusions}
 In ordinary type theory, there is a rule
 \begin{equation*}
@@ -410,3 +420,4 @@ The terms $\typefont{in}^P_x$ have the following behavior:
     {\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
     {\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{\typefont{in}^P_x}{\ctxwk{\subst{x}{P}}{g}}}{\subst{x}{g}}}
 \end{align}
+\end{comment}
