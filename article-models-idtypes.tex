@@ -1,8 +1,11 @@
 \section{Identity types}
-The identity types may now be formulated just as in ordinary Martin\nobreakdash-L\"of
-type theory. However, since all model categories have path objects, we will also
-introduce identity types for contexts.
+In this appendix we introduce identity types in for the type theory without type
+constructors of \autoref{tt}. Since we do not use variable declarations in our
+contexts, the notational appearance is somewhat different. The purpose here is
+not only to demonstrate how identity types should be introduced, but also to
+show that the new presentation of type theory is workable.
 
+\subsection{The rules for identity types}
 We will use the symbol $\reflsym$ slightly different than the book does. For us,
 $\refl{A}$ is a term of $\subst{\idfunc[A]}{\idtypevar{A}}$ in context
 $\ctxext{\Gamma}{A}$ and we will write $\subst{x}{\refl{A}}$ for the reflexivity
@@ -52,7 +55,7 @@ identity elimination in an extended context.
     {d}}
 \end{align}
 
-Likewise, we introduce identity types in a context.
+Likewise, we introduce identity types in a context. The rules are slightly simpler.
 
 \begin{align}
 & \inference{\jtype{\Gamma}{A}}{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}}{\idtypevar{A}}}\\
@@ -111,6 +114,7 @@ it follows that we have the judgmental equalities
 in context $\ctxext{{\Gamma}{A}}{P}$. We have the term $\jterm{\ctxext{{\Gamma}{A}}{P}}{\ctxwk{P}{P}}{\idfunc[P]}$.
 \end{proof}
 
+\begin{comment}
 Suppose we have a term $\jterm{\ctxext{\Gamma}{A}}{P}{f}$. 
 
 Using identity types, we can assert that a function $\jhom{\Gamma}{\Delta}{f}$ has
@@ -118,7 +122,9 @@ a left inverse $\jhom{\Delta}{\Gamma}{g}$ by asserting that there is an identifi
 \begin{equation*}
 ..
 \end{equation*}
+\end{comment}
 
+\begin{comment}
 \subsubsection{Compatibility of identity types with extension}
 
 \subsubsection{Compatibility of identity types with weakening}
@@ -163,8 +169,23 @@ We may simplify the type $\subst{\refl{\ctxwk{A}{B}}}{{\idfunc[\ctxwk{A}{B}]}{\c
 \end{proof}
 
 \subsubsection{Compatibility of identity types with substitution}
+\end{comment}
 
 \subsection{Generalized identity types}
+From the way identity types are treated and denoted, we might take the point of
+view that the identity types are instances of an operation which acts on the
+identity functions. In the following we introduce a new type constructor
+$\eqtype{x}$ for a given term $\jterm{\Gamma}{A}{x}$ which behaves very similarly
+to identity types. In the case of $\jterm{\Gamma}{\ctxwk{\Gamma}{\Gamma}}{\idfunc[\Gamma]}$
+the type $\eqtype{\idfunc[\Gamma]}$ is just the type $\idtypevar{\Gamma}$. In
+the case of a context morphism $\jterm{\Gamma}{\ctxwk{\Gamma}{\Delta}}{f}$, the
+type $\eqtype{f}$ can be thought of as the relation $\id{f(x)}{y}$ for terms $x:\Gamma$
+and $y:\Delta$. We prove that $\eqtype{f}$ is indeed equivalent to the type
+$\subst{f}{\ctxwk{\Gamma}{\idtypevar{\Delta}}}$ when both $\eqtype{f}$ and identity
+types are present. Since the relation $\id{f(x)}{y}$ is inductively generated
+by the reflexivity term if and only if $f$ is an equivalence, asserting the existence
+of $\eqtype{f}$ for all context morphisms $\jterm{\Gamma}{\ctxwk{\Gamma}{\Delta}}{f}$
+puts a groupoid condition on the type theory.
 
 \begin{infarray}{c}
 \inference{\jterm{\Gamma}{A}{x}}{\jtype{\ctxext{\Gamma}{A}}{\eqtype{x}}}\\

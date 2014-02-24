@@ -46,7 +46,7 @@ a model of type theory \emph{becomes} a category because it interprets type
 theory. In other words, type theory does all the work for us concerning the
 categorical structure. In particular, we have neither started our notion of models
 with AKS-categories as described in \cite{1categories} nor with Dybjer's notion
-of internal categories with families. We should gain that we get rid of
+of internal categories with families \cite{Dybjer1996}. We should gain that we get rid of
 truncatedness assumptions that are present in both AKS-categories, where the
 type of objects has to be a $1$-type, and internal categories with families,
 where the type of morphisms has to be a setoid. It needs not much arguing that any way to impose
@@ -141,7 +141,12 @@ Among the examples of internal models we should have:
       of the basic type theory to interpret identity types without necessarily
       interpreting dependent function types (but that should remain possible).
 \item[The graph model] This is the model that leads to the first version of the
-      descent theorem.
+      descent theorem. There are at least four variations of the graph model.
+      The canonical graph model has the usual dependent graphs as families. We
+      could also take left and right fibrations of graphs, although we loose
+      interpretations of some type constructors by doing that. However, if we
+      take the equifibered families as families we seem to get a model of type
+      theory with the usual type constructors.
 \item[Univalent unvirses] A univalent universe should be a model.
 \item[Equifibered diagrams over a graph] should be the fibrations in some model.
 \item[The model of all models] The objects in the model of models should be
@@ -163,5 +168,8 @@ Among the examples of internal models we should have:
       have modeled the univalence axiom. 
 \item[The set model] See \cite{RijkeSpitters:Sets}.
 \item[Polynomial functors] The theory of polynomial functors is essential to the
-      theory of $\tfW$-types, see 
+      theory of $\tfW$-types, see \cite{MoerdijkPalmgren2000}. The theory of
+      polynomial functors has been extensively developed by Kock \cite{Kock2011}.
+      Polynomial functors are generalizations of spans and graphs are endospans,
+      so a model of polynomial functors should generalize the graph model. 
 \end{description}

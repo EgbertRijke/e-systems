@@ -343,12 +343,16 @@
 
 \makeatletter
 \newcommand{\jctx}{\@ifnextchar*{\@jctxAlignTrue}{\@jctxAlignFalse}}
-\newcommand{\@jctxAlignTrue}[2]{& \vdash #2~ctx}
-\newcommand{\@jctxAlignFalse}[1]{\vdash #1~ctx}
+\newcommand{\@jctxAlignTrue}[2]{& \vdash #2~~\textit{ctx}}
+\newcommand{\@jctxAlignFalse}[1]{\vdash #1~~\textit{ctx}}
+
+\newcommand{\jfam}{\@ifnextchar*{\@jfamAlignTrue}{\@jfamAlignFalse}}
+\newcommand{\@jfamAlignTrue}[3]{#2 & \vdash #3~~\textit{fam}}
+\newcommand{\@jfamAlignFalse}[2]{#1 \vdash #2~~\textit{fam}}
 
 \newcommand{\jtype}{\@ifnextchar*{\@jtypeAlignTrue}{\@jtypeAlignFalse}}
-\newcommand{\@jtypeAlignFalse}[2]{#1\vdash #2~type}
-\newcommand{\@jtypeAlignTrue}[3]{#2 & \vdash #3~type}
+\newcommand{\@jtypeAlignFalse}[2]{#1\vdash #2~~\textit{type}}
+\newcommand{\@jtypeAlignTrue}[3]{#2 & \vdash #3~~\textit{type}}
 
 \newcommand{\jtermc}{\@ifnextchar*{\@jtermcAlignTrue}{\@jtermcAlignFalse}}
 \newcommand{\@jtermcAlignTrue}[3]{\@jtermAlignTrue{#1}{}{#2}{#3}}
@@ -359,12 +363,16 @@
 \newcommand{\@jtermAlignFalse}[3]{#1 \vdash #3:#2}
 
 \newcommand{\jctxeq}{\@ifnextchar*{\@jctxeqAlignTrue}{\@jctxeqAlignFalse}}
-\newcommand{\@jctxeqAlignTrue}[3]{& \vdash #2\jdeq #3~ctx}
-\newcommand{\@jctxeqAlignFalse}[2]{\vdash #1\jdeq #2~ctx}
+\newcommand{\@jctxeqAlignTrue}[3]{& \vdash #2\jdeq #3~~\textit{ctx}}
+\newcommand{\@jctxeqAlignFalse}[2]{\vdash #1\jdeq #2~~\textit{ctx}}
+
+\newcommand{\jfameq}{\@ifnextchar*{\@jfameqAlignTrue}{\@jfameqAlignFalse}}
+\newcommand{\@jfameqAlignTrue}[4]{#2 & \vdash #3\jdeq #4~~\textit{fam}}
+\newcommand{\@jfameqAlignFalse}[3]{#1 \vdash #2\jdeq #3~~\textit{fam}}
 
 \newcommand{\jtypeeq}{\@ifnextchar*{\@jtypeeqAlignTrue}{\@jtypeeqAlignFalse}}
-\newcommand{\@jtypeeqAlignTrue}[4]{#2 & \vdash #3\jdeq #4~type}
-\newcommand{\@jtypeeqAlignFalse}[3]{#1\vdash #2\jdeq #3~type}
+\newcommand{\@jtypeeqAlignTrue}[4]{#2 & \vdash #3\jdeq #4~~\textit{type}}
+\newcommand{\@jtypeeqAlignFalse}[3]{#1\vdash #2\jdeq #3~~\textit{type}}
 
 \newcommand{\jtermceq}{\@ifnextchar*{\@jtermceqAlignTrue}{\@jtermceqAlignFalse}}
 \newcommand{\@jtermceqAlignTrue}[4]{\@jtermeqAlignTrue{#1}{}{#2}{#3}{#4}}
@@ -391,6 +399,13 @@
 \end{array}
 \end{equation*}
 \endgroup}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% THE EMPTY CONTEXT
+
+\newcommand{\emptyc}{{[\;]}}
+\newcommand{\emptyf}[1][]{{[\;]}_{#1}}
+\newcommand{\emptytm}[1][]{\typefont{\#}_{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% CONTEXT EXTENSION 
@@ -428,7 +443,7 @@
 %%%% \subst{{x}{f}}{{x}{Q}} will print Q[x][f[x]]
 
 \makeatletter
-\newcommand{\subst}[2]{\@subst@type #2[\@subst@term #1]}
+\newcommand{\subst}[2]{\@subst@type #2{}[\@subst@term #1]}
 \newcommand{\@subst}{\@ifnextchar\bgroup{\@@subst}{}}
 \newcommand{\@@subst}[1]{\@ifnextchar\bgroup{\subst{#1}}{#1}}
 \newcommand{\@subst@term}{\@subst}

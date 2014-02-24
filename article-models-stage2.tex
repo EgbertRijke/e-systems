@@ -1,33 +1,51 @@
 \section{Stage two: extending the basic theory}\label{stage2}
-The first aim of this project is thus to give this new description of type
-theory with these properties. The second aim is to define a general notion of
-an internal model and provide several examples thereof. In the definition of
-internal models we envision that all the operations of type theory become
-morphisms of type theory: they are compatible with each and every morphism
-of type theory. The compatibility of extension, weakening and substitution is
-already part of the basic type theory. The compatibility of identity types
-with weakening for instance, is a form of function extensionality. The 
-compatibility of dependent function types with identity types is the usual
-funchtion extensionality principle. The
-compatibility of a universe operation with identity types should be univalence.
-The descent theorem implies that the colimit operation is also compatible with
-all the type theoretic operations (sigma and id are checked).
+With a firm notion of internal models of type theory and several extensions of
+type theory come within reach. The first of these extensions, colimits for
+diagrams over graphs, we have already started to explore. The operation 
+assigning the colimit to a graph is compatible with $\Sigma$ and $\idtypevar{}$
+types. The first was compatibility result was originally part of the descent
+theorem. We take the point of view that the descent theorem -- which asserts that
+for any graph $\Gamma$, the type of equifibered families over $\Gamma$ is
+equivalent in a canonical way to the type of families over $\tfcolim(\Gamma)$ --
+is just one of the aspects of many compatibility results for colimits. In this
+formulation, the descent theorem tells that the colimit operation acts not only
+on graphs (objects) but also on families (the equifibered diagrams over graphs)
+of the model of equifibered families.
+The colimit operation acts furthermore on terms and is compatible with extension,
+weakening and substitution. The fact that it is compatible with identity types is a new result
+which essentially expresses that the initial pointed equifibered diagram over
+a pointed graph (which is just another way of considering the notion of universal
+cover) describes
+the identity type of the colimit with respect to the base point. The methods
+in this proof actually describe all the higher identity types of the colimit
+as a certain higher inductive type; in particular it gives a description of the
+loop spaces of the higher inductive types appearing in \cite{TheBook}, so we
+should figure out which algebraic data we can extract from this description.
+In summary, this group of results related to the descent theorem may be viewed as the
+key to a good description of the colimit operation.
 
-We also wish to extend the descent property to a more general class of homotopy
-colimits. The general recipe has already been implicit in the first descent
-property where we have used diagrams over graphs. We have the following in mind:
-\begin{enumerate}
-\item Give an internal description of a diagram. Probably this is the same thing
-      as an internal model of the basic type theory with or without identity types.
-\item Define the notion of homotopy colimit thereof.
-\item Define the notion if equifibered diagrams.
-\item Formulate and prove descent: the map defined by substitution
- from families over the colimit to the equifibered diagrams is an equivalence.
-\end{enumerate}
+These results need to be extended. In the
+first place we could ask ourselves whether the colimit operation is compatible
+with $\Pi$ and the universe operation. Perhaps more importantly, the descent
+theorem and the related group of results stating that the colimit operation
+is compatible with various type constructors needs to be generalized to (diagrams
+over) arbitrary categories. Since we have a proposal for what a category is,
+namely a model of type theory without basic constructors, we seem to have the
+right tools at hand.  We envision that the colimit operation becomes a type theoretical operation
+(together with compatibility results) assigning a type to a diagram over a category.
+In the presence of a universe operator we might also consider to precompose
+the colimit operation with the universe operator, so that it acts on all families.
 
-Using the descent property we can view $\tfcolim$ as an operation of type theory
-It should preserve all the basic operations, identity types, dependent function
-types, itself, etc.
-
-Another thing we must keep in mind is that the compatibility rules in the basic
-type theory are strict. We should look to the possibility to weaken them.
+The result should be a fairly general theory of colimits and one of the first
+applications we must seek for is the establishment of $\im(f)$ as the colimit
+of the appropriate category, given a function $f:A\to B$ where $A$ and $B$
+are arbitrary types. In the case where $A$ and $B$ are sets, $\im(f)$ is
+the set-colimit of $\sm{x,y:A}\id{f(x)}{f(y)}\rightrightarrows A$; in general
+this diagram should be more complicated, see \S 6.1 of \cite{lurie2009higher}.
+It should be possible to describe, given $f:A\to B$, a diagram $K_f$ such that
+its colimit is $\im(f)$ generally. In particular we shouldn't need to take the
+set-colimit in the case that $f$ is a function between sets.  When we have 
+come this far we should also look for a possible definition of a
+(weak) higher predicative topos; the ingredients seem to be there. We hope that
+this gives us access to a description of sheaf models of type theory and we
+can possibly begin exploring some internal independence proofs.
