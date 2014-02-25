@@ -512,23 +512,23 @@ compose context morphisms (terms of weakened contexts).
 
 \begin{align}
 & \inference{\jfam{\Gamma}{A}\qquad\jfam{\Gamma}{B}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\\
-& \inference{\jfam{\Gamma}{A}\qquad\jfam{\ctxext{\Gamma}{B}}{Q}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\\
 & \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\Gamma}{B}{y}}{\jtermeq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\\
+& \inference{\jfam{\Gamma}{A}\qquad\jfam{\ctxext{\Gamma}{B}}{Q}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\\
 & \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
 \end{align}
 
 Using the rules of the compatibility of substitution with weakening and of the
 compatibility of weakening with itself, we see that we can show
 \begin{equation*}
-\jfameq{\Gamma}{\subst{f}{\ctxwk{\Gamma}{{\Delta}{\greek{E}}}}}{\ctxwk{\Gamma}{E}}
+\jfameq{\ctxext{\Gamma}{A}}{\subst{f}{\ctxwk{A}{{B}{C}}}}{\ctxwk{A}{C}}
 \end{equation*}
-for any three contexts $\Gamma$, $\Delta$ and $\greek{E}$ and any $\jhom{\Gamma}{\Delta}{f}$.
-It follows that for $\jhom{\Delta}{\greek{E}}{g}$ we have
+for any three families $A$, $B$ and $C$ in context $\Gamma$ and any $\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{f}$.
+It follows that for $\jterm{\ctxext{\Gamma}{B}}{\ctxwk{B}{C}}{g}$ we have
 \begin{equation*}
-\jhom{\Gamma}{\greek{E}}{\subst{f}{\ctxwk{\Gamma}{g}}}
+\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{C}}{\subst{f}{\ctxwk{A}{g}}}
 \end{equation*}
-The term $\jcomp{\Gamma}{f}{g}$ is the composition of $g$ with $f$. We may call
-a term $\jhom{\Gamma}{\Delta}{f}$ a morphism from $\Gamma$ to $\Delta$.
+The term $\jcomp{A}{f}{g}$ is the composition of $g$ with $f$. We may call
+a term $\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{f}$ a morphism from $A$ to $B$.
 
 \subsubsection{Identity functions}
 Without a rule explicitly asserting the existence of an identity morphism we don't
