@@ -36,6 +36,16 @@ substitution & \autoref{comp-se} & \autoref{comp-sw} & \autoref{comp-ss}
 Since extension by a context acts trivially on families and terms there are
 no rules added for extension followed by substitution.
 
+In \autoref{extension-on-terms} we come back to the operation of extension, but
+now for terms. The rules in this section explain what it means to be a term of
+an extended family, namely to be an extended term. The compatibility rules for
+extended terms are then similar as the compatibility rules that have appeared
+earlier: there is a compatibility rule for the extension of an extension, for
+the weakening of an extended term, for the substutution of an extended term by
+an arbitrary term and for substitution by an extended term. The last set of
+compatibility rules is a form of the Curry-Howard isomorphism -- this famous
+correspondence naturally comes out of our scheme of compatibility rules.
+
 \subsection{The basic judgments}
 The type theory we describe here is a theory of contexts, families of
 contexts and terms thereof. The families of contexts are by some authors called
@@ -501,7 +511,7 @@ We define
 \proj A \defeq \ctxwk{A}{\idfunc[\Gamma]}:\ctxwk{A}{{\Gamma}{\Gamma}}.
 \end{equation*}
 
-\subsubsection{Extension on terms}
+\subsubsection{Extension on terms}\label{extension-on-terms}
 When $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$ are terms,
 we obtain a term $\jterm{\Gamma}{\ctxext{A}{P}}{\ctxext{x}{u}}$. This operation
 of weakening on terms is like the pairing operation and like with the pairing
