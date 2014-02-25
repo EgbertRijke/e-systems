@@ -350,11 +350,16 @@ in the rules introducing the definitional equalities we assume $\jtermeq{\Gamma}
 \end{align}
 
 \subsubsection{Substitution is compatible with the empty context}
+The fibers of the empty family are the empty families:
+\begin{equation}
+\inference{\jterm{\Gamma}{A}{x}}{\jfameq{\Gamma}{\subst{x}{\emptyf}}{\emptyf}}
+\end{equation}
 
 The following rules assert that substituting by the term $\jterm{\Gamma}{\emptyf}{\emptytm}$
 leaves everything unchanged.
 \begin{align}
 & \inference{\jfam{\Gamma}{A}}{\jfameq{\Gamma}{\subst{\emptytm}{A}}{A}}\\
+& \inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{\emptytm}{x}}{x}}\\
 & \inference{\jfam{\ctxext{\Gamma}{A}}{P}}{\jfameq{\ctxext{\Gamma}{A}}{\subst{\emptytm}{P}}{P}}\\
 & \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\subst{\emptytm}{f}}{f}}.
 \end{align}
@@ -428,12 +433,6 @@ $\jterm{\Gamma}{A}{x}$ and $\jterm{\ctxext{\Gamma}{A}}{P}{f}$.
 {\jtermeq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{x}{{f}{h}}}{\subst{{x}{f}}{{x}{h}}}}
 \end{align}
 
-\subsubsection{The empty type is compatible with substitution}
-The fibers of the empty family are the empty families:
-\begin{equation}
-\inference{\jterm{\Gamma}{A}{x}}{\jfameq{\Gamma}{\subst{x}{\emptyf}}{\emptyf}}
-\end{equation}
-
 \subsubsection{Weakening is compatible with substitution}\label{comp-ws}
 We already have rules for the compatibility of substitution with weakening, but
 we still need the rules the other way around, asserting that there is a 
@@ -450,81 +449,7 @@ $\jterm{\Gamma}{B}{y}$.
 & \inference{\jterm{\ctxext{{\Gamma}{B}}{Q}}{R}{h}}{\jtermeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}{\ctxwk{A}{\subst{y}{R}}}{\ctxwk{A}{\subst{y}{h}}}{\subst{\ctxwk{A}{y}}{\ctxwk{A}{h}}}}
 \end{align}
 
-\subsection{The rules establishing the categorical properties of type theory}
-\subsubsection{The defining property of weakening}
-The judgmental equalities we're about to describe assert that substituting a term
-in the weakening a thing gives you the thing back. In the case of contexts we get that each fiber
-$\subst{x}{\ctxwk{A}{B}}$ is just $B$ and in the case of terms we get 
-that $\ctxwk{A}{y}$ is the constant function
-mapping everything to $y:B$. Thus, these rules actually establish the weakening
-as the weakening. After stating the rules we will describe what it means to
-compose context morphisms (terms of weakened contexts).
-
-\begin{align}
-& \inference{\jfam{\Gamma}{A}\qquad\jfam{\Gamma}{B}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\\
-& \inference{\jfam{\Gamma}{A}\qquad\jfam{\ctxext{\Gamma}{B}}{Q}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\\
-& \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\Gamma}{B}{y}}{\jtermeq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\\
-& \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
-\end{align}
-
-Using the rules of the compatibility of substitution with weakening and of the
-compatibility of weakening with itself, we see that we can show
-\begin{equation*}
-\jfameq{\Gamma}{\subst{f}{\ctxwk{\Gamma}{{\Delta}{\greek{E}}}}}{\ctxwk{\Gamma}{E}}
-\end{equation*}
-for any three contexts $\Gamma$, $\Delta$ and $\greek{E}$ and any $\jhom{\Gamma}{\Delta}{f}$.
-It follows that for $\jhom{\Delta}{\greek{E}}{g}$ we have
-\begin{equation*}
-\jhom{\Gamma}{\greek{E}}{\subst{f}{\ctxwk{\Gamma}{g}}}
-\end{equation*}
-The term $\jcomp{\Gamma}{f}{g}$ is the composition of $g$ with $f$. We may call
-a term $\jhom{\Gamma}{\Delta}{f}$ a morphism from $\Gamma$ to $\Delta$.
-
-\subsubsection{Identity functions}
-Without a rule explicitly asserting the existence of an identity morphism we don't
-get one, hence we do that here. The identity morphism is a term which introduced
-in ordinary type theory via the variable rule. The variable rule is a bit more
-general: it asserts that
-\begin{equation*}
-\jterm{\Gamma,\,x_1:A_1,\ldots,\,x_n:A_n}{A_i}{x_i}
-\end{equation*}
-for every $1\leq i\leq n$. Thus, it establishes the projections. In our setting,
-we get the projections from the identity morphisms together with weakening. We
-already have weakening, so here it suffices to introduce the identity morphisms.
-They are determined by their behavior with respect to substitution combined with
-weakening.
-
-\begin{align}
-&\inference{\jctx{\Gamma}}{\jterm{\Gamma}{\ctxwk{\Gamma}{\Gamma}}{\idfunc[\Gamma]}}\label{ctxIdFuncForm}\\
-&\inference{\jfam{\Gamma}{A}}{\jfameq{\Gamma}{\subst{\idfunc[\Gamma]}{\ctxwk{\Gamma}{A}}}{A}}\label{ctxIdFuncPbInvType}\\
-&\inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{\idfunc[\Gamma]}{\ctxwk{\Gamma}{x}}}{x}}\label{ctxIdFuncPbInvTerm}\\
-&\inference{\jterm{\Delta}{\ctxwk{\Delta}{\Gamma}}{g}}{\jtermeq{\Delta}{\ctxwk{\Delta}{\Gamma}}{\subst{g}{\ctxwk{\Delta}{\idfunc[\Gamma]}}}{g}}\label{ctxIdFuncSubstInvTerm}
-\end{align}
-
-The identity morphisms for types are introduced analogously to the identity
-morphisms of contexts, the only difference being that we have a rule asserting
-that $\subst{x}{\idfunc[A]}\jdeq x$ for every term $x:A$ in context $\Gamma$.
-
-\begin{align}
-& \inference{\jfam{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}\\
-& \inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}\\
-& \inference{\jfam{\ctxext{\Gamma}{A}}{P}}{\jfameq{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}{P}}\\
-& \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{A}{f}}}{f}} \\
-& \inference{\jterm{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{\subst{g}{\ctxwk{B}{\idfunc[A]}}}{g}}
-\end{align}
-
-Using these rules we can derive that there is a judgmental equality $\jfameq{\ctxext{\Gamma}{A}}{\subst{x}{{\idfunc[A]}{B}}}
-{\subst{x}{{x}{B}}}$. Note that $\subst{x}{{x}{B}}$ may just be denoted by
-$\subst{x,x}{B}$.
-
-The identity functions in combination with weakening give rise to the projections.
-We define
-
-\begin{equation*}
-\proj A \defeq \ctxwk{A}{\idfunc[\Gamma]}:\ctxwk{A}{{\Gamma}{\Gamma}}.
-\end{equation*}
-
-\subsubsection{Extension on terms}\label{extension-on-terms}
+\subsection{Extension on terms}\label{extension-on-terms}
 When $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$ are terms,
 we obtain a term $\jterm{\Gamma}{\ctxext{A}{P}}{\ctxext{x}{u}}$. This operation
 of weakening on terms is like the pairing operation and like with the pairing
@@ -575,29 +500,94 @@ substitute two consecutive times. This looks like the Curry-Howard isomorphism.
   {\jtermeq{\ctxext{\Gamma}{\subst{u}{{x}{Q}}}}{\subst{u}{{x}{R}}}{\subst{\ctxext{x}{u}}{t}}{\subst{u}{{x}{t}}}}
 \end{align}
 
-\begin{comment}
-\subsubsection{Inclusions}
-In ordinary type theory, there is a rule
-\begin{equation*}
-\inference{\jterm{\Gamma}{A}{x}\qquad\jfam{\Gamma,\,a:A}{P(a)}}
-  {\Gamma,\,u:P(x/a)\vdash x:A, u:P(x/a)}
-\end{equation*}
-This rule gives the inclusion of the fiber $\subst{x}{P}$ into $\ctxext{A}{P}$.
-
-Thus, we require
-\begin{equation}
-\inference{\jterm{\Gamma}{A}{x}\qquad\jfam{\ctxext{\Gamma}{A}}{P}}
-  {\jterm{\ctxext{\Gamma}{\subst{x}{P}}}{\ctxwk{\subst{x}{P}}{\ctxext{A}{P}}}{\typefont{in}^P_x}}
-\end{equation}
-
-The terms $\typefont{in}^P_x$ have the following behavior:
+\subsection{Composition and identity functions}
+\subsubsection{The defining property of weakening}
+The judgmental equalities we're about to describe assert that substituting a term
+in the weakening a thing gives you the thing back. In the case of contexts we get that each fiber
+$\subst{x}{\ctxwk{A}{B}}$ is just $B$ and in the case of terms we get 
+that $\ctxwk{A}{y}$ is the constant function
+mapping everything to $y:B$. Thus, these rules actually establish the weakening
+as the weakening. After stating the rules we will describe what it means to
+compose context morphisms (terms of weakened contexts).
 
 \begin{align}
-& \inference
-    {\jfam{\ctxext{{\Gamma}{A}}{P}}{Q}}
-    {\jfameq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{\typefont{in}^P_x}{\ctxwk{\subst{x}{P}}{Q}}}{\subst{x}{Q}}}\\
-& \inference
-    {\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
-    {\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{\typefont{in}^P_x}{\ctxwk{\subst{x}{P}}{g}}}{\subst{x}{g}}}
+& \inference{\jfam{\Gamma}{A}\qquad\jfam{\Gamma}{B}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\\
+& \inference{\jfam{\Gamma}{A}\qquad\jfam{\ctxext{\Gamma}{B}}{Q}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\\
+& \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\Gamma}{B}{y}}{\jtermeq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\\
+& \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
 \end{align}
-\end{comment}
+
+Using the rules of the compatibility of substitution with weakening and of the
+compatibility of weakening with itself, we see that we can show
+\begin{equation*}
+\jfameq{\Gamma}{\subst{f}{\ctxwk{\Gamma}{{\Delta}{\greek{E}}}}}{\ctxwk{\Gamma}{E}}
+\end{equation*}
+for any three contexts $\Gamma$, $\Delta$ and $\greek{E}$ and any $\jhom{\Gamma}{\Delta}{f}$.
+It follows that for $\jhom{\Delta}{\greek{E}}{g}$ we have
+\begin{equation*}
+\jhom{\Gamma}{\greek{E}}{\subst{f}{\ctxwk{\Gamma}{g}}}
+\end{equation*}
+The term $\jcomp{\Gamma}{f}{g}$ is the composition of $g$ with $f$. We may call
+a term $\jhom{\Gamma}{\Delta}{f}$ a morphism from $\Gamma$ to $\Delta$.
+
+\subsubsection{Identity functions}
+Without a rule explicitly asserting the existence of an identity morphism we don't
+get one, hence we do that here. The identity morphism is a term which introduced
+in ordinary type theory via the variable rule. The variable rule is a bit more
+general: it asserts that
+\begin{equation*}
+\jterm{\Gamma,\,x_1:A_1,\ldots,\,x_n:A_n}{A_i}{x_i}
+\end{equation*}
+for every $1\leq i\leq n$. Thus, it establishes the projections. In our setting,
+we get the projections from the identity morphisms together with weakening. We
+already have weakening, so here it suffices to introduce the identity morphisms.
+They are determined by their behavior with respect to substitution combined with
+weakening. The identity functions will also be subject to compatibility rules.
+\begin{align}
+& \inference{\jfam{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}\\
+& \inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}\\
+& \inference{\jfam{\ctxext{\Gamma}{A}}{P}}{\jfameq{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}{P}}\\
+& \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{A}{f}}}{f}} \\
+& \inference{\jterm{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{\subst{g}{\ctxwk{B}{\idfunc[A]}}}{g}}
+\end{align}
+
+Using these rules we can derive that there is a judgmental equality 
+$\jfameq{\Gamma}{\subst{x}{{\idfunc[A]}{R}}}
+{\subst{x}{{x}{R}}}$ for any $\jfam{\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}}{R}$. 
+Note that $\subst{x}{{x}{R}}$ is judgmentatlly the same as
+$\subst{\ctxext{x}{x}}{R}$.
+
+The identity functions in combination with weakening give rise to the projections.
+We define the term
+\begin{equation*}
+\proj P \defeq \ctxwk{P}{\idfunc[A]}:\ctxwk{P}{{A}{A}}
+\end{equation*}
+in context $\ctxext{{\Gamma}{A}}{P}$.
+
+The identity function of an extended family is the extension of the identity
+functions on the components in the apropriate way. To find out what the
+apropriate way is, note that
+\begin{align*}
+\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}} & \jdeq \ctxwk{P}{{A}{\ctxext{A}{P}}}\\
+& \jdeq \ctxext{\ctxwk{P}{{A}{A}}}{\ctxwk{P}{{A}{P}}}
+\end{align*}
+We have the term $\jterm{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{P}{A}}{\ctxwk{P}{\idfunc[A]}}$.
+Thus we need to find out what $\subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{P}}}$ is:
+\begin{align*}
+\subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{P}}} & \jdeq \ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}\\
+& \jdeq \ctxwk{P}{P},
+\end{align*}
+where we find the term $\idfunc[P]$. Therefore, we have the following inference rule:
+\begin{equation}
+\inference{\jfam{\Gamma}{A}\quad\jfam{\ctxext{\Gamma}{A}}{P}}{\jtermeq{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}{\idfunc[\ctxext{A}{P}]}{\ctxext{\ctxwk{P}{\idfunc[A]}}{\idfunc[P]}}}
+\end{equation}
+
+The identity function of a weakened family is the weakened identity function:
+\begin{equation}
+\inference{\jfam{\Gamma}{A}\quad\jfam{\Gamma}{B}}{\jtermeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{B}}}{\idfunc[\ctxwk{A}{B}]}{\ctxwk{A}{\idfunc[B]}}}
+\end{equation}
+
+The identity function of a substituted family is the substitution of the identity function
+\begin{equation}
+\inference{\jterm{\Gamma}{A}{x}\quad\jfam{\ctxext{\Gamma}{A}}{P}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\ctxwk{\subst{x}{P}}{\subst{x}{P}}}{\idfunc[\subst{x}{P}]}{\subst{x}{\idfunc[P]}}}
+\end{equation}
