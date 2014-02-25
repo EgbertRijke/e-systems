@@ -504,8 +504,11 @@ We define
 \subsubsection{Extension on terms}
 When $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$ are terms,
 we obtain a term $\jterm{\Gamma}{\ctxext{A}{P}}{\ctxext{x}{u}}$. This operation
-of weakening on terms is like the pairing operation. However, it is handled
-much stricter for it has a judgmental inverse and it is subject to various compatibility
+of weakening on terms is like the pairing operation and like with the pairing
+operation, extension on terms tells what the terms of an extended family are. 
+However, it is handled
+much stricter than $\smsym$-types, 
+for it has a judgmental inverse and it is subject to various compatibility
 rules.
 \begin{align}
 & \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}}{\jterm{\Gamma}{\ctxext{A}{P}}{\ctxext{x}{u}}}\\
