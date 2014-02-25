@@ -224,12 +224,16 @@ can be seen as the constant term with value $y$.
 We add rules asserting that a weakened type is again a type:
 
 \begin{align}
-& \inference{\jtype{\Gamma}{B}}{\jtype{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}}\\
 & \inference{\jfam{\Gamma}{B}\quad\jtype{\ctxext{\Gamma}{B}}{Q}}{\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
 \end{align}
 
 \subsubsection{Weakening is compatible with the empty context}
-
+The following rules express that when the empty context or context family is
+weakened, the result is the empty context family.
+\begin{align}
+& \inference{\jctx{\Gamma}}{\jfameq{\Gamma}{\ctxwk{\Gamma}{\emptyc}}{\emptyf}}\\
+& \inference{\jfam{\Gamma}{A}}{\jfameq{\ctxext{\Gamma}{A}}{\ctxwk{A}{\emptyf}}{\emptyf}}
+\end{align}
 Weakening by the empty family $\emptyf$ over a context $\Gamma$ leaves families, 
 their terms, families over those families and
 terms of those unchanged:
@@ -238,15 +242,6 @@ terms of those unchanged:
 & \inference{\jterm{\Gamma}{B}{y}}{\jtermeq{\Gamma}{B}{\ctxwk{\emptyf}{y}}{y}}\\
 & \inference{\jfam{\ctxext{\Gamma}{B}}{Q}}{\jfameq{\ctxext{\Gamma}{B}}{\ctxwk{\emptyf}{Q}}{Q}}\\
 & \inference{\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{Q}{\ctxwk{\emptyf}{g}}{g}}
-\end{align}
-
-\subsubsection{The empty context is compatible with weakening}
-The following rules express that when the empty context or context family is
-weakened, the result is the empty context family.
-
-\begin{align}
-& \inference{\jctx{\Gamma}}{\jfameq{\Gamma}{\ctxwk{\Gamma}{\emptyc}}{\emptyf}}\\
-& \inference{\jfam{\Gamma}{A}}{\jfameq{\ctxext{\Gamma}{A}}{\ctxwk{A}{\emptyf}}{\emptyf}}
 \end{align}
 
 \subsubsection{Weakening is compatible with extension}\label{comp-we}
