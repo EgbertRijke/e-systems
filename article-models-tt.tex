@@ -349,6 +349,12 @@ in the rules introducing the definitional equalities we assume $\jtermeq{\Gamma}
 & &\inference{\jtermeq{\ctxext{{\Gamma}{A}}{P}}{Q}{g}{g'}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}{\subst{x'}{g'}}}
 \end{align}
 
+We also add the following rule asserting that substitution preserves the
+property of being a type:
+\begin{align}
+& \inference{\jterm{\Gamma}{A}{x}\quad\jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}{\jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+\end{align}
+
 \subsubsection{Substitution is compatible with the empty context}
 The fibers of the empty family are the empty families:
 \begin{equation}
