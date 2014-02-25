@@ -1,5 +1,5 @@
-\section{Type theory without type constructors}\label{tt}
-In this appendix we give a possible description of type theory without basic
+\section{Type theory before type constructors}\label{tt}
+In this section we give a description of type theory before basic
 constructors and with explicit extension, weakening and substitution. We will
 formulate the type theory in such a way that contexts aren't lists of variable
 declarations. The reasons for this are twofold: (1) in the models of type theory
@@ -9,6 +9,11 @@ intend to give a general algebraic description of higher categories. Besides,
 we will not have to be burdened with comments about variables being bounded or not, or fresh or
 not occuring at all.
 
+We will develop a theory which is in fact a theory of contexts and families of
+contexts where a family of context can be a type, behind which we have the
+intuition that it is an atomic or irreducible family of contexts. We get immediately
+that every construction can be made in an arbitrary context. 
+
 It should be noted that this is just a prototype description. It may be the case
 that various other elements have to be added yet, such as terms
 $\jterm{\ctxext{\Gamma}{\subst{x}{P}}}{\ctxwk{\subst{x}{P}}{\ctxext{A}{P}}}{i}$
@@ -17,12 +22,21 @@ $\Gamma$. Moreover, it hasn't been thoroughly tested whether the theory presente
 here lives up to its promise.
 
 Much of the rules we state are just compatibility rules of extension, weakening
-and substitution with each other. To get the overview, we list the sections
+and substitution with each other. In a way, these rules assert that our contexts
+are just structureless lists of contexts and that likewise terms are structureless
+lists of terms. They are structureless in the sense that the order in which
+they are formed by pairing up is irrelevant. We note that this causes complications
+in the traditional way that categorical sematics of type theory is implemented,
+where contexts become objects of the category which is supposed to model type
+theory. The reason for this is that context extension will not satisfy all the
+compatibility rules we're about to state. The first step to resolving this is taking
+the types in the empty context as the objects. 
+
+To get the overview of the compatibility rules, we list the sections
 where these compatibility rules are described in the following table (in this
 table, the
 subsection mentioned in row $X$ and column $Y$ consideres the rules of the
 operation $Y\circ X$):
-
 \begin{center}
 \begin{tabular}{r|ccc}
 & extension & weakening & substitution\\
@@ -32,7 +46,6 @@ weakening & \autoref{comp-we} & \autoref{comp-ww} & \autoref{comp-ws}\\
 substitution & \autoref{comp-se} & \autoref{comp-sw} & \autoref{comp-ss}
 \end{tabular}
 \end{center}
-
 Since extension by a context acts trivially on families and terms there are
 no rules added for extension followed by substitution.
 
