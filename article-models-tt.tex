@@ -425,13 +425,13 @@ $\jterm{\Gamma}{A}{x}$ and $\jterm{\ctxext{\Gamma}{A}}{P}{f}$.
 
 \begin{align}
 &\inference{\jfam{\ctxext{{\Gamma}{A}}{P}}{Q}}
-{\jfameq{\Gamma}{\subst{x}{{f}{Q}}}{\subst{{x}{f}}{{x}{Q}}}}\\
-&\inference{\jfam{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
-{\jfameq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{{x}{f}}{{x}{R}}}}\\
+{\jfameq{\Gamma}{\subst{x}{{f}{Q}}}{\subst{{x}{f}}{{x}{Q}}}}\label{comp-ss-1}\\
 &\inference{\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
-{\jtermeq{\Gamma}{\subst{x}{{f}{Q}}}{\subst{x}{{f}{g}}}{\subst{{x}{f}}{{x}{g}}}}\\
+{\jtermeq{\Gamma}{\subst{x}{{f}{Q}}}{\subst{x}{{f}{g}}}{\subst{{x}{f}}{{x}{g}}}}\label{comp-ss-2}\\
+&\inference{\jfam{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
+{\jfameq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{{x}{f}}{{x}{R}}}}\label{comp-ss-3}\\
 &\inference{\jterm{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}{h}}
-{\jtermeq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{x}{{f}{h}}}{\subst{{x}{f}}{{x}{h}}}}
+{\jtermeq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{x}{{f}{h}}}{\subst{{x}{f}}{{x}{h}}}}\label{comp-ss-4}
 \end{align}
 
 \subsubsection{Weakening is compatible with substitution}\label{comp-ws}
@@ -450,63 +450,6 @@ $\jterm{\Gamma}{B}{y}$.
 & \inference{\jterm{\ctxext{{\Gamma}{B}}{Q}}{R}{h}}{\jtermeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}{\ctxwk{A}{\subst{y}{R}}}{\ctxwk{A}{\subst{y}{h}}}{\subst{\ctxwk{A}{y}}{\ctxwk{A}{h}}}}
 \end{align}
 
-\subsection{Extension on terms}\label{extension-on-terms}
-When $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$ are terms,
-we obtain a term $\jterm{\Gamma}{\ctxext{A}{P}}{\ctxext{x}{u}}$. This operation
-of weakening on terms is like the pairing operation and like with the pairing
-operation, extension on terms tells what the terms of an extended family are:
-every term of an extended family decomposes into the components of a pair. 
-\begin{align}
-& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}}{\jterm{\Gamma}{\ctxext{A}{P}}{\ctxext{x}{u}}}
-& & \inference{\jtermeq{\Gamma}{A}{x}{x'}\quad\jtermeq{\Gamma}{\subst{x}{P}}{u}{u'}}{\jtermeq{\Gamma}{\ctxext{A}{P}}{\ctxext{x}{u}}{\ctxext{x'}{u'}}}\\
-& \inference{\jterm{\Gamma}{\ctxext{A}{P}}{w}}{\jterm{\Gamma}{A}{\pts{w}}}
-& & \inference{\jtermeq{\Gamma}{\ctxext{A}{P}}{w}{w'}}{\jtermeq{\Gamma}{A}{\pts{w}}{\pts{w'}}}\\
-& \inference{\jterm{\Gamma}{\ctxext{A}{P}}{w}}{\jterm{\Gamma}{\subst{\pts{w}}{P}}{\edg{w}}}
-& & \inference{\jtermeq{\Gamma}{\ctxext{A}{P}}{w}{w'}}{\jtermeq{\Gamma}{\subst{\pts{w}}{P}}{\edg{w}}{\edg{w'}}}
-\end{align}
-However, this pairing is handled
-much stricter than $\smsym$-types, 
-because the decomposition is a judgmental inverse (and it will be subject to various compatibility
-rules).
-\begin{align}
-& \inference{\jterm{\Gamma}{\ctxext{A}{P}}{w}}{\jtermeq{\Gamma}{\ctxext{A}{P}}{\ctxext{\pts{w}}{\edg{w}}}{w}}\\
-& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}}{\jtermeq{\Gamma}{A}{\pts{(\ctxext{x}{u})}}{x}}\\
-& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}}{\jtermeq{\Gamma}{\subst{x}{P}}{\edg{(\ctxext{x}{u})}}{u}}
-\end{align}
-
-We add the following compatibility rule for two consecutive term extensions:
-\begin{equation}
-\inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jterm{\Gamma}{\subst{\ctxext{x}{u}}{Q}}{v}}
-{\jtermeq{\Gamma}{\ctxext{{A}{P}}{Q}}{\ctxext{x}{{u}{v}}}{\ctxext{{x}{u}}{v}}}
-\end{equation}
-
-When we weaken a term $\ctxext{y}{v}$ of $\ctxext{B}{Q}$ in context $\Gamma$ by
-a type $A$, the term that we get is $\ctxext{\ctxwk{A}{y}}{\ctxwk{A}{v}}$.
-\begin{align}
-& \inference{\jterm{\Gamma}{B}{y}\quad\jterm{\Gamma}{\subst{y}{Q}}{v}}{\jtermeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{\ctxext{B}{Q}}}{\ctxwk{A}{\ctxext{y}{v}}}{\ctxext{\ctxwk{A}{y}}{\ctxwk{A}{v}}}}\\
-& \inference{\jterm{\ctxext{\Gamma}{B}}{Q}{g}\quad\jterm{\ctxext{\Gamma}{B}}{\subst{g}{R}}{t}}{\jtermeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{\ctxext{Q}{R}}}{\ctxwk{A}{\ctxext{g}{t}}}{\ctxext{\ctxwk{A}{g}}{\ctxwk{A}{t}}}}
-\end{align}
-
-When we substitute an extended term $\ctxext{f}{g}$ of $\ctxext{P}{Q}$ by a term
-$x$ of $A$, the term that we get is $\ctxext{\subst{x}{f}}{\subst{x}{g}}$.
-\begin{align}
-& \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}\quad\jterm{\ctxext{\Gamma}{A}}{\subst{f}{Q}}{g}}{\jtermeq{\Gamma}{\ctxext{\subst{x}{P}}{\subst{x}{Q}}}{\subst{x}{\ctxext{f}{g}}}{\ctxext{\subst{x}{f}}{\subst{x}{g}}}}\\
-& \inference{\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}\quad\jterm{\ctxext{{\Gamma}{A}}{P}}{\subst{g}{R}}{t}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\ctxext{\subst{x}{Q}}{\subst{x}{R}}}{\subst{x}{\ctxext{g}{t}}}{\ctxext{\subst{x}{g}}{\subst{x}{t}}}}
-\end{align}
-
-Finally, when we substitute by an extended term we get an equal result as when we
-substitute two consecutive times. This looks like the Curry-Howard isomorphism.
-\begin{align}
-& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jfam{\ctxext{{\Gamma}{A}}{P}}{Q}}
-  {\jfameq{\Gamma}{\subst{\ctxext{x}{u}}{Q}}{\subst{u}{{x}{Q}}}}\\
-& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
-  {\jtermeq{\Gamma}{\subst{u}{{x}{Q}}}{\subst{\ctxext{x}{u}}{g}}{\subst{u}{{x}{g}}}}\\
-& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jfam{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
-  {\jfameq{\ctxext{\Gamma}{\subst{u}{{x}{Q}}}}{\subst{\ctxext{x}{u}}{R}}{\subst{u}{{x}{R}}}}\\
-& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jterm{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}{t}}
-  {\jtermeq{\ctxext{\Gamma}{\subst{u}{{x}{Q}}}}{\subst{u}{{x}{R}}}{\subst{\ctxext{x}{u}}{t}}{\subst{u}{{x}{t}}}}
-\end{align}
-
 \subsection{Composition and identity functions}
 \subsubsection{The defining property of weakening}
 The judgmental equalities we're about to describe assert that substituting a term
@@ -518,10 +461,10 @@ as the weakening. After stating the rules we will describe what it means to
 compose context morphisms (terms of weakened contexts).
 
 \begin{align}
-& \inference{\jfam{\Gamma}{A}\qquad\jfam{\Gamma}{B}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\\
-& \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\Gamma}{B}{y}}{\jtermeq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\\
-& \inference{\jfam{\Gamma}{A}\qquad\jfam{\ctxext{\Gamma}{B}}{Q}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\\
-& \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
+& \inference{\jfam{\Gamma}{A}\qquad\jfam{\Gamma}{B}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\label{defn-ws-1}\\
+& \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\Gamma}{B}{y}}{\jtermeq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\label{defn-ws-2}\\
+& \inference{\jfam{\Gamma}{A}\qquad\jfam{\ctxext{\Gamma}{B}}{Q}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\label{defn-ws-3}\\
+& \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}\label{defn-ws-4}
 \end{align}
 
 Using the rules of the compatibility of substitution with weakening and of the
@@ -555,24 +498,11 @@ already have weakening, so here it suffices to introduce the identity morphisms.
 Identity functions are determined by their behavior with respect to substitution combined with
 weakening. The identity functions will also be subject to compatibility rules.
 \begin{align}
-& \inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}\\
-& \inference{\jfam{\ctxext{\Gamma}{A}}{P}}{\jfameq{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}{P}}\\
-& \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{A}{f}}}{f}} \\
-& \inference{\jterm{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{\subst{g}{\ctxwk{B}{\idfunc[A]}}}{g}}
+& \inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}\label{idfunc-subst-defn}\\
+& \inference{\jfam{\ctxext{\Gamma}{A}}{P}}{\jfameq{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}{P}}\label{idfunc-wk-defn}\\
+& \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{A}{f}}}{f}}\label{idfunc-precomp} \\
+& \inference{\jterm{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{\subst{g}{\ctxwk{B}{\idfunc[A]}}}{g}}\label{idfunc-postcomp}
 \end{align}
-
-Using these rules we can derive that there is a judgmental equality 
-$\jfameq{\Gamma}{\subst{x}{{\idfunc[A]}{R}}}
-{\subst{x}{{x}{R}}}$ for any $\jfam{\ctxext{{\Gamma}{A}}{\ctxwk{A}{A}}}{R}$. 
-Note that $\subst{x}{{x}{R}}$ is judgmentatlly the same as
-$\subst{\ctxext{x}{x}}{R}$.
-
-The identity functions in combination with weakening give rise to the projections.
-We define the term
-\begin{equation*}
-\proj P \defeq \ctxwk{P}{\idfunc[A]}:\ctxwk{P}{{A}{A}}
-\end{equation*}
-in context $\ctxext{{\Gamma}{A}}{P}$.
 
 The identity function of an extended family is the extension of the identity
 functions on the components in the apropriate way. To find out what the
@@ -588,16 +518,117 @@ Thus we need to find out what $\subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{P}}}$
 & \jdeq \ctxwk{P}{P},
 \end{align*}
 where we find the term $\idfunc[P]$. Therefore, we have the following inference rule:
-\begin{equation}
-\inference{\jfam{\Gamma}{A}\quad\jfam{\ctxext{\Gamma}{A}}{P}}{\jtermeq{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}{\idfunc[\ctxext{A}{P}]}{\ctxext{\ctxwk{P}{\idfunc[A]}}{\idfunc[P]}}}
+\begin{equation}\label{idfunc-ext-comp}
+\inference{\jfam{\Gamma}{A}\quad\jfam{\ctxext{\Gamma}{A}}{P}}{\jtermeq{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}{\idfunc[\ctxext{A}{P}]}{\subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}}
 \end{equation}
 
 The identity function of a weakened family is the weakened identity function:
-\begin{equation}
+\begin{equation}\label{idfunc-wk-comp}
 \inference{\jfam{\Gamma}{A}\quad\jfam{\Gamma}{B}}{\jtermeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{B}}}{\idfunc[\ctxwk{A}{B}]}{\ctxwk{A}{\idfunc[B]}}}
 \end{equation}
 
 The identity function of a substituted family is the substitution of the identity function
-\begin{equation}
+\begin{equation}\label{idfunc-subst-comp}
 \inference{\jterm{\Gamma}{A}{x}\quad\jfam{\ctxext{\Gamma}{A}}{P}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\ctxwk{\subst{x}{P}}{\subst{x}{P}}}{\idfunc[\subst{x}{P}]}{\subst{x}{\idfunc[P]}}}
 \end{equation}
+
+\subsection{Extension on terms}\label{extension-on-terms}
+When $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$ are terms,
+we obtain the term $\jterm{\Gamma}{\ctxext{A}{P}}{\subst{u}{{x}{\idfunc[\ctxext{A}{P}]}}}$. 
+We define 
+\begin{equation*}
+\ctxext{x}{u}\defeq\subst{u}{{x}{\idfunc[\ctxext{A}{P}]}}.
+\end{equation*}
+Thus
+$\ctxext{x}{u}$ is the pairing of $x$ and $u$. Note that because
+$\ctxwk{P}{{A}{\ctxext{A}{P}}}\jdeq\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}$, the
+pairing function is just $\idfunc[\ctxext{A}{P}]$. 
+
+There is also a decomposition of terms $\jterm{\Gamma}{\ctxext{A}{P}}{w}$ into
+components: the projections. We define
+\begin{align*}
+\cprojfstf{A}{P} & \defeq \ctxwk{P}{\idfunc[A]}\\
+\cprojsndf{A}{P} & \defeq \idfunc[P]
+\end{align*}
+
+The constructions of the terms $\ctxext{x}{u}$ and $\cprojfst{A}{P}{w}$ and
+$\cprojsnd{A}{P}{w}$ are subject to various rules, with all of them being
+consequences of earlier introduced inference rules.
+
+\begin{lem} The following inference rules expressing that pairing is a strict
+inverse to the combination of decompositions, are valid:
+\begin{align*}
+& \inference{\jterm{\Gamma}{\ctxext{A}{P}}{w}}{\jtermeq{\Gamma}{\ctxext{A}{P}}{\ctxext{\cprojfst{A}{P}{w}}{\cprojsnd{A}{P}{w}}}{w}}\\
+& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}}{\jtermeq{\Gamma}{A}{\cprojfst{A}{P}{\ctxext{x}{u}}}{x}}\\
+& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}}{\jtermeq{\Gamma}{\subst{x}{P}}{\cprojsnd{A}{P}{\ctxext{x}{u}}}{u}}
+\end{align*}
+\end{lem}
+
+\begin{proof}
+To prove the first judgmental equality, note that
+\begin{align*}
+w & \jdeq \subst{w}{\idfunc[\ctxext{A}{P}]} \tag{by \autoref{idfunc-subst-defn}}\\
+& \jdeq \subst{w}{\subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}
+  \tag{by \autoref{idfunc-ext-comp}}\\
+& \jdeq \subst{{w}{\idfunc[P]}}{\subst{w}{{\ctxwk{P}{\idfunc[A]}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}\tag{by \autoref{comp-ss-4}}\\
+& \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\subst{w}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}\tag{by \autoref{comp-ss-2}}\\
+& \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\subst{w}{\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}}}\tag{by \autoref{idfunc-wk-comp}}\\
+& \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\idfunc[\ctxext{A}{P}]}}\tag{by \autoref{defn-ws-2}}\\
+& \jdeq \ctxext{\cprojfst{A}{P}{w}}{\cprojsnd{A}{P}{w}}\tag{by definition}
+\end{align*}
+\end{proof}
+
+\begin{lem}
+The following compatibility rules for two consecutive term extensions is valid:
+\begin{align*}
+& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jterm{\Gamma}{\subst{\ctxext{x}{u}}{Q}}{v}}
+{\jtermeq{\Gamma}{\ctxext{{A}{P}}{Q}}{\ctxext{x}{{u}{v}}}{\ctxext{{x}{u}}{v}}}\\
+& \inference{\jterm{\Gamma}{\ctxext{{A}{P}}{Q}}{w}}
+  {\jtermeq{\Gamma}{A}{\cprojfst{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}}}{\cprojfst{A}{\ctxext{P}{Q}}{w}}}\\
+& \inference{\jterm{\Gamma}{\ctxext{{A}{P}}{Q}}{w}}
+  {\jtermeq{\Gamma}{\subst{\cprojfst{A}{\ctxext{P}{Q}}{w}}{P}}
+  {\cprojsnd{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}}}
+  {\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}}\\
+& \inference{\jterm{\Gamma}{\ctxext{{A}{P}}{Q}}{w}}
+  {\jtermeq{\Gamma}{\subst{\cprojfst{\ctxext{A}{P}}{Q}{w}}{Q}}
+  {\cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
+  {\cprojsnd{\ctxext{A}{P}}{Q}{w}}}
+\end{align*}
+\end{lem}
+
+\begin{lem}
+When we weaken a term $\ctxext{y}{v}$ of $\ctxext{B}{Q}$ in context $\Gamma$ by
+a type $A$, the term that we get is $\ctxext{\ctxwk{A}{y}}{\ctxwk{A}{v}}$. More
+precisely, the following inference rules are valid:
+\begin{align*}
+& \inference{\jterm{\ctxext{\Gamma}{B}}{Q}{g}\quad\jterm{\ctxext{\Gamma}{B}}{\subst{g}{R}}{t}}{\jtermeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{\ctxext{Q}{R}}}{\ctxwk{A}{\ctxext{g}{t}}}{\ctxext{\ctxwk{A}{g}}{\ctxwk{A}{t}}}}
+% \\
+%& \inference{\jterm{\Gamma}{\ctxwk{A}{\ctxext{B}{Q}}}{\ctxwk{A}{w}}}{\jtermeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{B}}{\cprojfst{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{\ctxwk{A}{w}}}{\ctxwk{A}{(\cprojfst{B}{Q}{w})}}}\\
+\end{align*}
+\end{lem}
+
+\begin{lem}
+When we substitute an extended term $\ctxext{f}{g}$ of $\ctxext{P}{Q}$ by a term
+$x$ of $A$, the term that we get is $\ctxext{\subst{x}{f}}{\subst{x}{g}}$.
+More precisely, the following inference rules are valid:
+\begin{align*}
+& \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}\quad\jterm{\ctxext{\Gamma}{A}}{\subst{f}{Q}}{g}}{\jtermeq{\Gamma}{\ctxext{\subst{x}{P}}{\subst{x}{Q}}}{\subst{x}{\ctxext{f}{g}}}{\ctxext{\subst{x}{f}}{\subst{x}{g}}}}\\
+& \inference{\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}\quad\jterm{\ctxext{{\Gamma}{A}}{P}}{\subst{g}{R}}{t}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\ctxext{\subst{x}{Q}}{\subst{x}{R}}}{\subst{x}{\ctxext{g}{t}}}{\ctxext{\subst{x}{g}}{\subst{x}{t}}}}
+\end{align*}
+\end{lem}
+Finally, when we substitute by an extended term we get an equal result as when we
+substitute two consecutive times. This looks like the Curry-Howard isomorphism.
+
+\begin{lem}
+The following inference rules are valid:
+\begin{align*}
+& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jfam{\ctxext{{\Gamma}{A}}{P}}{Q}}
+  {\jfameq{\Gamma}{\subst{\ctxext{x}{u}}{Q}}{\subst{u}{{x}{Q}}}}\\
+& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
+  {\jtermeq{\Gamma}{\subst{u}{{x}{Q}}}{\subst{\ctxext{x}{u}}{g}}{\subst{u}{{x}{g}}}}\\
+& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jfam{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
+  {\jfameq{\ctxext{\Gamma}{\subst{u}{{x}{Q}}}}{\subst{\ctxext{x}{u}}{R}}{\subst{u}{{x}{R}}}}\\
+& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jterm{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}{t}}
+  {\jtermeq{\ctxext{\Gamma}{\subst{u}{{x}{Q}}}}{\subst{u}{{x}{R}}}{\subst{\ctxext{x}{u}}{t}}{\subst{u}{{x}{t}}}}
+\end{align*}
+\end{lem}

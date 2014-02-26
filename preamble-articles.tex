@@ -473,6 +473,21 @@
 \newcommand{\ctxwkop}[2]{\ctxwk{#2}{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% CONTEXT PROJECTIONS
+
+\makeatletter
+\newcommand{\cprojgenf}[3]{\typefont{pr}^{
+  \@ifnextchar\ctxext{\@ctxext@nested}{}#2,
+  \@ifnextchar\ctxext{\@ctxext@nested}{}#3}_{#1}}
+\newcommand{\cprojgen}[4]{\subst{#4}{\cprojgenf{#1}{#2}{#3}}}
+\makeatother
+
+\newcommand{\cprojfstf}[2]{\cprojgenf{0}{#1}{#2}}
+\newcommand{\cprojfst}[3]{\cprojgen{0}{#1}{#2}{#3}}
+\newcommand{\cprojsndf}[2]{\cprojgenf{1}{#1}{#2}}
+\newcommand{\cprojsnd}[3]{\cprojgen{1}{#1}{#2}{#3}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% JUDGMENTAL MORPHISMS
 
 \makeatletter
