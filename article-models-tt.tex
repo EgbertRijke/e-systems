@@ -542,10 +542,13 @@ general: it asserts that
 for every $1\leq i\leq n$. Thus, it establishes the projections. In our setting,
 we get the projections from the identity morphisms together with weakening. We
 already have weakening, so here it suffices to introduce the identity morphisms.
-They are determined by their behavior with respect to substitution combined with
+\begin{align}
+& \inference{\jfam{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}
+& & \inference{\jfameq{\Gamma}{A}{A'}}{\jtermeq{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}{\idfunc[A']}}
+\end{align}
+Identity functions are determined by their behavior with respect to substitution combined with
 weakening. The identity functions will also be subject to compatibility rules.
 \begin{align}
-& \inference{\jfam{\Gamma}{A}}{\jterm{\ctxext{\Gamma}{A}}{\ctxwk{A}{A}}{\idfunc[A]}}\\
 & \inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}\\
 & \inference{\jfam{\ctxext{\Gamma}{A}}{P}}{\jfameq{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}{P}}\\
 & \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{A}{f}}}{f}} \\
