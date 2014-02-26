@@ -454,15 +454,21 @@ $\jterm{\Gamma}{B}{y}$.
 When $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$ are terms,
 we obtain a term $\jterm{\Gamma}{\ctxext{A}{P}}{\ctxext{x}{u}}$. This operation
 of weakening on terms is like the pairing operation and like with the pairing
-operation, extension on terms tells what the terms of an extended family are. 
-However, it is handled
-much stricter than $\smsym$-types, 
-for it has a judgmental inverse and it is subject to various compatibility
-rules.
+operation, extension on terms tells what the terms of an extended family are:
+every term of an extended family decomposes into the components of a pair. 
 \begin{align}
-& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}}{\jterm{\Gamma}{\ctxext{A}{P}}{\ctxext{x}{u}}}\\
-& \inference{\jterm{\Gamma}{\ctxext{A}{P}}{w}}{\jterm{\Gamma}{A}{\pts{w}}}\\
-& \inference{\jterm{\Gamma}{\ctxext{A}{P}}{w}}{\jterm{\Gamma}{\subst{\pts{w}}{P}}{\edg{w}}}\\
+& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}}{\jterm{\Gamma}{\ctxext{A}{P}}{\ctxext{x}{u}}}
+& & \inference{\jtermeq{\Gamma}{A}{x}{x'}\quad\jtermeq{\Gamma}{\subst{x}{P}}{u}{u'}}{\jtermeq{\Gamma}{\ctxext{A}{P}}{\ctxext{x}{u}}{\ctxext{x'}{u'}}}\\
+& \inference{\jterm{\Gamma}{\ctxext{A}{P}}{w}}{\jterm{\Gamma}{A}{\pts{w}}}
+& & \inference{\jtermeq{\Gamma}{\ctxext{A}{P}}{w}{w'}}{\jtermeq{\Gamma}{A}{\pts{w}}{\pts{w'}}}\\
+& \inference{\jterm{\Gamma}{\ctxext{A}{P}}{w}}{\jterm{\Gamma}{\subst{\pts{w}}{P}}{\edg{w}}}
+& & \inference{\jtermeq{\Gamma}{\ctxext{A}{P}}{w}{w'}}{\jtermeq{\Gamma}{\subst{\pts{w}}{P}}{\edg{w}}{\edg{w'}}}
+\end{align}
+However, this pairing is handled
+much stricter than $\smsym$-types, 
+because the decomposition is a judgmental inverse (and it will be subject to various compatibility
+rules).
+\begin{align}
 & \inference{\jterm{\Gamma}{\ctxext{A}{P}}{w}}{\jtermeq{\Gamma}{\ctxext{A}{P}}{\ctxext{\pts{w}}{\edg{w}}}{w}}\\
 & \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}}{\jtermeq{\Gamma}{A}{\pts{(\ctxext{x}{u})}}{x}}\\
 & \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}}{\jtermeq{\Gamma}{\subst{x}{P}}{\edg{(\ctxext{x}{u})}}{u}}
