@@ -583,6 +583,14 @@ $\jterm{\Gamma}{\subst{x}{P}}{u}$. Then we have
 & \jdeq \subst{x}{\idfunc[A]}\\
 & \jdeq x.
 \end{align*}
+To prove the third judgmental equality, note that
+\begin{align*}
+\cprojsnd{A}{P}{\ctxext{x}{u}}
+& \jdeq \subst{\ctxext{x}{u}}{\idfunc[P]}\\
+& \jdeq \subst{u}{{x}{\idfunc[P]}}\\
+& \jdeq \subst{u}{\idfunc[\subst{x}{P}]}\\
+& \jdeq u.
+\end{align*}
 \end{proof}
 
 The constructions of the terms $\ctxext{x}{u}$ and $\cprojfst{A}{P}{w}$ and
