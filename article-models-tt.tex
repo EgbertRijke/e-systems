@@ -64,7 +64,7 @@ dependent contexts, but they are handled a bit differently here because they
 become the primary object of study. Dependent contexts can be types; they could
 be seen as atomic or indecomposable dependent contexts.
 
-Thus we make eight types of judgments in our type theory: ``$\Gamma$ is a context'',
+Thus we make eight kinds of judgments in our type theory: ``$\Gamma$ is a context'',
 ``$A$ is a family of contexts over $\Gamma$'', ``$A$ is a type in context $\Gamma$''
 and ``$x$ is a term of the family $A$ of contexts over $\Gamma$''. The other four
 judgments are for judgmental equality. 
@@ -156,14 +156,14 @@ guarantees that this will not cause confusion. Likewise, we shall denote
 $\emptytm[\Gamma]$ by $\emptytm$.
 
 \subsection{Extension}
-We introduce extension which not only extends a context $\Gamma$ and a type
-$A$ over it to a context $\ctxext{\Gamma}{A}$, but which also extends a type $A$
-in context $\Gamma$ and a family $P$ over it to a type $\ctxext{A}{P}$ in context
+We introduce extension which not only extends a context $\Gamma$ and a family
+$A$ over it to a context $\ctxext{\Gamma}{A}$, but which also extends a family $A$
+in context $\Gamma$ and a family $P$ over it to a family $\ctxext{A}{P}$ over context
 $\Gamma$. We do this to ensure that all of type theory can be done in a context.
 For instance, we could say (1) that a context in context $\Gamma$ is the same thing
-as a type in context $\Gamma$; (2) When $A$ is a context in this sense, a type in
-context $A$ is the same thing as a family $P$ over $A$ and (3) when $P$ is a type
-in context $A$ in this sense, a term of $P$ keeps its original meaning.
+as a family over $\Gamma$; (2) When $A$ is a context in this sense, a family over
+$A$ is the same thing as a family $P$ over $\ctxext{\Gamma}{A}$ and 
+(3) when $P$ is a family over $A$ in this sense, a term of $P$ keeps its original meaning.
 
 \begin{align}
 & \inference{\jfam{\Gamma}{A}}{\jctx{\ctxext{\Gamma}{A}}}
@@ -183,8 +183,8 @@ The following rule asserts that extension by $\emptyc$ leaves the contexts uncha
 \subsubsection{Extension is compatible with itself}\label{comp-ee}
 The inference rules asserting that extension is compatible with itself assert
 that contexts are unstructured lists of type declarations. This rule is
-unavoidable if we want that for a type $A$ in context $\Gamma$, a type
-in context $A$ is the same thing as a type in context $\ctxext{\Gamma}{A}$. 
+unavoidable if we want that for a family $A$ in context $\Gamma$, a family over
+$A$ is the same thing as a family over $\ctxext{\Gamma}{A}$. 
 
 \begin{align}
 & \inference{\jfam{\Gamma}{A}\qquad\jfam{\ctxext{\Gamma}{A}}{P}}
@@ -325,7 +325,9 @@ Given a family $P$ over $A$ and a term $x$ of $A$, substitution gives a way to
 consider the fiber $\subst{x}{P}$ of $P$ at $x$. Also, we get a way to evaluate
 terms $f$ of $P$ at $x$. This will give us ways to compose functions too. In
 this section, we shall first introduce the operations `substitution of a term $x$'
-for types, terms and families. Then we shall explain how substitution interacts
+for families $P$ over $\ctxext{\Gamma}{A}$, terms $f$ of those, families $Q$ over
+$\ctxext{{\Gamma}{A}}{P}$ and terms $g$ of those. 
+Then we shall explain how substitution interacts
 with itself, extension and weakening.
 
 In the rules introducing the various substitutions we assume $\jterm{\Gamma}{A}{x}$;
