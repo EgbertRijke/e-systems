@@ -85,9 +85,9 @@ judgmentally equal to a type $A$ in context $\Gamma$, then $B$ is a type in
 context $\Gamma$. This is expressed by the following four inference rules:
 
 \begin{align*}
-& \inference{\jfam{\Gamma}{A}}{\jfam{\Gamma}{A}} & & \inference{\jfameq{\Gamma}{A}{B}}{\jfameq{\Gamma}{A}{B}}\\
-& \inference{\jfam{\Gamma}{A}\quad\jfameq{\Gamma}{A}{B}}{\jfam{\Gamma}{B}}
-& & \inference{\jfam{\Gamma}{A}\quad\jfameq{\Gamma}{A}{B}}{\jfameq{\Gamma}{A}{B}}
+& \inference{\jtype{\Gamma}{A}}{\jfam{\Gamma}{A}} & & \inference{\jtypeeq{\Gamma}{A}{B}}{\jfameq{\Gamma}{A}{B}}\\
+& \inference{\jtype{\Gamma}{A}\quad\jfameq{\Gamma}{A}{B}}{\jtype{\Gamma}{B}}
+& & \inference{\jtype{\Gamma}{A}\quad\jfameq{\Gamma}{A}{B}}{\jtypeeq{\Gamma}{A}{B}}
 \end{align*}
 
 
