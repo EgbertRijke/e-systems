@@ -511,6 +511,40 @@ $\ctxext{x}{u}$ is the pairing of $x$ and $u$. Note that because
 $\ctxwk{P}{{A}{\ctxext{A}{P}}}\jdeq\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}$, the
 pairing function is just $\idfunc[\ctxext{A}{P}]$. 
 
+When we substitute by an extended term we get an equal result as when we
+substitute two consecutive times. This looks like currying.
+
+\begin{lem}
+The following inference rules are valid:
+\begin{align*}
+& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jfam{\ctxext{{\Gamma}{A}}{P}}{Q}}
+  {\jfameq{\Gamma}{\subst{\ctxext{x}{u}}{Q}}{\subst{u}{{x}{Q}}}}\\
+& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
+  {\jtermeq{\Gamma}{\subst{u}{{x}{Q}}}{\subst{\ctxext{x}{u}}{g}}{\subst{u}{{x}{g}}}}\\
+& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jfam{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
+  {\jfameq{\ctxext{\Gamma}{\subst{u}{{x}{Q}}}}{\subst{\ctxext{x}{u}}{R}}{\subst{u}{{x}{R}}}}\\
+& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jterm{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}{t}}
+  {\jtermeq{\ctxext{\Gamma}{\subst{u}{{x}{Q}}}}{\subst{u}{{x}{R}}}{\subst{\ctxext{x}{u}}{t}}{\subst{u}{{x}{t}}}}
+\end{align*}
+\end{lem}
+
+\begin{proof}
+We prove only the first judgmental equality. All the others are similar.
+Let $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$
+be terms and let $\jfam{\ctxext{{\Gamma}{A}}{P}}{Q}$ be a family. Then we have
+\begin{align*}
+\subst{\ctxext{x}{u}}{Q} 
+& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{Q} \tag{by definition}\\
+& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{{x}{\ctxwk{A}{Q}}}\tag{by \autoref{defn-ws-3}}\\
+& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\ctxwk{A}{Q}}}}}\tag{by \autoref{defn-ws-3}}\\
+& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{{u}{{x}{\ctxwk{P}{{A}{Q}}}}}\tag{by \autoref{comp-sw-f}}\\
+& \jdeq \subst{u}{{{x}{\idfunc[\ctxext{A}{P}]}}{{x}{\ctxwk{{P}{{A}{Q}}}}}}\tag{by \autoref{comp-ss-f}}\\
+& \jdeq \subst{u}{{x}{{\idfunc[\ctxext{A}{P}]}{\ctxwk{P}{{A}{Q}}}}}\tag{by \autoref{comp-ss-f}}\\
+& \jdeq \subst{u}{{x}{{\idfunc[\ctxext{A}{P}]}{\ctxwk{\ctxext{A}{P}}{Q}}}}\tag{by \autoref{comp-ew-f}}\\
+& \jdeq \subst{u}{{x}{Q}}\tag{by \autoref{idfunc-wk-defn}}
+\end{align*}
+\end{proof}
+
 There is also a decomposition of terms $\jterm{\Gamma}{\ctxext{A}{P}}{w}$ into
 components: the projections. We define
 \begin{align*}
@@ -603,36 +637,3 @@ More precisely, the following inference rules are valid:
 & \inference{\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}\quad\jterm{\ctxext{{\Gamma}{A}}{P}}{\subst{g}{R}}{t}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\ctxext{\subst{x}{Q}}{\subst{x}{R}}}{\subst{x}{\ctxext{g}{t}}}{\ctxext{\subst{x}{g}}{\subst{x}{t}}}}
 \end{align*}
 \end{lem}
-Finally, when we substitute by an extended term we get an equal result as when we
-substitute two consecutive times. This looks like currying.
-
-\begin{lem}
-The following inference rules are valid:
-\begin{align*}
-& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jfam{\ctxext{{\Gamma}{A}}{P}}{Q}}
-  {\jfameq{\Gamma}{\subst{\ctxext{x}{u}}{Q}}{\subst{u}{{x}{Q}}}}\\
-& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}}
-  {\jtermeq{\Gamma}{\subst{u}{{x}{Q}}}{\subst{\ctxext{x}{u}}{g}}{\subst{u}{{x}{g}}}}\\
-& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jfam{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
-  {\jfameq{\ctxext{\Gamma}{\subst{u}{{x}{Q}}}}{\subst{\ctxext{x}{u}}{R}}{\subst{u}{{x}{R}}}}\\
-& \inference{\jterm{\Gamma}{A}{x}\quad\jterm{\Gamma}{\subst{x}{P}}{u}\quad\jterm{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}{t}}
-  {\jtermeq{\ctxext{\Gamma}{\subst{u}{{x}{Q}}}}{\subst{u}{{x}{R}}}{\subst{\ctxext{x}{u}}{t}}{\subst{u}{{x}{t}}}}
-\end{align*}
-\end{lem}
-
-\begin{proof}
-We prove only the first judgmental equality. All the others are similar.
-Let $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$
-be terms and let $\jfam{\ctxext{{\Gamma}{A}}{P}}{Q}$ be a family. Then we have
-\begin{align*}
-\subst{\ctxext{x}{u}}{Q} 
-& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{Q} \tag{by definition}\\
-& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{{x}{\ctxwk{A}{Q}}}\tag{by \autoref{defn-ws-3}}\\
-& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\ctxwk{A}{Q}}}}}\tag{by \autoref{defn-ws-3}}\\
-& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{{u}{{x}{\ctxwk{P}{{A}{Q}}}}}\tag{by \autoref{comp-sw-f}}\\
-& \jdeq \subst{u}{{{x}{\idfunc[\ctxext{A}{P}]}}{{x}{\ctxwk{{P}{{A}{Q}}}}}}\tag{by \autoref{comp-ss-f}}\\
-& \jdeq \subst{u}{{x}{{\idfunc[\ctxext{A}{P}]}{\ctxwk{P}{{A}{Q}}}}}\tag{by \autoref{comp-ss-f}}\\
-& \jdeq \subst{u}{{x}{{\idfunc[\ctxext{A}{P}]}{\ctxwk{\ctxext{A}{P}}{Q}}}}\tag{by \autoref{comp-ew-f}}\\
-& \jdeq \subst{u}{{x}{Q}}\tag{by \autoref{idfunc-wk-defn}}
-\end{align*}
-\end{proof}
