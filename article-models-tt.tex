@@ -573,24 +573,6 @@ families. Then we have
 & \jdeq \ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{Q}}} \tag{by \autoref{comp-ws-f}}\\
 & \jdeq \ctxwk{P}{Q} \tag{by \autoref{idfunc-wk-defn}}
 \end{align*}
-To prove the second judgmental equality, let $\jterm{\Gamma}{A}{x}$ and
-$\jterm{\Gamma}{\subst{x}{P}}{u}$. Then we have
-\begin{align*}
-\cprojfst{A}{P}{\ctxext{x}{u}}
-& \jdeq \subst{\ctxext{x}{u}}{\ctxwk{P}{\idfunc[A]}}\\
-& \jdeq \subst{u}{{x}{\ctxwk{P}{\idfunc[A]}}} \\
-& \jdeq \subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\idfunc[A]}}}\\
-& \jdeq \subst{x}{\idfunc[A]}\\
-& \jdeq x.
-\end{align*}
-To prove the third judgmental equality, note that
-\begin{align*}
-\cprojsnd{A}{P}{\ctxext{x}{u}}
-& \jdeq \subst{\ctxext{x}{u}}{\idfunc[P]}\\
-& \jdeq \subst{u}{{x}{\idfunc[P]}}\\
-& \jdeq \subst{u}{\idfunc[\subst{x}{P}]}\\
-& \jdeq u.
-\end{align*}
 \end{proof}
 
 The constructions of the terms $\ctxext{x}{u}$ and $\cprojfst{A}{P}{w}$ and
@@ -617,6 +599,24 @@ w & \jdeq \subst{w}{\idfunc[\ctxext{A}{P}]} \tag{by \autoref{idfunc-subst-defn}}
 & \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\subst{w}{\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}}}\tag{by \autoref{idfunc-wk-comp}}\\
 & \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\idfunc[\ctxext{A}{P}]}}\tag{by \autoref{defn-ws-4}}\\
 & \jdeq \ctxext{\cprojfst{A}{P}{w}}{\cprojsnd{A}{P}{w}}\tag{by definition}
+\end{align*}
+To prove the second judgmental equality, let $\jterm{\Gamma}{A}{x}$ and
+$\jterm{\Gamma}{\subst{x}{P}}{u}$. Then we have
+\begin{align*}
+\cprojfst{A}{P}{\ctxext{x}{u}}
+& \jdeq \subst{\ctxext{x}{u}}{\ctxwk{P}{\idfunc[A]}}\\
+& \jdeq \subst{u}{{x}{\ctxwk{P}{\idfunc[A]}}} \\
+& \jdeq \subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\idfunc[A]}}}\\
+& \jdeq \subst{x}{\idfunc[A]}\\
+& \jdeq x.
+\end{align*}
+To prove the third judgmental equality, note that
+\begin{align*}
+\cprojsnd{A}{P}{\ctxext{x}{u}}
+& \jdeq \subst{\ctxext{x}{u}}{\idfunc[P]}\\
+& \jdeq \subst{u}{{x}{\idfunc[P]}}\\
+& \jdeq \subst{u}{\idfunc[\subst{x}{P}]}\\
+& \jdeq u.
 \end{align*}
 \end{proof}
 
