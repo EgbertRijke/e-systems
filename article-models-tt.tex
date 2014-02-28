@@ -2,12 +2,10 @@
 In this section we give a description of type theory before basic
 constructors and with explicit extension, weakening and substitution. We will
 formulate the type theory in such a way that contexts aren't lists of variable
-declarations. The reasons for this are twofold: (1) in the models of type theory
-such as a univalent universe or the graph model, contexts are types and graphs
-respectively -- they are objects rather than lists of variable declarations; we
-intend to give a general algebraic description of higher categories. Besides,
-we will not have to be burdened with comments about variables being bounded or not, or fresh or
-not occuring at all.
+declarations. The main reason is that we don't see variable declarations in the
+models either. This way we also set out to a more algebraic approach of type
+theory and higher category theory. Thirdly, we will not have to be burdened with
+comments about variables being bounded or not, or fresh or not occuring at all.
 
 We will develop a theory which is in fact a theory of contexts and families of
 contexts where a family of context can be a type, behind which we have the
@@ -598,7 +596,7 @@ The following compatibility rules for two consecutive term extensions is valid:
 
 \begin{lem}
 When we weaken a term $\ctxext{y}{v}$ of $\ctxext{B}{Q}$ in context $\Gamma$ by
-a type $A$, the term that we get is $\ctxext{\ctxwk{A}{y}}{\ctxwk{A}{v}}$. More
+a family $A$, the term that we get is $\ctxext{\ctxwk{A}{y}}{\ctxwk{A}{v}}$. More
 precisely, the following inference rules are valid:
 \begin{align*}
 & \inference{\jterm{\ctxext{\Gamma}{B}}{Q}{g}\quad\jterm{\ctxext{\Gamma}{B}}{\subst{g}{R}}{t}}{\jtermeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{\ctxext{Q}{R}}}{\ctxwk{A}{\ctxext{g}{t}}}{\ctxext{\ctxwk{A}{g}}{\ctxwk{A}{t}}}}
