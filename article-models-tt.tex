@@ -512,7 +512,10 @@ $\ctxwk{P}{{A}{\ctxext{A}{P}}}\jdeq\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}$, the
 pairing function is just $\idfunc[\ctxext{A}{P}]$. 
 
 When we substitute by an extended term we get an equal result as when we
-substitute two consecutive times. This looks like currying.
+substitute two consecutive times, like the way currying works. Note however,
+that we can now \emph{prove} this property using the inference rules we have
+already established. It is not a matter of convention, the way it usually is
+in type theory by agreeing that $f(x)(y)$ is written as $f(x,y)$. 
 
 \begin{lem}
 The following inference rules are valid:
@@ -569,6 +572,16 @@ families. Then we have
 & \jdeq \subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{Q}}} \tag{by \autoref{comp-ww-f}}\\
 & \jdeq \ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{Q}}} \tag{by \autoref{comp-ws-f}}\\
 & \jdeq \ctxwk{P}{Q} \tag{by \autoref{idfunc-wk-defn}}
+\end{align*}
+To prove the second judgmental equality, let $\jterm{\Gamma}{A}{x}$ and
+$\jterm{\Gamma}{\subst{x}{P}}{u}$. Then we have
+\begin{align*}
+\cprojfst{A}{P}{\ctxext{x}{u}}
+& \jdeq \subst{\ctxext{x}{u}}{\ctxwk{P}{\idfunc[A]}}\\
+& \jdeq \subst{u}{{x}{\ctxwk{P}{\idfunc[A]}}} \\
+& \jdeq \subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\idfunc[A]}}}\\
+& \jdeq \subst{x}{\idfunc[A]}\\
+& \jdeq x.
 \end{align*}
 \end{proof}
 
