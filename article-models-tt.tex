@@ -54,7 +54,7 @@ extended terms are then similar as the compatibility rules that have appeared
 earlier: there is a compatibility rule for the extension of an extension, for
 the weakening of an extended term, for the substutution of an extended term by
 an arbitrary term and for substitution by an extended term. The last set of
-compatibility rules is a form of the Curry-Howard isomorphism -- this famous
+compatibility rules is a form of currying-uncurrying -- this famous
 correspondence naturally comes out of our scheme of compatibility rules.
 
 \subsection{The basic judgments}
@@ -282,11 +282,11 @@ Thus, we get the following set of inference rules:
 & \inference{\jfam{\Gamma}{A}\qquad\jfam{\Gamma}{B}\qquad\jfam{\ctxext{\Gamma}{C}}{R}}
           {\jfameq{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
             {\ctxwk{A}{{B}{R}}}
-            {\ctxwk{{A}{B}}{{A}{R}}}}\\
+            {\ctxwk{{A}{B}}{{A}{R}}}}\label{comp-ww-f}\\
 & \inference{\jfam{\Gamma}{A}\qquad\jfam{\Gamma}{B}\qquad\jterm{\ctxext{\Gamma}{C}}{R}{t}}
           {\jtermeq{\ctxext{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
             {\ctxwk{{A}{B}}{{A}{R}}}{\ctxwk{A}{{B}{t}}}{\ctxwk{{A}{B}}{{A}{t}}}}
-            \label{comp-ww-inf4}
+            \label{comp-ww-t}
 \end{align}
 
 \subsubsection{Extension is compatible with weakening}\label{comp-ew}
@@ -298,9 +298,9 @@ In the following inference rules we assume that
 $\jfam{\Gamma}{A}$ and $\jfam{\ctxext{\Gamma}{A}}{P}$. 
 \begin{align}
 & \inference{\jfam{\ctxext{\Gamma}{B}}{Q}}
-    {\jfameq{\ctxext{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}{\ctxwk{\ctxext{A}{P}}{Q}}{\ctxwk{P}{{A}{Q}}}}\\
+    {\jfameq{\ctxext{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}{\ctxwk{\ctxext{A}{P}}{Q}}{\ctxwk{P}{{A}{Q}}}}\label{comp-ew-f}\\
 & \inference{\jterm{\ctxext{\Gamma}{B}}{Q}{g}}
-    {\jtermeq{\ctxext{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}{\ctxwk{P}{{A}{Q}}}{\ctxwk{\ctxext{A}{P}}{g}}{\ctxwk{P}{{A}{g}}}}
+    {\jtermeq{\ctxext{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}{\ctxwk{P}{{A}{Q}}}{\ctxwk{\ctxext{A}{P}}{g}}{\ctxwk{P}{{A}{g}}}}\label{comp-ew-t}
 \end{align}
 
 \subsection{The type theoretic operation of substitution}
@@ -372,14 +372,14 @@ $\jfam{\ctxext{\Gamma}{A}}{P}$:
 \begin{align}
 & \inference
   {\jfam{\ctxext{{\Gamma}{A}}{Q}}{R}}
-  {\jfameq{\ctxext{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}{\subst{x}{\ctxwk{P}{R}}}{\ctxwk{\subst{x}{P}}{\subst{x}{R}}}}\\
+  {\jfameq{\ctxext{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}{\subst{x}{\ctxwk{P}{R}}}{\ctxwk{\subst{x}{P}}{\subst{x}{R}}}}\label{comp-sw-f}\\
 & \inference
     {\jterm{\ctxext{{\Gamma}{A}}{Q}}{R}{h}}
     {\jtermeq
       {\ctxext{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}
       {\subst{x}{\ctxwk{P}{R}}}
       {\subst{x}{\ctxwk{P}{h}}}
-      {\ctxwk{\subst{x}{P}}{\subst{x}{h}}}}
+      {\ctxwk{\subst{x}{P}}{\subst{x}{h}}}}\label{comp-sw-t}
 \end{align}
 
 \subsubsection{Substitution is compatible with substitution}\label{comp-ss}
@@ -398,9 +398,9 @@ $\jterm{\Gamma}{A}{x}$ and $\jterm{\ctxext{\Gamma}{A}}{P}{f}$.
 
 \begin{align}
 &\inference{\jfam{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}}
-{\jfameq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{{x}{f}}{{x}{R}}}}\label{comp-ss-3}\\
+{\jfameq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{{x}{f}}{{x}{R}}}}\label{comp-ss-f}\\
 &\inference{\jterm{\ctxext{{{\Gamma}{A}}{P}}{Q}}{R}{h}}
-{\jtermeq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{x}{{f}{h}}}{\subst{{x}{f}}{{x}{h}}}}\label{comp-ss-4}
+{\jtermeq{\ctxext{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{x}{{f}{h}}}{\subst{{x}{f}}{{x}{h}}}}\label{comp-ss-t}
 \end{align}
 
 \subsubsection{Weakening is compatible with substitution}\label{comp-ws}
@@ -413,8 +413,8 @@ In the following inference rules we assume that $\jfam{\Gamma}{A}$ and that
 $\jterm{\Gamma}{B}{y}$.
 
 \begin{align}
-& \inference{\jfam{\ctxext{{\Gamma}{B}}{Q}}{R}}{\jfameq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}{\ctxwk{A}{\subst{y}{R}}}{\subst{\ctxwk{A}{y}}{\ctxwk{A}{R}}}}\\
-& \inference{\jterm{\ctxext{{\Gamma}{B}}{Q}}{R}{h}}{\jtermeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}{\ctxwk{A}{\subst{y}{R}}}{\ctxwk{A}{\subst{y}{h}}}{\subst{\ctxwk{A}{y}}{\ctxwk{A}{h}}}}
+& \inference{\jfam{\ctxext{{\Gamma}{B}}{Q}}{R}}{\jfameq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}{\ctxwk{A}{\subst{y}{R}}}{\subst{\ctxwk{A}{y}}{\ctxwk{A}{R}}}}\label{comp-ws-f}\\
+& \inference{\jterm{\ctxext{{\Gamma}{B}}{Q}}{R}{h}}{\jtermeq{\ctxext{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}{\ctxwk{A}{\subst{y}{R}}}{\ctxwk{A}{\subst{y}{h}}}{\subst{\ctxwk{A}{y}}{\ctxwk{A}{h}}}}\label{comp-ws-t}
 \end{align}
 
 \subsection{Composition and identity functions}
@@ -428,8 +428,6 @@ as the weakening. After stating the rules we will describe what it means to
 compose context morphisms (terms of weakened contexts).
 
 \begin{align}
-& \inference{\jfam{\Gamma}{A}\qquad\jfam{\Gamma}{B}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\Gamma}{\subst{x}{\ctxwk{A}{B}}}{B}}\label{defn-ws-1}\\
-& \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\Gamma}{B}{y}}{\jtermeq{\Gamma}{B}{\subst{x}{\ctxwk{A}{y}}}{y}}\label{defn-ws-2}\\
 & \inference{\jfam{\Gamma}{A}\qquad\jfam{\ctxext{\Gamma}{B}}{Q}\qquad\jterm{\Gamma}{A}{x}}{\jfameq{\ctxext{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}\label{defn-ws-3}\\
 & \inference{\jterm{\Gamma}{A}{x}\qquad\jterm{\ctxext{\Gamma}{B}}{Q}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}\label{defn-ws-4}
 \end{align}
@@ -467,7 +465,9 @@ weakening. The identity functions will also be subject to compatibility rules.
 \begin{align}
 & \inference{\jterm{\Gamma}{A}{x}}{\jtermeq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}\label{idfunc-subst-defn}\\
 & \inference{\jfam{\ctxext{\Gamma}{A}}{P}}{\jfameq{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}{P}}\label{idfunc-wk-defn}\\
+& \inference{\jfam{\ctxext{\Gamma}{A}}{P}}{\jfameq{\ctxext{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{{A}{A}}{P}}}{P}}\label{idfunc-wk-defn2}\\
 & \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{A}{f}}}{f}}\label{idfunc-precomp} \\
+& \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}}{\jtermeq{\ctxext{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{{A}{A}}{f}}}{f}}\label{idfunc-precomp} \\
 & \inference{\jterm{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{\subst{g}{\ctxwk{B}{\idfunc[A]}}}{g}}\label{idfunc-postcomp}
 \end{align}
 
@@ -518,6 +518,26 @@ components: the projections. We define
 \cprojsndf{A}{P} & \defeq \idfunc[P]
 \end{align*}
 
+\begin{lem}
+The following inference is valid:
+\begin{equation*}
+\inference{\jfam{\ctxext{\Gamma}{A}}{P}\quad\jfam{\ctxext{\Gamma}{A}}{Q}}
+{\jfameq{\ctxext{\Gamma}{{A}{P}}}{\subst{\cprojfstf{A}{P}}{\ctxwk{\ctxext{A}{P}}{Q}}}{\ctxwk{P}{Q}}}
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+Let $\jfam{\ctxext{\Gamma}{A}}{P}$ and $\jfam{\ctxext{\Gamma}{A}}{Q}$ be
+families. Then we have
+\begin{align*}
+\subst{\cprojfstf{A}{P}}{\ctxwk{\ctxext{A}{P}}{Q}} 
+& \jdeq \subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{\ctxext{A}{P}}{Q}} \tag{by definition}\\
+& \jdeq \subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{Q}}} \tag{by \autoref{comp-ww-f}}\\
+& \jdeq \ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{Q}}} \tag{by \autoref{comp-ws-f}}\\
+& \jdeq \ctxwk{P}{Q} \tag{by \autoref{idfunc-wk-defn}}
+\end{align*}
+\end{proof}
+
 The constructions of the terms $\ctxext{x}{u}$ and $\cprojfst{A}{P}{w}$ and
 $\cprojsnd{A}{P}{w}$ are subject to various rules, with all of them being
 consequences of earlier introduced inference rules.
@@ -537,10 +557,10 @@ To prove the first judgmental equality, note that
 w & \jdeq \subst{w}{\idfunc[\ctxext{A}{P}]} \tag{by \autoref{idfunc-subst-defn}}\\
 & \jdeq \subst{w}{\subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}
   \tag{by \autoref{idfunc-ext-comp}}\\
-& \jdeq \subst{{w}{\idfunc[P]}}{\subst{w}{{\ctxwk{P}{\idfunc[A]}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}\tag{by \autoref{comp-ss-4}}\\
-& \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\subst{w}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}\tag{by \autoref{comp-ss-4}}\\
+& \jdeq \subst{{w}{\idfunc[P]}}{\subst{w}{{\ctxwk{P}{\idfunc[A]}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}\tag{by \autoref{comp-ss-t}}\\
+& \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\subst{w}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}\tag{by \autoref{comp-ss-t}}\\
 & \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\subst{w}{\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}}}\tag{by \autoref{idfunc-wk-comp}}\\
-& \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\idfunc[\ctxext{A}{P}]}}\tag{by \autoref{defn-ws-2}}\\
+& \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\idfunc[\ctxext{A}{P}]}}\tag{by \autoref{defn-ws-4}}\\
 & \jdeq \ctxext{\cprojfst{A}{P}{w}}{\cprojsnd{A}{P}{w}}\tag{by definition}
 \end{align*}
 \end{proof}
@@ -584,7 +604,7 @@ More precisely, the following inference rules are valid:
 \end{align*}
 \end{lem}
 Finally, when we substitute by an extended term we get an equal result as when we
-substitute two consecutive times. This looks like the Curry-Howard isomorphism.
+substitute two consecutive times. This looks like currying.
 
 \begin{lem}
 The following inference rules are valid:
@@ -599,3 +619,20 @@ The following inference rules are valid:
   {\jtermeq{\ctxext{\Gamma}{\subst{u}{{x}{Q}}}}{\subst{u}{{x}{R}}}{\subst{\ctxext{x}{u}}{t}}{\subst{u}{{x}{t}}}}
 \end{align*}
 \end{lem}
+
+\begin{proof}
+We prove only the first judgmental equality. All the others are similar.
+Let $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$
+be terms and let $\jfam{\ctxext{{\Gamma}{A}}{P}}{Q}$ be a family. Then we have
+\begin{align*}
+\subst{\ctxext{x}{u}}{Q} 
+& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{Q} \tag{by definition}\\
+& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{{x}{\ctxwk{A}{Q}}}\tag{by \autoref{defn-ws-3}}\\
+& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\ctxwk{A}{Q}}}}}\tag{by \autoref{defn-ws-3}}\\
+& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{{u}{{x}{\ctxwk{P}{{A}{Q}}}}}\tag{by \autoref{comp-sw-f}}\\
+& \jdeq \subst{u}{{{x}{\idfunc[\ctxext{A}{P}]}}{{x}{\ctxwk{{P}{{A}{Q}}}}}}\tag{by \autoref{comp-ss-f}}\\
+& \jdeq \subst{u}{{x}{{\idfunc[\ctxext{A}{P}]}{\ctxwk{P}{{A}{Q}}}}}\tag{by \autoref{comp-ss-f}}\\
+& \jdeq \subst{u}{{x}{{\idfunc[\ctxext{A}{P}]}{\ctxwk{\ctxext{A}{P}}{Q}}}}\tag{by \autoref{comp-ew-f}}\\
+& \jdeq \subst{u}{{x}{Q}}\tag{by \autoref{idfunc-wk-defn}}
+\end{align*}
+\end{proof}
