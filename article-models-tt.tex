@@ -688,15 +688,42 @@ precisely, the following inference rules are valid:
 \end{align*}
 \end{lem}
 
+\begin{proof}
+Consider $\jterm{\ctxext{\Gamma}{B}}{Q}{g}$ and $\jterm{\ctxext{\Gamma}{B}}{\subst{g}{R}}{t}$.
+Then we have the judgmental equalities
+\begin{align*}
+\ctxwk{A}{\ctxext{g}{t}}
+& \jdeq \ctxwk{A}{\subst{t}{{g}{\idfunc[\ctxext{Q}{R}]}}}\\
+& \jdeq \subst{\ctxwk{A}{t}}{\ctxwk{A}{\subst{g}{\idfunc[\ctxext{Q}{R}]}}}\\
+& \jdeq \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\ctxwk{A}{\idfunc[\ctxext{Q}{R}]}}}\\
+& \jdeq \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\idfunc[\ctxwk{A}{\ctxext{Q}{R}}]}}\\
+& \jdeq \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\idfunc[\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}]}}\\
+& \jdeq \ctxext{\ctxwk{A}{g}}{\ctxwk{A}{t}}
+\end{align*}
+\end{proof}
+
 \begin{lem}
 When we substitute an extended term $\ctxext{f}{g}$ of $\ctxext{P}{Q}$ by a term
 $x$ of $A$, the term that we get is $\ctxext{\subst{x}{f}}{\subst{x}{g}}$.
 More precisely, the following inference rules are valid:
 \begin{align*}
-& \inference{\jterm{\ctxext{\Gamma}{A}}{P}{f}\quad\jterm{\ctxext{\Gamma}{A}}{\subst{f}{Q}}{g}}{\jtermeq{\Gamma}{\ctxext{\subst{x}{P}}{\subst{x}{Q}}}{\subst{x}{\ctxext{f}{g}}}{\ctxext{\subst{x}{f}}{\subst{x}{g}}}}\\
 & \inference{\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}\quad\jterm{\ctxext{{\Gamma}{A}}{P}}{\subst{g}{R}}{t}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\ctxext{\subst{x}{Q}}{\subst{x}{R}}}{\subst{x}{\ctxext{g}{t}}}{\ctxext{\subst{x}{g}}{\subst{x}{t}}}}
 \end{align*}
 \end{lem}
+
+\begin{proof}
+Consider $\jterm{\ctxext{\Gamma}{B}}{Q}{g}$ and $\jterm{\ctxext{\Gamma}{B}}{\subst{g}{R}}{t}$.
+Then we have the judgmental equalities
+\begin{align*}
+\subst{x}{\ctxext{g}{t}}
+& \jdeq \subst{x}{{t}{{g}{\idfunc[\ctxext{Q}{R}]}}}\\
+& \jdeq \subst{{x}{t}}{{x}{{g}{\idfunc[\ctxext{Q}{R}]}}}\\
+& \jdeq \subst{{x}{t}}{{{x}{g}}{{x}{\idfunc[\ctxext{Q}{R}]}}}\\
+& \jdeq \subst{{x}{t}}{{{x}{g}}{\idfunc[\subst{x}{\ctxext{Q}{R}}]}}\\
+& \jdeq \subst{{x}{t}}{{{x}{g}}{\idfunc[\ctxext{\subst{x}{Q}}{\subst{x}{R}}]}}\\
+& \jdeq \ctxext{\subst{x}{g}}{\subst{x}{t}}.
+\end{align*}
+\end{proof}
 
 \section{Pretty type theory}
 In this section we will do three things. First we explain basic type theory with
@@ -705,6 +732,111 @@ Then we will show how every formula in basic type theory without
 variable names (shall we call it \emph{Structural Type Theory}?) 
 can be interpreted in pretty type theory. Finally, we will show how every formula
 in pretty type theory can be interpreted in structural type theory.
+
+Pretty type theory is pretty as an ugly little duckling. At first, it is actually uglier than
+structural type theory because one has to keep track of a variable nobody is
+actually interested in. The situation improves when we introduce the operators
+of extension and weakening, because from that point onwards one can draw notational
+advantages from having the variable around.
+
+\subsection{The basic judgments}
+The type theory we describe here is a theory of contexts, families of
+contexts and terms thereof. The families of contexts are by some authors called
+dependent contexts, but they are handled a bit differently here because they
+become the primary object of study. Dependent contexts can be types; they could
+be seen as atomic or indecomposable dependent contexts.
+
+Thus we make eight kinds of judgments in our type theory: ``$\Gamma$ is a context'',
+``$A(i)$ is a family of contexts over $\Gamma$'', ``$A$ is a type in context $\Gamma$''
+and ``$x$ is a term of the family $A$ of contexts over $\Gamma$''. The other four
+judgments are for judgmental equality. 
+
+\begin{align*}
+\jvctx*{\Gamma} & \jvctxeq*{\Gamma}{\Gamma'}\\
+\jvfam*{i}{\Gamma}{A} & \jvfameq*{i}{\Gamma}{A}{B}\\
+\jvtype*{i}{\Gamma}{A} & \jvtypeeq*{i}{\Gamma}{A}{B}\\
+\jvterm*{i}{\Gamma}{A}{x} & \jvtermeq*{i}{\Gamma}{A}{x}{y}.
+\end{align*}
+
+If $A$ is a type
+in context $\Gamma$, then $A$ is also a family of contexts over $\Gamma$. Being
+a term of type $A$ means the same thing as being a term of the family $A$ of contexts.
+Two types in context $\Gamma$ are judgmentally equal precisely when they are equal
+as context families. Moreover, if a family $B$ of contexts over $\Gamma$ is
+judgmentally equal to a type $A$ in context $\Gamma$, then $B$ is a type in
+context $\Gamma$. This is expressed by the following four inference rules:
+
+\begin{small}
+\begin{align*}
+& \inference{\jvtype{i}{\Gamma}{A}}{\jvfam{i}{\Gamma}{A}} & & \inference{\jvtypeeq{i}{\Gamma}{A}{B}}{\jvfameq{i}{\Gamma}{A}{B}}\\
+& \inference{\jvtype{i}{\Gamma}{A}\quad\jvfameq{i}{\Gamma}{A}{B}}{\jvtype{i}{\Gamma}{B}}
+& & \inference{\jvtype{i}{\Gamma}{A}\quad\jvfameq{i}{\Gamma}{A}{B}}{\jvtypeeq{i}{\Gamma}{A}{B}}
+\end{align*}
+\end{small}
+
+\subsection{The basic rules for judgmental equality}
+The rules for judgmental equality establish that it is an equivalence relation
+in all three cases (contexts, types and terms).
+\bgroup\small
+\begin{align*}
+& \inference{\jvctx{\Gamma}}{\jvctxeq{\Gamma}{\Gamma}} 
+& & \inference{\jvctxeq{\Gamma}{\Delta}}{\jvctxeq{\Delta}{\Gamma}} 
+& & \inference{\jvctxeq{\Gamma}{\Delta}\qquad\jvctxeq{\Delta}{\greek{E}}}{\jvctxeq{\Gamma}{\greek{E}}}\\
+& \inference{\jvfam{i}{\Gamma}{A}}{\jvfameq{i}{\Gamma}{A}{A}} 
+& & \inference{\jvfameq{i}{\Gamma}{A}{B}}{\jvfameq{i}{\Gamma}{B}{A}}
+& & \inference{\jvfameq{i}{\Gamma}{A}{B}\qquad\jvfameq{i}{\Gamma}{B}{C}}{\jvfameq{i}{\Gamma}{A}{C}}\\
+& \inference{\jvterm{i}{\Gamma}{A}{x}}{\jvtermeq{i}{\Gamma}{A}{x}{x}}
+& & \inference{\jvtermeq{i}{\Gamma}{A}{x}{y}}{\jvtermeq{i}{\Gamma}{A}{y}{x}}
+& & \inference{\jvtermeq{i}{\Gamma}{A}{x}{y}\qquad\jvtermeq{i}{\Gamma}{A}{y}{z}}{\jvtermeq{i}{\Gamma}{A}{x}{z}}
+\end{align*}
+\egroup
+
+The following convertibility rules are responsible for the strictness
+of judgmental equality, which sets it apart from equivalences or identifications:
+
+\begin{align*}
+& \inference{\jvctxeq{\Gamma}{\Delta}\qquad\jvfam{i}{\Gamma}{A}}{\jvfam{i}{\Delta}{A}}
+& & \inference{\jvctxeq{\Gamma}{\Delta}\qquad\jvfameq{i}{\Gamma}{A}{B}}{\jvfameq{i}{\Delta}{A}{B}}\\
+& \inference{\jvctxeq{\Gamma}{\Delta}\qquad\jvterm{i}{\Gamma}{A}{x}}{\jvterm{i}{\Delta}{A}{x}}
+& & \inference{\jvctxeq{\Gamma}{\Delta}\qquad\jvtermeq{i}{\Gamma}{A}{x}{y}}{\jvtermeq{i}{\Delta}{A}{x}{y}}\\
+& \inference{\jvfameq{i}{\Gamma}{A}{B}\qquad \jvterm{i}{\Gamma}{A}{x}}{\jvterm{i}{\Gamma}{B}{x}}
+& & \inference{\jvfameq{i}{\Gamma}{A}{B}\qquad\jvtermeq{i}{\Gamma}{A}{x}{y}}{\jvtermeq{i}{\Gamma}{B}{x}{y}}
+\end{align*}
+
+\subsection{The empty context}
+There is an empty context and over any context there is an empty family of
+contexts. We do not assume that the empty context is a type, that would be like
+assuming that the multiplicative unit of a ring is prime. The empty family
+always has a unique term.
+
+\begin{align}
+& \inference{}{\jctx{\emptyc}}\\
+& \inference{\jctx{\Gamma}}{\jvfam{i}{\Gamma}{\emptyf[\Gamma]}}\\
+& \inference{\jctx{\Gamma}}{\jvterm{i}{\Gamma}{\emptyf[\Gamma]}{\emptytm[\Gamma]}}\\
+& \inference{\jvterm{i}{\Gamma}{\emptyf[\Gamma]}{x}}{\jvtermeq{i}{\Gamma}{\emptyf[\Gamma]}{x}{\emptytm[\Gamma]}}
+\end{align}
+
+Moreover, if $\Gamma$ is a context family over the
+empty context, then $\Gamma$ is a context and every context is a context
+family over the empty context. Note that this allows us to speak
+of terms of contexts too.
+
+\begin{align}
+& \inference{\jctx{\Gamma}}{\jvfam{\nameless}{\emptyc}{\Gamma}} 
+& & \inference{\jvfam{\nameless}{\emptyc}{\Gamma}}{\jctx{\Gamma}}\\
+& \inference{\jctxeq{\Gamma}{\Delta}}{\jvfameq{\nameless}{\emptyc}{\Gamma}{\Delta}}
+& & \inference{\jvfameq{\nameless}{\emptyc}{\Gamma}{\Delta}}{\jctxeq{\Gamma}{\Delta}}
+\end{align}
+
+\subsubsection{The empty context is compatible with itslef}
+The empty context $\emptyc$ may be considered as a family of contexts over the empty
+context. When we do this, we get $\emptyf[\emptyc]$.
+\begin{equation}
+\inference{}{\jvfameq{\nameless}{\emptyc}{\emptyc}{\emptyf[\emptyc]}}
+\end{equation}
+In the future, we shall denote $\emptyf[\Gamma]$ by $\emptyf$. The above rule
+guarantees that this will not cause confusion. Likewise, we shall denote
+$\emptytm[\Gamma]$ by $\emptytm$.
 
 \section{Chalmers type theory}
 In this section we will present the type theory that Coquand and Dybjer are using.

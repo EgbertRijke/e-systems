@@ -452,6 +452,48 @@
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Variable display
+
+\makeatletter
+\newcommand{\vardis}[2]{\@vardis@type #2{}(\@vardis@term #1)}
+\newcommand{\@vardis}{\@ifnextchar\bgroup{\@@vardis}{}}
+\newcommand{\@@vardis}[1]{\@ifnextchar\bgroup{\vardis{#1}}{#1}}
+\newcommand{\@vardis@term}{\@vardis}
+\newcommand{\@vardis@type}{\@ifnextchar\ctxext{\@ctxext@nested}{\@ifnextchar\ctxwk{\@ctxwk@nested}{\@vardis}}}
+\newcommand{\@vardis@nested}[3]{\@vardis@parens{#2}{#3}}
+\newcommand{\@vardis@parens}[2]{(\vardis{#1}{#2})}
+\makeatother
+
+\makeatletter
+\newcommand{\jvctx}{\jctx}
+\newcommand{\jvctxeq}{\jctxeq}
+
+\newcommand{\jvfam}{\@ifnextchar*{\@jvfamAlignTrue}{\@jvfamAlignFalse}}
+\newcommand{\@jvfamAlignTrue}[4]{\jfam*{#2:#3}{\vardis{#2}{#4}}}
+\newcommand{\@jvfamAlignFalse}[3]{\jfam{#1:#2}{\vardis{#1}{#3}}}
+
+\newcommand{\jvfameq}{\@ifnextchar*{\@jvfameqAlignTrue}{\@jvfameqAlignFalse}}
+\newcommand{\@jvfameqAlignTrue}[5]{\jfameq*{#2:#3}{\vardis{#2}{#4}}{\vardis{#2}{#5}}}
+\newcommand{\@jvfameqAlignFalse}[4]{\jfameq{#1:#2}{\vardis{#1}{#3}}{\vardis{#1}{#4}}}
+
+\newcommand{\jvtype}{\@ifnextchar*{\@jvtypeAlignTrue}{\@jvtypeAlignFalse}}
+\newcommand{\@jvtypeAlignTrue}[4]{\jtype*{#2:#3}{\vardis{#2}{#4}}}
+\newcommand{\@jvtypeAlignFalse}[3]{\jtype{#1:#2}{\vardis{#1}{#3}}}
+
+\newcommand{\jvtypeeq}{\@ifnextchar*{\@jvtypeeqAlignTrue}{\@jvtypeeqAlignFalse}}
+\newcommand{\@jvtypeeqAlignTrue}[5]{\jtypeeq*{#2:#3}{\vardis{#2}{#4}}{\vardis{#2}{#5}}}
+\newcommand{\@jvtypeeqAlignFalse}[4]{\jtypeeq{#1:#2}{\vardis{#1}{#3}}{\vardis{#1}{#4}}}
+
+\newcommand{\jvterm}{\@ifnextchar*{\@jvtermAlignTrue}{\@jvtermAlignFalse}}
+\newcommand{\@jvtermAlignTrue}[5]{\jterm*{#2:#3}{\vardis{#2}{#4}}{\vardis{#2}{#5}}}
+\newcommand{\@jvtermAlignFalse}[4]{\jterm{#1:#2}{\vardis{#1}{#3}}{\vardis{#1}{#4}}}
+
+\newcommand{\jvtermeq}{\@ifnextchar*{\@jvtermeqAlignTrue}{\@jvtermeqAlignFalse}}
+\newcommand{\@jvtermeqAlignTrue}[6]{\jtermeq*{#2:#3}{\vardis{#2}{#4}}{\vardis{#2}{#5}}{\vardis{#2}{#6}}}
+\newcommand{\@jvtermeqAlignFalse}[5]{\jtermeq{#1:#2}{\vardis{#1}{#3}}{\vardis{#1}{#4}}{\vardis{#1}{#5}}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% SUBSTITUTION
 
 \newcommand{\tfsubst}{\typefont{subst}}
