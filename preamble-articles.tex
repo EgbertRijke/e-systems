@@ -366,21 +366,41 @@
 \newcommand{\@jctxeqAlignTrue}[3]{& \vdash #2\jdeq #3~~\textit{ctx}}
 \newcommand{\@jctxeqAlignFalse}[2]{\vdash #1\jdeq #2~~\textit{ctx}}
 
+\newcommand{\jctxdefn}{\@ifnextchar*{\@jctxdefnAlignTrue}{\@jctxdefnAlignFalse}}
+\newcommand{\@jctxdefnAlignTrue}[3]{& \vdash #2\defeq #3~~\textit{ctx}}
+\newcommand{\@jctxdefnAlignFalse}[2]{\vdash #1\defeq #2~~\textit{ctx}}
+
 \newcommand{\jfameq}{\@ifnextchar*{\@jfameqAlignTrue}{\@jfameqAlignFalse}}
 \newcommand{\@jfameqAlignTrue}[4]{#2 & \vdash #3\jdeq #4~~\textit{fam}}
 \newcommand{\@jfameqAlignFalse}[3]{#1 \vdash #2\jdeq #3~~\textit{fam}}
+
+\newcommand{\jfamdefn}{\@ifnextchar*{\@jfamdefnAlignTrue}{\@jfamdefnAlignFalse}}
+\newcommand{\@jfamdefnAlignTrue}[4]{#2 & \vdash #3\defeq #4~~\textit{fam}}
+\newcommand{\@jfamdefnAlignFalse}[3]{#1 \vdash #2\defeq #3~~\textit{fam}}
 
 \newcommand{\jtypeeq}{\@ifnextchar*{\@jtypeeqAlignTrue}{\@jtypeeqAlignFalse}}
 \newcommand{\@jtypeeqAlignTrue}[4]{#2 & \vdash #3\jdeq #4~~\textit{type}}
 \newcommand{\@jtypeeqAlignFalse}[3]{#1\vdash #2\jdeq #3~~\textit{type}}
 
-\newcommand{\jtermceq}{\@ifnextchar*{\@jtermceqAlignTrue}{\@jtermceqAlignFalse}}
-\newcommand{\@jtermceqAlignTrue}[4]{\@jtermeqAlignTrue{#1}{}{#2}{#3}{#4}}
-\newcommand{\@jtermceqAlignFalse}[3]{\@jtermeqAlignFalse{}{#1}{#2}{#3}}
+\newcommand{\jtypedefn}{\@ifnextchar*{\@jtypedefnAlignTrue}{\@jtypedefnAlignFalse}}
+\newcommand{\@jtypedefnAlignTrue}[4]{#2 & \vdash #3\defeq #4~~\textit{type}}
+\newcommand{\@jtypedefnAlignFalse}[3]{#1\vdash #2\defeq #3~~\textit{type}}
+
+%\newcommand{\jtermceq}{\@ifnextchar*{\@jtermceqAlignTrue}{\@jtermceqAlignFalse}}
+%\newcommand{\@jtermceqAlignTrue}[4]{\@jtermeqAlignTrue{#1}{}{#2}{#3}{#4}}
+%\newcommand{\@jtermceqAlignFalse}[3]{\@jtermeqAlignFalse{}{#1}{#2}{#3}}
+%
+%\newcommand{\jtermceq}{\@ifnextchar*{\@jtermceqAlignTrue}{\@jtermceqAlignFalse}}
+%\newcommand{\@jtermceqAlignTrue}[4]{\@jtermeqAlignTrue{#1}{}{#2}{#3}{#4}}
+%\newcommand{\@jtermceqAlignFalse}[3]{\@jtermeqAlignFalse{}{#1}{#2}{#3}}
 
 \newcommand{\jtermeq}{\@ifnextchar*{\@jtermeqAlignTrue}{\@jtermeqAlignFalse}}
 \newcommand{\@jtermeqAlignTrue}[5]{#2 & \vdash #4\jdeq #5:#3}
 \newcommand{\@jtermeqAlignFalse}[4]{#1\vdash #3\jdeq #4:#2}
+
+\newcommand{\jtermdefn}{\@ifnextchar*{\@jtermdefnAlignTrue}{\@jtermdefnAlignFalse}}
+\newcommand{\@jtermdefnAlignTrue}[5]{#2 & \vdash #4\defeq #5:#3}
+\newcommand{\@jtermdefnAlignFalse}[4]{#1\vdash #3\defeq #4:#2}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

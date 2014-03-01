@@ -500,22 +500,27 @@ The identity function of a substituted family is the substitution of the identit
 \end{equation}
 
 \subsection{Extension on terms}\label{extension-on-terms}
+In this subsection we consider the notion of extension on terms, which has now
+become definable inside our theory. Moreover, every compatibility rule one may
+dream of is provable as well, using the compatibility rules we have introduced
+earlier. \emph{This subsection contains no new assumptions.}
+
+\begin{defn}
 When $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$ are terms,
-we obtain the term $\jterm{\Gamma}{\ctxext{A}{P}}{\subst{u}{{x}{\idfunc[\ctxext{A}{P}]}}}$. 
-We define 
+we define 
 \begin{equation*}
-\ctxext{x}{u}\defeq\subst{u}{{x}{\idfunc[\ctxext{A}{P}]}}.
-\end{equation*}
-Thus
-$\ctxext{x}{u}$ is the pairing of $x$ and $u$. Note that because
-$\ctxwk{P}{{A}{\ctxext{A}{P}}}\jdeq\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}$, the
-pairing function is just $\idfunc[\ctxext{A}{P}]$. 
+\jtermdefn{\Gamma}{\ctxext{A}{P}}{\ctxext{x}{u}}{\subst{u}{{x}{\idfunc[\ctxext{A}{P}]}}}.
+\end{equation*} 
+\end{defn}
+
+Thus, the term $\ctxext{x}{u}$ is the pairing of $x$ and $u$. Note that because
+we have the judgmental equality 
+$\ctxwk{P}{{A}{\ctxext{A}{P}}}\jdeq\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}$ in the
+context $\ctxext{{\Gamma}{A}}{P}$, the
+pairing function could just be defined as $\idfunc[\ctxext{A}{P}]$. 
 
 When we substitute by an extended term we get an equal result as when we
-substitute two consecutive times, like the way currying works. Note however,
-that we can now \emph{prove} this property using the inference rules we have
-already established. It is not a matter of convention, the way it usually is
-in type theory by agreeing that $f(x)(y)$ is written as $f(x,y)$. 
+substitute two consecutive times, like the way currying works.
 
 \begin{lem}
 The following inference rules are valid:
@@ -549,11 +554,15 @@ be terms and let $\jfam{\ctxext{{\Gamma}{A}}{P}}{Q}$ be a family. Then we have
 \end{proof}
 
 There is also a decomposition of terms $\jterm{\Gamma}{\ctxext{A}{P}}{w}$ into
-components: the projections. We define
+components: the projections. 
+
+\begin{defn}
+Let $\jfam{\Gamma}{A}$ and $\jfam{\ctxext{\Gamma}{A}}{P}$ be families. We define
 \begin{align*}
-\cprojfstf{A}{P} & \defeq \ctxwk{P}{\idfunc[A]}\\
-\cprojsndf{A}{P} & \defeq \idfunc[P]
+\jtermdefn*{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{P}{{A}{A}}}{\cprojfstf{A}{P}}{\ctxwk{P}{\idfunc[A]}}\\
+\jtermdefn*{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{P}{P}}{\cprojsndf{A}{P}}{\idfunc[P]}
 \end{align*}
+\end{defn}
 
 \begin{lem}
 The following inference is valid:
@@ -638,6 +647,36 @@ The following compatibility rules for two consecutive term extensions is valid:
 \end{align*}
 \end{lem}
 
+\begin{proof}
+Consider terms $\jterm{\Gamma}{A}{x}$, $\jterm{\Gamma}{\subst{x}{P}}{u}$ and
+$\jterm{\Gamma}{\subst{u}{{x}{Q}}}{v}$. Then we have
+\begin{align*}
+\ctxext{x}{{u}{v}} & \jdeq \subst{\ctxext{u}{v}}{{x}{\idfunc[\ctxext{A}{{P}{Q}}]}}\\
+& \jdeq \subst{v}{{u}{{x}{\idfunc[\ctxext{A}{{P}{Q}}]}}}\\
+& \jdeq \subst{v}{{u}{{x}{\idfunc[\ctxext{{A}{P}}{Q}]}}}\\
+& \jdeq \subst{v}{{\ctxext{x}{u}}{\idfunc[\ctxext{{A}{P}}{Q}]}}\\
+& \jdeq \ctxext{{x}{u}}{v}.
+\end{align*}
+Now consider a term $\jterm{\Gamma}{\ctxext{A}{{P}{Q}}}{w}$. Then we have
+\begin{align*}
+w 
+& \jdeq \ctxext{\cprojfst{A}{\ctxext{P}{Q}}{w}}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}\\
+& \jdeq \ctxext{\cprojfst{A}{\ctxext{P}{Q}}{w}}{{\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}{\cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}}\\
+& \jdeq \ctxext{{\cprojfst{A}{\ctxext{P}{Q}}{w}}{\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}}{\cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
+\end{align*}
+Thus we see that 
+\begin{align*}
+\cprojfst{\ctxext{A}{P}}{Q}{w} & \jdeq \ctxext{\cprojfst{A}{\ctxext{P}{Q}}{w}}{\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}\\ 
+\cprojsnd{\ctxext{A}{P}}{Q}{w} & \jdeq \cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}},
+\end{align*}
+proving the fourth judgmental equality, and therefore also that
+\begin{align*}
+\cprojfst{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}} & \jdeq \cprojfst{A}{\ctxext{P}{Q}}{w}\\
+\cprojsnd{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}} & \jdeq \cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}},
+\end{align*}
+proving the second and the third judgmental equalities.
+\end{proof}
+
 \begin{lem}
 When we weaken a term $\ctxext{y}{v}$ of $\ctxext{B}{Q}$ in context $\Gamma$ by
 a family $A$, the term that we get is $\ctxext{\ctxwk{A}{y}}{\ctxwk{A}{v}}$. More
@@ -658,3 +697,17 @@ More precisely, the following inference rules are valid:
 & \inference{\jterm{\ctxext{{\Gamma}{A}}{P}}{Q}{g}\quad\jterm{\ctxext{{\Gamma}{A}}{P}}{\subst{g}{R}}{t}}{\jtermeq{\ctxext{\Gamma}{\subst{x}{P}}}{\ctxext{\subst{x}{Q}}{\subst{x}{R}}}{\subst{x}{\ctxext{g}{t}}}{\ctxext{\subst{x}{g}}{\subst{x}{t}}}}
 \end{align*}
 \end{lem}
+
+\section{Pretty type theory}
+In this section we will do three things. First we explain basic type theory with
+variable names, which we simply call \emph{Pretty Type Theory}. 
+Then we will show how every formula in basic type theory without
+variable names (shall we call it \emph{Structural Type Theory}?) 
+can be interpreted in pretty type theory. Finally, we will show how every formula
+in pretty type theory can be interpreted in structural type theory.
+
+\section{Chalmers type theory}
+In this section we will present the type theory that Coquand and Dybjer are using.
+It is a weak type theory (I think), with not so many operations and judgmental equalities.
+We will show how every formula of Chalmers type theory can be interpreted in
+structural type theory.
