@@ -575,7 +575,7 @@ is compatible with extension:
 \begin{lem}
 For any $\jfam{\Gamma}{A}$ and $\jfam{\ctxext{\Gamma}{A}}{P}$ we have
 \begin{equation}\label{idfunc-ext-comp}
-\inference{\jfam{\Gamma}{A}\quad\jfam{\ctxext{\Gamma}{A}}{P}}{\jtermeq{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}{\idfunc[\ctxext{A}{P}]}{\subst{\cprojsndf{A}{P}}{{\cprojfstf{A}{P}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}}
+\inference{\jfam{\Gamma}{A}\quad\jfam{\ctxext{\Gamma}{A}}{P}}{\jtermeq{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}{\idfunc[\ctxext{A}{P}]}{\ctxext{\cprojfstf{A}{P}}{\cprojsndf{A}{P}}}}
 \end{equation}
 \end{lem}
 
@@ -583,7 +583,9 @@ For any $\jfam{\Gamma}{A}$ and $\jfam{\ctxext{\Gamma}{A}}{P}$ we have
 Consider the families $\jfam{\Gamma}{A}$ and $\jfam{\ctxext{\Gamma}{A}}{P}$. Then
 we have the judgmental equalities
 \begin{align*}
-\subst{\cprojsndf{A}{P}}{{\cprojfstf{A}{P}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}
+\ctxext{\cprojfstf{A}{P}}{\cprojsndf{A}{P}}
+& \jdeq \subst{\cprojsndf{A}{P}}{{\cprojfstf{A}{P}}{\idfunc[\ctxext{\ctxwk{\ctxext{A}{P}}{A}}{\ctxwk{\ctxext{A}{P}}{P}}]}}\\
+& \jdeq \subst{\cprojsndf{A}{P}}{{\cprojfstf{A}{P}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}\\
 & \jdeq \subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}\\
 & \jdeq \subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}}\\
 & \jdeq \subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{\idfunc[\ctxext{A}{P}]}}}}\\
