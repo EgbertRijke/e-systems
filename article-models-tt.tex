@@ -471,23 +471,10 @@ weakening. The identity functions will also be subject to compatibility rules.
 & \inference{\jterm{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{g}}{\jtermeq{\ctxext{\Gamma}{B}}{\ctxwk{B}{A}}{\subst{g}{\ctxwk{B}{\idfunc[A]}}}{g}}\label{idfunc-postcomp}
 \end{align}
 
-The identity function of an extended family is the extension of the identity
-functions on the components in the apropriate way. To find out what the
-apropriate way is, note that
-\begin{align*}
-\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}} & \jdeq \ctxwk{P}{{A}{\ctxext{A}{P}}}\\
-& \jdeq \ctxext{\ctxwk{P}{{A}{A}}}{\ctxwk{P}{{A}{P}}}
-\end{align*}
-We have the term $\jterm{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{P}{A}}{\ctxwk{P}{\idfunc[A]}}$.
-Thus we need to find out what $\subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{P}}}$ is:
-\begin{align*}
-\subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{P}}} & \jdeq \ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}\\
-& \jdeq \ctxwk{P}{P},
-\end{align*}
-where we find the term $\idfunc[P]$. Therefore, we have the following inference rule:
-\begin{equation}\label{idfunc-ext-comp}
-\inference{\jfam{\Gamma}{A}\quad\jfam{\ctxext{\Gamma}{A}}{P}}{\jtermeq{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}{\idfunc[\ctxext{A}{P}]}{\subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}}
-\end{equation}
+We won't state a compatibility rule stating that the identity function is
+compatible with extension because we will be able to prove that. Instead, we
+will just state the compatibility rules for the identity function combined with
+weakening and with substitution.
 
 The identity function of a weakened family is the weakened identity function:
 \begin{equation}\label{idfunc-wk-comp}
@@ -553,8 +540,26 @@ be terms and let $\jfam{\ctxext{{\Gamma}{A}}{P}}{Q}$ be a family. Then we have
 \end{align*}
 \end{proof}
 
-There is also a decomposition of terms $\jterm{\Gamma}{\ctxext{A}{P}}{w}$ into
-components: the projections. 
+We have seen above that the pairing function into $\ctxext{A}{P}$ is just the identity function on
+$\ctxext{A}{P}$. To analyze the pairing functin a little further, we will also
+need the projection maps from $\ctxext{A}{P}$ to $A$ and from $\ctxext{A}{P}$
+to $P$. We will now define these and see that the identity function of an
+extended family is the extension (or pairing) of the identity
+functions on the components in the apropriate way.
+
+To find out what the
+apropriate way is, note that
+\begin{align*}
+\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}} & \jdeq \ctxwk{P}{{A}{\ctxext{A}{P}}}\\
+& \jdeq \ctxext{\ctxwk{P}{{A}{A}}}{\ctxwk{P}{{A}{P}}}
+\end{align*}
+We have the term $\jterm{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{P}{A}}{\ctxwk{P}{\idfunc[A]}}$.
+Thus we need to find out what $\subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{P}}}$ is:
+\begin{align*}
+\subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{P}}} & \jdeq \ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}\\
+& \jdeq \ctxwk{P}{P},
+\end{align*}
+where we find the term $\idfunc[P]$. Therefore we define:
 
 \begin{defn}
 Let $\jfam{\Gamma}{A}$ and $\jfam{\ctxext{\Gamma}{A}}{P}$ be families. We define
@@ -563,6 +568,30 @@ Let $\jfam{\Gamma}{A}$ and $\jfam{\ctxext{\Gamma}{A}}{P}$ be families. We define
 \jtermdefn*{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{P}{P}}{\cprojsndf{A}{P}}{\idfunc[P]}
 \end{align*}
 \end{defn}
+
+We find the following inference rule, which expresses that the identity function
+is compatible with extension:
+
+\begin{lem}
+For any $\jfam{\Gamma}{A}$ and $\jfam{\ctxext{\Gamma}{A}}{P}$ we have
+\begin{equation}\label{idfunc-ext-comp}
+\inference{\jfam{\Gamma}{A}\quad\jfam{\ctxext{\Gamma}{A}}{P}}{\jtermeq{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}{\idfunc[\ctxext{A}{P}]}{\subst{\cprojsndf{A}{P}}{{\cprojfstf{A}{P}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}}
+\end{equation}
+\end{lem}
+
+\begin{proof}
+Consider the families $\jfam{\Gamma}{A}$ and $\jfam{\ctxext{\Gamma}{A}}{P}$. Then
+we have the judgmental equalities
+\begin{align*}
+\subst{\cprojsndf{A}{P}}{{\cprojfstf{A}{P}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}
+& \jdeq \subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}\\
+& \jdeq \subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}}\\
+& \jdeq \subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{\idfunc[\ctxext{A}{P}]}}}}\\
+& \jdeq \subst{\idfunc[P]}{\ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{\idfunc[\ctxext{A}{P}]}}}}\\
+& \jdeq \subst{\idfunc[A]}{\ctxwk{A}{\idfunc[\ctxext{A}{P}]}}\\
+& \jdeq \idfunc[\ctxext{A}{P}].
+\end{align*}
+\end{proof}
 
 \begin{lem}
 The following inference is valid:
@@ -733,7 +762,7 @@ variable names (shall we call it \emph{Structural Type Theory}?)
 can be interpreted in pretty type theory. Finally, we will show how every formula
 in pretty type theory can be interpreted in structural type theory.
 
-Pretty type theory is pretty as an ugly little duckling. At first, it is actually uglier than
+Pretty type theory is pretty as the ugly little duckling that grew up. At first, it is actually uglier than
 structural type theory because one has to keep track of a variable nobody is
 actually interested in. The situation improves when we introduce the operators
 of extension and weakening, because from that point onwards one can draw notational
@@ -837,6 +866,45 @@ context. When we do this, we get $\emptyf[\emptyc]$.
 In the future, we shall denote $\emptyf[\Gamma]$ by $\emptyf$. The above rule
 guarantees that this will not cause confusion. Likewise, we shall denote
 $\emptytm[\Gamma]$ by $\emptytm$.
+
+\subsection{Extension}
+We introduce extension which not only extends a context $\Gamma$ and a family
+$A$ over it to a context $\ctxext{\Gamma}{A}$, but which also extends a family $A$
+in context $\Gamma$ and a family $P$ over it to a family $\ctxext{A}{P}$ over context
+$\Gamma$. We do this to ensure that all of type theory can be done in a context.
+For instance, we could say (1) that a context in context $\Gamma$ is the same thing
+as a family over $\Gamma$; (2) When $A$ is a context in this sense, a family over
+$A$ is the same thing as a family $P$ over $\ctxext{\Gamma}{A}$ and 
+(3) when $P$ is a family over $A$ in this sense, a term of $P$ keeps its original meaning.
+
+\begin{align}
+& \inference{\jvfam{i}{\Gamma}{A}}{\jvfamcombi{{i}{x}}{{\Gamma}{A}}{P}}
+& & \inference{\jctxeq{\Gamma}{\Delta}\qquad\jfameq{\Gamma}{A}{B}}{\jctxeq{\ctxext{\Gamma}{A}}{\ctxext{\Delta}{B}}}\\
+& \inference{\jfam{\ctxext{\Gamma}{A}}{P}}{\jfam{\Gamma}{\ctxext{A}{P}}}
+& & \inference{\jfameq{\Gamma}{A}{B}\qquad\jfameq{\ctxext{\Gamma}{A}}{P}{Q}}{\jfameq{\Gamma}{\ctxext{A}{P}}{\ctxext{B}{Q}}}
+\end{align}
+
+\subsubsection{Extension is compatible with the empty context}
+The following rule asserts that extension by $\emptyc$ leaves the contexts unchanged.
+\begin{align}
+& \inference{\jctx{\Gamma}}{\jctxeq{\ctxext{\emptyc}{\Gamma}}{\Gamma}}\\
+& \inference{\jctx{\Gamma}}{\jctxeq{\ctxext{\Gamma}{\emptyf}}{\Gamma}}\\
+& \inference{\jfam{\Gamma}{A}}{\jfameq{\Gamma}{\ctxext{\emptyf}{A}}{A}}
+\end{align}
+
+\subsubsection{Extension is compatible with itself}\label{comp-ee}
+The inference rules asserting that extension is compatible with itself assert
+that contexts are unstructured lists of type declarations. This rule is
+unavoidable if we want that for a family $A$ in context $\Gamma$, a family over
+$A$ is the same thing as a family over $\ctxext{\Gamma}{A}$. 
+
+\begin{align}
+& \inference{\jfam{\Gamma}{A}\qquad\jfam{\ctxext{\Gamma}{A}}{P}}
+  {\jctxeq{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}}\\
+& \inference{\jfam{\ctxext{\Gamma}{A}}{P}\qquad\jfam{\ctxext{{\Gamma}{A}}{P}}{Q}}
+  {\jfameq{\Gamma}{\ctxext{{A}{P}}{Q}}{\ctxext{A}{{P}{Q}}}}
+\end{align}
+
 
 \section{Chalmers type theory}
 In this section we will present the type theory that Coquand and Dybjer are using.
