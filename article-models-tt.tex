@@ -771,15 +771,11 @@ of extension and weakening, because from that point onwards one can draw notatio
 advantages from having the variable around.
 
 \subsection{The basic judgments}
-The type theory we describe here is a theory of contexts, families of
-contexts and terms thereof. The families of contexts are by some authors called
-dependent contexts, but they are handled a bit differently here because they
-become the primary object of study. Dependent contexts can be types; they could
-be seen as atomic or indecomposable dependent contexts.
-
-Thus we make eight kinds of judgments in our type theory: ``$\Gamma$ is a context'',
-``$A(i)$ is a family of contexts over $\Gamma$'', ``$A$ is a type in context $\Gamma$''
-and ``$x$ is a term of the family $A$ of contexts over $\Gamma$''. The other four
+The basic judgments of pretty type theory are the same as for structural type
+theory. There are judgments for: ``$\Gamma$ is a context'',
+``$A(i)$ over $i:\Gamma$ is a family over $\Gamma$'', ``$A(i)$ over $i:\Gamma$ 
+is a type in context $\Gamma$''
+and ``$x(i)$ is a term of $A(i)$ above $i:\Gamma$''. The other four
 judgments are for judgmental equality. 
 
 \begin{align*}
@@ -789,13 +785,7 @@ judgments are for judgmental equality.
 \jvterm*{i}{\Gamma}{A}{x} & \jvtermeq*{i}{\Gamma}{A}{x}{y}.
 \end{align*}
 
-If $A$ is a type
-in context $\Gamma$, then $A$ is also a family of contexts over $\Gamma$. Being
-a term of type $A$ means the same thing as being a term of the family $A$ of contexts.
-Two types in context $\Gamma$ are judgmentally equal precisely when they are equal
-as context families. Moreover, if a family $B$ of contexts over $\Gamma$ is
-judgmentally equal to a type $A$ in context $\Gamma$, then $B$ is a type in
-context $\Gamma$. This is expressed by the following four inference rules:
+We have the following basic inference rules that relate types and families:
 
 \begin{small}
 \begin{align*}
@@ -806,8 +796,7 @@ context $\Gamma$. This is expressed by the following four inference rules:
 \end{small}
 
 \subsection{The basic rules for judgmental equality}
-The rules for judgmental equality establish that it is an equivalence relation
-in all three cases (contexts, types and terms).
+The rules for judgmental equality establish that it is an equivalence relation.
 \bgroup\small
 \begin{align*}
 & \inference{\jvctx{\Gamma}}{\jvctxeq{\Gamma}{\Gamma}} 
@@ -835,10 +824,8 @@ of judgmental equality, which sets it apart from equivalences or identifications
 \end{align*}
 
 \subsection{The empty context}
-There is an empty context and over any context there is an empty family of
-contexts. We do not assume that the empty context is a type, that would be like
-assuming that the multiplicative unit of a ring is prime. The empty family
-always has a unique term.
+The empty context looks a bit strange when we explicitly denote the terms. But
+we will not do so anymore after this subsection.
 
 \begin{align}
 & \inference{}{\jctx{\emptyc}}\\
