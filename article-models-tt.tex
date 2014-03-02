@@ -614,10 +614,32 @@ compose context morphisms (terms of weakened contexts).
 
 Using the rules of the compatibility of substitution with weakening and of the
 compatibility of weakening with itself, we see that we can show
+
+\begin{lem}
+The inference rule
 \begin{equation*}
-\jfameq{{\Gamma}{A}}{\subst{f}{\ctxwk{A}{{B}{C}}}}{\ctxwk{A}{C}}
+\inference
+  {\jfam{\Gamma}{A}
+   \jfam{\Gamma}{B}
+   \jfam{\Gamma}{C}
+   \jhom{\Gamma}{A}{B}{f}}
+  {\jfameq{{\Gamma}{A}}
+    {\subst{f}{\ctxwk{A}{{B}{C}}}}
+    {\ctxwk{A}{C}}}
 \end{equation*}
-for any three families $A$, $B$ and $C$ in context $\Gamma$ and any $\jterm{{\Gamma}{A}}{\ctxwk{A}{B}}{f}$.
+is valid.
+\end{lem}
+
+\begin{proof}
+Let $\jfam{\Gamma}{A}$, $\jfam{\Gamma}{B}$, $\jfam{\Gamma}{C}$ and $\jhom{\Gamma}{A}{B}{f}$.
+Then we have the judgmental equalities
+\begin{align*}
+\subst{f}{\ctxwk{A}{{B}{C}}}
+& \jdeq \subst{f}{\ctxwk{{A}{B}}{{A}{C}}}\\
+& \jdeq \ctxwk{A}{C}.
+\end{align*}
+\end{proof}
+
 It follows that for $\jterm{{\Gamma}{B}}{\ctxwk{B}{C}}{g}$ we can compose $f$
 with $g$ to obtain a term of $\ctxwk{A}{C}$ in context $\ctxext{\Gamma}{A}$.
 In the following definition, we work with in a slightly greater generality.
