@@ -626,14 +626,14 @@ In the following definition, we work with in a slightly greater generality.
 For $\jhom{\Gamma}{A}{B}{f}$ and consider a term $\jterm{{\Gamma}{B}}{Q}{g}$.
 We define
 \begin{align*}
-\jfamdefn*{{\Gamma}{A}}{\jhomcomp{f}{Q}}{\subst{f}{\ctxwk{A}{Q}}}\\
-\jtermdefn*{{\Gamma}{A}}{\jhomcomp{f}{Q}}{\jhomcomp{f}{g}}{\subst{f}{\ctxwk{A}{g}}}.
+\jfamdefn*{{\Gamma}{A}}{\jcomp{f}{Q}}{\subst{f}{\ctxwk{A}{Q}}}\\
+\jtermdefn*{{\Gamma}{A}}{\jcomp{f}{Q}}{\jcomp{f}{g}}{\subst{f}{\ctxwk{A}{g}}}.
 \end{align*}
 Likewise, when we have a family $\jfam{{{\Gamma}{B}}{Q}}{R}$ and a term
 $\jterm{{{\Gamma}{B}}{Q}}{R}{h}$, we define
 \begin{align*}
-\jfamdefn*{{{\Gamma}{A}}{\jhomcomp{f}{Q}}}{\jhomcomp{f}{R}}{\subst{f}{\ctxwk{A}{R}}}\\
-\jtermdefn*{{{\Gamma}{A}}{\jhomcomp{f}{Q}}}{\jhomcomp{f}{R}}{\jhomcomp{f}{h}}{\subst{f}{\ctxwk{A}{h}}}.
+\jfamdefn*{{{\Gamma}{A}}{\jcomp{f}{Q}}}{\jcomp{f}{R}}{\subst{f}{\ctxwk{A}{R}}}\\
+\jtermdefn*{{{\Gamma}{A}}{\jcomp{f}{Q}}}{\jcomp{f}{R}}{\jcomp{f}{h}}{\subst{f}{\ctxwk{A}{h}}}.
 \end{align*}
 \end{defn}
 
@@ -647,17 +647,40 @@ substituted by a composition:
   {\jhom{\Gamma}{A}{B}{f}
    \jhom{\Gamma}{B}{C}{g}
    \jfam{{{\Gamma}{A}}{\ctxwk{A}{C}}}{R}}
-  {\jfameq{{\Gamma}{A}}{\subst{\jhomcomp{f}{g}}{R}}{\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{R}}}}}\\
+  {\jfameq
+    {{\Gamma}{A}}
+    {\subst{\jcomp{f}{g}}{R}}
+    {\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{R}}}}}\\
 & \inference
   {\jhom{\Gamma}{A}{B}{f}
    \jhom{\Gamma}{B}{C}{g}
    \jterm{{{\Gamma}{A}}{\ctxwk{A}{C}}}{R}{h}}
-  {\jfameq{{\Gamma}{A}}{\subst{\jhomcomp{f}{g}}{h}}{\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{h}}}}}
+  {\jfameq
+    {{\Gamma}{A}}
+    {\subst{\jcomp{f}{g}}{h}}
+    {\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{h}}}}}
 \end{align*}
-In particular, when $\jhom{\Gamma}{C}{D}{h}$, we have
-\begin{equation*}
-\jhomeq{\Gamma}{A}{D}{\jhomcomp{\jhomcomp{f}{g}}{h}}{\jhomcomp{f}{\jhomcomp{g}{h}}}.
-\end{equation*}
+We also have the following related inference rules, asserting that composition
+is strictly associative:
+\begin{align*}
+& \inference
+  {\jhom{\Gamma}{A}{B}{f}
+   \jhom{\Gamma}{B}{C}{g}
+   \jfam{{\Gamma}{C}}{R}}
+  {\jfameq
+    {{\Gamma}{A}}
+    {\jcomp{{f}{g}}{R}}
+    {\jcomp{f}{{g}{R}}}}\\
+& \inference
+  {\jhom{\Gamma}{A}{B}{f}
+   \jhom{\Gamma}{B}{C}{g}
+   \jterm{{\Gamma}{C}}{R}{h}}
+  {\jtermeq
+    {{\Gamma}{A}}
+    {\jcomp{{f}{g}}{R}}
+    {\jcomp{{f}{g}}{h}}
+    {\jcomp{f}{{g}{h}}}}
+\end{align*}
 \end{lem}
 
 \begin{proof}
@@ -665,10 +688,25 @@ Consider family morphisms $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
 and a family $\jfam{{{\Gamma}{A}}{\ctxwk{A}{C}}}{R}$. Then we have the judgmental
 equalities
 \begin{align*}
-\subst{\jhomcomp{f}{g}}{R} & \jdeq \subst{{f}{\ctxwk{A}{g}}}{R}\\
+\subst{\jcomp{f}{g}}{R} & \jdeq \subst{{f}{\ctxwk{A}{g}}}{R}\\
 & \jdeq \subst{{f}{\ctxwk{A}{g}}}{\subst{f}{\ctxwk{{A}{B}}{R}}}\\
 & \jdeq \subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{R}}}
 \end{align*}
+The proof that 
+$\subst{\jcomp{f}{g}}{h}\jdeq\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{h}}}$
+is similar.
+
+Now suppose that $\jfam{{\Gamma}{C}}{R}$ instead. Then we have
+\begin{align*}
+\jcomp{{f}{g}}{R} & \jdeq \subst{\jcomp{f}{g}}{\ctxwk{A}{R}}\\
+& \jdeq \subst{{f}{\ctxwk{A}{g}}}{\ctxwk{A}{R}}\\
+& \jdeq \subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{{A}{R}}}}\\
+& \jdeq \subst{f}{{\ctxwk{A}{g}}{\ctxwk{A}{{B}{R}}}}\\
+& \jdeq \subst{f}{\ctxwk{A}{\subst{g}{\ctxwk{B}{R}}}}\\
+& \jdeq \subst{f}{\ctxwk{A}{\jcomp{g}{R}}}\\
+& \jdeq \jcomp{f}{{g}{R}}.
+\end{align*}
+Again, the proof is similar for terms $h$ of $R$ in context $\ctxext{\Gamma}{C}$.
 \end{proof}
 
 \begin{lem}
@@ -679,17 +717,50 @@ weakening:
   {\jhom{\Gamma}{A}{B}{f}
    \jhom{\Gamma}{B}{C}{g}
    \jfam{{\Gamma}{A}}{P}}
-  {\jhomeq{\Gamma}{{A}{P}}{C}{\ctxwk{P}{\jhomcomp{f}{g}}}{\jhomcomp{\ctxwk{P}{f}}{g}}}\\
+  {\jhomeq{\Gamma}{{A}{P}}{C}
+    {\ctxwk{P}{\jcomp{f}{g}}}
+    {\jcomp{\ctxwk{P}{f}}{g}}}\\
 & \inference
   {\jterm{\Gamma}{B}{y}
    \jhom{\Gamma}{B}{C}{g}}
-  {\jhomeq{\Gamma}{A}{C}{\jhomcomp{\ctxwk{A}{y}}{g}}{\ctxwk{A}{\subst{y}{g}}}}\\
+  {\jhomeq{\Gamma}{A}{C}
+    {\jcomp{\ctxwk{A}{y}}{g}}
+    {\ctxwk{A}{\subst{y}{g}}}}\\
 & \inference
   {\jhom{\Gamma}{A}{B}{f}
    \jterm{\Gamma}{C}{z}}
-  {\jhomeq{\Gamma}{A}{C}{\jhomcomp{f}{\ctxwk{B}{z}}}{\ctxwk{A}{z}}}
+  {\jhomeq{\Gamma}{A}{C}
+    {\jcomp{f}{\ctxwk{B}{z}}}
+    {\ctxwk{A}{z}}}
 \end{align*}
 \end{lem}
+
+\begin{proof}
+Let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$ and $\jfam{{\Gamma}{A}}{P}$.
+Then we have the judgmental equalities
+\begin{align*}
+\ctxwk{P}{\jcomp{f}{g}} 
+& \jdeq \ctxwk{P}{\subst{f}{\ctxwk{A}{g}}}\\
+& \jdeq \subst{\ctxwk{P}{f}}{\ctxwk{P}{{A}{g}}}\\
+& \jdeq \subst{\ctxwk{P}{f}}{\ctxwk{\ctxext{A}{P}}{g}}\\
+& \jdeq \jcomp{\ctxwk{P}{f}}{g}.
+\end{align*}
+Now let $\jterm{\Gamma}{B}{y}$ and $\jhom{\Gamma}{B}{C}{g}$. Then we have the
+judgmental equalities
+\begin{align*}
+\jcomp{\ctxwk{A}{y}}{g}
+& \jdeq \subst{\ctxwk{A}{y}}{\ctxwk{A}{g}}\\
+& \jdeq \ctxwk{A}{\subst{y}{g}}.
+\end{align*}
+For the third assertion, let $\jhom{\Gamma}{A}{B}{f}$ and $\jterm{\Gamma}{C}{z}$.
+Then we have the judgmental equalities
+\begin{align*}
+\jcomp{f}{\ctxwk{B}{z}} 
+& \jdeq \subst{f}{\ctxwk{A}{{B}{z}}}\\
+& \jdeq \subst{f}{\ctxwk{{A}{B}}{{A}{z}}}\\
+& \jdeq \ctxwk{A}{z}.
+\end{align*}
+\end{proof}
 
 \begin{lem}
 We have the following inference rules about the compatibility of composition with
@@ -699,14 +770,38 @@ substitution:
   {\jhom{{\Gamma}{A}}{P}{Q}{f}
    \jhom{{\Gamma}{A}}{Q}{R}{g}
    \jterm{\Gamma}{A}{x}}
-  {\jhomeq{\Gamma}{\subst{x}{P}}{\subst{x}{R}}{\subst{x}{\jhomcomp{f}{g}}}{\jhomcomp{\subst{x}{f}}{\subst{x}{g}}}}\\
+  {\jhomeq{\Gamma}{\subst{x}{P}}{\subst{x}{R}}
+    {\subst{x}{\jcomp{f}{g}}}
+    {\jcomp{\subst{x}{f}}{\subst{x}{g}}}}\\
 & \inference
   {\jhom{\Gamma}{A}{B}{f}
    \jhom{\Gamma}{B}{C}{g}
    \jterm{\Gamma}{A}{x}}
-  {\jtermeq{\Gamma}{C}{\subst{x}{\jhomcomp{f}{g}}}{\subst{{x}{f}}{g}}}
+  {\jtermeq{\Gamma}{C}
+    {\subst{x}{\jcomp{f}{g}}}
+    {\subst{{x}{f}}{g}}}
 \end{align*}
 \end{lem}
+
+\begin{proof}
+Let $\jhom{{\Gamma}{A}}{P}{Q}{f}$, $\jhom{{\Gamma}{A}}{Q}{R}{g}$ and $\jterm{\Gamma}{A}{x}$.
+Then we have the judgmental equalities
+\begin{align*}
+\subst{x}{\jcomp{f}{g}}
+& \jdeq \subst{x}{{f}{\ctxwk{P}{g}}}\\
+& \jdeq \subst{{x}{f}}{{x}{\ctxwk{P}{g}}}\\
+& \jdeq \subst{{x}{f}}{\ctxwk{\subst{x}{P}}{\subst{x}{g}}}\\
+& \jdeq \jcomp{\subst{x}{f}}{\subst{x}{g}}.
+\end{align*}
+Now let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$ and $\jterm{\Gamma}{A}{x}$.
+Then we have the judgmental equalities
+\begin{align*}
+\subst{x}{\jcomp{f}{g}}
+& \jdeq \subst{x}{{f}{\ctxwk{A}{g}}}\\
+& \jdeq \subst{{x}{f}}{{x}{\ctxwk{A}{g}}}\\
+& \jdeq \subst{{x}{f}}{g}.
+\end{align*}
+\end{proof}
 
 \subsubsection{Identity functions}
 Without a rule explicitly asserting the existence of an identity morphism we don't
@@ -881,7 +976,11 @@ For any $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ we have
 \inference
   {\jfam{\Gamma}{A}
    \jfam{{\Gamma}{A}}{P}}
-  {\jtermeq{{\Gamma}{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}{\idfunc[\ctxext{A}{P}]}{\ctxext{\cprojfstf{A}{P}}{\cprojsndf{A}{P}}}}
+  {\jtermeq
+    {{\Gamma}{{A}{P}}}
+    {\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}
+    {\idfunc[\ctxext{A}{P}]}
+    {\ctxext{\cprojfstf{A}{P}}{\cprojsndf{A}{P}}}}
 \end{equation}
 \end{lem}
 
@@ -891,12 +990,32 @@ we have the judgmental equalities
 \begin{align*}
 \ctxext{\cprojfstf{A}{P}}{\cprojsndf{A}{P}}
 & \jdeq \subst{\cprojsndf{A}{P}}{{\cprojfstf{A}{P}}{\idfunc[\ctxext{\ctxwk{\ctxext{A}{P}}{A}}{\ctxwk{\ctxext{A}{P}}{P}}]}}\\
-& \jdeq \subst{\cprojsndf{A}{P}}{{\cprojfstf{A}{P}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}\\
-& \jdeq \subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}\\
-& \jdeq \subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}}\\
-& \jdeq \subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{\idfunc[\ctxext{A}{P}]}}}}\\
-& \jdeq \subst{\idfunc[P]}{\ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{\idfunc[\ctxext{A}{P}]}}}}\\
-& \jdeq \subst{\idfunc[A]}{\ctxwk{A}{\idfunc[\ctxext{A}{P}]}}\\
+& \jdeq \subst
+          {\cprojsndf{A}{P}}
+          { {\cprojfstf{A}{P}}
+            {\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}\\
+& \jdeq \subst
+          {\idfunc[P]}
+          { {\ctxwk{P}{\idfunc[A]}}
+            {\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}\\
+& \jdeq \subst
+          {\idfunc[P]}
+          { {\ctxwk{P}{\idfunc[A]}}
+            {\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}}\\
+& \jdeq \subst
+          {\idfunc[P]}
+          { {\ctxwk{P}{\idfunc[A]}}
+            {\ctxwk{P}{{A}{\idfunc[\ctxext{A}{P}]}}}}\\
+& \jdeq \subst
+          {\idfunc[P]}
+          {\ctxwk
+            {P}
+            {\subst
+              {\idfunc[A]}
+              {\ctxwk{A}{\idfunc[\ctxext{A}{P}]}}}}\\
+& \jdeq \subst
+          {\idfunc[A]}
+          {\ctxwk{A}{\idfunc[\ctxext{A}{P}]}}\\
 & \jdeq \idfunc[\ctxext{A}{P}].
 \end{align*}
 \end{proof}
