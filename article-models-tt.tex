@@ -1,4 +1,4 @@
-\section{Type theory before type constructors}\label{tt}
+\section{Structural type theory}\label{tt}
 In this section we give a description of type theory before basic
 constructors and with explicit extension, weakening and substitution. We will
 formulate the type theory in such a way that contexts aren't lists of variable
@@ -769,6 +769,11 @@ structural type theory because one has to keep track of a variable nobody is
 actually interested in. The situation improves when we introduce the operators
 of extension and weakening, because from that point onwards one can draw notational
 advantages from having the variable around.
+
+Pretty type theory should be such that if you write down two contexts, families
+or terms in exactly the same way, then they are the same, and there should be
+notational shortcuts for extension, weakening and substitution which make
+this interesting.
 
 \subsection{The basic judgments}
 The basic judgments of pretty type theory are the same as for structural type
