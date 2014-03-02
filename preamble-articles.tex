@@ -342,65 +342,93 @@
 %%%% * \jtermeq for the judgment that two terms of the same type are the same
 
 \makeatletter
+% We first make a generic judgment command
+\newcommand{\judgment}{\@ifnextchar*{\@judgmentAT}{\@judgmentAF}}
+\newcommand{\@judgmentAT}[8]{\@judgment@ctx{#2} & \vdash \@judgment@rel{#3}{#4}{#5}{#6}{#7} #8}
+\newcommand{\@judgmentAF}[7]{\@judgment@ctx{#1} \vdash \@judgment@rel{#2}{#3}{#4}{#5}{#6} #7}
+\newcommand{\@judgment@ctx}{\@judgment@ext}
+\newcommand{\@judgment@rel}[5]{\@judgment@ext{#1} #2 \@judgment@ext{#3} #4 \@judgment@ext{#5}}
+\newcommand{\@judgment@kind}[1]{~~\textit{#1}}
+\newcommand{\@judgment@ext}[1]{\@ifnextchar\bgroup{\ctxext}{}#1}
+
+\newcommand{\jctx@sym}{\@judgment@kind{ctx}}
 \newcommand{\jctx}{\@ifnextchar*{\@jctxAlignTrue}{\@jctxAlignFalse}}
-\newcommand{\@jctxAlignTrue}[2]{& \vdash #2~~\textit{ctx}}
-\newcommand{\@jctxAlignFalse}[1]{\vdash #1~~\textit{ctx}}
+\newcommand{\@jctxAlignTrue}[2] %{& \vdash #2~~\textit{ctx}}
+  {\judgment*{}{}{}{}{}{#2}{\jctx@sym}}
+\newcommand{\@jctxAlignFalse}[1] %{\vdash #1~~\textit{ctx}}
+  {\judgment{}{}{}{}{}{#1}{\jctx@sym}}
 
+\newcommand{\jfam@sym}{\@judgment@kind{fam}}
 \newcommand{\jfam}{\@ifnextchar*{\@jfamAlignTrue}{\@jfamAlignFalse}}
-\newcommand{\@jfamAlignTrue}[3]{#2 & \vdash #3~~\textit{fam}}
-\newcommand{\@jfamAlignFalse}[2]{#1 \vdash #2~~\textit{fam}}
+\newcommand{\@jfamAlignTrue}[3] %{#2 & \vdash #3~~\textit{fam}}
+  {\judgment*{#2}{}{}{}{}{#3}{\jfam@sym}}
+\newcommand{\@jfamAlignFalse}[2] %{#1 \vdash #2~~\textit{fam}}
+  {\judgment{#1}{}{}{}{}{#2}{\jfam@sym}}
 
+\newcommand{\jtype@sym}{\@judgment@kind{type}}
 \newcommand{\jtype}{\@ifnextchar*{\@jtypeAlignTrue}{\@jtypeAlignFalse}}
-\newcommand{\@jtypeAlignFalse}[2]{#1\vdash #2~~\textit{type}}
-\newcommand{\@jtypeAlignTrue}[3]{#2 & \vdash #3~~\textit{type}}
-
-\newcommand{\jtermc}{\@ifnextchar*{\@jtermcAlignTrue}{\@jtermcAlignFalse}}
-\newcommand{\@jtermcAlignTrue}[3]{\@jtermAlignTrue{#1}{}{#2}{#3}}
-\newcommand{\@jtermcAlignFalse}[2]{\@jtermAlignFalse{}{#1}{#2}}
+\newcommand{\@jtypeAlignTrue}[3] %{#2 & \vdash #3~~\textit{type}}
+  {\judgment*{#2}{}{}{}{}{#3}{\jtype@sym}}
+\newcommand{\@jtypeAlignFalse}[2] %{#1\vdash #2~~\textit{type}}
+  {\judgment{#1}{}{}{}{}{#2}{\jtype@sym}}
+  
+%\newcommand{\jtermc}{\@ifnextchar*{\@jtermcAlignTrue}{\@jtermcAlignFalse}}
+%\newcommand{\@jtermcAlignTrue}[3]{\@jtermAlignTrue{#1}{}{#2}{#3}}
+%\newcommand{\@jtermcAlignFalse}[2]{\@jtermAlignFalse{}{#1}{#2}}
 
 \newcommand{\jterm}{\@ifnextchar*{\@jtermAlignTrue}{\@jtermAlignFalse}}
-\newcommand{\@jtermAlignTrue}[4]{#2 & \vdash #4:#3}
-\newcommand{\@jtermAlignFalse}[3]{#1 \vdash #3:#2}
+\newcommand{\@jtermAlignTrue}[4] %{#2 & \vdash #4:#3}
+  {\judgment*{#2}{}{}{#4}{:}{#3}{}}
+\newcommand{\@jtermAlignFalse}[3] %{#1 \vdash #3:#2}
+  {\judgment{#1}{}{}{#3}{:}{#2}{}}
 
 \newcommand{\jctxeq}{\@ifnextchar*{\@jctxeqAlignTrue}{\@jctxeqAlignFalse}}
-\newcommand{\@jctxeqAlignTrue}[3]{& \vdash #2\jdeq #3~~\textit{ctx}}
-\newcommand{\@jctxeqAlignFalse}[2]{\vdash #1\jdeq #2~~\textit{ctx}}
+\newcommand{\@jctxeqAlignTrue}[3] %{& \vdash #2\jdeq #3~~\textit{ctx}}
+  {\judgment*{}{#2}{\jdeq}{#3}{}{}{\jctx@sym}}
+\newcommand{\@jctxeqAlignFalse}[2] %{\vdash #1\jdeq #2~~\textit{ctx}}
+  {\judgment{}{#1}{\jdeq}{#2}{}{}{\jctx@sym}}
 
 \newcommand{\jctxdefn}{\@ifnextchar*{\@jctxdefnAlignTrue}{\@jctxdefnAlignFalse}}
-\newcommand{\@jctxdefnAlignTrue}[3]{& \vdash #2\defeq #3~~\textit{ctx}}
-\newcommand{\@jctxdefnAlignFalse}[2]{\vdash #1\defeq #2~~\textit{ctx}}
+\newcommand{\@jctxdefnAlignTrue}[3] %{& \vdash #2\defeq #3~~\textit{ctx}}
+    {\judgment*{}{#2}{\defeq}{#3}{}{}{\jctx@sym}}
+\newcommand{\@jctxdefnAlignFalse}[2] %{\vdash #1\defeq #2~~\textit{ctx}}
+    {\judgment{}{#1}{\defeq}{#2}{}{}{\jctx@sym}}
 
 \newcommand{\jfameq}{\@ifnextchar*{\@jfameqAlignTrue}{\@jfameqAlignFalse}}
-\newcommand{\@jfameqAlignTrue}[4]{#2 & \vdash #3\jdeq #4~~\textit{fam}}
-\newcommand{\@jfameqAlignFalse}[3]{#1 \vdash #2\jdeq #3~~\textit{fam}}
+\newcommand{\@jfameqAlignTrue}[4] %{#2 & \vdash #3\jdeq #4~~\textit{fam}}
+  {\judgment*{#2}{#3}{\jdeq}{#4}{}{}{\jfam@sym}}
+\newcommand{\@jfameqAlignFalse}[3] %{#1 \vdash #2\jdeq #3~~\textit{fam}}
+  {\judgment{#1}{#2}{\jdeq}{#3}{}{}{\jfam@sym}}
 
 \newcommand{\jfamdefn}{\@ifnextchar*{\@jfamdefnAlignTrue}{\@jfamdefnAlignFalse}}
-\newcommand{\@jfamdefnAlignTrue}[4]{#2 & \vdash #3\defeq #4~~\textit{fam}}
-\newcommand{\@jfamdefnAlignFalse}[3]{#1 \vdash #2\defeq #3~~\textit{fam}}
+\newcommand{\@jfamdefnAlignTrue}[4] %{#2 & \vdash #3\defeq #4~~\textit{fam}}
+  {\judgment*{#2}{#3}{\defeq}{#4}{}{}{\jfam@sym}}
+\newcommand{\@jfamdefnAlignFalse}[3] %{#1 \vdash #2\defeq #3~~\textit{fam}}
+  {\judgment{#1}{#2}{\defeq}{#3}{}{}{\jfam@sym}}
 
 \newcommand{\jtypeeq}{\@ifnextchar*{\@jtypeeqAlignTrue}{\@jtypeeqAlignFalse}}
-\newcommand{\@jtypeeqAlignTrue}[4]{#2 & \vdash #3\jdeq #4~~\textit{type}}
-\newcommand{\@jtypeeqAlignFalse}[3]{#1\vdash #2\jdeq #3~~\textit{type}}
+\newcommand{\@jtypeeqAlignTrue}[4] %{#2 & \vdash #3\jdeq #4~~\textit{type}}
+  {\judgment*{#2}{#3}{\jdeq}{#4}{}{}{\jtype@sym}}
+\newcommand{\@jtypeeqAlignFalse}[3] %{#1\vdash #2\jdeq #3~~\textit{type}}
+  {\judgment{#1}{#2}{\jdeq}{#3}{}{}{\jtype@sym}}
 
 \newcommand{\jtypedefn}{\@ifnextchar*{\@jtypedefnAlignTrue}{\@jtypedefnAlignFalse}}
-\newcommand{\@jtypedefnAlignTrue}[4]{#2 & \vdash #3\defeq #4~~\textit{type}}
-\newcommand{\@jtypedefnAlignFalse}[3]{#1\vdash #2\defeq #3~~\textit{type}}
-
-%\newcommand{\jtermceq}{\@ifnextchar*{\@jtermceqAlignTrue}{\@jtermceqAlignFalse}}
-%\newcommand{\@jtermceqAlignTrue}[4]{\@jtermeqAlignTrue{#1}{}{#2}{#3}{#4}}
-%\newcommand{\@jtermceqAlignFalse}[3]{\@jtermeqAlignFalse{}{#1}{#2}{#3}}
-%
-%\newcommand{\jtermceq}{\@ifnextchar*{\@jtermceqAlignTrue}{\@jtermceqAlignFalse}}
-%\newcommand{\@jtermceqAlignTrue}[4]{\@jtermeqAlignTrue{#1}{}{#2}{#3}{#4}}
-%\newcommand{\@jtermceqAlignFalse}[3]{\@jtermeqAlignFalse{}{#1}{#2}{#3}}
+\newcommand{\@jtypedefnAlignTrue}[4] %{#2 & \vdash #3\defeq #4~~\textit{type}}
+  {\judgment*{#2}{#3}{\defeq}{#4}{}{}{\jtype@sym}}
+\newcommand{\@jtypedefnAlignFalse}[3] %{#1\vdash #2\defeq #3~~\textit{type}}
+  {\judgment{#1}{#2}{\defeq}{#3}{}{}{\jtype@sym}}
 
 \newcommand{\jtermeq}{\@ifnextchar*{\@jtermeqAlignTrue}{\@jtermeqAlignFalse}}
-\newcommand{\@jtermeqAlignTrue}[5]{#2 & \vdash #4\jdeq #5:#3}
-\newcommand{\@jtermeqAlignFalse}[4]{#1\vdash #3\jdeq #4:#2}
+\newcommand{\@jtermeqAlignTrue}[5] %{#2 & \vdash #4\jdeq #5:#3}
+  {\judgment*{#2}{#4}{\jdeq}{#5}{:}{#3}{}}
+\newcommand{\@jtermeqAlignFalse}[4] %{#1\vdash #3\jdeq #4:#2}
+  {\judgment{#1}{#3}{\jdeq}{#4}{:}{#2}{}}
 
 \newcommand{\jtermdefn}{\@ifnextchar*{\@jtermdefnAlignTrue}{\@jtermdefnAlignFalse}}
-\newcommand{\@jtermdefnAlignTrue}[5]{#2 & \vdash #4\defeq #5:#3}
-\newcommand{\@jtermdefnAlignFalse}[4]{#1\vdash #3\defeq #4:#2}
+\newcommand{\@jtermdefnAlignTrue}[5] %{#2 & \vdash #4\defeq #5:#3}
+  {\judgment*{#2}{#4}{\defeq}{#5}{:}{#3}{}}
+\newcommand{\@jtermdefnAlignFalse}[4] %{#1\vdash #3\defeq #4:#2}
+  {\judgment{#1}{#3}{\defeq}{#4}{:}{#2}{}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
