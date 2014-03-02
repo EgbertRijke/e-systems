@@ -1233,6 +1233,35 @@ Then we have the judgmental equalities
 \end{align*}
 \end{proof}
 
+We also have the following lemma about the compatibility of pairing and composition:
+
+\begin{lem}
+The following inference rule is valid
+\begin{align*}
+& \inference
+  {\jhom{\Gamma}{A}{B}{f}
+   \jhom{\Gamma}{B}{C}{g}
+   \jfam{{\Gamma}{C}}{R}
+   \jterm{{\Gamma}{B}}{\subst{g}{\ctxwk{B}{R}}}{w}}
+  {\jhomeq{\Gamma}{A}{{C}{R}}
+    {\jcomp{f}{\ctxext{g}{w}}}
+    {\ctxext{\jcomp{f}{g}}{\jcomp{f}{w}}}}
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$, $\jfam{{\Gamma}{C}}{R}$
+and $\jterm{{\Gamma}{B}}{\subst{g}{\ctxwk{B}{R}}}{w}$. Then we have the
+judgmental equalities
+\begin{align*}
+\jcomp{f}{\ctxext{g}{w}}
+& \jdeq \subst{f}{\ctxwk{A}{\ctxext{g}{w}}}\\
+& \jdeq \subst{f}{\ctxext{\ctxwk{A}{g}}{\ctxwk{A}{w}}}\\
+& \jdeq \ctxext{\subst{f}{\ctxwk{A}{g}}}{\subst{f}{\ctxwk{A}{w}}}\\
+& \jdeq \ctxext{\jcomp{f}{g}}{\jcomp{f}{w}}.
+\end{align*}
+\end{proof}
+
 \section{Pretty type theory}
 In this section we will do three things. First we explain basic type theory with
 variable names, which we simply call \emph{Pretty Type Theory}. 

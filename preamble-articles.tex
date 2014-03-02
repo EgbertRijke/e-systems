@@ -593,17 +593,22 @@
 
 \makeatletter
 \newcommand{\jhom}[4]{\jterm{{#1}{#2}}{\ctxwk{#2}{#3}}{#4}}
-\newcommand{\jhomeq}[5]{\jtermeq{{#1}{#2}}{\ctxwk{\@ifnextchar\bgroup{\ctxext}{}#2}{#3}}{#4}{#5}}
+\newcommand{\jhomeq}[5]{\jtermeq{{#1}{#2}}
+  {\ctxwk{\@ifnextchar\bgroup{\ctxext}{}#2}{\@ifnextchar\bgroup{\@ctxext@parens}{}#3}}{#4}{#5}}
 \newcommand{\jhomdefn}[5]{\jtermdefn{{#1}{#2}}{\ctxwk{#2}{#3}}{#4}{#5}}
 \newcommand{\jcomp}[2]{\jcomp@testleft #2 \circ \jcomp@testright #1}
 \newcommand{\jcomp@testleft}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\ctxwk{\@ctxwk@nested}{%
-  \@ifnextchar\bgroup{\@jcomp@parens}{}}}}
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\bgroup{\@jcomp@parens}{%
+  }}}}}
 \newcommand{\jcomp@testright}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\subst{\@subst@nested}{%
-  \@ifnextchar\bgroup{\@jcomp@parens}{}}}}
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\bgroup{\@jcomp@parens}{%
+  }}}}}
 \newcommand{\@jcomp@nested}[3]{\@jcomp@parens{#2}{#3}}
 \newcommand{\@jcomp@parens}[2]{(\jcomp{#1}{#2})}
 \makeatother
