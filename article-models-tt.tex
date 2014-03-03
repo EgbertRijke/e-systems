@@ -1270,6 +1270,31 @@ an inductively defined unit type. We will assume that not only the unit type
 is compatible with extension, weakening, substitution and identity functions,
 but also its induction principle should be compatible with those.
 
+\begin{align*}
+& \inference
+  {\jctx{\Gamma}}
+  {\jtype{\Gamma}{\unit_\Gamma}}
+& & \inference
+    {\jctxeq{\Gamma}{\Gamma'}}
+    {\jtypeeq{\Gamma}
+      {\unit_{\Gamma}}
+      {\unit_{\Gamma'}}}\\
+& \inference
+  {\jctx{\Gamma}}
+  {\jterm{\Gamma}{\unit_\Gamma}{\ttt_\Gamma}}
+& & \inference
+    {\jctxeq{\Gamma}{\Gamma'}}
+    {\jtermeq{\Gamma}{\unit_\Gamma}{\ttt_\Gamma}{\ttt_{\Gamma'}}}
+& \inference
+  {\jfam{\Gamma}{A}}
+  {\jtype{{{\Gamma}{A}}{\ctxwk{A}{\unit_{\Gamma}}}}{\unit_{A}}\\
+& & \inference
+    {\jfameq{\Gamma}{A'}}
+    {\jtypeeq{{{\Gamma}{A}}{\ctxwk{A}{\unit_{\Gamma}}}}
+      {\unit_{A}}
+      {\unit_{A'}}}\\
+\end{align*}
+
 \subsection{The empty type}
 
 \subsection{The natural numbers}
