@@ -450,10 +450,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% THE EMPTY CONTEXT
 
-\makeatletter
-\newcommand{\tfemp}[1]{\typefont{emp}_{\default@ctxext #1}}
-\makeatother
-
 \newcommand{\emptyc}{{[\;]}}
 \newcommand{\emptyf}[1][]{{[\;]}_{#1}}
 \newcommand{\emptytm}[1][]{\typefont{\#}_{#1}}
@@ -461,12 +457,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% CONTEXT EXTENSION 
 %%%%
-%%%% explicit context extension notation which we will use only rarely
-
-\makeatletter
-\newcommand{\tfext}[1]{\typefont{ext}_{\default@ctxext #1}}
-\makeatother
-
 %%%% The context extension command.
 %%%%
 %%%% To get a feeling of how the command works, here are a few examples.
@@ -546,10 +536,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% SUBSTITUTION
 
-\makeatletter
-\newcommand{\tfsubst}[1]{\typefont{subst}_{\default@ctxext #1}}
-\makeatother
-
 %%%% The substitution command will act the following way
 %%%%
 %%%% \subst{x}{P} will print P[x]
@@ -557,71 +543,86 @@
 %%%% \subst{{x}{f}}{{x}{Q}} will print Q[x][f[x]]
 
 \makeatletter
-\newcommand{\subst}[2]{\@subst@type #2{}[\@subst@term #1]}
-\newcommand{\@subst}{\@ifnextchar\bgroup{\@@subst}{}}
-\newcommand{\@@subst}[1]{\@ifnextchar\bgroup{\subst{#1}}{#1}}
-\newcommand{\@subst@term}{\@subst}
-\newcommand{\@subst@type}{\@ifnextchar\ctxext{\@ctxext@nested}{\@ifnextchar\ctxwk{\@ctxwk@nested}{\@ifnextchar\jcomp{\@jcomp@nested}{\@subst}}}}
-\newcommand{\@subst@nested}[3]{\@subst@parens{#2}{#3}}
-\newcommand{\@subst@parens}[2]{(\subst{#1}{#2})}
+\newcommand{\subst}[2]{%
+  \@subst@type #2{}[\@subst@term #1]}
+\newcommand{\@subst}{%
+  \@ifnextchar\bgroup{\@@subst}{}}
+\newcommand{\@@subst}[1]{%
+  \@ifnextchar\bgroup{\subst{#1}}{#1}}
+\newcommand{\@subst@term}{%
+  \@subst}
+\newcommand{\@subst@type}{%
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\ctxwk{\@ctxwk@nested}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  \@subst}}}}}
+\newcommand{\@subst@nested}[3]{%
+  \@subst@parens{#2}{#3}}
+\newcommand{\@subst@parens}[2]{%
+  (\subst{#1}{#2})}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% WEAKENING
 
-\makeatletter
-\newcommand{\tfwk}[1]{\typefont{wk}_{\default@ctxext #1}}
-\makeatother
-
 %%%% The weakening command is very much like the substitution command.
 
 \makeatletter
-\newcommand{\ctxwk}[2]{\langle\@ctxwk@act #1\rangle\@ctxwk@pass #2}
-\newcommand{\@ctxwk}{\@ifnextchar\bgroup{\@@ctxwk}{}}
-\newcommand{\@@ctxwk}[1]{\@ifnextchar\bgroup{\ctxwk{#1}}{#1}}
-\newcommand{\@ctxwk@act}{\@ctxwk}
-\newcommand{\@ctxwk@pass}{\@ifnextchar\ctxext{\@ctxext@nested}{\@ifnextchar\subst{\@subst@nested}{\@ifnextchar\jcomp{\@jcomp@nested}{\@ctxwk}}}}
-\newcommand{\@ctxwk@parens}[2]{(\ctxwk{#1}{#2})}
-\newcommand{\@ctxwk@nested}[3]{\@ctxwk@parens{#2}{#3}}
+\newcommand{\ctxwk}[2]{%
+  \langle\@ctxwk@act #1\rangle\@ctxwk@pass #2}
+\newcommand{\@ctxwk}{%
+  \@ifnextchar\bgroup{\@@ctxwk}{}}
+\newcommand{\@@ctxwk}[1]{%
+  \@ifnextchar\bgroup{\ctxwk{#1}}{#1}}
+\newcommand{\@ctxwk@act}{%
+  \@ctxwk}
+\newcommand{\@ctxwk@pass}{%
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\subst{\@subst@nested}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  \@ctxwk}}}}}
+\newcommand{\@ctxwk@parens}[2]{%
+  (\ctxwk{#1}{#2})}
+\newcommand{\@ctxwk@nested}[3]{%
+  \@ctxwk@parens{#2}{#3}}
 \makeatother
 
 %%%% Not sure if we're gonna need the following.
-\newcommand{\ctxwkop}[2]{\ctxwk{#2}{#1}}
+\newcommand{\ctxwkop}[2]{%
+  \ctxwk{#2}{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% CONTEXT PROJECTIONS
+%%%% UNFOLD
+%%%%
+%%%% For each definition in the type theory we make two versions of the macro:
+%%%% the macro introducing the new notation and an @unfold version of the macro
+%%%% which outputs the meaning of that new notation. Thus, we can use the
+%%%% following construction to write our text. When we introduce \macro, we can
+%%%% write \unfold{\macro} and the output will be the result of \macro@unfold.
 
 \makeatletter
-\newcommand{\cprojgenf}[3]{\typefont{pr}^{
-  \@ifnextchar\ctxext{\@ctxext@nested}{}#2,
-  \@ifnextchar\ctxext{\@ctxext@nested}{}#3}_{#1}}
-\newcommand{\cprojgen}[4]{\subst{#4}{\cprojgenf{#1}{#2}{#3}}}
-\makeatother
-
-\newcommand{\cprojfstf}[2]{\cprojgenf{0}{#1}{#2}}
-\newcommand{\cprojfst}[3]{\cprojgen{0}{#1}{#2}{#3}}
-\newcommand{\cprojsndf}[2]{\cprojgenf{1}{#1}{#2}}
-\newcommand{\cprojsnd}[3]{\cprojgen{1}{#1}{#2}{#3}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Unfold
-
-\makeatletter
-\newcommand{\unfold}{\unfoldall}
+\newcommand{\unfold}{%
+  \unfoldall}
 \newcommand{\unfoldall}[1]{%
-  \begingroup
-  \renewcommand{\jhom}{\jhom@unfold}
-  \renewcommand{\jhomeq}{\jhomeq@unfold}
-  \renewcommand{\jhomdefn}{\jhomdefn@unfold}
-  \renewcommand{\jfhom}{\jfhom@unfold}
-  \renewcommand{\jcomp}{\jcomp@unfold}
-  \renewcommand{\@jcomp@nested}{\@jcomp@unfold@nested}
-  \renewcommand{\@jcomp@parens}{\@jcomp@unfold@parens}
-  \renewcommand{\tmext}{\tmext@unfold}
-  \renewcommand{\@tmext@nested}{\@tmext@unfold@nested}
-  \renewcommand{\@tmext@parens}{\@tmext@unfold@parens}
-  #1
-  \endgroup
+  \begingroup%
+  \renewcommand{\jhom}{\jhom@unfold}%
+  \renewcommand{\jhomeq}{\jhomeq@unfold}%
+  \renewcommand{\jhomdefn}{\jhomdefn@unfold}%
+  \renewcommand{\jfhom}{\jfhom@unfold}%
+  \renewcommand{\jcomp}{\jcomp@unfold}%
+  \renewcommand{\@jcomp@nested}{\@jcomp@unfold@nested}%
+  \renewcommand{\@jcomp@parens}{\@jcomp@unfold@parens}%
+  \renewcommand{\tmext}{\tmext@unfold}%
+  \renewcommand{\@tmext@nested}{\@tmext@unfold@nested}%
+  \renewcommand{\@tmext@parens}{\@tmext@unfold@parens}%
+  \renewcommand{\cprojfstf}{\cprojfstf@unfold}%
+  \renewcommand{\cprojfst}{\cprojfst@unfold}%
+  \renewcommand{\cprojsndf}{\cprojsndf@unfold}%
+  \renewcommand{\cprojsnd}{\cprojsnd@unfold}%
+  #1%
+  \endgroup%
 }
 \makeatother
 
@@ -634,7 +635,7 @@
 \newcommand{\tmext}[4]{%
   \ctxext{#3}{#4}}
 \newcommand{\@tmext@nested}[5]{%
-  \tmext@parens{#2}{#3}{#4}{#5}}
+  \@tmext@parens{#2}{#3}{#4}{#5}}
 \newcommand{\@tmext@parens}[4]{%
   (\tmext{#1}{#2}{#3}{#4})}
 
@@ -651,17 +652,27 @@
 %%%% JUDGMENTAL MORPHISMS
 
 \makeatletter
-%%%% The identity function constructor
-\newcommand{\tfid}[1]{\typefont{idfun}_{\default@ctxext #1}}
 
 %%%% The judgment that f is a morphism from A to B in context \Gamma.
 \newcommand{\jhomsym}[3][]{%
   ~~\textit{hom}_{#1}(\default@ctxext #2,\default@ctxext #3)}
-\newcommand{\jhom}[4]{%
+\newcommand{\jhom}{%
+  \@ifnextchar*{\@jhomAlignTrue}{\@jhomAlignFalse}}
+\newcommand{\@jhomAlignTrue}[5]{%
+  \judgment*{#2}{}{}{#5}{}{}{\jhomsym{#3}{#4}}}
+\newcommand{\@jhomAlignFalse}[4]{%
   \judgment{#1}{}{}{#4}{}{}{\jhomsym{#2}{#3}}}
-\newcommand{\jhomeq}[5]{%
+\newcommand{\jhomeq}{%
+  \@ifnextchar*{\@jhomeqAlignTrue}{\@jhomeqAlignFalse}}
+\newcommand{\@jhomeqAlignTrue}[6]{%
+  \judgment*{#2}{#5}{\jdeq}{#6}{}{}{\jhomsym{#3}{#4}}}
+\newcommand{\@jhomeqAlignFalse}[5]{%
   \judgment{#1}{#4}{\jdeq}{#5}{}{}{\jhomsym{#2}{#3}}}
-\newcommand{\jhomdefn}[5]{%
+\newcommand{\jhomdefn}{%
+  \@ifnextchar*{\@jhomdefnAlignTrue}{\@jhomdefnAlignFalse}}
+\newcommand{\@jhomdefnAlignTrue}[6]{%
+  \judgment*{#2}{#5}{\defeq}{#6}{}{}{\jhomsym{#3}{#4}}}
+\newcommand{\@jhomdefnAlignFalse}[5]{%
   \judgment{#1}{#4}{\defeq}{#5}{}{}{\jhomsym{#2}{#3}}}
 
 \newcommand{\jhom@unfold}[4]{%
@@ -710,30 +721,93 @@
   (\jcomp@unfold{#1}{#2}{#3})}
 
 %%%% The judgment that F is a morphism from P to Q over f in context \Gamma.
-\newcommand{\jfhom}[7]{\judgment{#1}{}{}{#7}{}{}{\jhomsym[#4]{#5}{#6}}}
-\newcommand{\jfhom@unfold}[7]{\jterm
-  {{{#1}{#2}}{#5}}
-  {\ctxwk{\default@ctxext #5}{\jcomp{#2}{#4}{#6}}}
-  {#7}}
+\newcommand{\jfhom}[7]{%
+  \judgment{#1}{}{}{#7}{}{}{\jhomsym[#4]{#5}{#6}}}
+\newcommand{\jfhom@unfold}[7]{%
+  \jterm
+    {{{#1}{#2}}{#5}}
+    {\ctxwk{\default@ctxext #5}{\jcomp{#2}{#4}{#6}}}
+    {#7}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% CONTEXT PROJECTIONS
+
+\makeatletter
+\newcommand{\cprojgenf}[3]{%
+  \typefont{pr}^{
+    \@ifnextchar\ctxext{\@ctxext@nested}{}#2,
+    \@ifnextchar\ctxext{\@ctxext@nested}{}#3}_{#1}}
+\newcommand{\cprojgen}[4]{%
+  \subst{#4}{\cprojgenf{#1}{#2}{#3}}}
+
+\newcommand{\cprojfstf}[2]{%
+  \cprojgenf{0}{#1}{#2}}
+\newcommand{\cprojfst}[3]{%
+  \cprojgen{0}{#1}{#2}{#3}}
+\newcommand{\cprojsndf}[2]{%
+  \cprojgenf{1}{#1}{#2}}
+\newcommand{\cprojsnd}[3]{%
+  \cprojgen{1}{#1}{#2}{#3}}
+
+\newcommand{\cprojfstf@unfold}[2]{%
+  \ctxwk{\default@ctxext #2}\idfunc[\default@ctxext #1]}
+\newcommand{\cprojfst@unfold}[3]{%
+  \subst{#3}{(\cprojfstf@unfold{#1}{#2})}}
+\newcommand{\cprojsndf@unfold}[2]{%
+  \idfunc[\default@ctxext #2]}
+\newcommand{\cprojsnd@unfold}[3]{%
+  \subst{#3}{\cprojsnd@unfold{#1}{#2}}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% The compatible unit type
 
 \makeatletter
-\newcommand{\unitc}[1]{\unit^0_{\default@ctxext #1}}
-\newcommand{\unitct}[1]{\ttt^0_{\default@ctxext #1}}
-\newcommand{\unitf}[2]{\unit^1_{\default@ctxext #1,\default@ctxext #2}}
-\newcommand{\unitft}[2]{\ttt^1_{\default@ctxext #1,\default@ctxext #2}}
+\newcommand{\unitc}[1]{%
+  \unit^0_{\default@ctxext #1}}
+\newcommand{\unitct}[1]{%
+  \ttt^0_{\default@ctxext #1}}
+\newcommand{\unitf}[2]{%
+  \unit^1_{\default@ctxext #1,\default@ctxext #2}}
+\newcommand{\unitft}[2]{%
+  \ttt^1_{\default@ctxext #1,\default@ctxext #2}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Models
+%%%% THE CONSTRUCTORS OF THE TYPE THEORY OF MODELS
 
 \makeatletter
-\newcommand{\mctx}{\mathcal{C}}
-\newcommand{\mfam}[1]{\mathcal{F}_{\default@ctxext #1}}
-\newcommand{\mtm}[1]{\mathcal{T}_{\default@ctxext #1}}
+%%%% The initial model
+\newcommand{\mctx}{%
+  \mathcal{C}}
+
+%%%% The family constructor
+\newcommand{\mfam}[1]{%
+  \mathcal{F}_{\default@ctxext #1}}
+
+%%%% The terms constructor
+\newcommand{\mtm}[1]{%
+  \mathcal{T}_{\default@ctxext #1}}
+
+%%%% The empty type constructor
+\newcommand{\tfemp}[1]{\typefont{emp}_{\default@ctxext #1}}
+
+%%%% The extension constructor
+\newcommand{\tfext}[1]{%
+  \typefont{ext}_{\default@ctxext #1}}
+
+%%%% The substitution constructor
+\newcommand{\tfsubst}[1]{%
+  \typefont{subst}_{\default@ctxext #1}}
+  
+%%%% The weakening constructor
+\newcommand{\tfwk}[1]{%
+  \typefont{wk}_{\default@ctxext #1}}
+
+%%%% The identity function constructor
+\newcommand{\tfid}[1]{%
+  \typefont{idfun}_{\default@ctxext #1}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
