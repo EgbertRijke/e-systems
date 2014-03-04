@@ -1381,7 +1381,7 @@ We impose the following compatibility rules for the unit type:
 \subsection{The compatibility of the type constructors with each other}
 \label{compatibility-of-type-constructors}
 
-\section{Models of type theory}
+\section{The type theory of models of type theory}
 In this section we pursue the idea of what a general model of type theory is by
 axiomatizing what you can do with them. We have the following ideas:
 \begin{enumerate}
@@ -1400,12 +1400,12 @@ should be families over $\Gamma$.
 If we extend $A$ by $\mfam{A}$, we get the Sierpinski model of $A$.
 \item Likewise, models can be weakened and substituted and there are identity
 functions.
-
 \end{enumerate}
 So the theory of models is going to be an extension of this theory with this
-data.
+data. The theory we are about to describe can be seen as an elementary theory
+of the category (with families (and terms)) of categories (with families (and terms)).
 
-\subsection{The basic ingredients of the theory of models}
+\subsection{The basic ingredients of the type theory of models}
 We first introduce the basic ingredients of our abstract theory of models.
 \begin{align*}
 & \inference
@@ -1420,6 +1420,14 @@ We first introduce the basic ingredients of our abstract theory of models.
   {\jctx{\Gamma}}
   {\jfam{{\Gamma}{\mfam{\Gamma}}}{\mtm{\Gamma}}}
   \tag{terms}
+\intertext{The following two rules essentially make a start with saying that every term is functorial
+in the apropriate sense (there will be more rules contributing to this vies):}
+& \inference
+  {\jterm{{\Gamma}{A}}{P}{f}}
+  {\jterm{{{\Gamma}{A}}{\mfam{A}}}{\subst{f}{\mfam{P}}}{\mfam{f}}}\\
+& \inference
+  {\jterm{{\Gamma}{A}}{P}{f}}
+  {\jterm{{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}{\subst{\mfam{f}}{{f}{\mtm{P}}}}{\mtm{f}}}
 \intertext{The empty context of a model $A$ is simply a term of $A$:}
 & \inference
   {\jfam{\Gamma}{A}}
@@ -1516,25 +1524,21 @@ cases.
 \end{equation*}
 
 \subsubsection{Terms of families of extensions}
-\begin{equation*}
-\inference
-  {\jterm{\Gamma}{A}{x}
-   \jterm{\Gamma}{\subst{x}{P}}{u}}
-  {\jtermeq
-    {{{\Gamma}{A}}{P}}
-    {\mfam{{A}{P}}}
-    {\mfam{{x}{u}}}
-    {{\ctxwk{P}{\mfam{x}}}{\mfam{u}}}}
-\end{equation*}
 
 \subsubsection{Terms of extensions}
+
+\subsubsection{Families over the empty context}
 \begin{equation*}
 \inference
-  {\jfam{{\Gamma}{A}}{P}}
-  {\jfameq
-    {{{{\Gamma}{A}}{P}}{\mfam{{A}{P}}}}
-    {\mtm{{A}{P}}}
-    {{\ctxwk{{P}{\mfam{A}}}{{P}{\mtm{A}}}}{\ctxwk{{P}{\mfam{A}}}{\mtm{P}}}}}
+  {\jfam{\Gamma}{A}}
+  {\jfameq{\Gamma}{\subst{\tfemp{A}}{\mfam{A}}}{A}}
+\end{equation*}
+
+\subsubsection{Terms of the empty family}
+\begin{equation*}
+\inference
+  {\jfam{\Gamma}{A}}
+  {\jfameq{{\Gamma}{A}}{\subst{\tfemp{\mfam{A}}}{\mtm{A}}}{\emptyf[A]}}
 \end{equation*}
 
 \section{Pretty type theory}
