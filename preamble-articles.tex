@@ -791,7 +791,10 @@
   \mathcal{T}_{\default@ctxext #1}}
 
 %%%% The empty type constructor
-\newcommand{\tfemp}[1]{\typefont{emp}_{\default@ctxext #1}}
+\newcommand{\tfemp}[1]{%
+  \typefont{emp}_{\default@ctxext #1}}
+\newcommand{\tft}[1]{%
+  \typefont{t}_{\default@ctxext #1}}
 
 %%%% The extension constructor
 \newcommand{\tfext}[1]{%

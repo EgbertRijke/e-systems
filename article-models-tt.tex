@@ -1449,6 +1449,10 @@ We first introduce the basic ingredients of our abstract theory of models.
   {\jctx{\mctx}}
   \tag{the canonical model}\\
 & \inference
+  {\jfam{\mctx}{P}}
+  {\jterm{\mctx}{P}{i}}
+  \tag{initiality of $\mctx$}\\
+& \inference
   {\jfam{\Gamma}{A}}
   {\jfam{{\Gamma}{A}}{\mfam{A}}}
   \tag{families}\\
@@ -1468,7 +1472,10 @@ in the apropriate sense (there will be more rules contributing to this vies):}
 & \inference
   {\jfam{\Gamma}{A}}
   {\jterm{\Gamma}{A}{\tfemp{A}}}
-  \tag{empty context}
+  \tag{empty context}\\
+& \inference
+  {\jfam{\Gamma}{A}}
+  {\jterm{{{\Gamma}{A}}{\mfam{A}}}{\subst{\tfemp{\mfam{A}}}{\mtm{A}}}{\tft{A}}}
 \intertext{Extension is going to be a morphism from $\ctxext{A}{\mfam{A}}$ to
 $A$ in context $\Gamma$:}
 & \inference
@@ -1553,6 +1560,32 @@ weakening, substitution and identity functions are. Likewise the rules for
 compatibility with weakening and substitution do this for their respective
 cases.
 
+The easiest set of compatibility rules comes with weakening. The compatibility
+rules that deal with substitution are likely going to have to do with the
+Yoneda lemma, which we should be able to implement at some point. 
+
+\subsubsection{Families of weakenings}
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}}
+  { \jfameq
+    {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+    {\mfam{\ctxwk{A}{B}}}
+    {\ctxwk{A}{\mfam{B}}}}.
+\end{equation*}
+
+\subsubsection{Terms of weakenings}
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}}
+  { \jfameq
+    {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\mfam{\ctxwk{A}{B}}}}
+    {\mtm{\ctxwk{A}{B}}}
+    {\ctxwk{A}{\mtm{B}}}}
+\end{equation*}
+
 \subsubsection{Families of extensions}
 
 \subsubsection{Terms of families of extensions}
@@ -1572,6 +1605,61 @@ cases.
   {\jfam{\Gamma}{A}}
   {\jfameq{{\Gamma}{A}}{\subst{\tfemp{\mfam{A}}}{\mtm{A}}}{\emptyf[A]}}
 \end{equation*}
+
+\subsubsection{The empty family over the empty family}
+\begin{equation*}
+\inference
+  {\jfam{\Gamma}{A}}
+  {\jtermeq{\Gamma}{A}{\subst{\tfemp{A}}{\tfemp{\mfam{A}}}}{\tfemp{A}}}
+\end{equation*}
+
+\subsubsection{Extension by the empty family}
+To understand the following inference rule, recall that for $\jfam{\Gamma}{A}$
+we have the judgmental equalities
+\begin{equation*}
+\subst{\tfemp{\mfam{A}}}{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}\jdeq
+\subst{\tfemp{\mfam{A}}}{\ctxwk{\mfam{A}}{{A}{A}}}\jdeq
+\ctxwk{A}{A}.
+\end{equation*}
+Therefore, we can postulate:
+\begin{equation*}
+\inference
+  {\jfam{\Gamma}{A}}
+  {\jhomeq{\Gamma}{A}{A}{\subst{\tfemp{\mfam{A}}}{\tfext{A}}}{\idfunc[A]}}
+\end{equation*}
+
+\subsubsection{Extensions of the empty context}
+To understand the following inference rule, recall that for $\jfam{\Gamma}{A}$
+we have the judgmental equalities
+\begin{align*}
+\subst{\tfemp{A}}{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}
+& \jdeq \subst{\tfemp{A}}{\ctxwk{\mfam{A}}{{A}{A}}}\\
+& \jdeq \ctxwk{\subst{\tfemp{A}}{\mfam{A}}}{\subst{\tfemp{A}}{\ctxwk{A}{A}}}\\
+& \jdeq \ctxwk{A}{\subst{\tfemp{A}}{\ctxwk{A}{A}}}\\
+& \jdeq \ctxwk{A}{A}
+\end{align*}
+Therefore, we can postulate
+\begin{equation*}
+\inference
+  {\jfam{\Gamma}{A}}
+  {\jhomeq{\Gamma}{A}{A}{\subst{\tfemp{A}}{\tfext{A}}}{\idfunc[A]}}
+\end{equation*}
+
+\subsubsection{Weakening by the empty family}
+
+\subsubsection{Weakenings of the empty family}
+
+\subsubsection{Substitutions of the empty family}
+
+\subsubsection{Substitution by the term of the empty family}
+
+\subsubsection{Extensions of extensions}
+
+\subsubsection{Extensions of weakenings}
+
+\subsubsection{Weakenings by extensions}
+
+\subsubsection{Substitutions of extensions}
 
 \section{Pretty type theory}
 In this section we will do three things. First we explain basic type theory with
