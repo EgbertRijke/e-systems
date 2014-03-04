@@ -830,10 +830,15 @@ notion because it will be needed in the theory of models later on.
 
 \begin{defn}
 Let $\jhom{\Gamma}{A}{B}{f}$ be a morphism from $A$ to $B$ in context $\Gamma$
-and consider $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{B}}{Q}$. A morphism
-from $P$ to $Q$ over $f$ in context $\Gamma$ is a term
+and consider $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{B}}{Q}$. We define the
+judgment
 \begin{equation*}
-\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}.
+\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F},
+\end{equation*}
+which is pronounced as `$F$ is a morphism from $P$ to $Q$ over $f$ in context
+$\Gamma$, to be the judgment
+\begin{equation*}
+\unfold{\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}}.
 \end{equation*}
 \end{defn}
 

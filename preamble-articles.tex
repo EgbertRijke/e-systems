@@ -349,7 +349,7 @@
 \newcommand{\@judgment@ctx}{\@judgment@ext}
 \newcommand{\@judgment@rel}[5]{\@judgment@ext{#1} #2 \@judgment@ext{#3} #4 \@judgment@ext{#5}}
 \newcommand{\@judgment@kind}[1]{~~\textit{#1}}
-\newcommand{\@judgment@ext}[1]{\@ctxext@default#1}
+\newcommand{\@judgment@ext}[1]{\default@ctxext#1}
 
 \newcommand{\quad@test}{%
   \@ifnextchar\jctx{\quad}{%
@@ -451,7 +451,7 @@
 %%%% THE EMPTY CONTEXT
 
 \makeatletter
-\newcommand{\tfemp}[1]{\typefont{emp}_{\@ctxext@default #1}}
+\newcommand{\tfemp}[1]{\typefont{emp}_{\default@ctxext #1}}
 \makeatother
 
 \newcommand{\emptyc}{{[\;]}}
@@ -464,7 +464,7 @@
 %%%% explicit context extension notation which we will use only rarely
 
 \makeatletter
-\newcommand{\tfext}[1]{\typefont{ext}_{\@ctxext@default #1}}
+\newcommand{\tfext}[1]{\typefont{ext}_{\default@ctxext #1}}
 \makeatother
 
 %%%% The context extension command.
@@ -485,8 +485,8 @@
 
 %%%% We want that some commands accept binary trees as arguments that default
 %%%% into extensions. We make the following command to realize this
-\newcommand{\@ctxext@default}{\@ifnextchar\bgroup{\ctxext}{}}
-\newcommand{\@ctxext@default@parens}{\@ifnextchar\bgroup{\@ctxext@parens}{}}
+\newcommand{\default@ctxext}{\@ifnextchar\bgroup{\ctxext}{}}
+\newcommand{\default@ctxext@parens}{\@ifnextchar\bgroup{\@ctxext@parens}{}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -547,7 +547,7 @@
 %%%% SUBSTITUTION
 
 \makeatletter
-\newcommand{\tfsubst}[1]{\typefont{subst}_{\@ctxext@default #1}}
+\newcommand{\tfsubst}[1]{\typefont{subst}_{\default@ctxext #1}}
 \makeatother
 
 %%%% The substitution command will act the following way
@@ -570,7 +570,7 @@
 %%%% WEAKENING
 
 \makeatletter
-\newcommand{\tfwk}[1]{\typefont{wk}_{\@ctxext@default #1}}
+\newcommand{\tfwk}[1]{\typefont{wk}_{\default@ctxext #1}}
 \makeatother
 
 %%%% The weakening command is very much like the substitution command.
@@ -604,15 +604,85 @@
 \newcommand{\cprojsnd}[3]{\cprojgen{1}{#1}{#2}{#3}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Unfold
+
+\makeatletter
+\newcommand{\unfold}{\unfoldall}
+\newcommand{\unfoldall}[1]{%
+  \begingroup
+  \renewcommand{\jhom}{\jhom@unfold}
+  \renewcommand{\jfhom}{\jfhom@unfold}
+  \renewcommand{\jcomp}{\jcomp@unfold}
+  \renewcommand{\@jcomp@nested}{\@jcomp@unfold@nested}
+  \renewcommand{\@jcomp@parens}{\@jcomp@unfold@parens}
+  \renewcommand{\tmext}{\tmext@unfold}
+  \renewcommand{\@tmext@nested}{\@tmext@unfold@nested}
+  \renewcommand{\@tmext@parens}{\@tmext@unfold@parens}
+  #1
+  \endgroup
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% TERM EXTENSION
+
+\makeatletter
+
+%%%% The basic term extension commands
+\newcommand{\tmext}[4]{%
+  \ctxext{#3}{#4}}
+\newcommand{\@tmext@nested}[5]{%
+  \tmext@parens{#2}{#3}{#4}{#5}}
+\newcommand{\@tmext@parens}[4]{%
+  (\tmext{#1}{#2}{#3}{#4})}
+
+%%%% The unfolded term extension commands
+\newcommand{\tmext@unfold}[4]{%
+  \subst{#4}{{#3}{\idfunc[\ctxext{#1}{#2}]}}}
+\newcommand{\@tmext@unfold@nested}[1]{%
+  \@tmext@unfold@parens}
+\newcommand{\@tmext@unfold@parens}[4]{%
+  (\tmext@unfold{#1}{#2}{#3}{#4})}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% JUDGMENTAL MORPHISMS
 
 \makeatletter
-\newcommand{\tfid}[1]{\typefont{idfun}_{\@ctxext@default #1}}
-\newcommand{\jhom}[4]{\jterm{{#1}{#2}}{\ctxwk{\@ctxext@default #2}{\@ctxext@default@parens #3}}{#4}}
-\newcommand{\jhomeq}[5]{\jtermeq{{#1}{#2}}
-  {\ctxwk{\@ctxext@default #2}{\@ctxext@default@parens #3}}{#4}{#5}}
-\newcommand{\jhomdefn}[5]{\jtermdefn{{#1}{#2}}{\ctxwk{#2}{#3}}{#4}{#5}}
-\newcommand{\jcomp}[2]{\jcomp@testleft #2 \circ \jcomp@testright #1}
+%%%% The identity function constructor
+\newcommand{\tfid}[1]{\typefont{idfun}_{\default@ctxext #1}}
+
+%%%% The judgment that f is a morphism from A to B in context \Gamma.
+\newcommand{\jhomsym}[3][]{%
+  ~~\textit{hom}_{#1}(\default@ctxext #2,\default@ctxext #3)}
+\newcommand{\jhom}[4]{%
+  \judgment{#1}{}{}{#4}{}{}{\jhomsym{#2}{#3}}}
+\newcommand{\jhomeq}[5]{%
+  \judgment{#1}{#4}{\jdeq}{#5}{}{}{\jhomsym{#2}{#3}}}
+\newcommand{\jhomdefn}[5]{%
+  \judgment{#1}{#4}{\defeq}{#5}{}{}{\jhomsym{#2}{#3}}}
+
+\newcommand{\jhom@unfold}[4]{%
+  \jterm
+    {{#1}{#2}}
+    {\ctxwk{\default@ctxext #2}{\default@ctxext@parens #3}}
+    {#4}}
+\newcommand{\jhomeq@unfold}[5]{%
+  \jtermeq
+    {{#1}{#2}}
+    {\ctxwk{\default@ctxext #2}{\default@ctxext@parens #3}}
+    {#4}
+    {#5}}
+\newcommand{\jhomdefn@unfold}[5]{%
+  \jtermdefn
+    {{#1}{#2}}
+    {\ctxwk{\default@ctxext #2}{\default@ctxext@parens #3}}
+    {#4}
+    {#5}}
+
+%%%% Composition of morphisms
+\newcommand{\jcomp}[2]{%
+  \jcomp@testleft #2 \circ \jcomp@testright #1}
 \newcommand{\jcomp@testleft}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\ctxwk{\@ctxwk@nested}{%
@@ -625,12 +695,23 @@
   \@ifnextchar\ctxext{\@ctxext@nested}{%
   \@ifnextchar\bgroup{\@jcomp@parens}{%
   }}}}}
-\newcommand{\@jcomp@nested}[3]{\@jcomp@parens{#2}{#3}}
-\newcommand{\@jcomp@parens}[2]{(\jcomp{#1}{#2})}
+\newcommand{\@jcomp@nested}[3]{%
+  \@jcomp@parens{#2}{#3}}
+\newcommand{\@jcomp@parens}[2]{%
+  (\jcomp{#1}{#2})}
 
-\newcommand{\jfhom}[7]{\jterm
+\newcommand{\jcomp@unfold}[2]{%
+  \subst{f}{\ctxwk{\blank}{#2}}}
+\newcommand{\@jcomp@unfold@nested}[3]{%
+  \@jcomp@unfold@parens{#2}{#3}}
+\newcommand{\@jcomp@unfold@parens}[2]{%
+  (\jcomp@unfold{#1}{#2})}
+
+%%%% The judgment that F is a morphism from P to Q over f in context \Gamma.
+\newcommand{\jfhom}[7]{\judgment{#1}{}{}{#7}{}{}{\jhomsym[#4]{#5}{#6}}}
+\newcommand{\jfhom@unfold}[7]{\jterm
   {{{#1}{#2}}{#5}}
-  {\ctxwk{\@ctxext@default #5}{\jcomp{#4}{#6}}}
+  {\ctxwk{\default@ctxext #5}{\jcomp{#4}{#6}}}
   {#7}}
 \makeatother
 
@@ -638,10 +719,10 @@
 %%%% The compatible unit type
 
 \makeatletter
-\newcommand{\unitc}[1]{\unit^0_{\@ctxext@default #1}}
-\newcommand{\unitct}[1]{\ttt^0_{\@ctxext@default #1}}
-\newcommand{\unitf}[2]{\unit^1_{\@ctxext@default #1,\@ctxext@default #2}}
-\newcommand{\unitft}[2]{\ttt^1_{\@ctxext@default #1,\@ctxext@default #2}}
+\newcommand{\unitc}[1]{\unit^0_{\default@ctxext #1}}
+\newcommand{\unitct}[1]{\ttt^0_{\default@ctxext #1}}
+\newcommand{\unitf}[2]{\unit^1_{\default@ctxext #1,\default@ctxext #2}}
+\newcommand{\unitft}[2]{\ttt^1_{\default@ctxext #1,\default@ctxext #2}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -649,8 +730,8 @@
 
 \makeatletter
 \newcommand{\mctx}{\mathcal{C}}
-\newcommand{\mfam}[1]{\mathcal{F}_{\@ctxext@default #1}}
-\newcommand{\mtm}[1]{\mathcal{T}_{\@ctxext@default #1}}
+\newcommand{\mfam}[1]{\mathcal{F}_{\default@ctxext #1}}
+\newcommand{\mtm}[1]{\mathcal{T}_{\default@ctxext #1}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
