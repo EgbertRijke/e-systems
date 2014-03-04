@@ -1,4 +1,4 @@
-\section{Structural type theory}\label{tt}
+\section{Type theory before type constructors}\label{tt}
 In this section we give a description of type theory before basic
 constructors and with explicit extension, weakening and substitution. We will
 formulate the type theory in such a way that contexts aren't lists of variable
@@ -825,6 +825,21 @@ Then we have the judgmental equalities
 \end{align*}
 \end{proof}
 
+There is also a notion of morphism \emph{over} a morphism. We will develop this
+notion because it will be needed in the theory of models later on.
+
+\begin{defn}
+Let $\jhom{\Gamma}{A}{B}{f}$ be a morphism from $A$ to $B$ in context $\Gamma$
+and consider $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{B}}{Q}$. A morphism
+from $P$ to $Q$ over $f$ in context $\Gamma$ is a term
+\begin{equation*}
+\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}.
+\end{equation*}
+\end{defn}
+
+We can also define composition for this version of morphism and formulate
+compatibility rules for them. 
+
 \subsubsection{Identity functions}
 Without a rule explicitly asserting the existence of an identity morphism we don't
 get one, hence we do that here. The identity morphism is a term which introduced
@@ -1261,8 +1276,42 @@ judgmental equalities
 & \jdeq \ctxext{\jcomp{f}{g}}{\jcomp{f}{w}}.
 \end{align*}
 \end{proof}
+%\end{document}
 
 \section{Type constructors in structural type theory}
+In this section we will introduce the usual type constructors to structural
+type theory. We do so with the point of view that each type constructor is a
+(class of) operations on type theory that should be compatible with extension,
+weakening, substitution and identity morphisms. Likewise, each induction
+principle of an inductively defined type constructor is going to be such an
+operator, and it is therefore also required to be compatible with extension,
+weakening, substitution and identity functions.
+
+We will first state all the rules of the individual type constructors, where
+only the $\wtypesym$-type constructor depends on the presence of dependent
+function types (or universes too?), and hence comes with the notion that $\wtypesym$
+is compatible with dependent product types and vice versa. All the other
+compatibility properties are stated in \autoref{compatibility-of-type-constructors}.
+
+\subsubsection{Issues to keep in mind}
+\begin{enumerate}
+\item The rule asserting that unit types are compatible with context extension makes
+no sense from the point of view that contexts are lists of types and types
+are contexts of length one; in other words, that types are indecomposable (i.e.~non-extended)
+families. Remidies:
+\begin{enumerate}
+\item This point of view is wrong and should be abandoned.
+\item We have, as Vladimir proposed, two kinds of judgmental equalities. One
+      could be used for the very strict equalities, the other could be used
+      to state the compatibility rules with. In other words, the other equality
+      is a compatibility relation. If we do that, we shouldn't require that
+      if a family is compatible with a type, then the family is a type. The
+      compatibility relation could relate things by uniqueness up to unique
+      isomorphism.
+\item Don't state such compatibility rules for the type constructors.
+\item Don't even give the unit type a dependent action.
+\end{enumerate}
+\end{enumerate}
 
 \subsection{The unit type in structural type theory}
 In this section we explore what we get if we pose compatibility conditions on
@@ -1272,27 +1321,47 @@ but also its induction principle should be compatible with those.
 
 \begin{align*}
 & \inference
-  {\jctx{\Gamma}}
-  {\jtype{\Gamma}{\unit_\Gamma}}
+  {\jfam{\Gamma}{A}}
+  {\jtype{{\Gamma}{A}}{\unitc{A}}}
 & & \inference
-    {\jctxeq{\Gamma}{\Gamma'}}
-    {\jtypeeq{\Gamma}
-      {\unit_{\Gamma}}
-      {\unit_{\Gamma'}}}\\
-& \inference
-  {\jctx{\Gamma}}
-  {\jterm{\Gamma}{\unit_\Gamma}{\ttt_\Gamma}}
-& & \inference
-    {\jctxeq{\Gamma}{\Gamma'}}
-    {\jtermeq{\Gamma}{\unit_\Gamma}{\ttt_\Gamma}{\ttt_{\Gamma'}}}
+    {\jfameq{\Gamma}{A}{A'}}
+    {\jtypeeq{{\Gamma}{A}}
+      {\unitc{A}}
+      {\unitc{A'}}}\\
 & \inference
   {\jfam{\Gamma}{A}}
-  {\jtype{{{\Gamma}{A}}{\ctxwk{A}{\unit_{\Gamma}}}}{\unit_{A}}\\
+  {\jterm{{\Gamma}{A}}{\unitc{A}}{\unitct{A}}}
 & & \inference
-    {\jfameq{\Gamma}{A'}}
-    {\jtypeeq{{{\Gamma}{A}}{\ctxwk{A}{\unit_{\Gamma}}}}
-      {\unit_{A}}
-      {\unit_{A'}}}\\
+    {\jfameq{\Gamma}{A}{A'}}
+    {\jtermeq{{\Gamma}{A}}{\unitc{A}}{\unitct{A}}{\unitct{A'}}}\\
+& \inference
+  {\jfam{{\Gamma}{A}}{P}}
+  {\jtype{{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}{\unitf{A}{P}}}
+& & \inference
+    {\jfameq{{\Gamma}{A}}{P}{P'}}
+    {\jtypeeq{{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}
+      {\unitf{A}{P}}
+      {\unitf{A}{P'}}}\\
+& \inference
+  {\jfam{{\Gamma}{A}}{P}}
+  {\jterm{{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}{\unitf{A}{P}}{\unitft{A}{P}}}
+& & \inference
+    {\jfameq{{\Gamma}{A}}{P}{P'}}
+    {\jtermeq{{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}{\unitf{A}{P}}
+      {\unitft{A}{P}}
+      {\unitft{A}{P'}}}
+\end{align*}
+
+We impose the following compatibility rules for the unit type:
+
+\begin{align*}
+& \inference
+  {\jfam{{\Gamma}{A}}{P}}
+  {\jtypeeq{{{\Gamma}{A}}{P}}{\ctxext{\ctxwk{P}{\unitc{A}}}{\unitf{A}{P}}}{\unitc{{\Gamma}{A}}}}\\
+& \inference
+  {\jfam{\Gamma}{A}
+   \jfam{\Gamma}{B}}
+  {\jtypeeq{{{\Gamma}{A}}{\ctxwk{A}{B}}}{}{}}  
 \end{align*}
 
 \subsection{The empty type}
@@ -1308,6 +1377,169 @@ but also its induction principle should be compatible with those.
 \subsection{$\wtypesym$-types}
 
 \subsection{Universes}
+
+\subsection{The compatibility of the type constructors with each other}
+\label{compatibility-of-type-constructors}
+
+\section{Models of type theory}
+In this section we pursue the idea of what a general model of type theory is by
+axiomatizing what you can do with them. We have the following ideas:
+\begin{enumerate}
+\item There are dependent models and sections thereof. Particular instances
+of sections: extension, weakening and substitution (and something for identity
+function?). And like the original
+extension, weakening and substitution, they're going to be compatible with each
+other. Therefore we state our theory of models as an extension of type theory
+without constructors.
+\item Type theory without constructors is a model of itself, the canonical model $\mctx$.
+\item for any (family of) model(s) $A$, there is the family model $\mfam{A}$ which
+is a family of models over $A$.
+\item The terms of $\mctx$ should be precisely contexts. Terms of $\subst{\Gamma}{\mfam{\mctx}}$
+should be families over $\Gamma$.
+\item if a model and a family of models over it are given, there is an extended model.
+If we extend $A$ by $\mfam{A}$, we get the Sierpinski model of $A$.
+\item Likewise, models can be weakened and substituted and there are identity
+functions.
+
+\end{enumerate}
+So the theory of models is going to be an extension of this theory with this
+data.
+
+\subsection{The basic ingredients of the theory of models}
+We first introduce the basic ingredients of our abstract theory of models.
+\begin{align*}
+& \inference
+  {}
+  {\jctx{\mctx}}
+  \tag{the canonical model}\\
+& \inference
+  {\jfam{\Gamma}{A}}
+  {\jfam{{\Gamma}{A}}{\mfam{A}}}
+  \tag{families}\\
+& \inference
+  {\jterm{\Gamma}{A}{x}}
+  {\jterm{{\Gamma}{A}}{\mfam{A}}{\mfam{x}}}
+  \tag{term action of $\mfam{}$}\\
+& \inference
+  {\jctx{\Gamma}}
+  {\jfam{{\Gamma}{\mfam{\Gamma}}}{\mtm{\Gamma}}}
+  \tag{terms}
+\intertext{The empty context of a model $A$ is simply a term of $A$:}
+& \inference
+  {\jfam{\Gamma}{A}}
+  {\jterm{\Gamma}{A}{\tfemp{A}}}
+  \tag{empty context}
+\intertext{Extension is going to be a morphism from $\ctxext{A}{\mfam{A}}$ to
+$A$ in context $\Gamma$:}
+& \inference
+  {\jfam{\Gamma}{A}}
+  {\jhom{\Gamma}{{A}{\mfam{A}}}{A}{\tfext{A}}}
+  \tag{extension}
+\intertext{The action of weakening on families
+is a morphism from $\ctxwk{\mfam{A}}{\mfam{A}}$ to
+$\mfam{\mfam{A}}$ in context $\ctxext{{\Gamma}{A}}{\mfam{A}}$:}
+& \inference
+  {\jfam{\Gamma}{A}}
+  {\jhom{{{\Gamma}{A}}{\mfam{A}}}{\ctxwk{\mfam{A}}{\mfam{A}}}
+    {\mfam{\mfam{A}}}
+    {\tfwk{A}^0}}
+  \tag{weakening}
+\intertext{The action of weakening on terms
+is a morphism from $\ctxwk{\mfam{A}}{\mtm{A}}$ to $\mtm{\mfam{\mfam{A}}}$ over
+$\tfwk{A}^0$ in context $\ctxext{{\Gamma}{A}}{\mfam{A}}$:}
+& \inference
+  {\jfam{\Gamma}{A}}
+  {\jfhom
+    {{{\Gamma}{A}}{\mfam{A}}}
+    {\ctxwk{\mfam{A}}{\mfam{A}}}
+    {\mfam{\mfam{A}}}
+    {\tfwk{A}^0}
+    {\ctxwk{\mfam{A}}{\mtm{A}}}
+    {\mtm{\mfam{\mfam{A}}}}
+    {\tfwk{A}^1}}
+  \tag{weakening}
+\intertext{The action of substitution by a term on families
+is going to be a morphism from $\ctxwk{\mtm{A}}{\mfam{\mfam{A}}}$ to 
+$\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}$
+in context $\ctxext{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}$:}
+& \inference
+  {\jfam{\Gamma}{A}}
+  {\jhom
+  {{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}
+  {\ctxwk{\mtm{A}}{\mfam{\mfam{A}}}}
+  {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
+  {\tfsubst{A}^0}}
+\intertext{Likewise, the action of substitution by a term on terms of those
+families is going to be a morphism from $\ctxwk{\mtm{A}}{\mtm{\mfam{\mfam{A}}}}$
+to $\ctxwk{\mtm{A}}{{\mfam{A}}{\mtm{A}}}$ over $\tfsubst{A}^0$ in context
+$\ctxext{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}$:}
+& \inference
+  {\jfam{\Gamma}{A}}
+  {\jfhom
+  {{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}
+  {\ctxwk{\mtm{A}}{\mfam{\mfam{A}}}}
+  {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
+  {\tfsubst{A}^0}
+  {\ctxwk{\mtm{A}}{\mtm{\mfam{\mfam{A}}}}}
+  {\ctxwk{\mtm{A}}{{\mfam{A}}{\mtm{A}}}}
+  {\tfsubst{A}^1}}
+\intertext{The identity functions are coded by}
+& \inference
+  {\jfam{\Gamma}{A}}
+  {\jterm
+   {{{\Gamma}{A}}{\mfam{A}}}
+   {\subst{{\idfunc[\mfam{A}]}{\tfwk{A}^0}}{\mtm{\mfam{\mfam{A}}}}}
+   {\tfid{A}}}
+\end{align*}
+We will call the terms that we introduced here the model constructors.
+
+\subsection{The compatibility rules}
+We need to do several things in this section:
+\begin{enumerate}
+\item postulate that ordinary extension, weakening, substitution and identity
+functions are compatible with the model constructors.
+\item postulate that each of the model constructors is compatible with ordinary
+extension, weakening, substitution and identity functions.
+\item postulate that the model constructors are compatible with each other,
+so that they come to model ordinary extension, weakening, substitution and
+identity functions respectively.
+\end{enumerate}
+Note that the rules for compatibility with extension are going to explain which
+model $\ctxext{A}{P}$ is by telling what the families, the terms, extension,
+weakening, substitution and identity functions are. Likewise the rules for
+compatibility with weakening and substitution do this for their respective
+cases.
+
+\subsubsection{Families of extensions}
+\begin{equation*}
+\inference
+  {\jfam{{\Gamma}{A}}{P}}
+  {\jfameq{{{\Gamma}{A}}{P}}
+    {\mfam{{A}{P}}}
+    {{\ctxwk{P}{\mfam{A}}}{\ctxwk{{P}{\mfam{A}}}{\mfam{P}}}}}
+\end{equation*}
+
+\subsubsection{Terms of families of extensions}
+\begin{equation*}
+\inference
+  {\jterm{\Gamma}{A}{x}
+   \jterm{\Gamma}{\subst{x}{P}}{u}}
+  {\jtermeq
+    {{{\Gamma}{A}}{P}}
+    {\mfam{{A}{P}}}
+    {\mfam{{x}{u}}}
+    {{\ctxwk{P}{\mfam{x}}}{\mfam{u}}}}
+\end{equation*}
+
+\subsubsection{Terms of extensions}
+\begin{equation*}
+\inference
+  {\jfam{{\Gamma}{A}}{P}}
+  {\jfameq
+    {{{{\Gamma}{A}}{P}}{\mfam{{A}{P}}}}
+    {\mtm{{A}{P}}}
+    {{\ctxwk{{P}{\mfam{A}}}{{P}{\mtm{A}}}}{\ctxwk{{P}{\mfam{A}}}{\mtm{P}}}}}
+\end{equation*}
 
 \section{Pretty type theory}
 In this section we will do three things. First we explain basic type theory with

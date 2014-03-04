@@ -349,7 +349,7 @@
 \newcommand{\@judgment@ctx}{\@judgment@ext}
 \newcommand{\@judgment@rel}[5]{\@judgment@ext{#1} #2 \@judgment@ext{#3} #4 \@judgment@ext{#5}}
 \newcommand{\@judgment@kind}[1]{~~\textit{#1}}
-\newcommand{\@judgment@ext}[1]{\@ifnextchar\bgroup{\ctxext}{}#1}
+\newcommand{\@judgment@ext}[1]{\@ctxext@default#1}
 
 \newcommand{\quad@test}{%
   \@ifnextchar\jctx{\quad}{%
@@ -450,6 +450,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% THE EMPTY CONTEXT
 
+\makeatletter
+\newcommand{\tfemp}[1]{\typefont{emp}_{\@ctxext@default #1}}
+\makeatother
+
 \newcommand{\emptyc}{{[\;]}}
 \newcommand{\emptyf}[1][]{{[\;]}_{#1}}
 \newcommand{\emptytm}[1][]{\typefont{\#}_{#1}}
@@ -459,7 +463,9 @@
 %%%%
 %%%% explicit context extension notation which we will use only rarely
 
-\newcommand{\tfext}{\typefont{ext}}
+\makeatletter
+\newcommand{\tfext}[1]{\typefont{ext}_{\@ctxext@default #1}}
+\makeatother
 
 %%%% The context extension command.
 %%%%
@@ -476,6 +482,11 @@
 \newcommand{\@@ctxext}[1]{\@ifnextchar\bgroup{\@ctxext@parens{#1}}{#1}}
 \newcommand{\@ctxext@parens}[2]{(\ctxext{#1}{#2})}
 \newcommand{\@ctxext@nested}[3]{\@ctxext@parens{#2}{#3}}
+
+%%%% We want that some commands accept binary trees as arguments that default
+%%%% into extensions. We make the following command to realize this
+\newcommand{\@ctxext@default}{\@ifnextchar\bgroup{\ctxext}{}}
+\newcommand{\@ctxext@default@parens}{\@ifnextchar\bgroup{\@ctxext@parens}{}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -535,7 +546,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% SUBSTITUTION
 
-\newcommand{\tfsubst}{\typefont{subst}}
+\makeatletter
+\newcommand{\tfsubst}[1]{\typefont{subst}_{\@ctxext@default #1}}
+\makeatother
 
 %%%% The substitution command will act the following way
 %%%%
@@ -556,7 +569,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% WEAKENING
 
-\newcommand{\tfwk}{\typefont{wk}}
+\makeatletter
+\newcommand{\tfwk}[1]{\typefont{wk}_{\@ctxext@default #1}}
+\makeatother
 
 %%%% The weakening command is very much like the substitution command.
 
@@ -592,9 +607,10 @@
 %%%% JUDGMENTAL MORPHISMS
 
 \makeatletter
-\newcommand{\jhom}[4]{\jterm{{#1}{#2}}{\ctxwk{#2}{#3}}{#4}}
+\newcommand{\tfid}[1]{\typefont{idfun}_{\@ctxext@default #1}}
+\newcommand{\jhom}[4]{\jterm{{#1}{#2}}{\ctxwk{\@ctxext@default #2}{\@ctxext@default@parens #3}}{#4}}
 \newcommand{\jhomeq}[5]{\jtermeq{{#1}{#2}}
-  {\ctxwk{\@ifnextchar\bgroup{\ctxext}{}#2}{\@ifnextchar\bgroup{\@ctxext@parens}{}#3}}{#4}{#5}}
+  {\ctxwk{\@ctxext@default #2}{\@ctxext@default@parens #3}}{#4}{#5}}
 \newcommand{\jhomdefn}[5]{\jtermdefn{{#1}{#2}}{\ctxwk{#2}{#3}}{#4}{#5}}
 \newcommand{\jcomp}[2]{\jcomp@testleft #2 \circ \jcomp@testright #1}
 \newcommand{\jcomp@testleft}{%
@@ -611,6 +627,30 @@
   }}}}}
 \newcommand{\@jcomp@nested}[3]{\@jcomp@parens{#2}{#3}}
 \newcommand{\@jcomp@parens}[2]{(\jcomp{#1}{#2})}
+
+\newcommand{\jfhom}[7]{\jterm
+  {{{#1}{#2}}{#5}}
+  {\ctxwk{\@ctxext@default #5}{\jcomp{#4}{#6}}}
+  {#7}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% The compatible unit type
+
+\makeatletter
+\newcommand{\unitc}[1]{\unit^0_{\@ctxext@default #1}}
+\newcommand{\unitct}[1]{\ttt^0_{\@ctxext@default #1}}
+\newcommand{\unitf}[2]{\unit^1_{\@ctxext@default #1,\@ctxext@default #2}}
+\newcommand{\unitft}[2]{\ttt^1_{\@ctxext@default #1,\@ctxext@default #2}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Models
+
+\makeatletter
+\newcommand{\mctx}{\mathcal{C}}
+\newcommand{\mfam}[1]{\mathcal{F}_{\@ctxext@default #1}}
+\newcommand{\mtm}[1]{\mathcal{T}_{\@ctxext@default #1}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
