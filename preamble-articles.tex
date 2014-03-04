@@ -611,6 +611,8 @@
 \newcommand{\unfoldall}[1]{%
   \begingroup
   \renewcommand{\jhom}{\jhom@unfold}
+  \renewcommand{\jhomeq}{\jhomeq@unfold}
+  \renewcommand{\jhomdefn}{\jhomdefn@unfold}
   \renewcommand{\jfhom}{\jfhom@unfold}
   \renewcommand{\jcomp}{\jcomp@unfold}
   \renewcommand{\@jcomp@nested}{\@jcomp@unfold@nested}
@@ -681,8 +683,8 @@
     {#5}}
 
 %%%% Composition of morphisms
-\newcommand{\jcomp}[2]{%
-  \jcomp@testleft #2 \circ \jcomp@testright #1}
+\newcommand{\jcomp}[3]{%
+  \jcomp@testleft #3 \circ \jcomp@testright #2}
 \newcommand{\jcomp@testleft}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\ctxwk{\@ctxwk@nested}{%
@@ -695,23 +697,23 @@
   \@ifnextchar\ctxext{\@ctxext@nested}{%
   \@ifnextchar\bgroup{\@jcomp@parens}{%
   }}}}}
-\newcommand{\@jcomp@nested}[3]{%
-  \@jcomp@parens{#2}{#3}}
-\newcommand{\@jcomp@parens}[2]{%
-  (\jcomp{#1}{#2})}
+\newcommand{\@jcomp@nested}[4]{%
+  \@jcomp@parens{#2}{#3}{#4}}
+\newcommand{\@jcomp@parens}[3]{%
+  (\jcomp{#1}{#2}{#3})}
 
-\newcommand{\jcomp@unfold}[2]{%
-  \subst{f}{\ctxwk{\blank}{#2}}}
-\newcommand{\@jcomp@unfold@nested}[3]{%
-  \@jcomp@unfold@parens{#2}{#3}}
-\newcommand{\@jcomp@unfold@parens}[2]{%
-  (\jcomp@unfold{#1}{#2})}
+\newcommand{\jcomp@unfold}[3]{%
+  \subst{#2}{\ctxwk{#1}{#3}}}
+\newcommand{\@jcomp@unfold@nested}[4]{%
+  \@jcomp@unfold@parens{#2}{#3}{#4}}
+\newcommand{\@jcomp@unfold@parens}[3]{%
+  (\jcomp@unfold{#1}{#2}{#3})}
 
 %%%% The judgment that F is a morphism from P to Q over f in context \Gamma.
 \newcommand{\jfhom}[7]{\judgment{#1}{}{}{#7}{}{}{\jhomsym[#4]{#5}{#6}}}
 \newcommand{\jfhom@unfold}[7]{\jterm
   {{{#1}{#2}}{#5}}
-  {\ctxwk{\default@ctxext #5}{\jcomp{#4}{#6}}}
+  {\ctxwk{\default@ctxext #5}{\jcomp{#2}{#4}{#6}}}
   {#7}}
 \makeatother
 
