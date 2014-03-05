@@ -70,10 +70,17 @@ and ``$x$ is a term of the family $A$ of contexts over $\Gamma$''. The other fou
 judgments are for judgmental equality. 
 
 \begin{align*}
-\jctx*{\Gamma} & \jctxeq*{\Gamma}{\Gamma'}\\
-\jfam*{\Gamma}{A} & \jfameq*{\Gamma}{A}{B}\\
-\jtype*{\Gamma}{A} & \jtypeeq*{\Gamma}{A}{B}\\
-\jterm*{\Gamma}{A}{x} & \jtermeq*{\Gamma}{A}{x}{y}.
+\jctx*{\Gamma} 
+& \jctxeq*{\Gamma}{\Gamma'}
+  \\
+\jfam*{\Gamma}{A} 
+& \jfameq*{\Gamma}{A}{B}
+  \\
+\jtype*{\Gamma}{A} 
+& \jtypeeq*{\Gamma}{A}{B}
+  \\
+\jterm*{\Gamma}{A}{x} 
+& \jtermeq*{\Gamma}{A}{x}{y}.
 \end{align*}
 
 If $A$ is a type
@@ -86,19 +93,28 @@ context $\Gamma$. This is expressed by the following four inference rules:
 
 \begin{align*}
 & \inference
-  {\jtype{\Gamma}{A}}
-  {\jfam{\Gamma}{A}}
+  { \jtype{\Gamma}{A}
+    }
+  { \jfam{\Gamma}{A}
+    }
 & & \inference
-    {\jtypeeq{\Gamma}{A}{B}}
-    {\jfameq{\Gamma}{A}{B}}\\
+    { \jtypeeq{\Gamma}{A}{B}
+      }
+    { \jfameq{\Gamma}{A}{B}
+      }
+    \\
 & \inference
-  {\jtype{\Gamma}{A}
-   \jfameq{\Gamma}{A}{B}}
-  {\jtype{\Gamma}{B}}
+  { \jtype{\Gamma}{A}
+    \jfameq{\Gamma}{A}{B}
+    }
+  { \jtype{\Gamma}{B}
+    }
 & & \inference
-    {\jtype{\Gamma}{A}
-     \jfameq{\Gamma}{A}{B}}
-    {\jtypeeq{\Gamma}{A}{B}}
+    { \jtype{\Gamma}{A}
+      \jfameq{\Gamma}{A}{B}
+      }
+    { \jtypeeq{\Gamma}{A}{B}
+      }
 \end{align*}
 
 
@@ -108,35 +124,55 @@ in all three cases (contexts, types and terms).
 \bgroup\small
 \begin{align*}
 & \inference
-  {\jctx{\Gamma}}
-  {\jctxeq{\Gamma}{\Gamma}} 
+  { \jctx{\Gamma}
+    }
+  { \jctxeq{\Gamma}{\Gamma}
+    } 
 & & \inference
-    {\jctxeq{\Gamma}{\Delta}}
-    {\jctxeq{\Delta}{\Gamma}} 
+    { \jctxeq{\Gamma}{\Delta}
+      }
+    { \jctxeq{\Delta}{\Gamma}
+      } 
 & & \inference
-    {\jctxeq{\Gamma}{\Delta}
-     \jctxeq{\Delta}{\greek{E}}}
-    {\jctxeq{\Gamma}{\greek{E}}}\\
+    { \jctxeq{\Gamma}{\Delta}
+      \jctxeq{\Delta}{\greek{E}}
+      }
+    { \jctxeq{\Gamma}{\greek{E}}
+      }
+    \\
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jfameq{\Gamma}{A}{A}} 
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{A}{A}
+    } 
 & & \inference
-    {\jfameq{\Gamma}{A}{B}}
-    {\jfameq{\Gamma}{B}{A}}
+    { \jfameq{\Gamma}{A}{B}
+      }
+    { \jfameq{\Gamma}{B}{A}
+      }
 & & \inference
-    {\jfameq{\Gamma}{A}{B}
-     \jfameq{\Gamma}{B}{C}}
-    {\jfameq{\Gamma}{A}{C}}\\
+    { \jfameq{\Gamma}{A}{B}
+      \jfameq{\Gamma}{B}{C}
+      }
+    { \jfameq{\Gamma}{A}{C}
+      }
+    \\
 & \inference
-  {\jterm{\Gamma}{A}{x}}
-  {\jtermeq{\Gamma}{A}{x}{x}}
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq{\Gamma}{A}{x}{x}
+    }
 & & \inference
-    {\jtermeq{\Gamma}{A}{x}{y}}
-    {\jtermeq{\Gamma}{A}{y}{x}}
+    { \jtermeq{\Gamma}{A}{x}{y}
+      }
+    { \jtermeq{\Gamma}{A}{y}{x}
+      }
 & & \inference
-    {\jtermeq{\Gamma}{A}{x}{y}
-     \jtermeq{\Gamma}{A}{y}{z}}
-    {\jtermeq{\Gamma}{A}{x}{z}}
+    { \jtermeq{\Gamma}{A}{x}{y}
+      \jtermeq{\Gamma}{A}{y}{z}
+      }
+    { \jtermeq{\Gamma}{A}{x}{z}
+      }
 \end{align*}
 \egroup
 
@@ -145,29 +181,43 @@ of judgmental equality, which sets it apart from equivalences or identifications
 
 \begin{align*}
 & \inference
-  {\jctxeq{\Gamma}{\Delta}
-   \jfam{\Gamma}{A}}
-  {\jfam{\Delta}{A}}
+  { \jctxeq{\Gamma}{\Delta}
+    \jfam{\Gamma}{A}
+    }
+  { \jfam{\Delta}{A}
+    }
 & & \inference
-    {\jctxeq{\Gamma}{\Delta}
-     \jfameq{\Gamma}{A}{B}}
-    {\jfameq{\Delta}{A}{B}}\\
+    { \jctxeq{\Gamma}{\Delta}
+      \jfameq{\Gamma}{A}{B}
+      }
+    { \jfameq{\Delta}{A}{B}
+      }
+    \\
 & \inference
-  {\jctxeq{\Gamma}{\Delta}
-   \jterm{\Gamma}{A}{x}}
-  {\jterm{\Delta}{A}{x}}
+  { \jctxeq{\Gamma}{\Delta}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jterm{\Delta}{A}{x}
+    }
 & & \inference
-    {\jctxeq{\Gamma}{\Delta}
-     \jtermeq{\Gamma}{A}{x}{y}}
-    {\jtermeq{\Delta}{A}{x}{y}}\\
+    { \jctxeq{\Gamma}{\Delta}
+      \jtermeq{\Gamma}{A}{x}{y}
+      }
+    { \jtermeq{\Delta}{A}{x}{y}
+      }
+    \\
 & \inference
-  {\jfameq{\Gamma}{A}{B}
-   \jterm{\Gamma}{A}{x}}
-  {\jterm{\Gamma}{B}{x}}
+  { \jfameq{\Gamma}{A}{B}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jterm{\Gamma}{B}{x}
+    }
 & & \inference
-    {\jfameq{\Gamma}{A}{B}
-     \jtermeq{\Gamma}{A}{x}{y}}
-    {\jtermeq{\Gamma}{B}{x}{y}}
+    { \jfameq{\Gamma}{A}{B}
+      \jtermeq{\Gamma}{A}{x}{y}
+      }
+    { \jtermeq{\Gamma}{B}{x}{y}
+      }
 \end{align*}
 
 \subsection{The empty context}
@@ -178,17 +228,31 @@ always has a unique term.
 
 \begin{align}
 & \inference
-  {}
-  {\jctx{\emptyc}}\\
+  { }
+  { \jctx{\emptyc}
+    }
+  \\
 & \inference
-  {\jctx{\Gamma}}
-  {\jfam{\Gamma}{\emptyf[\Gamma]}}\\
+  { \jctx{\Gamma}
+    }
+  { \jfam{\Gamma}{\emptyf[\Gamma]}
+    }
+  \\
 & \inference
-  {\jctx{\Gamma}}
-  {\jterm{\Gamma}{\emptyf[\Gamma]}{\emptytm[\Gamma]}}\\
+  { \jctx{\Gamma}
+    }
+  { \jterm{\Gamma}{\emptyf[\Gamma]}{\emptytm[\Gamma]}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{\emptyf[\Gamma]}{x}}
-  {\jtermeq{\Gamma}{\emptyf[\Gamma]}{x}{\emptytm[\Gamma]}}
+  { \jterm{\Gamma}{\emptyf[\Gamma]}{x}
+    }
+  { \jtermeq
+      {\Gamma}
+      {\emptyf[\Gamma]}
+      {x}
+      {\emptytm[\Gamma]}
+    }
 \end{align}
 
 Moreover, if $\Gamma$ is a context family over the
@@ -198,17 +262,26 @@ of terms of contexts too.
 
 \begin{align}
 & \inference
-  {\jctx{\Gamma}}
-  {\jfam{\emptyc}{\Gamma}} 
+  { \jctx{\Gamma}
+    }
+  { \jfam{\emptyc}{\Gamma}
+    } 
 & & \inference
-    {\jfam{\emptyc}{\Gamma}}
-    {\jctx{\Gamma}}\\
+    { \jfam{\emptyc}{\Gamma}
+      }
+    { \jctx{\Gamma}
+      }
+    \\
 & \inference
-  {\jctxeq{\Gamma}{\Delta}}
-  {\jfameq{\emptyc}{\Gamma}{\Delta}}
+  { \jctxeq{\Gamma}{\Delta}
+    }
+  { \jfameq{\emptyc}{\Gamma}{\Delta}
+    }
 & & \inference
-    {\jfameq{\emptyc}{\Gamma}{\Delta}}
-    {\jctxeq{\Gamma}{\Delta}}
+    { \jfameq{\emptyc}{\Gamma}{\Delta}
+      }
+    { \jctxeq{\Gamma}{\Delta}
+      }
 \end{align}
 
 \subsubsection{The empty context is compatible with itslef}
@@ -216,8 +289,12 @@ The empty context $\emptyc$ may be considered as a family of contexts over the e
 context. When we do this, we get $\emptyf[\emptyc]$.
 \begin{equation}
 \inference
-{}
-{\jfameq{\emptyc}{\emptyc}{\emptyf[\emptyc]}}
+  { }
+  { \jfameq
+      {\emptyc}
+      {\emptyc}
+      {\emptyf[\emptyc]}
+    }
 \end{equation}
 In the future, we shall denote $\emptyf[\Gamma]$ by $\emptyf$. The above rule
 guarantees that this will not cause confusion. Likewise, we shall denote
@@ -235,33 +312,50 @@ $A$ is the same thing as a family $P$ over $\ctxext{\Gamma}{A}$ and
 
 \begin{align}
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jctx{\ctxext{\Gamma}{A}}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jctx{\ctxext{\Gamma}{A}}
+    }
 & & \inference
-    {\jctxeq{\Gamma}{\Delta}
-     \jfameq{\Gamma}{A}{B}}
-    {\jctxeq{\ctxext{\Gamma}{A}}{\ctxext{\Delta}{B}}}\\
+    { \jctxeq{\Gamma}{\Delta}
+      \jfameq{\Gamma}{A}{B}
+      }
+    { \jctxeq{\ctxext{\Gamma}{A}}{\ctxext{\Delta}{B}}
+      }
+    \\
 & \inference
-  {\jfam{{\Gamma}{A}}{P}}
-  {\jfam{\Gamma}{\ctxext{A}{P}}}
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfam{\Gamma}{\ctxext{A}{P}}
+    }
 & & \inference
-    {\jfameq{\Gamma}{A}{B} 
-     \jfameq{{\Gamma}{A}}{P}{Q}}
-    {\jfameq{\Gamma}{\ctxext{A}{P}}{\ctxext{B}{Q}}}
+    { \jfameq{\Gamma}{A}{B} 
+      \jfameq{{\Gamma}{A}}{P}{Q}
+      }
+    { \jfameq{\Gamma}{\ctxext{A}{P}}{\ctxext{B}{Q}}
+      }
 \end{align}
 
 \subsubsection{Extension is compatible with the empty context}
 The following rule asserts that extension by $\emptyc$ leaves the contexts unchanged.
 \begin{align}
 & \inference
-  {\jctx{\Gamma}}
-  {\jctxeq{\ctxext{\emptyc}{\Gamma}}{\Gamma}}\\
+  { \jctx{\Gamma}
+    }
+  { \jctxeq{\ctxext{\emptyc}{\Gamma}}{\Gamma}
+    }
+  \\
 & \inference
-  {\jctx{\Gamma}}
-  {\jctxeq{\ctxext{\Gamma}{\emptyf}}{\Gamma}}\\
+  { \jctx{\Gamma}
+    }
+  { \jctxeq{\ctxext{\Gamma}{\emptyf}}{\Gamma}
+    }
+  \\
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jfameq{\Gamma}{\ctxext{\emptyf}{A}}{A}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{\ctxext{\emptyf}{A}}{A}
+    }
 \end{align}
 
 \subsubsection{Extension is compatible with itself}\label{comp-ee}
@@ -272,13 +366,18 @@ $A$ is the same thing as a family over $\ctxext{\Gamma}{A}$.
 
 \begin{align}
 & \inference
-  {\jfam{\Gamma}{A}
-   \jfam{{\Gamma}{A}}{P}}
-  {\jctxeq{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}}\\
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jctxeq{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}
+    }
+  \\
 & \inference
-  {\jfam{{\Gamma}{A}}{P}
-   \jfam{{{\Gamma}{A}}{P}}{Q}}
-  {\jfameq{\Gamma}{\ctxext{{A}{P}}{Q}}{\ctxext{A}{{P}{Q}}}}
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq{\Gamma}{\ctxext{{A}{P}}{Q}}{\ctxext{A}{{P}{Q}}}
+    }
 \end{align}
 
 \subsection{The type theoretic operation of weakening}
@@ -295,38 +394,70 @@ can be seen as the constant term with value $y$.
  $\jfameq{\Gamma}{A}{A'}$.
 \begin{align}
 & \inference
-  {\jfam{\Gamma}{B}}
-  {\jfam{{\Gamma}{A}}{\ctxwk{A}{B}}}
+  { \jfam{\Gamma}{B}
+    }
+  { \jfam{{\Gamma}{A}}{\ctxwk{A}{B}}
+    }
 & & \inference
-    {\jfameq{\Gamma}{B}{B'}}
-    {\jfameq{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}}\\
+    { \jfameq{\Gamma}{B}{B'}
+      }
+    { \jfameq{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}
+      }
+    \\
 & \inference
-  {\jfam{{\Gamma}{B}}{Q}}
-  {\jfam{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
+  { \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfam{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}
+    }
 & & \inference
-    {\jfameq{{\Gamma}{B}}{Q}{Q'}}
-    {\jfameq{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}{\ctxwk{A'}{Q'}}}\\
+    { \jfameq{{\Gamma}{B}}{Q}{Q'}
+      }
+    { \jfameq
+        {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+        {\ctxwk{A}{Q}}
+        {\ctxwk{A'}{Q'}}
+      }
+    \\
 & \inference
-  {\jterm{\Gamma}{B}{y}}
-  {\jterm{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}}
+  { \jterm{\Gamma}{B}{y}
+    }
+  { \jterm{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}
+    }
 & & \inference
-    {\jtermeq{\Gamma}{B}{y}{y'}}
-    {\jtermeq{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}{\ctxwk{A'}{y'}}}\\
+    { \jtermeq{\Gamma}{B}{y}{y'}
+      }
+    { \jtermeq
+        {{\Gamma}{A}}
+        {\ctxwk{A}{B}}
+        {\ctxwk{A}{y}}
+        {\ctxwk{A'}{y'}}
+      }
+    \\
 & \inference
-  {\jterm{{\Gamma}{B}}{Q}{g}}
-  {\jterm{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}{\ctxwk{A}{g}}}
+  { \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jterm{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}{\ctxwk{A}{g}}
+    }
 & & \inference
-    {\jtermeq{{\Gamma}{B}}{Q}{g}{g'}}
-    {\jtermeq{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}{\ctxwk{A}{g}}{\ctxwk{A'}{g'}}}
+    { \jtermeq{{\Gamma}{B}}{Q}{g}{g'}
+      }
+    { \jtermeq
+        {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+        {\ctxwk{A}{Q}}
+        {\ctxwk{A}{g}}
+        {\ctxwk{A'}{g'}}
+      }
 \end{align}
 
 We add rules asserting that a weakened type is again a type:
 
 \begin{align}
 & \inference
-  {\jfam{\Gamma}{B}
-   \jtype{\ctxext{\Gamma}{B}}{Q}}
-  {\jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
+  { \jfam{\Gamma}{B}
+    \jtype{\ctxext{\Gamma}{B}}{Q}
+    }
+  { \jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}
+    }
 \end{align}
 
 \subsubsection{Weakening is compatible with the empty context}
@@ -334,28 +465,44 @@ The following rules express that when the empty context or context family is
 weakened, the result is the empty context family.
 \begin{align}
 & \inference
-  {\jctx{\Gamma}}
-  {\jfameq{\Gamma}{\ctxwk{\Gamma}{\emptyc}}{\emptyf}}\\
+  { \jctx{\Gamma}
+    }
+  { \jfameq{\Gamma}{\ctxwk{\Gamma}{\emptyc}}{\emptyf}
+    }
+  \\
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jfameq{{\Gamma}{A}}{\ctxwk{A}{\emptyf}}{\emptyf}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{{\Gamma}{A}}{\ctxwk{A}{\emptyf}}{\emptyf}
+    }
 \end{align}
 Weakening by the empty family $\emptyf$ over a context $\Gamma$ leaves families, 
 their terms, families over those families and
 terms of those unchanged:
 \begin{align}
 & \inference
-  {\jfam{\Gamma}{B}}
-  {\jfameq{\Gamma}{\ctxwk{\emptyf}{B}}{B}}\\
+  { \jfam{\Gamma}{B}
+    }
+  { \jfameq{\Gamma}{\ctxwk{\emptyf}{B}}{B}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{B}{y}}
-  {\jtermeq{\Gamma}{B}{\ctxwk{\emptyf}{y}}{y}}\\
+  { \jterm{\Gamma}{B}{y}
+    }
+  { \jtermeq{\Gamma}{B}{\ctxwk{\emptyf}{y}}{y}
+    }
+  \\
 & \inference
-  {\jfam{{\Gamma}{B}}{Q}}
-  {\jfameq{{\Gamma}{B}}{\ctxwk{\emptyf}{Q}}{Q}}\\
+  { \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq{{\Gamma}{B}}{\ctxwk{\emptyf}{Q}}{Q}
+    }
+  \\
 & \inference
-  {\jterm{{\Gamma}{B}}{Q}{g}}
-  {\jtermeq{{\Gamma}{B}}{Q}{\ctxwk{\emptyf}{g}}{g}}
+  { \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jtermeq{{\Gamma}{B}}{Q}{\ctxwk{\emptyf}{g}}{g}
+    }
 \end{align}
 
 \subsubsection{Weakening is compatible with extension}\label{comp-we}
@@ -376,11 +523,13 @@ following compatibility rules become completely obvious.
 In the following inference rules we assume that $\jfam{\Gamma}{A}$.
 \begin{align}
 & \inference
-  {\jfam{{{\Gamma}{B}}{Q}}{R}}
-  {\jfameq
-    {\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}
-    {\ctxwk{A}{\ctxext{Q}{R}}}
-    {\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}}
+  { \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jfameq
+      {\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{\ctxext{Q}{R}}}
+      {\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+    }
 \end{align}
 
 \subsubsection{Weakening is compatible with itself}\label{comp-ww}
@@ -389,26 +538,42 @@ that weakening is compatible with itself. These rules state that the following
 diagram commutes given any two families $A$ and $B$ in context $\Gamma$:
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
-\jfam{\Gamma}{\blank} \ar{r}{C\mapsto\ctxwk{B}{C}} \ar{d}[swap]{C\mapsto\ctxwk{A}{C}} & \jfam{{\Gamma}{B}}{\blank} \ar{d}{Q\mapsto\ctxwk{A}{Q}}\\
-\jfam{{\Gamma}{A}}{\blank} \ar{r}[swap]{P\mapsto\ctxwk{{A}{B}}{P}} & \jfam{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\blank}
+\jfam{\Gamma}{\blank} 
+  \ar{r}{C\mapsto\ctxwk{B}{C}} 
+  \ar{d}[swap]{C\mapsto\ctxwk{A}{C}} 
+& \jfam{{\Gamma}{B}}{\blank} 
+  \ar{d}{Q\mapsto\ctxwk{A}{Q}}
+  \\
+\jfam{{\Gamma}{A}}{\blank} 
+  \ar{r}[swap]{P\mapsto\ctxwk{{A}{B}}{P}} 
+& \jfam{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\blank}
 \end{tikzcd}
 \end{equation*}
 Thus, we get the following set of inference rules:
 \begin{align}
 & \inference
-  {\jfam{\Gamma}{A}
-   \jfam{\Gamma}{B}
-   \jfam{{\Gamma}{C}}{R}}
-  {\jfameq{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
-    {\ctxwk{A}{{B}{R}}}
-    {\ctxwk{{A}{B}}{{A}{R}}}}\label{comp-ww-f}\\
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jfam{{\Gamma}{C}}{R}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
+      {\ctxwk{A}{{B}{R}}}
+      {\ctxwk{{A}{B}}{{A}{R}}}
+    }
+  \label{comp-ww-f}\\
 & \inference
-  {\jfam{\Gamma}{A}
-   \jfam{\Gamma}{B}
-   \jterm{{\Gamma}{C}}{R}{t}}
-  {\jtermeq{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
-    {\ctxwk{{A}{B}}{{A}{R}}}{\ctxwk{A}{{B}{t}}}{\ctxwk{{A}{B}}{{A}{t}}}}
-\label{comp-ww-t}
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jterm{{\Gamma}{C}}{R}{t}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
+      {\ctxwk{{A}{B}}{{A}{R}}}
+      {\ctxwk{A}{{B}{t}}}
+      {\ctxwk{{A}{B}}{{A}{t}}}
+    }
+  \label{comp-ww-t}
 \end{align}
 
 \subsubsection{Extension is compatible with weakening}\label{comp-ew}
@@ -420,12 +585,23 @@ In the following inference rules we assume that
 $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$. 
 \begin{align}
 & \inference
-  {\jfam{{\Gamma}{B}}{Q}}
-  {\jfameq{{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}{\ctxwk{\ctxext{A}{P}}{Q}}{\ctxwk{P}{{A}{Q}}}}
+  { \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
+      {\ctxwk{\ctxext{A}{P}}{Q}}
+      {\ctxwk{P}{{A}{Q}}}
+    }
   \label{comp-ew-f}\\
 & \inference
-  {\jterm{{\Gamma}{B}}{Q}{g}}
-  {\jtermeq{{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}{\ctxwk{P}{{A}{Q}}}{\ctxwk{\ctxext{A}{P}}{g}}{\ctxwk{P}{{A}{g}}}} 
+  { \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
+      {\ctxwk{P}{{A}{Q}}}
+      {\ctxwk{\ctxext{A}{P}}{g}}
+      {\ctxwk{P}{{A}{g}}}
+    } 
   \label{comp-ew-t}
 \end{align}
 
@@ -444,75 +620,124 @@ in the rules introducing the definitional equalities we assume $\jtermeq{\Gamma}
 
 \begin{align}
 & \inference
-  {\jfam{{\Gamma}{A}}{P}}
-  {\jfam{\Gamma}{\subst{x}{P}}}
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfam{\Gamma}{\subst{x}{P}}
+    }
 & & \inference
-    {\jfameq{{\Gamma}{A}}{P}{P'}}
-    {\jfameq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}}\\
+    { \jfameq{{\Gamma}{A}}{P}{P'}
+      }
+    { \jfameq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}
+      }
+    \\
 & \inference
-  {\jfam{{{\Gamma}{A}}{P}}{Q}}
-  {\jfam{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfam{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}
+    }
 & & \inference
-    {\jfameq{{{\Gamma}{A}}{P}}{Q}{Q'}}
-    {\jfameq{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x'}{Q'}}}\\
+    { \jfameq{{{\Gamma}{A}}{P}}{Q}{Q'}
+      }
+    { \jfameq{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x'}{Q'}}
+      }
+    \\
 & \inference
-  {\jterm{{\Gamma}{A}}{P}{f}}
-  {\jterm{\Gamma}{\subst{x}{P}}{\subst{x}{f}}}
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jterm{\Gamma}{\subst{x}{P}}{\subst{x}{f}}
+    }
 & & \inference
-    {\jtermeq{{\Gamma}{A}}{P}{f}{f'}}
-    {\jtermeq{\Gamma}{\subst{x}{P}}{\subst{x}{f}}{\subst{x'}{f'}}}\\
+    { \jtermeq{{\Gamma}{A}}{P}{f}{f'}
+      }
+    { \jtermeq{\Gamma}{\subst{x}{P}}{\subst{x}{f}}{\subst{x'}{f'}}
+      }
+    \\
 & \inference
-  {\jterm{{{\Gamma}{A}}{P}}{Q}{g}}
-  {\jterm{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}}
+  { \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    }
+  { \jterm{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}
+    }
 & & \inference
-    {\jtermeq{{{\Gamma}{A}}{P}}{Q}{g}{g'}}
-    {\jtermeq{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}{\subst{x'}{g'}}}
+    { \jtermeq{{{\Gamma}{A}}{P}}{Q}{g}{g'}
+      }
+    { \jtermeq
+        {{\Gamma}{\subst{x}{P}}}
+        {\subst{x}{Q}}
+        {\subst{x}{g}}
+        {\subst{x'}{g'}}
+      }
 \end{align}
 
 We also add the following rule asserting that substitution preserves the
 property of being a type:
 \begin{align}
 & \inference
-  {\jterm{\Gamma}{A}{x}
-   \jtype{\ctxext{{\Gamma}{A}}{P}}{Q}}
-  {\jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+  { \jterm{\Gamma}{A}{x}
+    \jtype{\ctxext{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}
+    }
 \end{align}
 
 \subsubsection{Substitution is compatible with the empty context}
 The fibers of the empty family are the empty families:
 \begin{align}
 & \inference
-  {\jterm{\Gamma}{A}{x}}
-  {\jfameq{\Gamma}{\subst{x}{\emptyf}}{\emptyf}}\\
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jfameq{\Gamma}{\subst{x}{\emptyf}}{\emptyf}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{A}{x}
-   \jfam{{\Gamma}{A}}{P}}
-  {\jfameq{{\Gamma}{\subst{x}{P}}}{\subst{x}{\emptyf}}{\emptyf}}
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\emptyf}}
+      {\emptyf}
+    }
 \end{align}
 
 The following rules assert that substituting by the term $\jterm{\Gamma}{\emptyf}{\emptytm}$
 leaves everything unchanged.
 \begin{align}
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jfameq{\Gamma}{\subst{\emptytm}{A}}{A}}\\
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{\subst{\emptytm}{A}}{A}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{A}{x}}
-  {\jtermeq{\Gamma}{A}{\subst{\emptytm}{x}}{x}}\\
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq{\Gamma}{A}{\subst{\emptytm}{x}}{x}
+    }
+  \\
 & \inference
-  {\jfam{{\Gamma}{A}}{P}}
-  {\jfameq{{\Gamma}{A}}{\subst{\emptytm}{P}}{P}}\\
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq{{\Gamma}{A}}{\subst{\emptytm}{P}}{P}
+    }
+  \\
 & \inference
-  {\jterm{{\Gamma}{A}}{P}{f}}
-  {\jtermeq{{\Gamma}{A}}{P}{\subst{\emptytm}{f}}{f}}.
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jtermeq{{\Gamma}{A}}{P}{\subst{\emptytm}{f}}{f}
+    }.
 \end{align}
 
 \subsubsection{Substitution is compatible with extension}\label{comp-se}
 Suppose $\jterm{\Gamma}{A}{x}$ in all of the following inference rule.
 \begin{align}
 & \inference
-  {\jfam{{{{\Gamma}{A}}{P}}{Q}}{R}}
-  {\jfameq{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxext{Q}{R}}}{\ctxext{\subst{x}{Q}}{\subst{x}{R}}}}
+  { \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\ctxext{Q}{R}}}
+      {\ctxext{\subst{x}{Q}}{\subst{x}{R}}}
+    }
 \end{align}
 
 \subsubsection{Substitution is compatible with weakening}\label{comp-sw}
@@ -521,8 +746,15 @@ that the following diagram commutes for any $\jterm{\Gamma}{A}{x}$ and any
 $\jfam{{\Gamma}{A}}{P}$:
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
-\jfam{{\Gamma}{A}}{\blank} \ar{d}[swap]{Q\mapsto\subst{x}{Q}} \ar{r}{Q\mapsto\ctxwk{P}{Q}} & \jfam{{{\Gamma}{A}}{P}}{\blank} \ar{d}{R\mapsto\subst{x}{R}}\\ 
-\jfam{\Gamma}{\blank} \ar{r}[swap]{B\mapsto\ctxwk{\subst{x}{P}}{B}} & \jfam{{\Gamma}{\subst{x}{P}}}{\blank}
+\jfam{{\Gamma}{A}}{\blank} 
+  \ar{d}[swap]{Q\mapsto\subst{x}{Q}} 
+  \ar{r}{Q\mapsto\ctxwk{P}{Q}} 
+& \jfam{{{\Gamma}{A}}{P}}{\blank} 
+    \ar{d}{R\mapsto\subst{x}{R}}
+  \\ 
+\jfam{\Gamma}{\blank} 
+  \ar{r}[swap]{B\mapsto\ctxwk{\subst{x}{P}}{B}} 
+& \jfam{{\Gamma}{\subst{x}{P}}}{\blank}
 \end{tikzcd}
 \end{equation*}
 We plug in an extra layer of families to cover the most general case at once.
@@ -530,16 +762,23 @@ In the following inference rules we assume that $\jterm{\Gamma}{A}{x}$ and
 $\jfam{{\Gamma}{A}}{P}$:
 \begin{align}
 & \inference
-  {\jfam{{{\Gamma}{A}}{Q}}{R}}
-  {\jfameq{{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}{\subst{x}{\ctxwk{P}{R}}}{\ctxwk{\subst{x}{P}}{\subst{x}{R}}}}
+  { \jfam{{{\Gamma}{A}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}
+      {\subst{x}{\ctxwk{P}{R}}}
+      {\ctxwk{\subst{x}{P}}{\subst{x}{R}}}
+    }
   \label{comp-sw-f}\\
 & \inference
-  {\jterm{{{\Gamma}{A}}{Q}}{R}{h}}
-  {\jtermeq
+  { \jterm{{{\Gamma}{A}}{Q}}{R}{h}
+    }
+  { \jtermeq
       {\ctxext{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}
       {\subst{x}{\ctxwk{P}{R}}}
       {\subst{x}{\ctxwk{P}{h}}}
-      {\ctxwk{\subst{x}{P}}{\subst{x}{h}}}}
+      {\ctxwk{\subst{x}{P}}{\subst{x}{h}}}
+    }
   \label{comp-sw-t}
 \end{align}
 
@@ -559,12 +798,23 @@ $\jterm{\Gamma}{A}{x}$ and $\jterm{{\Gamma}{A}}{P}{f}$.
 
 \begin{align}
 & \inference
-  {\jfam{{{{\Gamma}{A}}{P}}{Q}}{R}}
-  {\jfameq{{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{{x}{f}}{{x}{R}}}}
+  { \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{{f}{Q}}}}
+      {\subst{x}{{f}{R}}}
+      {\subst{{x}{f}}{{x}{R}}}
+    }
   \label{comp-ss-f}\\
 & \inference
-  {\jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{h}}
-  {\jtermeq{{\Gamma}{\subst{x}{{f}{Q}}}}{\subst{x}{{f}{R}}}{\subst{x}{{f}{h}}}{\subst{{x}{f}}{{x}{h}}}}
+  { \jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{h}
+    }
+  { \jtermeq
+      {{\Gamma}{\subst{x}{{f}{Q}}}}
+      {\subst{x}{{f}{R}}}
+      {\subst{x}{{f}{h}}}
+      {\subst{{x}{f}}{{x}{h}}}
+    }
   \label{comp-ss-t}
 \end{align}
 
@@ -579,12 +829,23 @@ $\jterm{\Gamma}{B}{y}$.
 
 \begin{align}
 & \inference
-  {\jfam{{{\Gamma}{B}}{Q}}{R}}
-  {\jfameq{{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}{\ctxwk{A}{\subst{y}{R}}}{\subst{\ctxwk{A}{y}}{\ctxwk{A}{R}}}}
+  { \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}
+      {\ctxwk{A}{\subst{y}{R}}}
+      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{R}}}
+    }
   \label{comp-ws-f}\\
 & \inference
-  {\jterm{{{\Gamma}{B}}{Q}}{R}{h}}
-  {\jtermeq{{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}{\ctxwk{A}{\subst{y}{R}}}{\ctxwk{A}{\subst{y}{h}}}{\subst{\ctxwk{A}{y}}{\ctxwk{A}{h}}}}
+  { \jterm{{{\Gamma}{B}}{Q}}{R}{h}
+    }
+  { \jtermeq
+      {{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}
+      {\ctxwk{A}{\subst{y}{R}}}
+      {\ctxwk{A}{\subst{y}{h}}}
+      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{h}}}
+    }
   \label{comp-ws-t}
 \end{align}
 
@@ -600,15 +861,19 @@ compose context morphisms (terms of weakened contexts).
 
 \begin{align}
 & \inference
-  {\jfam{\Gamma}{A}
-   \jfam{{\Gamma}{B}}{Q}
-   \jterm{\Gamma}{A}{x}}
-  {\jfameq{{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}}
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jfameq{{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}
+    }
   \label{defn-ws-3}\\
 & \inference
-  {\jterm{\Gamma}{A}{x}
-   \jterm{{\Gamma}{B}}{Q}{g}}
-  {\jtermeq{{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}}
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jtermeq{{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}
+    }
   \label{defn-ws-4}
 \end{align}
 
@@ -619,13 +884,16 @@ compatibility of weakening with itself, we see that we can show
 The inference rule
 \begin{equation*}
 \inference
-  {\jfam{\Gamma}{A}
-   \jfam{\Gamma}{B}
-   \jfam{\Gamma}{C}
-   \jhom{\Gamma}{A}{B}{f}}
-  {\jfameq{{\Gamma}{A}}
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jfam{\Gamma}{C}
+    \jhom{\Gamma}{A}{B}{f}
+    }
+  { \jfameq
+    {{\Gamma}{A}}
     {\subst{f}{\ctxwk{A}{{B}{C}}}}
-    {\ctxwk{A}{C}}}
+    {\ctxwk{A}{C}}
+    }
 \end{equation*}
 is valid.
 \end{lem}
@@ -635,8 +903,11 @@ Let $\jfam{\Gamma}{A}$, $\jfam{\Gamma}{B}$, $\jfam{\Gamma}{C}$ and $\jhom{\Gamma
 Then we have the judgmental equalities
 \begin{align*}
 \subst{f}{\ctxwk{A}{{B}{C}}}
-& \jdeq \subst{f}{\ctxwk{{A}{B}}{{A}{C}}}\\
-& \jdeq \ctxwk{A}{C}.
+& \jdeq 
+  \subst{f}{\ctxwk{{A}{B}}{{A}{C}}}
+  \\
+& \jdeq 
+  \ctxwk{A}{C}.
 \end{align*}
 \end{proof}
 
@@ -681,8 +952,16 @@ We define
 Likewise, when we have a family $\jfam{{{\Gamma}{B}}{Q}}{R}$ and a term
 $\jterm{{{\Gamma}{B}}{Q}}{R}{h}$, we define
 \begin{align*}
-\jfamdefn*{{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}{\jcomp{A}{f}{R}}{\unfold{\jcomp{A}{f}{R}}}\\
-\jtermdefn*{{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}{\jcomp{A}{f}{R}}{\jcomp{A}{f}{h}}{\unfold{\jcomp{A}{f}{h}}}.
+\jfamdefn*
+  {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
+  {\jcomp{A}{f}{R}}
+  {\unfold{\jcomp{A}{f}{R}}}
+  \\
+\jtermdefn*
+  {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
+  {\jcomp{A}{f}{R}}
+  {\jcomp{A}{f}{h}}
+  {\unfold{\jcomp{A}{f}{h}}}.
 \end{align*}
 \end{defn}
 
@@ -693,42 +972,52 @@ We have the following inference rules about the situation where something is
 substituted by a composition:
 \begin{align*}
 & \inference
-  {\jhom{\Gamma}{A}{B}{f}
+  { \jhom{\Gamma}{A}{B}{f}
     \jhom{\Gamma}{B}{C}{g}
-    \jfam{{{\Gamma}{A}}{\ctxwk{A}{C}}}{R}}
-  {\jfameq
-    {{\Gamma}{A}}
-    {\subst{\jcomp{A}{f}{g}}{R}}
-    {\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{R}}}}}\\
+    \jfam{{{\Gamma}{A}}{\ctxwk{A}{C}}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{A}}
+      {\subst{\jcomp{A}{f}{g}}{R}}
+      {\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{R}}}}
+    }
+  \\
 & \inference
-  {\jhom{\Gamma}{A}{B}{f}
+  { \jhom{\Gamma}{A}{B}{f}
     \jhom{\Gamma}{B}{C}{g}
-    \jterm{{{\Gamma}{A}}{\ctxwk{A}{C}}}{R}{h}}
-  {\jfameq
+    \jterm{{{\Gamma}{A}}{\ctxwk{A}{C}}}{R}{h}
+    }
+  { \jfameq
     {{\Gamma}{A}}
     {\subst{\jcomp{A}{f}{g}}{h}}
-    {\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{h}}}}}
+    {\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{h}}}}
+    }
 \end{align*}
 We also have the following related inference rules, asserting that composition
 is strictly associative:
 \begin{align*}
 & \inference
-    {\jhom{\Gamma}{A}{B}{f}
-      \jhom{\Gamma}{B}{C}{g}
-      \jfam{{\Gamma}{C}}{R}}
-    {\jfameq
+  { \jhom{\Gamma}{A}{B}{f}
+    \jhom{\Gamma}{B}{C}{g}
+    \jfam{{\Gamma}{C}}{R}
+    }
+  { \jfameq
       {{\Gamma}{A}}
       {\jcomp{A}{{A}{f}{g}}{R}}
-      {\jcomp{A}{f}{{B}{g}{R}}}}\\
+      {\jcomp{A}{f}{{B}{g}{R}}}
+    }
+  \\
 & \inference
-    {\jhom{\Gamma}{A}{B}{f}
+    { \jhom{\Gamma}{A}{B}{f}
       \jhom{\Gamma}{B}{C}{g}
-      \jterm{{\Gamma}{C}}{R}{h}}
-    {\jtermeq
-      {{\Gamma}{A}}
-      {\jcomp{A}{{A}{f}{g}}{R}}
-      {\jcomp{A}{{A}{f}{g}}{h}}
-      {\jcomp{A}{f}{{B}{g}{h}}}}
+      \jterm{{\Gamma}{C}}{R}{h}
+      }
+    { \jtermeq
+        {{\Gamma}{A}}
+        {\jcomp{A}{{A}{f}{g}}{R}}
+        {\jcomp{A}{{A}{f}{g}}{h}}
+        {\jcomp{A}{f}{{B}{g}{h}}}
+      }
 \end{align*}
 \end{lem}
 
@@ -737,9 +1026,15 @@ Consider family morphisms $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
 and a family $\jfam{{{\Gamma}{A}}{\ctxwk{A}{C}}}{R}$. Then we have the judgmental
 equalities
 \begin{align*}
-\subst{\jcomp{A}{f}{g}}{R} & \jdeq \subst{{f}{\ctxwk{A}{g}}}{R}\\
-& \jdeq \subst{{f}{\ctxwk{A}{g}}}{\subst{f}{\ctxwk{{A}{B}}{R}}}\\
-& \jdeq \subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{R}}}
+\subst{\jcomp{A}{f}{g}}{R} 
+& \jdeq 
+  \subst{{f}{\ctxwk{A}{g}}}{R}
+  \\
+& \jdeq 
+  \subst{{f}{\ctxwk{A}{g}}}{\subst{f}{\ctxwk{{A}{B}}{R}}}
+  \\
+& \jdeq 
+  \subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{R}}}
 \end{align*}
 The proof that 
 $\subst{\jcomp{A}{f}{g}}{h}\jdeq\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{h}}}$
@@ -747,13 +1042,27 @@ is similar.
 
 Now suppose that $\jfam{{\Gamma}{C}}{R}$ instead. Then we have
 \begin{align*}
-\jcomp{A}{{A}{f}{g}}{R} & \jdeq \subst{\jcomp{A}{f}{g}}{\ctxwk{A}{R}}\\
-& \jdeq \subst{{f}{\ctxwk{A}{g}}}{\ctxwk{A}{R}}\\
-& \jdeq \subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{{A}{R}}}}\\
-& \jdeq \subst{f}{{\ctxwk{A}{g}}{\ctxwk{A}{{B}{R}}}}\\
-& \jdeq \subst{f}{\ctxwk{A}{\subst{g}{\ctxwk{B}{R}}}}\\
-& \jdeq \subst{f}{\ctxwk{A}{\jcomp{B}{g}{R}}}\\
-& \jdeq \jcomp{A}{f}{{B}{g}{R}}.
+\jcomp{A}{{A}{f}{g}}{R} 
+& \jdeq 
+  \subst{\jcomp{A}{f}{g}}{\ctxwk{A}{R}}
+  \\
+& \jdeq 
+  \subst{{f}{\ctxwk{A}{g}}}{\ctxwk{A}{R}}
+  \\
+& \jdeq 
+  \subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{{A}{R}}}}
+  \\
+& \jdeq 
+  \subst{f}{{\ctxwk{A}{g}}{\ctxwk{A}{{B}{R}}}}
+  \\
+& \jdeq 
+  \subst{f}{\ctxwk{A}{\subst{g}{\ctxwk{B}{R}}}}
+  \\
+& \jdeq 
+  \subst{f}{\ctxwk{A}{\jcomp{B}{g}{R}}}
+  \\
+& \jdeq 
+  \jcomp{A}{f}{{B}{g}{R}}.
 \end{align*}
 Again, the proof is similar for terms $h$ of $R$ in context $\ctxext{\Gamma}{C}$.
 \end{proof}
@@ -763,24 +1072,41 @@ We have the following inference rules about the compatibility of composition wit
 weakening:
 \begin{align*}
 & \inference
-  {\jhom{\Gamma}{A}{B}{f}
-   \jhom{\Gamma}{B}{C}{g}
-   \jfam{{\Gamma}{A}}{P}}
-  {\jhomeq{\Gamma}{{A}{P}}{C}
-    {\ctxwk{P}{\jcomp{A}{f}{g}}}
-    {\jcomp{{A}{P}}{\ctxwk{P}{f}}{g}}}\\
+  { \jhom{\Gamma}{A}{B}{f}
+    \jhom{\Gamma}{B}{C}{g}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jhomeq
+      {\Gamma}
+      {{A}{P}}
+      {C}
+      {\ctxwk{P}{\jcomp{A}{f}{g}}}
+      {\jcomp{{A}{P}}{\ctxwk{P}{f}}{g}}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{B}{y}
-   \jhom{\Gamma}{B}{C}{g}}
-  {\jhomeq{\Gamma}{A}{C}
-    {\jcomp{A}{\ctxwk{A}{y}}{g}}
-    {\ctxwk{A}{\subst{y}{g}}}}\\
+  { \jterm{\Gamma}{B}{y}
+    \jhom{\Gamma}{B}{C}{g}
+    }
+  { \jhomeq
+      {\Gamma}
+      {A}
+      {C}
+      {\jcomp{A}{\ctxwk{A}{y}}{g}}
+      {\ctxwk{A}{\subst{y}{g}}}
+    }
+  \\
 & \inference
-  {\jhom{\Gamma}{A}{B}{f}
-   \jterm{\Gamma}{C}{z}}
-  {\jhomeq{\Gamma}{A}{C}
-    {\jcomp{A}{f}{\ctxwk{B}{z}}}
-    {\ctxwk{A}{z}}}
+  { \jhom{\Gamma}{A}{B}{f}
+    \jterm{\Gamma}{C}{z}
+    }
+  { \jhomeq
+      {\Gamma}
+      {A}
+      {C}
+      {\jcomp{A}{f}{\ctxwk{B}{z}}}
+      {\ctxwk{A}{z}}
+    }
 \end{align*}
 \end{lem}
 
@@ -789,25 +1115,40 @@ Let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$ and $\jfam{{\Gamma}{A}}{P
 Then we have the judgmental equalities
 \begin{align*}
 \ctxwk{P}{\jcomp{A}{f}{g}} 
-& \jdeq \ctxwk{P}{\subst{f}{\ctxwk{A}{g}}}\\
-& \jdeq \subst{\ctxwk{P}{f}}{\ctxwk{P}{{A}{g}}}\\
-& \jdeq \subst{\ctxwk{P}{f}}{\ctxwk{\ctxext{A}{P}}{g}}\\
-& \jdeq \jcomp{{A}{P}}{\ctxwk{P}{f}}{g}.
+& \jdeq 
+  \ctxwk{P}{\subst{f}{\ctxwk{A}{g}}}
+  \\
+& \jdeq 
+  \subst{\ctxwk{P}{f}}{\ctxwk{P}{{A}{g}}}
+  \\
+& \jdeq 
+  \subst{\ctxwk{P}{f}}{\ctxwk{\ctxext{A}{P}}{g}}
+  \\
+& \jdeq 
+  \jcomp{{A}{P}}{\ctxwk{P}{f}}{g}.
 \end{align*}
 Now let $\jterm{\Gamma}{B}{y}$ and $\jhom{\Gamma}{B}{C}{g}$. Then we have the
 judgmental equalities
 \begin{align*}
 \jcomp{A}{\ctxwk{A}{y}}{g}
-& \jdeq \subst{\ctxwk{A}{y}}{\ctxwk{A}{g}}\\
-& \jdeq \ctxwk{A}{\subst{y}{g}}.
+& \jdeq 
+  \subst{\ctxwk{A}{y}}{\ctxwk{A}{g}}
+  \\
+& \jdeq 
+  \ctxwk{A}{\subst{y}{g}}.
 \end{align*}
 For the third assertion, let $\jhom{\Gamma}{A}{B}{f}$ and $\jterm{\Gamma}{C}{z}$.
 Then we have the judgmental equalities
 \begin{align*}
 \jcomp{A}{f}{\ctxwk{B}{z}} 
-& \jdeq \subst{f}{\ctxwk{A}{{B}{z}}}\\
-& \jdeq \subst{f}{\ctxwk{{A}{B}}{{A}{z}}}\\
-& \jdeq \ctxwk{A}{z}.
+& \jdeq 
+  \subst{f}{\ctxwk{A}{{B}{z}}}
+  \\
+& \jdeq 
+  \subst{f}{\ctxwk{{A}{B}}{{A}{z}}}
+  \\
+& \jdeq 
+  \ctxwk{A}{z}.
 \end{align*}
 \end{proof}
 
@@ -816,39 +1157,62 @@ We have the following inference rules about the compatibility of composition wit
 substitution:
 \begin{align*}
 & \inference
-  {\jhom{{\Gamma}{A}}{P}{Q}{f}
-   \jhom{{\Gamma}{A}}{Q}{R}{g}
-   \jterm{\Gamma}{A}{x}}
-  {\jhomeq{\Gamma}{\subst{x}{P}}{\subst{x}{R}}
-    {\subst{x}{\jcomp{P}{f}{g}}}
-    {\jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{g}}}}\\
+  { \jhom{{\Gamma}{A}}{P}{Q}{f}
+    \jhom{{\Gamma}{A}}{Q}{R}{g}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jhomeq
+      {\Gamma}
+      {\subst{x}{P}}
+      {\subst{x}{R}}
+      {\subst{x}{\jcomp{P}{f}{g}}}
+      {\jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{g}}}
+    }
+  \\
 & \inference
-  {\jhom{\Gamma}{A}{B}{f}
-   \jhom{\Gamma}{B}{C}{g}
-   \jterm{\Gamma}{A}{x}}
-  {\jtermeq{\Gamma}{C}
-    {\subst{x}{\jcomp{A}{f}{g}}}
-    {\subst{{x}{f}}{g}}}
+  { \jhom{\Gamma}{A}{B}{f}
+    \jhom{\Gamma}{B}{C}{g}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq
+      {\Gamma}
+      {C}
+      {\subst{x}{\jcomp{A}{f}{g}}}
+      {\subst{{x}{f}}{g}}
+    }
 \end{align*}
 \end{lem}
 
 \begin{proof}
-Let $\jhom{{\Gamma}{A}}{P}{Q}{f}$, $\jhom{{\Gamma}{A}}{Q}{R}{g}$ and $\jterm{\Gamma}{A}{x}$.
+Let $\jhom{{\Gamma}{A}}{P}{Q}{f}$, $\jhom{{\Gamma}{A}}{Q}{R}{g}$ and 
+$\jterm{\Gamma}{A}{x}$.
 Then we have the judgmental equalities
 \begin{align*}
 \subst{x}{\jcomp{A}{f}{g}}
-& \jdeq \subst{x}{{f}{\ctxwk{P}{g}}}\\
-& \jdeq \subst{{x}{f}}{{x}{\ctxwk{P}{g}}}\\
-& \jdeq \subst{{x}{f}}{\ctxwk{\subst{x}{P}}{\subst{x}{g}}}\\
-& \jdeq \jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{g}}.
+& \jdeq 
+  \subst{x}{{f}{\ctxwk{P}{g}}}
+  \\
+& \jdeq 
+  \subst{{x}{f}}{{x}{\ctxwk{P}{g}}}
+  \\
+& \jdeq 
+  \subst{{x}{f}}{\ctxwk{\subst{x}{P}}{\subst{x}{g}}}
+  \\
+& \jdeq 
+  \jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{g}}.
 \end{align*}
 Now let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$ and $\jterm{\Gamma}{A}{x}$.
 Then we have the judgmental equalities
 \begin{align*}
 \subst{x}{\jcomp{A}{f}{g}}
-& \jdeq \subst{x}{{f}{\ctxwk{A}{g}}}\\
-& \jdeq \subst{{x}{f}}{{x}{\ctxwk{A}{g}}}\\
-& \jdeq \subst{{x}{f}}{g}.
+& \jdeq 
+  \subst{x}{{f}{\ctxwk{A}{g}}}
+  \\
+& \jdeq 
+  \subst{{x}{f}}{{x}{\ctxwk{A}{g}}}
+  \\
+& \jdeq 
+  \subst{{x}{f}}{g}.
 \end{align*}
 \end{proof}
 
@@ -885,38 +1249,65 @@ we get the projections from the identity morphisms together with weakening. We
 already have weakening, so here it suffices to introduce the identity morphisms.
 \begin{align}
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jhom{\Gamma}{A}{A}{\idfunc[A]}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jhom{\Gamma}{A}{A}{\idfunc[A]}
+    }
 & & \inference
-    {\jfameq{\Gamma}{A}{A'}}
-    {\jhomeq{\Gamma}{A}{A}{\idfunc[A]}{\idfunc[A']}}
+    { \jfameq{\Gamma}{A}{A'}
+      }
+    { \jhomeq{\Gamma}{A}{A}{\idfunc[A]}{\idfunc[A']}
+      }
 \end{align}
 Identity functions are determined by their behavior with respect to substitution combined with
 weakening. The identity functions will also be subject to compatibility rules.
 \begin{align}
 & \inference
-  {\jterm{\Gamma}{A}{x}}
-  {\jtermeq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}}
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}
+    }
   \label{idfunc-subst-defn}\\
 & \inference
-  {\jfam{{\Gamma}{A}}{P}}
-  {\jfameq{{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}{P}}
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq{{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}{P}
+    }
   \label{idfunc-wk-defn}\\
 & \inference
-  {\jfam{{\Gamma}{A}}{P}}
-  {\jfameq{{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{{A}{A}}{P}}}{P}}
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq
+      {{\Gamma}{A}}
+      {\subst{\idfunc[A]}{\ctxwk{{A}{A}}{P}}}
+      {P}
+    }
   \label{idfunc-wk-defn2}\\
 & \inference
-  {\jterm{{\Gamma}{A}}{P}{f}}
-  {\jtermeq{{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{A}{f}}}{f}}
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jtermeq
+      {{\Gamma}{A}}
+      {P}
+      {\subst{\idfunc[A]}{\ctxwk{A}{f}}}
+      {f}
+    }
   \label{idfunc-precomp}\\
 & \inference
-  {\jterm{{\Gamma}{A}}{P}{f}}
-  {\jtermeq{{\Gamma}{A}}{P}{\subst{\idfunc[A]}{\ctxwk{{A}{A}}{f}}}{f}}
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jtermeq
+      {{\Gamma}{A}}
+      {P}
+      {\subst{\idfunc[A]}{\ctxwk{{A}{A}}{f}}}
+      {f}
+    }
   \label{idfunc-precomp}\\
 & \inference
-  {\jhom{\Gamma}{A}{B}{f}}
-  {\jhomeq{\Gamma}{A}{B}{\jcomp{A}{f}{\idfunc[B]}}{f}}
+  { \jhom{\Gamma}{A}{B}{f}
+    }
+  { \jhomeq{\Gamma}{A}{B}{\jcomp{A}{f}{\idfunc[B]}}{f}
+    }
   \label{idfunc-postcomp}
 \end{align}
 
@@ -928,17 +1319,31 @@ weakening and with substitution.
 The identity function of a weakened family is the weakened identity function:
 \begin{equation}\label{idfunc-wk-comp}
 \inference
-  {\jfam{\Gamma}{A}
-   \jfam{\Gamma}{B}}
-  {\jhomeq{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{B}}{\ctxwk{A}{\idfunc[B]}}{\idfunc[\ctxwk{A}{B}]}}
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    }
+  { \jhomeq
+      {{\Gamma}{A}}
+      {\ctxwk{A}{B}}
+      {\ctxwk{A}{B}}
+      {\ctxwk{A}{\idfunc[B]}}
+      {\idfunc[\ctxwk{A}{B}]}
+    }
 \end{equation}
 
 The identity function of a substituted family is the substitution of the identity function
 \begin{equation}\label{idfunc-subst-comp}
 \inference
-  {\jterm{\Gamma}{A}{x}
-   \jfam{{\Gamma}{A}}{P}}
-  {\jhomeq{\Gamma}{\subst{x}{P}}{\subst{x}{P}}{\subst{x}{\idfunc[P]}}{\idfunc[\subst{x}{P}]}}
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jhomeq
+      {\Gamma}
+      {\subst{x}{P}}
+      {\subst{x}{P}}
+      {\subst{x}{\idfunc[P]}}
+      {\idfunc[\subst{x}{P}]}
+    }
 \end{equation}
 
 \subsection{Extension on terms}\label{extension-on-terms}
@@ -951,7 +1356,11 @@ earlier. \emph{This subsection contains no new assumptions.}
 When $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$ are terms,
 we define 
 \begin{equation*}
-\jtermdefn{\Gamma}{\ctxext{A}{P}}{\tmext{A}{P}{x}{u}}{\unfold{\tmext{A}{P}{x}{u}}}.
+\jtermdefn
+  {\Gamma}
+  {\ctxext{A}{P}}
+  {\tmext{A}{P}{x}{u}}
+  {\unfold{\tmext{A}{P}{x}{u}}}.
 \end{equation*} 
 \end{defn}
 
@@ -968,25 +1377,50 @@ substitute two consecutive times, like the way currying works.
 The following inference rules are valid:
 \begin{align*}
 & \inference
-  {\jterm{\Gamma}{A}{x}
-   \jterm{\Gamma}{\subst{x}{P}}{u}
-   \jfam{{{\Gamma}{A}}{P}}{Q}}
-  {\jfameq{\Gamma}{\subst{\tmext{A}{P}{x}{u}}{Q}}{\subst{u}{{x}{Q}}}}\\
+  { \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{\subst{x}{P}}{u}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq
+      {\Gamma}
+      {\subst{\tmext{A}{P}{x}{u}}{Q}}
+      {\subst{u}{{x}{Q}}}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{A}{x}
-   \jterm{\Gamma}{\subst{x}{P}}{u}
-   \jterm{{{\Gamma}{A}}{P}}{Q}{g}}
-  {\jtermeq{\Gamma}{\subst{u}{{x}{Q}}}{\subst{\tmext{A}{P}{x}{u}}{g}}{\subst{u}{{x}{g}}}}\\
+  { \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{\subst{x}{P}}{u}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    }
+  { \jtermeq
+      {\Gamma}
+      {\subst{u}{{x}{Q}}}
+      {\subst{\tmext{A}{P}{x}{u}}{g}}
+      {\subst{u}{{x}{g}}}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{A}{x}
-   \jterm{\Gamma}{\subst{x}{P}}{u}
-   \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}}
-  {\jfameq{{\Gamma}{\subst{u}{{x}{Q}}}}{\subst{\tmext{A}{P}{x}{u}}{R}}{\subst{u}{{x}{R}}}}\\
+  { \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{\subst{x}{P}}{u}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{u}{{x}{Q}}}}
+      {\subst{\tmext{A}{P}{x}{u}}{R}}
+      {\subst{u}{{x}{R}}}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{A}{x}
-   \jterm{\Gamma}{\subst{x}{P}}{u}
-   \jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{t}}
-  {\jtermeq{{\Gamma}{\subst{u}{{x}{Q}}}}{\subst{u}{{x}{R}}}{\subst{\tmext{A}{P}{x}{u}}{t}}{\subst{u}{{x}{t}}}}
+  { \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{\subst{x}{P}}{u}
+    \jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{t}
+    }
+  { \jtermeq
+      {{\Gamma}{\subst{u}{{x}{Q}}}}
+      {\subst{u}{{x}{R}}}
+      {\subst{\tmext{A}{P}{x}{u}}{t}}
+      {\subst{u}{{x}{t}}}
+    }
 \end{align*}
 \end{lem}
 
@@ -995,15 +1429,49 @@ We prove only the first judgmental equality. All the others are similar.
 Let $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$
 be terms and let $\jfam{{{\Gamma}{A}}{P}}{Q}$ be a family. Then we have
 \begin{align*}
-\subst{\tmext{A}{P}{x}{u}}{Q} 
-& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{Q} \tag{by definition}\\
-& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{{x}{\ctxwk{A}{Q}}}\tag{by \autoref{defn-ws-3}}\\
-& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\ctxwk{A}{Q}}}}}\tag{by \autoref{defn-ws-3}}\\
-& \jdeq \subst{{u}{{x}{\idfunc[\ctxext{A}{P}]}}}{{u}{{x}{\ctxwk{P}{{A}{Q}}}}}\tag{by \autoref{comp-sw-f}}\\
-& \jdeq \subst{u}{{{x}{\idfunc[\ctxext{A}{P}]}}{{x}{\ctxwk{{P}{{A}{Q}}}}}}\tag{by \autoref{comp-ss-f}}\\
-& \jdeq \subst{u}{{x}{{\idfunc[\ctxext{A}{P}]}{\ctxwk{P}{{A}{Q}}}}}\tag{by \autoref{comp-ss-f}}\\
-& \jdeq \subst{u}{{x}{{\idfunc[\ctxext{A}{P}]}{\ctxwk{\ctxext{A}{P}}{Q}}}}\tag{by \autoref{comp-ew-f}}\\
-& \jdeq \subst{u}{{x}{Q}}\tag{by \autoref{idfunc-wk-defn}}
+\subst
+  {\tmext{A}{P}{x}{u}}
+  {Q} 
+& \jdeq 
+  \subst
+    {{u}{{x}{\idfunc[\ctxext{A}{P}]}}}
+    {Q}
+  \tag{by definition}\\
+& \jdeq 
+  \subst
+    {{u}{{x}{\idfunc[\ctxext{A}{P}]}}}
+    {{x}{\ctxwk{A}{Q}}}
+  \tag{by \autoref{defn-ws-3}}\\
+& \jdeq 
+  \subst
+    {{u}{{x}{\idfunc[\ctxext{A}{P}]}}}
+    {{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\ctxwk{A}{Q}}}}}
+  \tag{by \autoref{defn-ws-3}}\\
+& \jdeq 
+  \subst
+    {{u}{{x}{\idfunc[\ctxext{A}{P}]}}}
+    {{u}{{x}{\ctxwk{P}{{A}{Q}}}}}
+  \tag{by \autoref{comp-sw-f}}\\
+& \jdeq 
+  \subst
+    {u}
+    {{{x}{\idfunc[\ctxext{A}{P}]}}{{x}{\ctxwk{{P}{{A}{Q}}}}}}
+  \tag{by \autoref{comp-ss-f}}\\
+& \jdeq 
+  \subst
+    {u}
+    {{x}{{\idfunc[\ctxext{A}{P}]}{\ctxwk{P}{{A}{Q}}}}}
+  \tag{by \autoref{comp-ss-f}}\\
+& \jdeq 
+  \subst
+    {u}
+    {{x}{{\idfunc[\ctxext{A}{P}]}{\ctxwk{\ctxext{A}{P}}{Q}}}}
+  \tag{by \autoref{comp-ew-f}}\\
+& \jdeq 
+  \subst
+    {u}
+    {{x}{Q}}
+  \tag{by \autoref{idfunc-wk-defn}}
 \end{align*}
 \end{proof}
 
@@ -1017,22 +1485,40 @@ functions on the components in the apropriate way.
 To find out what the
 apropriate way is, note that
 \begin{align*}
-\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}} & \jdeq \ctxwk{P}{{A}{\ctxext{A}{P}}}\\
-& \jdeq \ctxext{\ctxwk{P}{{A}{A}}}{\ctxwk{P}{{A}{P}}}
+\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}} 
+& \jdeq 
+  \ctxwk{P}{{A}{\ctxext{A}{P}}}
+  \\
+& \jdeq 
+  \ctxext{\ctxwk{P}{{A}{A}}}{\ctxwk{P}{{A}{P}}}
 \end{align*}
 We have the term $\jterm{{\Gamma}{{A}{P}}}{\ctxwk{P}{A}}{\ctxwk{P}{\idfunc[A]}}$.
 Thus we need to find out what $\subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{P}}}$ is:
 \begin{align*}
-\subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{P}}} & \jdeq \ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}\\
-& \jdeq \ctxwk{P}{P},
+\subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{P}}} 
+& \jdeq 
+  \ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}
+  \\
+& \jdeq 
+  \ctxwk{P}{P},
 \end{align*}
 where we find the term $\idfunc[P]$. Therefore we define:
 
 \begin{defn}
 Let $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ be families. We define
 \begin{align*}
-\jhomdefn*{\Gamma}{{A}{P}}{A}{\cprojfstf{A}{P}}{\unfold{\cprojfstf{A}{P}}}\\
-\jtermdefn*{\ctxext{\Gamma}{{A}{P}}}{\ctxwk{P}{P}}{\cprojsndf{A}{P}}{\idfunc[P]}
+\jhomdefn*
+  {\Gamma}
+  {{A}{P}}
+  {A}
+  {\cprojfstf{A}{P}}
+  {\unfold{\cprojfstf{A}{P}}}
+  \\
+\jtermdefn*
+  {\ctxext{\Gamma}{{A}{P}}}
+  {\ctxwk{P}{P}}
+  {\cprojsndf{A}{P}}
+  {\unfold{\cprojsndf{A}{P}}}
 \end{align*}
 \end{defn}
 
@@ -1043,11 +1529,20 @@ is compatible with extension:
 For any $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ we have
 \begin{equation}\label{idfunc-ext-comp}
 \inference
-  {\jfam{\Gamma}{A}
-   \jfam{{\Gamma}{A}}{P}}
-  {\jhomeq{\Gamma}{{A}{P}}{{A}{P}}
-    {\idfunc[\ctxext{A}{P}]}
-    {\tmext{\ctxwk{\ctxext{A}{P}}{A}}{\ctxwk{\ctxext{A}{P}}{P}}{\cprojfstf{A}{P}}{\cprojsndf{A}{P}}}}
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jhomeq
+      {\Gamma}
+      {{A}{P}}{{A}{P}}
+      {\idfunc[\ctxext{A}{P}]}
+      { \tmext
+          {\ctxwk{\ctxext{A}{P}}{A}}
+          {\ctxwk{\ctxext{A}{P}}{P}}
+          {\cprojfstf{A}{P}}
+          {\cprojsndf{A}{P}}
+        }
+    }
 \end{equation}
 \end{lem}
 
@@ -1055,31 +1550,65 @@ For any $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ we have
 Consider the families $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$. Then
 we have the judgmental equalities
 \begin{align*}
-\tmext{\ctxwk{\ctxext{A}{P}}{A}}{\ctxwk{\ctxext{A}{P}}{P}}{\cprojfstf{A}{P}}{\cprojsndf{A}{P}}
-& \jdeq \unfold{\tmext{\ctxwk{\ctxext{A}{P}}{A}}{\ctxwk{\ctxext{A}{P}}{P}}{\cprojfstf{A}{P}}{\cprojsndf{A}{P}}}\\
-& \jdeq \subst
-          {\idfunc[P]}
-          { {\ctxwk{P}{\idfunc[A]}}
-            {\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}\\
-& \jdeq \subst
-          {\idfunc[P]}
-          { {\ctxwk{P}{\idfunc[A]}}
-            {\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}}\\
-& \jdeq \subst
-          {\idfunc[P]}
-          { {\ctxwk{P}{\idfunc[A]}}
-            {\ctxwk{P}{{A}{\idfunc[\ctxext{A}{P}]}}}}\\
-& \jdeq \subst
-          {\idfunc[P]}
-          {\ctxwk
-            {P}
-            {\subst
-              {\idfunc[A]}
-              {\ctxwk{A}{\idfunc[\ctxext{A}{P}]}}}}\\
-& \jdeq \subst
-          {\idfunc[A]}
-          {\ctxwk{A}{\idfunc[\ctxext{A}{P}]}}\\
-& \jdeq \idfunc[\ctxext{A}{P}].
+\tmext
+  {\ctxwk{\ctxext{A}{P}}{A}}
+  {\ctxwk{\ctxext{A}{P}}{P}}
+  {\cprojfstf{A}{P}}
+  {\cprojsndf{A}{P}}
+& \jdeq 
+  \unfold
+  { \tmext
+      {\ctxwk{\ctxext{A}{P}}{A}}
+      {\ctxwk{\ctxext{A}{P}}{P}}
+      {\cprojfstf{A}{P}}
+      {\cprojsndf{A}{P}}
+    }
+  \\
+& \jdeq 
+  \subst
+    { \idfunc[P]
+      }
+    { {\ctxwk{P}{\idfunc[A]}}
+      {\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}
+      }
+  \\
+& \jdeq 
+  \subst
+    { \idfunc[P]
+      }
+    { {\ctxwk{P}{\idfunc[A]}}
+      {\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}
+      }
+  \\
+& \jdeq 
+  \subst
+    { \idfunc[P]
+      }
+    { {\ctxwk{P}{\idfunc[A]}}
+      {\ctxwk{P}{{A}{\idfunc[\ctxext{A}{P}]}}}
+      }
+  \\
+& \jdeq 
+  \subst
+    { \idfunc[P]
+      }
+    {\ctxwk
+      {P}
+      { \subst
+        {\idfunc[A]}
+        {\ctxwk{A}{\idfunc[\ctxext{A}{P}]}}
+        }
+      }
+  \\
+& \jdeq 
+  \subst
+    { \idfunc[A]
+      }
+    { \ctxwk{A}{\idfunc[\ctxext{A}{P}]}
+      }
+  \\
+& \jdeq 
+  \idfunc[\ctxext{A}{P}].
 \end{align*}
 \end{proof}
 
@@ -1087,9 +1616,14 @@ we have the judgmental equalities
 The following inference is valid:
 \begin{equation*}
 \inference
-  {\jfam{{\Gamma}{A}}{P}
-   \jfam{{\Gamma}{A}}{Q}}
-  {\jfameq{{\Gamma}{{A}{P}}}{\subst{\cprojfstf{A}{P}}{\ctxwk{\ctxext{A}{P}}{Q}}}{\ctxwk{P}{Q}}}
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{A}}{Q}
+    }
+  { \jfameq
+      {{\Gamma}{{A}{P}}}
+      {\subst{\cprojfstf{A}{P}}{\ctxwk{\ctxext{A}{P}}{Q}}}
+      {\ctxwk{P}{Q}}
+    }
 \end{equation*}
 \end{lem}
 
@@ -1098,10 +1632,18 @@ Let $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$ be
 families. Then we have
 \begin{align*}
 \subst{\cprojfstf{A}{P}}{\ctxwk{\ctxext{A}{P}}{Q}} 
-& \jdeq \subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{\ctxext{A}{P}}{Q}} \tag{by definition}\\
-& \jdeq \subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{Q}}} \tag{by \autoref{comp-ww-f}}\\
-& \jdeq \ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{Q}}} \tag{by \autoref{comp-ws-f}}\\
-& \jdeq \ctxwk{P}{Q} \tag{by \autoref{idfunc-wk-defn}}
+& \jdeq 
+  \subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{\ctxext{A}{P}}{Q}} 
+  \tag{by definition}\\
+& \jdeq 
+  \subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{Q}}} 
+  \tag{by \autoref{comp-ww-f}}\\
+& \jdeq 
+  \ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{Q}}} 
+  \tag{by \autoref{comp-ws-f}}\\
+& \jdeq 
+  \ctxwk{P}{Q} 
+  \tag{by \autoref{idfunc-wk-defn}}
 \end{align*}
 \end{proof}
 
@@ -1113,52 +1655,143 @@ consequences of earlier introduced inference rules.
 inverse to the combination of decompositions, are valid:
 \begin{align*}
 & \inference
-    {\jterm{\Gamma}{\ctxext{A}{P}}{w}}
-    {\jtermeq
+  { \jterm{\Gamma}{\ctxext{A}{P}}{w}
+    }
+  { \jtermeq
       {\Gamma}
       {\ctxext{A}{P}}
       {\tmext{A}{P}{\cprojfst{A}{P}{w}}{\cprojsnd{A}{P}{w}}}
-      {w}}\\
+      {w}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{A}{x}
-   \jterm{\Gamma}{\subst{x}{P}}{u}}
-  {\jtermeq{\Gamma}{A}{\cprojfst{A}{P}{\tmext{A}{P}{x}{u}}}{x}}\\
+  { \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{\subst{x}{P}}{u}
+    }
+  { \jtermeq
+      {\Gamma}
+      {A}
+      {\cprojfst{A}{P}{\tmext{A}{P}{x}{u}}}
+      {x}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{A}{x}
-   \jterm{\Gamma}{\subst{x}{P}}{u}}
-  {\jtermeq{\Gamma}{\subst{x}{P}}{\cprojsnd{A}{P}{\tmext{A}{P}{x}{u}}}{u}}
+  { \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{\subst{x}{P}}{u}
+    }
+  { \jtermeq
+      {\Gamma}
+      {\subst{x}{P}}
+      {\cprojsnd{A}{P}{\tmext{A}{P}{x}{u}}}
+      {u}
+    }
 \end{align*}
 \end{lem}
 
 \begin{proof}
 To prove the first judgmental equality, note that
 \begin{align*}
-w & \jdeq \subst{w}{\idfunc[\ctxext{A}{P}]} \tag{by \autoref{idfunc-subst-defn}}\\
-& \jdeq \subst{w}{\subst{\idfunc[P]}{{\ctxwk{P}{\idfunc[A]}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}
+w 
+& \jdeq 
+  \subst{w}{\idfunc[\ctxext{A}{P}]} 
+  \tag{by \autoref{idfunc-subst-defn}}\\
+& \jdeq 
+  \subst
+    { w}
+    { { \idfunc[P]}
+      { { \ctxwk{P}{\idfunc[A]}}
+        { \idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}
+        }
+      }
   \tag{by \autoref{idfunc-ext-comp}}\\
-& \jdeq \subst{{w}{\idfunc[P]}}{\subst{w}{{\ctxwk{P}{\idfunc[A]}}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}\tag{by \autoref{comp-ss-t}}\\
-& \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\subst{w}{\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}}}\tag{by \autoref{comp-ss-t}}\\
-& \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\subst{w}{\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}}}\tag{by \autoref{idfunc-wk-comp}}\\
-& \jdeq \subst{{w}{\idfunc[P]}}{{\subst{w}{\ctxwk{P}{\idfunc[A]}}}{\idfunc[\ctxext{A}{P}]}}\tag{by \autoref{defn-ws-4}}\\
-& \jdeq \tmext{A}{P}{\cprojfst{A}{P}{w}}{\cprojsnd{A}{P}{w}}\tag{by definition}
+& \jdeq 
+  \subst
+    { {w}
+      {\idfunc[P]}
+      }
+    { {w}
+      { { \ctxwk{P}{\idfunc[A]}
+          }
+        { \idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]
+          }
+        }
+      }
+  \tag{by \autoref{comp-ss-t}}\\
+& \jdeq 
+  \subst
+    { {w}
+      {\idfunc[P]}
+      }
+    { { {w}
+        {\ctxwk{P}{\idfunc[A]}}
+        }
+      { {w}
+        {\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}
+        }
+      }
+  \tag{by \autoref{comp-ss-t}}\\
+& \jdeq 
+  \subst
+    { {w}
+      {\idfunc[P]}
+      }
+    { { {w}
+        {\ctxwk{P}{\idfunc[A]}}
+        }
+      { {w}
+        {\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}
+        }
+      }
+  \tag{by \autoref{idfunc-wk-comp}}\\
+& \jdeq 
+  \subst
+    { {w}
+      {\idfunc[P]}
+      }
+    { { {w}
+        {\ctxwk{P}{\idfunc[A]}}
+        }
+      { \idfunc[\ctxext{A}{P}]
+        }
+      }
+  \tag{by \autoref{defn-ws-4}}\\
+& \jdeq 
+  \tmext{A}{P}{\cprojfst{A}{P}{w}}{\cprojsnd{A}{P}{w}}
+  \tag{by definition}
 \end{align*}
 To prove the second judgmental equality, let $\jterm{\Gamma}{A}{x}$ and
 $\jterm{\Gamma}{\subst{x}{P}}{u}$. Then we have
 \begin{align*}
 \cprojfst{A}{P}{\tmext{A}{P}{x}{u}}
-& \jdeq \subst{\tmext{A}{P}{x}{u}}{\ctxwk{P}{\idfunc[A]}}\\
-& \jdeq \subst{u}{{x}{\ctxwk{P}{\idfunc[A]}}} \\
-& \jdeq \subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\idfunc[A]}}}\\
-& \jdeq \subst{x}{\idfunc[A]}\\
-& \jdeq x.
+& \jdeq 
+  \subst{\tmext{A}{P}{x}{u}}{\ctxwk{P}{\idfunc[A]}}
+  \\
+& \jdeq 
+  \subst{u}{{x}{\ctxwk{P}{\idfunc[A]}}} 
+  \\
+& \jdeq 
+  \subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\idfunc[A]}}}
+  \\
+& \jdeq 
+  \subst{x}{\idfunc[A]}
+  \\
+& \jdeq 
+  x.
 \end{align*}
 To prove the third judgmental equality, note that
 \begin{align*}
 \cprojsnd{A}{P}{\tmext{A}{P}{x}{u}}
-& \jdeq \subst{\tmext{A}{P}{x}{u}}{\idfunc[P]}\\
-& \jdeq \subst{u}{{x}{\idfunc[P]}}\\
-& \jdeq \subst{u}{\idfunc[\subst{x}{P}]}\\
-& \jdeq u.
+& \jdeq 
+  \subst{\tmext{A}{P}{x}{u}}{\idfunc[P]}
+  \\
+& \jdeq 
+  \subst{u}{{x}{\idfunc[P]}}
+  \\
+& \jdeq 
+  \subst{u}{\idfunc[\subst{x}{P}]}
+  \\
+& \jdeq 
+  u.
 \end{align*}
 \end{proof}
 
@@ -1166,23 +1799,46 @@ To prove the third judgmental equality, note that
 The following compatibility rules for two consecutive term extensions is valid:
 \begin{align*}
 & \inference
-  {\jterm{\Gamma}{A}{x}
-   \jterm{\Gamma}{\subst{x}{P}}{u}
-   \jterm{\Gamma}{\subst{\tmext{A}{P}{x}{u}}{Q}}{v}}
-  {\jtermeq{\Gamma}{\ctxext{{A}{P}}{Q}}{\tmext{A}{{P}{Q}}{x}{{u}{v}}}{\tmext{{A}{P}}{Q}{{x}{u}}{v}}}\\
+  { \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{\subst{x}{P}}{u}
+    \jterm{\Gamma}{\subst{\tmext{A}{P}{x}{u}}{Q}}{v}
+    }
+  { \jtermeq
+      {\Gamma}
+      {\ctxext{{A}{P}}{Q}}
+      {\tmext{A}{{P}{Q}}{x}{{u}{v}}}
+      {\tmext{{A}{P}}{Q}{{x}{u}}{v}}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{\ctxext{{A}{P}}{Q}}{w}}
-  {\jtermeq{\Gamma}{A}{\cprojfst{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}}}{\cprojfst{A}{\ctxext{P}{Q}}{w}}}\\
+  { \jterm{\Gamma}{\ctxext{{A}{P}}{Q}}{w}
+    }
+  { \jtermeq
+      {\Gamma}
+      {A}
+      {\cprojfst{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}}}
+      {\cprojfst{A}{\ctxext{P}{Q}}{w}}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{\ctxext{{A}{P}}{Q}}{w}}
-  {\jtermeq{\Gamma}{\subst{\cprojfst{A}{\ctxext{P}{Q}}{w}}{P}}
-    {\cprojsnd{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}}}
-    {\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}}\\
+  { \jterm{\Gamma}{\ctxext{{A}{P}}{Q}}{w}
+    }
+  { \jtermeq
+      {\Gamma}
+      {\subst{\cprojfst{A}{\ctxext{P}{Q}}{w}}{P}}
+      {\cprojsnd{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}}}
+      {\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
+    }
+  \\
 & \inference
-  {\jterm{\Gamma}{\ctxext{{A}{P}}{Q}}{w}}
-  {\jtermeq{\Gamma}{\subst{\cprojfst{\ctxext{A}{P}}{Q}{w}}{Q}}
-    {\cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
-    {\cprojsnd{\ctxext{A}{P}}{Q}{w}}}
+    { \jterm{\Gamma}{\ctxext{{A}{P}}{Q}}{w}
+      }
+    { \jtermeq
+        {\Gamma}
+        {\subst{\cprojfst{\ctxext{A}{P}}{Q}{w}}{Q}}
+        {\cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
+        {\cprojsnd{\ctxext{A}{P}}{Q}{w}}
+      }
 \end{align*}
 \end{lem}
 
@@ -1190,28 +1846,80 @@ The following compatibility rules for two consecutive term extensions is valid:
 Consider terms $\jterm{\Gamma}{A}{x}$, $\jterm{\Gamma}{\subst{x}{P}}{u}$ and
 $\jterm{\Gamma}{\subst{u}{{x}{Q}}}{v}$. Then we have
 \begin{align*}
-\tmext{A}{{P}{Q}}{x}{{u}{v}} & \jdeq \subst{\tmext{P}{Q}{u}{v}}{{x}{\idfunc[\ctxext{A}{{P}{Q}}]}}\\
-& \jdeq \subst{v}{{u}{{x}{\idfunc[\ctxext{A}{{P}{Q}}]}}}\\
-& \jdeq \subst{v}{{u}{{x}{\idfunc[\ctxext{{A}{P}}{Q}]}}}\\
-& \jdeq \subst{v}{{\tmext{A}{P}{x}{u}}{\idfunc[\ctxext{{A}{P}}{Q}]}}\\
-& \jdeq \tmext{{A}{P}}{Q}{{x}{u}}{v}.
+\tmext{A}{{P}{Q}}{x}{{\subst{x}{P}}{\subst{x}{Q}}{u}{v}} 
+& \jdeq 
+  \subst
+    {\tmext{\subst{x}{P}}{\subst{x}{Q}}{u}{v}}
+    {{x}{\idfunc[\ctxext{A}{{P}{Q}}]}}
+  \\
+& \jdeq 
+  \subst{v}{{u}{{x}{\idfunc[\ctxext{A}{{P}{Q}}]}}}
+  \\
+& \jdeq 
+  \subst{v}{{u}{{x}{\idfunc[\ctxext{{A}{P}}{Q}]}}}
+  \\
+& \jdeq 
+  \subst{v}{{\tmext{A}{P}{x}{u}}{\idfunc[\ctxext{{A}{P}}{Q}]}}
+  \\
+& \jdeq 
+  \tmext{{A}{P}}{Q}{{A}{P}{x}{u}}{v}.
 \end{align*}
 Now consider a term $\jterm{\Gamma}{\ctxext{A}{{P}{Q}}}{w}$. Then we have
 \begin{align*}
 w 
-& \jdeq \tmext{A}{{P}{Q}}{\cprojfst{A}{\ctxext{P}{Q}}{w}}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}\\
-& \jdeq \tmext{A}{{P}{Q}}{\cprojfst{A}{\ctxext{P}{Q}}{w}}{{\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}{\cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}}\\
-& \jdeq \tmext{{A}{P}}{Q}{{\cprojfst{A}{\ctxext{P}{Q}}{w}}{\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}}{\cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
+& \jdeq 
+  \tmext
+    {A}
+    {{P}{Q}}
+    {\cprojfst{A}{\ctxext{P}{Q}}{w}}
+    {\cprojsnd{A}{\ctxext{P}{Q}}{w}}
+  \\
+& \jdeq 
+  \tmext
+    {A}
+    {{P}{Q}}
+    {\cprojfst{A}{\ctxext{P}{Q}}{w}}
+    { {P}
+      {Q}
+      {\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
+      {\cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
+      }
+  \\
+& \jdeq 
+  \tmext
+    {{A}{P}}
+    {Q}
+    { {} % need to provide base and family, but there's no unfold.
+      {}
+      {\cprojfst{A}{\ctxext{P}{Q}}{w}}
+      {\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
+      }
+    { \cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}
+      }
 \end{align*}
 Thus we see that 
 \begin{align*}
-\cprojfst{\ctxext{A}{P}}{Q}{w} & \jdeq \tmext{A}{P}{\cprojfst{A}{\ctxext{P}{Q}}{w}}{\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}\\ 
-\cprojsnd{\ctxext{A}{P}}{Q}{w} & \jdeq \cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}},
+\cprojfst{\ctxext{A}{P}}{Q}{w} 
+& \jdeq 
+  \tmext
+    {A}
+    {P}
+    {\cprojfst{A}{\ctxext{P}{Q}}{w}}
+    {\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
+  \\ 
+\cprojsnd{\ctxext{A}{P}}{Q}{w} 
+& \jdeq 
+  \cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}},
 \end{align*}
 proving the fourth judgmental equality, and therefore also that
 \begin{align*}
-\cprojfst{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}} & \jdeq \cprojfst{A}{\ctxext{P}{Q}}{w}\\
-\cprojsnd{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}} & \jdeq \cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}},
+\cprojfst{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}} 
+& \jdeq 
+  \cprojfst{A}{\ctxext{P}{Q}}{w}
+  \\
+\cprojsnd{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}} 
+& \jdeq 
+  \cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}},
 \end{align*}
 proving the second and the third judgmental equalities.
 \end{proof}
@@ -1222,13 +1930,15 @@ a family $A$, the term that we get is $\tmext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{\ctxwk
 precisely, the following inference rules are valid:
 \begin{align*}
 & \inference
-  {\jterm{{\Gamma}{B}}{Q}{g}
-   \jterm{{\Gamma}{B}}{\subst{g}{R}}{t}}
-  {\jtermeq
-    {{{\Gamma}{A}}{\ctxwk{A}{B}}}
-    {\ctxwk{A}{\ctxext{Q}{R}}}
-    {\ctxwk{A}{\tmext{Q}{R}{g}{t}}}
-    {\tmext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}{\ctxwk{A}{g}}{\ctxwk{A}{t}}}}
+  { \jterm{{\Gamma}{B}}{Q}{g}
+    \jterm{{\Gamma}{B}}{\subst{g}{R}}{t}
+    }
+  { \jtermeq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{\ctxext{Q}{R}}}
+      {\ctxwk{A}{\tmext{Q}{R}{g}{t}}}
+      {\tmext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}{\ctxwk{A}{g}}{\ctxwk{A}{t}}}
+    }
 % \\
 %& \inference{\jterm{\Gamma}{\ctxwk{A}{\ctxext{B}{Q}}}{\ctxwk{A}{w}}}{\jtermeq{{\Gamma}{A}}{\ctxwk{A}{B}}{\cprojfst{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{\ctxwk{A}{w}}}{\ctxwk{A}{(\cprojfst{B}{Q}{w})}}}\\
 \end{align*}
@@ -1239,12 +1949,23 @@ Consider $\jterm{{\Gamma}{B}}{Q}{g}$ and $\jterm{{\Gamma}{B}}{\subst{g}{R}}{t}$.
 Then we have the judgmental equalities
 \begin{align*}
 \ctxwk{A}{\ctxext{Q}{R}{g}{t}}
-& \jdeq \ctxwk{A}{\subst{t}{{g}{\idfunc[\ctxext{Q}{R}]}}}\\
-& \jdeq \subst{\ctxwk{A}{t}}{\ctxwk{A}{\subst{g}{\idfunc[\ctxext{Q}{R}]}}}\\
-& \jdeq \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\ctxwk{A}{\idfunc[\ctxext{Q}{R}]}}}\\
-& \jdeq \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\idfunc[\ctxwk{A}{\ctxext{Q}{R}}]}}\\
-& \jdeq \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\idfunc[\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}]}}\\
-& \jdeq \tmext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}{\ctxwk{A}{g}}{\ctxwk{A}{t}}
+& \jdeq 
+  \ctxwk{A}{\subst{t}{{g}{\idfunc[\ctxext{Q}{R}]}}}
+  \\
+& \jdeq 
+  \subst{\ctxwk{A}{t}}{\ctxwk{A}{\subst{g}{\idfunc[\ctxext{Q}{R}]}}}
+  \\
+& \jdeq 
+  \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\ctxwk{A}{\idfunc[\ctxext{Q}{R}]}}}
+  \\
+& \jdeq 
+  \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\idfunc[\ctxwk{A}{\ctxext{Q}{R}}]}}
+  \\
+& \jdeq 
+  \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\idfunc[\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}]}}
+  \\
+& \jdeq 
+  \tmext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}{\ctxwk{A}{g}}{\ctxwk{A}{t}}
 \end{align*}
 \end{proof}
 
@@ -1254,13 +1975,15 @@ $x$ of $A$, the term that we get is $\tmext{\subst{x}{P}}{\subst{x}{Q}}{\subst{x
 More precisely, the following inference rules are valid:
 \begin{align*}
 & \inference
-  {\jterm{{{\Gamma}{A}}{P}}{Q}{g}
-   \jterm{{{\Gamma}{A}}{P}}{\subst{g}{R}}{t}}
-  {\jtermeq
-    {{\Gamma}{\subst{x}{P}}}
-    {\ctxext{\subst{x}{Q}}{\subst{x}{R}}}
-    {\subst{x}{\tmext{Q}{R}{g}{t}}}
-    {\tmext{\subst{x}{Q}}{\subst{x}{R}}{\subst{x}{g}}{\subst{x}{t}}}}
+  { \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jterm{{{\Gamma}{A}}{P}}{\subst{g}{R}}{t}
+    }
+  { \jtermeq
+      {{\Gamma}{\subst{x}{P}}}
+      {\ctxext{\subst{x}{Q}}{\subst{x}{R}}}
+      {\subst{x}{\tmext{Q}{R}{g}{t}}}
+      {\tmext{\subst{x}{Q}}{\subst{x}{R}}{\subst{x}{g}}{\subst{x}{t}}}
+    }
 \end{align*}
 \end{lem}
 
@@ -1269,12 +1992,23 @@ Consider $\jterm{{\Gamma}{B}}{Q}{g}$ and $\jterm{{\Gamma}{B}}{\subst{g}{R}}{t}$.
 Then we have the judgmental equalities
 \begin{align*}
 \subst{x}{\tmext{Q}{R}{g}{t}}
-& \jdeq \subst{x}{{t}{{g}{\idfunc[\ctxext{Q}{R}]}}}\\
-& \jdeq \subst{{x}{t}}{{x}{{g}{\idfunc[\ctxext{Q}{R}]}}}\\
-& \jdeq \subst{{x}{t}}{{{x}{g}}{{x}{\idfunc[\ctxext{Q}{R}]}}}\\
-& \jdeq \subst{{x}{t}}{{{x}{g}}{\idfunc[\subst{x}{\ctxext{Q}{R}}]}}\\
-& \jdeq \subst{{x}{t}}{{{x}{g}}{\idfunc[\ctxext{\subst{x}{Q}}{\subst{x}{R}}]}}\\
-& \jdeq \tmext{\subst{x}{Q}}{\subst{x}{R}}{\subst{x}{g}}{\subst{x}{t}}.
+& \jdeq 
+  \subst{x}{{t}{{g}{\idfunc[\ctxext{Q}{R}]}}}
+  \\
+& \jdeq 
+  \subst{{x}{t}}{{x}{{g}{\idfunc[\ctxext{Q}{R}]}}}
+  \\
+& \jdeq 
+  \subst{{x}{t}}{{{x}{g}}{{x}{\idfunc[\ctxext{Q}{R}]}}}
+  \\
+& \jdeq 
+  \subst{{x}{t}}{{{x}{g}}{\idfunc[\subst{x}{\ctxext{Q}{R}}]}}
+  \\
+& \jdeq 
+  \subst{{x}{t}}{{{x}{g}}{\idfunc[\ctxext{\subst{x}{Q}}{\subst{x}{R}}]}}
+  \\
+& \jdeq 
+  \tmext{\subst{x}{Q}}{\subst{x}{R}}{\subst{x}{g}}{\subst{x}{t}}.
 \end{align*}
 \end{proof}
 
@@ -1284,13 +2018,18 @@ We also have the following lemma about the compatibility of pairing and composit
 The following inference rule is valid
 \begin{align*}
 & \inference
-  {\jhom{\Gamma}{A}{B}{f}
-   \jhom{\Gamma}{B}{C}{g}
-   \jfam{{\Gamma}{C}}{R}
-   \jterm{{\Gamma}{B}}{\subst{g}{\ctxwk{B}{R}}}{w}}
-  {\jhomeq{\Gamma}{A}{{C}{R}}
-    {\jcomp{A}{f}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}}
-    {\tmext{\ctxwk{A}{C}}{\ctxwk{A}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{w}}}}
+  { \jhom{\Gamma}{A}{B}{f}
+    \jhom{\Gamma}{B}{C}{g}
+    \jfam{{\Gamma}{C}}{R}
+    \jterm{{\Gamma}{B}}{\subst{g}{\ctxwk{B}{R}}}{w}
+    }
+  { \jhomeq
+      {\Gamma}
+      {A}
+      {{C}{R}}
+      {\jcomp{A}{f}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}}
+      {\tmext{\ctxwk{A}{C}}{\ctxwk{A}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{w}}}
+    }
 \end{align*}
 \end{lem}
 
@@ -1300,10 +2039,23 @@ and $\jterm{{\Gamma}{B}}{\subst{g}{\ctxwk{B}{R}}}{w}$. Then we have the
 judgmental equalities
 \begin{align*}
 \jcomp{A}{f}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}
-& \jdeq \subst{f}{\ctxwk{A}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}}\\
-& \jdeq \subst{f}{\tmext{\ctxwk{A}{{B}{C}}}{\ctxwk{A}{{B}{R}}}{\ctxwk{A}{g}}{\ctxwk{A}{w}}}\\
-& \jdeq \tmext{\ctxwk{A}{C}}{\ctxwk{A}{R}}{\subst{f}{\ctxwk{A}{g}}}{\subst{f}{\ctxwk{A}{w}}}\\
-& \jdeq \tmext{\ctxwk{A}{C}}{\ctxwk{A}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{w}}.
+& \jdeq 
+  \subst{f}{\ctxwk{A}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}}
+  \\
+& \jdeq 
+  \subst
+    {f}
+    {\tmext{\ctxwk{A}{{B}{C}}}{\ctxwk{A}{{B}{R}}}{\ctxwk{A}{g}}{\ctxwk{A}{w}}}
+  \\
+& \jdeq 
+  \tmext
+    {\ctxwk{A}{C}}
+    {\ctxwk{A}{R}}
+    {\subst{f}{\ctxwk{A}{g}}}
+    {\subst{f}{\ctxwk{A}{w}}}
+  \\
+& \jdeq 
+  \tmext{\ctxwk{A}{C}}{\ctxwk{A}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{w}}.
 \end{align*}
 \end{proof}
 %\end{document}
@@ -1351,47 +2103,80 @@ but also its induction principle should be compatible with those.
 
 \begin{align*}
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jtype{{\Gamma}{A}}{\unitc{A}}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jtype{{\Gamma}{A}}{\unitc{A}}
+    }
 & & \inference
-    {\jfameq{\Gamma}{A}{A'}}
-    {\jtypeeq{{\Gamma}{A}}
-      {\unitc{A}}
-      {\unitc{A'}}}\\
+    { \jfameq{\Gamma}{A}{A'}
+      }
+    { \jtypeeq
+        {{\Gamma}{A}}
+        {\unitc{A}}
+        {\unitc{A'}}
+      }
+  \\
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jterm{{\Gamma}{A}}{\unitc{A}}{\unitct{A}}}
+    { \jfam{\Gamma}{A}
+      }
+    { \jterm{{\Gamma}{A}}{\unitc{A}}{\unitct{A}}
+      }
 & & \inference
-    {\jfameq{\Gamma}{A}{A'}}
-    {\jtermeq{{\Gamma}{A}}{\unitc{A}}{\unitct{A}}{\unitct{A'}}}\\
+    { \jfameq{\Gamma}{A}{A'}
+      }
+    { \jtermeq{{\Gamma}{A}}{\unitc{A}}{\unitct{A}}{\unitct{A'}}
+      }
+  \\
 & \inference
-  {\jfam{{\Gamma}{A}}{P}}
-  {\jtype{{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}{\unitf{A}{P}}}
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jtype{{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}{\unitf{A}{P}}
+    }
 & & \inference
-    {\jfameq{{\Gamma}{A}}{P}{P'}}
-    {\jtypeeq{{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}
+    { \jfameq{{\Gamma}{A}}{P}{P'}
+      }
+    { \jtypeeq
+        {{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}
+        {\unitf{A}{P}}
+        {\unitf{A}{P'}}
+      }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jterm
+      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}
       {\unitf{A}{P}}
-      {\unitf{A}{P'}}}\\
-& \inference
-  {\jfam{{\Gamma}{A}}{P}}
-  {\jterm{{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}{\unitf{A}{P}}{\unitft{A}{P}}}
-& & \inference
-    {\jfameq{{\Gamma}{A}}{P}{P'}}
-    {\jtermeq{{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}{\unitf{A}{P}}
       {\unitft{A}{P}}
-      {\unitft{A}{P'}}}
+    }
+& & \inference
+    { \jfameq{{\Gamma}{A}}{P}{P'}
+      }
+    { \jtermeq
+        {{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}
+        {\unitf{A}{P}}
+        {\unitft{A}{P}}
+        {\unitft{A}{P'}}
+      }
 \end{align*}
 
 We impose the following compatibility rules for the unit type:
 
 \begin{align*}
 & \inference
-  {\jfam{{\Gamma}{A}}{P}}
-  {\jtypeeq{{{\Gamma}{A}}{P}}{\ctxext{\ctxwk{P}{\unitc{A}}}{\unitf{A}{P}}}{\unitc{{\Gamma}{A}}}}\\
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jtypeeq
+      {{{\Gamma}{A}}{P}}
+      {\ctxext{\ctxwk{P}{\unitc{A}}}{\unitf{A}{P}}}
+      {\unitc{{\Gamma}{A}}}
+    }\\
 & \inference
-  {\jfam{\Gamma}{A}
-   \jfam{\Gamma}{B}}
-  {\jtypeeq{{{\Gamma}{A}}{\ctxwk{A}{B}}}{}{}}  
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    }
+  { \jtypeeq{{{\Gamma}{A}}{\ctxwk{A}{B}}}{}{}
+    }  
 \end{align*}
 
 \subsection{The empty type}
@@ -1416,20 +2201,20 @@ In this section we pursue the idea of what a general model of type theory is by
 axiomatizing what you can do with them. We have the following ideas:
 \begin{enumerate}
 \item There are dependent models and sections thereof. Particular instances
-of sections: extension, weakening and substitution (and something for identity
-function?). And like the original
-extension, weakening and substitution, they're going to be compatible with each
-other. Therefore we state our theory of models as an extension of type theory
-without constructors.
+  of sections: extension, weakening and substitution (and something for identity
+  function?). And like the original
+  extension, weakening and substitution, they're going to be compatible with each
+  other. Therefore we state our theory of models as an extension of type theory
+  without constructors.
 \item Type theory without constructors is a model of itself, the canonical model $\mctx$.
 \item for any (family of) model(s) $A$, there is the family model $\mfam{A}$ which
-is a family of models over $A$.
+  is a family of models over $A$.
 \item The terms of $\mctx$ should be precisely contexts. Terms of $\subst{\Gamma}{\mfam{\mctx}}$
-should be families over $\Gamma$.
+  should be families over $\Gamma$.
 \item if a model and a family of models over it are given, there is an extended model.
-If we extend $A$ by $\mfam{A}$, we get the Sierpinski model of $A$.
+  If we extend $A$ by $\mfam{A}$, we get the Sierpinski model of $A$.
 \item Likewise, models can be weakened and substituted and there are identity
-functions.
+  functions.
 \end{enumerate}
 So the theory of models is going to be an extension of this theory with this
 data. The theory we are about to describe can be seen as an elementary theory
@@ -1445,41 +2230,53 @@ order theory over the basic theory of types.
 We first introduce the basic ingredients of our abstract theory of models.
 \begin{align*}
 & \inference
-  {}
-  {\jctx{\mctx}}
+  { }
+  { \jctx{\mctx}
+    }
   \tag{the canonical model}\\
 & \inference
-  {\jfam{\mctx}{P}}
-  {\jterm{\mctx}{P}{i}}
+  { \jfam{\mctx}{P}
+    }
+  { \jterm{\mctx}{P}{i}
+    }
   \tag{initiality of $\mctx$}\\
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jfam{{\Gamma}{A}}{\mfam{A}}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jfam{{\Gamma}{A}}{\mfam{A}}
+    }
   \tag{families}\\
 & \inference
-  {\jctx{\Gamma}}
-  {\jfam{{\Gamma}{\mfam{\Gamma}}}{\mtm{\Gamma}}}
+  { \jctx{\Gamma}
+    }
+  { \jfam{{\Gamma}{\mfam{\Gamma}}}{\mtm{\Gamma}}
+    }
   \tag{terms}
 \intertext{%
   The following two rules essentially make a start with saying that every term is functorial
   in the apropriate sense (there will be more rules contributing to this vies):}
 & \inference
-  {\jterm{{\Gamma}{A}}{P}{f}}
-  {\jhom
-    {{\Gamma}{A}}
-    {\mfam{A}}
-    {\subst{f}{\mfam{P}}}
-    {\mfam{f}}}\\
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jhom
+      {{\Gamma}{A}}
+      {\mfam{A}}
+      {\subst{f}{\mfam{P}}}
+      {\mfam{f}}
+    }
+  \\
 & \inference
-  {\jterm{{\Gamma}{A}}{P}{f}}
-  {\jfhom
-    {{\Gamma}{A}}
-    {\mfam{A}}
-    {\subst{f}{\mfam{P}}}
-    {\mfam{f}}
-    {\mtm{A}}
-    {\subst{f}{\mtm{P}}}
-    {\mtm{f}}}
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jfhom
+      {{\Gamma}{A}}
+      {\mfam{A}}
+      {\subst{f}{\mfam{P}}}
+      {\mfam{f}}
+      {\mtm{A}}
+      {\subst{f}{\mtm{P}}}
+      {\mtm{f}}
+    }
 \intertext{%
   When the situation requires clarity --  for instance when extensions
   are involved -- we will write $\mfam{f}^\Gamma$ and $\mtm{f}^\Gamma$ to make
@@ -1487,43 +2284,55 @@ We first introduce the basic ingredients of our abstract theory of models.
 \intertext{%
 The empty context of a model $A$ is simply a term of $A$:}
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jterm{\Gamma}{A}{\tfemp{A}}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jterm{\Gamma}{A}{\tfemp{A}}
+    }
   \tag{empty context}\\
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jterm{{{\Gamma}{A}}{\mfam{A}}}{\subst{\tfemp{\mfam{A}}}{\mtm{A}}}{\tft{A}}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jterm{{{\Gamma}{A}}{\mfam{A}}}{\subst{\tfemp{\mfam{A}}}{\mtm{A}}}{\tft{A}}
+    }
 \intertext{%
   Extension is going to be a morphism from $\ctxext{A}{\mfam{A}}$ to
   $A$ in context $\Gamma$:}
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jhom{\Gamma}{{A}{\mfam{A}}}{A}{\tfext{A}}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jhom{\Gamma}{{A}{\mfam{A}}}{A}{\tfext{A}}
+    }
   \tag{extension}
 \intertext{%
   The action of weakening on families
   is a morphism from $\ctxwk{\mfam{A}}{\mfam{A}}$ to
   $\mfam{\mfam{A}}$ in context $\ctxext{{\Gamma}{A}}{\mfam{A}}$:}
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jhom{{{\Gamma}{A}}{\mfam{A}}}{\ctxwk{\mfam{A}}{\mfam{A}}}
-    {\mfam{\mfam{A}}}
-    {\tfwk{A}^0}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jhom
+      {{{\Gamma}{A}}{\mfam{A}}}
+      {\ctxwk{\mfam{A}}{\mfam{A}}}
+      {\mfam{\mfam{A}}}
+      {\tfwk{A}^0}
+    }
   \tag{weakening}
 \intertext{%
   The action of weakening on terms
   is a morphism from $\ctxwk{\mfam{A}}{\mtm{A}}$ to $\mtm{\mfam{\mfam{A}}}$ over
   $\tfwk{A}^0$ in context $\ctxext{{\Gamma}{A}}{\mfam{A}}$:}
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jfhom
-    {{{\Gamma}{A}}{\mfam{A}}}
-    {\ctxwk{\mfam{A}}{\mfam{A}}}
-    {\mfam{\mfam{A}}}
-    {\tfwk{A}^0}
-    {\ctxwk{\mfam{A}}{\mtm{A}}}
-    {\mtm{\mfam{\mfam{A}}}}
-    {\tfwk{A}^1}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jfhom
+      {{{\Gamma}{A}}{\mfam{A}}}
+      {\ctxwk{\mfam{A}}{\mfam{A}}}
+      {\mfam{\mfam{A}}}
+      {\tfwk{A}^0}
+      {\ctxwk{\mfam{A}}{\mtm{A}}}
+      {\mtm{\mfam{\mfam{A}}}}
+      {\tfwk{A}^1}
+    }
   \tag{weakening}
 \intertext{%
   The action of substitution by a term on families
@@ -1531,12 +2340,14 @@ The empty context of a model $A$ is simply a term of $A$:}
   $\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}$
   in context $\ctxext{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}$:}
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jhom
-  {{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}
-  {\ctxwk{\mtm{A}}{\mfam{\mfam{A}}}}
-  {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
-  {\tfsubst{A}^0}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jhom
+      {{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}
+      {\ctxwk{\mtm{A}}{\mfam{\mfam{A}}}}
+      {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
+      {\tfsubst{A}^0}
+    }
   \tag{substitution}
 \intertext{%
   Likewise, the action of substitution by a term on terms of those
@@ -1544,25 +2355,29 @@ The empty context of a model $A$ is simply a term of $A$:}
   to $\ctxwk{\mtm{A}}{{\mfam{A}}{\mtm{A}}}$ over $\tfsubst{A}^0$ in context
   $\ctxext{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}$:}
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jfhom
-  {{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}
-  {\ctxwk{\mtm{A}}{\mfam{\mfam{A}}}}
-  {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
-  {\tfsubst{A}^0}
-  {\ctxwk{\mtm{A}}{\mtm{\mfam{\mfam{A}}}}}
-  {\ctxwk{\mtm{A}}{{\mfam{A}}{\mtm{A}}}}
-  {\tfsubst{A}^1}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jfhom
+      {{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}
+      {\ctxwk{\mtm{A}}{\mfam{\mfam{A}}}}
+      {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
+      {\tfsubst{A}^0}
+      {\ctxwk{\mtm{A}}{\mtm{\mfam{\mfam{A}}}}}
+      {\ctxwk{\mtm{A}}{{\mfam{A}}{\mtm{A}}}}
+      {\tfsubst{A}^1}
+    }
   \tag{substitution}
 \intertext{%
   The identity functions are coded by}
 & \inference
-  {\jfam{\Gamma}{A}}
-  {\jterm
-   {{{\Gamma}{A}}{\mfam{A}}}
-   {\subst{{\idfunc[\mfam{A}]}{\tfwk{A}^0}}{\mtm{\mfam{\mfam{A}}}}}
-   {\tfid{A}}}
-   \tag{identity functions}
+  { \jfam{\Gamma}{A}
+    }
+  { \jterm
+      {{{\Gamma}{A}}{\mfam{A}}}
+      {\subst{{\idfunc[\mfam{A}]}{\tfwk{A}^0}}{\mtm{\mfam{\mfam{A}}}}}
+      {\tfid{A}}
+    }
+  \tag{identity functions}
 \end{align*}
 We will call the terms that we introduced here the model constructors.
 
@@ -1593,32 +2408,38 @@ Yoneda lemma, which we should be able to implement at some point.
 \begin{equation*}
 \inference
   { \jfam{\Gamma}{A}
-    \jfam{\Gamma}{B}}
+    \jfam{\Gamma}{B}
+    }
   { \jfameq
-    {{{\Gamma}{A}}{\ctxwk{A}{B}}}
-    {\mfam{\ctxwk{A}{B}}}
-    {\ctxwk{A}{\mfam{B}}}}.
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\mfam{\ctxwk{A}{B}}}
+      {\ctxwk{A}{\mfam{B}}}
+    }.
 \end{equation*}
 
 \subsubsection{Terms of weakenings}
 \begin{equation*}
 \inference
   { \jfam{\Gamma}{A}
-    \jfam{\Gamma}{B}}
+    \jfam{\Gamma}{B}
+    }
   { \jfameq
     {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\mfam{\ctxwk{A}{B}}}}
     {\mtm{\ctxwk{A}{B}}}
-    {\ctxwk{A}{\mtm{B}}}}
+    {\ctxwk{A}{\mtm{B}}}
+    }
 \end{equation*}
 
 \subsubsection{Families over families are families over extensions}
 \begin{equation*}
 \inference
-  {\jfam{\Gamma}{A}}
-  {\jfameq
-    {{{\Gamma}{A}}{\mfam{A}}}
-    {\mfam{\mfam{A}}}
-    {\jcomp{{A}{\mfam{A}}}{\tfext{A}}{\mfam{A}}}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\mfam{A}}}
+      {\mfam{\mfam{A}}}
+      {\jcomp{{A}{\mfam{A}}}{\tfext{A}}{\mfam{A}}}
+    }
 \end{equation*}
 \emph{(Note: this rule might be a consequence of an explanation of what $\mfam{{A}{P}}$
 is in general, but at the moment I don't see how to do this)}
@@ -1642,8 +2463,10 @@ families over weakenings are weakenings of families, we have the judgmental
 equalities
 \begin{equation*}
 \subst{\tfext{A}}{\mfam{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}}
-\jdeq \unfold{\jcomp{{A}{P}}{\tfext{A}}{\mfam{A}}}
-\jdeq \jcomp{{A}{P}}{\tfext{A}}{\mfam{A}}
+\jdeq 
+  \unfold{\jcomp{{A}{P}}{\tfext{A}}{\mfam{A}}}
+\jdeq 
+  \jcomp{{A}{P}}{\tfext{A}}{\mfam{A}}
 \end{equation*}
 Therefore, we can compare the term $\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}$
 to the identity function $\idfunc[\jcomp{}{\tfext{A}}{\mfam{A}}]$. 
@@ -1651,13 +2474,15 @@ The compatibility
 rule for the action of extension on families of families asserts that
 \begin{equation*}
 \inference
-  {\jfam{\Gamma}{A}}
-  {\jhomeq
-    {{\Gamma}{A}}
-    {\jcomp{}{\tfext{A}}{\mfam{A}}}
-    {\jcomp{}{\tfext{A}}{\mfam{A}}}
-    {\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}}
-    {\idfunc[\jcomp{}{\tfext{A}}{\mfam{A}}]}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq
+      {{\Gamma}{A}}
+      {\jcomp{}{\tfext{A}}{\mfam{A}}}
+      {\jcomp{}{\tfext{A}}{\mfam{A}}}
+      {\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+      {\idfunc[\jcomp{}{\tfext{A}}{\mfam{A}}]}
+    }
 \end{equation*}
 \emph{(Note: this rule might be a consequence of an explanation of what $\mfam{{A}{P}}$
 is in general, but at the moment I don't see how to do this)}
@@ -1671,37 +2496,47 @@ is in general, but at the moment I don't see how to do this)}
 \subsubsection{Families over the empty context}
 \begin{equation*}
 \inference
-  {\jfam{\Gamma}{A}}
-  {\jfameq{\Gamma}{\subst{\tfemp{A}}{\mfam{A}}}{A}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{\subst{\tfemp{A}}{\mfam{A}}}{A}
+    }
 \end{equation*}
 
 \subsubsection{Terms of the empty family}
 \begin{equation*}
 \inference
-  {\jfam{\Gamma}{A}}
-  {\jfameq{{\Gamma}{A}}{\subst{\tfemp{\mfam{A}}}{\mtm{A}}}{\emptyf[A]}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{{\Gamma}{A}}{\subst{\tfemp{\mfam{A}}}{\mtm{A}}}{\emptyf[A]}
+    }
 \end{equation*}
 
 \subsubsection{The empty family over the empty family}
 \begin{equation*}
 \inference
-  {\jfam{\Gamma}{A}}
-  {\jtermeq{\Gamma}{A}{\subst{\tfemp{A}}{\tfemp{\mfam{A}}}}{\tfemp{A}}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jtermeq{\Gamma}{A}{\subst{\tfemp{A}}{\tfemp{\mfam{A}}}}{\tfemp{A}}
+    }
 \end{equation*}
 
 \subsubsection{Extension by the empty family}
 To understand the following inference rule, recall that for $\jfam{\Gamma}{A}$
 we have the judgmental equalities
 \begin{equation*}
-\subst{\tfemp{\mfam{A}}}{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}\jdeq
-\subst{\tfemp{\mfam{A}}}{\ctxwk{\mfam{A}}{{A}{A}}}\jdeq
-\ctxwk{A}{A}.
+\subst{\tfemp{\mfam{A}}}{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}
+\jdeq
+  \subst{\tfemp{\mfam{A}}}{\ctxwk{\mfam{A}}{{A}{A}}}
+\jdeq
+  \ctxwk{A}{A}.
 \end{equation*}
 Therefore, we can postulate:
 \begin{equation*}
 \inference
-  {\jfam{\Gamma}{A}}
-  {\jhomeq{\Gamma}{A}{A}{\subst{\tfemp{\mfam{A}}}{\tfext{A}}}{\idfunc[A]}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq{\Gamma}{A}{A}{\subst{\tfemp{\mfam{A}}}{\tfext{A}}}{\idfunc[A]}
+    }
 \end{equation*}
 
 \subsubsection{Extensions of the empty context}
@@ -1709,16 +2544,25 @@ To understand the following inference rule, recall that for $\jfam{\Gamma}{A}$
 we have the judgmental equalities
 \begin{align*}
 \subst{\tfemp{A}}{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}
-& \jdeq \subst{\tfemp{A}}{\ctxwk{\mfam{A}}{{A}{A}}}\\
-& \jdeq \ctxwk{\subst{\tfemp{A}}{\mfam{A}}}{\subst{\tfemp{A}}{\ctxwk{A}{A}}}\\
-& \jdeq \ctxwk{A}{\subst{\tfemp{A}}{\ctxwk{A}{A}}}\\
-& \jdeq \ctxwk{A}{A}
+& \jdeq 
+  \subst{\tfemp{A}}{\ctxwk{\mfam{A}}{{A}{A}}}
+  \\
+& \jdeq 
+  \ctxwk{\subst{\tfemp{A}}{\mfam{A}}}{\subst{\tfemp{A}}{\ctxwk{A}{A}}}
+  \\
+& \jdeq 
+  \ctxwk{A}{\subst{\tfemp{A}}{\ctxwk{A}{A}}}
+  \\
+& \jdeq 
+  \ctxwk{A}{A}
 \end{align*}
 Therefore, we can postulate
 \begin{equation*}
 \inference
-  {\jfam{\Gamma}{A}}
-  {\jhomeq{\Gamma}{A}{A}{\subst{\tfemp{A}}{\tfext{A}}}{\idfunc[A]}}
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq{\Gamma}{A}{A}{\subst{\tfemp{A}}{\tfext{A}}}{\idfunc[A]}
+    }
 \end{equation*}
 
 \subsubsection{Weakening by the empty family}

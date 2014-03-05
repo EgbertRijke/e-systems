@@ -631,8 +631,9 @@
 \makeatletter
 
 %%%% The basic term extension commands
+\newcommand{\default@tmext}{\@ifnextchar\bgroup{\tmext}{}}
 \newcommand{\tmext}[4]{%
-  \ctxext{#3}{#4}}
+  \ctxext{\default@tmext #3}{\default@tmext #4}}
 \newcommand{\@tmext@nested}[5]{%
   \@tmext@parens{#2}{#3}{#4}{#5}}
 \newcommand{\@tmext@parens}[4]{%
