@@ -49,3 +49,30 @@ come this far we should also look for a possible definition of a
 (weak) higher predicative topos; the ingredients seem to be there. We hope that
 this gives us access to a description of sheaf models of type theory and we
 can possibly begin exploring some internal independence proofs.
+
+\section{Stage three: Beyond}
+We also pose the following questions which, I'm afraid, are beyond the scope
+of the proposed research program.
+
+\begin{enumerate}
+\item In this document we have developed a custom type theory without basic
+constructors. It is not a question whether someone will want to propose
+a slightly different type theory without basic constructors, someone will. So
+it would be nice if there were a type theory of type theories, formalizing what
+a type theory actually is. Then one could define his or her new type theory
+as an object of that theory. Moreover, it could then be possible to write a
+program that automatically generates a theorem prover for user defined type
+theories in this language, so that a person who has come up with a new type
+theory (such as Guillaume who came up with his type theory of higher groupoids)
+can immediately start giving formally verified proofs in his new type theory.
+One could also envision that there will be morphisms in this type theory which
+automatically transform a formalized development of a theory from one type
+theory to another, so that not every simple thing has to be done over and over
+again. So the question is, could something like that actually be possible? We
+may actually use our type theory before type constructors for that. Or, if we
+manage to get hold on the internal logic of a model
+(which should be a type theory such that the model in question is its initial
+model?)
+for each object of our type theory of models of type theory, we might actually
+already have a `type theory of type theories'.
+\end{enumerate}

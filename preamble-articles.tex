@@ -369,7 +369,9 @@
   \@ifnextchar\jvtermeq{\quad}{%
   \@ifnextchar\jhom{\quad}{%
   \@ifnextchar\jhomeq{\quad}{%
-  }}}}}}}}}}}}}}}}}}}
+  \@ifnextchar\jfhom{\quad}{%
+  \@ifnextchar\jfhomeq{\quad}{%
+  }}}}}}}}}}}}}}}}}}}}}
 
 %%%% Judgments about contexts
 \newcommand{\jctx@sym}{\@judgment@kind{ctx}}
@@ -722,7 +724,7 @@
 
 %%%% The judgment that F is a morphism from P to Q over f in context \Gamma.
 \newcommand{\jfhom}[7]{%
-  \judgment{#1}{}{}{#7}{}{}{\jhomsym[#4]{#5}{#6}}}
+  \judgment{#1}{}{}{#7}{}{}{\jhomsym[{#4}]{#5}{#6}}}
 \newcommand{\jfhom@unfold}[7]{%
   \jterm
     {{{#1}{#2}}{#5}}

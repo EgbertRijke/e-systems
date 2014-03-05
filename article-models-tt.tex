@@ -1346,6 +1346,45 @@ The identity function of a substituted family is the substitution of the identit
     }
 \end{equation}
 
+Now let $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$ be families. A
+morphism from $P$ to $Q$ over the identity function $\idfunc[A]$ in context
+$\Gamma$ is the same thing as a morphism from $P$ to $Q$ in context
+$\ctxext{\Gamma}{A}$:
+
+\begin{lem}\label{hom-over-id-is-hom}
+We have the following valid inference rules:
+\begin{align*}
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{A}}{Q}
+    \jfhom{\Gamma}{A}{A}{\idfunc[A]}{P}{Q}{f}
+    }
+  { \jhom{{\Gamma}{A}}{P}{Q}{f}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{A}}{Q}
+    \jhom{{\Gamma}{A}}{P}{Q}{f}
+    }
+  { \jfhom{\Gamma}{A}{A}{\idfunc[A]}{P}{Q}{f}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+If we unfold the judgments $\jhom{{\Gamma}{A}}{P}{Q}{f}$ and
+$\jfhom{\Gamma}{A}{A}{\idfunc[A]}{P}{Q}{f}$, we get the judgments
+\begin{align*}
+& \unfold{\jhom{{\Gamma}{A}}{P}{Q}{f}}
+  \\
+& \unfold{\jfhom{\Gamma}{A}{A}{\idfunc[A]}{P}{Q}{f}}
+\end{align*}
+respectively. Therefore, we only need to verify that
+$\ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{Q}}}\jdeq\ctxwk{P}{Q}$, which is indeed
+the case by \autoref{idfunc-wk-defn}.
+\end{proof}
+
 \subsection{Extension on terms}\label{extension-on-terms}
 In this subsection we consider the notion of extension on terms, which has now
 become definable inside our theory. Moreover, every compatibility rule one may
@@ -2444,15 +2483,28 @@ Yoneda lemma, which we should be able to implement at some point.
 \emph{(Note: this rule might be a consequence of an explanation of what $\mfam{{A}{P}}$
 is in general, but at the moment I don't see how to do this)}
 
+\subsubsection{Terms of families over families are terms of families over extensions}
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\mfam{A}}}{\mfam{\mfam{A}}}}
+      {\mtm{\mfam{A}}}
+      {\jcomp{}{\tfext{A}}{\mtm{A}}}
+      }
+\end{equation*}
+
 \subsubsection{Extension acts as the identity on families of families}
 The family of which $\tfext{A}$ is a term, is unfolded as
 \begin{equation*}
 \unfold{\jhom{\Gamma}{{A}{\mfam{A}}}{A}{\tfext{A}}}
 \end{equation*}
-Therefore, there is a term
+Because we have the judgmental equality $\ctxext{\Gamma}{{A}{\mfam{A}}}
+\jdeq \ctxext{{\Gamma}{A}}{\mfam{A}}$, there is a term
 \begin{equation*}
 \jhom
-  {{\Gamma}{A}}
+  {{{\Gamma}{A}}{\mfam{A}}}
   {\mfam{\mfam{A}}}
   {\subst{\tfext{A}}{\mfam{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}}}
   {\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}}
@@ -2477,7 +2529,7 @@ rule for the action of extension on families of families asserts that
   { \jfam{\Gamma}{A}
     }
   { \jhomeq
-      {{\Gamma}{A}}
+      {{{\Gamma}{A}}{\mfam{A}}}
       {\jcomp{}{\tfext{A}}{\mfam{A}}}
       {\jcomp{}{\tfext{A}}{\mfam{A}}}
       {\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}}
@@ -2486,6 +2538,70 @@ rule for the action of extension on families of families asserts that
 \end{equation*}
 \emph{(Note: this rule might be a consequence of an explanation of what $\mfam{{A}{P}}$
 is in general, but at the moment I don't see how to do this)}
+
+\subsubsection{Extension acts as the identity on terms of families of families}
+We now investigate the nature of the morphism.
+\begin{equation*}
+\jfhom
+  {{{\Gamma}{A}}{\mfam{A}}}
+  {\mfam{\mfam{A}}}
+  {\subst{\tfext{A}}{\mfam{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}}}
+  {\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+  {\mtm{\mfam{A}}}
+  {\subst{\tfext{A}}{\mtm{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}}}
+  {\mtm{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+\end{equation*}
+Note that we have the judgmental equality 
+$\mtm{\mfam{A}}\jdeq\jcomp{}{\tfext{A}}{\mtm{A}}$. Likewise, we have the
+judgmental equality $\subst{\tfext{A}}{\mtm{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}}
+\jdeq\jcomp{}{\tfext{A}}{\mtm{A}}$. Thirdly, we have the judgmental equality
+$\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}\jdeq\idfunc[\jcomp{}{\tfext{A}}{\mfam{A}}]$.
+We may combine these three facts with \autoref{hom-over-id-is-hom} to see that
+\begin{equation*}
+\jhom
+  {{{{\Gamma}{A}}{\mfam{A}}}{\jcomp{}{\tfext{A}}}{\mfam{A}}}
+  {\jcomp{}{\tfext{A}}{\mtm{A}}}
+  {\jcomp{}{\tfext{A}}{\mtm{A}}}
+  {\mtm{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+\end{equation*}
+Now we see that we can require that $\mtm{\tfext{A}}^{\ctxext{\Gamma}{A}}$ is
+the identity function on $\jcomp{}{\tfext{A}}{\mtm{A}}$:
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq
+    {{{{\Gamma}{A}}{\mfam{A}}}{\jcomp{}{\tfext{A}}}{\mfam{A}}}
+    {\jcomp{}{\tfext{A}}{\mtm{A}}}
+    {\jcomp{}{\tfext{A}}{\mtm{A}}}
+    {\mtm{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+    {\idfunc[\jcomp{}{\tfext{A}}{\mtm{A}}]}
+    }
+\end{equation*}
+
+\subsubsection{Weakening followed by substitution is the identity}
+The weakening morphism $\tfwk{A}^0$ gives a morphism
+\begin{equation*}
+\jhom
+  {{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}
+  {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
+  {\ctxwk{\mtm{A}}{\mfam{\mfam{A}}}}
+  {\ctxwk{\mtm{A}}{\tfwk{A}^0}}
+\end{equation*}
+which can be composed with the morphism $\tfsubst{A}^0$. We require that this
+composition is the identity function on $\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}$:
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq
+      {{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}
+      {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
+      {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
+      {\ctxwk{\mtm{A}}{\tfwk{A}^0}}
+      {\idfunc[\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}]}
+    }
+\end{equation*}
 
 \subsubsection{Families of extensions}
 
