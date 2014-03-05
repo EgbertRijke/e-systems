@@ -1460,15 +1460,32 @@ We first introduce the basic ingredients of our abstract theory of models.
   {\jctx{\Gamma}}
   {\jfam{{\Gamma}{\mfam{\Gamma}}}{\mtm{\Gamma}}}
   \tag{terms}
-\intertext{The following two rules essentially make a start with saying that every term is functorial
-in the apropriate sense (there will be more rules contributing to this vies):}
+\intertext{%
+  The following two rules essentially make a start with saying that every term is functorial
+  in the apropriate sense (there will be more rules contributing to this vies):}
 & \inference
   {\jterm{{\Gamma}{A}}{P}{f}}
-  {\jterm{{{\Gamma}{A}}{\mfam{A}}}{\subst{f}{\mfam{P}}}{\mfam{f}}}\\
+  {\jhom
+    {{\Gamma}{A}}
+    {\mfam{A}}
+    {\subst{f}{\mfam{P}}}
+    {\mfam{f}}}\\
 & \inference
   {\jterm{{\Gamma}{A}}{P}{f}}
-  {\jterm{{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}{\subst{\mfam{f}}{{f}{\mtm{P}}}}{\mtm{f}}}
-\intertext{The empty context of a model $A$ is simply a term of $A$:}
+  {\jfhom
+    {{\Gamma}{A}}
+    {\mfam{A}}
+    {\subst{f}{\mfam{P}}}
+    {\mfam{f}}
+    {\mtm{A}}
+    {\subst{f}{\mtm{P}}}
+    {\mtm{f}}}
+\intertext{%
+  When the situation requires clarity --  for instance when extensions
+  are involved -- we will write $\mfam{f}^\Gamma$ and $\mtm{f}^\Gamma$ to make
+  what we regard as the context explicit.}
+\intertext{%
+The empty context of a model $A$ is simply a term of $A$:}
 & \inference
   {\jfam{\Gamma}{A}}
   {\jterm{\Gamma}{A}{\tfemp{A}}}
@@ -1476,24 +1493,27 @@ in the apropriate sense (there will be more rules contributing to this vies):}
 & \inference
   {\jfam{\Gamma}{A}}
   {\jterm{{{\Gamma}{A}}{\mfam{A}}}{\subst{\tfemp{\mfam{A}}}{\mtm{A}}}{\tft{A}}}
-\intertext{Extension is going to be a morphism from $\ctxext{A}{\mfam{A}}$ to
-$A$ in context $\Gamma$:}
+\intertext{%
+  Extension is going to be a morphism from $\ctxext{A}{\mfam{A}}$ to
+  $A$ in context $\Gamma$:}
 & \inference
   {\jfam{\Gamma}{A}}
   {\jhom{\Gamma}{{A}{\mfam{A}}}{A}{\tfext{A}}}
   \tag{extension}
-\intertext{The action of weakening on families
-is a morphism from $\ctxwk{\mfam{A}}{\mfam{A}}$ to
-$\mfam{\mfam{A}}$ in context $\ctxext{{\Gamma}{A}}{\mfam{A}}$:}
+\intertext{%
+  The action of weakening on families
+  is a morphism from $\ctxwk{\mfam{A}}{\mfam{A}}$ to
+  $\mfam{\mfam{A}}$ in context $\ctxext{{\Gamma}{A}}{\mfam{A}}$:}
 & \inference
   {\jfam{\Gamma}{A}}
   {\jhom{{{\Gamma}{A}}{\mfam{A}}}{\ctxwk{\mfam{A}}{\mfam{A}}}
     {\mfam{\mfam{A}}}
     {\tfwk{A}^0}}
   \tag{weakening}
-\intertext{The action of weakening on terms
-is a morphism from $\ctxwk{\mfam{A}}{\mtm{A}}$ to $\mtm{\mfam{\mfam{A}}}$ over
-$\tfwk{A}^0$ in context $\ctxext{{\Gamma}{A}}{\mfam{A}}$:}
+\intertext{%
+  The action of weakening on terms
+  is a morphism from $\ctxwk{\mfam{A}}{\mtm{A}}$ to $\mtm{\mfam{\mfam{A}}}$ over
+  $\tfwk{A}^0$ in context $\ctxext{{\Gamma}{A}}{\mfam{A}}$:}
 & \inference
   {\jfam{\Gamma}{A}}
   {\jfhom
@@ -1505,10 +1525,11 @@ $\tfwk{A}^0$ in context $\ctxext{{\Gamma}{A}}{\mfam{A}}$:}
     {\mtm{\mfam{\mfam{A}}}}
     {\tfwk{A}^1}}
   \tag{weakening}
-\intertext{The action of substitution by a term on families
-is going to be a morphism from $\ctxwk{\mtm{A}}{\mfam{\mfam{A}}}$ to 
-$\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}$
-in context $\ctxext{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}$:}
+\intertext{%
+  The action of substitution by a term on families
+  is going to be a morphism from $\ctxwk{\mtm{A}}{\mfam{\mfam{A}}}$ to 
+  $\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}$
+  in context $\ctxext{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}$:}
 & \inference
   {\jfam{\Gamma}{A}}
   {\jhom
@@ -1517,10 +1538,11 @@ in context $\ctxext{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}$:}
   {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
   {\tfsubst{A}^0}}
   \tag{substitution}
-\intertext{Likewise, the action of substitution by a term on terms of those
-families is going to be a morphism from $\ctxwk{\mtm{A}}{\mtm{\mfam{\mfam{A}}}}$
-to $\ctxwk{\mtm{A}}{{\mfam{A}}{\mtm{A}}}$ over $\tfsubst{A}^0$ in context
-$\ctxext{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}$:}
+\intertext{%
+  Likewise, the action of substitution by a term on terms of those
+  families is going to be a morphism from $\ctxwk{\mtm{A}}{\mtm{\mfam{\mfam{A}}}}$
+  to $\ctxwk{\mtm{A}}{{\mfam{A}}{\mtm{A}}}$ over $\tfsubst{A}^0$ in context
+  $\ctxext{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}$:}
 & \inference
   {\jfam{\Gamma}{A}}
   {\jfhom
@@ -1532,7 +1554,8 @@ $\ctxext{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}$:}
   {\ctxwk{\mtm{A}}{{\mfam{A}}{\mtm{A}}}}
   {\tfsubst{A}^1}}
   \tag{substitution}
-\intertext{The identity functions are coded by}
+\intertext{%
+  The identity functions are coded by}
 & \inference
   {\jfam{\Gamma}{A}}
   {\jterm
@@ -1549,7 +1572,9 @@ We need to do several things in this section:
 \item postulate that ordinary extension, weakening, substitution and identity
 functions are compatible with the model constructors.
 \item postulate that each of the model constructors is compatible with ordinary
-extension, weakening, substitution and identity functions.
+extension, weakening, substitution and identity functions. Actually, we want
+that every term of this type theory is compatible with those. I.e.~every term
+is a functor/morphism of models. Also the sections.
 \item postulate that the model constructors are compatible with each other,
 so that they come to model ordinary extension, weakening, substitution and
 identity functions respectively.
@@ -1585,6 +1610,57 @@ Yoneda lemma, which we should be able to implement at some point.
     {\mtm{\ctxwk{A}{B}}}
     {\ctxwk{A}{\mtm{B}}}}
 \end{equation*}
+
+\subsubsection{Families over families are families over extensions}
+\begin{equation*}
+\inference
+  {\jfam{\Gamma}{A}}
+  {\jfameq
+    {{{\Gamma}{A}}{\mfam{A}}}
+    {\mfam{\mfam{A}}}
+    {\jcomp{{A}{\mfam{A}}}{\tfext{A}}{\mfam{A}}}}
+\end{equation*}
+\emph{(Note: this rule might be a consequence of an explanation of what $\mfam{{A}{P}}$
+is in general, but at the moment I don't see how to do this)}
+
+\subsubsection{Extension acts as the identity on families of families}
+The family of which $\tfext{A}$ is a term, is unfolded as
+\begin{equation*}
+\unfold{\jhom{\Gamma}{{A}{\mfam{A}}}{A}{\tfext{A}}}
+\end{equation*}
+Therefore, there is a term
+\begin{equation*}
+\jhom
+  {{\Gamma}{A}}
+  {\mfam{\mfam{A}}}
+  {\subst{\tfext{A}}{\mfam{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}}}
+  {\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+\end{equation*}
+By the rule asserting that families of families are families of extensions, we
+have $\mfam{\mfam{A}}\jdeq\jcomp{}{\tfext{A}}{\mfam{A}}$. By the rule that
+families over weakenings are weakenings of families, we have the judgmental
+equalities
+\begin{equation*}
+\subst{\tfext{A}}{\mfam{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}}
+\jdeq \unfold{\jcomp{{A}{P}}{\tfext{A}}{\mfam{A}}}
+\jdeq \jcomp{{A}{P}}{\tfext{A}}{\mfam{A}}
+\end{equation*}
+Therefore, we can compare the term $\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}$
+to the identity function $\idfunc[\jcomp{}{\tfext{A}}{\mfam{A}}]$. 
+The compatibility
+rule for the action of extension on families of families asserts that
+\begin{equation*}
+\inference
+  {\jfam{\Gamma}{A}}
+  {\jhomeq
+    {{\Gamma}{A}}
+    {\jcomp{}{\tfext{A}}{\mfam{A}}}
+    {\jcomp{}{\tfext{A}}{\mfam{A}}}
+    {\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+    {\idfunc[\jcomp{}{\tfext{A}}{\mfam{A}}]}}
+\end{equation*}
+\emph{(Note: this rule might be a consequence of an explanation of what $\mfam{{A}{P}}$
+is in general, but at the moment I don't see how to do this)}
 
 \subsubsection{Families of extensions}
 
@@ -1652,6 +1728,13 @@ Therefore, we can postulate
 \subsubsection{Substitutions of the empty family}
 
 \subsubsection{Substitution by the term of the empty family}
+
+\subsubsection{Extension acts as the identity functor on families}
+\begin{equation*}
+df
+\end{equation*}
+
+\subsubsection{Extension acts as the identity functor on terms}
 
 \subsubsection{Extensions of extensions}
 

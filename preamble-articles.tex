@@ -321,7 +321,6 @@
 \newcommand{\greek}{\mathrm}
 \newcommand{\product}[2]{{#1}\times{#2}}
 \newcommand{\pairp}[1]{(#1)}
-%\newcommand{\jcomp}[3]{\subst{#2}{\ctxwk{#1}{#3}}}
 \newcommand{\jequalizer}[3]{\{#1|#2\jdeq #3\}}
 \newcommand{\jequalizerin}[2]{\iota_{#1,#2}}
 \newcommand{\tounit}[1]{{!_{#1}}}
@@ -714,7 +713,7 @@
   (\jcomp{#1}{#2}{#3})}
 
 \newcommand{\jcomp@unfold}[3]{%
-  \subst{#2}{\ctxwk{#1}{#3}}}
+  \subst{#2}{\ctxwk{\default@ctxext #1}{#3}}}
 \newcommand{\@jcomp@unfold@nested}[4]{%
   \@jcomp@unfold@parens{#2}{#3}{#4}}
 \newcommand{\@jcomp@unfold@parens}[3]{%
