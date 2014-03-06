@@ -206,6 +206,11 @@ The easiest set of compatibility rules comes with weakening. The compatibility
 rules that deal with substitution are likely going to have to do with the
 Yoneda lemma, which we should be able to implement at some point. 
 
+The model $\subst{\tfemp{A}}{\mtm{A}}$ is going to be initial in the category of
+all models over $A$. That means: whenever $P$ is a family over $\subst{\tfemp{A}}
+{\mtm{A}}$ there will be a term of $P$. This means in particular that
+$\subst{\tfemp{\emptyf}}{\mtm{\emptyf}}$ is going to be $\mctx$.
+
 \subsubsection{Families of weakenings}
 \begin{equation*}
 \inference
@@ -343,7 +348,7 @@ the identity function on $\jcomp{}{\tfext{A}}{\mtm{A}}$:
 \end{equation*}
 
 \subsubsection{Weakening followed by substitution is the identity}
-The weakening morphism $\tfwk{A}^0$ gives a morphism
+The weakening morphism $\tfwk{A}^0$ gives a weakened morphism
 \begin{equation*}
 \jhom
   {{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}
@@ -361,10 +366,55 @@ composition is the identity function on $\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}$:
       {{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}
       {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
       {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
-      {\ctxwk{\mtm{A}}{\tfwk{A}^0}}
+      {\jcomp{}{\ctxwk{\mtm{A}}{\tfwk{A}^0}}{\tfsubst{A}^0}}
       {\idfunc[\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}]}
     }
 \end{equation*}
+Likewise, the weakening morphism $\tfwk{A}^1$ gives a weakened morphism
+\begin{equation*}
+\jfhom
+  {{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}
+  {\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}
+  {\ctxwk{\mtm{A}}{\mfam{\mfam{A}}}}
+  {\ctxwk{\mtm{A}}{\tfwk{A}^0}}
+  {\ctxwk{\mtm{A}}{\ctxwk{\mfam{A}}{\mtm{A}}}}
+  {\ctxwk{\mtm{A}}{\mtm{\mfam{\mfam{A}}}}}
+  {\ctxwk{\mtm{A}}{\tfwk{A}^1}}
+\end{equation*}
+which can be composed with the the morphism $\tfsubst{A}^1$. We require that
+this composition is the identity function on 
+$\ctxwk{\mtm{A}}{\ctxwk{\mfam{A}}{\mtm{A}}}$. Note that this composition gives
+a morphism over $\jcomp{}{\ctxwk{\mtm{A}}{\tfwk{A}^0}}{\tfsubst{A}^0}$, which
+is the identity function on $\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}$; so in fact
+it is an ordinary morphism in the context
+$\ctxext{{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}{\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}$.
+Thus the inference rule we require to become valid is:
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq
+      {{{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}{\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}}
+      {\ctxwk{\mtm{A}}{\ctxwk{\mfam{A}}{\mtm{A}}}}
+      {\ctxwk{\mtm{A}}{\ctxwk{\mfam{A}}{\mtm{A}}}}
+      {\jcomp{}{\ctxwk{\mtm{A}}{\tfwk{A}^1}}{\tfsubst{A}^1}}
+      {\idfunc[\ctxwk{\mtm{A}}{\ctxwk{\mfam{A}}{\mtm{A}}}]}
+    }
+\end{equation*}
+
+\subsubsection{Weakening by a family is precomposing with extension}
+We seem to need the following rule:
+\begin{equation*}
+\inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\mfam{A}}}
+      {\ctxwk{\mfam{A}}{P}}
+      {\jcomp{}{\tfext{A}}{P}}
+    }
+\end{equation*}
+I don't know very well how to motivate requiring this rule. Maybe it's provable?
 
 \subsubsection{Families of extensions}
 
@@ -452,20 +502,101 @@ Therefore, we can postulate
 
 \subsubsection{Substitution by the term of the empty family}
 
-\subsubsection{Extension acts as the identity functor on families}
+\subsection{Compatibility properties of arbitrary terms}
+
+\subsubsection{Every term is compatible with the empty context}
 \begin{equation*}
-df
+\inference
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jtermeq
+      {\Gamma}
+      {\subst{\tfemp{A}}{P}}
+      {\subst{\tfemp{A}}{f}}
+      {\tfemp{\subst{\tfemp{A}}{P}}}
+    }
 \end{equation*}
 
-\subsubsection{Extension acts as the identity functor on terms}
+\subsubsection{Every term is compatible with extension}
+Let $\jterm{{\Gamma}{A}}{P}{f}$. The rule we're about to explain is that $f$
+commutes with extension.
 
-\subsubsection{Extensions of extensions}
+We have the morphism
+$\jhom{{\Gamma}{A}}{\mfam{A}}{\subst{f}{\mfam{P}}}{\mfam{f}}$. Let's unfold
+to remind ourselves what this means:
+\begin{equation*}
+\unfold{\jhom{{\Gamma}{A}}{\mfam{A}}{\subst{f}{\mfam{P}}}{\mfam{f}}}
+\end{equation*}
+Now note that we have the judgmental equality
+\begin{equation*}
+  \ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}
+  \jdeq
+  \subst{\ctxwk{\mfam{A}}{f}}{\ctxwk{\mfam{A}}{\mfam{P}}}
+\end{equation*}
+and we see that we get the term
+$ \tmext
+    {\ctxwk{\mfam{A}}{P}}
+    {\ctxwk{\mfam{A}}{\mfam{P}}}
+    {\ctxwk{\mfam{A}}{f}}
+    {\mfam{f}}
+  $
+of the family $\ctxwk{\mfam{A}}{\ctxext{P}{\mfam{P}}}$. We can substitute this
+term in the morphism
+\begin{equation*}
+\jhom
+  {{{\Gamma}{A}}{\mfam{A}}}
+  {\ctxwk{\mfam{A}}{\ctxext{P}{\mfam{P}}}}
+  {\ctxwk{\mfam{A}}{P}}
+  {\ctxwk{\mfam{A}}{\tfext{P}}}
+\end{equation*}
+to obtain the term 
+$ \jterm
+    {{{\Gamma}{A}}{\mfam{A}}}
+    {\ctxwk{\mfam{A}}{P}}
+    { \subst
+        { \tmext
+            {\ctxwk{\mfam{A}}{P}}
+            {\ctxwk{\mfam{A}}{\mfam{P}}}
+            {\ctxwk{\mfam{A}}{f}}
+            {\mfam{f}}
+          }
+        { \ctxwk{\mfam{A}}{\tfext{P}}
+          }
+      }.
+  $
+We can also compose $\tfext{A}$ with $f$ to obtain the term
+\begin{equation*}
+\jterm{{{\Gamma}{A}}{\mfam{f}}}{\jcomp{}{\tfext{A}}{P}}{\jcomp{}{\tfext{A}}{f}}
+\end{equation*}
+Note that we have (?) the judgmental equality $\jcomp{}{\tfext{A}}{P}
+\jdeq\ctxwk{\mfam{A}}{P}$ and therefore
+we can require:
+\begin{equation*}
+\inference
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jtermeq
+       {{{\Gamma}{A}}{\mfam{A}}}
+       {\ctxwk{\mfam{A}}{P}}
+       { \subst
+           { \tmext
+               {\ctxwk{\mfam{A}}{P}}
+               {\ctxwk{\mfam{A}}{\mfam{P}}}
+               {\ctxwk{\mfam{A}}{f}}
+               {\mfam{f}}
+             }
+           { \ctxwk{\mfam{A}}{\tfext{P}}
+             }
+         }
+       {\jcomp{}{\tfext{A}}{f}}
+    }
+\end{equation*}
 
-\subsubsection{Extensions of weakenings}
+\subsubsection{Every term is compatible with weakening}
 
-\subsubsection{Weakenings by extensions}
+\subsubsection{Every term is compatible with substitution}
 
-\subsubsection{Substitutions of extensions}
+\subsubsection{Every term preserves identity}
 
 \section{Pretty type theory}
 In this section we will do three things. First we explain basic type theory with

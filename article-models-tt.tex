@@ -1227,14 +1227,62 @@ judgment
 \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F},
 \end{equation*}
 which is pronounced as `$F$ is a morphism from $P$ to $Q$ over $f$ in context
-$\Gamma$, to be the judgment
+$\Gamma$', to be the judgment
 \begin{equation*}
 \unfold{\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}}.
 \end{equation*}
 \end{defn}
 
-We can also define composition for this version of morphism and formulate
-compatibility rules for them. 
+\begin{rmk}
+The judgment $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ means the same thing as
+\begin{equation*}
+\jhom{{\Gamma}{A}}{P}{\jcomp{A}{f}{Q}}{F}.
+\end{equation*}
+\end{rmk}
+
+Suppose we have morphisms $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
+and that we have the morphisms $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ and
+$\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ over them. Then we have
+\begin{equation*}
+\jhom
+  {{\Gamma}{A}}
+  {\jcomp{A}{f}{Q}}
+  {\jcomp{A}{f}{{B}{g}{R}}}
+  {\unfold{\jcomp{A}{f}{G}}}
+\end{equation*}
+Because we also have $\jhom{{\Gamma}{A}}{P}{\jcomp{A}{f}{Q}}{F}$, we have the
+composition
+\begin{equation*}
+\jhom
+  {{\Gamma}{A}}
+  {P}
+  {\jcomp{A}{f}{{B}{g}{R}}}
+  {\jcomp{P}{F}{\unfold{\jcomp{A}{f}{G}}}}.
+\end{equation*}
+Because of 
+the judgmental equality $\jcomp{A}{f}{{B}{g}{R}}\jdeq
+\jcomp{A}{{A}{f}{g}}{R}$, it follows that 
+$\jcomp{P}{F}{\unfold{\jcomp{A}{f}{G}}}$ is a morphism from $P$ to $R$ over
+$\jcomp{A}{f}{g}$. We make the following definition:
+
+\begin{defn}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
+be morphisms and let $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ and
+$\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ be morphisms over them. Then we define
+\begin{equation*}
+\jfhomdefn
+  {\Gamma}
+  {A}
+  {C}
+  {\jcomp{A}{f}{g}}
+  {P}
+  {R}
+  {\jfcomp{A}{f}{P}{F}{G}}
+  {\unfold{\jfcomp{A}{f}{P}{F}{G}}}.
+\end{equation*}
+\end{defn}
+
+This composition is also judgmentally associative.
 
 \subsubsection{Identity functions}
 Without a rule explicitly asserting the existence of an identity morphism we don't
