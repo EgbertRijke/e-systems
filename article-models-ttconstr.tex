@@ -1,0 +1,135 @@
+\section{Type constructors in structural type theory}
+In this section we will introduce the usual type constructors to structural
+type theory. We do so with the point of view that each type constructor is a
+(class of) operations on type theory that should be compatible with extension,
+weakening, substitution and identity morphisms. Likewise, each induction
+principle of an inductively defined type constructor is going to be such an
+operator, and it is therefore also required to be compatible with extension,
+weakening, substitution and identity functions.
+
+We will first state all the rules of the individual type constructors, where
+only the $\wtypesym$-type constructor depends on the presence of dependent
+function types (or universes too?), and hence comes with the notion that $\wtypesym$
+is compatible with dependent product types and vice versa. All the other
+compatibility properties are stated in \autoref{compatibility-of-type-constructors}.
+
+\subsubsection{Issues to keep in mind}
+\begin{enumerate}
+\item The rule asserting that unit types are compatible with context extension makes
+no sense from the point of view that contexts are lists of types and types
+are contexts of length one; in other words, that types are indecomposable (i.e.~non-extended)
+families. Remidies:
+\begin{enumerate}
+\item This point of view is wrong and should be abandoned.
+\item We have, as Vladimir proposed, two kinds of judgmental equalities. One
+      could be used for the very strict equalities, the other could be used
+      to state the compatibility rules with. In other words, the other equality
+      is a compatibility relation. If we do that, we shouldn't require that
+      if a family is compatible with a type, then the family is a type. The
+      compatibility relation could relate things by uniqueness up to unique
+      isomorphism.
+\item Don't state such compatibility rules for the type constructors.
+\item Don't even give the unit type a dependent action.
+\end{enumerate}
+\end{enumerate}
+
+\subsection{The unit type in structural type theory}
+In this section we explore what we get if we pose compatibility conditions on
+an inductively defined unit type. We will assume that not only the unit type
+is compatible with extension, weakening, substitution and identity functions,
+but also its induction principle should be compatible with those.
+
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jtype{{\Gamma}{A}}{\unitc{A}}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{A'}
+      }
+    { \jtypeeq
+        {{\Gamma}{A}}
+        {\unitc{A}}
+        {\unitc{A'}}
+      }
+  \\
+& \inference
+    { \jfam{\Gamma}{A}
+      }
+    { \jterm{{\Gamma}{A}}{\unitc{A}}{\unitct{A}}
+      }
+& & \inference
+    { \jfameq{\Gamma}{A}{A'}
+      }
+    { \jtermeq{{\Gamma}{A}}{\unitc{A}}{\unitct{A}}{\unitct{A'}}
+      }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jtype{{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}{\unitf{A}{P}}
+    }
+& & \inference
+    { \jfameq{{\Gamma}{A}}{P}{P'}
+      }
+    { \jtypeeq
+        {{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}
+        {\unitf{A}{P}}
+        {\unitf{A}{P'}}
+      }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jterm
+      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}
+      {\unitf{A}{P}}
+      {\unitft{A}{P}}
+    }
+& & \inference
+    { \jfameq{{\Gamma}{A}}{P}{P'}
+      }
+    { \jtermeq
+        {{{{\Gamma}{A}}{P}}{\ctxwk{P}{\unitc{A}}}}
+        {\unitf{A}{P}}
+        {\unitft{A}{P}}
+        {\unitft{A}{P'}}
+      }
+\end{align*}
+
+We impose the following compatibility rules for the unit type:
+
+\begin{align*}
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jtypeeq
+      {{{\Gamma}{A}}{P}}
+      {\ctxext{\ctxwk{P}{\unitc{A}}}{\unitf{A}{P}}}
+      {\unitc{{\Gamma}{A}}}
+    }\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    }
+  { \jtypeeq{{{\Gamma}{A}}{\ctxwk{A}{B}}}{}{}
+    }  
+\end{align*}
+
+\subsection{The empty type}
+
+\subsection{The natural numbers}
+
+\subsection{Dependent pair types}
+
+\subsection{Identity types}
+
+\subsection{Dependent function types}
+
+\subsection{$\wtypesym$-types}
+
+\subsection{Universes}
+
+\subsection{The compatibility of the type constructors with each other}
+\label{compatibility-of-type-constructors}
