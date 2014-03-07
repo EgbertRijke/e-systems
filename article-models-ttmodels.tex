@@ -500,6 +500,11 @@ Therefore, we can postulate
 \subsubsection{Substitution by the term of the empty family}
 
 \subsection{Compatibility properties of arbitrary terms}
+In this subsection we will state the inference rules that assert that every
+term $\jterm{{\Gamma}{A}}{P}{f}$ acts functorially. That means, every term
+preserves the empty context, extension, weakening, substitution and the
+identity functions. Moreover, there will be several inference rules
+involving the behavior of $\mfam{f}$ and $\mtm{f}$.
 
 \subsubsection{Every term is compatible with the empty context}
 \begin{equation*}
@@ -513,6 +518,50 @@ Therefore, we can postulate
       {\tfemp{\subst{\tfemp{A}}{P}}}
     }
 \end{equation*}
+
+\subsubsection{The action of the action on families of a term is the action
+on contexts of that term}
+Consider a term $\jterm{{\Gamma}{A}}{P}{f}$. Then we have the term
+\begin{equation*}
+\jterm
+  {{\Gamma}{\subst{\tfemp{A}}{\mfam{A}}}}
+  {\subst{\tfemp{A}}{\ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}}}
+  {\subst{\tfemp{A}}{\mfam{f}}}
+\end{equation*}
+We have required that $\subst{\tfemp{A}}{\mfam{A}}\jdeq A$. Also, we have the
+judgmental equalities
+\begin{align*}
+\subst{\tfemp{A}}{\ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}}
+& \jdeq
+  \ctxwk{\subst{\tfemp{A}}{\mfam{A}}}{\subst{\tfemp{A}}{{f}{\mfam{P}}}}
+  \\
+& \jdeq
+  \ctxwk{A}{\subst{{\tfemp{A}}{f}}{{\tfemp{A}}{\mfam{P}}}}
+  \\
+& \jdeq
+  \ctxwk{A}{\subst{\tfemp{\subst{\tfemp{A}}{P}}}{{\tfemp{A}}{\mfam{P}}}}
+  \\
+& \jdeq
+  \ctxwk{A}{\subst{{\tfemp{A}}{\tfemp{P}}}{{\tfemp{A}}{\mfam{P}}}}
+  \\
+& \jdeq
+  \ctxwk{A}{\subst{\tfemp{A}}{{\tfemp{P}}{\mfam{P}}}}
+  \\
+& \jdeq
+  \ctxwk{A}{\subst{\tfemp{A}}{P}}
+\end{align*}
+If we require also the following inference rule, we would get $\mfam{A}\jdeq
+\ctxwk{A}{A}$.
+\begin{equation*}
+\inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq{{\Gamma}{A}}{P}{\ctxwk{A}{\subst{\tfemp{A}}{P}}}
+    }
+\end{equation*}
+This rule would say that a family $P$ of models over $A$ is determined by the
+model $\subst{\tfemp{A}}{P}$ and that the only possible families of models
+are the constant families.
 
 \subsubsection{Every term is compatible with extension}
 Let $\jterm{{\Gamma}{A}}{P}{f}$. The rule we're about to explain is that $f$
