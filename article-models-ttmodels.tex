@@ -24,7 +24,15 @@ axiomatizing what you can do with them. We have the following ideas:
   theory become contexts, families or terms, depending on what kind of judgments
   it was. Then, valid inferences of the original type theory become valid
   judgments here. In some sense, the theory we present here is therefore a second
-  order theory over the basic theory of types. 
+  order theory over the basic theory of types.
+\item Martin Escardo and Mike Shulman have been promoting the use of 
+  inductive-inductive definitions for internal models. What we're doing here looks
+  different, because we're writing down a type theory for internal models, but it
+  might not be that different at all. The type theory can be seen as the theory
+  of (dependent) algebras over the inductive-inductively defined model and the
+  terms of this type theory are the (dependent) algebra homomorphisms. The
+  asserted initial object of our type theory is the inductive-inductively defined
+  type. 
 \end{itemize}
 
 \subsection{The basic ingredients of the type theory of models}
@@ -506,6 +514,74 @@ preserves the empty context, extension, weakening, substitution and the
 identity functions. Moreover, there will be several inference rules
 involving the behavior of $\mfam{f}$ and $\mtm{f}$.
 
+\subsubsection{The action on families of families of a term is the action on
+families over extensions}
+Let $\jterm{{\Gamma}{A}}{P}{f}$. Then we have the term
+\begin{equation*}
+\jterm{{{\Gamma}{A}}{\mfam{A}}}{\ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}}{\mfam{f}}
+\end{equation*}
+and we have the term
+\begin{equation*}
+\jterm
+  { {{{\Gamma}{A}}{\mfam{A}}}{\mfam{\mfam{A}}}
+    }
+  { \ctxwk
+      {\mfam{\mfam{A}}}
+      {\subst{\mfam{f}}{\mfam{\ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}}}}
+    }
+  { \mfam{\mfam{f}}
+    }.
+\end{equation*}
+We have the judgmental equality $\mfam{\mfam{A}}\jdeq
+\jcomp{}{\tfext{A}}{\mfam{A}}$; in this subsubsection we wish to establish a
+similar judgmental equality explaining what $\mfam{\mfam{f}}$ is. Note that
+we have the judgmental equalities
+\begin{align*}
+\ctxwk
+  {\mfam{\mfam{A}}}
+  {\subst{\mfam{f}}{\mfam{\ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}}}}
+& \jdeq
+  \ctxwk
+    {\jcomp{}{\tfext{A}}{\mfam{A}}}
+    {\subst{\mfam{f}}{\mfam{\ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}}}}
+  \\
+& \jdeq
+  \ctxwk
+    {\unfold{\jcomp{\ctxext{A}{\mfam{A}}}{\tfext{A}}{\mfam{A}}}}
+    {\subst{\mfam{f}}{\mfam{\ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}}}}
+  \\
+& \jdeq
+  \ctxwk
+    {\subst{\tfext{A}}{\ctxwk{\mfam{A}}{{A}{\mfam{A}}}}}
+    {\subst{\mfam{f}}{\mfam{\ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}}}}
+  \\
+& \jdeq
+  \ctxwk
+    { \subst{\tfext{A}}{\ctxwk{\mfam{A}}{{A}{\mfam{A}}}}
+      }
+    { \subst
+        { \tfext{A}
+          }
+        { \ctxwk
+            {A}
+            {\subst{\mfam{f}}{\mfam{\ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}}}}}
+      }
+  \\
+& \jdeq
+  \subst
+    { \tfext{A}
+      }
+    { \ctxwk
+        { {\mfam{A}}{{A}{\mfam{A}}}
+          }
+        { {A}
+          {\subst{\mfam{f}}{\mfam{\ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}}}}
+          }
+      }
+  \\
+& \jdeq \unfold{\jcomp{{A}{\mfam{A}}}{\tfext{A}}{\mfam{\ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}}}}
+\end{align*}
+
 \subsubsection{Every term is compatible with the empty context}
 \begin{equation*}
 \inference
@@ -521,6 +597,10 @@ involving the behavior of $\mfam{f}$ and $\mtm{f}$.
 
 \subsubsection{The action of the action on families of a term is the action
 on contexts of that term}
+\emph{In this subsubsection we attempted to establish a rule asserting that
+$\subst{\tfemp{A}}{\mfam{f}}\jdeq f$ for any $\jterm{{\Gamma}{A}}{P}{f}$. This
+is however not true.}
+
 Consider a term $\jterm{{\Gamma}{A}}{P}{f}$. Then we have the term
 \begin{equation*}
 \jterm
@@ -639,10 +719,13 @@ we can require:
 \end{equation*}
 
 \subsubsection{Every term is compatible with weakening}
+Let $\jterm{{\Gamma}{A}}{P}{f}$ be a term. We will establish an inference rule
+asserting that $f$ commutes with weakening. 
 
 \subsubsection{Every term is compatible with substitution}
 
 \subsubsection{Every term preserves identity}
+
 
 \section{Pretty type theory}
 In this section we will do three things. First we explain basic type theory with
