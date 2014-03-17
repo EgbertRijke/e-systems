@@ -1,23 +1,43 @@
 \section{Type theory before type constructors}\label{tt}
-In this section we give a description of type theory before basic
-constructors and with explicit extension, weakening and substitution. We will
-formulate the type theory in such a way that contexts aren't lists of variable
-declarations. The main reason is that we don't see variable declarations in the
+In this section we give a description of dependent type theory before type
+constructors with explicit operations of extension, weakening and substitution. We will
+formulate the type theory in such a way that contexts aren't defined
+to be lists of variable
+declarations. We rather take a syntactic approach in our treatment of contexts,
+axiomatizing only what you can do with them and allowing for the freedom to
+interpret the axiom in any desired way. 
+The main reason is that we don't see variable declarations in the internal
 models either. This way we also set out to a more algebraic approach of type
 theory and higher category theory. Thirdly, we will not have to be burdened with
-comments about variables being bounded or not, or fresh or not occuring at all.
+superficial comments about variables being bounded or not, or fresh or free or 
+not occuring at all.
 
-We will develop a theory which is in fact a theory of contexts and families of
-contexts where a family of context can be a type, behind which we have the
-intuition that it is an atomic or irreducible family of contexts. We get immediately
-that every construction can be made in an arbitrary context. 
+The theory we will develop here is a theory of contexts, families of contexts
+and terms thereof. Families of contexts could have been named dependent contexts
+or telescopes.
 
-It should be noted that this is just a prototype description. It may be the case
-that various other elements have to be added yet, such as terms
-$\jterm{{\Gamma}{\subst{x}{P}}}{\ctxwk{\subst{x}{P}}{\ctxext{A}{P}}}{i}$
-including the fiber $\subst{x}{P}$ into the extended family $\ctxext{A}{P}$ over
-$\Gamma$. Moreover, it hasn't been thoroughly tested whether the theory presented
-here lives up to its promise.
+In our treatment, a context can be the empty context or it can be a binary
+planar tree of which `the leaves are (families of) contexts'. 
+The judgmental equality relation on contexts is an equivalence relation which 
+expresses that binary planar
+trees of contexts are judgmentally equal if their leaves are, taking only the
+order of the leaves into account \emph{and not the actual shape of the three}.
+The intuition behind this equivalence relation is indeed that unstructured
+(i.e.~unbracketed) lists such as the lists of variable declarations which
+usually appear in type theoretical syntax, may be regarded as contexts.
+
+Besides contexts, families and terms there will also be a notion of `type in
+a context'. Only a family of contexts over a context $\Gamma$ is eligible to
+be a type in the context $\Gamma$ and we have the intuition that `being a type'
+expresses the property of `being an atomic or irreducible family of contexts'.
+
+We will formulate fairly strict rules governing the judgmental equalities,
+expressing that extension, weakening and substitution are combatible with
+each other in a judgmental manner. This does not, however, diminish the role
+of isomorphisms or of homotopies could play in the theory once identity types
+are added. Indeed, types could still have non-trivial identity relations and
+the category of types in a certain context could genuinely display higher
+categorical structure, or so we conjecture.
 
 Much of the rules we state are just compatibility rules of extension, weakening
 and substitution with each other. In a way, these rules assert that our contexts
