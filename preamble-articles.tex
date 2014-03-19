@@ -10,6 +10,7 @@
 \linespread{1.05} % Palatino looks better with this
 
 \usepackage{fancyhdr} % To set headers and footers
+\usepackage{enumitem,mathtools,xspace,xcolor}
 \usepackage{comment}
 \usepackage{ifthen}
 
@@ -20,17 +21,14 @@
 \usepackage[inference]{semantic}
 \usepackage{booktabs}
 
-\usepackage{enumitem,mathtools,xspace,xcolor}
-
-\usepackage{aliascnt}
-\usepackage[capitalize]{cleveref}
-
 \usepackage[hyphens]{url} % This package has to be loaded *before* hyperref
 \usepackage[pagebackref,colorlinks,citecolor=darkgreen,linkcolor=darkgreen,unicode]{hyperref}
 \definecolor{darkgreen}{rgb}{0,0.45,0}
 
 % For some reason the following can't be above hyperref...
 \usepackage{amssymb,amsmath,amsthm,stmaryrd,mathrsfs,wasysym}
+\usepackage{aliascnt}
+\usepackage[capitalize]{cleveref}
 
 % The braket macro shouldn't be necessary
 \usepackage{braket} % used for \setof{ ... } macro
