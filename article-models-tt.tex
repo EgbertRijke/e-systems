@@ -2178,3 +2178,38 @@ judgmental equalities
   \qedhere
 \end{align*}
 \end{proof}
+
+\subsection{Judgmental trivial cofibrations}
+\begin{defn}
+Let $\jhom{\Gamma}{A}{B}{f}$ be a context morphism. We say that $f$ is a 
+\emph{judgmental trivial cofibration} if the following inference rules are valid:
+\begin{align*}
+& \inference
+  { \jfam{{\Gamma}{B}}{Q}
+    \jterm{{\Gamma}{A}}{\jcomp{A}{f}{Q}}{g}
+    }
+  { \jterm{{\Gamma}{B}}{Q}{\jtcext{g}}
+    }
+& & \inference
+  { \jfam{{\Gamma}{B}}{Q}
+    \jterm{{\Gamma}{A}}{\jcomp{A}{f}{Q}}{g}
+    }
+  { \jtermeq{{\Gamma}{A}}{\jcomp{A}{f}{Q}}{\jcomp{A}{f}{\jtcext{g}}}{g}
+    }
+\end{align*}
+\end{defn}
+
+When $f$ is a context morphism from $A$ to $B$ in context $\Gamma$, 
+finding a term of a family $Q$ over $\ctxext{\Gamma}{B}$ can be accomplished
+by finding a term of the family $\jcomp{A}{f}{Q}$ over $\ctxext{\Gamma}{A}$.
+Judgmental trivial cofibrations come with a computation rule. Thus, term
+constructors of inductively defined types are going to be the major source of
+examples of judgmental trivial cofibrations. Since identity functions behave
+so nicely, they are judgmental trivial cofibrations too.
+
+\begin{lem}
+The identity function
+$\jhom{\Gamma}{A}{A}{\idfunc[A]}$ is a judgmental trivial cofibration
+for each family $A$ of contexts over $\Gamma$
+\end{lem}
+
