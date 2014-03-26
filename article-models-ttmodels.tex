@@ -407,6 +407,120 @@ Thus the inference rule we require to become valid is:
     }
 \end{equation*}
 
+\subsubsection{Families of extended models}
+Suppose we have a model $\ctxext{A}{P}$ in context $\Gamma$. In this section we
+will figure out what the families of this model are. This is a bit tricky, so
+we first treat the case where $P\jdeq\mfam{A}$. A context $\gamma$ in this
+model is decomposed as a pair $\tmext{A}{\mfam{A}}{\pts{\gamma}}{\edg{\gamma}}$
+which consists of a context $\pts{\gamma}$ of the model $A$ and a context
+$\edg{\gamma}$ of the model $\mfam{A}$ in the fiber above $\pts{\Gamma}$. In
+other words, $\edg{\gamma}$ is a family over $\pts{\gamma}$. A family $\beta$
+over $\gamma$ is then a pair $\tmext{}{}{\pts{\beta}}{\edg{\beta}}$ consisting
+of a family $\pts{\beta}$ over $\pts{\gamma}$ and a family $\edg{\beta}$ over
+the extended term $\tmext{}{}{\pts{\beta}}{\edg{\gamma}}$. 
+It is this extension which appears in the type of $\edg{\beta}$ which requires
+a workaround for general $P$.
+
+We consider the following diagram helpful:
+\begin{equation*}
+\begin{tikzcd}
+\jcomp{}{\bar{\typefont{pr}}}{{}{\tfext{A}}{\mfam{P}}}
+  \rar{}
+  \ar[fib]{d}
+  &
+  \jcomp{}{\tfext{A}}{\mfam{P}}
+    \rar{}
+    \ar[fib]{d}{}
+  &
+  \mfam{P}
+    \ar[fib]{d}{}
+  \\
+\jcomp{}{\bar{\typefont{pr}}}{{}{\tfext{A}}{P}}
+  \rar{}
+  \ar[fib]{d}{}
+  &
+  \jcomp{}{\tfext{A}}{P}
+  \rar{}
+  \ar[fib]{d}{}
+  &
+  P
+  \ar[fib]{d}{}\\
+\ctxext{{A}{P}}{\mfam{A}}
+  \ar{r}[swap]{\bar{\typefont{pr}}}
+  &
+  \ctxext{A}{\mfam{A}}
+  \ar{r}[swap]{\tfext{A}}
+  &
+  A
+\end{tikzcd}
+\end{equation*}
+Here $\bar{\typefont{pr}}\jdeq\tmext{}{}{\cprojfstf{A}{P}}{\idtm{\mfam{A}}}$,
+the unmarked horizontal arrows indicate identity terms and the vertical arrows
+merely indicate that what's above is a family depending on what's below.
+
+\subsubsection{Families of substituted modes}
+The following inference rule explains that the fiber at a term $f$ of $P$
+of the model of families of a family of models $Q$ over $\ctxext{{\Gamma}{A}}{P}$
+is judgmentally the same as the model of families of the fiber at the term $f$
+of the family $Q$. In more practical terms, suppose we have a context $\gamma$
+in $Q$ which happens to be in the fiber at $f$ of $Q$ over $P$, then a family
+over $\gamma$ according to $Q$ is the same thing as a family over $\Gamma$
+according to $\subst{f}{Q}$. The following inference rule captures this idea
+precisely:
+
+\begin{equation}
+\inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jfameq
+      {{\Gamma}{A}}
+      {\subst{f}{\mfam{Q}}}
+      {\mfam{\subst{f}{Q}}}
+    }
+\end{equation}
+
+\subsubsection{Families of weakened models}
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{\mfam{B}}}
+      {\mfam{\ctxwk{A}{B}}}
+    }
+\end{equation*}
+
+\subsubsection{The action on families of the identity term}
+Let $A$ be a model in context $\Gamma$. Then we have the identity term
+$\jhom{\Gamma}{A}{A}{\idtm{A}}$, which also has an action on families with the
+following specification:
+\begin{equation*}
+\jhom{{\Gamma}{A}}{\mfam{A}}{\subst{\idtm{A}}{\mfam{\ctxwk{A}{A}}}}{\mfam{\idtm{A}}}.
+\end{equation*}
+Note, however that we have the judgmental equalities
+\begin{equation*}
+\subst{\idtm{A}}{\mfam{\ctxwk{A}{A}}}\jdeq\subst{\idtm{A}}{\ctxwk{A}{\mfam{A}}}
+\jdeq\mfam{A},
+\end{equation*}
+so we may require that the action on families of the identity
+term $\idtm{A}$ is the identity term $\idtm{\mfam{A}}$. We get the following
+inference rule:
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq
+      {{\Gamma}{A}}
+      {\mfam{A}}
+      {\mfam{A}}
+      {\mfam{\idtm{A}}}
+      {\idtm{\mfam{A}}}
+    }
+\end{equation*}
+
 \subsubsection{Weakening by a family is precomposing with extension}
 We seem to need the following rule:
 \begin{equation*}
