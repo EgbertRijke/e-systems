@@ -1923,8 +1923,8 @@ The following compatibility rules for two consecutive term extensions is valid:
   { \jtermeq
       {\Gamma}
       {\ctxext{{A}{P}}{Q}}
-      {\tmext{A}{{P}{Q}}{x}{{u}{v}}}
-      {\tmext{{A}{P}}{Q}{{x}{u}}{v}}
+      {\tmext{A}{{P}{Q}}{x}{{\subst{x}{P}}{\subst{x}{Q}}{u}{v}}}
+      {\tmext{{A}{P}}{Q}{{A}{P}{x}{u}}{v}}
     }
   \\
 & \inference

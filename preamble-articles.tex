@@ -533,17 +533,19 @@
 \newcommand{\tmext}[4]{%
   \ctxext{\tmext@testleft #3}{\tmext@testright #4}}
 \newcommand{\tmext@testleft}{%
+  \@ifnextchar\bgroup{\@tmext@parens}{%
   \@ifnextchar\tmext{\@tmext@nested}{%
   \@ifnextchar\ctxwk{\@ctxwk@nested}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \default@tmext
-  }}}}
+  }}}}}
 \newcommand{\tmext@testright}{%
+  \@ifnextchar\bgroup{\@tmext@parens}{%
   \@ifnextchar\tmext{\@tmext@nested}{%
   \@ifnextchar\subst{\@subst@nested}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \default@tmext
-  }}}}
+  }}}}}
 \newcommand{\@tmext@nested}[5]{%
   \@tmext@parens{#2}{#3}{#4}{#5}}
 \newcommand{\@tmext@parens}[4]{%
