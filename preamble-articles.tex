@@ -412,7 +412,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% THE EMPTY CONTEXT
 
-\newcommand{\emptysym}{\greek{O}}
+\newcommand{\emptysym}{[\;]}
 \newcommand{\emptyc}{{\emptysym}}
 \newcommand{\emptyf}[1][]{{\emptysym}_{#1}}
 \newcommand{\emptytm}[1][]{\typefont{\#}_{#1}}
@@ -473,7 +473,10 @@
   \@ifnextchar\ctxwk{\@ctxwk@nested}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\tmext{\@tmext@nested}{%
-  \@subst}}}}}
+%  \@ifnextchar\mfam{\@mfam@nested}{%
+%  \@ifnextchar\mtm{\@mtm@nested}{%
+  \@subst
+  }}}}}%}}
 \newcommand{\@subst@nested}[3]{%
   \@subst@parens{#2}{#3}}
 \newcommand{\@subst@parens}[2]{%
@@ -499,7 +502,10 @@
   \@ifnextchar\subst{\@subst@nested}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\tmext{\@tmext@nested}{%
-  \@ctxwk}}}}}
+%  \@ifnextchar\mfam{\@mfam@nested}{%
+%  \@ifnextchar\mtm{\@mtm@nested}{%
+  \@ctxwk
+  }}}}}%}}
 \newcommand{\@ctxwk@parens}[2]{%
   (\ctxwk{#1}{#2})}
 \newcommand{\@ctxwk@nested}[3]{%
@@ -511,12 +517,11 @@
   \ctxwk{#2}{#1}}
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% IDENTITY FUNCTIONS
-%%%%
-%%%% We currently just use \idfunc but this should probably change because that
-%%%% is the lambda-abstracted version of our identity morphisms
-%%%%
-%%%% -- TO CONSTRUCT
+%%%% IDENTITY TERMS
+
+\makeatletter
+\newcommand{\idtm}[1]{\typefont{id}_{#1}}
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% TERM EXTENSION
@@ -546,7 +551,7 @@
 
 %%%% The unfolded term extension commands
 \newcommand{\tmext@unfold}[4]{%
-  \subst{#4}{{#3}{\idfunc[\ctxext{#1}{#2}]}}}
+  \subst{#4}{{#3}{\idtm{\ctxext{#1}{#2}}}}}
 \newcommand{\@tmext@unfold@nested}[1]{%
   \@tmext@unfold@parens}
 \newcommand{\@tmext@unfold@parens}[4]{%
@@ -695,11 +700,11 @@
   \cprojgen{1}{#1}{#2}{#3}}
 
 \newcommand{\cprojfstf@unfold}[2]{%
-  \ctxwk{\default@ctxext #2}\idfunc[\default@ctxext #1]}
+  \ctxwk{\default@ctxext #2}\idtm{\default@ctxext #1}}
 \newcommand{\cprojfst@unfold}[3]{%
   \subst{#3}{(\cprojfstf@unfold{#1}{#2})}}
 \newcommand{\cprojsndf@unfold}[2]{%
-  \idfunc[\default@ctxext #2]}
+  \idtm{\default@ctxext #2}}
 \newcommand{\cprojsnd@unfold}[3]{%
   \subst{#3}{\cprojsnd@unfold{#1}{#2}}}
 \makeatother
@@ -763,12 +768,16 @@
   \mathcal{C}}
 
 %%%% The family constructor
-\newcommand{\mfam}[1]{%
-  \mathcal{F}_{\default@ctxext #1}}
+\newcommand{\mfam}[2][]{%
+  \mathcal{F}_{\default@ctxext #2}^{#1}}
+\newcommand{\@mfam@nested}[1]{\@mfam@parens}
+\newcommand{\@mfam@parens}[2][]{(\mfam[#1]{#2})}
 
 %%%% The terms constructor
-\newcommand{\mtm}[1]{%
-  \mathcal{T}_{\default@ctxext #1}}
+\newcommand{\mtm}[2][]{%
+  \mathcal{T}_{\default@ctxext #2}^{#1}}
+\newcommand{\@mtm@nested}[1]{\@mtm@parens}
+\newcommand{\@mtm@parens}[2][]{(\mtm[#1]{#2})}
 
 %%%% The empty type constructor
 \newcommand{\tfemp}[1]{%
@@ -790,7 +799,7 @@
 
 %%%% The identity function constructor
 \newcommand{\tfid}[1]{%
-  \typefont{idfun}_{\default@ctxext #1}}
+  \typefont{idtm}_{\default@ctxext #1}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

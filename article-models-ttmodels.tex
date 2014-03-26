@@ -88,7 +88,7 @@ We first introduce the basic ingredients of our abstract theory of models.
     }
 \intertext{%
   When the situation requires clarity --  for instance when extensions
-  are involved -- we will write $\mfam{f}^\Gamma$ and $\mtm{f}^\Gamma$ to make
+  are involved -- we will write $\mfam[\Gamma]{f}$ and $\mtm[\Gamma]{f}$ to make
   what we regard as the context explicit.}
 \intertext{%
 The empty context of a model $A$ is simply a term of $A$:}
@@ -177,7 +177,7 @@ The empty context of a model $A$ is simply a term of $A$:}
     }
   \tag{substitution}
 \intertext{%
-  The identity functions are coded by}
+  The identity terms are coded by}
 & \inference
   { \jfam{\Gamma}{A}
     }
@@ -186,7 +186,7 @@ The empty context of a model $A$ is simply a term of $A$:}
       {\subst{{\idfunc[\mfam{A}]}{\tfwk{A}^0}}{\mtm{\mfam{\mfam{A}}}}}
       {\tfid{A}}
     }
-  \tag{identity functions}
+  \tag{identity terms}
 \end{align*}
 We will call the terms that we introduced here the model constructors.
 
@@ -196,15 +196,15 @@ We need to do several things in this section:
 \item postulate that ordinary extension, weakening, substitution and identity
 functions are compatible with the model constructors.
 \item postulate that each of the model constructors is compatible with ordinary
-extension, weakening, substitution and identity functions. Actually, we want
+extension, weakening, substitution and identity terms. Actually, we want
 that every term of this type theory is compatible with those. I.e.~every term
 is a functor/morphism of models. Also the sections.
 \item postulate that the model constructors are compatible with each other,
 so that they come to model ordinary extension, weakening, substitution and
-identity functions respectively.
+identity terms respectively.
 \item Note that the rules for compatibility with extension are going to explain which
 model $\ctxext{A}{P}$ is by telling what the families, the terms, extension,
-weakening, substitution and identity functions are. Likewise the rules for
+weakening, substitution and identity terms are. Likewise the rules for
 compatibility with weakening and substitution do this for their respective
 cases.
 \item The easiest set of compatibility rules comes with weakening. The compatibility
@@ -280,7 +280,7 @@ Because we have the judgmental equality $\ctxext{\Gamma}{{A}{\mfam{A}}}
   {{{\Gamma}{A}}{\mfam{A}}}
   {\mfam{\mfam{A}}}
   {\subst{\tfext{A}}{\mfam{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}}}
-  {\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+  {\mfam[\ctxext{\Gamma}{A}]{\tfext{A}}}
 \end{equation*}
 By the rule asserting that families of families are families of extensions, we
 have $\mfam{\mfam{A}}\jdeq\jcomp{}{\tfext{A}}{\mfam{A}}$. By the rule that
@@ -293,8 +293,8 @@ equalities
 \jdeq 
   \jcomp{{A}{P}}{\tfext{A}}{\mfam{A}}
 \end{equation*}
-Therefore, we can compare the term $\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}$
-to the identity function $\idfunc[\jcomp{}{\tfext{A}}{\mfam{A}}]$. 
+Therefore, we can compare the term $\mfam[\ctxext{\Gamma}{A}]{\tfext{A}}$
+to the identity term $\idfunc[\jcomp{}{\tfext{A}}{\mfam{A}}]$. 
 The compatibility
 rule for the action of extension on families of families asserts that
 \begin{equation*}
@@ -305,7 +305,7 @@ rule for the action of extension on families of families asserts that
       {{{\Gamma}{A}}{\mfam{A}}}
       {\jcomp{}{\tfext{A}}{\mfam{A}}}
       {\jcomp{}{\tfext{A}}{\mfam{A}}}
-      {\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+      {\mfam[\ctxext{\Gamma}{A}]{\tfext{A}}}
       {\idfunc[\jcomp{}{\tfext{A}}{\mfam{A}}]}
     }
 \end{equation*}
@@ -319,26 +319,26 @@ We now investigate the nature of the morphism.
   {{{\Gamma}{A}}{\mfam{A}}}
   {\mfam{\mfam{A}}}
   {\subst{\tfext{A}}{\mfam{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}}}
-  {\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+  {\mfam[\ctxext{\Gamma}{A}]{\tfext{A}}}
   {\mtm{\mfam{A}}}
   {\subst{\tfext{A}}{\mtm{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}}}
-  {\mtm{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+  {\mtm[\ctxext{\Gamma}{A}]{\tfext{A}}}
 \end{equation*}
 Note that we have the judgmental equality 
 $\mtm{\mfam{A}}\jdeq\jcomp{}{\tfext{A}}{\mtm{A}}$. Likewise, we have the
 judgmental equality $\subst{\tfext{A}}{\mtm{\ctxwk{\ctxext{A}{\mfam{A}}}{A}}}
 \jdeq\jcomp{}{\tfext{A}}{\mtm{A}}$. Thirdly, we have the judgmental equality
-$\mfam{\tfext{A}}^{\ctxext{\Gamma}{A}}\jdeq\idfunc[\jcomp{}{\tfext{A}}{\mfam{A}}]$.
+$\mfam[\ctxext{\Gamma}{A}]{\tfext{A}}\jdeq\idfunc[\jcomp{}{\tfext{A}}{\mfam{A}}]$.
 We may combine these three facts with \autoref{hom-over-id-is-hom} to see that
 \begin{equation*}
 \jhom
   {{{{\Gamma}{A}}{\mfam{A}}}{\jcomp{}{\tfext{A}}}{\mfam{A}}}
   {\jcomp{}{\tfext{A}}{\mtm{A}}}
   {\jcomp{}{\tfext{A}}{\mtm{A}}}
-  {\mtm{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+  {\mtm[\ctxext{\Gamma}{A}]{\tfext{A}}}
 \end{equation*}
-Now we see that we can require that $\mtm{\tfext{A}}^{\ctxext{\Gamma}{A}}$ is
-the identity function on $\jcomp{}{\tfext{A}}{\mtm{A}}$:
+Now we see that we can require that $\mtm[\ctxext{\Gamma}{A}]{\tfext{A}}$ is
+the identity term on $\jcomp{}{\tfext{A}}{\mtm{A}}$:
 \begin{equation*}
 \inference
   { \jfam{\Gamma}{A}
@@ -347,7 +347,7 @@ the identity function on $\jcomp{}{\tfext{A}}{\mtm{A}}$:
     {{{{\Gamma}{A}}{\mfam{A}}}{\jcomp{}{\tfext{A}}}{\mfam{A}}}
     {\jcomp{}{\tfext{A}}{\mtm{A}}}
     {\jcomp{}{\tfext{A}}{\mtm{A}}}
-    {\mtm{\tfext{A}}^{\ctxext{\Gamma}{A}}}
+    {\mtm[\ctxext{\Gamma}{A}]{\tfext{A}}}
     {\idfunc[\jcomp{}{\tfext{A}}{\mtm{A}}]}
     }
 \end{equation*}
@@ -362,7 +362,7 @@ The weakening morphism $\tfwk{A}^0$ gives a weakened morphism
   {\ctxwk{\mtm{A}}{\tfwk{A}^0}}
 \end{equation*}
 which can be composed with the morphism $\tfsubst{A}^0$. We require that this
-composition is the identity function on $\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}$:
+composition is the identity term on $\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}$:
 \begin{equation*}
 \inference
   { \jfam{\Gamma}{A}
@@ -387,10 +387,10 @@ Likewise, the weakening morphism $\tfwk{A}^1$ gives a weakened morphism
   {\ctxwk{\mtm{A}}{\tfwk{A}^1}}
 \end{equation*}
 which can be composed with the the morphism $\tfsubst{A}^1$. We require that
-this composition is the identity function on 
+this composition is the identity term on 
 $\ctxwk{\mtm{A}}{\ctxwk{\mfam{A}}{\mtm{A}}}$. Note that this composition gives
 a morphism over $\jcomp{}{\ctxwk{\mtm{A}}{\tfwk{A}^0}}{\tfsubst{A}^0}$, which
-is the identity function on $\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}$; so in fact
+is the identity term on $\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}$; so in fact
 it is an ordinary morphism in the context
 $\ctxext{{{{\Gamma}{A}}{\mfam{A}}}{\mtm{A}}}{\ctxwk{\mtm{A}}{{\mfam{A}}{\mfam{A}}}}$.
 Thus the inference rule we require to become valid is:
@@ -511,7 +511,7 @@ Therefore, we can postulate
 In this subsection we will state the inference rules that assert that every
 term $\jterm{{\Gamma}{A}}{P}{f}$ acts functorially. That means, every term
 preserves the empty context, extension, weakening, substitution and the
-identity functions. Moreover, there will be several inference rules
+identity terms. Moreover, there will be several inference rules
 involving the behavior of $\mfam{f}$ and $\mtm{f}$.
 
 \subsubsection{The action on families of families of a term is the action on

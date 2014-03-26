@@ -874,7 +874,7 @@ $\jterm{\Gamma}{B}{y}$.
   \label{comp-ws-t}
 \end{align}
 
-\subsection{Composition and identity functions}
+\subsection{Composition and identity terms}
 \subsubsection{The defining property of weakening}
 The judgmental equalities we're about to describe assert that substituting a term
 in the weakening a thing gives you the thing back. In the case of contexts we get that each fiber
@@ -1312,7 +1312,7 @@ $\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ be morphisms over them. Then we define
 
 This composition is also judgmentally associative.
 
-\subsubsection{Identity functions}
+\subsubsection{identity terms}
 Without a rule explicitly asserting the existence of an identity morphism we don't
 get one, hence we do that here. The identity morphism is a term which introduced
 in ordinary type theory via the variable rule. The variable rule is a bit more
@@ -1327,27 +1327,27 @@ already have weakening, so here it suffices to introduce the identity morphisms.
 & \inference
   { \jfam{\Gamma}{A}
     }
-  { \jhom{\Gamma}{A}{A}{\idfunc[A]}
+  { \jhom{\Gamma}{A}{A}{\idtm{A}}
     }
 & & \inference
     { \jfameq{\Gamma}{A}{A'}
       }
-    { \jhomeq{\Gamma}{A}{A}{\idfunc[A]}{\idfunc[A']}
+    { \jhomeq{\Gamma}{A}{A}{\idtm{A}}{\idtm{A'}}
       }
 \end{align}
-Identity functions are determined by their behavior with respect to substitution combined with
-weakening. The identity functions will also be subject to compatibility rules.
+Identity terms are determined by their behavior with respect to substitution combined with
+weakening. The identity terms will also be subject to compatibility rules.
 \begin{align}
 & \inference
   { \jterm{\Gamma}{A}{x}
     }
-  { \jtermeq{\Gamma}{A}{\subst{x}{\idfunc[A]}}{x}
+  { \jtermeq{\Gamma}{A}{\subst{x}{\idtm{A}}}{x}
     }
   \label{idfunc-subst-defn}\\
 & \inference
   { \jfam{{\Gamma}{A}}{P}
     }
-  { \jfameq{{\Gamma}{A}}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}{P}
+  { \jfameq{{\Gamma}{A}}{\subst{\idtm{A}}{\ctxwk{A}{P}}}{P}
     }
   \label{idfunc-wk-defn}\\
 & \inference
@@ -1355,7 +1355,7 @@ weakening. The identity functions will also be subject to compatibility rules.
     }
   { \jfameq
       {{\Gamma}{A}}
-      {\subst{\idfunc[A]}{\ctxwk{{A}{A}}{P}}}
+      {\subst{\idtm{A}}{\ctxwk{{A}{A}}{P}}}
       {P}
     }
   \label{idfunc-wk-defn2}\\
@@ -1365,7 +1365,7 @@ weakening. The identity functions will also be subject to compatibility rules.
   { \jtermeq
       {{\Gamma}{A}}
       {P}
-      {\subst{\idfunc[A]}{\ctxwk{A}{f}}}
+      {\subst{\idtm{A}}{\ctxwk{A}{f}}}
       {f}
     }
   \label{idfunc-precomp}\\
@@ -1375,24 +1375,24 @@ weakening. The identity functions will also be subject to compatibility rules.
   { \jtermeq
       {{\Gamma}{A}}
       {P}
-      {\subst{\idfunc[A]}{\ctxwk{{A}{A}}{f}}}
+      {\subst{\idtm{A}}{\ctxwk{{A}{A}}{f}}}
       {f}
     }
   \label{idfunc-precomp}\\
 & \inference
   { \jhom{\Gamma}{A}{B}{f}
     }
-  { \jhomeq{\Gamma}{A}{B}{\jcomp{A}{f}{\idfunc[B]}}{f}
+  { \jhomeq{\Gamma}{A}{B}{\jcomp{A}{f}{\idtm{B}}}{f}
     }
   \label{idfunc-postcomp}
 \end{align}
 
-We won't state a compatibility rule stating that the identity function is
+We won't state a compatibility rule stating that the identity term is
 compatible with extension because we will be able to prove that. Instead, we
-will just state the compatibility rules for the identity function combined with
+will just state the compatibility rules for the identity term combined with
 weakening and with substitution.
 
-The identity function of a weakened family is the weakened identity function:
+The identity term of a weakened family is the weakened identity term:
 \begin{equation}\label{idfunc-wk-comp}
 \inference
   { \jfam{\Gamma}{A}
@@ -1402,12 +1402,12 @@ The identity function of a weakened family is the weakened identity function:
       {{\Gamma}{A}}
       {\ctxwk{A}{B}}
       {\ctxwk{A}{B}}
-      {\ctxwk{A}{\idfunc[B]}}
-      {\idfunc[\ctxwk{A}{B}]}
+      {\ctxwk{A}{\idtm{B}}}
+      {\idtm{\ctxwk{A}{B}}}
     }
 \end{equation}
 
-The identity function of a substituted family is the substitution of the identity function
+The identity term of a substituted family is the substitution of the identity term
 \begin{equation}\label{idfunc-subst-comp}
 \inference
   { \jterm{\Gamma}{A}{x}
@@ -1417,13 +1417,13 @@ The identity function of a substituted family is the substitution of the identit
       {\Gamma}
       {\subst{x}{P}}
       {\subst{x}{P}}
-      {\subst{x}{\idfunc[P]}}
-      {\idfunc[\subst{x}{P}]}
+      {\subst{x}{\idtm{P}}}
+      {\idtm{\subst{x}{P}}}
     }
 \end{equation}
 
 Now let $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$ be families. A
-morphism from $P$ to $Q$ over the identity function $\idfunc[A]$ in context
+morphism from $P$ to $Q$ over the identity term $\idtm{A}$ in context
 $\Gamma$ is the same thing as a morphism from $P$ to $Q$ in context
 $\ctxext{\Gamma}{A}$:
 
@@ -1433,7 +1433,7 @@ We have the following valid inference rules:
 & \inference
   { \jfam{{\Gamma}{A}}{P}
     \jfam{{\Gamma}{A}}{Q}
-    \jfhom{\Gamma}{A}{A}{\idfunc[A]}{P}{Q}{f}
+    \jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}
     }
   { \jhom{{\Gamma}{A}}{P}{Q}{f}
     }
@@ -1443,21 +1443,21 @@ We have the following valid inference rules:
     \jfam{{\Gamma}{A}}{Q}
     \jhom{{\Gamma}{A}}{P}{Q}{f}
     }
-  { \jfhom{\Gamma}{A}{A}{\idfunc[A]}{P}{Q}{f}
+  { \jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}
     }
 \end{align*}
 \end{lem}
 
 \begin{proof}
 If we unfold the judgments $\jhom{{\Gamma}{A}}{P}{Q}{f}$ and
-$\jfhom{\Gamma}{A}{A}{\idfunc[A]}{P}{Q}{f}$, we get the judgments
+$\jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}$, we get the judgments
 \begin{align*}
 & \unfold{\jhom{{\Gamma}{A}}{P}{Q}{f}}
   \\
-& \unfold{\jfhom{\Gamma}{A}{A}{\idfunc[A]}{P}{Q}{f}}
+& \unfold{\jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}}
 \end{align*}
 respectively. Therefore, we only need to verify that
-$\ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{Q}}}\jdeq\ctxwk{P}{Q}$, which is indeed
+$\ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}}\jdeq\ctxwk{P}{Q}$, which is indeed
 the case by \autoref{idfunc-wk-defn}.
 \end{proof}
 
@@ -1483,7 +1483,7 @@ Thus, the term $\tmext{A}{P}{x}{u}$ is the pairing of $x$ and $u$. Note that bec
 we have the judgmental equality 
 $\ctxwk{P}{{A}{\ctxext{A}{P}}}\jdeq\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}$ in the
 context $\ctxext{{\Gamma}{A}}{P}$, the
-pairing function could just be defined as $\idfunc[\ctxext{A}{P}]$. 
+pairing function could just be defined as $\idtm{\ctxext{A}{P}}$. 
 
 When we substitute by an extended term we get an equal result as when we
 substitute two consecutive times, like the way currying works.
@@ -1549,38 +1549,38 @@ be terms and let $\jfam{{{\Gamma}{A}}{P}}{Q}$ be a family. Then we have
   {Q} 
 & \jdeq 
   \subst
-    {{u}{{x}{\idfunc[\ctxext{A}{P}]}}}
+    {{u}{{x}{\idtm{\ctxext{A}{P}}}}}
     {Q}
   \tag{by definition}\\
 & \jdeq 
   \subst
-    {{u}{{x}{\idfunc[\ctxext{A}{P}]}}}
+    {{u}{{x}{\idtm{\ctxext{A}{P}}}}}
     {{x}{\ctxwk{A}{Q}}}
   \tag{by \autoref{defn-ws-3}}\\
 & \jdeq 
   \subst
-    {{u}{{x}{\idfunc[\ctxext{A}{P}]}}}
+    {{u}{{x}{\idtm{\ctxext{A}{P}}}}}
     {{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\ctxwk{A}{Q}}}}}
   \tag{by \autoref{defn-ws-3}}\\
 & \jdeq 
   \subst
-    {{u}{{x}{\idfunc[\ctxext{A}{P}]}}}
+    {{u}{{x}{\idtm{\ctxext{A}{P}}}}}
     {{u}{{x}{\ctxwk{P}{{A}{Q}}}}}
   \tag{by \autoref{comp-sw-f}}\\
 & \jdeq 
   \subst
     {u}
-    {{{x}{\idfunc[\ctxext{A}{P}]}}{{x}{\ctxwk{{P}{{A}{Q}}}}}}
+    {{{x}{\idtm{\ctxext{A}{P}}}}{{x}{\ctxwk{{P}{{A}{Q}}}}}}
   \tag{by \autoref{comp-ss-f}}\\
 & \jdeq 
   \subst
     {u}
-    {{x}{{\idfunc[\ctxext{A}{P}]}{\ctxwk{P}{{A}{Q}}}}}
+    {{x}{{\idtm{\ctxext{A}{P}}}{\ctxwk{P}{{A}{Q}}}}}
   \tag{by \autoref{comp-ss-f}}\\
 & \jdeq 
   \subst
     {u}
-    {{x}{{\idfunc[\ctxext{A}{P}]}{\ctxwk{\ctxext{A}{P}}{Q}}}}
+    {{x}{{\idtm{\ctxext{A}{P}}}{\ctxwk{\ctxext{A}{P}}{Q}}}}
   \tag{by \autoref{comp-ew-f}}\\
 & \jdeq 
   \subst
@@ -1590,10 +1590,10 @@ be terms and let $\jfam{{{\Gamma}{A}}{P}}{Q}$ be a family. Then we have
 \end{align*}
 \end{proof}
 
-We have seen above that the pairing function into $\ctxext{A}{P}$ is just the identity function on
+We have seen above that the pairing function into $\ctxext{A}{P}$ is just the identity term on
 $\ctxext{A}{P}$. To analyze the pairing functin a little further, we will also
 need the projection maps from $\ctxext{A}{P}$ to $A$ and from $\ctxext{A}{P}$
-to $P$. We will now define these and see that the identity function of an
+to $P$. We will now define these and see that the identity term of an
 extended family is the extension (or pairing) of the identity
 functions on the components in the apropriate way.
 
@@ -1607,17 +1607,17 @@ apropriate way is, note that
 & \jdeq 
   \ctxext{\ctxwk{P}{{A}{A}}}{\ctxwk{P}{{A}{P}}}
 \end{align*}
-We have the term $\jterm{{\Gamma}{{A}{P}}}{\ctxwk{P}{A}}{\ctxwk{P}{\idfunc[A]}}$.
-Thus we need to find out what $\subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{P}}}$ is:
+We have the term $\jterm{{\Gamma}{{A}{P}}}{\ctxwk{P}{A}}{\ctxwk{P}{\idtm{A}}}$.
+Thus we need to find out what $\subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{P}}}$ is:
 \begin{align*}
-\subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{P}}} 
+\subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{P}}} 
 & \jdeq 
-  \ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{P}}}
+  \ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{P}}}
   \\
 & \jdeq 
   \ctxwk{P}{P},
 \end{align*}
-where we find the term $\idfunc[P]$. Therefore we define:
+where we find the term $\idtm{P}$. Therefore we define:
 
 \begin{defn}
 Let $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ be families. We define
@@ -1637,7 +1637,7 @@ Let $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ be families. We define
 \end{align*}
 \end{defn}
 
-We find the following inference rule, which expresses that the identity function
+We find the following inference rule, which expresses that the identity term
 is compatible with extension:
 
 \begin{lem}
@@ -1650,7 +1650,7 @@ For any $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ we have
   { \jhomeq
       {\Gamma}
       {{A}{P}}{{A}{P}}
-      {\idfunc[\ctxext{A}{P}]}
+      {\idtm{\ctxext{A}{P}}}
       { \tmext
           {\ctxwk{\ctxext{A}{P}}{A}}
           {\ctxwk{\ctxext{A}{P}}{P}}
@@ -1681,49 +1681,49 @@ we have the judgmental equalities
   \\
 & \jdeq 
   \subst
-    { \idfunc[P]
+    { \idtm{P}
       }
-    { {\ctxwk{P}{\idfunc[A]}}
-      {\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}
-      }
-  \\
-& \jdeq 
-  \subst
-    { \idfunc[P]
-      }
-    { {\ctxwk{P}{\idfunc[A]}}
-      {\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}
+    { {\ctxwk{P}{\idtm{A}}}
+      {\idtm{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}}
       }
   \\
 & \jdeq 
   \subst
-    { \idfunc[P]
+    { \idtm{P}
       }
-    { {\ctxwk{P}{\idfunc[A]}}
-      {\ctxwk{P}{{A}{\idfunc[\ctxext{A}{P}]}}}
+    { {\ctxwk{P}{\idtm{A}}}
+      {\ctxwk{\ctxext{A}{P}}{\idtm{\ctxext{A}{P}}}}
       }
   \\
 & \jdeq 
   \subst
-    { \idfunc[P]
+    { \idtm{P}
+      }
+    { {\ctxwk{P}{\idtm{A}}}
+      {\ctxwk{P}{{A}{\idtm{\ctxext{A}{P}}}}}
+      }
+  \\
+& \jdeq 
+  \subst
+    { \idtm{P}
       }
     {\ctxwk
       {P}
       { \subst
-        {\idfunc[A]}
-        {\ctxwk{A}{\idfunc[\ctxext{A}{P}]}}
+        {\idtm{A}}
+        {\ctxwk{A}{\idtm{\ctxext{A}{P}}}}
         }
       }
   \\
 & \jdeq 
   \subst
-    { \idfunc[A]
+    { \idtm{A}
       }
-    { \ctxwk{A}{\idfunc[\ctxext{A}{P}]}
+    { \ctxwk{A}{\idtm{\ctxext{A}{P}}}
       }
   \\
 & \jdeq 
-  \idfunc[\ctxext{A}{P}].
+  \idtm{\ctxext{A}{P}}.
   \qedhere
 \end{align*}
 \end{proof}
@@ -1749,13 +1749,13 @@ families. Then we have
 \begin{align*}
 \subst{\cprojfstf{A}{P}}{\ctxwk{\ctxext{A}{P}}{Q}} 
 & \jdeq 
-  \subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{\ctxext{A}{P}}{Q}} 
+  \subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{\ctxext{A}{P}}{Q}} 
   \tag{by definition}\\
 & \jdeq 
-  \subst{\ctxwk{P}{\idfunc[A]}}{\ctxwk{P}{{A}{Q}}} 
+  \subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{Q}}} 
   \tag{by \autoref{comp-ww-f}}\\
 & \jdeq 
-  \ctxwk{P}{\subst{\idfunc[A]}{\ctxwk{A}{Q}}} 
+  \ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}} 
   \tag{by \autoref{comp-ws-f}}\\
 & \jdeq 
   \ctxwk{P}{Q} 
@@ -1809,26 +1809,26 @@ To prove the first judgmental equality, note that
 \begin{align*}
 w 
 & \jdeq 
-  \subst{w}{\idfunc[\ctxext{A}{P}]} 
+  \subst{w}{\idtm{\ctxext{A}{P}}} 
   \tag{by \autoref{idfunc-subst-defn}}\\
 & \jdeq 
   \subst
     { w}
-    { { \idfunc[P]}
-      { { \ctxwk{P}{\idfunc[A]}}
-        { \idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}
+    { { \idtm{P}}
+      { { \ctxwk{P}{\idtm{A}}}
+        { \idtm{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}}
         }
       }
   \tag{by \autoref{idfunc-ext-comp}}\\
 & \jdeq 
   \subst
     { {w}
-      {\idfunc[P]}
+      {\idtm{P}}
       }
     { {w}
-      { { \ctxwk{P}{\idfunc[A]}
+      { { \ctxwk{P}{\idtm{A}}
           }
-        { \idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]
+        { \idtm{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}
           }
         }
       }
@@ -1836,38 +1836,38 @@ w
 & \jdeq 
   \subst
     { {w}
-      {\idfunc[P]}
+      {\idtm{P}}
       }
     { { {w}
-        {\ctxwk{P}{\idfunc[A]}}
+        {\ctxwk{P}{\idtm{A}}}
         }
       { {w}
-        {\idfunc[\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}]}
+        {\idtm{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}}
         }
       }
   \tag{by \autoref{comp-ss-t}}\\
 & \jdeq 
   \subst
     { {w}
-      {\idfunc[P]}
+      {\idtm{P}}
       }
     { { {w}
-        {\ctxwk{P}{\idfunc[A]}}
+        {\ctxwk{P}{\idtm{A}}}
         }
       { {w}
-        {\ctxwk{\ctxext{A}{P}}{\idfunc[\ctxext{A}{P}]}}
+        {\ctxwk{\ctxext{A}{P}}{\idtm{\ctxext{A}{P}}}}
         }
       }
   \tag{by \autoref{idfunc-wk-comp}}\\
 & \jdeq 
   \subst
     { {w}
-      {\idfunc[P]}
+      {\idtm{P}}
       }
     { { {w}
-        {\ctxwk{P}{\idfunc[A]}}
+        {\ctxwk{P}{\idtm{A}}}
         }
-      { \idfunc[\ctxext{A}{P}]
+      { \idtm{\ctxext{A}{P}}
         }
       }
   \tag{by \autoref{defn-ws-4}}\\
@@ -1880,16 +1880,16 @@ $\jterm{\Gamma}{\subst{x}{P}}{u}$. Then we have
 \begin{align*}
 \cprojfst{A}{P}{\tmext{A}{P}{x}{u}}
 & \jdeq 
-  \subst{\tmext{A}{P}{x}{u}}{\ctxwk{P}{\idfunc[A]}}
+  \subst{\tmext{A}{P}{x}{u}}{\ctxwk{P}{\idtm{A}}}
   \\
 & \jdeq 
-  \subst{u}{{x}{\ctxwk{P}{\idfunc[A]}}} 
+  \subst{u}{{x}{\ctxwk{P}{\idtm{A}}}} 
   \\
 & \jdeq 
-  \subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\idfunc[A]}}}
+  \subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\idtm{A}}}}
   \\
 & \jdeq 
-  \subst{x}{\idfunc[A]}
+  \subst{x}{\idtm{A}}
   \\
 & \jdeq 
   x.
@@ -1898,13 +1898,13 @@ To prove the third judgmental equality, note that
 \begin{align*}
 \cprojsnd{A}{P}{\tmext{A}{P}{x}{u}}
 & \jdeq 
-  \subst{\tmext{A}{P}{x}{u}}{\idfunc[P]}
+  \subst{\tmext{A}{P}{x}{u}}{\idtm{P}}
   \\
 & \jdeq 
-  \subst{u}{{x}{\idfunc[P]}}
+  \subst{u}{{x}{\idtm{P}}}
   \\
 & \jdeq 
-  \subst{u}{\idfunc[\subst{x}{P}]}
+  \subst{u}{\idtm{\subst{x}{P}}}
   \\
 & \jdeq 
   u.
@@ -1967,16 +1967,16 @@ $\jterm{\Gamma}{\subst{u}{{x}{Q}}}{v}$. Then we have
 & \jdeq 
   \subst
     {\tmext{\subst{x}{P}}{\subst{x}{Q}}{u}{v}}
-    {{x}{\idfunc[\ctxext{A}{{P}{Q}}]}}
+    {{x}{\idtm{\ctxext{A}{{P}{Q}}}}}
   \\
 & \jdeq 
-  \subst{v}{{u}{{x}{\idfunc[\ctxext{A}{{P}{Q}}]}}}
+  \subst{v}{{u}{{x}{\idtm{\ctxext{A}{{P}{Q}}}}}}
   \\
 & \jdeq 
-  \subst{v}{{u}{{x}{\idfunc[\ctxext{{A}{P}}{Q}]}}}
+  \subst{v}{{u}{{x}{\idtm{\ctxext{{A}{P}}{Q}}}}}
   \\
 & \jdeq 
-  \subst{v}{{\tmext{A}{P}{x}{u}}{\idfunc[\ctxext{{A}{P}}{Q}]}}
+  \subst{v}{{\tmext{A}{P}{x}{u}}{\idtm{\ctxext{{A}{P}}{Q}}}}
   \\
 & \jdeq 
   \tmext{{A}{P}}{Q}{{A}{P}{x}{u}}{v}.
@@ -2067,19 +2067,19 @@ Then we have the judgmental equalities
 \begin{align*}
 \ctxwk{A}{\ctxext{Q}{R}{g}{t}}
 & \jdeq 
-  \ctxwk{A}{\subst{t}{{g}{\idfunc[\ctxext{Q}{R}]}}}
+  \ctxwk{A}{\subst{t}{{g}{\idtm{\ctxext{Q}{R}}}}}
   \\
 & \jdeq 
-  \subst{\ctxwk{A}{t}}{\ctxwk{A}{\subst{g}{\idfunc[\ctxext{Q}{R}]}}}
+  \subst{\ctxwk{A}{t}}{\ctxwk{A}{\subst{g}{\idtm{\ctxext{Q}{R}}}}}
   \\
 & \jdeq 
-  \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\ctxwk{A}{\idfunc[\ctxext{Q}{R}]}}}
+  \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\ctxwk{A}{\idtm{\ctxext{Q}{R}}}}}
   \\
 & \jdeq 
-  \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\idfunc[\ctxwk{A}{\ctxext{Q}{R}}]}}
+  \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\idtm{\ctxwk{A}{\ctxext{Q}{R}}}}}
   \\
 & \jdeq 
-  \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\idfunc[\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}]}}
+  \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\idtm{\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}}}
   \\
 & \jdeq 
   \tmext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}{\ctxwk{A}{g}}{\ctxwk{A}{t}}
@@ -2111,19 +2111,19 @@ Then we have the judgmental equalities
 \begin{align*}
 \subst{x}{\tmext{Q}{R}{g}{t}}
 & \jdeq 
-  \subst{x}{{t}{{g}{\idfunc[\ctxext{Q}{R}]}}}
+  \subst{x}{{t}{{g}{\idtm{\ctxext{Q}{R}}}}}
   \\
 & \jdeq 
-  \subst{{x}{t}}{{x}{{g}{\idfunc[\ctxext{Q}{R}]}}}
+  \subst{{x}{t}}{{x}{{g}{\idtm{\ctxext{Q}{R}}}}}
   \\
 & \jdeq 
-  \subst{{x}{t}}{{{x}{g}}{{x}{\idfunc[\ctxext{Q}{R}]}}}
+  \subst{{x}{t}}{{{x}{g}}{{x}{\idtm{\ctxext{Q}{R}}}}}
   \\
 & \jdeq 
-  \subst{{x}{t}}{{{x}{g}}{\idfunc[\subst{x}{\ctxext{Q}{R}}]}}
+  \subst{{x}{t}}{{{x}{g}}{\idtm{\subst{x}{\ctxext{Q}{R}}}}}
   \\
 & \jdeq 
-  \subst{{x}{t}}{{{x}{g}}{\idfunc[\ctxext{\subst{x}{Q}}{\subst{x}{R}}]}}
+  \subst{{x}{t}}{{{x}{g}}{\idtm{\ctxext{\subst{x}{Q}}{\subst{x}{R}}}}}
   \\
 & \jdeq 
   \tmext{\subst{x}{Q}}{\subst{x}{R}}{\subst{x}{g}}{\subst{x}{t}}.
@@ -2204,12 +2204,12 @@ finding a term of a family $Q$ over $\ctxext{\Gamma}{B}$ can be accomplished
 by finding a term of the family $\jcomp{A}{f}{Q}$ over $\ctxext{\Gamma}{A}$.
 Judgmental trivial cofibrations come with a computation rule. Thus, term
 constructors of inductively defined types are going to be the major source of
-examples of judgmental trivial cofibrations. Since identity functions behave
+examples of judgmental trivial cofibrations. Since identity terms behave
 so nicely, they are judgmental trivial cofibrations too.
 
 \begin{lem}
-The identity function
-$\jhom{\Gamma}{A}{A}{\idfunc[A]}$ is a judgmental trivial cofibration
+The identity term
+$\jhom{\Gamma}{A}{A}{\idtm{A}}$ is a judgmental trivial cofibration
 for each family $A$ of contexts over $\Gamma$
 \end{lem}
 
