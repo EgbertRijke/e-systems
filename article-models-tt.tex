@@ -1461,11 +1461,19 @@ $\ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}}\jdeq\ctxwk{P}{Q}$, which is indeed
 the case by \autoref{idfunc-wk-defn}.
 \end{proof}
 
-\subsection{Extension on terms}\label{extension-on-terms}
-In this subsection we consider the notion of extension on terms, which has now
+\subsection{Digging a little deeper in the theory of contexts, families and terms}
+
+There is a good amount of things we can already state and prove about in the
+theory we have developed so far. We will develop a bit more theory that will
+come in handy later on.
+
+\emph{This subsection contains no new assumptions.}
+
+\subsubsection{Extension on terms}\label{extension-on-terms}
+In this subsubsection we consider the notion of extension on terms, which has now
 become definable inside our theory. Moreover, every compatibility rule one may
 dream of is provable as well, using the compatibility rules we have introduced
-earlier. \emph{This subsection contains no new assumptions.}
+earlier.
 
 \begin{defn}
 When $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$ are terms,
@@ -2185,12 +2193,23 @@ terms, we can develop a diagramatic style of of displaying type dependencies
 combined with morphisms. We give an informal, metatheoretical definition of
 such diagrams by indicating what the various components mean. The definition
 is informal because we will only use such diagrams occasionally to provide a
-graphical indication of the situation in which we're working.
+graphical indication of the situation in which we're working. In particular,
+we will not shy away from using natural numbers and trust that the reader can
+figure out what we mean.
 
 \begin{defn}
 A diagram is said to be a \emph{dependency diagram in context $\Gamma$}
 if it is built up according to the following steps:
 \begin{itemize}
+\item The arrows appearing in a dependency diagram are either ordinary, like the
+arrow%
+$\begin{tikzcd}[ampersand replacement = \&]
+X \ar{r} \& Y,
+\end{tikzcd}$
+or double-headed, like
+$\begin{tikzcd}[ampersand replacement = \&]
+X \ar[fib]{r} \& Y.
+\end{tikzcd}$
 \item An ordinary arrow 
 \begin{equation*}
 \begin{tikzcd}
@@ -2200,36 +2219,111 @@ A \ar{r}{f} & B
 between two families $A$ and $B$ of contexts over $\Gamma$ indicates that
 $f$ is a morphism from $A$ to $B$ in context $\Gamma$, i.e.~that we have the
 judgment $\jhom{\Gamma}{A}{B}{f}$.
-\item The set of double-headed arrows must form a forest where the root of
-each tree is a family of contexts over $\Gamma$. 
+\item The set of double-headed arrows must form a forest and the root of
+each maximal tree of double-headed arrows is a family of contexts over $\Gamma$.
+In particular, if an object is not the domain of a double-headed arrow it must
+be a family of contexts over $\Gamma$.
 \item A sequence of double-headed 
 arrows
 \begin{equation*}
 \begin{tikzcd}
-P_{n+1} \ar[fib]{r} & \cdots \ar[fib]{r} & P_1 \ar[fib]{r} & A
+P_{n} \ar[fib]{r} & \cdots \ar[fib]{r} & P_1 \ar[fib]{r} & A
 \end{tikzcd}
 \end{equation*}
 indicates that $P_1$ is a family of contexts over $\ctxext{\Gamma}{A}$, that
 $P_2$ is a family of contexts over $\ctxext{{\Gamma}{A}}{P_1}$, etcetera.
-\item A ladder of double-headed arrows
+\item There can be two kinds of ladders of double-headed arrows:
 \begin{equation*}
 \begin{tikzcd}
-P_{n+1} \ar{r}{F_{n+1}} \ar[fib]{d} & Q_{n+1} \ar[fib]{d}\\
+P_{n} \ar{r}{F_{n}} \ar[fib]{d} & Q_{n} \ar[fib]{d}\\
 \vdots \ar[fib]{d} & \vdots \ar[fib]{d}\\
 P_1 \ar{r}{F_1} \ar[fib]{d} & Q_1 \ar[fib]{d}\\
 A \ar{r}{f} & B
 \end{tikzcd}
+\qquad
+\begin{tikzcd}[column sep = tiny]
+P_{n+m} \ar{rr}{F_{n+m}} \ar[fib]{d} & & Q_{n+m} \ar[fib]{d}\\
+\vdots \ar[fib]{d} & & \vdots \ar[fib]{d}\\
+P_{n+1} \ar{rr}{F_{n+1}} \ar[fib]{dr} & & Q_{n+1} \ar[fib]{dl}\\
+& P_n \ar[fib]{d}\\
+& \vdots \ar[fib]{d}\\
+& P_1 \ar[fib]{d}\\
+& A
+\end{tikzcd}
 \end{equation*}
+The ladder on the left 
 indicates that $F_1$ is a morphism from $P_1$ to $Q_1$ \emph{over} $f$,
 i.e.~that the judgment $\jfhom{\Gamma}{A}{B}{f}{P_1}{Q_1}{F_1}$ holds, that
 $F_2$ is a morphism from $P_2$ to $Q_2$ over
 the morphism $\tmext{}{}{\ctxwk{P_1}{f}}{F_1}$ from $\ctxext{A}{P_1}$ to
 $\ctxext{B}{Q_1}$, etcetera.
+
+The ladder on the right indicates that $F_{n+1}$ is a morphism from $P_{n+1}$ to
+$Q_{n+1}$ in the appropriate context, that $F_{n+2}$ is a morphism from
+$P_{n+2}$ to $Q_{n+2}$ over $F_{n+1}$, etcetera.
+ 
+Note that the object(s) at the bottom of a ladder are always families of contexts
+over $\Gamma$, so that the typing of the various ingredients makes sense.
 \end{itemize}
 Such a diagram is said to be commutative if the subdiagram consisting of only
 the normal headed arrows is commutative in the usual sense (using judgmental
 equality). Note that the ladders are inherently commutative.
 \end{defn}
+
+The most basic illustrative example of a commutative dependency diagram is
+the diagram
+\begin{equation*}
+\begin{tikzcd}
+P \ar[fib]{d} \ar{r}{F} & Q \ar[fib]{d} \\
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation*}
+indicating a morphism $F$ from $P$ to $Q$ over the morphism $f$ from $A$ to
+$B$ in a context $\Gamma$.
+
+\begin{defn}
+We say that a commutative dependency diagram of the form
+\begin{equation*}
+\begin{tikzcd}
+P \ar[fib]{d} \ar{r}{F} & Q \ar[fib]{d} \\
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation*}
+is a judgmental pullback if the following inference rules are valid:
+\begin{align*}
+& \inference
+  { \jfam{{\Gamma}{A}}{P'}
+    \jfhom{\Gamma}{A}{B}{f}{P'}{Q}{F'}
+    }
+  { \jhom{{\Gamma}{A}}{P'}{P}{u}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P'}
+    \jfhom{\Gamma}{A}{B}{f}{P'}{Q}{F'}
+    }
+  { \jfhomeq{\Gamma}{A}{B}{f}{P'}{Q}{\jcomp{}{u}{F}}{F'}
+    }
+  \\
+& \inference
+  { \jhom{{\Gamma}{A}}{P'}{P}{v}
+    \jfhomeq{\Gamma}{A}{B}{f}{P'}{Q}{\jcomp{}{v}{F}}{F'}
+    }
+  { \jhomeq{{\Gamma}{A}}{P'}{P}{v}{u}
+    }
+\end{align*}
+\end{defn}
+
+\begin{lem}
+The diagram
+\begin{equation*}
+\begin{tikzcd}
+\jcomp{}{f}{Q} \ar[fib]{d} \ar{r}{\idtm{\jcomp{}{f}{Q}}} & Q \ar[fib]{d} \\
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation*}
+is a judgmental pullback diagram.
+\end{lem}
 
 \subsubsection{Another special case of projections}
 In this subsubsection we investigate the special case of a projection which
@@ -2306,7 +2400,7 @@ We have the judgmental equality
 for any family $Q$ of contexts over $\ctxext{{\Gamma}{A}}{\mfam{A}}$ 
 \end{lem}
 
-\subsection{Judgmental trivial cofibrations}
+\subsubsection{Judgmental trivial cofibrations}
 \begin{defn}
 Let $\jhom{\Gamma}{A}{B}{f}$ be a context morphism. We say that $f$ is a 
 \emph{judgmental trivial cofibration} if the following inference rules are valid:

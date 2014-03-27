@@ -242,6 +242,14 @@ context appears in the codomain:
 \subsection{$\wtypesym$-types}
 
 \subsection{Universes}
+The type operator $\UU$ has as input a pair $(A,P)$ consisting of a family
+$A$ in context $\Gamma$ and a family $P$ in context $\ctxext{\Gamma}{A}$. Its
+output is a pair $(U(A,P),\tilde{U}(A,P))$ consisting of a family
+$U(A,P)$ in context $\Gamma$ and a family $\tilde{U}(A,P)$ over it for which
+there are terms representing the empty context, the operations of extension,
+weakening and substitution and the identity terms. Moreover there is a morphism
+$i$ from $A$ to $U(A,P)$ with the property that 
+$\jcomp{}{i}{\tilde{U}(A,P)}\jdeq P$.
 
 \subsection{The compatibility of the type constructors with each other}
 \label{compatibility-of-type-constructors}
