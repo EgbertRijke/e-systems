@@ -2325,6 +2325,22 @@ A \ar{r}{f} & B
 is a judgmental pullback diagram.
 \end{lem}
 
+\begin{proof}
+The proof is a triviality because $\jhom{{\Gamma}{A}}{P'}{\jcomp{}{f}{Q}}{F'}$
+is the same judgment as $\jfhom{\Gamma}{A}{B}{f}{P'}{Q}{F'}$ and
+$\jcomp{}{\idtm{\jcomp{}{f}{Q}}}{F'}\jdeq F'$.
+\end{proof}
+
+\begin{lem}
+Suppose we have the diagram
+\begin{equation*}
+\begin{tikzcd}
+P \ar{r}{F} \ar[fib]{d} & Q \ar{r}{G} \ar[fib]{d} & R \ar[fib]{d}\\
+A \ar{r}{f} & B \ar{r}{g} & C
+\end{tikzcd}
+\end{equation*}
+\end{lem}
+
 \subsubsection{Another special case of projections}
 In this subsubsection we investigate the special case of a projection which
 appears as a morphism from $\ctxext{{A}{P}}{\ctxwk{P}{Q}}$ to $\ctxext{A}{Q}$
