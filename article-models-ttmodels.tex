@@ -452,74 +452,7 @@ We consider the following dependency diagram helpful:
 \end{equation*}
 Here the morphism 
 $\bar{\typefont{pr}}$ should be explained (skip ahead to 
-\autoref{barproj} for the definition). Note that we have the judgmental
-equalities
-\begin{align*}
-\ctxwk{\ctxext{{A}{P}}{\ctxwk{P}{\mfam{A}}}}{\ctxext{A}{\mfam{A}}}
-& \jdeq 
-  \ctxext
-    {\ctxwk{\ctxext{{A}{P}}{\ctxwk{P}{\mfam{A}}}}{A}}
-    {\ctxwk{\ctxext{{A}{P}}{\ctxwk{P}{\mfam{A}}}}{\mfam{A}}}
-  \\
-& \jdeq
-  \ctxext
-    {\ctxwk{{P}{\mfam{A}}}{{\ctxext{A}{P}}{A}}}
-    {\ctxwk{\ctxext{{A}{P}}{\ctxwk{P}{\mfam{A}}}}{\mfam{A}}}
-\end{align*}
-Note that we have the term $\ctxwk{{P}{\mfam{A}}}{\cprojfstf{A}{P}}$ of the
-family $\ctxwk{{P}{\mfam{A}}}{{\ctxext{A}{P}}{A}}$. Therefore, we need to
-find a term of type $\subst{\ctxwk{{P}{\mfam{A}}}{\cprojfstf{A}{P}}}
-{\ctxwk{\ctxext{{A}{P}}{\ctxwk{P}{\mfam{A}}}}{\mfam{A}}}$. Note that we have
-the judgmental equalities:
-\begin{align*}
-\subst
-  {\ctxwk{{P}{\mfam{A}}}{\cprojfstf{A}{P}}}
-  {\ctxwk{\ctxext{{A}{P}}{\ctxwk{P}{\mfam{A}}}}{\mfam{A}}}
-& \jdeq
-  \subst
-    {\ctxwk{{P}{\mfam{A}}}{\cprojfstf{A}{P}}}
-    {\ctxwk{{P}{\mfam{A}}}{{\ctxext{A}{P}}{\mfam{A}}}}
-  \\
-& \jdeq
-  \ctxwk
-    { {P}{\mfam{A}}
-      }
-    { \subst
-        {\cprojfstf{A}{P}}
-        {\ctxwk{\ctxext{A}{P}}{\mfam{A}}}
-      }
-  \\
-& \jdeq
-  \ctxwk
-    { {P}{\mfam{A}}
-      }
-    { {P}{\mfam{A}}
-      }
-  \\
-& \jdeq
-  \ctxwk{P}{{\mfam{A}}{\mfam{A}}}
-\end{align*}
-We find the term $\ctxwk{P}{\idtm{\mfam{A}}}$ here. Thus we can now define
-$\bar{\typefont{pr}}$ by:
-\begin{equation}\label{barproj}
-\jhomdefn
-  {\Gamma}
-  {{{A}{P}}{\mfam{A}}}
-  {{A}{\mfam{A}}}
-  {\bar{\typefont{pr}}}
-  {\tmext{}{}{\ctxwk{{P}{\mfam{A}}}{\cprojfstf{A}{P}}}{\ctxwk{P}{\idtm{\mfam{A}}}}}
-\end{equation}
-
-\begin{lem}
-We have the judgmental equality
-\begin{equation*}
-\jfameq
-  {{{{\Gamma}{A}}{P}}{\ctxwk{P}{\mfam{A}}}}
-  {\jcomp{}{\bar{\typefont{pr}}}{Q}}
-  {\ctxwk{P}{Q}}
-\end{equation*}
-for any family $Q$ of contexts over $\ctxext{{\Gamma}{A}}{\mfam{A}}$ 
-\end{lem}
+\autoref{barproj} for the definition). 
 
 \subsubsection{Families of substituted modes}
 The following inference rule explains that the fiber at a term $f$ of $P$

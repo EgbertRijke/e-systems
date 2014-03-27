@@ -2179,6 +2179,133 @@ judgmental equalities
 \end{align*}
 \end{proof}
 
+\subsubsection{Commuting dependence diagrams}
+Now that we have introduced the notions of morphisms, composition and identity
+terms, we can develop a diagramatic style of of displaying type dependencies
+combined with morphisms. We give an informal, metatheoretical definition of
+such diagrams by indicating what the various components mean. The definition
+is informal because we will only use such diagrams occasionally to provide a
+graphical indication of the situation in which we're working.
+
+\begin{defn}
+A diagram is said to be a \emph{dependency diagram in context $\Gamma$}
+if it is built up according to the following steps:
+\begin{itemize}
+\item An ordinary arrow 
+\begin{equation*}
+\begin{tikzcd}
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation*}
+between two families $A$ and $B$ of contexts over $\Gamma$ indicates that
+$f$ is a morphism from $A$ to $B$ in context $\Gamma$, i.e.~that we have the
+judgment $\jhom{\Gamma}{A}{B}{f}$.
+\item The set of double-headed arrows must form a forest where the root of
+each tree is a family of contexts over $\Gamma$. 
+\item A sequence of double-headed 
+arrows
+\begin{equation*}
+\begin{tikzcd}
+P_{n+1} \ar[fib]{r} & \cdots \ar[fib]{r} & P_1 \ar[fib]{r} & A
+\end{tikzcd}
+\end{equation*}
+indicates that $P_1$ is a family of contexts over $\ctxext{\Gamma}{A}$, that
+$P_2$ is a family of contexts over $\ctxext{{\Gamma}{A}}{P_1}$, etcetera.
+\item A ladder of double-headed arrows
+\begin{equation*}
+\begin{tikzcd}
+P_{n+1} \ar{r}{F_{n+1}} \ar[fib]{d} & Q_{n+1} \ar[fib]{d}\\
+\vdots \ar[fib]{d} & \vdots \ar[fib]{d}\\
+P_1 \ar{r}{F_1} \ar[fib]{d} & Q_1 \ar[fib]{d}\\
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation*}
+indicates that $F_1$ is a morphism from $P_1$ to $Q_1$ \emph{over} $f$,
+i.e.~that the judgment $\jfhom{\Gamma}{A}{B}{f}{P_1}{Q_1}{F_1}$ holds, that
+$F_2$ is a morphism from $P_2$ to $Q_2$ over
+the morphism $\tmext{}{}{\ctxwk{P_1}{f}}{F_1}$ from $\ctxext{A}{P_1}$ to
+$\ctxext{B}{Q_1}$, etcetera.
+\end{itemize}
+Such a diagram is said to be commutative if the subdiagram consisting of only
+the normal headed arrows is commutative in the usual sense (using judgmental
+equality). Note that the ladders are inherently commutative.
+\end{defn}
+
+\subsubsection{Another special case of projections}
+In this subsubsection we investigate the special case of a projection which
+appears as a morphism from $\ctxext{{A}{P}}{\ctxwk{P}{Q}}$ to $\ctxext{A}{Q}$
+in context $\Gamma$, where we assume to have the families 
+$\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$. 
+
+Note that we have the judgmental
+equalities
+\begin{align*}
+\ctxwk{\ctxext{{A}{P}}{\ctxwk{P}{\mfam{A}}}}{\ctxext{A}{\mfam{A}}}
+& \jdeq 
+  \ctxext
+    {\ctxwk{\ctxext{{A}{P}}{\ctxwk{P}{\mfam{A}}}}{A}}
+    {\ctxwk{\ctxext{{A}{P}}{\ctxwk{P}{\mfam{A}}}}{\mfam{A}}}
+  \\
+& \jdeq
+  \ctxext
+    {\ctxwk{{P}{\mfam{A}}}{{\ctxext{A}{P}}{A}}}
+    {\ctxwk{\ctxext{{A}{P}}{\ctxwk{P}{\mfam{A}}}}{\mfam{A}}}
+\end{align*}
+Note that we have the term $\ctxwk{{P}{\mfam{A}}}{\cprojfstf{A}{P}}$ of the
+family $\ctxwk{{P}{\mfam{A}}}{{\ctxext{A}{P}}{A}}$. Therefore, we need to
+find a term of type $\subst{\ctxwk{{P}{\mfam{A}}}{\cprojfstf{A}{P}}}
+{\ctxwk{\ctxext{{A}{P}}{\ctxwk{P}{\mfam{A}}}}{\mfam{A}}}$. Note that we have
+the judgmental equalities:
+\begin{align*}
+\subst
+  {\ctxwk{{P}{\mfam{A}}}{\cprojfstf{A}{P}}}
+  {\ctxwk{\ctxext{{A}{P}}{\ctxwk{P}{\mfam{A}}}}{\mfam{A}}}
+& \jdeq
+  \subst
+    {\ctxwk{{P}{\mfam{A}}}{\cprojfstf{A}{P}}}
+    {\ctxwk{{P}{\mfam{A}}}{{\ctxext{A}{P}}{\mfam{A}}}}
+  \\
+& \jdeq
+  \ctxwk
+    { {P}{\mfam{A}}
+      }
+    { \subst
+        {\cprojfstf{A}{P}}
+        {\ctxwk{\ctxext{A}{P}}{\mfam{A}}}
+      }
+  \\
+& \jdeq
+  \ctxwk
+    { {P}{\mfam{A}}
+      }
+    { {P}{\mfam{A}}
+      }
+  \\
+& \jdeq
+  \ctxwk{P}{{\mfam{A}}{\mfam{A}}}
+\end{align*}
+We find the term $\ctxwk{P}{\idtm{\mfam{A}}}$ here. Thus we can now define
+$\bar{\typefont{pr}}$ by:
+\begin{equation}\label{barproj}
+\jhomdefn
+  {\Gamma}
+  {{{A}{P}}{\mfam{A}}}
+  {{A}{\mfam{A}}}
+  {\bar{\typefont{pr}}}
+  {\tmext{}{}{\ctxwk{{P}{\mfam{A}}}{\cprojfstf{A}{P}}}{\ctxwk{P}{\idtm{\mfam{A}}}}}
+\end{equation}
+
+\begin{lem}
+We have the judgmental equality
+\begin{equation*}
+\jfameq
+  {{{{\Gamma}{A}}{P}}{\ctxwk{P}{\mfam{A}}}}
+  {\jcomp{}{\bar{\typefont{pr}}}{Q}}
+  {\ctxwk{P}{Q}}
+\end{equation*}
+for any family $Q$ of contexts over $\ctxext{{\Gamma}{A}}{\mfam{A}}$ 
+\end{lem}
+
 \subsection{Judgmental trivial cofibrations}
 \begin{defn}
 Let $\jhom{\Gamma}{A}{B}{f}$ be a context morphism. We say that $f$ is a 
