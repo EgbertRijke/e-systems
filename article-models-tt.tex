@@ -2332,6 +2332,24 @@ $\jcomp{}{\idtm{\jcomp{}{f}{Q}}}{F'}\jdeq F'$.
 \end{proof}
 
 \begin{lem}
+A square
+\begin{equation*}
+\begin{tikzcd}
+P \ar[fib]{d} \ar{r}{F} & Q \ar[fib]{d} \\
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation*}
+is a pullback precisely when the square
+\begin{equation*}
+\begin{tikzcd}[column sep = large]
+\ctxext{A}{P} \ar{d}[swap]{\cprojfstf{A}{P}} \ar{r}{\tmext{}{}{\ctxwk{P}{f}}{F}} & \ctxext{B}{Q} \ar{d}{\cprojfstf{B}{Q}} \\
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation*}
+is a pullback
+\end{lem}
+
+\begin{lem}
 Suppose we have the diagram
 \begin{equation*}
 \begin{tikzcd}
@@ -2339,7 +2357,23 @@ P \ar{r}{F} \ar[fib]{d} & Q \ar{r}{G} \ar[fib]{d} & R \ar[fib]{d}\\
 A \ar{r}{f} & B \ar{r}{g} & C
 \end{tikzcd}
 \end{equation*}
+where the square on the right and the outer rectangle are judgmental pullback 
+diagrams. Then the square on the left is a judgmental pullback diagram.
 \end{lem}
+
+\begin{proof}
+Let $\jfam{{\Gamma}{A}}{P'}$ be a family and let $\jfhom{\Gamma}{A}{B}{f}
+{P'}{Q}{F}$ be a morphism over $f$.
+\begin{itemize}
+\item Then we compose $F'$ with $G$ to obtain a morphism over $\jcomp{}{f}{g}$.
+\item Then we get $\jhom{{\Gamma}{A}}{P'}{P}{u}$ with a uniqueness property.
+      The property that $\jcomp{}{u}{F}\jdeq F'$ follows from the assumption
+      that the right square is a pullback.
+\item Now assume that we have another such $v$. Compose it with $F$ and $G$.
+      By the assumed properties this is the same as $u$ composed with $F$ and
+      $G$. By the pullback condition we now get $u\jdeq v$. 
+\end{itemize}
+\end{proof}
 
 \subsubsection{Another special case of projections}
 In this subsubsection we investigate the special case of a projection which
