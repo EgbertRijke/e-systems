@@ -1,4 +1,4 @@
-\section{Operational syntactics for type theory before type constructors}\label{tt}
+\section{The theory of contexts, families and terms}\label{tt}
 In this section we give a description of dependent type theory before type
 constructors with explicit operations of extension, weakening and substitution. We will
 formulate the type theory in such a way that contexts aren't defined
@@ -69,20 +69,53 @@ weakening & \autoref{comp-we} & \autoref{comp-ww} & \autoref{comp-ws}\\
 substitution & \autoref{comp-se} & \autoref{comp-sw} & \autoref{comp-ss}
 \end{tabular}
 \end{center}
-Since extension by a context acts trivially on families and terms there are
-no rules added for extension followed by substitution.
 
-In \autoref{extension-on-terms} we come back to the operation of extension, but
-now for terms. The rules in this section explain what it means to be a term of
-an extended family, namely to be an extended term. The compatibility rules for
-extended terms are then similar as the compatibility rules that have appeared
-earlier: there is a compatibility rule for the extension of an extension, for
-the weakening of an extended term, for the substutution of an extended term by
-an arbitrary term and for substitution by an extended term. The last set of
-compatibility rules is a form of currying-uncurrying -- this famous
-correspondence naturally comes out of our scheme of compatibility rules.
+In \autoref{digging_deeper} we use the framework we have developed in this
+section to derive new notions and their properties. In particular, we will
+develop the notion of \emph{extension on terms} together with the projection
+maps from an extension to the `base' context of family, the 
+\emph{family pullback} which is a version of pullbacks for families and thirdly
+the \emph{inductive morphisms} which are morphisms of type theory that allow
+to find terms of families over the codomain context by pulling them back to
+the domain context and finding a term there.
 
-\subsection{Judgments and inference rules}
+In \autoref{extension-on-terms} on the extension operation on terms we will
+derive all the compatibility rules that one would expect to hold for extension
+on terms. The key to most of these results is the currying operation, which
+could be seen as the missing feature in the table above. The extension on terms
+operation depends in an essential way on the substitution operation, on the
+identity terms and therefore indirectly also on the weakening operation. Thus,
+we will see here all of the features of the theory we develop in
+\autoref{judgments} through \autoref{categorical_properties} come to the 
+surface.
+
+It should be kept in mind though that in the current formulation there is no
+sealed deal establishing a relationship between families over a context
+and any kind of morphisms -- neither with morphisms having the `base' of the
+family as its codomain nor with families into a universe (universes will be
+introduced in \autoref{universes}). The only thing we know here is
+that a family $P$ over $\ctxext{\Gamma}{A}$ determines a context morphism
+from $\ctxext{A}{P}$ to $A$ in context $\Gamma$, the projection. 
+We do not see this as
+a shortcoming of the theory of contexts families and terms. Rather, such a
+correspondence is a feature of a theory which does incorporate universes. The
+fact that we're lacking a clear connection between families and (a specified
+class of) morphisms, however, does show up in our treatment of the notion we
+called familie pullbacks. For instance, we can't show that a square of families
+is a pullback precisely when the corresponding square of projections is a
+pullback: only the backwards direction holds. Neither can we show that the
+composition of two family pullback squares is again a family pullback square.
+We feel that pointing out what we can and can't do in the current setting is
+an important aspect of developing an intuition with the system and therefore
+we include this subsubsection even though the theory might feel `incomplete'
+compared to the usual theory of pullbacks.
+
+In the last subsubsection we give a treatment of inductive morphisms. These
+morphisms appear also in the introduction of the many inductive type
+constructors in \autoref{tt_constructors} and therefore a general treatment of
+the subject is insightful.
+
+\subsection{Judgments and inference rules}\label{judgments}
 The type theory we describe here is a theory of contexts, families of
 contexts and terms thereof. The families of contexts are by some authors called
 dependent contexts, but they are handled a bit differently here because they
@@ -873,7 +906,7 @@ $\jterm{\Gamma}{B}{y}$.
   \label{comp-ws-t}
 \end{align}
 
-\subsection{Composition and identity terms}
+\subsection{Composition and identity terms}\label{categorical_properties}
 \subsubsection{The defining property of weakening}
 The judgmental equalities we're about to describe assert that substituting a term
 in the weakening a thing gives you the thing back. In the case of contexts we get that each fiber
@@ -1461,6 +1494,7 @@ the case by \autoref{idfunc-wk-defn}.
 \end{proof}
 
 \subsection{Digging a little deeper in the theory of contexts, families and terms}
+\label{digging_deeper}
 
 There is a good amount of things we can already state and prove about in the
 theory we have developed so far. We will develop a bit more theory that will
