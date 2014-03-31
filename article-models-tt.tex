@@ -89,6 +89,11 @@ we will see here all of the features of the theory we develop in
 \autoref{judgments} through \autoref{categorical_properties} come to the 
 surface.
 
+Next, we introduce the inclusion of the fibers $\subst{x}{P}$ into the extension
+$\ctxext{A}{P}$ as a morphism in context $\Gamma$. As was the case with
+extension on terms and with projections, there will be a ton of compatibility
+properties which we will prove about these inclusions. 
+
 It should be kept in mind though that in the current formulation there is no
 sealed deal establishing a relationship between families over a context
 and any kind of morphisms -- neither with morphisms having the `base' of the
@@ -103,12 +108,15 @@ fact that we're lacking a clear connection between families and (a specified
 class of) morphisms, however, does show up in our treatment of the notion we
 called familie pullbacks. For instance, we can't show that a square of families
 is a pullback precisely when the corresponding square of projections is a
-pullback: only the backwards direction holds. Neither can we show that the
-composition of two family pullback squares is again a family pullback square.
+pullback: only the backwards direction holds. 
+The discrepancies continue: ordinary pullbacks do not always exist
+whereas family pullbacks do but the composition of two family pullback squares
+need not be a family pullback square again whereas the pasting lemma of
+ordinary pullbacks holds as usually.
 We feel that pointing out what we can and can't do in the current setting is
 an important aspect of developing an intuition with the system and therefore
-we include this subsubsection even though the theory might feel `incomplete'
-compared to the usual theory of pullbacks.
+we include this subsubsection even though the theory of family pullbacks
+might feel a bit different than the usual theory of pullbacks.
 
 In the last subsubsection we give a treatment of inductive morphisms. These
 morphisms appear also in the introduction of the many inductive type
