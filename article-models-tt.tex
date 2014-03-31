@@ -82,7 +82,7 @@ an arbitrary term and for substitution by an extended term. The last set of
 compatibility rules is a form of currying-uncurrying -- this famous
 correspondence naturally comes out of our scheme of compatibility rules.
 
-\subsection{The basic judgments}
+\subsection{Judgments and inference rules}
 The type theory we describe here is a theory of contexts, families of
 contexts and terms thereof. The families of contexts are by some authors called
 dependent contexts, but they are handled a bit differently here because they
@@ -141,7 +141,6 @@ context $\Gamma$. This is expressed by the following four inference rules:
     { \jtypeeq{\Gamma}{A}{B}
       }
 \end{align*}
-
 
 \subsection{The basic rules for judgmental equality}
 The rules for judgmental equality establish that it is an equivalence relation
@@ -2289,7 +2288,7 @@ P \ar[fib]{d} \ar{r}{F} & Q \ar[fib]{d} \\
 A \ar{r}{f} & B
 \end{tikzcd}
 \end{equation*}
-is a judgmental pullback if the following inference rules are valid:
+is a family pullback if the following inference rules are valid:
 \begin{align*}
 & \inference
   { \jfam{{\Gamma}{A}}{P'}
@@ -2322,7 +2321,7 @@ The diagram
 A \ar{r}{f} & B
 \end{tikzcd}
 \end{equation*}
-is a judgmental pullback diagram.
+is a family pullback diagram.
 \end{lem}
 
 \begin{proof}
@@ -2333,21 +2332,30 @@ $\jcomp{}{\idtm{\jcomp{}{f}{Q}}}{F'}\jdeq F'$.
 
 \begin{lem}
 A square
-\begin{equation*}
+\begin{equation}\label{eq:fpb_to_pb_eqv_fpb}
 \begin{tikzcd}
 P \ar[fib]{d} \ar{r}{F} & Q \ar[fib]{d} \\
 A \ar{r}{f} & B
 \end{tikzcd}
-\end{equation*}
-is a pullback precisely when the square
-\begin{equation*}
+\end{equation}
+is a family pullback square whenever the square
+\begin{equation}\label{eq:fpb_to_pb_eqv_pb}
 \begin{tikzcd}[column sep = large]
 \ctxext{A}{P} \ar{d}[swap]{\cprojfstf{A}{P}} \ar{r}{\tmext{}{}{\ctxwk{P}{f}}{F}} & \ctxext{B}{Q} \ar{d}{\cprojfstf{B}{Q}} \\
 A \ar{r}{f} & B
 \end{tikzcd}
-\end{equation*}
-is a pullback
+\end{equation}
+is a pullback square.
 \end{lem}
+
+\begin{proof}
+First assume that the diagram in \autoref{eq:fpb_to_pb_eqv_fpb} is a family 
+pullback square. Consider a family $\jfam{\Gamma}{X}$, the morphisms
+$\jhom{\Gamma}{X}{A}{g}$ and $\jhom{\Gamma}{X}{{A}{P}}{h}$ and the judgmental
+equality $\jhomeq{\Gamma}{X}{B}{\jcomp{}{g}{f}}{\jcomp{}{h}{\cprojfstf{B}{Q}}}$.
+
+We have the family $\jfam{{\Gamma}{A}}{\ctxwk{A}{X}}$.
+\end{proof}
 
 \begin{lem}
 Suppose we have the diagram
@@ -2357,8 +2365,8 @@ P \ar{r}{F} \ar[fib]{d} & Q \ar{r}{G} \ar[fib]{d} & R \ar[fib]{d}\\
 A \ar{r}{f} & B \ar{r}{g} & C
 \end{tikzcd}
 \end{equation*}
-where the square on the right and the outer rectangle are judgmental pullback 
-diagrams. Then the square on the left is a judgmental pullback diagram.
+where the square on the right and the outer rectangle are family pullback 
+diagrams. Then the square on the left is a family pullback diagram.
 \end{lem}
 
 \begin{proof}
