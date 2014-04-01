@@ -2581,7 +2581,7 @@ We have the judgmental equalities:
 \begin{align*}
 \jcomp{\subst{x}{P}}{\finc{x}{P}}{Q}
 & \jdeq
-  \unfold{\jcomp{\subst{x}{P}}{\finc{x}{P}}{Q}}
+  \subst{\tmext{}{}{\ctxwk{\subst{x}{P}}{x}}{\idtm{\subst{x}{P}}}}{\ctxwk{\subst{x}{P}}{Q}}
   \\
 & \jdeq
   \subst{\idtm{\subst{x}{P}}}{{\ctxwk{\subst{x}{P}}{x}}{\ctxwk{\subst{x}{P}}{Q}}}
