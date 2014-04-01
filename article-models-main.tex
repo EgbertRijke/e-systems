@@ -45,18 +45,38 @@ been studied very much. Dependent product types or even universes tend to make
 an early appearance in just about any presentation of type theory. While one
 could argue that in type theories like the one in \cite{Dybjer1996} the type
 constructors could be left out and a study of the remnants could \emph{in
-principle} be carried out, this is not the usual practice. In the type theory
+principle} be carried out, this is not the usual practice. A noteable exception
+is the unpublished work \cite{Awodey2013} on natural models of type theory,
+which makes the connection between categories with families and representable
+transformations of presheaves. In the type theory
 of \cite{TheBook}, which seems to have won the race of introducing universes
-as early as possible hands down, this seems entirely unfeasible.
+as early as possible hands down, this seems entirely unfeasible. Also, the 
+proof-assistant \Coq\ {\color{red}(and \Agda too?)} has universes and dependent product and pair types 
+built-in, making it impossible to study type theory without type constructors in 
+that environment.
 
 Nevertheless, type theory without type constructors has received some attention
-recently. In \cite{Garner2014}, Garner describes the combinatorial structure
+contributors to the Univalent Foundations Program recently. We name two
+further investigations on this topic, other than the mentioned work by Awodey.
+In \cite{Garner2014}, Garner describes the combinatorial structure
 of the type operations of the weakening, substitution and projection monads
 (their projections are our identity terms) and suggests lots of further research
 that can be done on type theory without constructors. Also, Joyal has been
 lecturing about tribes lately, which are a categorical semantics for type theory
 without type constructors. Although his slides have been going around on
 mailing lists, there is as of yet no easily accessible written accound on tribes.
+
+The theory that is layed out in this part is built up modularly. As announced,
+we begin by presenting type theory without type constructors. This type theory
+can be extended by adding type constructors. (Probably) There are three flavors
+of type constructors. Dependent function types and universes are each of their
+own flavor; the inductive types form the third flavor.
+
+However the type theory can also be extended with local versions of extenison,
+weakening, substitution and identity terms. This comprises a type theory of
+(internal) models of the theory of contexts families and terms presented in
+\autoref{tt} and it can be further extended to also model any combination of
+type constructors.
 
 \input{article-models-tt}
 

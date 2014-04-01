@@ -1,20 +1,24 @@
 \section{The theory of contexts, families and terms}\label{tt}
 In this section we give a description of dependent type theory before type
-constructors with explicit operations of extension, weakening and substitution. We will
-formulate the type theory in such a way that contexts aren't defined
-to be lists of variable
-declarations. We rather take a syntactic approach in our treatment of contexts,
-axiomatizing only what you can do with them and allowing for the freedom to
-interpret the axiom in any desired way. 
-The main reason is that we don't see variable declarations in the internal
-models either. This way we also set out to a more algebraic approach of type
-theory and higher category theory. Thirdly, we will not have to be burdened with
-superficial comments about variables being bounded or not, or fresh or free or 
-not occuring at all.
+constructors. Apart from contexts, families and terms -- which provide for the
+core of the language of dependent logic -- the basic ingredients
+of this theory will be the operations of extension, weakening and substitution
+and the identity terms. The resulting theory can be seen as the structure of
+dependent type theory. We note up front that what we call families over contexts
+here, could have been named dependent contexts or telescopes, see
+\cite{deBruijn1991,hofmann1995extensional}.
 
-The theory we will develop here is a theory of contexts, families of contexts
-and terms thereof. Families of contexts could have been named dependent contexts
-or telescopes.
+We will
+formulate the type theory in such a way that contexts aren't defined
+to be lists of variable declarations. The variable-free (or name-free) approach 
+we take here is rather different than those appearing in 
+\cite{hofmann1995extensional,TheBook} but it has appeared in the work of Coquand
+and in \cite{Dybjer1996}.
+The main reason we don't let variable declarations in is that we don't see them 
+in the internal models either. This way we also set out to a more algebraic 
+approach of type theory and higher category theory. Thirdly, we will not have to
+be burdened with superficial comments about variables being bounded or not, or 
+fresh or free or not occuring at all.
 
 In our treatment, a context can be the empty context or it can be a binary
 planar tree of which `the leaves are (families of) contexts'. 
