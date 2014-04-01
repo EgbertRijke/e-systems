@@ -2447,6 +2447,11 @@ A \ar{r}{f} & B
 indicating a morphism $F$ from $P$ to $Q$ over the morphism $f$ from $A$ to
 $B$ in a context $\Gamma$.
 
+We can just copy the usual categorical definition of a pullback square to our
+current situation, but we have to require that each arrow in the pullback square
+is an ordinary arrow. When families (i.e. double-headed arrows) are involved
+in the diagram, we make the following definition of a family pullback:
+
 \begin{defn}
 We say that a commutative dependency diagram of the form
 \begin{equation*}
@@ -2455,7 +2460,7 @@ P \ar[fib]{d} \ar{r}{F} & Q \ar[fib]{d} \\
 A \ar{r}{f} & B
 \end{tikzcd}
 \end{equation*}
-is a family pullback if the following inference rules are valid:
+is a \emph{family pullback} if the following inference rules are valid:
 \begin{align*}
 & \inference
   { \jfam{{\Gamma}{A}}{P'}
@@ -2480,22 +2485,9 @@ is a family pullback if the following inference rules are valid:
 \end{align*}
 \end{defn}
 
-\begin{lem}
-The diagram
-\begin{equation*}
-\begin{tikzcd}
-\jcomp{}{f}{Q} \ar[fib]{d} \ar{r}{\idtm{\jcomp{}{f}{Q}}} & Q \ar[fib]{d} \\
-A \ar{r}{f} & B
-\end{tikzcd}
-\end{equation*}
-is a family pullback diagram.
-\end{lem}
-
-\begin{proof}
-The proof is a triviality because $\jhom{{\Gamma}{A}}{P'}{\jcomp{}{f}{Q}}{F'}$
-is the same judgment as $\jfhom{\Gamma}{A}{B}{f}{P'}{Q}{F'}$ and
-$\jcomp{}{\idtm{\jcomp{}{f}{Q}}}{F'}\jdeq F'$.
-\end{proof}
+The following lemma explains that when a square involving families is a
+family pullback square whenever the corresponding square involving projections is a
+pullback square. There is no proof in the the opposite direction.
 
 \begin{lem}
 A square
@@ -2515,14 +2507,29 @@ A \ar{r}{f} & B
 is a pullback square.
 \end{lem}
 
-\begin{proof}
-First assume that the diagram in \autoref{eq:fpb_to_pb_eqv_fpb} is a family 
-pullback square. Consider a family $\jfam{\Gamma}{X}$, the morphisms
-$\jhom{\Gamma}{X}{A}{g}$ and $\jhom{\Gamma}{X}{{A}{P}}{h}$ and the judgmental
-equality $\jhomeq{\Gamma}{X}{B}{\jcomp{}{g}{f}}{\jcomp{}{h}{\cprojfstf{B}{Q}}}$.
+The family pullback of a family along any morphism always exists. It is simply given
+by the precomposition of the family with the morphism. Note that this fact does
+not carry over to arbitrary pullbacks.
 
-We have the family $\jfam{{\Gamma}{A}}{\ctxwk{A}{X}}$.
+\begin{lem}
+The diagram
+\begin{equation*}
+\begin{tikzcd}
+\jcomp{}{f}{Q} \ar[fib]{d} \ar{r}{\idtm{\jcomp{}{f}{Q}}} & Q \ar[fib]{d} \\
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation*}
+is a family pullback diagram.
+\end{lem}
+
+\begin{proof}
+The proof is a triviality because $\jhom{{\Gamma}{A}}{P'}{\jcomp{}{f}{Q}}{F'}$
+is the same judgment as $\jfhom{\Gamma}{A}{B}{f}{P'}{Q}{F'}$ and
+$\jcomp{}{\idtm{\jcomp{}{f}{Q}}}{F'}\jdeq F'$.
 \end{proof}
+
+For arbitrary pullbacks we have the pasting lemma as usual, but for family
+pullbacks we can only derive one of the parts of the pasting lemma.
 
 \begin{lem}
 Suppose we have the diagram
@@ -2673,10 +2680,10 @@ We have the judgmental equality
 for any family $Q$ of contexts over $\ctxext{{\Gamma}{A}}{\mfam{A}}$ 
 \end{lem}
 
-\subsubsection{Judgmental trivial cofibrations}
+\subsubsection{Inductive morphisms}
 \begin{defn}
-Let $\jhom{\Gamma}{A}{B}{f}$ be a context morphism. We say that $f$ is a 
-\emph{judgmental trivial cofibration} if the following inference rules are valid:
+Let $\jhom{\Gamma}{A}{B}{f}$ be a context morphism. We say that $f$ is an 
+\emph{inductive morphism} if the following inference rules are valid:
 \begin{align*}
 & \inference
   { \jfam{{\Gamma}{B}}{Q}
@@ -2696,14 +2703,14 @@ Let $\jhom{\Gamma}{A}{B}{f}$ be a context morphism. We say that $f$ is a
 When $f$ is a context morphism from $A$ to $B$ in context $\Gamma$, 
 finding a term of a family $Q$ over $\ctxext{\Gamma}{B}$ can be accomplished
 by finding a term of the family $\jcomp{A}{f}{Q}$ over $\ctxext{\Gamma}{A}$.
-Judgmental trivial cofibrations come with a computation rule. Thus, term
+Inductive morphisms come with a computation rule. Thus, term
 constructors of inductively defined types are going to be the major source of
-examples of judgmental trivial cofibrations. Since identity terms behave
-so nicely, they are judgmental trivial cofibrations too.
+examples of inductive morphisms. Since identity terms behave
+so nicely, they are inductive morphisms too.
 
 \begin{lem}
 The identity term
-$\jhom{\Gamma}{A}{A}{\idtm{A}}$ is a judgmental trivial cofibration
+$\jhom{\Gamma}{A}{A}{\idtm{A}}$ is an inductive morphism
 for each family $A$ of contexts over $\Gamma$
 \end{lem}
 
