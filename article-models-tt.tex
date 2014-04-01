@@ -3,10 +3,9 @@ In this section we give a description of dependent type theory before type
 constructors. Apart from contexts, families and terms -- which provide for the
 core of the language of dependent logic -- the basic ingredients
 of this theory will be the operations of extension, weakening and substitution
-and the identity terms. The resulting theory can be seen as the structure of
-dependent type theory. We note up front that what we call families over contexts
-here, could have been named dependent contexts or telescopes, see
-\cite{deBruijn1991,hofmann1995extensional}.
+and the identity terms. An empty context (and empty families) are also included
+in the theory. The resulting theory can be seen as a manifestation of the 
+structure underlying dependent type theory.
 
 We will
 formulate the type theory in such a way that contexts aren't defined
@@ -152,6 +151,13 @@ judgments are for judgmental equality.
 \jterm*{\Gamma}{A}{x} 
 & \jtermeq*{\Gamma}{A}{x}{y}.
 \end{align*}
+
+We note that what we call families over contexts
+here could also have been named dependent contexts or telescopes, see
+\cite{deBruijn1991,hofmann1995extensional}. The term family is in agreement
+with the terminology scheme of \cite{TheBook}, though the reader should be
+warned that the notion of familie means something slightly different there than
+it does here.
 
 If $A$ is a type
 in context $\Gamma$, then $A$ is also a family of contexts over $\Gamma$. Being
