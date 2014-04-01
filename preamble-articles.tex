@@ -361,9 +361,17 @@
 \newcommand{\@judgmentAT}[8]{\@judgment@ctx{#2} & \vdash \@judgment@rel{#3}{#4}{#5}{#6}{#7} #8}
 \newcommand{\@judgmentAF}[7]{\@judgment@ctx{#1} \vdash \@judgment@rel{#2}{#3}{#4}{#5}{#6} #7\quad@test}
 \newcommand{\@judgment@ctx}{\@judgment@ext}
-\newcommand{\@judgment@rel}[5]{\@judgment@ext{#1} #2 \@judgment@ext{#3} #4 \@judgment@ext{#5}}
+\newcommand{\@judgment@rel}[5]{
+  { \default@ctxext #1
+    }
+  #2 
+  { \default@ctxext #3
+    }
+  #4
+  { \default@ctxext #5
+    }}
 \newcommand{\@judgment@kind}[1]{~~\textit{#1}}
-\newcommand{\@judgment@ext}[1]{\default@ctxext#1}
+\newcommand{\@judgment@ext}[1]{\default@ctxext #1}
 
 \newcommand{\quad@test}{%
   \@ifnextchar\jctx{\quad}{%
@@ -562,6 +570,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% TERM EXTENSION
+%%%%
+%%%% The term extension command \tmext is slightly complicated because 
+%%%% \tmext@unfold should do different things depending on whether it has two
+%%%% or four arguments. Thus \tmext has a full form and a short form, where
+%%%% the short form has two arguments and the full form has four. 
 
 \makeatletter
 
@@ -572,13 +585,13 @@
 \newcommand{\tmext@full}[4]{%
   \ctxext{\tmext@testleft #3}{\tmext@testright #4}}
 \newcommand{\tmext@short}[2]{%
-  \ctxext{\tmext@testleft #1}{\tmext@testright #1}}
+  \ctxext{\tmext@testleft #1}{\tmext@testright #2}}
 \newcommand{\tmext@testleft}{%
   \@ifnextchar\bgroup{\@tmext@parens}{%
   \@ifnextchar\tmext{\@tmext@nested}{%
   \@ifnextchar\ctxwk{\@ctxwk@nested}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
-  \default@tmext
+%  \default@tmext
   }}}}}
 \newcommand{\tmext@testright}{%
   \@ifnextchar\bgroup{\@tmext@parens}{%
@@ -587,12 +600,16 @@
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\cprojfst{\cprojfst@nested}{%
   \@ifnextchar\cprojsnd{\cprojsnd@nested}{%
-  \default@tmext
+%  \default@tmext
   }}}}}}}
-\newcommand{\@tmext@nested}[5]{%
-  \@tmext@parens{#2}{#3}{#4}{#5}}
-\newcommand{\@tmext@parens}[4]{%
-  (\tmext{#1}{#2}{#3}{#4})}
+\newcommand{\@tmext@nested}[1]{%
+  \@tmext@parens}
+\newcommand{\@tmext@parens}[2]{%
+  \@ifnextchar\bgroup
+    {\tmext@full@parens{#1}{#2}}
+    {(\tmext@short{#1}{#2})}}
+\newcommand{\tmext@full@parens}[4]{%
+  (\tmext@full{#1}{#2}{#3}{#4})}
 
 %%%% The unfolded term extension commands
 \newcommand{\tmext@unfold}[2]{%
@@ -687,7 +704,7 @@
 
 %%%% Vertical composition of morphisms.
 \newcommand{\jvcomp}[3]{%
-  \jcomp@testleft #3 \bullet \jcomp@testright #2}
+  \jcomp@testleft #2 \bullet \jcomp@testright #3}
 \newcommand{\jvcomp@testleft}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
   \@ifnextchar\ctxwk{\@ctxwk@nested}{%

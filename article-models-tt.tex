@@ -2263,14 +2263,14 @@ in a context $\Gamma$. Then we have
   {A}
   {{B}{Q}}
   {f}
-  {\tmext{}{}{\jcomp{}{f}{\cprojfstf{B}{Q}}}{\jcomp{}{f}{\cprojsndf{B}{Q}}}}.
+  {\tmext{\jcomp{}{f}{\cprojfstf{B}{Q}}}{\jcomp{}{f}{\cprojsndf{B}{Q}}}}.
 \end{equation*}
 Alternatively, when $\jhom{\Gamma}{A}{B}{f_0}$ and 
 $\jterm{{\Gamma}{A}}{\jcomp{}{f_0}{Q}}{f_1}$ we obtain a morphism
-$\jhom{\Gamma}{A}{{B}{Q}}{\tmext{}{}{f_0}{f_1}}$ with the property that
+$\jhom{\Gamma}{A}{{B}{Q}}{\tmext{f_0}{f_1}}$ with the property that
 \begin{align*}
-\jhomeq*{\Gamma}{A}{B}{\jcomp{}{\tmext{}{}{f_0}{f_1}}{\cprojfstf{B}{Q}}}{f_0}\\
-\jtermeq*{{\Gamma}{A}}{\jcomp{}{f_0}{Q}}{\jcomp{}{\tmext{}{}{f_0}{f_1}}{\cprojsndf{B}{Q}}}{f_1}.
+\jhomeq*{\Gamma}{A}{B}{\jcomp{}{\tmext{f_0}{f_1}}{\cprojfstf{B}{Q}}}{f_0}\\
+\jtermeq*{{\Gamma}{A}}{\jcomp{}{f_0}{Q}}{\jcomp{}{\tmext{f_0}{f_1}}{\cprojsndf{B}{Q}}}{f_1}.
 \end{align*}
 \end{lem}
 
@@ -2346,8 +2346,10 @@ judgmental equalities
 \begin{defn}
 Let $\jhom{\Gamma}{A}{B}{f}$ be a morphism from $A$ to $B$ in context $\Gamma$
 and let $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ be a morphism over $f$ in context 
-$\Gamma$.
-
+$\Gamma$. We define
+\begin{equation*}
+\jhomdefn{\Gamma}{{A}{P}}{{B}{Q}}{\jvcomp{P}{f}{F}}{\unfold{\jvcomp{P}{f}{F}}}
+\end{equation*}
 \end{defn}
 
 \subsubsection{Fiber inclusions}
@@ -2438,7 +2440,7 @@ The ladder on the left
 indicates that $F_1$ is a morphism from $P_1$ to $Q_1$ \emph{over} $f$,
 i.e.~that the judgment $\jfhom{\Gamma}{A}{B}{f}{P_1}{Q_1}{F_1}$ holds, that
 $F_2$ is a morphism from $P_2$ to $Q_2$ over
-the morphism $\tmext{}{}{\ctxwk{P_1}{f}}{F_1}$ from $\ctxext{A}{P_1}$ to
+the morphism $\tmext{\ctxwk{P_1}{f}}{F_1}$ from $\ctxext{A}{P_1}$ to
 $\ctxext{B}{Q_1}$, etcetera.
 
 The ladder on the right indicates that $F_{n+1}$ is a morphism from $P_{n+1}$ to
@@ -2517,7 +2519,7 @@ A \ar{r}{f} & B
 is a family pullback square whenever the square
 \begin{equation}\label{eq:fpb_to_pb_eqv_pb}
 \begin{tikzcd}[column sep = large]
-\ctxext{A}{P} \ar{d}[swap]{\cprojfstf{A}{P}} \ar{r}{\tmext{}{}{\ctxwk{P}{f}}{F}} & \ctxext{B}{Q} \ar{d}{\cprojfstf{B}{Q}} \\
+\ctxext{A}{P} \ar{d}[swap]{\cprojfstf{A}{P}} \ar{r}{\tmext{\ctxwk{P}{f}}{F}} & \ctxext{B}{Q} \ar{d}{\cprojfstf{B}{Q}} \\
 A \ar{r}{f} & B
 \end{tikzcd}
 \end{equation}
@@ -2609,7 +2611,7 @@ We have the judgmental equalities:
 \begin{align*}
 \jcomp{\subst{x}{P}}{\finc{x}{P}}{Q}
 & \jdeq
-  \subst{\tmext{}{}{\ctxwk{\subst{x}{P}}{x}}{\idtm{\subst{x}{P}}}}{\ctxwk{\subst{x}{P}}{Q}}
+  \subst{\tmext{\ctxwk{\subst{x}{P}}{x}}{\idtm{\subst{x}{P}}}}{\ctxwk{\subst{x}{P}}{Q}}
   \\
 & \jdeq
   \subst{\idtm{\subst{x}{P}}}{{\ctxwk{\subst{x}{P}}{x}}{\ctxwk{\subst{x}{P}}{Q}}}
@@ -2683,7 +2685,7 @@ $\bar{\typefont{pr}}$ by:
   {{{A}{P}}{\mfam{A}}}
   {{A}{\mfam{A}}}
   {\bar{\typefont{pr}}}
-  {\tmext{}{}{\ctxwk{{P}{\mfam{A}}}{\cprojfstf{A}{P}}}{\ctxwk{P}{\idtm{\mfam{A}}}}}
+  {\tmext{\ctxwk{{P}{\mfam{A}}}{\cprojfstf{A}{P}}}{\ctxwk{P}{\idtm{\mfam{A}}}}}
 \end{equation}
 
 \begin{lem}
