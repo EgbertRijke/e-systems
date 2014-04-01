@@ -242,6 +242,7 @@
 %  \renewcommand{\@jfcomp@nested}{\@jfcomp@unfold@nested}%
 %  \renewcommand{\@jfcomp@parens}{\@jfcomp@unfold@parens}%
   \renewcommand{\sandwich}{\sandwich@unfold}%
+  \renewcommand{\finc}{\finc@unfold}%
   #1%
   \endgroup%
   }
@@ -270,12 +271,13 @@
   \@ifnextchar\cprojfst{\@eatdo{\cprojfst@unfold}}{%
   \@ifnextchar\cprojsndf{\@eatdo{\cprojsndf@unfold}}{%
   \@ifnextchar\cprojsnd{\@eatdo{\cprojsnd@unfold}}{%
-  \@ifnexthcar\jfcomp{\@eatdo{\jfcomp@unfold}}{%
+  \@ifnextchar\jfcomp{\@eatdo{\jfcomp@unfold}}{%
 %  \@ifnextchar\@jfcomp@nested{\@eatdo{\@jfcomp@unfold@nested}}{%
 %  \@ifnextchar\@jfcomp@parens{\@eatdo{\@jfcomp@unfold@parens}}{%
   \@ifnextchar\sandwich{\@eatdo{\sandwich@unfold}}{%
-  #1%
+  \@ifnextchar\finc{\@eatdo{\finc@unfold}}{%
   }}}}}}}}}}}}}}}}}%}}
+  #1}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -646,13 +648,15 @@
   \@ifnextchar\ctxwk{\@ctxwk@nested}{%
   \@ifnextchar\ctxext{\@ctxext@nested}{%
   \@ifnextchar\bgroup{\@jcomp@parens}{%
-  }}}}}
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  }}}}}}
 \newcommand{\jcomp@testright}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\subst{\@subst@nested}{%
   \@ifnextchar\ctxext{\@ctxext@nested}{%
   \@ifnextchar\bgroup{\@jcomp@parens}{%
-  }}}}}
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  }}}}}}
 \newcommand{\@jcomp@nested}[4]{%
   \@jcomp@parens{#2}{#3}{#4}}
 \newcommand{\@jcomp@parens}[3]{%
@@ -724,9 +728,16 @@
 
 \makeatletter
 \newcommand{\cprojgenf}[3]{%
-  \typefont{pr}^{
-    \@ifnextchar\ctxext{\@ctxext@nested}{}#2,
-    \@ifnextchar\ctxext{\@ctxext@nested}{}#3}_{#1}}
+  \typefont{pr}^{%
+    \@ifnextchar\bgroup{\@ctxext@parens}{%
+    \@ifnextchar\ctxext{\@ctxext@nested}{%
+    }}
+    #2,
+    \@ifnextchar\bgroup{\@ctxext@parens}{%
+    \@ifnextchar\ctxext{\@ctxext@nested}{%
+    }}
+    #3
+    }_{#1}}
 \newcommand{\cprojgen}[4]{%
   \subst{#4}{\cprojgenf{#1}{#2}{#3}}}
 
@@ -751,6 +762,14 @@
 %%%% The sandwich function
 \newcommand{\sandwich}[3]{\typefont{sw}^{#1,#2,#3}}
 \newcommand{\sandwich@unfold}[3]{\typefont{sw}^{#1,#2,#3}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% FIBER INCLUSIONS
+
+\makeatletter
+\newcommand{\finc}[2]{\typefont{in}^{#2}_{#1}}
+\newcommand{\finc@unfold}[2]{\tmext{}{}{\ctxwk{\subst{x}{P}}{x}}{\idtm{\subst{x}{P}}}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

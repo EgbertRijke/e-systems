@@ -1510,7 +1510,7 @@ come in handy later on.
 
 \emph{This subsection contains no new assumptions.}
 
-\subsubsection{Extension on terms}\label{extension-on-terms}
+\subsubsection{Projections and extension on terms}\label{extension-on-terms}
 In this subsubsection we consider the notion of extension on terms, which has now
 become definable inside our theory. Moreover, every compatibility rule one may
 dream of is provable as well, using the compatibility rules we have introduced
@@ -1977,33 +1977,36 @@ The following compatibility rules for two consecutive term extensions is valid:
     }
   \\
 & \inference
-  { \jterm{\Gamma}{\ctxext{{A}{P}}{Q}}{w}
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
     }
-  { \jtermeq
+  { \jhomeq
       {\Gamma}
+      {\ctxext{{A}{P}}{Q}}
       {A}
-      {\cprojfst{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}}}
-      {\cprojfst{A}{\ctxext{P}{Q}}{w}}
+      {\jcomp{}{\cprojfstf{{A}{P}}{Q}}{\cprojfstf{A}{P}}}
+      {\cprojfstf{A}{{P}{Q}}}
     }
   \\
 & \inference
-  { \jterm{\Gamma}{\ctxext{{A}{P}}{Q}}{w}
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
     }
-  { \jtermeq
-      {\Gamma}
-      {\subst{\cprojfst{A}{\ctxext{P}{Q}}{w}}{P}}
-      {\cprojsnd{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}}}
-      {\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
+  { \jhomeq
+      {{\Gamma}{A}}
+      {{P}{Q}}
+      {P}
+      {\jcomp{}{\cprojfstf{{A}{P}}{Q}}{\cprojsndf{A}{P}}}
+      {\jcomp{}{\cprojsndf{A}{{P}{Q}}}{\cprojfstf{P}{Q}}}
     }
   \\
 & \inference
-    { \jterm{\Gamma}{\ctxext{{A}{P}}{Q}}{w}
+    { \jfam{{{\Gamma}{A}}{P}}{Q}
       }
-    { \jtermeq
-        {\Gamma}
-        {\subst{\cprojfst{\ctxext{A}{P}}{Q}{w}}{Q}}
-        {\cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
-        {\cprojsnd{\ctxext{A}{P}}{Q}{w}}
+    { \jhomeq
+        {{{\Gamma}{A}}{P}}
+        {Q}
+        {Q}
+        {\cprojsndf{{A}{P}}{Q}}
+        {\jcomp{}{\cprojsndf{A}{{P}{Q}}}{\cprojsndf{P}{Q}}}
       }
 \end{align*}
 \end{lem}
@@ -2105,8 +2108,28 @@ precisely, the following inference rules are valid:
       {\ctxwk{A}{\tmext{Q}{R}{g}{t}}}
       {\tmext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}{\ctxwk{A}{g}}{\ctxwk{A}{t}}}
     }
-% \\
-%& \inference{\jterm{\Gamma}{\ctxwk{A}{\ctxext{B}{Q}}}{\ctxwk{A}{w}}}{\jtermeq{{\Gamma}{A}}{\ctxwk{A}{B}}{\cprojfst{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{\ctxwk{A}{w}}}{\ctxwk{A}{(\cprojfst{B}{Q}{w})}}}\\
+  \\
+& \inference
+  { \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jhomeq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+      {\ctxwk{A}{Q}}
+      {\cprojfstf{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+      {\ctxwk{A}{\cprojfstf{Q}{R}}}
+    }
+  \\
+& \inference
+  { \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jhomeq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
+      {\ctxwk{A}{R}}
+      {\ctxwk{A}{R}}
+      {\cprojsndf{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+      {\ctxwk{A}{\cprojsndf{Q}{R}}}
+    }
 \end{align*}
 \end{lem}
 
@@ -2142,7 +2165,8 @@ $x$ of $A$, the term that we get is $\tmext{\subst{x}{P}}{\subst{x}{Q}}{\subst{x
 More precisely, the following inference rules are valid:
 \begin{align*}
 & \inference
-  { \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
     \jterm{{{\Gamma}{A}}{P}}{\subst{g}{R}}{t}
     }
   { \jtermeq
@@ -2150,6 +2174,30 @@ More precisely, the following inference rules are valid:
       {\ctxext{\subst{x}{Q}}{\subst{x}{R}}}
       {\subst{x}{\tmext{Q}{R}{g}{t}}}
       {\tmext{\subst{x}{Q}}{\subst{x}{R}}{\subst{x}{g}}{\subst{x}{t}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jhomeq
+      {\Gamma}
+      {{\subst{x}{P}}{\subst{x}{Q}}}
+      {\subst{x}{P}}
+      {\cprojfstf{\subst{x}{P}}{\subst{x}{Q}}}
+      {\subst{x}{\cprojfstf{P}{Q}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jhomeq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{Q}}
+      {\subst{x}{Q}}
+      {\cprojsndf{\subst{x}{P}}{\subst{x}{Q}}}
+      {\subst{x}{\cprojsndf{P}{Q}}}
     }
 \end{align*}
 \end{lem}
@@ -2178,6 +2226,74 @@ Then we have the judgmental equalities
   \tmext{\subst{x}{Q}}{\subst{x}{R}}{\subst{x}{g}}{\subst{x}{t}}.
   \qedhere
 \end{align*}
+\end{proof}
+
+\subsubsection{Fiber inclusions}
+We will use the insights of \autoref{extension-on-terms} to define and study
+\emph{fiber inclusions}. The fiber inclusion of the \emph{fiber}
+$\subst{x}{P}$ into the extension $\ctxext{A}{P}$ is a morphism
+$\jhom{\Gamma}{\subst{x}{P}}{{A}{P}}{\finc{x}{P}}$, for any family
+$\jfam{{\Gamma}{A}}{P}$ and any term $\jterm{\Gamma}{A}{x}$. Then we will determine
+the ways in which it is compatible with the other operators. Note that in this
+subsubsection we will focus on the compatibility properties; the fact that
+the fiber inclusions also appear in a pullback diagram will be established in
+\autoref{pullback}. Because 
+$\finc{x}{P}$ is a morphism into an extension, we will first study morphisms
+into extensions more generally.
+
+For the following lemma, recall that the judgment $\jhom{\Gamma}{A}{{B}{Q}}{f}$
+unfolds as
+\begin{equation*}
+\unfold{\jhom{\Gamma}{A}{{B}{Q}}{f}}
+\end{equation*}
+and that we have the judgmental equality 
+$ \jfameq
+    {{\Gamma}{A}}
+    {\ctxwk{A}{\ctxext{B}{Q}}}
+    {\ctxext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}}.
+  $
+Therefore, each morphism into an extended family can itself be described as
+an extended term. The following lemma explains how this goes.
+
+\begin{lem}
+Let $\jhom{\Gamma}{A}{{B}{Q}}{f}$ be a morphism from $A$ to $\ctxext{B}{Q}$
+in a context $\Gamma$. Then we have
+\begin{equation*}
+\jhomeq
+  {\Gamma}
+  {A}
+  {{B}{Q}}
+  {f}
+  {\tmext{}{}{\jcomp{}{f}{\cprojfstf{B}{Q}}}{\jcomp{}{f}{\cprojsndf{B}{Q}}}}.
+\end{equation*}
+Alternatively, when $\jhom{\Gamma}{A}{B}{f_0}$ and 
+$\jterm{{\Gamma}{A}}{\jcomp{}{f_0}{Q}}{f_1}$ we obtain a morphism
+$\jhom{\Gamma}{A}{{B}{Q}}{\tmext{}{}{f_0}{f_1}}$ with the property that
+\begin{align*}
+\jhomeq*{\Gamma}{A}{B}{\jcomp{}{\tmext{}{}{f_0}{f_1}}{\cprojfstf{B}{Q}}}{f_0}\\
+\jtermeq*{{\Gamma}{A}}{\jcomp{}{f_0}{Q}}{\jcomp{}{\tmext{}{}{f_0}{f_1}}{\cprojsndf{B}{Q}}}{f_1}.
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Let $\jhom{\Gamma}{A}{{B}{Q}}{f}$ be a morphism in context $\Gamma$. Then we
+have the judgmental equalities
+\begin{align*}
+\cprojfst{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{f}
+& \jdeq
+  \subst{f}{\ctxwk{A}{\cprojfstf{B}{Q}}}
+  \\
+& \jdeq
+  \jcomp{}{f}{\cprojfstf{B}{Q}}
+  \\
+\cprojsnd{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{f}
+& \jdeq
+  \subst{f}{\ctxwk{A}{\cprojsndf{B}{Q}}}
+  \\
+& \jdeq
+  \jcomp{}{f}{\cprojsndf{B}{Q}}
+\end{align*}
+The alternative formulation of the statement is a direct corollary.
 \end{proof}
 
 We also have the following lemma about the compatibility of pairing and composition:
@@ -2228,7 +2344,16 @@ judgmental equalities
 \end{align*}
 \end{proof}
 
-\subsubsection{Commuting dependence diagrams}
+\begin{defn}
+Let $\jterm{\Gamma}{A}{x}$ be a term and let $\jfam{{\Gamma}{A}}{P}$ be a
+family. Then we define
+\begin{equation*}
+\jhomdefn{\Gamma}{\subst{x}{P}}{{A}{P}}{\finc{x}{P}}{\unfoldnext{\finc{x}{P}}}
+\end{equation*}
+\end{defn}
+
+\subsubsection{Pullback squares and family pullback squares}
+\label{pullback}
 Now that we have introduced the notions of morphisms, composition and identity
 terms, we can develop a diagramatic style of of displaying type dependencies
 combined with morphisms. We give an informal, metatheoretical definition of
@@ -2423,6 +2548,50 @@ Let $\jfam{{\Gamma}{A}}{P'}$ be a family and let $\jfhom{\Gamma}{A}{B}{f}
       By the assumed properties this is the same as $u$ composed with $F$ and
       $G$. By the pullback condition we now get $u\jdeq v$. 
 \end{itemize}
+\end{proof}
+
+\begin{lem}
+For any $\jterm{\Gamma}{A}{x}$ and any $\jfam{{\Gamma}{A}}{P}$, the square
+\begin{equation*}
+\begin{tikzcd}
+\subst{x}{P} \ar{d} \ar{r}{\finc{x}{P}} & \ctxext{A}{P} \ar{d}{\cprojfstf{A}{P}}\\
+\emptyf \ar{r}{\ctxwk{\emptyf}{x}} & A
+\end{tikzcd}
+\end{equation*}
+is a pullback square.
+\end{lem}
+
+\begin{lem}
+We have the following inference rule:
+\begin{equation*}
+\inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\jcomp{}{\finc{x}{P}}{Q}}
+      {\subst{x}{Q}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+We have the judgmental equalities:
+\begin{align*}
+\jcomp{\subst{x}{P}}{\finc{x}{P}}{Q}
+& \jdeq
+  \unfold{\jcomp{\subst{x}{P}}{\finc{x}{P}}{Q}}
+  \\
+& \jdeq
+  \subst{\idtm{\subst{x}{P}}}{{\ctxwk{\subst{x}{P}}{x}}{\ctxwk{\subst{x}{P}}{Q}}}
+  \\
+& \jdeq
+  \subst{\idtm{\subst{x}{P}}}{\ctxwk{\subst{x}{P}}{\subst{x}{Q}}}
+  \\
+& \jdeq
+  \subst{x}{Q}.
+\end{align*}
 \end{proof}
 
 \subsubsection{Another special case of projections}
