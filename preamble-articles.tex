@@ -221,7 +221,7 @@
 
 \makeatletter
 \newcommand{\unfold}{%
-  \unfoldall}
+  \unfoldnext}
 \newcommand{\unfoldall}[1]{%
   \begingroup%
   \renewcommand{\jhom}{\jhom@unfold}%
@@ -243,6 +243,7 @@
 %  \renewcommand{\@jfcomp@parens}{\@jfcomp@unfold@parens}%
   \renewcommand{\sandwich}{\sandwich@unfold}%
   \renewcommand{\finc}{\finc@unfold}%
+  \renewcommand{\jvcomp}{\jvcomp@unfold}%
   #1%
   \endgroup%
   }
@@ -276,7 +277,8 @@
 %  \@ifnextchar\@jfcomp@parens{\@eatdo{\@jfcomp@unfold@parens}}{%
   \@ifnextchar\sandwich{\@eatdo{\sandwich@unfold}}{%
   \@ifnextchar\finc{\@eatdo{\finc@unfold}}{%
-  }}}}}}}}}}}}}}}}}%}}
+  \@ifnextchar\jvcomp{\@eatdo{\jvcomp@unfold}}{%
+  }}}}}}}}}}}}}}}}}}%}}
   #1}
 \makeatother
 
@@ -565,8 +567,12 @@
 
 %%%% The basic term extension commands
 \newcommand{\default@tmext}{\@ifnextchar\bgroup{\tmext}{}}
-\newcommand{\tmext}[4]{%
+\newcommand{\tmext}[2]{%
+  \@ifnextchar\bgroup{\tmext@full{#1}{#2}}{\tmext@short{#1}{#2}}}
+\newcommand{\tmext@full}[4]{%
   \ctxext{\tmext@testleft #3}{\tmext@testright #4}}
+\newcommand{\tmext@short}[2]{%
+  \ctxext{\tmext@testleft #1}{\tmext@testright #1}}
 \newcommand{\tmext@testleft}{%
   \@ifnextchar\bgroup{\@tmext@parens}{%
   \@ifnextchar\tmext{\@tmext@nested}{%
@@ -579,15 +585,19 @@
   \@ifnextchar\tmext{\@tmext@nested}{%
   \@ifnextchar\subst{\@subst@nested}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\cprojfst{\cprojfst@nested}{%
+  \@ifnextchar\cprojsnd{\cprojsnd@nested}{%
   \default@tmext
-  }}}}}
+  }}}}}}}
 \newcommand{\@tmext@nested}[5]{%
   \@tmext@parens{#2}{#3}{#4}{#5}}
 \newcommand{\@tmext@parens}[4]{%
   (\tmext{#1}{#2}{#3}{#4})}
 
 %%%% The unfolded term extension commands
-\newcommand{\tmext@unfold}[4]{%
+\newcommand{\tmext@unfold}[2]{%
+  \@ifnextchar\bgroup{\tmext@unfold@full{#1}{#2}}{\tmext@short{#1}{#2}}}
+\newcommand{\tmext@unfold@full}[4]{%  
   \subst{#4}{{#3}{\idtm{\ctxext{#1}{#2}}}}}
 \newcommand{\@tmext@unfold@nested}[1]{%
   \@tmext@unfold@parens}
@@ -675,6 +685,40 @@
 \newcommand{\@jcomp@unfold@parens}[3]{%
   (\jcomp@unfold{#1}{#2}{#3})}
 
+%%%% Vertical composition of morphisms.
+\newcommand{\jvcomp}[3]{%
+  \jcomp@testleft #3 \bullet \jcomp@testright #2}
+\newcommand{\jvcomp@testleft}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\ctxwk{\@ctxwk@nested}{%
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\bgroup{\@jvcomp@parens}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  }}}}}}
+\newcommand{\jvcomp@testright}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\subst{\@subst@nested}{%
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\bgroup{\@jvcomp@parens}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  }}}}}}
+\newcommand{\@jvcomp@nested}[4]{%
+  \@jvcomp@parens{#2}{#3}{#4}}
+\newcommand{\@jvcomp@parens}[3]{%
+  (\jvcomp{#1}{#2}{#3})}
+
+\newcommand{\jvcomp@unfold}[3]{%
+  \tmext{}{}{\ctxwk{#1}{#2}}{#3}
+  }
+\newcommand{\jvcomp@unfold@test@preside}{%
+  \@ifnextchar\bgroup{\@jvcomp@unfold@parens}{}}
+\newcommand{\jvcomp@unfold@test@postside}{%
+  \@ifnextchar\bgroup{\@jvcomp@unfold@parens}{}}
+\newcommand{\@jvcomp@unfold@nested}[4]{%
+  \@jvcomp@unfold@parens{#2}{#3}{#4}}
+\newcommand{\@jvcomp@unfold@parens}[3]{%
+  (\jvcomp@unfold{#1}{#2}{#3})}
+
 %%%% The judgment that F is a morphism from P to Q over f in context \Gamma.
 \newcommand{\jfhomsym}[3]{\jhomsym[{#1}]{#2}{#3}}
 \newcommand{\jfhom}{%
@@ -740,15 +784,23 @@
     }_{#1}}
 \newcommand{\cprojgen}[4]{%
   \subst{#4}{\cprojgenf{#1}{#2}{#3}}}
+\newcommand{\cprojgen@nested}[1]{%
+  \cprojgen@parens}
+\newcommand{\cprojgen@parens}[4]{%
+  (\cprojgen{#1}{#2}{#3}{#4})}
 
 \newcommand{\cprojfstf}[2]{%
   \cprojgenf{0}{#1}{#2}}
 \newcommand{\cprojfst}[3]{%
   \cprojgen{0}{#1}{#2}{#3}}
+\newcommand{\cprojfst@nested}[1]{%
+  \cprojgen@nested{#1}{0}}
 \newcommand{\cprojsndf}[2]{%
   \cprojgenf{1}{#1}{#2}}
 \newcommand{\cprojsnd}[3]{%
   \cprojgen{1}{#1}{#2}{#3}}
+\newcommand{\cprojsnd@nested}[1]{%
+  \cprojgen@nested{#1}{1}}
 
 \newcommand{\cprojfstf@unfold}[2]{%
   \ctxwk{\default@ctxext #2}\idtm{\default@ctxext #1}}
