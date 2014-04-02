@@ -2250,6 +2250,51 @@ Then we have the judgmental equalities
   \\
 & \jdeq 
   \tmext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}{\ctxwk{A}{g}}{\ctxwk{A}{t}}
+\end{align*}
+Next, we want to prove the judgmental equality
+\begin{equation*}
+\jhomeq
+  {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+  {{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+  {\ctxwk{A}{Q}}
+  {\cprojfstf{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+  {\ctxwk{A}{\cprojfstf{Q}{R}}}
+\end{equation*}
+Note that we have the judgmental equalities
+\begin{align*}
+\cprojfstf{\ctxwk{A}{Q}}{\ctxwk{A}{R}}
+& \jdeq
+  \unfoldall{\cprojfstf{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+  \\
+& \jdeq
+  \ctxwk{{A}{R}}{{A}{\idtm{Q}}}
+  \\
+& \jdeq
+  \unfoldall{\ctxwk{A}{\cprojfstf{Q}{R}}}
+  \\
+& \jdeq
+  \ctxwk{A}{\cprojfstf{Q}{R}}.
+\end{align*}
+Finally, we want to prove the judgmental equality
+\begin{equation*}
+\jhomeq
+  {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
+  {\ctxwk{A}{R}}
+  {\ctxwk{A}{R}}
+  {\cprojsndf{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+  {\ctxwk{A}{\cprojsndf{Q}{R}}}
+\end{equation*}
+Note that we have the judgmental equalities
+\begin{align*}
+\cprojsndf{\ctxwk{A}{Q}}{\ctxwk{A}{R}}
+& \jdeq
+  \unfoldall{\cprojsndf{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+  \\
+& \jdeq
+  \unfoldall{\ctxwk{A}{\cprojsndf{Q}{R}}}
+  \\
+& \jdeq
+  \ctxwk{A}{\cprojsndf{Q}{R}}.
   \qedhere
 \end{align*}
 \end{proof}
@@ -2273,26 +2318,26 @@ More precisely, the following inference rules are valid:
   \\
 & \inference
   { \jterm{\Gamma}{A}{x}
-    \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
     }
   { \jhomeq
-      {\Gamma}
-      {{\subst{x}{P}}{\subst{x}{Q}}}
-      {\subst{x}{P}}
-      {\cprojfstf{\subst{x}{P}}{\subst{x}{Q}}}
-      {\subst{x}{\cprojfstf{P}{Q}}}
+      {{\Gamma}{\subst{x}{P}}}
+      {{\subst{x}{Q}}{\subst{x}{R}}}
+      {\subst{x}{Q}}
+      {\cprojfstf{\subst{x}{Q}}{\subst{x}{R}}}
+      {\subst{x}{\cprojfstf{Q}{R}}}
     }
   \\
 & \inference
   { \jterm{\Gamma}{A}{x}
-    \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
     }
   { \jhomeq
-      {{\Gamma}{\subst{x}{P}}}
-      {\subst{x}{Q}}
-      {\subst{x}{Q}}
-      {\cprojsndf{\subst{x}{P}}{\subst{x}{Q}}}
-      {\subst{x}{\cprojsndf{P}{Q}}}
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+      {\subst{x}{R}}
+      {\subst{x}{R}}
+      {\cprojsndf{\subst{x}{Q}}{\subst{x}{R}}}
+      {\subst{x}{\cprojsndf{Q}{R}}}
     }
 \end{align*}
 \end{lem}
@@ -2319,6 +2364,51 @@ Then we have the judgmental equalities
   \\
 & \jdeq 
   \tmext{\subst{x}{Q}}{\subst{x}{R}}{\subst{x}{g}}{\subst{x}{t}}.
+\end{align*}
+Next, we want to prove the judgmental equality
+\begin{equation*}
+\jhomeq
+  {{\Gamma}{\subst{x}{P}}}
+  {{\subst{x}{Q}}{\subst{x}{R}}}
+  {\subst{x}{Q}}
+  {\cprojfstf{\subst{x}{Q}}{\subst{x}{R}}}
+  {\subst{x}{\cprojfstf{Q}{R}}}
+\end{equation*}
+Note that we have the judgmental equalities
+\begin{align*}
+\cprojfstf{\subst{x}{Q}}{\subst{x}{R}}
+& \jdeq
+  \unfoldall{\cprojfstf{\subst{x}{Q}}{\subst{x}{R}}}
+  \\
+& \jdeq
+  \ctxwk{\subst{x}{R}}{\subst{x}{\idtm{Q}}}
+  \\
+& \jdeq
+  \unfoldall{\subst{x}{\cprojfstf{Q}{R}}}
+  \\
+& \jdeq
+  \subst{x}{\cprojfstf{Q}{R}}.
+\end{align*}
+And finally we want to prove the judgmental equality
+\begin{equation*}
+\jhomeq
+  {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+  {\subst{x}{R}}
+  {\subst{x}{R}}
+  {\cprojsndf{\subst{x}{Q}}{\subst{x}{R}}}
+  {\subst{x}{\cprojsndf{Q}{R}}}
+\end{equation*}
+Note that we have the judgmental equalities
+\begin{align*}
+\cprojsndf{\subst{x}{Q}}{\subst{x}{R}}
+& \jdeq
+  \unfoldall{\cprojsndf{\subst{x}{Q}}{\subst{x}{R}}}
+  \\
+& \jdeq
+  \unfoldall{\subst{x}{\cprojsndf{Q}{R}}}
+  \\
+& \jdeq
+  \subst{x}{\cprojsndf{Q}{R}}.
   \qedhere
 \end{align*}
 \end{proof}

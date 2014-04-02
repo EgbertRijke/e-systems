@@ -244,6 +244,10 @@
   \renewcommand{\sandwich}{\sandwich@unfold}%
   \renewcommand{\finc}{\finc@unfold}%
   \renewcommand{\jvcomp}{\jvcomp@unfold}%
+  \renewcommand{\subst@type@unfold}[1]{
+    \@ifnextchar\cprojfstf{\@eatdo{\cprojfstf@parens}}{%
+      ##1}
+    }
   #1%
   \endgroup%
   }
@@ -520,8 +524,9 @@
   \@ifnextchar\tmext{\@tmext@nested}{%
 %  \@ifnextchar\mfam{\@mfam@nested}{%
 %  \@ifnextchar\mtm{\@mtm@nested}{%
-  \@subst
+  \subst@type@unfold{\@subst}
   }}}}}%}}
+\newcommand{\subst@type@unfold}[1]{#1}
 \newcommand{\@subst@nested}[3]{%
   \@subst@parens{#2}{#3}}
 \newcommand{\@subst@parens}[2]{%
@@ -801,6 +806,10 @@
     }_{#1}}
 \newcommand{\cprojgen}[4]{%
   \subst{#4}{\cprojgenf{#1}{#2}{#3}}}
+\newcommand{\cprojgenf@nested}[1]{%
+  \cprojgenf@parens}
+\newcommand{\cprojgenf@parens}[3]{%
+  (\cprojgenf{#1}{#2}{#3})}
 \newcommand{\cprojgen@nested}[1]{%
   \cprojgen@parens}
 \newcommand{\cprojgen@parens}[4]{%
@@ -808,23 +817,37 @@
 
 \newcommand{\cprojfstf}[2]{%
   \cprojgenf{0}{#1}{#2}}
+\newcommand{\cprojfstf@nested}[1]{%
+  \cprojfstf@parens}
+\newcommand{\cprojfstf@parens}[2]{%
+  (\cprojfstf{#1}{#2})}
+\newcommand{\cprojfstf@unfold}[2]{%
+  \ctxwk{\default@ctxext #2}\idtm{\default@ctxext #1}}
+
 \newcommand{\cprojfst}[3]{%
   \cprojgen{0}{#1}{#2}{#3}}
 \newcommand{\cprojfst@nested}[1]{%
-  \cprojgen@nested{#1}{0}}
+  \cprojfst@parens}
+\newcommand{\cprojfst@parens}[3]{%
+  (\cprojfst{#1}{#2}{#3})}
+\newcommand{\cprojfst@unfold}[3]{%
+  \subst{#3}{(\cprojfstf@unfold{#1}{#2})}}
+
 \newcommand{\cprojsndf}[2]{%
   \cprojgenf{1}{#1}{#2}}
+\newcommand{\cprojsndf@nested}[1]{%
+  \cprojsndf@parens}
+\newcommand{\cprojsndf@parens}[2]{%
+  (\cprojsndf{#1}{#2})}
+\newcommand{\cprojsndf@unfold}[2]{%
+  \idtm{\default@ctxext #2}}
+
 \newcommand{\cprojsnd}[3]{%
   \cprojgen{1}{#1}{#2}{#3}}
 \newcommand{\cprojsnd@nested}[1]{%
-  \cprojgen@nested{#1}{1}}
-
-\newcommand{\cprojfstf@unfold}[2]{%
-  \ctxwk{\default@ctxext #2}\idtm{\default@ctxext #1}}
-\newcommand{\cprojfst@unfold}[3]{%
-  \subst{#3}{(\cprojfstf@unfold{#1}{#2})}}
-\newcommand{\cprojsndf@unfold}[2]{%
-  \idtm{\default@ctxext #2}}
+  \cprojsnd@parens}
+\newcommand{\cprojsnd@parens}[3]{%
+  (\cprojsnd{#1}{#2}{#3})}
 \newcommand{\cprojsnd@unfold}[3]{%
   \subst{#3}{\cprojsnd@unfold{#1}{#2}}}
   
