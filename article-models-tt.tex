@@ -2093,6 +2093,9 @@ note that we have the judgmental equalities
   \subst{\ctxwk{Q}{\idtm{{A}{P}}}}{\ctxwk{Q}{{\ctxext{A}{P}}{\idtm{P}}}}
   \\
 & \jdeq
+  \ctxwk{Q}{\subst{\idtm{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{\idtm{P}}}}
+  \\
+& \jdeq
   \ctxwk{Q}{\idtm{P}}
   \\
 & \jdeq
@@ -2100,6 +2103,27 @@ note that we have the judgmental equalities
   \\
 & \jdeq
   \jcomp{{P}{Q}}{\cprojsndf{A}{{P}{Q}}}{\cprojfstf{P}{Q}}
+\end{align*}
+To prove the judgmental equality
+\begin{equation*}
+\jhomeq
+  {{{\Gamma}{A}}{P}}
+  {Q}
+  {Q}
+  {\cprojsndf{{A}{P}}{Q}}
+  {\jcomp{}{\cprojsndf{A}{{P}{Q}}}{\cprojsndf{P}{Q}}}
+\end{equation*}
+note that we have the judgmental equalities
+\begin{align*}
+\cprojsndf{{A}{P}}{Q}
+& \jdeq
+  \unfoldall{\cprojsndf{{A}{P}}{Q}}
+  \\
+& \jdeq 
+  \unfoldall{\jcomp{{P}{Q}}{\cprojsndf{A}{{P}{Q}}}{\cprojsndf{P}{Q}}}
+  \\
+& \jdeq
+  \jcomp{}{\cprojsndf{A}{{P}{Q}}}{\cprojsndf{P}{Q}}\qedhere
 \end{align*}
 \begin{comment}
 %%%% This was a proof of an old version of the statement
