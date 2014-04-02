@@ -2025,11 +2025,10 @@ The following compatibility rules for two consecutive term extensions is valid:
 Consider terms $\jterm{\Gamma}{A}{x}$, $\jterm{\Gamma}{\subst{x}{P}}{u}$ and
 $\jterm{\Gamma}{\subst{u}{{x}{Q}}}{v}$. Then we have
 \begin{align*}
-\tmext{A}{{P}{Q}}{x}{{\subst{x}{P}}{\subst{x}{Q}}{u}{v}} 
+\tmext{x}{{u}{v}}
 & \jdeq 
   \subst
-    {\tmext{\subst{x}{P}}{\subst{x}{Q}}{u}{v}}
-    {{x}{\idtm{\ctxext{A}{{P}{Q}}}}}
+    {\tmext{u}{v}}{{x}{\idtm{\ctxext{A}{{P}{Q}}}}}
   \\
 & \jdeq 
   \subst{v}{{u}{{x}{\idtm{\ctxext{A}{{P}{Q}}}}}}
@@ -2038,11 +2037,72 @@ $\jterm{\Gamma}{\subst{u}{{x}{Q}}}{v}$. Then we have
   \subst{v}{{u}{{x}{\idtm{\ctxext{{A}{P}}{Q}}}}}
   \\
 & \jdeq 
-  \subst{v}{{\tmext{A}{P}{x}{u}}{\idtm{\ctxext{{A}{P}}{Q}}}}
+  \subst{v}{{\tmext{x}{u}}{\idtm{\ctxext{{A}{P}}{Q}}}}
   \\
 & \jdeq 
-  \tmext{{A}{P}}{Q}{{A}{P}{x}{u}}{v}.
+  \tmext{{x}{u}}{v}.
 \end{align*}
+To prove the judmental equality
+\begin{equation*}
+\jhomeq
+  {\Gamma}
+  {\ctxext{{A}{P}}{Q}}
+  {A}
+  {\jcomp{}{\cprojfstf{{A}{P}}{Q}}{\cprojfstf{A}{P}}}
+  {\cprojfstf{A}{{P}{Q}}}
+\end{equation*}
+note that we have the judgmental equalities
+\begin{align*}
+\jcomp{{{A}{P}}{Q}}{\cprojfstf{{A}{P}}{Q}}{\cprojfstf{A}{P}}
+& \jdeq 
+  \unfoldall{\jcomp{{{A}{P}}{Q}}{\cprojfstf{{A}{P}}{Q}}{\cprojfstf{A}{P}}}
+  \\
+& \jdeq 
+  \subst
+    {\ctxwk{Q}{\idtm{{A}{P}}}}
+    {\ctxwk{Q}{{\ctxext{A}{P}}{{P}{\idtm{A}}}}}
+  \\
+& \jdeq
+  \ctxwk{Q}{\subst{\idtm{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{{P}{\idtm{A}}}}}
+  \\
+& \jdeq
+  \ctxwk{Q}{{P}{\idtm{A}}}
+  \\
+& \jdeq
+  \ctxwk{\ctxext{P}{Q}}{\idtm{A}}
+  \\
+& \jdeq
+  \cprojfstf{A}{{P}{Q}}
+\end{align*}
+To prove the judgmental equality
+\begin{equation*}
+\jhomeq
+  {{\Gamma}{A}}
+  {{P}{Q}}
+  {P}
+  {\jcomp{}{\cprojfstf{{A}{P}}{Q}}{\cprojsndf{A}{P}}}
+  {\jcomp{}{\cprojsndf{A}{{P}{Q}}}{\cprojfstf{P}{Q}}}
+\end{equation*}
+note that we have the judgmental equalities
+\begin{align*}
+\jcomp{{{A}{P}}{Q}}{\cprojfstf{{A}{P}}{Q}}{\cprojsndf{A}{P}}
+& \jdeq 
+  \unfoldall{\jcomp{{{A}{P}}{Q}}{\cprojfstf{{A}{P}}{Q}}{\cprojsndf{A}{P}}}
+  \\
+& \jdeq
+  \subst{\ctxwk{Q}{\idtm{{A}{P}}}}{\ctxwk{Q}{{\ctxext{A}{P}}{\idtm{P}}}}
+  \\
+& \jdeq
+  \ctxwk{Q}{\idtm{P}}
+  \\
+& \jdeq
+  \unfoldall{\jcomp{{P}{Q}}{\cprojsndf{A}{{P}{Q}}}{\cprojfstf{P}{Q}}}
+  \\
+& \jdeq
+  \jcomp{{P}{Q}}{\cprojsndf{A}{{P}{Q}}}{\cprojfstf{P}{Q}}
+\end{align*}
+\begin{comment}
+%%%% This was a proof of an old version of the statement
 Now consider a term $\jterm{\Gamma}{\ctxext{A}{{P}{Q}}}{w}$. Then we have
 \begin{align*}
 w 
@@ -2101,6 +2161,7 @@ proving the fourth judgmental equality, and therefore also that
   \cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}},
 \end{align*}
 proving the second and the third judgmental equalities.
+\end{comment}
 \end{proof}
 
 \begin{lem}
