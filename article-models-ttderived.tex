@@ -1,18 +1,15 @@
 \section{Derived notions of the theory of contexts, families and terms}
 \label{digging_deeper}
 
-There is a good amount of things we can already state and prove about in the
-theory we have developed so far. We will develop a bit more theory that will
-come in handy later on.
-
-In this section we use the framework we have developed in this
-section to derive new notions and their properties. In particular, we will
+In this section we use the framework we have developed in \autoref{tt}
+to derive new notions and their properties. In particular, we will
 develop the notion of \emph{extension on terms} together with the projection
 maps from an extension to the `base' context of family, the 
 \emph{family pullback} which is a version of pullbacks for families and thirdly
 the \emph{inductive morphisms} which are morphisms of type theory that allow
 to find terms of families over the codomain context by pulling them back to
 the domain context and finding a term there.
+\emph{This section contains no new assumptions.}
 
 In \autoref{extension-on-terms} on the extension operation on terms we will
 derive all the compatibility rules that one would expect to hold for extension
@@ -57,8 +54,6 @@ In the last subsection we give a treatment of inductive morphisms. These
 morphisms appear also in the introduction of the many inductive type
 constructors in \autoref{tt_constructors} and therefore a general treatment of
 the subject is insightful.
-
-\emph{This subsection contains no new assumptions.}
 
 \subsection{Projections and extension on terms}\label{extension-on-terms}
 In this subsection we consider the notion of extension on terms, which has now
@@ -1080,11 +1075,116 @@ the fiber inclusions also appear in a pullback diagram will be established in
 
 \begin{defn}
 Let $\jterm{\Gamma}{A}{x}$ be a term and let $\jfam{{\Gamma}{A}}{P}$ be a
-family. Then we define
+family. Then we define the \emph{fiber inclusion} of $\subst{x}{P}$ into
+$\ctxext{A}{P}$ in context $\Gamma$ to be the morphism
 \begin{equation*}
-\jhomdefn{\Gamma}{\subst{x}{P}}{{A}{P}}{\finc{x}{P}}{\unfoldnext{\finc{x}{P}}}
+\jhomdefn{\Gamma}{\subst{x}{P}}{{A}{P}}{\finc{x}{P}}{\unfoldnext{\finc{x}{P}}}.
 \end{equation*}
 \end{defn}
+
+We have the following lemmas expressing the compatibility of the fiber
+inclusions with the empty context, extension, weakening and substitution. 
+
+\begin{lem}
+The fiber inclusions are compatible with the empty families; i.e.~the following
+inference rules are valid
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq
+      {\Gamma}
+      {A}
+      {\finc{x}{\emptyf}}
+      {x}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq
+      {\Gamma}
+      {A}
+      {A}
+      {\finc{\emptytm}{A}}
+      {\idtm{A}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{lem}
+The fiber inclusions are compatible with extension; i.e.~the following inference
+rule is valid
+\begin{equation*}
+\inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{\subst{x}{P}}{u}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jhomeq
+      {\Gamma}
+      {\subst{\tmext{x}{u}}{Q}}
+      {{{A}{P}}{Q}}
+      {\finc{\tmext{x}{u}}{Q}}
+      {\jcomp{}{\finc{u}{\subst{x}{Q}}}{\finc{x}{\ctxext{P}{Q}}}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{lem}
+The fiber inclusions are compatible with weakening; i.e.~the following inference
+rule is valid
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    \jterm{\Gamma}{B}{y}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jhomeq
+      {{\Gamma}{A}}
+      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{Q}}}
+      {{\ctxwk{A}{B}}{\ctxwk{A}{Q}}}
+      {\finc{\ctxwk{A}{y}}{\ctxwk{A}{Q}}}
+      {\ctxwk{A}{\finc{y}{Q}}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{lem}
+The fiber inclusions are compatible with substitution; i.e.~the following
+inference rule is valid
+\begin{equation*}
+\inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jhomeq
+      {\Gamma}
+      {\subst{{x}{f}}{{x}{Q}}}
+      {{\subst{x}{P}}{\subst{x}{Q}}}
+      {\finc{\subst{x}{f}}{\subst{x}{Q}}}
+      {\subst{x}{\finc{f}{Q}}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{lem}
+The fiber inclusions are compatible with identity terms; i.e.~the following
+inference rule is valid
+\begin{equation*}
+\inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jhomeq
+      {{\Gamma}{A}}
+      {P}
+      {\ctxwk{A}{\ctxext{A}{P}}}
+      {\finc{\idtm{A}}{\ctxwk{A}{P}}}
+      {\idtm{{A}{P}}}
+    }
+\end{equation*}
+\end{lem}
 
 \subsection{Pullback squares and family pullback squares}
 \label{pullback}
