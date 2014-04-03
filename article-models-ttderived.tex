@@ -231,137 +231,12 @@ Let $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ be families. We define
 \end{align*}
 \end{defn}
 
-We find the following inference rule, which expresses that the identity term
-is compatible with extension:
-
-\begin{lem}
-For any $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ we have
-\begin{equation}\label{idfunc-ext-comp}
-\inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{A}}{P}
-    }
-  { \jhomeq
-      {\Gamma}
-      {{A}{P}}{{A}{P}}
-      {\idtm{\ctxext{A}{P}}}
-      { \tmext
-          {\ctxwk{\ctxext{A}{P}}{A}}
-          {\ctxwk{\ctxext{A}{P}}{P}}
-          {\cprojfstf{A}{P}}
-          {\cprojsndf{A}{P}}
-        }
-    }
-\end{equation}
-\end{lem}
-
-\begin{proof}
-Consider the families $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$. Then
-we have the judgmental equalities
-\begin{align*}
-\tmext
-  {\ctxwk{\ctxext{A}{P}}{A}}
-  {\ctxwk{\ctxext{A}{P}}{P}}
-  {\cprojfstf{A}{P}}
-  {\cprojsndf{A}{P}}
-& \jdeq 
-  \unfold
-  { \tmext
-      {\ctxwk{\ctxext{A}{P}}{A}}
-      {\ctxwk{\ctxext{A}{P}}{P}}
-      {\cprojfstf{A}{P}}
-      {\cprojsndf{A}{P}}
-    }
-  \\
-& \jdeq 
-  \subst
-    { \idtm{P}
-      }
-    { {\ctxwk{P}{\idtm{A}}}
-      {\idtm{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}}
-      }
-  \\
-& \jdeq 
-  \subst
-    { \idtm{P}
-      }
-    { {\ctxwk{P}{\idtm{A}}}
-      {\ctxwk{\ctxext{A}{P}}{\idtm{\ctxext{A}{P}}}}
-      }
-  \\
-& \jdeq 
-  \subst
-    { \idtm{P}
-      }
-    { {\ctxwk{P}{\idtm{A}}}
-      {\ctxwk{P}{{A}{\idtm{\ctxext{A}{P}}}}}
-      }
-  \\
-& \jdeq 
-  \subst
-    { \idtm{P}
-      }
-    {\ctxwk
-      {P}
-      { \subst
-        {\idtm{A}}
-        {\ctxwk{A}{\idtm{\ctxext{A}{P}}}}
-        }
-      }
-  \\
-& \jdeq 
-  \subst
-    { \idtm{A}
-      }
-    { \ctxwk{A}{\idtm{\ctxext{A}{P}}}
-      }
-  \\
-& \jdeq 
-  \idtm{\ctxext{A}{P}}.
-  \qedhere
-\end{align*}
-\end{proof}
-
-\begin{lem}
-The following inference is valid:
-\begin{equation*}
-\inference
-  { \jfam{{\Gamma}{A}}{P}
-    \jfam{{\Gamma}{A}}{Q}
-    }
-  { \jfameq
-      {{\Gamma}{{A}{P}}}
-      {\subst{\cprojfstf{A}{P}}{\ctxwk{\ctxext{A}{P}}{Q}}}
-      {\ctxwk{P}{Q}}
-    }
-\end{equation*}
-\end{lem}
-
-\begin{proof}
-Let $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$ be
-families. Then we have
-\begin{align*}
-\subst{\cprojfstf{A}{P}}{\ctxwk{\ctxext{A}{P}}{Q}} 
-& \jdeq 
-  \subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{\ctxext{A}{P}}{Q}} 
-  \tag{by definition}\\
-& \jdeq 
-  \subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{Q}}} 
-  \tag{by \autoref{comp-ww-f}}\\
-& \jdeq 
-  \ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}} 
-  \tag{by \autoref{comp-ws-f}}\\
-& \jdeq 
-  \ctxwk{P}{Q} 
-  \tag{by \autoref{idfunc-wk-defn}}
-\end{align*}
-\end{proof}
-
 The constructions of the terms $\tmext{A}{P}{x}{u}$ and $\cprojfst{A}{P}{w}$ and
 $\cprojsnd{A}{P}{w}$ are subject to various rules, with all of them being
 consequences of earlier introduced inference rules.
 
-\begin{lem} The following inference rules expressing that pairing is a strict
+\begin{lem}\label{lem:tmext-basic}
+The following inference rules expressing that pairing is a strict
 inverse to the combination of decompositions, are valid:
 \begin{align*}
 & \inference
@@ -506,8 +381,82 @@ To prove the third judgmental equality, note that
 \end{align*}
 \end{proof}
 
-\begin{lem}
-The following compatibility rules for two consecutive term extensions is valid:
+In \autoref{lem:tmext-emp,lem:tmext-ext,lem:tmext-wk,lem:tmext-subst,lem:tmext-id}
+we show that term extension and the projections are
+compatible with the empty families, extension,
+weakening, substitution and the identity terms (in that order). \autoref{lem:tmext-id}
+is in fact a generalization of the above \autoref{lem:tmext-basic}.
+
+\begin{lem}\label{lem:tmext-emp}
+The following compatibility rules for extensions of the term of the empty family
+are valid:
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq{\Gamma}{A}{\tmext{\emptytm}{x}}{x}
+    }
+& & \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq{\Gamma}{A}{\tmext{x}{\emptytm}}{x}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jtermeq
+      {{\Gamma}{A}}
+      {\emptyf}
+      {\cprojfstf{\emptyf}{A}}
+      {\emptytm}
+    }
+& & \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq
+      {\Gamma}
+      {A}
+      {A}
+      {\cprojfstf{A}{\emptyf}}
+      {\idtm{A}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq
+      {\Gamma}
+      {A}
+      {A}
+      {\cprojsndf{\emptyf}{A}}
+      {\idtm{A}}
+    }
+& & \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jtermeq
+      {{\Gamma}{A}}
+      {\emptyf}
+      {\cprojsndf{A}{\emptyf}}
+      {\emptytm}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+These equalities are very easy to verify. We only display a proof of the first:
+\begin{equation*}
+\tmext{\emptytm}{x}
+\jdeq \unfold{\tmext{\emptyf}{A}{\emptytm}{x}}
+\jdeq \subst{x}{\idtm{{\emptyf}{A}}}
+\jdeq \subst{x}{\idtm{A}}
+\jdeq x.\qedhere
+\end{equation*}
+\end{proof}
+
+\begin{lem}\label{lem:tmext-ext}
+The following compatibility rules for two consecutive term extensions are valid:
 \begin{align*}
 & \inference
   { \jterm{\Gamma}{A}{x}
@@ -723,7 +672,7 @@ proving the second and the third judgmental equalities.
 \end{comment}
 \end{proof}
 
-\begin{lem}
+\begin{lem}\label{lem:tmext-wk}
 When we weaken a term $\tmext{B}{Q}{y}{v}$ of $\ctxext{B}{Q}$ in context $\Gamma$ by
 a family $A$, the term that we get is $\tmext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{\ctxwk{A}{y}}{\ctxwk{A}{v}}$. More
 precisely, the following inference rules are valid:
@@ -834,7 +783,7 @@ Note that we have the judgmental equalities
 \end{align*}
 \end{proof}
 
-\begin{lem}
+\begin{lem}\label{lem:tmext-subst}
 When we substitute an extended term $\tmext{P}{Q}{f}{g}$ of $\ctxext{P}{Q}$ by a term
 $x$ of $A$, the term that we get is $\tmext{\subst{x}{P}}{\subst{x}{Q}}{\subst{x}{f}}{\subst{x}{g}}$.
 More precisely, the following inference rules are valid:
@@ -944,6 +893,97 @@ Note that we have the judgmental equalities
   \\
 & \jdeq
   \subst{x}{\cprojsndf{Q}{R}}.
+  \qedhere
+\end{align*}
+\end{proof}
+
+We find the following inference rule, which expresses that the identity term
+is compatible with extension:
+
+\begin{lem}\label{lem:tmext-id}
+For any $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ we have
+\begin{equation}\label{idfunc-ext-comp}
+\inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jhomeq
+      {\Gamma}
+      {{A}{P}}{{A}{P}}
+      {\idtm{\ctxext{A}{P}}}
+      { \tmext
+          {\ctxwk{\ctxext{A}{P}}{A}}
+          {\ctxwk{\ctxext{A}{P}}{P}}
+          {\cprojfstf{A}{P}}
+          {\cprojsndf{A}{P}}
+        }
+    }
+\end{equation}
+\end{lem}
+
+\begin{proof}
+Consider the families $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$. Then
+we have the judgmental equalities
+\begin{align*}
+\tmext
+  {\ctxwk{\ctxext{A}{P}}{A}}
+  {\ctxwk{\ctxext{A}{P}}{P}}
+  {\cprojfstf{A}{P}}
+  {\cprojsndf{A}{P}}
+& \jdeq 
+  \unfold
+  { \tmext
+      {\ctxwk{\ctxext{A}{P}}{A}}
+      {\ctxwk{\ctxext{A}{P}}{P}}
+      {\cprojfstf{A}{P}}
+      {\cprojsndf{A}{P}}
+    }
+  \\
+& \jdeq 
+  \subst
+    { \idtm{P}
+      }
+    { {\ctxwk{P}{\idtm{A}}}
+      {\idtm{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}}
+      }
+  \\
+& \jdeq 
+  \subst
+    { \idtm{P}
+      }
+    { {\ctxwk{P}{\idtm{A}}}
+      {\ctxwk{\ctxext{A}{P}}{\idtm{\ctxext{A}{P}}}}
+      }
+  \\
+& \jdeq 
+  \subst
+    { \idtm{P}
+      }
+    { {\ctxwk{P}{\idtm{A}}}
+      {\ctxwk{P}{{A}{\idtm{\ctxext{A}{P}}}}}
+      }
+  \\
+& \jdeq 
+  \subst
+    { \idtm{P}
+      }
+    {\ctxwk
+      {P}
+      { \subst
+        {\idtm{A}}
+        {\ctxwk{A}{\idtm{\ctxext{A}{P}}}}
+        }
+      }
+  \\
+& \jdeq 
+  \subst
+    { \idtm{A}
+      }
+    { \ctxwk{A}{\idtm{\ctxext{A}{P}}}
+      }
+  \\
+& \jdeq 
+  \idtm{\ctxext{A}{P}}.
   \qedhere
 \end{align*}
 \end{proof}
@@ -1438,6 +1478,42 @@ We have the judgmental equalities:
   \subst{x}{Q}.
 \end{align*}
 \end{proof}
+
+\begin{lem}
+The following inference rule is valid:
+\begin{equation*}
+\inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{A}}{Q}
+    }
+  { \jfameq
+      {{\Gamma}{{A}{P}}}
+      {\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}}
+      {\ctxwk{P}{Q}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+Let $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$ be
+families. Then we have
+\begin{align*}
+\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}
+& \jdeq
+  \unfoldall{\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}}
+  \tag{by definition}\\
+& \jdeq 
+  \subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{Q}}} 
+  \tag{by \autoref{comp-ww-f}}\\
+& \jdeq 
+  \ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}} 
+  \tag{by \autoref{comp-ws-f}}\\
+& \jdeq 
+  \ctxwk{P}{Q} 
+  \tag{by \autoref{idfunc-wk-defn}}
+\end{align*}
+\end{proof}
+
 
 \subsection{Another special case of projections}
 In this subsection we investigate the special case of a projection which
