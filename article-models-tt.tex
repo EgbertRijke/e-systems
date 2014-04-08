@@ -1,4 +1,4 @@
-\section{The theory of contexts, families and terms}\label{tt}
+\section{The algebraic theory of contexts, families and terms}\label{tt}
 In this section we give a description of dependent type theory before type
 constructors. Apart from contexts, families and terms -- which provide for the
 core of the language of dependent logic -- the basic ingredients
@@ -83,9 +83,7 @@ be seen as atomic or indecomposable dependent contexts.
 Thus we make eight kinds of judgments: ``$\Gamma$ is a context'',
 ``$A$ is a family of contexts over $\Gamma$'', ``$A$ is a type in context $\Gamma$''
 and ``$x$ is a term of the family $A$ of contexts over $\Gamma$''. The other four
-judgments are for judgmental equality. 
-
-\begin{align*}
+judgments are for judgmental equality. \begin{align*}
 \jctx*{\Gamma} 
 & \jctxeq*{\Gamma}{\Gamma'}
   \\
@@ -114,8 +112,7 @@ it does here.
 \subsection{The basic rules for judgmental equality}
 The rules for judgmental equality establish that it is an equivalence relation
 in all three cases (contexts, types and terms).
-\bgroup\small
-\begin{align*}
+\bgroup\small\begin{align*}
 & \inference
   { \jctx{\Gamma}
     }
@@ -170,9 +167,7 @@ in all three cases (contexts, types and terms).
 \egroup
 
 The following convertibility rules are responsible for the strictness
-of judgmental equality, which sets it apart from equivalences or identifications:
-
-\begin{align*}
+of judgmental equality, which sets it apart from equivalences or identifications:\begin{align*}
 & \inference
   { \jctxeq{\Gamma}{\Delta}
     \jfam{\Gamma}{A}
@@ -221,9 +216,7 @@ asserts nothing. Likewise, in any context one can assert nothing and this is
 achieved by the empty family. 
 Since somebody who states nothing asserts it all right, there is a term of the empty
 family over any context. Moreover, any two terms of the empty family are always
-judgmentally equal.
-
-\begin{align}
+judgmentally equal.\begin{align}
 & \inference
   { }
   { \jctx{\emptyc}
@@ -262,7 +255,6 @@ as judgmental equality of families of contexts over the empty context.
 By regarding contexts as families of contexts over the empty context, we
 enable ourselves also to speak of terms of contexts. A term of a context
 $\Gamma$ is a term of the family $\Gamma$ over the empty context. 
-
 \begin{align}
 & \inference
   { \jctx{\Gamma}
@@ -289,8 +281,7 @@ $\Gamma$ is a term of the family $\Gamma$ over the empty context.
 
 \subsubsection{The empty context is compatible with itself}
 The empty context $\emptyc$ may be considered as a family of contexts over the empty
-context. When we do this, we get $\emptyf[\emptyc]$.
-\begin{equation}
+context. When we do this, we get $\emptyf[\emptyc]$.\begin{equation}
 \inference
   { }
   { \jfameq
@@ -313,7 +304,6 @@ For instance, we could say (1) that a context in context $\Gamma$ is the same th
 as a family over $\Gamma$; (2) When $A$ is a context in this sense, a family over
 $A$ is the same thing as a family $P$ over $\ctxext{\Gamma}{A}$ and 
 (3) when $P$ is a family over $A$ in this sense, a term of $P$ keeps its original meaning.
-
 \begin{align}
 & \inference
   { \jfam{\Gamma}{A}
@@ -341,8 +331,7 @@ $A$ is the same thing as a family $P$ over $\ctxext{\Gamma}{A}$ and
 \end{align}
 
 \subsubsection{Extension is compatible with the empty context}
-The following rule asserts that extension by $\emptyc$ leaves the contexts unchanged.
-\begin{align}
+The following rule asserts that extension by $\emptyc$ leaves the contexts unchanged.\begin{align}
 & \inference
   { \jctx{\Gamma}
     }
@@ -373,7 +362,6 @@ The inference rules asserting that extension is compatible with itself assert
 that contexts are unstructured lists of type declarations. This rule is
 unavoidable if we want that for a family $A$ in context $\Gamma$, a family over
 $A$ is the same thing as a family over $\ctxext{\Gamma}{A}$. 
-
 \begin{align}
 & \inference
   { \jfam{\Gamma}{A}
@@ -401,8 +389,7 @@ can be seen as the constant term with value $y$.
  
  In the following inference rules we assume that $\jfam{\Gamma}{A}$ and in the
  rules asserting a judgmental equality we assume furthermore that 
- $\jfameq{\Gamma}{A}{A'}$.
-\begin{align}
+ $\jfameq{\Gamma}{A}{A'}$.\begin{align}
 & \inference
   { \jfam{\Gamma}{B}
     }
@@ -461,8 +448,7 @@ can be seen as the constant term with value $y$.
 
 \subsubsection{Weakening is compatible with the empty context}
 The following rules express that when the empty context or context family is
-weakened, the result is the empty context family.
-\begin{align}
+weakened, the result is the empty context family.\begin{align}
 & \inference
   { \jctx{\Gamma}
     }
@@ -477,8 +463,7 @@ weakened, the result is the empty context family.
 \end{align}
 Weakening by the empty family $\emptyf$ over a context $\Gamma$ leaves families, 
 their terms, families over those families and
-terms of those unchanged:
-\begin{align}
+terms of those unchanged:\begin{align}
 & \inference
   { \jfam{\Gamma}{B}
     }
@@ -519,8 +504,7 @@ judgmental equality between two families. When one makes the weakening operation
 notationally invisible -- as is in fact the usual practice in type theory -- the
 following compatibility rules become completely obvious.
 
-In the following inference rules we assume that $\jfam{\Gamma}{A}$.
-\begin{align}
+In the following inference rules we assume that $\jfam{\Gamma}{A}$.\begin{align}
 & \inference
   { \jfam{{{\Gamma}{B}}{Q}}{R}
     }
@@ -534,8 +518,7 @@ In the following inference rules we assume that $\jfam{\Gamma}{A}$.
 \subsubsection{Weakening is compatible with itself}\label{comp-ww}
 We state judgmental equality rules expressing
 that weakening is compatible with itself. These rules state that the following
-diagram commutes given any two families $A$ and $B$ in context $\Gamma$:
-\begin{equation*}
+diagram commutes given any two families $A$ and $B$ in context $\Gamma$:\begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \jfam{\Gamma}{\blank} 
   \ar{r}{C\mapsto\ctxwk{B}{C}} 
@@ -548,8 +531,7 @@ diagram commutes given any two families $A$ and $B$ in context $\Gamma$:
 & \jfam{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\blank}
 \end{tikzcd}
 \end{equation*}
-Thus, we get the following set of inference rules:
-\begin{align}
+Thus, we get the following set of inference rules:\begin{align}
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{\Gamma}{B}
@@ -581,8 +563,7 @@ weakening by an extension is the same thing as weakening twice in the
 appropriate way.
 
 In the following inference rules we assume that
-$\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$. 
-\begin{align}
+$\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$. \begin{align}
 & \inference
   { \jfam{{\Gamma}{B}}{Q}
     }
@@ -616,7 +597,6 @@ with itself, extension and weakening.
 
 In the rules introducing the various substitutions we assume $\jterm{\Gamma}{A}{x}$;
 in the rules introducing the definitional equalities we assume $\jtermeq{\Gamma}{A}{x}{x'}$.
-
 \begin{align}
 & \inference
   { \jfam{{\Gamma}{A}}{P}
@@ -668,8 +648,7 @@ in the rules introducing the definitional equalities we assume $\jtermeq{\Gamma}
 \end{align}
 
 \subsubsection{Substitution is compatible with the empty context}
-The fibers of the empty family are the empty families:
-\begin{align}
+The fibers of the empty family are the empty families:\begin{align}
 & \inference
   { \jterm{\Gamma}{A}{x}
     }
@@ -688,8 +667,7 @@ The fibers of the empty family are the empty families:
 \end{align}
 
 The following rules assert that substituting by the term $\jterm{\Gamma}{\emptyf}{\emptytm}$
-leaves everything unchanged.
-\begin{align}
+leaves everything unchanged.\begin{align}
 & \inference
   { \jfam{\Gamma}{A}
     }
@@ -716,8 +694,7 @@ leaves everything unchanged.
 \end{align}
 
 \subsubsection{Substitution is compatible with extension}\label{comp-se}
-Suppose $\jterm{\Gamma}{A}{x}$ in all of the following inference rule.
-\begin{align}
+Suppose $\jterm{\Gamma}{A}{x}$ in all of the following inference rule.\begin{align}
 & \inference
   { \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
     }
@@ -731,8 +708,7 @@ Suppose $\jterm{\Gamma}{A}{x}$ in all of the following inference rule.
 \subsubsection{Substitution is compatible with weakening}\label{comp-sw}
 The rules asserting the compatibility of substitution with weakening assert
 that the following diagram commutes for any $\jterm{\Gamma}{A}{x}$ and any
-$\jfam{{\Gamma}{A}}{P}$:
-\begin{equation*}
+$\jfam{{\Gamma}{A}}{P}$:\begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \jfam{{\Gamma}{A}}{\blank} 
   \ar{d}[swap]{Q\mapsto\subst{x}{Q}} 
@@ -747,8 +723,7 @@ $\jfam{{\Gamma}{A}}{P}$:
 \end{equation*}
 We plug in an extra layer of families to cover the most general case at once.
 In the following inference rules we assume that $\jterm{\Gamma}{A}{x}$ and
-$\jfam{{\Gamma}{A}}{P}$:
-\begin{align}
+$\jfam{{\Gamma}{A}}{P}$:\begin{align}
 & \inference
   { \jfam{{{\Gamma}{A}}{Q}}{R}
     }
@@ -783,7 +758,6 @@ as $\subst{x,\subst{x}{f}}{g}$, although we will not do that here.
 
 In the following inference rules we assume
 $\jterm{\Gamma}{A}{x}$ and $\jterm{{\Gamma}{A}}{P}{f}$.
-
 \begin{align}
 & \inference
   { \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
@@ -814,7 +788,6 @@ together with all its variants.
 
 In the following inference rules we assume that $\jfam{\Gamma}{A}$ and that
 $\jterm{\Gamma}{B}{y}$.
-
 \begin{align}
 & \inference
   { \jfam{{{\Gamma}{B}}{Q}}{R}
@@ -846,7 +819,6 @@ that $\ctxwk{A}{y}$ is the constant function
 mapping everything to $y:B$. Thus, these rules actually establish the weakening
 as the weakening. After stating the rules we will describe what it means to
 compose context morphisms (terms of weakened contexts).
-
 \begin{align}
 & \inference
   { \jfam{\Gamma}{A}
@@ -869,8 +841,7 @@ Using the rules of the compatibility of substitution with weakening and of the
 compatibility of weakening with itself, we see that we can show
 
 \begin{lem}
-The inference rule
-\begin{equation*}
+The inference rule\begin{equation*}
 \inference
   { \jfam{\Gamma}{A}
     \jfam{\Gamma}{B}
@@ -888,8 +859,7 @@ is valid.
 
 \begin{proof}
 Let $\jfam{\Gamma}{A}$, $\jfam{\Gamma}{B}$, $\jfam{\Gamma}{C}$ and $\jhom{\Gamma}{A}{B}{f}$.
-Then we have the judgmental equalities
-\begin{align*}
+Then we have the judgmental equalities\begin{align*}
 \subst{f}{\ctxwk{A}{{B}{C}}}
 & \jdeq 
   \subst{f}{\ctxwk{{A}{B}}{{A}{C}}}
@@ -905,29 +875,24 @@ with $g$ to obtain a term of $\ctxwk{A}{C}$ in context $\ctxext{\Gamma}{A}$.
 In the following definition, we work with in a slightly greater generality.
 
 \begin{defn}
-We define the judgment
-\begin{equation*}
+We define the judgment\begin{equation*}
 \jhom{\Gamma}{A}{B}{f},
 \end{equation*}
 which is pronounced as `$f$ is a morphism from $A$ to $B$ in context $\Gamma$',
-to be the judgment
-\begin{equation*}
+to be the judgment\begin{equation*}
 \unfold{\jhom{\Gamma}{A}{B}{f}}.
 \end{equation*}
-Likewise, we define the judgment
-\begin{equation*}
+Likewise, we define the judgment\begin{equation*}
 \jhomeq{\Gamma}{A}{B}{f}{f'}
 \end{equation*}
-to be the judgment
-\begin{equation*}
+to be the judgment\begin{equation*}
 \unfold{\jhomeq{\Gamma}{A}{B}{f}{f'}}.
 \end{equation*}
 \end{defn}
 
 \begin{defn}
 Let $\jhom{\Gamma}{A}{B}{f}$ and consider a term $\jterm{{\Gamma}{B}}{Q}{g}$.
-We define
-\begin{align*}
+We define\begin{align*}
 \jfamdefn*
   {{\Gamma}{A}}
   {\jcomp{A}{f}{Q}}
@@ -939,8 +904,7 @@ We define
   {\unfold{\jcomp{A}{f}{g}}}.
 \end{align*}
 Likewise, when we have a family $\jfam{{{\Gamma}{B}}{Q}}{R}$ and a term
-$\jterm{{{\Gamma}{B}}{Q}}{R}{h}$, we define
-\begin{align*}
+$\jterm{{{\Gamma}{B}}{Q}}{R}{h}$, we define\begin{align*}
 \jfamdefn*
   {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
   {\jcomp{A}{f}{R}}
@@ -958,8 +922,7 @@ We have lots of compatibility properties for composition:
 
 \begin{lem}
 We have the following inference rules about the situation where something is
-substituted by a composition:
-\begin{align*}
+substituted by a composition:\begin{align*}
 & \inference
   { \jhom{\Gamma}{A}{B}{f}
     \jhom{\Gamma}{B}{C}{g}
@@ -983,8 +946,7 @@ substituted by a composition:
     }
 \end{align*}
 We also have the following related inference rules, asserting that composition
-is strictly associative:
-\begin{align*}
+is strictly associative:\begin{align*}
 & \inference
   { \jhom{\Gamma}{A}{B}{f}
     \jhom{\Gamma}{B}{C}{g}
@@ -1013,8 +975,7 @@ is strictly associative:
 \begin{proof}
 Consider family morphisms $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
 and a family $\jfam{{{\Gamma}{A}}{\ctxwk{A}{C}}}{R}$. Then we have the judgmental
-equalities
-\begin{align*}
+equalities\begin{align*}
 \subst{\jcomp{A}{f}{g}}{R} 
 & \jdeq 
   \subst{{f}{\ctxwk{A}{g}}}{R}
@@ -1029,8 +990,7 @@ The proof that
 $\subst{\jcomp{A}{f}{g}}{h}\jdeq\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{h}}}$
 is similar.
 
-Now suppose that $\jfam{{\Gamma}{C}}{R}$ instead. Then we have
-\begin{align*}
+Now suppose that $\jfam{{\Gamma}{C}}{R}$ instead. Then we have\begin{align*}
 \jcomp{A}{{A}{f}{g}}{R} 
 & \jdeq 
   \subst{\jcomp{A}{f}{g}}{\ctxwk{A}{R}}
@@ -1058,8 +1018,7 @@ Again, the proof is similar for terms $h$ of $R$ in context $\ctxext{\Gamma}{C}$
 
 \begin{lem}
 We have the following inference rules about the compatibility of composition with
-weakening:
-\begin{align*}
+weakening:\begin{align*}
 & \inference
   { \jhom{\Gamma}{A}{B}{f}
     \jhom{\Gamma}{B}{C}{g}
@@ -1101,8 +1060,7 @@ weakening:
 
 \begin{proof}
 Let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$ and $\jfam{{\Gamma}{A}}{P}$.
-Then we have the judgmental equalities
-\begin{align*}
+Then we have the judgmental equalities\begin{align*}
 \ctxwk{P}{\jcomp{A}{f}{g}} 
 & \jdeq 
   \ctxwk{P}{\subst{f}{\ctxwk{A}{g}}}
@@ -1117,8 +1075,7 @@ Then we have the judgmental equalities
   \jcomp{{A}{P}}{\ctxwk{P}{f}}{g}.
 \end{align*}
 Now let $\jterm{\Gamma}{B}{y}$ and $\jhom{\Gamma}{B}{C}{g}$. Then we have the
-judgmental equalities
-\begin{align*}
+judgmental equalities\begin{align*}
 \jcomp{A}{\ctxwk{A}{y}}{g}
 & \jdeq 
   \subst{\ctxwk{A}{y}}{\ctxwk{A}{g}}
@@ -1127,8 +1084,7 @@ judgmental equalities
   \ctxwk{A}{\subst{y}{g}}.
 \end{align*}
 For the third assertion, let $\jhom{\Gamma}{A}{B}{f}$ and $\jterm{\Gamma}{C}{z}$.
-Then we have the judgmental equalities
-\begin{align*}
+Then we have the judgmental equalities\begin{align*}
 \jcomp{A}{f}{\ctxwk{B}{z}} 
 & \jdeq 
   \subst{f}{\ctxwk{A}{{B}{z}}}
@@ -1144,8 +1100,7 @@ Then we have the judgmental equalities
 
 \begin{lem}
 We have the following inference rules about the compatibility of composition with
-substitution:
-\begin{align*}
+substitution:\begin{align*}
 & \inference
   { \jhom{{\Gamma}{A}}{P}{Q}{f}
     \jhom{{\Gamma}{A}}{Q}{R}{g}
@@ -1176,8 +1131,7 @@ substitution:
 \begin{proof}
 Let $\jhom{{\Gamma}{A}}{P}{Q}{f}$, $\jhom{{\Gamma}{A}}{Q}{R}{g}$ and 
 $\jterm{\Gamma}{A}{x}$.
-Then we have the judgmental equalities
-\begin{align*}
+Then we have the judgmental equalities\begin{align*}
 \subst{x}{\jcomp{A}{f}{g}}
 & \jdeq 
   \subst{x}{{f}{\ctxwk{P}{g}}}
@@ -1192,8 +1146,7 @@ Then we have the judgmental equalities
   \jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{g}}.
 \end{align*}
 Now let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$ and $\jterm{\Gamma}{A}{x}$.
-Then we have the judgmental equalities
-\begin{align*}
+Then we have the judgmental equalities\begin{align*}
 \subst{x}{\jcomp{A}{f}{g}}
 & \jdeq 
   \subst{x}{{f}{\ctxwk{A}{g}}}
@@ -1213,28 +1166,24 @@ notion because it will be needed in the theory of models later on.
 \begin{defn}
 Let $\jhom{\Gamma}{A}{B}{f}$ be a morphism from $A$ to $B$ in context $\Gamma$
 and consider $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{B}}{Q}$. We define the
-judgment
-\begin{equation*}
+judgment\begin{equation*}
 \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F},
 \end{equation*}
 which is pronounced as `$F$ is a morphism from $P$ to $Q$ over $f$ in context
-$\Gamma$', to be the judgment
-\begin{equation*}
+$\Gamma$', to be the judgment\begin{equation*}
 \unfold{\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}}.
 \end{equation*}
 \end{defn}
 
 \begin{rmk}
-The judgment $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ means the same thing as
-\begin{equation*}
+The judgment $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ means the same thing as\begin{equation*}
 \jhom{{\Gamma}{A}}{P}{\jcomp{A}{f}{Q}}{F}.
 \end{equation*}
 \end{rmk}
 
 Suppose we have morphisms $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
 and that we have the morphisms $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ and
-$\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ over them. Then we have
-\begin{equation*}
+$\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ over them. Then we have\begin{equation*}
 \jhom
   {{\Gamma}{A}}
   {\jcomp{A}{f}{Q}}
@@ -1242,8 +1191,7 @@ $\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ over them. Then we have
   {\unfold{\jcomp{A}{f}{G}}}
 \end{equation*}
 Because we also have $\jhom{{\Gamma}{A}}{P}{\jcomp{A}{f}{Q}}{F}$, we have the
-composition
-\begin{equation*}
+composition\begin{equation*}
 \jhom
   {{\Gamma}{A}}
   {P}
@@ -1259,8 +1207,7 @@ $\jcomp{A}{f}{g}$. We make the following definition:
 \begin{defn}
 Let $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
 be morphisms and let $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ and
-$\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ be morphisms over them. Then we define
-\begin{equation*}
+$\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ be morphisms over them. Then we define\begin{equation*}
 \jfhomdefn
   {\Gamma}
   {A}
@@ -1275,19 +1222,17 @@ $\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ be morphisms over them. Then we define
 
 This composition is also judgmentally associative.
 
-\subsubsection{identity terms}
+\subsubsection{Identity terms}
 Without a rule explicitly asserting the existence of an identity morphism we don't
 get one, hence we do that here. The identity morphism is a term which introduced
 in ordinary type theory via the variable rule. The variable rule is a bit more
-general: it asserts that
-\begin{equation*}
+general: it asserts that\begin{equation*}
 \jterm{\Gamma,\,x_1:A_1,\ldots,\,x_n:A_n}{A_i}{x_i}
 \end{equation*}
 for every $1\leq i\leq n$. Thus, it establishes the projections. In 
 the current setting,
 we get the projections from the identity morphisms together with weakening. We
-already have weakening, so here it suffices to introduce the identity morphisms.
-\begin{align}
+already have weakening, so here it suffices to introduce the identity morphisms.\begin{align}
 & \inference
   { \jfam{\Gamma}{A}
     }
@@ -1300,8 +1245,7 @@ already have weakening, so here it suffices to introduce the identity morphisms.
       }
 \end{align}
 Identity terms are determined by their behavior with respect to substitution combined with
-weakening. The identity terms will also be subject to compatibility rules.
-\begin{align}
+weakening. The identity terms will also be subject to compatibility rules.\begin{align}
 & \inference
   { \jterm{\Gamma}{A}{x}
     }
@@ -1356,8 +1300,7 @@ compatible with extension because we will be able to prove that. Instead, we
 will just state the compatibility rules for the identity term combined with
 weakening and with substitution.
 
-The identity term of a weakened family is the weakened identity term:
-\begin{equation}\label{idfunc-wk-comp}
+The identity term of a weakened family is the weakened identity term:\begin{equation}\label{idfunc-wk-comp}
 \inference
   { \jfam{\Gamma}{A}
     \jfam{\Gamma}{B}
@@ -1371,8 +1314,7 @@ The identity term of a weakened family is the weakened identity term:
     }
 \end{equation}
 
-The identity term of a substituted family is the substitution of the identity term
-\begin{equation}\label{idfunc-subst-comp}
+The identity term of a substituted family is the substitution of the identity term\begin{equation}\label{idfunc-subst-comp}
 \inference
   { \jterm{\Gamma}{A}{x}
     \jfam{{\Gamma}{A}}{P}
@@ -1392,8 +1334,7 @@ $\Gamma$ is the same thing as a morphism from $P$ to $Q$ in context
 $\ctxext{\Gamma}{A}$:
 
 \begin{lem}\label{hom-over-id-is-hom}
-We have the following valid inference rules:
-\begin{align*}
+We have the following valid inference rules:\begin{align*}
 & \inference
   { \jfam{{\Gamma}{A}}{P}
     \jfam{{\Gamma}{A}}{Q}
@@ -1414,8 +1355,7 @@ We have the following valid inference rules:
 
 \begin{proof}
 If we unfold the judgments $\jhom{{\Gamma}{A}}{P}{Q}{f}$ and
-$\jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}$, we get the judgments
-\begin{align*}
+$\jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}$, we get the judgments\begin{align*}
 & \unfold{\jhom{{\Gamma}{A}}{P}{Q}{f}}
   \\
 & \unfold{\jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}}
@@ -1434,8 +1374,7 @@ i.e.\ families which are neither the empty context nor the extension of two
 families which are both not the empty context (in algebraic terminology: which
 are both non-trivial). To allow ourselves to speak of types we introduce two
 new judgments: the judgment that something is a type and the judgment that two
-types are equal.
-\begin{align*}
+types are equal.\begin{align*}
 \jtype*{\Gamma}{A} 
 & \jtypeeq*{\Gamma}{A}{B}
 \end{align*}
@@ -1444,8 +1383,7 @@ in context $\Gamma$, then $A$ is also a family of contexts over $\Gamma$.
 Moreover, two types in context $\Gamma$ are judgmentally equal precisely when they are equal
 as context families and if a family $B$ of contexts over $\Gamma$ is
 judgmentally equal to a type $A$ in context $\Gamma$, then $B$ is a type in
-context $\Gamma$. This is expressed by the following four inference rules:
-\begin{align*}
+context $\Gamma$. This is expressed by the following four inference rules:\begin{align*}
 & \inference
   { \jtype{\Gamma}{A}
     }
@@ -1479,8 +1417,7 @@ class. The empty context would be such a path of length $0$ whereas the types
 would be such paths of length $1$.
 
 We add rules asserting that a weakened type is again a type that 
-substitution preserves the property of being a type:
-\begin{align}
+substitution preserves the property of being a type:\begin{align}
 & \inference
   { \jfam{\Gamma}{B}
     \jtype{\ctxext{\Gamma}{B}}{Q}
@@ -1502,4 +1439,5 @@ judgment that something is a type will allow for the possibility to study
 conditions such as the one asserting that every family `factorizes' uniquely
 as multiple applications of extension to types, analogous to the condition on
 unique factorization domains in ring theory. All the tradional models of type
-theory should translate to models with such a condition.
+theory should translate to models with such a condition, simply because
+traditionally contexts are viewed as lists of variable (and type) declarations.
