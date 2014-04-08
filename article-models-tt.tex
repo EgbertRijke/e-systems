@@ -73,7 +73,7 @@ substitution & \autoref{comp-se} & \autoref{comp-sw} & \autoref{comp-ss}
 \end{tabular}
 \end{center}
 
-\subsection{Judgments and inference rules}\label{judgments}
+\subsection{Judgments and valid inference rules}\label{judgments}
 The theory we describe here is a theory of contexts, families of
 contexts and terms thereof. The families of contexts are by some authors called
 dependent contexts, but they are handled a bit differently here because they
@@ -83,7 +83,8 @@ be seen as atomic or indecomposable dependent contexts.
 Thus we make eight kinds of judgments: ``$\Gamma$ is a context'',
 ``$A$ is a family of contexts over $\Gamma$'', ``$A$ is a type in context $\Gamma$''
 and ``$x$ is a term of the family $A$ of contexts over $\Gamma$''. The other four
-judgments are for judgmental equality. \begin{align*}
+judgments are for judgmental equality.
+\begin{align*}
 \jctx*{\Gamma} 
 & \jctxeq*{\Gamma}{\Gamma'}
   \\
@@ -109,10 +110,38 @@ with the terminology scheme of \cite{TheBook}, though the reader should be
 warned that the notion of familie means something slightly different there than
 it does here.
 
+The theory of contexts, families and terms shall be described by means of a
+declaration of valid inference rules. An inference rule is an expression of the
+form
+\begin{equation*}
+\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{J}}
+\end{equation*}
+where each of $\mathcal{H}_1$, ..., $\mathcal{H}_n$ and $\mathcal{J}$ is 
+judgment. The judgments $\mathcal{H}_1$, ..., $\mathcal{H}_n$ are called the
+hypotheses and the judgment $\mathcal{J}$ is the conclusion of the inference
+rule. The class of valid inference rules is closed under composition. That
+means that if
+\begin{equation*}
+\inference{\mathcal{I}_{1k}\quad\cdots\quad\mathcal{I}_{m_kk}}{\mathcal{H}_k}
+\end{equation*}
+and
+\begin{equation*}
+\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{J}}
+\end{equation*}
+are valid inference rules for $1\leq k\leq n$, then
+\begin{equation*}
+\inference{\mathcal{I}_{11}\quad\cdots\quad\mathcal{I}_{m_11}\quad\cdots\quad\mathcal{I}_{1n}\quad\cdots\quad\mathcal{I}_{m_nn}}{\mathcal{J}}
+\end{equation*}
+is also a valid inference rule. Also, in a valid inference rule 
+duplicated hypotheses may always be contracted and hypotheses may always be 
+reordered; the result is still considered a valid inference rule.
+
 \subsection{The basic rules for judgmental equality}
 The rules for judgmental equality establish that it is an equivalence relation
-in all three cases (contexts, types and terms).
-\bgroup\small\begin{align*}
+in all three cases (contexts, families and terms). Thus, the following inference
+rules shall be required to be valid:
+\bgroup\small
+\begin{align*}
 & \inference
   { \jctx{\Gamma}
     }
@@ -167,7 +196,8 @@ in all three cases (contexts, types and terms).
 \egroup
 
 The following convertibility rules are responsible for the strictness
-of judgmental equality, which sets it apart from equivalences or identifications:\begin{align*}
+of judgmental equality, which sets it apart from equivalences or identifications:
+\begin{align*}
 & \inference
   { \jctxeq{\Gamma}{\Delta}
     \jfam{\Gamma}{A}
@@ -218,7 +248,8 @@ asserts nothing. Likewise, in any context one can assert nothing and this is
 achieved by the empty family. 
 Since somebody who states nothing asserts it all right, there is a term of the empty
 family over any context. Moreover, any two terms of the empty family are always
-judgmentally equal.\begin{align}
+judgmentally equal.
+\begin{align}
 & \inference
   { }
   { \jctx{\emptyc}
@@ -328,7 +359,8 @@ can be seen as the constant term with value $y$.
  
  In the following inference rules we assume that $\jfam{\Gamma}{A}$ and in the
  rules asserting a judgmental equality we assume furthermore that 
- $\jfameq{\Gamma}{A}{A'}$.\begin{align}
+ $\jfameq{\Gamma}{A}{A'}$.
+ \begin{align}
 & \inference
   { \jfam{\Gamma}{B}
     }
@@ -448,16 +480,11 @@ in the rules introducing the definitional equalities we assume $\jtermeq{\Gamma}
 \end{align}
 
 \subsubsection{Identity terms}
-Without a rule explicitly asserting the existence of an identity morphism we don't
-get one, hence we do that here. The identity morphism is a term which introduced
-in ordinary type theory via the variable rule. The variable rule is a bit more
-general: it asserts that\begin{equation*}
-\jterm{\Gamma,\,x_1:A_1,\ldots,\,x_n:A_n}{A_i}{x_i}
-\end{equation*}
-for every $1\leq i\leq n$. Thus, it establishes the projections. In 
-the current setting,
-we get the projections from the identity morphisms together with weakening. We
-already have weakening, so here it suffices to introduce the identity morphisms.\begin{align}
+Last, but not least, we introduce the identity terms. In combination with
+weakening and substitution, identity terms will allow us to speak of projections,
+of a variant of extension for terms and of fiber inclusions.
+
+\begin{align}
 & \inference
   { \jfam{\Gamma}{A}
     }
@@ -472,10 +499,19 @@ already have weakening, so here it suffices to introduce the identity morphisms.
 
 \subsection{The judgmental equalities of the theory of contexts, families and
 terms}
+In this section we extend the judgmental equality relation in such a way that
+the empty context, extension, weakening, substitution and the identity terms
+all become compatible with each other. Since we have five operations, there
+are going to be $25$ finite sets of rules explaining how each operation is
+compatible with each of the operations. In addition to these $25$ finite sets
+of compatibility rules, there are also two sets of rules explaining the
+cancellation properties of weakening and substitution and of the identity terms.
 
-\subsubsection{The empty context is compatible with itself}
-The empty context $\emptyc$ may be considered as a family of contexts over the empty
-context. When we do this, we get $\emptyf[\emptyc]$.\begin{equation}
+\subsubsection{The empty context is compatible with itself}\label{comp-00}
+Because every context is a family of contexts over the empty context, 
+the empty context $\emptyc$ may be considered as a family of contexts over the empty
+context. When we do this, we get $\emptyf[\emptyc]$.
+\begin{equation}\label{eq:comp-00}
 \inference
   { }
   { \jfameq
@@ -488,14 +524,15 @@ In the future, we shall denote $\emptyf[\Gamma]$ by $\emptyf$. The above rule
 guarantees that this will not cause confusion. Likewise, we shall denote
 $\emptytm[\Gamma]$ by $\emptytm$.
 
-\subsubsection{Extension is compatible with the empty context}
-The following rule asserts that extension by $\emptyc$ leaves the contexts unchanged.\begin{align}
+\subsubsection{Extension is compatible with the empty context}\label{comp-e0}
+The following rule asserts that extension by $\emptyc$ leaves the contexts unchanged.
+\begin{align}
 & \inference
   { \jctx{\Gamma}
     }
   { \jctxeq{\ctxext{\emptyc}{\Gamma}}{\Gamma}
     }
-  \\
+  \label{eq:comp-e0}\\
 & \inference
   { \jctx{\Gamma}
     }
@@ -515,30 +552,10 @@ The following rule asserts that extension by $\emptyc$ leaves the contexts uncha
     }
 \end{align}
 
-\subsubsection{Extension is compatible with itself}\label{comp-ee}
-The inference rules asserting that extension is compatible with itself assert
-that contexts are unstructured lists of type declarations. This rule is
-unavoidable if we want that for a family $A$ in context $\Gamma$, a family over
-$A$ is the same thing as a family over $\ctxext{\Gamma}{A}$. 
-\begin{align}
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{A}}{P}
-    }
-  { \jctxeq{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}
-    }
-  \\
-& \inference
-  { \jfam{{\Gamma}{A}}{P}
-    \jfam{{{\Gamma}{A}}{P}}{Q}
-    }
-  { \jfameq{\Gamma}{\ctxext{{A}{P}}{Q}}{\ctxext{A}{{P}{Q}}}
-    }
-\end{align}
-
 \subsubsection{Weakening is compatible with the empty context}
 The following rules express that when the empty context or context family is
-weakened, the result is the empty context family.\begin{align}
+weakened, the result is the empty context family.
+\begin{align}
 & \inference
   { \jctx{\Gamma}
     }
@@ -553,7 +570,8 @@ weakened, the result is the empty context family.\begin{align}
 \end{align}
 Weakening by the empty family $\emptyf$ over a context $\Gamma$ leaves families, 
 their terms, families over those families and
-terms of those unchanged:\begin{align}
+terms of those unchanged:
+\begin{align}
 & \inference
   { \jfam{\Gamma}{B}
     }
@@ -579,6 +597,75 @@ terms of those unchanged:\begin{align}
     }
 \end{align}
 
+\subsubsection{Substitution is compatible with the empty context}
+The fibers of the empty family are the empty families:
+\begin{align}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jfameq{\Gamma}{\subst{x}{\emptyf}}{\emptyf}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\emptyf}}
+      {\emptyf}
+    }
+\end{align}
+
+The following rules assert that substituting by the term $\jterm{\Gamma}{\emptyf}{\emptytm}$
+leaves everything unchanged.
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{\subst{\emptytm}{A}}{A}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq{\Gamma}{A}{\subst{\emptytm}{x}}{x}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq{{\Gamma}{A}}{\subst{\emptytm}{P}}{P}
+    }
+  \\
+& \inference
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jtermeq{{\Gamma}{A}}{P}{\subst{\emptytm}{f}}{f}
+    }.
+\end{align}
+
+\subsubsection{Extension is compatible with itself}\label{comp-ee}
+The inference rules asserting that extension is compatible with itself assert
+that contexts are unstructured lists of type declarations. This rule is
+unavoidable if we want that for a family $A$ in context $\Gamma$, a family over
+$A$ is the same thing as a family over $\ctxext{\Gamma}{A}$. 
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jctxeq{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq{\Gamma}{\ctxext{{A}{P}}{Q}}{\ctxext{A}{{P}{Q}}}
+    }
+\end{align}
+
 \subsubsection{Weakening is compatible with extension}\label{comp-we}
 
 The following rules assert the compatibility of extension with weakening: for
@@ -594,7 +681,8 @@ judgmental equality between two families. When one makes the weakening operation
 notationally invisible -- as is in fact the usual practice in type theory -- the
 following compatibility rules become completely obvious.
 
-In the following inference rules we assume that $\jfam{\Gamma}{A}$.\begin{align}
+In the following inference rules we assume that $\jfam{\Gamma}{A}$.
+\begin{align}
 & \inference
   { \jfam{{{\Gamma}{B}}{Q}}{R}
     }
@@ -608,7 +696,8 @@ In the following inference rules we assume that $\jfam{\Gamma}{A}$.\begin{align}
 \subsubsection{Weakening is compatible with itself}\label{comp-ww}
 We state judgmental equality rules expressing
 that weakening is compatible with itself. These rules state that the following
-diagram commutes given any two families $A$ and $B$ in context $\Gamma$:\begin{equation*}
+diagram commutes given any two families $A$ and $B$ in context $\Gamma$:
+\begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \jfam{\Gamma}{\blank} 
   \ar{r}{C\mapsto\ctxwk{B}{C}} 
@@ -621,7 +710,8 @@ diagram commutes given any two families $A$ and $B$ in context $\Gamma$:\begin{e
 & \jfam{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\blank}
 \end{tikzcd}
 \end{equation*}
-Thus, we get the following set of inference rules:\begin{align}
+Thus, we get the following set of inference rules:
+\begin{align}
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{\Gamma}{B}
@@ -653,7 +743,8 @@ weakening by an extension is the same thing as weakening twice in the
 appropriate way.
 
 In the following inference rules we assume that
-$\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$. \begin{align}
+$\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$.
+\begin{align}
 & \inference
   { \jfam{{\Gamma}{B}}{Q}
     }
@@ -675,54 +766,9 @@ $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$. \begin{align}
   \label{comp-ew-t}
 \end{align}
 
-\subsubsection{Substitution is compatible with the empty context}
-The fibers of the empty family are the empty families:\begin{align}
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    }
-  { \jfameq{\Gamma}{\subst{x}{\emptyf}}{\emptyf}
-    }
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jfam{{\Gamma}{A}}{P}
-    }
-  { \jfameq
-      {{\Gamma}{\subst{x}{P}}}
-      {\subst{x}{\emptyf}}
-      {\emptyf}
-    }
-\end{align}
-
-The following rules assert that substituting by the term $\jterm{\Gamma}{\emptyf}{\emptytm}$
-leaves everything unchanged.\begin{align}
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jfameq{\Gamma}{\subst{\emptytm}{A}}{A}
-    }
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    }
-  { \jtermeq{\Gamma}{A}{\subst{\emptytm}{x}}{x}
-    }
-  \\
-& \inference
-  { \jfam{{\Gamma}{A}}{P}
-    }
-  { \jfameq{{\Gamma}{A}}{\subst{\emptytm}{P}}{P}
-    }
-  \\
-& \inference
-  { \jterm{{\Gamma}{A}}{P}{f}
-    }
-  { \jtermeq{{\Gamma}{A}}{P}{\subst{\emptytm}{f}}{f}
-    }.
-\end{align}
-
 \subsubsection{Substitution is compatible with extension}\label{comp-se}
-Suppose $\jterm{\Gamma}{A}{x}$ in all of the following inference rule.\begin{align}
+Suppose $\jterm{\Gamma}{A}{x}$ in all of the following inference rule.
+\begin{align}
 & \inference
   { \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
     }
@@ -736,7 +782,8 @@ Suppose $\jterm{\Gamma}{A}{x}$ in all of the following inference rule.\begin{ali
 \subsubsection{Substitution is compatible with weakening}\label{comp-sw}
 The rules asserting the compatibility of substitution with weakening assert
 that the following diagram commutes for any $\jterm{\Gamma}{A}{x}$ and any
-$\jfam{{\Gamma}{A}}{P}$:\begin{equation*}
+$\jfam{{\Gamma}{A}}{P}$:
+\begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \jfam{{\Gamma}{A}}{\blank} 
   \ar{d}[swap]{Q\mapsto\subst{x}{Q}} 
@@ -751,7 +798,8 @@ $\jfam{{\Gamma}{A}}{P}$:\begin{equation*}
 \end{equation*}
 We plug in an extra layer of families to cover the most general case at once.
 In the following inference rules we assume that $\jterm{\Gamma}{A}{x}$ and
-$\jfam{{\Gamma}{A}}{P}$:\begin{align}
+$\jfam{{\Gamma}{A}}{P}$:
+\begin{align}
 & \inference
   { \jfam{{{\Gamma}{A}}{Q}}{R}
     }
@@ -840,7 +888,8 @@ $\jterm{\Gamma}{B}{y}$.
 
 \subsubsection{The cancellation properties of identity terms}
 Identity terms are determined by their behavior with respect to substitution combined with
-weakening. The identity terms will also be subject to compatibility rules.\begin{align}
+weakening. The identity terms will also be subject to compatibility rules.
+\begin{align}
 & \inference
   { \jterm{\Gamma}{A}{x}
     }
@@ -895,7 +944,8 @@ compatible with extension because we will be able to prove that. Instead, we
 will just state the compatibility rules for the identity term combined with
 weakening and with substitution.
 
-The identity term of a weakened family is the weakened identity term:\begin{equation}\label{idfunc-wk-comp}
+The identity term of a weakened family is the weakened identity term:
+\begin{equation}\label{idfunc-wk-comp}
 \inference
   { \jfam{\Gamma}{A}
     \jfam{\Gamma}{B}
@@ -909,7 +959,8 @@ The identity term of a weakened family is the weakened identity term:\begin{equa
     }}
 \end{equation}
 
-The identity term of a substituted family is the substitution of the identity term\begin{equation}\label{idfunc-subst-comp}
+The identity term of a substituted family is the substitution of the identity term
+\begin{equation}\label{idfunc-subst-comp}
 \inference
   { \jterm{\Gamma}{A}{x}
     \jfam{{\Gamma}{A}}{P}
@@ -958,7 +1009,8 @@ i.e.\ families which are neither the empty context nor the extension of two
 families which are both not the empty context (in algebraic terminology: which
 are both non-trivial). To allow ourselves to speak of types we introduce two
 new judgments: the judgment that something is a type and the judgment that two
-types are equal.\begin{align*}
+types are equal.
+\begin{align*}
 \jtype*{\Gamma}{A} 
 & \jtypeeq*{\Gamma}{A}{B}
 \end{align*}
@@ -967,7 +1019,8 @@ in context $\Gamma$, then $A$ is also a family of contexts over $\Gamma$.
 Moreover, two types in context $\Gamma$ are judgmentally equal precisely when they are equal
 as context families and if a family $B$ of contexts over $\Gamma$ is
 judgmentally equal to a type $A$ in context $\Gamma$, then $B$ is a type in
-context $\Gamma$. This is expressed by the following four inference rules:\begin{align*}
+context $\Gamma$. This is expressed by the following four inference rules:
+\begin{align*}
 & \inference
   { \jtype{\Gamma}{A}
     }
@@ -1001,7 +1054,8 @@ class. The empty context would be such a path of length $0$ whereas the types
 would be such paths of length $1$.
 
 We add rules asserting that a weakened type is again a type that 
-substitution preserves the property of being a type:\begin{align}
+substitution preserves the property of being a type:
+\begin{align}
 & \inference
   { \jfam{\Gamma}{B}
     \jtype{\ctxext{\Gamma}{B}}{Q}
