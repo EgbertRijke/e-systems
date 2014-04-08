@@ -55,6 +55,429 @@ morphisms appear also in the introduction of the many inductive type
 constructors in \autoref{tt_constructors} and therefore a general treatment of
 the subject is insightful.
 
+\subsection{Morphisms}\label{categorical_properties}
+Using the rules of the compatibility of substitution with weakening and of the
+compatibility of weakening with itself, we see that we can show
+
+\begin{lem}
+The inference rule\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jfam{\Gamma}{C}
+    \jhom{\Gamma}{A}{B}{f}
+    }
+  { \jfameq
+    {{\Gamma}{A}}
+    {\subst{f}{\ctxwk{A}{{B}{C}}}}
+    {\ctxwk{A}{C}}
+    }
+\end{equation*}
+is valid.
+\end{lem}
+
+\begin{proof}
+Let $\jfam{\Gamma}{A}$, $\jfam{\Gamma}{B}$, $\jfam{\Gamma}{C}$ and $\jhom{\Gamma}{A}{B}{f}$.
+Then we have the judgmental equalities\begin{align*}
+\subst{f}{\ctxwk{A}{{B}{C}}}
+& \jdeq 
+  \subst{f}{\ctxwk{{A}{B}}{{A}{C}}}
+  \\
+& \jdeq 
+  \ctxwk{A}{C}.
+  \qedhere
+\end{align*}
+\end{proof}
+
+It follows that for $\jterm{{\Gamma}{B}}{\ctxwk{B}{C}}{g}$ we can compose $f$
+with $g$ to obtain a term of $\ctxwk{A}{C}$ in context $\ctxext{\Gamma}{A}$.
+In the following definition, we work with in a slightly greater generality.
+
+\begin{defn}
+We define the judgment\begin{equation*}
+\jhom{\Gamma}{A}{B}{f},
+\end{equation*}
+which is pronounced as `$f$ is a morphism from $A$ to $B$ in context $\Gamma$',
+to be the judgment\begin{equation*}
+\unfold{\jhom{\Gamma}{A}{B}{f}}.
+\end{equation*}
+Likewise, we define the judgment\begin{equation*}
+\jhomeq{\Gamma}{A}{B}{f}{f'}
+\end{equation*}
+to be the judgment\begin{equation*}
+\unfold{\jhomeq{\Gamma}{A}{B}{f}{f'}}.
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+Let $\jhom{\Gamma}{A}{B}{f}$ and consider a term $\jterm{{\Gamma}{B}}{Q}{g}$.
+We define\begin{align*}
+\jfamdefn*
+  {{\Gamma}{A}}
+  {\jcomp{A}{f}{Q}}
+  {\unfold{\jcomp{A}{f}{Q}}}\\
+\jtermdefn*
+  {{\Gamma}{A}}
+  {\jcomp{A}{f}{Q}}
+  {\jcomp{A}{f}{g}}
+  {\unfold{\jcomp{A}{f}{g}}}.
+\end{align*}
+Likewise, when we have a family $\jfam{{{\Gamma}{B}}{Q}}{R}$ and a term
+$\jterm{{{\Gamma}{B}}{Q}}{R}{h}$, we define\begin{align*}
+\jfamdefn*
+  {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
+  {\jcomp{A}{f}{R}}
+  {\unfold{\jcomp{A}{f}{R}}}
+  \\
+\jtermdefn*
+  {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
+  {\jcomp{A}{f}{R}}
+  {\jcomp{A}{f}{h}}
+  {\unfold{\jcomp{A}{f}{h}}}.
+\end{align*}
+\end{defn}
+
+We have lots of compatibility properties for composition:
+
+\begin{lem}
+We have the following inference rules about the situation where something is
+substituted by a composition:\begin{align*}
+& \inference
+  { \jhom{\Gamma}{A}{B}{f}
+    \jhom{\Gamma}{B}{C}{g}
+    \jfam{{{\Gamma}{A}}{\ctxwk{A}{C}}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{A}}
+      {\subst{\jcomp{A}{f}{g}}{R}}
+      {\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{R}}}}
+    }
+  \\
+& \inference
+  { \jhom{\Gamma}{A}{B}{f}
+    \jhom{\Gamma}{B}{C}{g}
+    \jterm{{{\Gamma}{A}}{\ctxwk{A}{C}}}{R}{h}
+    }
+  { \jfameq
+    {{\Gamma}{A}}
+    {\subst{\jcomp{A}{f}{g}}{h}}
+    {\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{h}}}}
+    }
+\end{align*}
+We also have the following related inference rules, asserting that composition
+is strictly associative:\begin{align*}
+& \inference
+  { \jhom{\Gamma}{A}{B}{f}
+    \jhom{\Gamma}{B}{C}{g}
+    \jfam{{\Gamma}{C}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{A}}
+      {\jcomp{A}{{A}{f}{g}}{R}}
+      {\jcomp{A}{f}{{B}{g}{R}}}
+    }
+  \\
+& \inference
+    { \jhom{\Gamma}{A}{B}{f}
+      \jhom{\Gamma}{B}{C}{g}
+      \jterm{{\Gamma}{C}}{R}{h}
+      }
+    { \jtermeq
+        {{\Gamma}{A}}
+        {\jcomp{A}{{A}{f}{g}}{R}}
+        {\jcomp{A}{{A}{f}{g}}{h}}
+        {\jcomp{A}{f}{{B}{g}{h}}}
+      }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Consider family morphisms $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
+and a family $\jfam{{{\Gamma}{A}}{\ctxwk{A}{C}}}{R}$. Then we have the judgmental
+equalities\begin{align*}
+\subst{\jcomp{A}{f}{g}}{R} 
+& \jdeq 
+  \subst{{f}{\ctxwk{A}{g}}}{R}
+  \\
+& \jdeq 
+  \subst{{f}{\ctxwk{A}{g}}}{\subst{f}{\ctxwk{{A}{B}}{R}}}
+  \\
+& \jdeq 
+  \subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{R}}}
+\end{align*}
+The proof that 
+$\subst{\jcomp{A}{f}{g}}{h}\jdeq\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{h}}}$
+is similar.
+
+Now suppose that $\jfam{{\Gamma}{C}}{R}$ instead. Then we have\begin{align*}
+\jcomp{A}{{A}{f}{g}}{R} 
+& \jdeq 
+  \subst{\jcomp{A}{f}{g}}{\ctxwk{A}{R}}
+  \\
+& \jdeq 
+  \subst{{f}{\ctxwk{A}{g}}}{\ctxwk{A}{R}}
+  \\
+& \jdeq 
+  \subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{{A}{R}}}}
+  \\
+& \jdeq 
+  \subst{f}{{\ctxwk{A}{g}}{\ctxwk{A}{{B}{R}}}}
+  \\
+& \jdeq 
+  \subst{f}{\ctxwk{A}{\subst{g}{\ctxwk{B}{R}}}}
+  \\
+& \jdeq 
+  \subst{f}{\ctxwk{A}{\jcomp{B}{g}{R}}}
+  \\
+& \jdeq 
+  \jcomp{A}{f}{{B}{g}{R}}.
+\end{align*}
+Again, the proof is similar for terms $h$ of $R$ in context $\ctxext{\Gamma}{C}$.
+\end{proof}
+
+\begin{lem}
+We have the following inference rules about the compatibility of composition with
+weakening:\begin{align*}
+& \inference
+  { \jhom{\Gamma}{A}{B}{f}
+    \jhom{\Gamma}{B}{C}{g}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jhomeq
+      {\Gamma}
+      {{A}{P}}
+      {C}
+      {\ctxwk{P}{\jcomp{A}{f}{g}}}
+      {\jcomp{{A}{P}}{\ctxwk{P}{f}}{g}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{B}{y}
+    \jhom{\Gamma}{B}{C}{g}
+    }
+  { \jhomeq
+      {\Gamma}
+      {A}
+      {C}
+      {\jcomp{A}{\ctxwk{A}{y}}{g}}
+      {\ctxwk{A}{\subst{y}{g}}}
+    }
+  \\
+& \inference
+  { \jhom{\Gamma}{A}{B}{f}
+    \jterm{\Gamma}{C}{z}
+    }
+  { \jhomeq
+      {\Gamma}
+      {A}
+      {C}
+      {\jcomp{A}{f}{\ctxwk{B}{z}}}
+      {\ctxwk{A}{z}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$ and $\jfam{{\Gamma}{A}}{P}$.
+Then we have the judgmental equalities\begin{align*}
+\ctxwk{P}{\jcomp{A}{f}{g}} 
+& \jdeq 
+  \ctxwk{P}{\subst{f}{\ctxwk{A}{g}}}
+  \\
+& \jdeq 
+  \subst{\ctxwk{P}{f}}{\ctxwk{P}{{A}{g}}}
+  \\
+& \jdeq 
+  \subst{\ctxwk{P}{f}}{\ctxwk{\ctxext{A}{P}}{g}}
+  \\
+& \jdeq 
+  \jcomp{{A}{P}}{\ctxwk{P}{f}}{g}.
+\end{align*}
+Now let $\jterm{\Gamma}{B}{y}$ and $\jhom{\Gamma}{B}{C}{g}$. Then we have the
+judgmental equalities\begin{align*}
+\jcomp{A}{\ctxwk{A}{y}}{g}
+& \jdeq 
+  \subst{\ctxwk{A}{y}}{\ctxwk{A}{g}}
+  \\
+& \jdeq 
+  \ctxwk{A}{\subst{y}{g}}.
+\end{align*}
+For the third assertion, let $\jhom{\Gamma}{A}{B}{f}$ and $\jterm{\Gamma}{C}{z}$.
+Then we have the judgmental equalities\begin{align*}
+\jcomp{A}{f}{\ctxwk{B}{z}} 
+& \jdeq 
+  \subst{f}{\ctxwk{A}{{B}{z}}}
+  \\
+& \jdeq 
+  \subst{f}{\ctxwk{{A}{B}}{{A}{z}}}
+  \\
+& \jdeq 
+  \ctxwk{A}{z}.
+  \qedhere
+\end{align*}
+\end{proof}
+
+\begin{lem}
+We have the following inference rules about the compatibility of composition with
+substitution:\begin{align*}
+& \inference
+  { \jhom{{\Gamma}{A}}{P}{Q}{f}
+    \jhom{{\Gamma}{A}}{Q}{R}{g}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jhomeq
+      {\Gamma}
+      {\subst{x}{P}}
+      {\subst{x}{R}}
+      {\subst{x}{\jcomp{P}{f}{g}}}
+      {\jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{g}}}
+    }
+  \\
+& \inference
+  { \jhom{\Gamma}{A}{B}{f}
+    \jhom{\Gamma}{B}{C}{g}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq
+      {\Gamma}
+      {C}
+      {\subst{x}{\jcomp{A}{f}{g}}}
+      {\subst{{x}{f}}{g}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Let $\jhom{{\Gamma}{A}}{P}{Q}{f}$, $\jhom{{\Gamma}{A}}{Q}{R}{g}$ and 
+$\jterm{\Gamma}{A}{x}$.
+Then we have the judgmental equalities\begin{align*}
+\subst{x}{\jcomp{A}{f}{g}}
+& \jdeq 
+  \subst{x}{{f}{\ctxwk{P}{g}}}
+  \\
+& \jdeq 
+  \subst{{x}{f}}{{x}{\ctxwk{P}{g}}}
+  \\
+& \jdeq 
+  \subst{{x}{f}}{\ctxwk{\subst{x}{P}}{\subst{x}{g}}}
+  \\
+& \jdeq 
+  \jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{g}}.
+\end{align*}
+Now let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$ and $\jterm{\Gamma}{A}{x}$.
+Then we have the judgmental equalities\begin{align*}
+\subst{x}{\jcomp{A}{f}{g}}
+& \jdeq 
+  \subst{x}{{f}{\ctxwk{A}{g}}}
+  \\
+& \jdeq 
+  \subst{{x}{f}}{{x}{\ctxwk{A}{g}}}
+  \\
+& \jdeq 
+  \subst{{x}{f}}{g}.
+  \qedhere
+\end{align*}
+\end{proof}
+
+There is also a notion of morphism \emph{over} a morphism. We will develop this
+notion because it will be needed in the theory of models later on.
+
+\begin{defn}
+Let $\jhom{\Gamma}{A}{B}{f}$ be a morphism from $A$ to $B$ in context $\Gamma$
+and consider $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{B}}{Q}$. We define the
+judgment\begin{equation*}
+\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F},
+\end{equation*}
+which is pronounced as `$F$ is a morphism from $P$ to $Q$ over $f$ in context
+$\Gamma$', to be the judgment\begin{equation*}
+\unfold{\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}}.
+\end{equation*}
+\end{defn}
+
+\begin{rmk}
+The judgment $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ means the same thing as\begin{equation*}
+\jhom{{\Gamma}{A}}{P}{\jcomp{A}{f}{Q}}{F}.
+\end{equation*}
+\end{rmk}
+
+Suppose we have morphisms $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
+and that we have the morphisms $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ and
+$\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ over them. Then we have\begin{equation*}
+\jhom
+  {{\Gamma}{A}}
+  {\jcomp{A}{f}{Q}}
+  {\jcomp{A}{f}{{B}{g}{R}}}
+  {\unfold{\jcomp{A}{f}{G}}}
+\end{equation*}
+Because we also have $\jhom{{\Gamma}{A}}{P}{\jcomp{A}{f}{Q}}{F}$, we have the
+composition\begin{equation*}
+\jhom
+  {{\Gamma}{A}}
+  {P}
+  {\jcomp{A}{f}{{B}{g}{R}}}
+  {\jcomp{P}{F}{\unfold{\jcomp{A}{f}{G}}}}.
+\end{equation*}
+Because of 
+the judgmental equality $\jcomp{A}{f}{{B}{g}{R}}\jdeq
+\jcomp{A}{{A}{f}{g}}{R}$, it follows that 
+$\jcomp{P}{F}{\unfold{\jcomp{A}{f}{G}}}$ is a morphism from $P$ to $R$ over
+$\jcomp{A}{f}{g}$. We make the following definition:
+
+\begin{defn}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
+be morphisms and let $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ and
+$\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ be morphisms over them. Then we define\begin{equation*}
+\jfhomdefn
+  {\Gamma}
+  {A}
+  {C}
+  {\jcomp{A}{f}{g}}
+  {P}
+  {R}
+  {\jfcomp{A}{f}{P}{F}{G}}
+  {\unfold{\jfcomp{A}{f}{P}{F}{G}}}.
+\end{equation*}
+\end{defn}
+
+This composition is also judgmentally associative.
+
+Now let $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$ be families. A
+morphism from $P$ to $Q$ over the identity term $\idtm{A}$ in context
+$\Gamma$ is the same thing as a morphism from $P$ to $Q$ in context
+$\ctxext{\Gamma}{A}$:
+
+\begin{lem}\label{hom-over-id-is-hom}
+We have the following valid inference rules:\begin{align*}
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{A}}{Q}
+    \jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}
+    }
+  { \jhom{{\Gamma}{A}}{P}{Q}{f}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{A}}{Q}
+    \jhom{{\Gamma}{A}}{P}{Q}{f}
+    }
+  { \jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+If we unfold the judgments $\jhom{{\Gamma}{A}}{P}{Q}{f}$ and
+$\jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}$, we get the judgments\begin{align*}
+& \unfold{\jhom{{\Gamma}{A}}{P}{Q}{f}}
+  \\
+& \unfold{\jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}}
+\end{align*}
+respectively. Therefore, we only need to verify that
+$\ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}}\jdeq\ctxwk{P}{Q}$, which is indeed
+the case by \autoref{idfunc-wk-defn}.
+\end{proof}
+
 \subsection{Projections and extension on terms}\label{extension-on-terms}
 In this subsection we consider the notion of extension on terms, which has now
 become definable inside our theory. Moreover, every compatibility rule one may
