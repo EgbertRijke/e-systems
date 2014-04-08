@@ -8,7 +8,7 @@ in the theory. The resulting theory can be seen as a manifestation of the
 structure underlying dependent type theory.
 
 We will
-formulate the type theory in such a way that contexts aren't defined
+formulate the theory of contexts, families and terms in such a way that contexts aren't defined
 to be lists of variable declarations. The variable-free (or name-free) approach 
 we take here is rather different than those appearing in 
 \cite{hofmann1995extensional,TheBook} but it has appeared in the work of Coquand
@@ -74,13 +74,13 @@ substitution & \autoref{comp-se} & \autoref{comp-sw} & \autoref{comp-ss}
 \end{center}
 
 \subsection{Judgments and inference rules}\label{judgments}
-The type theory we describe here is a theory of contexts, families of
+The theory we describe here is a theory of contexts, families of
 contexts and terms thereof. The families of contexts are by some authors called
 dependent contexts, but they are handled a bit differently here because they
 become the primary object of study. Dependent contexts can be types; they could
 be seen as atomic or indecomposable dependent contexts.
 
-Thus we make eight kinds of judgments in our type theory: ``$\Gamma$ is a context'',
+Thus we make eight kinds of judgments: ``$\Gamma$ is a context'',
 ``$A$ is a family of contexts over $\Gamma$'', ``$A$ is a type in context $\Gamma$''
 and ``$x$ is a term of the family $A$ of contexts over $\Gamma$''. The other four
 judgments are for judgmental equality. 
@@ -92,12 +92,17 @@ judgments are for judgmental equality.
 \jfam*{\Gamma}{A} 
 & \jfameq*{\Gamma}{A}{B}
   \\
-\jtype*{\Gamma}{A} 
-& \jtypeeq*{\Gamma}{A}{B}
-  \\
 \jterm*{\Gamma}{A}{x} 
 & \jtermeq*{\Gamma}{A}{x}{y}.
 \end{align*}
+
+Strictly speaking, we have three different judgmental equalities in play and one
+could request for a notational difference to signify that fact. For instance,
+we could denote the judgmental equalities of contexts, families and terms by
+$\jdeq_c$, $\jdeq_f$ and $\jdeq_t$ respectively. It will, however, always be
+clear which of the three kinds of judgmental equality is meant when we assert
+a judgmental equality and therefore we shall not bother to make this notational
+distinction.
 
 We note that what we call families over contexts
 here could also have been named dependent contexts or telescopes, see
@@ -105,40 +110,6 @@ here could also have been named dependent contexts or telescopes, see
 with the terminology scheme of \cite{TheBook}, though the reader should be
 warned that the notion of familie means something slightly different there than
 it does here.
-
-If $A$ is a type
-in context $\Gamma$, then $A$ is also a family of contexts over $\Gamma$. Being
-a term of type $A$ means the same thing as being a term of the family $A$ of contexts.
-Two types in context $\Gamma$ are judgmentally equal precisely when they are equal
-as context families. Moreover, if a family $B$ of contexts over $\Gamma$ is
-judgmentally equal to a type $A$ in context $\Gamma$, then $B$ is a type in
-context $\Gamma$. This is expressed by the following four inference rules:
-
-\begin{align*}
-& \inference
-  { \jtype{\Gamma}{A}
-    }
-  { \jfam{\Gamma}{A}
-    }
-& & \inference
-    { \jtypeeq{\Gamma}{A}{B}
-      }
-    { \jfameq{\Gamma}{A}{B}
-      }
-    \\
-& \inference
-  { \jtype{\Gamma}{A}
-    \jfameq{\Gamma}{A}{B}
-    }
-  { \jtype{\Gamma}{B}
-    }
-& & \inference
-    { \jtype{\Gamma}{A}
-      \jfameq{\Gamma}{A}{B}
-      }
-    { \jtypeeq{\Gamma}{A}{B}
-      }
-\end{align*}
 
 \subsection{The basic rules for judgmental equality}
 The rules for judgmental equality establish that it is an equivalence relation
@@ -243,10 +214,14 @@ of judgmental equality, which sets it apart from equivalences or identifications
 \end{align*}
 
 \subsection{The empty context}
-There is an empty context and over any context there is an empty family of
-contexts. We do not assume that the empty context is a type, that would be like
-assuming that the multiplicative unit of a ring is prime. The empty family
-always has a unique term. 
+In the theory of contexts, families and terms we introduce an empty context and,
+for every context $\Gamma$, an empty family over $\Gamma$. 
+When contexts are viewed as statements, the empty context is the statement that
+asserts nothing. Likewise, in any context one can assert nothing and this is
+achieved by the empty family. 
+Since somebody who states nothing asserts it all right, there is a term of the empty
+family over any context. Moreover, any two terms of the empty family are always
+judgmentally equal.
 
 \begin{align}
 & \inference
@@ -277,10 +252,16 @@ always has a unique term.
     }
 \end{align}
 
-Moreover, if $\Gamma$ is a context family over the
-empty context, then $\Gamma$ is a context and every context is a context
-family over the empty context. Note that this allows us to speak
-of terms of contexts too.
+The empty context and the empty families together with the operation of
+extension will provide several shortcuts for the rest
+of the theory of families and terms. This is (in part) obtained by requiring
+that a context is exactly the same thing as a family of contexts over the
+empty context and that judgmental equality of contexts is exactly the same
+as judgmental equality of families of contexts over the empty context. 
+
+By regarding contexts as families of contexts over the empty context, we
+enable ourselves also to speak of terms of contexts. A term of a context
+$\Gamma$ is a term of the family $\Gamma$ over the empty context. 
 
 \begin{align}
 & \inference
@@ -306,7 +287,7 @@ of terms of contexts too.
       }
 \end{align}
 
-\subsubsection{The empty context is compatible with itslef}
+\subsubsection{The empty context is compatible with itself}
 The empty context $\emptyc$ may be considered as a family of contexts over the empty
 context. When we do this, we get $\emptyf[\emptyc]$.
 \begin{equation}
@@ -326,7 +307,8 @@ $\emptytm[\Gamma]$ by $\emptytm$.
 We introduce extension which not only extends a context $\Gamma$ and a family
 $A$ over it to a context $\ctxext{\Gamma}{A}$, but which also extends a family $A$
 in context $\Gamma$ and a family $P$ over it to a family $\ctxext{A}{P}$ over context
-$\Gamma$. We do this to ensure that all of type theory can be done in a context.
+$\Gamma$. We do this to ensure that all of the theory of contexts, families and
+terms can be done in a context.
 For instance, we could say (1) that a context in context $\Gamma$ is the same thing
 as a family over $\Gamma$; (2) When $A$ is a context in this sense, a family over
 $A$ is the same thing as a family $P$ over $\ctxext{\Gamma}{A}$ and 
@@ -378,6 +360,12 @@ The following rule asserts that extension by $\emptyc$ leaves the contexts uncha
     }
   { \jfameq{\Gamma}{\ctxext{\emptyf}{A}}{A}
     }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{{A}{\emptyf}}{A}
+    }
 \end{align}
 
 \subsubsection{Extension is compatible with itself}\label{comp-ee}
@@ -402,7 +390,7 @@ $A$ is the same thing as a family over $\ctxext{\Gamma}{A}$.
     }
 \end{align}
 
-\subsection{The type theoretic operation of weakening}
+\subsection{Weakening}
 When $A$ is a context family over a context $\Gamma$, we wish to define a weakening
 operation $\ctxwk{A}{}$. The weakening operation acts on context families $B$ 
 over $\Gamma$, terms thereof, context families over $B$ and terms thereof.
@@ -469,17 +457,6 @@ can be seen as the constant term with value $y$.
         {\ctxwk{A}{g}}
         {\ctxwk{A'}{g'}}
       }
-\end{align}
-
-We add rules asserting that a weakened type is again a type:
-
-\begin{align}
-& \inference
-  { \jfam{\Gamma}{B}
-    \jtype{\ctxext{\Gamma}{B}}{Q}
-    }
-  { \jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}
-    }
 \end{align}
 
 \subsubsection{Weakening is compatible with the empty context}
@@ -627,7 +604,7 @@ $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$.
   \label{comp-ew-t}
 \end{align}
 
-\subsection{The type theoretic operation of substitution}
+\subsection{Substitution}
 Given a family $P$ over $A$ and a term $x$ of $A$, substitution gives a way to
 consider the fiber $\subst{x}{P}$ of $P$ at $x$. Also, we get a way to evaluate
 terms $f$ of $P$ at $x$. This will give us ways to compose functions too. In
@@ -688,17 +665,6 @@ in the rules introducing the definitional equalities we assume $\jtermeq{\Gamma}
         {\subst{x}{g}}
         {\subst{x'}{g'}}
       }
-\end{align}
-
-We also add the following rule asserting that substitution preserves the
-property of being a type:
-\begin{align}
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jtype{\ctxext{{\Gamma}{A}}{P}}{Q}
-    }
-  { \jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}
-    }
 \end{align}
 
 \subsubsection{Substitution is compatible with the empty context}
@@ -1317,7 +1283,8 @@ general: it asserts that
 \begin{equation*}
 \jterm{\Gamma,\,x_1:A_1,\ldots,\,x_n:A_n}{A_i}{x_i}
 \end{equation*}
-for every $1\leq i\leq n$. Thus, it establishes the projections. In our setting,
+for every $1\leq i\leq n$. Thus, it establishes the projections. In 
+the current setting,
 we get the projections from the identity morphisms together with weakening. We
 already have weakening, so here it suffices to introduce the identity morphisms.
 \begin{align}
@@ -1457,3 +1424,80 @@ respectively. Therefore, we only need to verify that
 $\ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}}\jdeq\ctxwk{P}{Q}$, which is indeed
 the case by \autoref{idfunc-wk-defn}.
 \end{proof}
+
+\subsection{The possiblity of types in the theory of contexts, families and
+terms}
+We have deliberately not spoken of types so far because we have taken the point
+of view that a type in a context is nothing but a family in that context which
+belongs to the class of types. We think of types as \emph{irreducible} families,
+i.e.\ families which are neither the empty context nor the extension of two
+families which are both not the empty context (in algebraic terminology: which
+are both non-trivial). To allow ourselves to speak of types we introduce two
+new judgments: the judgment that something is a type and the judgment that two
+types are equal.
+\begin{align*}
+\jtype*{\Gamma}{A} 
+& \jtypeeq*{\Gamma}{A}{B}
+\end{align*}
+But only families of contexts are eligible to be types. If $A$ is a type
+in context $\Gamma$, then $A$ is also a family of contexts over $\Gamma$. 
+Moreover, two types in context $\Gamma$ are judgmentally equal precisely when they are equal
+as context families and if a family $B$ of contexts over $\Gamma$ is
+judgmentally equal to a type $A$ in context $\Gamma$, then $B$ is a type in
+context $\Gamma$. This is expressed by the following four inference rules:
+\begin{align*}
+& \inference
+  { \jtype{\Gamma}{A}
+    }
+  { \jfam{\Gamma}{A}
+    }
+& & \inference
+    { \jtypeeq{\Gamma}{A}{B}
+      }
+    { \jfameq{\Gamma}{A}{B}
+      }
+    \\
+& \inference
+  { \jtype{\Gamma}{A}
+    \jfameq{\Gamma}{A}{B}
+    }
+  { \jtype{\Gamma}{B}
+    }
+& & \inference
+    { \jtype{\Gamma}{A}
+      \jfameq{\Gamma}{A}{B}
+      }
+    { \jtypeeq{\Gamma}{A}{B}
+      }
+\end{align*}
+As pointed out at the beginning of this subsection, 
+we do not assume that the empty context is a type, that would be like
+assuming that the multiplicative unit of a ring is prime. We envision a
+categorical interpretation of the theory of contexts, families and terms where 
+contexts are interpreted as finite paths of arrows belonging to a predetermined
+class. The empty context would be such a path of length $0$ whereas the types
+would be such paths of length $1$.
+
+We add rules asserting that a weakened type is again a type that 
+substitution preserves the property of being a type:
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{B}
+    \jtype{\ctxext{\Gamma}{B}}{Q}
+    }
+  { \jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jtype{\ctxext{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}
+    }
+\end{align}
+With only the current rules, the possibility of making the judgment that
+something is a type does not add much to the theory of contexts, families and
+terms. Nevertheless, when studying models, having an interpretation for the
+judgment that something is a type will allow for the possibility to study
+conditions such as the one asserting that every family `factorizes' uniquely
+as multiple applications of extension to types.
