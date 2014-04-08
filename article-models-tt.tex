@@ -239,6 +239,31 @@ of judgmental equality, which sets it apart from equivalences or identifications
 \end{align*}
 
 \subsection{The operations of the theory of contexts, families and terms}
+In this subsection we introduce the notions of empty context,
+extension, weakening, substitution and identity terms. These are all viewed as
+operations of the theory of contexts, families and terms. 
+
+Generally, 
+each operation should
+have an action on contexts, on families and on terms at the `appropriate level'
+and should be compatible with each of the operations we introduce here. In
+that will become more practical after the theory of contexts, families and terms
+is formulated, this means that when we will write down a type theory that
+interprets itself in \autoref{ttmodels}, each of the notions of empty context,
+extension, weakening, substitution and identity terms are going to be internalized
+as terms of the theory and all terms are going to be compatible with these.
+That vague idea will be our guiding light.
+
+So in principle, the introductions of each of the empty context, extension,
+weakening, substitution and identity terms should come in three parts. In 
+practice, they do not all come in three parts.
+
+Apart from the empty context, there will indeed be an empty family and a term
+of the empty family (which will be deemed unique). But context extension will
+not have an explicit action `at the level of families' since extension
+is used to define higher families and the action would have to be trivial
+anyway. The operations of weakening and substitution are actually introduced
+by four inference rules and the identity terms by one.
 
 \subsubsection{The empty context}
 In the theory of contexts, families and terms we introduce an empty context and,
@@ -420,13 +445,7 @@ can be seen as the constant term with value $y$.
 \subsubsection{Substitution}
 Given a family $P$ over $A$ and a term $x$ of $A$, substitution gives a way to
 consider the fiber $\subst{x}{P}$ of $P$ at $x$. Also, we get a way to evaluate
-terms $f$ of $P$ at $x$. This will give us ways to compose functions too. In
-this section, we shall first introduce the operations `substitution of a term $x$'
-for families $P$ over $\ctxext{\Gamma}{A}$, terms $f$ of those, families $Q$ over
-$\ctxext{{\Gamma}{A}}{P}$ and terms $g$ of those. 
-Then we shall explain how substitution interacts
-with itself, extension and weakening.
-
+terms $f$ of $P$ at $x$. This will give us ways to compose morphisms too.
 In the rules introducing the various substitutions we assume $\jterm{\Gamma}{A}{x}$;
 in the rules introducing the definitional equalities we assume $\jtermeq{\Gamma}{A}{x}{x'}$.
 \begin{align}
@@ -482,8 +501,8 @@ in the rules introducing the definitional equalities we assume $\jtermeq{\Gamma}
 \subsubsection{Identity terms}
 Last, but not least, we introduce the identity terms. In combination with
 weakening and substitution, identity terms will allow us to speak of projections,
-of a variant of extension for terms and of fiber inclusions.
-
+of a variant of extension for terms and of fiber inclusions. The following
+inference rules are required to be valid:
 \begin{align}
 & \inference
   { \jfam{\Gamma}{A}
