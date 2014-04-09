@@ -119,7 +119,12 @@ form
 where each of $\mathcal{H}_1$, ..., $\mathcal{H}_n$ and $\mathcal{J}$ is 
 judgment. The judgments $\mathcal{H}_1$, ..., $\mathcal{H}_n$ are called the
 hypotheses and the judgment $\mathcal{J}$ is the conclusion of the inference
-rule. The class of valid inference rules is closed under composition. That
+rule. When a judgment is the conclusion of a valid inference rule, we also say
+that the judgment is valid or well-formed. In fact, the only way to construct
+new judgments is via the valid inference rules we describe in this section.
+
+The class of valid inference rules is closed under composition and under
+rearranging the hypotheses. That
 means that if
 \begin{equation*}
 \inference{\mathcal{I}_{1k}\quad\cdots\quad\mathcal{I}_{m_kk}}{\mathcal{H}_k}
@@ -312,7 +317,8 @@ as judgmental equality of families of contexts over the empty context.
 
 By regarding contexts as families of contexts over the empty context, we
 enable ourselves also to speak of terms of contexts. A term of a context
-$\Gamma$ is a term of the family $\Gamma$ over the empty context. 
+$\Gamma$ is a term of the family $\Gamma$ over the empty context. These ideas
+are captured in the following convertibility rules:
 \begin{align}
 & \inference
   { \jctx{\Gamma}
@@ -337,16 +343,22 @@ $\Gamma$ is a term of the family $\Gamma$ over the empty context.
       }
 \end{align}
 
+Because a context is the same thing as a family of contexts over the empty
+context, we may introduce other type theoretic operations by only describing
+operations on families of contexts. These will then automatically translate
+to opearations on contexts as well. This and the notion of terms of a context
+give the empty context a fundamental role in the theory of contexts, families
+and terms and we feel that the purpose of the empty context should not be
+diminished to mere esthetical reasons, as might be the case in the setting
+of models of the theory \cite{Awodey2013}.
+
 \subsubsection{Extension}
-We introduce extension which not only extends a context $\Gamma$ and a family
-$A$ over it to a context $\ctxext{\Gamma}{A}$, but which also extends a family $A$
-in context $\Gamma$ and a family $P$ over it to a family $\ctxext{A}{P}$ over context
-$\Gamma$. We do this to ensure that all of the theory of contexts, families and
-terms can be done in a context.
-For instance, we could say (1) that a context in context $\Gamma$ is the same thing
-as a family over $\Gamma$; (2) When $A$ is a context in this sense, a family over
-$A$ is the same thing as a family $P$ over $\ctxext{\Gamma}{A}$ and 
-(3) when $P$ is a family over $A$ in this sense, a term of $P$ keeps its original meaning.
+The operation of extension has its place right at the core of the theory of
+contexts, families and terms since it enables one to consider families over
+families and higher level families alike.
+
+We will need the extension operation at the level of contexts and families 
+over them and at the level of families and families over them. 
 \begin{align}
 & \inference
   { \jfam{\Gamma}{A}
@@ -374,36 +386,46 @@ $A$ is the same thing as a family $P$ over $\ctxext{\Gamma}{A}$ and
 \end{align}
 
 \subsubsection{Weakening}
-When $A$ is a context family over a context $\Gamma$, we wish to define a weakening
-operation $\ctxwk{A}{}$. The weakening operation acts on context families $B$ 
-over $\Gamma$, terms thereof, context families over $B$ and terms thereof.
-It weakens those, which means that it ``adds $A$ to the context''. The context
-family $\ctxwk{A}{B}$ can be seen as the constant family $B$ over $\ctxext{\Gamma}{A}$.
-Likewise, when $y$ is a term of $B$, the term $\ctxwk{A}{y}$ of $\ctxwk{A}{B}$
-can be seen as the constant term with value $y$.
- 
- In the following inference rules we assume that $\jfam{\Gamma}{A}$ and in the
- rules asserting a judgmental equality we assume furthermore that 
- $\jfameq{\Gamma}{A}{A'}$.
- \begin{align}
+When $A$ is a family in context $\Gamma$, the operation of weakening by $A$
+takes a family $B$ in context $\Gamma$ and provides a family $\ctxwk{A}{B}$
+in context $\ctxext{\Gamma}{A}$. The context family $\ctxwk{A}{B}$ can be seen
+as the constant family over $\ctxext{\Gamma}{A}$ with value $B$. This idea will
+be axiomatized in the cancellation property of weakening and substitution in
+\autoref{cancellation-ws}.
+There is also an action of weakening by $A$
+on families $Q$ over $\ctxext{\Gamma}{B}$ -- the weakened family $\ctxwk{A}{Q}$
+will be a family over $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$ -- and likewise
+there is an action on terms of those families.
+
+We will not need to postulate an action of weakening on terms $y$ of families 
+$B$ to provide for the `constant terms' $\ctxwk{A}{y}$ of type
+$\ctxwk{A}{B}$. These
+will be obtained from the action of weakening on terms described above once
+we have established the judgmental equality $\ctxwk{A}{\emptyf}\jdeq\emptyf$
+of families over $\ctxext{\Gamma}{A}$ in \autoref{comp-w0}.
+\begin{align}
 & \inference
-  { \jfam{\Gamma}{B}
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
     }
   { \jfam{{\Gamma}{A}}{\ctxwk{A}{B}}
     }
 & & \inference
-    { \jfameq{\Gamma}{B}{B'}
+    { \jfameq{\Gamma}{A}{A'}
+      \jfameq{\Gamma}{B}{B'}
       }
     { \jfameq{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}
       }
     \\
 & \inference
-  { \jfam{{\Gamma}{B}}{Q}
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
     }
   { \jfam{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}
     }
 & & \inference
-    { \jfameq{{\Gamma}{B}}{Q}{Q'}
+    { \jfameq{\Gamma}{A}{A'}
+      \jfameq{{\Gamma}{B}}{Q}{Q'}
       }
     { \jfameq
         {{{\Gamma}{A}}{\ctxwk{A}{B}}}
@@ -411,28 +433,30 @@ can be seen as the constant term with value $y$.
         {\ctxwk{A'}{Q'}}
       }
     \\
+%& \inference
+%  { \jterm{\Gamma}{B}{y}
+%    }
+%  { \jterm{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}
+%    }
+%& & \inference
+%    { \jtermeq{\Gamma}{B}{y}{y'}
+%      }
+%    { \jtermeq
+%        {{\Gamma}{A}}
+%        {\ctxwk{A}{B}}
+%        {\ctxwk{A}{y}}
+%        {\ctxwk{A'}{y'}}
+%      }
+%    \\
 & \inference
-  { \jterm{\Gamma}{B}{y}
-    }
-  { \jterm{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A}{y}}
-    }
-& & \inference
-    { \jtermeq{\Gamma}{B}{y}{y'}
-      }
-    { \jtermeq
-        {{\Gamma}{A}}
-        {\ctxwk{A}{B}}
-        {\ctxwk{A}{y}}
-        {\ctxwk{A'}{y'}}
-      }
-    \\
-& \inference
-  { \jterm{{\Gamma}{B}}{Q}{g}
+  { \jfam{\Gamma}{A}
+    \jterm{{\Gamma}{B}}{Q}{g}
     }
   { \jterm{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}{\ctxwk{A}{g}}
     }
 & & \inference
-    { \jtermeq{{\Gamma}{B}}{Q}{g}{g'}
+    { \jfameq{\Gamma}{A}{A'}
+      \jtermeq{{\Gamma}{B}}{Q}{g}{g'}
       }
     { \jtermeq
         {{{\Gamma}{A}}{\ctxwk{A}{B}}}
@@ -441,6 +465,9 @@ can be seen as the constant term with value $y$.
         {\ctxwk{A'}{g'}}
       }
 \end{align}
+In \autoref{morphisms} we will take the terms $\unfold{\jhom{\Gamma}{A}{B}{f}}$
+to be the morphisms of families from $A$ to $B$. These will be at the heart of
+the categorical structure of the theory.
 
 \subsubsection{Substitution}
 Given a family $P$ over $A$ and a term $x$ of $A$, substitution gives a way to
@@ -571,7 +598,7 @@ The following rule asserts that extension by $\emptyc$ leaves the contexts uncha
     }
 \end{align}
 
-\subsubsection{Weakening is compatible with the empty context}
+\subsubsection{Weakening is compatible with the empty context}\label{comp-w0}
 The following rules express that when the empty context or context family is
 weakened, the result is the empty context family.
 \begin{align}
@@ -994,6 +1021,7 @@ The identity term of a substituted family is the substitution of the identity te
 \end{equation}
 
 \subsubsection{The cancellation property of weakening and substitution}
+\label{cancellation-ws}
 The judgmental equalities we're about to describe assert that substituting a term
 in the weakening a thing gives you the thing back. In the case of contexts we get that each fiber
 $\subst{x}{\ctxwk{A}{B}}$ is just $B$ and in the case of terms we get 
