@@ -505,7 +505,7 @@ pairing function could just be defined as $\idtm{\ctxext{A}{P}}$.
 When we substitute by an extended term we get an equal result as when we
 substitute two consecutive times, like the way currying works.
 
-\begin{lem}
+\begin{lem}\label{comp-es}
 The following inference rules are valid:
 \begin{align*}
 & \inference
@@ -1095,7 +1095,7 @@ proving the second and the third judgmental equalities.
 \end{comment}
 \end{proof}
 
-\begin{lem}\label{lem:tmext-wk}
+\begin{lem}\label{lem:tmext-wk}\label{comp-we-t}
 When we weaken a term $\tmext{B}{Q}{y}{v}$ of $\ctxext{B}{Q}$ in context $\Gamma$ by
 a family $A$, the term that we get is $\tmext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{\ctxwk{A}{y}}{\ctxwk{A}{v}}$. More
 precisely, the following inference rules are valid:
@@ -1206,7 +1206,7 @@ Note that we have the judgmental equalities
 \end{align*}
 \end{proof}
 
-\begin{lem}\label{lem:tmext-subst}
+\begin{lem}\label{lem:tmext-subst}\label{comp-se-t}
 When we substitute an extended term $\tmext{P}{Q}{f}{g}$ of $\ctxext{P}{Q}$ by a term
 $x$ of $A$, the term that we get is $\tmext{\subst{x}{P}}{\subst{x}{Q}}{\subst{x}{f}}{\subst{x}{g}}$.
 More precisely, the following inference rules are valid:
@@ -1323,7 +1323,7 @@ Note that we have the judgmental equalities
 We find the following inference rule, which expresses that the identity term
 is compatible with extension:
 
-\begin{lem}\label{lem:tmext-id}
+\begin{lem}\label{lem:tmext-id}\label{comp-ie}
 For any $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ we have
 \begin{equation}\label{idfunc-ext-comp}
 \inference
