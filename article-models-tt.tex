@@ -371,6 +371,25 @@ over them and at the level of families and families over them.
     { \jfameq{\Gamma}{\ctxext{A}{P}}{\ctxext{B}{Q}}
       }
 \end{align}
+The extension operation may also be defined to act on families over families
+and terms thereof. For instance, When $\jfam{{\Gamma}{A}}{P}$ is a family,
+we would get a family $\jfam{{\Gamma}{A}}{{\Gamma}{P}}$ and when
+$\jterm{{\Gamma}{A}}{P}{f}$ is a term, we would get a term
+$\jterm{{\Gamma}{A}}{{\Gamma}{P}}{\ctxext{\Gamma}{f}}$. Then there would be
+axioms stating the judgmental equalities $\ctxext{\Gamma}{P}\jdeq P$ and
+$\ctxext{\Gamma}{f}\jdeq f$. Thus, it is of no actual use to introduce the
+action of context extension on families and terms.
+
+Nevertheless, the fact that extension \emph{does} act on families
+and terms (albeit trivially) reflects in the internal extension term in the type theory of
+models of type theory, which is developed in \autoref{ttmodels}. Also, in the
+categorical semantics, the extension operation would be the concatenation of
+lists of arrows belonging to the class of arrows representing families. Since
+families over families are interpreted by lists of those family arrows extending
+concateneted lists of family arrows, the action of concatenation of such lists
+may be taken to be trivial. The $\Sigma$-functor, which is the version of this
+operation on those lists which have length one, acts trivially on morphisms;
+another manifestation of the same phenomenon.
 
 \subsubsection{Weakening}
 \label{weakening}
@@ -638,7 +657,9 @@ because that would exactly be the fiber at an extended term. We will see in
 for any family $\jfam{{{\Gamma}{A}}{P}}{Q}$ and any two terms $\jterm{\Gamma}{A}{x}$
 and $\jterm{\Gamma}{\subst{x}{P}}{u}$. That's a form of currying.
 \end{itemize}
-The spots with a \xmark simply make no sense. The marked references point to
+The spots with a \xmark simply make no sense 
+{\color{red}(or do they, when the term model
+is better understood (by me)?)}. The marked references point to
 axioms which \emph{do} have a variant for terms, but those require the notion
 of extension on terms, can be proved and therefore need not be included in our
 list of compatibility axioms. In each of these sections, we give a forward
