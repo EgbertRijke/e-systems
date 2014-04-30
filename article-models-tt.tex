@@ -533,8 +533,8 @@ a term $g$ of $Q$ to a term $\ctxwk[\tmsym]{A}{g}$ of $\ctxwk[\famsym]{A}{Q}$.
         {\ctxwk[\tmsym]{A'}{g'}}
       }
 \end{align}
-The following rule expresses that when the empty context or context family is
-weakened, the result is the empty context family.
+The following inference rules express that when the empty context or family is
+weakened, the result is the empty family.
 \label{comp-w0}
 \begin{align}
 %& \inference
@@ -548,9 +548,18 @@ weakened, the result is the empty context family.
     }
   { \jfameq{{\Gamma}{A}}{\ctxwk{A}{\emptyf}}{\emptyf}
     }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    }
+  { \jfameq
+    {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+    {\ctxwk[\famsym]{A}{\emptyf}}
+    {\emptyf}
+    }
 \end{align}
-The special case where $\Gamma$ is taken to be the empty context is again
-noteworthy. Also, note that we do not have to axiomatize the action of weakening
+Note that we do not have to axiomatize the action of weakening
 by $A$ on the term of the empty family, because the result will be in the empty 
 family and every term in the empty family is judgmentally equal to the term 
 $\emptytm$.
@@ -610,15 +619,14 @@ their terms, families over those families and terms of those unchanged:
 \subsubsection{Substitution}
 \label{substitution}
 Given a family $P$ over $A$ and a term $x$ of $A$, substitution gives a way to
-consider the \emph{fiber $\subst{x}{P}$ of $P$ at $x$}. The substitution
-operation furthermore restricts families $Q$ over $\ctxext{{\Gamma}{A}}{P}$ to
-families $\subst{x}{Q}$ over $\ctxext{\Gamma}{\subst{x}{P}}$ and likewise it
-restricts terms $g$ of such $Q$ to terms $\subst{x}{g}$ of $\subst{x}{Q}$.
-
-As was the case with weakening, we will get to apply the substitution operation
-to terms $f$ of $P$ as well, but only after we have established the judgmental
-equality $\subst{x}{\emptyf}\jdeq\emptyf$ of families over the context $\Gamma$.
-We will state this inference rule in \autoref{comp-s0}.
+consider the \emph{fiber $\subst{x}{P}$ of $P$ at $x$}. As was the case with
+weakening, the substitution operation comes in three parts: the `action on
+contexts' of substitution is the operation just described; the `action on
+families' of substitution takes a family $Q$ over $\ctxext{{\Gamma}{A}}{P}$
+to a family $\subst[\famsym]{x}{Q}$ over $\ctxext{\Gamma}{\subst{x}{P}}$; the
+`action on terms' of substitution takes a term $g$ of $Q$ over
+$\ctxext{{\Gamma}{A}}{P}$ to a term $\subst[\tmsym]{x}{g}$ of 
+$\subst[\famsym]{x}{Q}$.
 \begin{align}
 & \inference
   { \jterm{\Gamma}{A}{x}
@@ -637,13 +645,13 @@ We will state this inference rule in \autoref{comp-s0}.
   { \jterm{\Gamma}{A}{x}
     \jfam{{{\Gamma}{A}}{P}}{Q}
     }
-  { \jfam{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}
+  { \jfam{{\Gamma}{\subst{x}{P}}}{\subst[\famsym]{x}{Q}}
     }
 & & \inference
     { \jtermeq{\Gamma}{A}{x}{x'}
       \jfameq{{{\Gamma}{A}}{P}}{Q}{Q'}
       }
-    { \jfameq{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x'}{Q'}}
+    { \jfameq{{\Gamma}{\subst{x}{P}}}{\subst[\famsym]{x}{Q}}{\subst[\famsym]{x'}{Q'}}
       }
     \\
 %& \inference
@@ -661,7 +669,7 @@ We will state this inference rule in \autoref{comp-s0}.
   { \jterm{\Gamma}{A}{x}
     \jterm{{{\Gamma}{A}}{P}}{Q}{g}
     }
-  { \jterm{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}
+  { \jterm{{\Gamma}{\subst{x}{P}}}{\subst[\famsym]{x}{Q}}{\subst[\tmsym]{x}{g}}
     }
 & & \inference
     { \jtermeq{\Gamma}{A}{x}{x'}
@@ -669,11 +677,86 @@ We will state this inference rule in \autoref{comp-s0}.
       }
     { \jtermeq
         {{\Gamma}{\subst{x}{P}}}
-        {\subst{x}{Q}}
-        {\subst{x}{g}}
-        {\subst{x'}{g'}}
+        {\subst[\famsym]{x}{Q}}
+        {\subst[\tmsym]{x}{g}}
+        {\subst[\tmsym]{x'}{g'}}
       }
 \end{align}
+The following inference rules establish that the fibers of the empty family are 
+the empty families:
+\label{comp-s0}
+\begin{align}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jfameq{\Gamma}{\subst{x}{\emptyf}}{\emptyf}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\emptyf}}
+      {\emptyf}
+    }
+\end{align}
+Note again that we do not have to axiomatize the action of substitution by $x$ on the term
+of the empty family, because the result will be in the empty family and every
+term in the empty family is judgmentally equal to the term $\emptytm$.
+
+We use the above rule to state the compatibility of the action on families of
+substitution with the action on contexts of substitution. Note that a family
+$P$ over $\ctxext{\Gamma}{A}$ may be regarded as a family over
+$\ctxext{{\Gamma}{A}}{\emptyf}$. Thus, we may consider the family
+$\subst[\famsym]{x}{P}$ over $\ctxext{\Gamma}{\subst{x}{\emptyf}}$. Since
+$\subst{x}{\emptyf}$ is judgmentally equal to the empty family, we may compare
+$\subst[\famsym]{x}{P}$ with $\subst{x}{P}$:
+\begin{equation}
+\inference
+{ \jfam{{\Gamma}{A}}{P}
+  }
+{ \jfameq{\Gamma}{\subst[\famsym]{x}{P}}{\subst{x}{P}}
+  }
+\end{equation}
+Due to this rule we need not make the annotations $\famsym$ and $\tmsym$ in
+the notation for substitution anymore and thus we shall omit them from now on.
+Note that because a family $P$ over $\ctxext{\Gamma}{A}$ is eligible for
+application of the action on families of substitution, we may also substitute
+terms of $P$. Thus, given terms $\jterm{\Gamma}{A}{x}$ and $\jterm{{\Gamma}{A}}{P}{f}$,
+we get a term $\jterm{\Gamma}{\subst{x}{P}}{\subst{x}{f}}$, the \emph{value of
+$f$ at $x$}.
+
+\label{comp-0s}
+The following rules assert that substituting by the term $\jterm{\Gamma}{\emptyf}{\emptytm}$
+leaves everything unchanged.
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{\subst{\emptytm}{A}}{A}
+    }
+  \\
+%& \inference
+%  { \jterm{\Gamma}{A}{x}
+%    }
+%  { \jtermeq{\Gamma}{A}{\subst{\emptytm}{x}}{x}
+%    }
+%  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq{{\Gamma}{A}}{\subst{\emptytm}{P}}{P}
+    }
+  \\
+& \inference
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jtermeq{{\Gamma}{A}}{P}{\subst{\emptytm}{f}}{f}
+    }.
+\end{align}
+
 In \autoref{morphisms} we will use a combination of weakening and substitution
 to define composition of morphisms of families. However, we have to rely
 on the cancellation rule stated in \autoref{cancellation-ws} before we can
@@ -795,60 +878,6 @@ axioms which \emph{do} have a variant for terms, but those require the notion
 of extension on terms, can be proved and therefore need not be included in our
 list of compatibility axioms. In each of these sections, we give a forward
 reference to the lemma in which this variant is stated and proved.
-
-\subsubsection{Substitutions of the empty context}
-\label{comp-s0}
-The fibers of the empty family are the empty families:
-\begin{align}
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    }
-  { \jfameq{\Gamma}{\subst{x}{\emptyf}}{\emptyf}
-    }
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jfam{{\Gamma}{A}}{P}
-    }
-  { \jfameq
-      {{\Gamma}{\subst{x}{P}}}
-      {\subst{x}{\emptyf}}
-      {\emptyf}
-    }
-\end{align}
-Note again that we do not have to axiomatize the action of substitution by $x$ on the term
-of the empty family, because the result will be in the empty family and every
-term in the empty family is judgmentally equal to the term $\emptytm$.
-
-\subsubsection{Substitution by the term of the empty context}
-\label{comp-0s}
-The following rules assert that substituting by the term $\jterm{\Gamma}{\emptyf}{\emptytm}$
-leaves everything unchanged.
-\begin{align}
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jfameq{\Gamma}{\subst{\emptytm}{A}}{A}
-    }
-  \\
-%& \inference
-%  { \jterm{\Gamma}{A}{x}
-%    }
-%  { \jtermeq{\Gamma}{A}{\subst{\emptytm}{x}}{x}
-%    }
-%  \\
-& \inference
-  { \jfam{{\Gamma}{A}}{P}
-    }
-  { \jfameq{{\Gamma}{A}}{\subst{\emptytm}{P}}{P}
-    }
-  \\
-& \inference
-  { \jterm{{\Gamma}{A}}{P}{f}
-    }
-  { \jtermeq{{\Gamma}{A}}{P}{\subst{\emptytm}{f}}{f}
-    }.
-\end{align}
 
 \subsubsection{Extensions of extensions are extensions by extensions}
 \label{comp-ee}
