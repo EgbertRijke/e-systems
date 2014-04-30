@@ -249,11 +249,19 @@ weakening, substitution and identity terms should come in three parts. In
 practice, they do not all come in three parts.
 
 Apart from the empty context, there will indeed be an empty family and a term
-of the empty family (which will be deemed unique). But context extension will
+of the empty family (which will be deemed unique). But extension will
 not have an explicit action `at the level of families' since extension
 is used to define higher families and the action would have to be trivial
-anyway. The operations of weakening and substitution are actually introduced
-by four inference rules and the identity terms by one.
+anyway. The empty context and extension provide the essentials of the rest of
+the theory in the sense that higher families are families over extensions,
+contexts are families over the empty context and the `action on families' of
+any operation applied to families over the empty context is the same as the
+original operation. Thus, when we have introduced the operations of weakening
+and substitution we will see that they also have an `action on the terms of 
+contexts'. We will state the relevant judgmental equality rules for the empty
+context in this section rather than in the next, since they are required to
+state that the action on families of an operation is compatible with the
+original operation.
 
 \subsubsection{The empty context}
 \label{empty}
