@@ -351,6 +351,12 @@
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+
+\newcommand{\famsym}{\mathcal{F}}
+\newcommand{\tmsym}{\mathcal{T}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% JUDGMENTS
 %%%%
 %%%% Below we define several commands for the judgments of type theory. There
@@ -512,8 +518,8 @@
 %%%% \subst{{x}{f}}{{x}{Q}} will print Q[x][f[x]]
 
 \makeatletter
-\newcommand{\subst}[2]{%
-  \@subst@type #2{}[\@subst@term #1]}
+\newcommand{\subst}[3][]{%
+  \@subst@type #3{}[\@subst@term #2]^{#1}}
 \newcommand{\@subst}{%
   \@ifnextchar\bgroup{\@@subst}{}}
 \newcommand{\@@subst}[1]{%
@@ -542,8 +548,8 @@
 %%%% The weakening command is very much like the substitution command.
 
 \makeatletter
-\newcommand{\ctxwk}[2]{%
-  \langle\@ctxwk@act #1\rangle \@ctxwk@pass #2}
+\newcommand{\ctxwk}[3][]{%
+  \langle\@ctxwk@act #2\rangle^{#1} \@ctxwk@pass #3}
 \newcommand{\@ctxwk}{%
   \@ifnextchar\bgroup{\@@ctxwk}{}}
 \newcommand{\@@ctxwk}[1]{%

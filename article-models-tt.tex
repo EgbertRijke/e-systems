@@ -346,6 +346,23 @@ and terms and we feel that the purpose of the empty context should not be
 diminished to mere esthetical reasons, as might be the case in the setting
 of models of the theory \cite{Awodey2013}.
 
+\label{comp-00}
+Because every context is a family of contexts over the empty context, 
+the empty context $\emptyc$ may be considered as a family of contexts over the empty
+context. When we do this, we get $\emptyf[\emptyc]$.
+\begin{equation}\label{eq:comp-00}
+\inference
+  { }
+  { \jfameq
+      {\emptyc}
+      {\emptyc}
+      {\emptyf[\emptyc]}
+    }
+\end{equation}
+In the future, we shall denote $\emptyf[\Gamma]$ by $\emptyf$. The above rule
+guarantees that this will not cause confusion. Likewise, we shall denote
+$\emptytm[\Gamma]$ by $\emptytm$.
+
 \subsubsection{Extension}
 \label{extension}
 The operation of extension has its place right at the core of the theory of
@@ -399,6 +416,43 @@ may be taken to be trivial. The $\Sigma$-functor, which is the version of this
 operation on those lists which have length one, acts trivially on morphisms;
 another manifestation of the same phenomenon.
 
+In \autoref{extension-on-terms} we will also define an extension operation
+on terms, which defines a term $\jterm{\Gamma}{{A}{P}}{\tmext{x}{u}}$ for
+every $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$. This
+operation is defined by using the substitution operation and identity terms.
+
+In the following set of inference rules we state that the empty context and
+the empty family are neutral objects when extension is concerned.
+\label{comp-e0}\label{comp-0e}
+\begin{align}
+%& \inference
+%  { \jctx{\Gamma}
+%    }
+%  { \jctxeq{\ctxext{\Gamma}{\emptyf}}{\Gamma}
+%    }
+%  \label{comp-e0-c}\\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{{A}{\emptyf}}{A}
+    }
+  \label{comp-e0-f}
+  \\
+%& \inference
+%  { \jctx{\Gamma}
+%    }
+%  { \jctxeq{\ctxext{\emptyc}{\Gamma}}{\Gamma}
+%    }
+%  \label{comp-0e-c}\\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{\ctxext{\emptyf}{A}}{A}
+    }
+  \label{comp-0e-f}
+\end{align}
+Note the special case where we take $\Gamma$ to be the empty context.
+
 \subsubsection{Weakening}
 \label{weakening}
 When $A$ is a family in context $\Gamma$, the operation of weakening by $A$
@@ -406,18 +460,17 @@ takes a family $B$ in context $\Gamma$ and provides a family $\ctxwk{A}{B}$
 in context $\ctxext{\Gamma}{A}$. The context family $\ctxwk{A}{B}$ can be seen
 as the constant family over $\ctxext{\Gamma}{A}$ with value $B$. This idea will
 be axiomatized in the cancellation property of weakening and substitution in
-\autoref{cancellation-ws}.
-There is also an action of weakening by $A$
-on families $Q$ over $\ctxext{\Gamma}{B}$ -- the weakened family $\ctxwk{A}{Q}$
-will be a family over $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$ -- and likewise
-there is an action on terms of those families.
+\autoref{cancellation-ws}. In \autoref{morphisms} we will take the terms 
+$\unfold{\jhom{\Gamma}{A}{B}{f}}$ to be the morphisms of families from $A$ to 
+$B$. These will be at the heart of the categorical structure of the theory.
 
-We will not need to postulate an action of weakening on terms $y$ of families 
-$B$ to provide for the `constant terms' $\ctxwk{A}{y}$ of type
-$\ctxwk{A}{B}$. These
-will be obtained from the action of weakening on terms described above once
-we have established the judgmental equality $\ctxwk{A}{\emptyf}\jdeq\emptyf$
-of families over $\ctxext{\Gamma}{A}$ in \autoref{comp-w0}.
+The weakening operation acts on three levels: on contexts, on families and
+on terms. The `action on contexts' of weakening is the action we described
+above: it takes a family $B$ over $\Gamma$ to a family $\ctxwk{A}{B}$ over
+$\ctxext{\Gamma}{A}$; the `action on families' of weakening takes a family
+$Q$ over $\ctxext{\Gamma}{B}$ to a family $\ctxwk[\famsym]{A}{Q}$ over
+$\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$; the `action on terms' of weakening takes
+a term $g$ of $Q$ to a term $\ctxwk[\tmsym]{A}{g}$ of $\ctxwk[\famsym]{A}{Q}$.
 \begin{align}
 & \inference
   { \jfam{\Gamma}{A}
@@ -436,7 +489,7 @@ of families over $\ctxext{\Gamma}{A}$ in \autoref{comp-w0}.
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{B}}{Q}
     }
-  { \jfam{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}
+  { \jfam{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk[\famsym]{A}{Q}}
     }
 & & \inference
     { \jfameq{\Gamma}{A}{A'}
@@ -444,8 +497,8 @@ of families over $\ctxext{\Gamma}{A}$ in \autoref{comp-w0}.
       }
     { \jfameq
         {{{\Gamma}{A}}{\ctxwk{A}{B}}}
-        {\ctxwk{A}{Q}}
-        {\ctxwk{A'}{Q'}}
+        {\ctxwk[\famsym]{A}{Q}}
+        {\ctxwk[\famsym]{A'}{Q'}}
       }
     \\
 %& \inference
@@ -467,7 +520,7 @@ of families over $\ctxext{\Gamma}{A}$ in \autoref{comp-w0}.
   { \jfam{\Gamma}{A}
     \jterm{{\Gamma}{B}}{Q}{g}
     }
-  { \jterm{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}{\ctxwk{A}{g}}
+  { \jterm{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk[\famsym]{A}{Q}}{\ctxwk[\tmsym]{A}{g}}
     }
 & & \inference
     { \jfameq{\Gamma}{A}{A'}
@@ -475,14 +528,84 @@ of families over $\ctxext{\Gamma}{A}$ in \autoref{comp-w0}.
       }
     { \jtermeq
         {{{\Gamma}{A}}{\ctxwk{A}{B}}}
-        {\ctxwk{A}{Q}}
-        {\ctxwk{A}{g}}
-        {\ctxwk{A'}{g'}}
+        {\ctxwk[\famsym]{A}{Q}}
+        {\ctxwk[\tmsym]{A}{g}}
+        {\ctxwk[\tmsym]{A'}{g'}}
       }
 \end{align}
-In \autoref{morphisms} we will take the terms $\unfold{\jhom{\Gamma}{A}{B}{f}}$
-to be the morphisms of families from $A$ to $B$. These will be at the heart of
-the categorical structure of the theory.
+The following rule expresses that when the empty context or context family is
+weakened, the result is the empty context family.
+\label{comp-w0}
+\begin{align}
+%& \inference
+%  { \jctx{\Gamma}
+%    }
+%  { \jfameq{\Gamma}{\ctxwk{\Gamma}{\emptyc}}{\emptyf}
+%    }
+%  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{{\Gamma}{A}}{\ctxwk{A}{\emptyf}}{\emptyf}
+    }
+\end{align}
+The special case where $\Gamma$ is taken to be the empty context is again
+noteworthy. Also, note that we do not have to axiomatize the action of weakening
+by $A$ on the term of the empty family, because the result will be in the empty 
+family and every term in the empty family is judgmentally equal to the term 
+$\emptytm$.
+
+Because a family over $\Gamma$ is the same as a family over 
+$\ctxext{\Gamma}{\emptyf}$, we can apply both the action on contexts and the
+action on families of weakening to a family $B$ over $\Gamma$. When we apply
+the action on families, we obtain a family $\ctxwk[\famsym]{A}{B}$ over the
+context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{\emptyf}}$. However, since we have
+postulated the judgmental equalities $\ctxwk{A}{\emptyf}\jdeq\emptyf$ and
+$\ctxext{{\Gamma}{A}}{\emptyf}\jdeq\ctxext{\Gamma}{A}$, we see that we can
+compare $\ctxwk[\famsym]{A}{B}$ with $\ctxwk{A}{B}$. The following inference
+rule postulates that these two are judgmentally equal:
+\begin{equation}
+\inference
+{ \jfam{\Gamma}{A}
+  \jfam{\Gamma}{B}
+  }
+{ \jfameq{{\Gamma}{A}}{\ctxwk[\famsym]{A}{B}}{\ctxwk{A}{B}}
+  }
+\end{equation}
+Due to this rule, the action on contexts and the action on families of weakening
+are compatible with each other and consequently there can be no possible
+confusion when we omit the annotations $\famsym$ and $\tmsym$ alltogether. In
+the future, the weakening of a family $Q$ over $\ctxext{\Gamma}{B}$ shall
+be denoted just by $\ctxwk{A}{Q}$ and likewise the weakening of a term $g$ of
+$Q$ shall be denoted by $\ctxwk{A}{g}$.
+
+Because a family $B$ over $\Gamma$ can be treated as a family by the operation
+of weakening, weakening also acts on the terms of $B$. The weakening of a term
+$y$ of $B$ by $A$ can be seen as the constant term (or function) of the
+family $\ctxwk{A}{B}$.
+
+Note that we can also weaken by the empty family over $\Gamma$ itself.
+Weakening by the empty family $\emptyf$ over a context $\Gamma$ leaves families, 
+their terms, families over those families and terms of those unchanged:
+\label{comp-0w}\begin{align}
+& \inference
+  { \jfam{\Gamma}{B}
+    }
+  { \jfameq{\Gamma}{\ctxwk{\emptyf}{B}}{B}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq{{\Gamma}{B}}{\ctxwk{\emptyf}{Q}}{Q}
+    }
+  \\
+& \inference
+  { \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jtermeq{{\Gamma}{B}}{Q}{\ctxwk{\emptyf}{g}}{g}
+    }
+\end{align}
 
 \subsubsection{Substitution}
 \label{substitution}
@@ -672,104 +795,6 @@ axioms which \emph{do} have a variant for terms, but those require the notion
 of extension on terms, can be proved and therefore need not be included in our
 list of compatibility axioms. In each of these sections, we give a forward
 reference to the lemma in which this variant is stated and proved.
-
-\subsubsection{The empty context as a family over the empty context}
-\label{comp-00}
-Because every context is a family of contexts over the empty context, 
-the empty context $\emptyc$ may be considered as a family of contexts over the empty
-context. When we do this, we get $\emptyf[\emptyc]$.
-\begin{equation}\label{eq:comp-00}
-\inference
-  { }
-  { \jfameq
-      {\emptyc}
-      {\emptyc}
-      {\emptyf[\emptyc]}
-    }
-\end{equation}
-In the future, we shall denote $\emptyf[\Gamma]$ by $\emptyf$. The above rule
-guarantees that this will not cause confusion. Likewise, we shall denote
-$\emptytm[\Gamma]$ by $\emptytm$.
-
-\subsubsection{Extensions of the empty context}
-\label{comp-e0}
-\begin{align}
-%& \inference
-%  { \jctx{\Gamma}
-%    }
-%  { \jctxeq{\ctxext{\Gamma}{\emptyf}}{\Gamma}
-%    }
-%  \label{comp-e0-c}\\
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jfameq{\Gamma}{{A}{\emptyf}}{A}
-    }
-  \label{comp-e0-f}
-\end{align}
-
-\subsubsection{Extension by the empty context}
-\label{comp-0e}
-\begin{align}
-%& \inference
-%  { \jctx{\Gamma}
-%    }
-%  { \jctxeq{\ctxext{\emptyc}{\Gamma}}{\Gamma}
-%    }
-%  \label{comp-0e-c}\\
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jfameq{\Gamma}{\ctxext{\emptyf}{A}}{A}
-    }
-  \label{comp-0e-f}
-\end{align}
-
-\subsubsection{Weakenings of the empty context}
-\label{comp-w0}
-The following rules express that when the empty context or context family is
-weakened, the result is the empty context family.
-\begin{align}
-%& \inference
-%  { \jctx{\Gamma}
-%    }
-%  { \jfameq{\Gamma}{\ctxwk{\Gamma}{\emptyc}}{\emptyf}
-%    }
-%  \\
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jfameq{{\Gamma}{A}}{\ctxwk{A}{\emptyf}}{\emptyf}
-    }
-\end{align}
-Note that we do not have to axiomatize the action of weakening by $A$ on the term
-of the empty family, because the result will be in the empty family and every
-term in the empty family is judgmentally equal to the term $\emptytm$.
-
-\subsubsection{Weakening by the empty context}
-\label{comp-0w}
-Weakening by the empty family $\emptyf$ over a context $\Gamma$ leaves families, 
-their terms, families over those families and
-terms of those unchanged:
-\begin{align}
-& \inference
-  { \jfam{\Gamma}{B}
-    }
-  { \jfameq{\Gamma}{\ctxwk{\emptyf}{B}}{B}
-    }
-  \\
-& \inference
-  { \jfam{{\Gamma}{B}}{Q}
-    }
-  { \jfameq{{\Gamma}{B}}{\ctxwk{\emptyf}{Q}}{Q}
-    }
-  \\
-& \inference
-  { \jterm{{\Gamma}{B}}{Q}{g}
-    }
-  { \jtermeq{{\Gamma}{B}}{Q}{\ctxwk{\emptyf}{g}}{g}
-    }
-\end{align}
 
 \subsubsection{Substitutions of the empty context}
 \label{comp-s0}
