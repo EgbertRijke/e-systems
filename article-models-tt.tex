@@ -838,10 +838,10 @@ and weakening have two arguments which are both of the family-kind, substitution
 has two arguments of which one is a term and the other is a family and
 idenitity terms have one argument, a family.
 \begin{center}
-\begin{tabular}{r|rrrrr}
-& emp & ext & wk & subst & id\\
+\begin{tabular}{r|rrrr}
+& ext & wk & subst & id\\
 \hline
-extension & \autoref{comp-ee}* & \autoref{comp-ew} & \cmark & \cmark \\
+extension & \autoref{comp-ee}* &  & \cmark & \cmark \\
 weakening & \autoref{comp-we}* & \autoref{comp-ww} & \autoref{comp-sw} & \autoref{comp-wi} \\
 substitution & \autoref{comp-se}* & \autoref{comp-ws} & \autoref{comp-ss} & \autoref{comp-si} \\
 identity terms & \cmark & \autoref{comp-wi} & \autoref{comp-si} & \xmark
@@ -929,6 +929,25 @@ judgmental equality between two families.
 There is also a version of this property where an extended term is weakened.
 This variant is stated and proved in \autoref{comp-we-t}.
 
+\subsubsection{Fibers of extensions}
+\label{comp-se}
+The following inference rule asserts that if we take the fiber of an extended
+family at a term $x$ of $A$ in context $\Gamma$, the substitution by $x$
+distributes over the factors of the extension.
+\begin{align}\label{comp-se-f}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\ctxext{Q}{R}}}
+      {\ctxext{\subst{x}{Q}}{\subst{x}{R}}}
+    }
+\end{align}
+There is also a version of this statement in which extended terms are considered.
+This variant is stated and proved in \autoref{comp-se-t}.
+
 \subsubsection{Weakening of weakenings}
 When a weakened family is weakened even further, the outer weakening distributes
 over the `weakening factors'.
@@ -958,56 +977,6 @@ over the `weakening factors'.
     }
   \label{comp-ww-t}
 \end{align}
-
-\subsubsection{Weakening by extensions}
-\label{comp-ew}
-The rules expressing that extension is compatible with weakening assert that
-weakening by an extension is the same thing as weakening twice in the
-appropriate way.
-\begin{align}
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{A}}{P}
-    \jfam{{\Gamma}{B}}{Q}
-    }
-  { \jfameq
-      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
-      {\ctxwk{\ctxext{A}{P}}{Q}}
-      {\ctxwk{P}{{A}{Q}}}
-    }
-  \label{comp-ew-f}\\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{A}}{P}
-    \jterm{{\Gamma}{B}}{Q}{g}
-    }
-  { \jtermeq
-      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
-      {\ctxwk{P}{{A}{Q}}}
-      {\ctxwk{\ctxext{A}{P}}{g}}
-      {\ctxwk{P}{{A}{g}}}
-    } 
-  \label{comp-ew-t}
-\end{align}
-
-\subsubsection{Fibers of extensions}
-\label{comp-se}
-The following inference rule asserts that if we take the fiber of an extended
-family at a term $x$ of $A$ in context $\Gamma$, the substitution by $x$
-distributes over the factors of the extension.
-\begin{align}\label{comp-se-f}
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
-    }
-  { \jfameq
-      {{\Gamma}{\subst{x}{P}}}
-      {\subst{x}{\ctxext{Q}{R}}}
-      {\ctxext{\subst{x}{Q}}{\subst{x}{R}}}
-    }
-\end{align}
-There is also a version of this statement in which extended terms are considered.
-This variant is stated and proved in \autoref{comp-se-t}.
 
 \subsubsection{Fibers of weakenings}\label{comp-sw}
 Substitutions distribute over weakenings:
@@ -1137,6 +1106,37 @@ The identity term of a substituted family is the substitution of the identity te
       {\idtm{\subst{x}{P}}}
     }}
 \end{equation}
+
+\subsubsection{Currying for weakening}
+\label{comp-ew}
+The rules expressing that extension is compatible with weakening assert that
+weakening by an extension is the same thing as weakening twice in the
+appropriate way.
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
+      {\ctxwk{\ctxext{A}{P}}{Q}}
+      {\ctxwk{P}{{A}{Q}}}
+    }
+  \label{comp-ew-f}\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
+      {\ctxwk{P}{{A}{Q}}}
+      {\ctxwk{\ctxext{A}{P}}{g}}
+      {\ctxwk{P}{{A}{g}}}
+    } 
+  \label{comp-ew-t}
+\end{align}
 
 \subsubsection{The cancellation property of weakening and substitution}
 \label{cancellation-ws}
