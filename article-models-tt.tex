@@ -1016,7 +1016,9 @@ is not well-formed. The term $\subst{x}{f}$ can be substituted in (terms of) fam
 $\subst{x}{P}$; the term $\subst{x}{g}$ is such. Therefore, associativity of
 substitution takes the form $\subst{x}{{f}{g}}\jdeq\subst{{x}{f}}{{x}{g}}$.
 Note that the term $\subst{{x}{f}}{{x}{g}}$ may be written down more conveniently
-as $\subst{x,\subst{x}{f}}{g}$, although we will not do that here.
+as $\subst{x,\subst{x}{f}}{g}$, although we will not do that. In fact, after
+we have introduced extension on terms in \autoref{extension-on-terms}, we will 
+see that $\subst{{x}{f}}{{x}{g}}\jdeq\subst{\tmext{x}{\subst{x}{f}}}{g}$.
 
 In the following inference rules we assume
 $\jterm{\Gamma}{A}{x}$ and $\jterm{{\Gamma}{A}}{P}{f}$.
