@@ -726,7 +726,9 @@
 \newcommand{\jcomp@unfold@test@preside}{%
   \@ifnextchar\bgroup{\@jcomp@unfold@parens}{}}
 \newcommand{\jcomp@unfold@test@postside}{%
-  \@ifnextchar\bgroup{\@jcomp@unfold@parens}{}}
+  \@ifnextchar\bgroup{\@jcomp@unfold@parens}{%
+  \@ifnextchar\subst{\@subst@nested}{%
+  }}}
 \newcommand{\@jcomp@unfold@nested}[4]{%
   \@jcomp@unfold@parens{#2}{#3}{#4}}
 \newcommand{\@jcomp@unfold@parens}[3]{%

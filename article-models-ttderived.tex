@@ -59,7 +59,7 @@ the subject is insightful.
 Using the rules of the compatibility of substitution with weakening and of the
 compatibility of weakening with itself, we see that we can show
 
-\begin{lem}
+\begin{lem}\label{lem:prehom}
 The inference rule\begin{equation*}
 \inference
   { \jfam{\Gamma}{A}
@@ -110,20 +110,14 @@ to be the judgment\begin{equation*}
 \end{defn}
 
 \begin{defn}
-Let $\jhom{\Gamma}{A}{B}{f}$ and consider a term $\jterm{{\Gamma}{B}}{Q}{g}$.
+Let $\jhom{\Gamma}{A}{B}{f}$ and consider a family $\jfam{{\Gamma}{B}}{Q}$,
+a family $\jfam{{{\Gamma}{B}}{Q}}{R}$ and a term $\jterm{{{\Gamma}{B}}{Q}}{R}{h}$.
 We define\begin{align*}
 \jfamdefn*
   {{\Gamma}{A}}
   {\jcomp{A}{f}{Q}}
-  {\unfold{\jcomp{A}{f}{Q}}}\\
-\jtermdefn*
-  {{\Gamma}{A}}
-  {\jcomp{A}{f}{Q}}
-  {\jcomp{A}{f}{g}}
-  {\unfold{\jcomp{A}{f}{g}}}.
-\end{align*}
-Likewise, when we have a family $\jfam{{{\Gamma}{B}}{Q}}{R}$ and a term
-$\jterm{{{\Gamma}{B}}{Q}}{R}{h}$, we define\begin{align*}
+  {\unfold{\jcomp{A}{f}{Q}}}
+  \\
 \jfamdefn*
   {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
   {\jcomp{A}{f}{R}}
@@ -137,7 +131,233 @@ $\jterm{{{\Gamma}{B}}{Q}}{R}{h}$, we define\begin{align*}
 \end{align*}
 \end{defn}
 
-We have lots of compatibility properties for composition:
+\begin{lem}
+Let $\jhom{\Gamma}{A}{B}{f}$. Then the inference rules
+\begin{align*}
+& \inference
+  { %
+    }
+  { \jfameq{{\Gamma}{A}}{\jcomp{A}{f}{\emptyf}}{\emptyf}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq{{{\Gamma}{B}}{\jcomp{A}{f}{Q}}}{\jcomp{A}{f}{\emptyf}}{\emptyf}
+    }
+\end{align*}
+are valid.
+\end{lem}
+
+\begin{proof}
+For the first, note that we have the judgmental equalities
+\begin{equation*}
+\jcomp{A}{f}{\emptyf}
+  \jdeq
+  \unfold{\jcomp{A}{f}{\emptyf}}
+  \jdeq
+  \subst{f}{\emptyf}
+  \jdeq
+  \emptyf.
+\end{equation*}
+The second judgmental equality is proven similarly.
+\end{proof}
+
+\begin{rmk}
+Recall that we can treat a family $\jfam{{\Gamma}{B}}{Q}$ as a family
+$\jfam{{{\Gamma}{B}}{\emptyf}}{Q}$ and that $\jcomp{A}{f}{\emptyf}\jdeq
+\emptyf$. Thus we can apply composition with $f$ to terms 
+$\jterm{{\Gamma}{B}}{Q}{g}$. We get
+\begin{equation*}
+\jtermeq
+  {{\Gamma}{B}}
+  {\jcomp{A}{f}{Q}}
+  {\jcomp{A}{f}{g}}
+  {\unfold{\jcomp{A}{f}{g}}}.
+\end{equation*}
+In the particular situation where we take $Q$ to be a weakened family
+$\ctxwk{B}{C}$, we see that we can apply composition with $f$ to morphisms
+from $B$ to $C$ and we can use \autoref{lem:prehom} to see that we get
+\begin{equation*}
+\jhomeq{\Gamma}{A}{C}{\jcomp{A}{f}{g}}{\unfold{\jcomp{A}{f}{g}}}
+\end{equation*}
+for $\jhom{\Gamma}{B}{C}{g}$. 
+
+One might argue that the notation for composition should be reserved to only
+this special case, to not confuse with common intuition of composition. It is
+however very convenient to see composition as an operation of the theory of
+contexts, families and terms. This allows us to follow the scheme of
+compatibility rules which are provable for this form of composition. 
+\end{rmk}
+
+We have lots of compatibility properties for composition. On the one hand we
+have the properties that composition with a morphism $f$ is compatible with
+the empty family, extension, weakening, substitution and identity terms. On
+the other hand, there are compatibility properties saying what happens when
+we substitute by a composition, or when we weaken or substitute a composition.
+Proving all these compatibility properties is the content of the rest of this
+subsection. None of it is very difficult.
+
+\begin{lem}
+We have the following inference rule expressing that composition with $f$ is
+compatible with extension:
+\begin{equation*}
+\inference
+  { \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
+      {\jcomp{A}{f}{\ctxext{R}{S}}}
+      {\ctxext{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+Let $\jfam{{{{\Gamma}{B}}{Q}}{R}}{S}$. Then we have the judgmental equalities
+\begin{align*}
+\jcomp{A}{f}{\ctxext{R}{S}}
+& \jdeq
+  \unfold{\jcomp{A}{f}{\ctxext{R}{S}}}
+  \\
+& \jdeq
+  \subst{f}{\ctxext{\ctxwk{A}{R}}{\ctxwk{A}{S}}}
+  \\
+& \jdeq
+  \unfoldall{\ctxext{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}}
+  \\
+& \jdeq
+  \ctxext{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}.\qedhere
+\end{align*}
+\end{proof}
+
+\begin{lem}
+We have the following inference rules expressing that composition with $f$ is
+compatible with weakening:
+\begin{align*}
+& \inference
+  { \jfam{{{\Gamma}{B}}{Q}}{R}
+    \jfam{{{\Gamma}{B}}{Q}}{S}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}{\jcomp{A}{f}{R}}}
+      {\jcomp{A}{f}{\ctxwk{R}{S}}}
+      {\ctxwk{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}}
+    }
+  \\
+& \inference
+  { \jfam{{{\Gamma}{B}}{Q}}{R}
+    \jterm{{{\Gamma}{B}}{Q}}{S}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}{\jcomp{A}{f}{R}}}
+      {\jcomp{A}{f}{\ctxwk{R}{S}}}
+      {\jcomp{A}{f}{\ctxwk{R}{k}}}
+      {\ctxwk{\jcomp{A}{f}{R}}{\jcomp{A}{f}{k}}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Consider the families $\jfam{{{\Gamma}{B}}{Q}}{R}$ and 
+$\jfam{{{\Gamma}{B}}{Q}}{S}$. Then we have the judgmental equalities
+\begin{align*}
+\jcomp{A}{f}{\ctxwk{R}{S}}
+& \jdeq
+  \unfold{\jcomp{A}{f}{\ctxwk{R}{S}}}
+  \\
+& \jdeq
+  \subst{f}{\ctxwk{{A}{R}}{{A}{S}}}
+  \\
+& \jdeq
+  \unfoldall{\ctxwk{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}}
+  \\
+& \jdeq
+  \ctxwk{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}.
+\end{align*}
+The proof of the second property is similar.
+\end{proof}
+
+\begin{lem}
+We have the following inference rules expressing that composition with $f$ is
+compatible with substitution:
+\begin{align*}
+& \inference
+  { \jterm{{{\Gamma}{B}}{Q}}{R}{h}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
+      {\jcomp{A}{f}{\subst{h}{S}}}
+      {\subst{\jcomp{A}{f}{h}}{\jcomp{A}{f}{S}}}
+    }
+  \\
+& \inference
+  { \jterm{{{\Gamma}{B}}{Q}}{R}{h}
+    \jterm{{{{\Gamma}{B}}{Q}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
+      {\jcomp{A}{f}{\subst{h}{S}}}
+      {\jcomp{A}{f}{\subst{h}{k}}}
+      {\subst{\jcomp{A}{f}{h}}{\jcomp{A}{f}{k}}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Let $\jterm{{{\Gamma}{B}}{Q}}{R}{h}$ and $\jfam{{{{\Gamma}{B}}{Q}}{R}}{S}$.
+Then we have the judgmental equalities
+\begin{align*}
+\jcomp{A}{f}{\subst{h}{S}}
+& \jdeq
+  \unfold{\jcomp{A}{f}{\subst{h}{S}}}
+  \\
+& \jdeq
+  \subst{f}{{\ctxwk{A}{h}}{\ctxwk{A}{S}}}
+  \\
+& \jdeq
+  \unfoldall{\subst{\jcomp{A}{f}{h}}{\jcomp{A}{f}{S}}}
+  \\
+& \jdeq
+  \subst{\jcomp{A}{f}{h}}{\jcomp{A}{f}{S}}.
+\end{align*}
+The proof of the second inference rule is similar.
+\end{proof}
+
+\begin{lem}
+We have the following inference rule expressing that composition with $f$ is
+compatible with identity terms:
+\begin{equation*}
+\inference
+  { \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}{\jcomp{A}{f}{R}}}
+      {\ctxwk{\jcomp{A}{f}{R}}{\jcomp{A}{f}{R}}}
+      {\jcomp{A}{f}{\idtm{R}}}
+      {\idtm{\jcomp{A}{f}{R}}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+Let $\jfam{{{\Gamma}{B}}{Q}}{R}$. We have the following judgmental equalities:
+\begin{align*}
+\jcomp{A}{f}{\idtm{R}}
+& \jdeq
+  \unfold{\jcomp{A}{f}{\idtm{R}}}
+  \\
+& \jdeq
+  \subst{f}{\idtm{\ctxwk{A}{R}}}
+  \\
+& \jdeq
+  \unfoldall{\idtm{\jcomp{A}{f}{R}}}
+  \\
+& \jdeq
+  \idtm{\jcomp{A}{f}{R}}.\qedhere
+\end{align*}
+\end{proof}
 
 \begin{lem}
 We have the following inference rules about the situation where something is
