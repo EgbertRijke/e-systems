@@ -2065,8 +2065,12 @@ following diagrams commute judgmentally:
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \ctxext{A}{{P}{\jcomp{}{e}{P}}} 
-  \ar{d}[swap]{\tmext{\ctxwk{\jcomp{}{e}{P}}{e}}{\idtm{\jcomp{}{e}{P}}}} 
-  \ar{r}{\tmext{\ctxwk{\ctxext{P}{\jcomp{}{e}{P}}}{\idtm{A}}}{f}} 
+  \ar{d}[swap]{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}
+    %\tmext{\ctxwk{\jcomp{}{e}{P}}{e}}{\idtm{\jcomp{}{e}{P}}}
+    } 
+  \ar{r}{\jvcomp{}{\idtm{A}}{f}
+    %\tmext{\ctxwk{\ctxext{P}{\jcomp{}{e}{P}}}{\idtm{A}}}{f}
+    } 
   & \ctxext{A}{P} \ar{d}{e}\\
 \ctxext{A}{P} \ar{r}[swap]{e} & A
 \end{tikzcd}
@@ -2074,17 +2078,108 @@ following diagrams commute judgmentally:
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \ctxext{P}{{\jcomp{}{e}{P}}{\jcomp{}{\bar{e}}{{}{e}{P}}}} 
-  \ar{r} 
+  \ar{r}{\jvcomp{}{\idtm{P}}{\jcomp{}{e}{f}}}
   \ar{d}[swap]{
-    \tmext
-      {\ctxwk{\jcomp{}{\bar{e}}{{}{e}{P}}}{f}}
-      {\idtm{\jcomp{}{\bar{e}}{{}{e}{P}}}}
+    \jvcomp{}{f}{\idtm{\jcomp{}{\bar{e}}{{}{e}{P}}}}
+%    \tmext
+%      {\ctxwk{\jcomp{}{\bar{e}}{{}{e}{P}}}{f}}
+%      {\idtm{\jcomp{}{\bar{e}}{{}{e}{P}}}}
     }
 & \ctxext{P}{\jcomp{}{e}{P}} \ar{d}{f}\\
 \ctxext{P}{\jcomp{}{e}{P}} \ar{r}[swap]{f} & P
 \end{tikzcd}
 \end{equation*}
 where we have taken 
-$\bar{e}\defeq\tmext{\ctxwk{\jcomp{}{e}{P}}{e}}{\idtm{\jcomp{}{e}{P}}}$, which
+$\bar{e}\defeq\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}$, which
 is the morphism on the left of the first diagram (taking the upper morphism
-would yield a judgmentally equal result).
+would yield a judgmentally equal result). To see that the above diagram makes
+sense, note that we can compute the upper left family in two different ways.
+First, we have the judgmental equalities
+\begin{align*}
+\jcomp{}{\bar{e}}{\jcomp{}{e}{P}}
+& \jdeq 
+  \jcomp{}{\jcomp{}{\bar{e}}{e}}{P}
+  \\
+& \jdeq
+  \jcomp{}{
+    \jcomp{}{\jvcomp{}{f}{\idtm{\jcomp{}{\bar{e}}{{}{e}{P}}}}}{e}}{P}
+  \\
+& \jdeq
+  \jcomp{}{\jvcomp{}{f}{\idtm{\jcomp{}{\bar{e}}{{}{e}{P}}}}}{
+    \jcomp{}{e}{P}}
+  \\
+& \jdeq
+  \subst
+    {\tmext{\ctxwk{\ctxext{P}{\jcomp{}{e}{P}}}{\idtm{A}}}{f}}
+    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}
+  \\
+& \jdeq
+  \subst
+    {f}
+    { {\ctxwk{\ctxext{P}{\jcomp{}{e}{P}}}{\idtm{A}}}
+      {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}
+      }
+  \\
+& \jdeq
+  \subst
+    {f}
+    {\ctxwk{\ctxext{P}{\jcomp{}{e}{P}}}{\jcomp{}{e}{P}}}
+  \\
+& \jdeq
+  \jcomp{}{f}{\jcomp{}{e}{P}}
+\end{align*}
+so the downwards arrow on the left indeed makes sense. Second, we have the
+judgmental equalities
+\begin{align*}
+\ctxext{\jcomp{}{e}{P}}{\jcomp{}{\bar{e}}{\jcomp{}{e}{P}}}
+& \jdeq
+  \ctxext{\jcomp{}{e}{P}}{\subst{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}
+    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}}
+  \\
+& \jdeq
+  \ctxext{\jcomp{}{e}{P}}{\subst
+    {\idtm{\jcomp{}{e}{P}}}
+    {{\ctxwk{\jcomp{}{e}{P}}{e}}
+    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}}}
+  \\
+& \jdeq
+  \ctxext{\jcomp{}{e}{P}}{\subst
+    {\idtm{\jcomp{}{e}{P}}}
+    {{\ctxwk{\jcomp{}{e}{P}}{e}}
+    {\ctxwk{\ctxext{{A}{P}}{\jcomp{}{e}{P}}}{\jcomp{}{e}{P}}}}}
+  \\
+& \jdeq
+  \ctxext{\jcomp{}{e}{P}}{\subst
+    {\idtm{\jcomp{}{e}{P}}}
+    {{\ctxwk{\jcomp{}{e}{P}}{e}}
+    {\ctxwk{\jcomp{}{e}{P}}{{\ctxext{A}{P}}{\jcomp{}{e}{P}}}}}}
+  \\
+& \jdeq
+  \ctxext{\jcomp{}{e}{P}}{\subst
+    {\idtm{\jcomp{}{e}{P}}}
+    {\ctxwk{\jcomp{}{e}{P}}{\subst{e}
+    {\ctxwk{\ctxext{A}{P}}{\jcomp{}{e}{P}}}}}}
+  \\
+& \jdeq
+  \ctxext{\jcomp{}{e}{P}}{\subst{e}
+    {\ctxwk{\ctxext{A}{P}}{\jcomp{}{e}{P}}}}
+  \\
+& \jdeq
+  \ctxext{\jcomp{}{e}{P}}{\jcomp{}{e}{\jcomp{}{e}{P}}}
+  \\
+& \jdeq
+  \jcomp{}{e}{\ctxext{P}{\jcomp{}{e}{P}}}
+\end{align*}
+and we indeed have the morphism $\jcomp{}{e}{f}$ from
+$\jcomp{}{e}{\ctxext{P}{\jcomp{}{e}{P}}}$ to $\jcomp{}{e}{P}$.
+\subsection{Extension-empty algebras}
+\begin{defn}
+Let $P$ be a family over the extended context $\ctxext{\Gamma}{A}$, let
+$\jterm{\Gamma}{A}{x}$ and $\jterm{{\Gamma}{A}}{P}{f}$ be terms. Then the
+quadruple $(A,P,x,f)$ is said to be an \emph{empty algebra in context $\Gamma$}
+if the following judgmental equalities hold:
+\begin{align*}
+\jfameq*{\Gamma}{\subst{x}{P}}{A}\\
+\jtermeq*{\Gamma}{A}{\subst{x}{f}}{x}.
+\end{align*}
+\end{defn}
