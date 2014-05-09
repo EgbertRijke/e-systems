@@ -2053,3 +2053,38 @@ for each family $A$ of contexts over $\Gamma$
 \item Substitutions of inductive morphisms are inductive
 \end{itemize}
 
+\subsection{Extension algebras}
+Let $P$ be a family over an extended context $\ctxext{\Gamma}{A}$. We could
+mimic extension by requiring to have terms
+\begin{align*}
+\jhom*{\Gamma}{{A}{P}}{A}{e}\\
+\jhom*{{\Gamma}{A}}{{P}{\jcomp{}{e}{P}}}{P}{f}.
+\end{align*}
+We say that a quadruple $(A,P,e,f)$ as above is an extension algebra if the
+following diagrams commute judgmentally:
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\ctxext{A}{{P}{\jcomp{}{e}{P}}} 
+  \ar{d}[swap]{\tmext{\ctxwk{\jcomp{}{e}{P}}{e}}{\idtm{\jcomp{}{e}{P}}}} 
+  \ar{r}{\tmext{\ctxwk{\ctxext{P}{\jcomp{}{e}{P}}}{\idtm{A}}}{f}} 
+  & \ctxext{A}{P} \ar{d}{e}\\
+\ctxext{A}{P} \ar{r}[swap]{e} & A
+\end{tikzcd}
+\end{equation*}
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\ctxext{P}{{\jcomp{}{e}{P}}{\jcomp{}{\bar{e}}{{}{e}{P}}}} 
+  \ar{r} 
+  \ar{d}[swap]{
+    \tmext
+      {\ctxwk{\jcomp{}{\bar{e}}{{}{e}{P}}}{f}}
+      {\idtm{\jcomp{}{\bar{e}}{{}{e}{P}}}}
+    }
+& \ctxext{P}{\jcomp{}{e}{P}} \ar{d}{f}\\
+\ctxext{P}{\jcomp{}{e}{P}} \ar{r}[swap]{f} & P
+\end{tikzcd}
+\end{equation*}
+where we have taken 
+$\bar{e}\defeq\tmext{\ctxwk{\jcomp{}{e}{P}}{e}}{\idtm{\jcomp{}{e}{P}}}$, which
+is the morphism on the left of the first diagram (taking the upper morphism
+would yield a judgmentally equal result).

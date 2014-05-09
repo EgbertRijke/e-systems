@@ -36,7 +36,35 @@ axiomatizing what you can do with them. We have the following ideas:
 \end{itemize}
 
 \subsection{The basic ingredients of the type theory of models}
-We first introduce the basic ingredients of our abstract theory of models.
+\subsubsection{The family and term models and the initial model}
+For every model $A$ there is a dependent model $\mfam{A}$ of families over $A$,
+called the \emph{family model of $A$}.
+The terms of a model $A$ are to be thought of as the contexts of $A$. Thus, when
+we have a term $x:A$, the families over $x$ are the terms of the substituted
+model $\subst{x}{\mfam{A}}$.
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfam{{\Gamma}{A}}{\mfam{A}}
+    }
+  \tag{families}
+\end{equation*}
+
+Likewise, there is a \emph{term model $\mtm{A}$ of $A$}, 
+which is a family of models over the family model $\mfam{A}$ of $A$. When
+$x_0:A$ and $x_1:\mfam{A}$, then a term of $\subst{x_1}{{x_0}{\mtm{A}}}$ is
+to be thought of as a term of $x_1$ in context $x_0$.
+\begin{equation*}
+\inference
+  { \jctx{\Gamma}
+    }
+  { \jfam{{\Gamma}{\mfam{\Gamma}}}{\mtm{\Gamma}}
+    }
+  \tag{terms}
+\end{equation*}
+We shall furthermore assume that there is an initial model $\mctx$ in the theory
+of models.
 \begin{align*}
 & \inference
   { }
@@ -48,22 +76,24 @@ We first introduce the basic ingredients of our abstract theory of models.
     }
   { \jterm{\mctx}{P}{i}
     }
-  \tag{initiality of $\mctx$}\\
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jfam{{\Gamma}{A}}{\mfam{A}}
-    }
-  \tag{families}\\
-& \inference
-  { \jctx{\Gamma}
-    }
-  { \jfam{{\Gamma}{\mfam{\Gamma}}}{\mtm{\Gamma}}
-    }
-  \tag{terms}
-\intertext{%
-  The following two rules essentially make a start with saying that every term is functorial
-  in the apropriate sense (there will be more rules contributing to this vies):}
+  \tag{initiality of $\mctx$}
+\end{align*}
+
+\subsubsection{The action of terms on families and on terms}
+We will require that every term $\jterm{{\Gamma}{A}}{P}{f}$ has an action on
+families and on terms. It tells that when $x_1$ is a family over $x_0$ in $A$
+with a term $y$, then we obtain a family $\subst{x_1}{{x_0}{\mfam{f}}}$ over
+$\subst{x_0}{f}$ with a term $\subst{y}{{x_1}{{x_0}{\mtm{f}}}}$.
+However, there is a choice in the precise formulation of this idea. One option
+is to require that $\mfam{f}$ is a term of the family $\ctxwk{\mfam{A}}
+{\subst{f}{\mfam{P}}}$; the other option, first investigated over a pastis
+and peanuts before having breakfast, is that $\mfam{f}$ is a term of
+the family $\jcomp{}{\tfext{A}}{\subst{f}{\mfam{P}}}$. We explore these two
+options in more detail separately.
+
+\paragraph{Option one: pullback along the projection}
+Suppose we require the inference rules
+\begin{align*}
 & \inference
   { \jterm{{\Gamma}{A}}{P}{f}
     }
@@ -86,12 +116,38 @@ We first introduce the basic ingredients of our abstract theory of models.
       {\subst{f}{\mtm{P}}}
       {\mtm{f}}
     }
-\intertext{%
-  When the situation requires clarity --  for instance when extensions
-  are involved -- we will write $\mfam[\Gamma]{f}$ and $\mtm[\Gamma]{f}$ to make
-  what we regard as the context explicit.}
-\intertext{%
-The empty context of a model $A$ is simply a term of $A$:}
+\end{align*}
+When the situation requires clarity --  for instance when extensions
+are involved -- we will write $\mfam[\Gamma]{f}$ and $\mtm[\Gamma]{f}$ to make
+what we regard as the context explicit.
+
+With these two inference rules we see that
+\begin{align*}
+\subst{\tfemp{A}}{\ctxwk{\mfam{A}}{\subst{f}{\mfam{P}}}}
+& \jdeq
+  \ctxwk{\subst{\tfemp{A}}{\mfam{A}}}{\subst{\tfemp{A}}{{f}{\mfam{P}}}}
+  \\
+& \jdeq
+  \ctxwk{A}{\subst{\tfemp{A}}{{f}{\mfam{P}}}}
+  \\
+& \jdeq
+  \ctxwk{A}{\subst{{\tfemp{A}}{f}}{{\tfemp{A}}{\mfam{P}}}}
+  \\
+& \jdeq
+  \ctxwk{A}{\subst{\tfemp{\subst{\tfemp{A}}{P}}}{{\tfemp{A}}{\mfam{P}}}}
+  \\
+& \jdeq
+  \ctxwk{A}{\subst{\tfemp{\subst{\tfemp{A}}{P}}}}{\mfam{\subst{\tfemp{A}}{P}}}
+  \\
+& \jdeq
+  \ctxwk{A}{\subst{\tfemp{A}}{P}}
+\end{align*}
+
+\paragraph{Option two: pullback along extension}
+
+\subsubsection{The rest}
+The empty context of a model $A$ is simply a term of $A$:
+\begin{align*}
 & \inference
   { \jfam{\Gamma}{A}
     }
