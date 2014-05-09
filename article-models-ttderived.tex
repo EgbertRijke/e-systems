@@ -2054,15 +2054,22 @@ for each family $A$ of contexts over $\Gamma$
 \end{itemize}
 
 \subsection{Extension algebras}
+In this subsection our goal is to define the notion of extension algebras,
+which are internal versions of the extension operation of the theory of
+contexts, families and terms. In this article, their use will be mainly in
+universes.
+
 Let $P$ be a family over an extended context $\ctxext{\Gamma}{A}$. We could
 mimic extension by requiring to have terms
 \begin{align*}
 \jhom*{\Gamma}{{A}{P}}{A}{e}\\
 \jhom*{{\Gamma}{A}}{{P}{\jcomp{}{e}{P}}}{P}{f}.
 \end{align*}
-We say that a quadruple $(A,P,e,f)$ as above is an extension algebra if the
-following diagrams commute judgmentally:
-\begin{equation*}
+Extension also satisfies the properties explained in \autoref{comp-ee}, so we
+must find the two judgmental equalities for $e$ and $f$ mimicing those. 
+The first of these judgmental equalities is easy to give: it says that the
+following diagram commutes:
+\begin{equation}\label{eq:ealg-eq1}
 \begin{tikzcd}[column sep=huge]
 \ctxext{A}{{P}{\jcomp{}{e}{P}}} 
   \ar{d}[swap]{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}
@@ -2074,38 +2081,144 @@ following diagrams commute judgmentally:
   & \ctxext{A}{P} \ar{d}{e}\\
 \ctxext{A}{P} \ar{r}[swap]{e} & A
 \end{tikzcd}
-\end{equation*}
+\end{equation}
+To get a feel for this judgmental equality we include the following lemma.
+
+\begin{lem}
+Let $A$, $P$, $e$ and $f$ be as above, satisfying \autoref{eq:ealg-eq1} and
+let $x_0:A$,
+$x_1:\subst{x_0}{P}$ and $x_2:\subst{x_1}{{x_0}{\jcomp{}{e}{P}}}$.
+Then we have the judgmental equality
 \begin{equation*}
-\begin{tikzcd}[column sep=huge]
-\ctxext{P}{{\jcomp{}{e}{P}}{\jcomp{}{\bar{e}}{{}{e}{P}}}} 
-  \ar{r}{\jvcomp{}{\idtm{P}}{\jcomp{}{e}{f}}}
-  \ar{d}[swap]{
-    \jvcomp{}{f}{\idtm{\jcomp{}{\bar{e}}{{}{e}{P}}}}
-%    \tmext
-%      {\ctxwk{\jcomp{}{\bar{e}}{{}{e}{P}}}{f}}
-%      {\idtm{\jcomp{}{\bar{e}}{{}{e}{P}}}}
-    }
+\subst{{x_2}{{x_1}{f}}}{{x_0}{e}}
+\jdeq
+\subst{x_2}{{{x_1}{{x_0}{e}}}{e}}.
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+The proof is a simple computation:
+\begin{align*}
+\subst{{x_2}{{x_1}{f}}}{{x_0}{e}}
+& \jdeq
+  \subst{\tmext{x_0}{\subst{x_2}{{x_1}{f}}}}{e}
+  \\
+& \jdeq 
+  \subst{{x_2}{{x_1}{{x_0}{\jvcomp{}{\idtm{A}}{f}}}}}{e}
+  \\
+& \jdeq
+  \subst{x_2}{{x_1}{{x_0}{\jcomp{}{\jvcomp{}{\idtm{A}}{f}}{e}}}}
+  \\
+& \jdeq
+  \subst{x_2}{{x_1}{{x_0}{\jcomp{}{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}{e}}}}
+  \\
+& \jdeq 
+  \subst{{x_2}{{x_1}{{x_0}{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}}}}{e}
+  \\
+& \jdeq
+  \subst{\tmext{\subst{x_1}{{x_0}{e}}}{x_2}}{e}
+  \\
+& \jdeq
+  \subst{x_2}{{{x_1}{{x_0}{e}}}{e}}.\qedhere
+\end{align*}
+\end{proof}
+
+The second of the judgmental equalities is harder to describe, however. We need
+to consider `higher' families, i.e.~families over families over families, and
+thus we need to look at the family $\jcomp{}{e}{\jcomp{}{e}{P}}$ and find the
+two dotted morphisms in the diagram
+\begin{equation*}
+\begin{tikzcd}
+\ctxext{P}{{\jcomp{}{e}{P}}{\jcomp{}{e}{\jcomp{}{e}{P}}}}
+  \ar[densely dotted]{d}
+  \ar[densely dotted]{r}
 & \ctxext{P}{\jcomp{}{e}{P}} \ar{d}{f}\\
-\ctxext{P}{\jcomp{}{e}{P}} \ar{r}[swap]{f} & P
+\ctxext{P}{\jcomp{}{e}{P}} \ar{r}{f} & P
 \end{tikzcd}
 \end{equation*}
-where we have taken 
-$\bar{e}\defeq\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}$, which
-is the morphism on the left of the first diagram (taking the upper morphism
-would yield a judgmentally equal result). To see that the above diagram makes
-sense, note that we can compute the upper left family in two different ways.
-First, we have the judgmental equalities
+The first is easy to find. Note that we have the judgmental equality
+\begin{equation*}
+\ctxext{\jcomp{}{e}{P}}{\jcomp{}{e}{\jcomp{}{e}{P}}}
+  \jdeq
+  \jcomp{}{e}{\ctxext{P}{\jcomp{}{e}{P}}}
+\end{equation*}
+and therefore we may just take the morphism
+\begin{equation*}
+\jhom
+  {{\Gamma}{A}}
+  {{P}{{\jcomp{}{e}{P}}{\jcomp{}{e}{\jcomp{}{e}{P}}}}}
+  {{P}{\jcomp{}{e}{P}}}
+  {\jvcomp{}{\idtm{P}}{\jcomp{}{e}{f}}}.
+\end{equation*}
+For the other morphism we need to look at the family
+$\ctxext{P}{{\jcomp{}{e}{P}}{\jcomp{}{e}{\jcomp{}{e}{P}}}}$ differently. We do
+that in the following lemma.
+
+\begin{lem}
+Suppose we have $A$, $P$, $e$ and $f$ satisfying \autoref{eq:ealg-eq1}. Then
+we have the judgmental equality
+\begin{equation*}
+\jcomp{}{e}{\jcomp{}{e}{P}}
+  \jdeq
+  \jcomp{}{f}{\jcomp{}{e}{P}}.
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+The proof is a rather long computation:
 \begin{align*}
-\jcomp{}{\bar{e}}{\jcomp{}{e}{P}}
+\jcomp{}{e}{\jcomp{}{e}{P}}
+& \jdeq
+  \subst{e}
+    {\ctxwk{\ctxext{A}{P}}{\jcomp{}{e}{P}}}
+  \\
+& \jdeq
+  \subst
+    {\idtm{\jcomp{}{e}{P}}}
+    { \ctxwk
+        {\jcomp{}{e}{P}}{\subst{e}
+        {\ctxwk{\ctxext{A}{P}}{\jcomp{}{e}{P}}}}}
+  \\
+& \jdeq
+  \subst
+    {\idtm{\jcomp{}{e}{P}}}
+    { {\ctxwk{\jcomp{}{e}{P}}{e}}
+      {\ctxwk{\jcomp{}{e}{P}}{{\ctxext{A}{P}}{\jcomp{}{e}{P}}}}}
+  \\
+& \jdeq
+  \subst
+    {\idtm{\jcomp{}{e}{P}}}
+    { {\ctxwk{\jcomp{}{e}{P}}{e}}
+      {\ctxwk{\ctxext{{A}{P}}{\jcomp{}{e}{P}}}{\jcomp{}{e}{P}}}}
+  \\
+& \jdeq
+  \subst
+    {\idtm{\jcomp{}{e}{P}}}
+    { {\ctxwk{\jcomp{}{e}{P}}{e}}
+      {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}}
+  \\
+& \jdeq
+  \subst
+    {\unfold{\jvcomp{\jcomp{}{e}{P}}{e}{\idtm{\jcomp{}{e}{P}}}}}
+    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}
+  \\
+& \jdeq
+  \subst
+    {\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}
+    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}
+  \\
+& \jdeq
+  \jcomp{}{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}
+  \\
 & \jdeq 
-  \jcomp{}{\jcomp{}{\bar{e}}{e}}{P}
+  \jcomp{}{\jcomp{}{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}{e}}{P}
   \\
 & \jdeq
   \jcomp{}{
-    \jcomp{}{\jvcomp{}{f}{\idtm{\jcomp{}{\bar{e}}{{}{e}{P}}}}}{e}}{P}
+    \jcomp{}{\jvcomp{}{\idtm{A}}{f}}{e}}{P}
   \\
 & \jdeq
-  \jcomp{}{\jvcomp{}{f}{\idtm{\jcomp{}{\bar{e}}{{}{e}{P}}}}}{
+  \jcomp{}{\jvcomp{}{\idtm{A}}{f}}{
     \jcomp{}{e}{P}}
   \\
 & \jdeq
@@ -2123,55 +2236,76 @@ First, we have the judgmental equalities
 & \jdeq
   \subst
     {f}
+    { {\cprojfstf{A}{\ctxext{P}{\jcomp{}{e}{P}}}}
+      {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}
+      }
+  \\
+& \jdeq
+  \subst
+    {f}
+    {\jcomp{}{\cprojfstf{A}{\ctxext{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}
+  \\
+& \jdeq
+  \subst
+    {f}
     {\ctxwk{\ctxext{P}{\jcomp{}{e}{P}}}{\jcomp{}{e}{P}}}
   \\
 & \jdeq
-  \jcomp{}{f}{\jcomp{}{e}{P}}
+  \jcomp{}{f}{\jcomp{}{e}{P}}.
+  \qedhere
 \end{align*}
-so the downwards arrow on the left indeed makes sense. Second, we have the
-judgmental equalities
-\begin{align*}
-\ctxext{\jcomp{}{e}{P}}{\jcomp{}{\bar{e}}{\jcomp{}{e}{P}}}
-& \jdeq
-  \ctxext{\jcomp{}{e}{P}}{\subst{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}
-    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}}
-  \\
-& \jdeq
-  \ctxext{\jcomp{}{e}{P}}{\subst
-    {\idtm{\jcomp{}{e}{P}}}
-    {{\ctxwk{\jcomp{}{e}{P}}{e}}
-    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}}}
-  \\
-& \jdeq
-  \ctxext{\jcomp{}{e}{P}}{\subst
-    {\idtm{\jcomp{}{e}{P}}}
-    {{\ctxwk{\jcomp{}{e}{P}}{e}}
-    {\ctxwk{\ctxext{{A}{P}}{\jcomp{}{e}{P}}}{\jcomp{}{e}{P}}}}}
-  \\
-& \jdeq
-  \ctxext{\jcomp{}{e}{P}}{\subst
-    {\idtm{\jcomp{}{e}{P}}}
-    {{\ctxwk{\jcomp{}{e}{P}}{e}}
-    {\ctxwk{\jcomp{}{e}{P}}{{\ctxext{A}{P}}{\jcomp{}{e}{P}}}}}}
-  \\
-& \jdeq
-  \ctxext{\jcomp{}{e}{P}}{\subst
-    {\idtm{\jcomp{}{e}{P}}}
-    {\ctxwk{\jcomp{}{e}{P}}{\subst{e}
-    {\ctxwk{\ctxext{A}{P}}{\jcomp{}{e}{P}}}}}}
-  \\
-& \jdeq
-  \ctxext{\jcomp{}{e}{P}}{\subst{e}
-    {\ctxwk{\ctxext{A}{P}}{\jcomp{}{e}{P}}}}
-  \\
-& \jdeq
-  \ctxext{\jcomp{}{e}{P}}{\jcomp{}{e}{\jcomp{}{e}{P}}}
-  \\
-& \jdeq
-  \jcomp{}{e}{\ctxext{P}{\jcomp{}{e}{P}}}
-\end{align*}
-and we indeed have the morphism $\jcomp{}{e}{f}$ from
-$\jcomp{}{e}{\ctxext{P}{\jcomp{}{e}{P}}}$ to $\jcomp{}{e}{P}$.
+\end{proof}
+
+Now we see that we can use the morphism
+\begin{equation*}
+\jhom
+  {{\Gamma}{A}}
+  {{P}{{\jcomp{}{e}{P}}{\jcomp{}{f}{{}{e}{P}}}}}
+  {{P}{\jcomp{}{e}{P}}}
+  {\jvcomp{}{f}{\idtm{\jcomp{}{f}{{}{e}{P}}}}}.
+\end{equation*}
+Thus, the second judgmental equality we will need is that the diagram
+\begin{equation}\label{eq:ealg-eq2}
+\begin{tikzcd}[column sep=huge]
+\ctxext{P}{{\jcomp{}{e}{P}}{\jcomp{}{e}{{}{e}{P}}}} 
+  \ar{r}{\jvcomp{}{\idtm{P}}{\jcomp{}{e}{f}}}
+  \ar{d}[swap]{
+    \jvcomp{}{f}{\idtm{\jcomp{}{f}{{}{e}{P}}}}
+%    \tmext
+%      {\ctxwk{\jcomp{}{\bar{e}}{{}{e}{P}}}{f}}
+%      {\idtm{\jcomp{}{\bar{e}}{{}{e}{P}}}}
+    }
+& \ctxext{P}{\jcomp{}{e}{P}} \ar{d}{f}\\
+\ctxext{P}{\jcomp{}{e}{P}} \ar{r}[swap]{f} & P
+\end{tikzcd}
+\end{equation}
+commutes judgmentally. Now we can confidently formulate the definition of
+extension algebras.
+
+\begin{defn}
+An \emph{extension algebra in context $\Gamma$} is a quadruple $(A,P,e,f)$
+consisting of a family $A$ over context $\Gamma$, a family $P$ over the context
+$\ctxext{\Gamma}{A}$, a morphism $e$ from $\ctxext{A}{P}$ to $A$ in context
+$\Gamma$ and a morphism $f$ from $\ctxext{P}{\jcomp{}{e}{P}}$ to $P$ in context
+$\ctxext{\Gamma}{A}$, satisfying the judgmental equalities of
+\autoref{eq:ealg-eq1,eq:ealg-eq2}.
+\end{defn}
+
+We also give a bit of intuition to the requirement of \autoref{eq:ealg-eq2} by
+means of the following lemma.
+
+\begin{lem}
+Let $(A,P,e,f)$ be an extension algebra in context $\Gamma$ and let
+$y_0:P$, $y_1:\subst{y_0}{\jcomp{}{e}{P}}$ and 
+$y_2:\subst{y_1}{{y_0}{\jcomp{}{e}{\jcomp{}{e}{P}}}}$. Then we have the
+judgmental equality
+\begin{equation*}
+\subst{{y_2}{{y_1}{\jcomp{}{e}{f}}}}{{y_0}{f}}
+  \jdeq
+  \subst{y_2}{{{y_1}{{y_0}{f}}}{f}}
+\end{equation*}
+\end{lem}
+
 \subsection{Extension-empty algebras}
 \begin{defn}
 Let $P$ be a family over the extended context $\ctxext{\Gamma}{A}$, let
