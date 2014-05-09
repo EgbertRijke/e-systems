@@ -643,18 +643,6 @@ The following inference rules are valid:
 & \inference
   { \jterm{\Gamma}{A}{x}
     \jterm{\Gamma}{\subst{x}{P}}{u}
-    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
-    }
-  { \jtermeq
-      {\Gamma}
-      {\subst{u}{{x}{Q}}}
-      {\subst{\tmext{A}{P}{x}{u}}{g}}
-      {\subst{u}{{x}{g}}}
-    }
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jterm{\Gamma}{\subst{x}{P}}{u}
     \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
     }
   { \jfameq
@@ -671,8 +659,8 @@ The following inference rules are valid:
   { \jtermeq
       {{\Gamma}{\subst{u}{{x}{Q}}}}
       {\subst{u}{{x}{R}}}
-      {\subst{\tmext{A}{P}{x}{u}}{t}}
-      {\subst{u}{{x}{t}}}
+      {\subst{\tmext{A}{P}{x}{u}}{h}}
+      {\subst{u}{{x}{h}}}
     }
 \end{align*}
 \end{lem}
@@ -2234,6 +2222,17 @@ for any family $Q$ of contexts over $\ctxext{{\Gamma}{A}}{\mfam{A}}$
 \end{lem}
 
 \subsection{Inductive morphisms}
+In this subsection we investigate the notion of inductive morphisms. An 
+inductive morphism $f$ from $A$ to $B$ in context $\Gamma$ is a morphism which
+induces an operation which is judgmentally the right inverse of composition
+with $f$. We explore a notion of inductive morphism which is much stronger
+than the usual notion: it pushes families over $A$ to families over $B$,
+families over families over $A$ to families over families over $B$ and terms
+thereof to terms of the output families over families in a manner compatible
+with the empty family, extension, weakening, substitution and identity terms.
+As a result, inductive morphisms will be stable under extension, weakening,
+substitution and the identity term is an inductive morphism.
+
 \begin{defn}
 Let $\jhom{\Gamma}{A}{B}{f}$ be a context morphism. We say that $f$ is an 
 \emph{inductive morphism} if the following inference rules are valid:
@@ -2387,7 +2386,10 @@ we have the judgmental equality
 \end{lem}
 
 \begin{proof}
-The proof is a rather long computation:
+The proof is a rather long computation. It was found by starting with the
+application of \autoref{eq:ealg-eq1} and making the computation in both ways
+from there. The judgmental equality below where \autoref{eq:ealg-eq1} is applied,
+is marked with an $*$. The computation goes as follows:
 \begin{align*}
 \jcomp{}{e}{\jcomp{}{e}{P}}
 & \jdeq
@@ -2432,10 +2434,10 @@ The proof is a rather long computation:
 & \jdeq
   \jcomp{}{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}
   \\
-& \jdeq 
+& \jdeq
   \jcomp{}{\jcomp{}{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}{e}}{P}
   \\
-& \jdeq
+& \stackrel{*}{\jdeq}
   \jcomp{}{
     \jcomp{}{\jvcomp{}{\idtm{A}}{f}}{e}}{P}
   \\
@@ -2528,6 +2530,45 @@ judgmental equality
 \end{equation*}
 \end{lem}
 
+\begin{proof}
+The proof is a straightforward calculation (start in the middle):
+\begin{align*}
+\subst{{y_2}{{y_1}{\jcomp{}{e}{f}}}}{{y_0}{f}}
+& \jdeq
+  \subst{\tmext{y_0}{\subst{y_2}{{y_1}{\jcomp{}{e}{f}}}}}{f}
+  \\
+& \jdeq
+  \subst{{y_2}{{y_1}{{y_0}{\jvcomp{}{\idtm{P}}{\jcomp{}{e}{f}}}}}}{f}
+  \\
+& \jdeq
+  \subst
+    {y_2}
+    { {y_1}
+      { {y_0}
+        {\jcomp{}{\jvcomp{}{\idtm{P}}{\jcomp{}{e}{f}}}{f}}
+        }
+      }
+  \\
+& \jdeq
+  \subst
+    {y_2}
+    { {y_1}
+      { {y_0}
+        {\jcomp{}{\jvcomp{}{f}{\idtm{\jcomp{}{f}{{}{e}{P}}}}}{f}}
+        }
+      }
+  \\
+& \jdeq
+  \subst{{y_2}{{y_1}{{y_0}{\jvcomp{}{f}{\idtm{\jcomp{}{f}{{}{e}{P}}}}}}}}{f}
+  \\
+& \jdeq
+  \subst{\tmext{\subst{y_1}{{y_0}{f}}}{y_2}}{f}
+  \\
+& \jdeq
+  \subst{y_2}{{{y_1}{{y_0}{f}}}{f}}.\qedhere
+\end{align*}
+\end{proof}
+
 \subsection{Extension-empty algebras}
 \begin{defn}
 Let $P$ be a family over the extended context $\ctxext{\Gamma}{A}$, let
@@ -2538,4 +2579,12 @@ if the following judgmental equalities hold:
 \jfameq*{\Gamma}{\subst{x}{P}}{A}\\
 \jtermeq*{\Gamma}{A}{\subst{x}{f}}{x}.
 \end{align*}
+\end{defn}
+
+\begin{defn}
+Let $(A_0,P_0,x_0,f_0)$ be an empty algebra in context $\Gamma$ and consider
+\begin{enumerate}
+\item a family $\jfam{{\Gamma}{A_0}}{A_1}$.
+\item a family $\jfam{{{{\Gamma}{A_0}}{P_0}}{\ctxwk{P_0}{A_1}}}{P_1}$.
+\end{enumerate}
 \end{defn}
