@@ -2565,7 +2565,31 @@ such that the diagrams
   \ar[shift right=.7ex,dotted]{u}[swap]{x}
 \end{tikzcd}
 \end{equation*}
-commute
+and
+\begin{equation*}
+\begin{tikzcd}
+\jcomp{}{f}{\ctxext{Q}{\jcomp{}{g}{Q}}}
+  \ar{r}{\jcomp{}{f}{h}}
+  \ar[shift right=.7ex,fib]{d}
+& Q
+  \ar[shift right=.7ex,fib]{d}
+  \\
+\jcomp{}{f}{\jcomp{}{e}{B}}
+  \ar{r}{\idtm{\jcomp{}{f}{\jcomp{}{e}{B}}}}
+  \ar[shift right=.7ex,fib]{d}
+  \ar[shift right=.7ex,dotted,mapsto]{u}[swap]{\jcomp{}{f}{y}}
+& \jcomp{}{e}{B}
+  \ar[shift right=.7ex,fib]{d}
+  \ar[shift right=.7ex,dotted,mapsto]{u}[swap]{y}
+  \\
+\ctxext{P}{\jcomp{}{e}{P}}
+  \ar{r}[swap]{f}
+  \ar[shift right=.7ex,dotted]{u}[swap]{\jcomp{}{f}{\jcomp{}{e}{x}}}
+& P
+  \ar[shift right=.7ex,dotted]{u}[swap]{\jcomp{}{e}{x}}
+\end{tikzcd}
+\end{equation*}
+commute.
 \end{defn}
 
 \begin{rmk}
@@ -2603,3 +2627,12 @@ Let $(A_0,P_0,x_0,f_0)$ be an empty algebra in context $\Gamma$ and consider
 \item a family $\jfam{{{{\Gamma}{A_0}}{P_0}}{\ctxwk{P_0}{A_1}}}{P_1}$.
 \end{enumerate}
 \end{defn}
+
+\subsection{Extension-weakening algebras}
+
+\subsection{Extension-substitution algebras}
+
+\subsection{Pre-universes}
+Pre-universes are internal versions of the theory of contexts, families and
+terms. They interpret extension, the empty context, weakening, substitution
+and identity terms all at once in a compatible way.
