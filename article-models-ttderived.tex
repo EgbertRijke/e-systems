@@ -2227,7 +2227,10 @@ which are internal versions of the extension operation of the theory of
 contexts, families and terms. In this article, their use will be mainly in
 universes. The theory of extension algebras requires the full power (i.e.~all
 of the ingredients) of the theory of contexts, families and terms in its
-formulation.
+formulation and it is (perhaps surprisingly) quite involved to formulate it.
+It is however a necessary task, because extension algebras stand at the basis
+of implementing any theory with dependency in the theory of contexts, families
+and terms (i.e.~you don't stand a chance without extension algebras).
 
 Let $P$ be a family over an extended context $\ctxext{\Gamma}{A}$. We could
 mimic extension by requiring to have terms
@@ -2546,9 +2549,40 @@ consisting of
 \jterm*{{\Gamma}{A}}{B}{x}\\
 \jterm*{{{\Gamma}{A}}{P}}{\subst{\jcomp{}{e}{x}}{Q}}{y}
 \end{align*}
-such that... (compatibility of the extensions)
+such that the diagrams
+\begin{equation*}
+\begin{tikzcd}
+\ctxext{\jcomp{}{e}{B}}{Q} 
+  \ar{r}{g} 
+  \ar[shift right=.7ex,fib]{d}
+& B 
+  \ar[shift right=.7ex,fib]{d} 
+  \\
+\ctxext{A}{P} 
+  \ar[shift right=.7ex,dotted]{u}[swap]{\tmext{\jcomp{}{e}{x}}{y}}
+  \ar{r}{e}
+& A
+  \ar[shift right=.7ex,dotted]{u}[swap]{x}
+\end{tikzcd}
+\end{equation*}
+commute
 \end{defn}
 
+\begin{rmk}
+The compatibility 
+\end{rmk}
+
+\begin{defn}
+Suppose $\mathcal{A}$ and $\mathcal{B}$ are extension algebras in context
+$\Gamma$. We define the extension algebra $\ctxwk{\mathcal{A}}{\mathcal{B}}$
+to be the quadruple
+\begin{equation*}
+(\ctxwk{A}{B},\ctxwk{\ctxext{A}{P}}{Q},\ctxwk{\ctxext{A}{P}}{g},\ctxwk{\ctxext{A}{P}}{h}).
+\end{equation*}
+Note that $\ctxwk{\ctxext{A}{P}}{Q}$ is a family over $\ctxwk{\ctxext{A}{P}}{B}$,
+whereas it should be a family over $\jcomp{}{e}{\ctxwk{A}{B}}$. These are the
+same by \autoref{lem:prehom}.
+\end{defn}
 
 \subsection{Extension-empty algebras}
 \begin{defn}
