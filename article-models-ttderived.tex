@@ -2531,7 +2531,7 @@ judgmental equality
 \end{lem}
 
 \begin{proof}
-The proof is a straightforward calculation (start in the middle):
+The proof is a straightforward calculation:
 \begin{align*}
 \subst{{y_2}{{y_1}{\jcomp{}{e}{f}}}}{{y_0}{f}}
 & \jdeq
@@ -2568,6 +2568,33 @@ The proof is a straightforward calculation (start in the middle):
   \subst{y_2}{{{y_1}{{y_0}{f}}}{f}}.\qedhere
 \end{align*}
 \end{proof}
+
+Extension algebras don't come in isolation. There are also extension algebra
+families and extension algebra terms. We now aim to define these and to
+establish various constructions of new extension algebras out of old ones:
+the empty extension algebra, and extensions, weakenings and substitutions
+of extension algebras and of course the identity term as an extension algebra
+term. We start with extension algebra families.
+
+Consider an extension algebra $\mathcal{A}\defeq(A,P,e,f)$. 
+An extension algebra family over $\mathcal{A}$ is likewise a quadruple
+$\mathcal{B}\defeq(B,Q,g,h)$. Here we have a family $\jfam{{\Gamma}{A}}{B}$, a
+family $\jfam{{{{\Gamma}{A}}{P}}{\jcomp{}{e}{B}}}{Q}$ and
+\begin{align*}
+\jhom*{{{\Gamma}{A}}{P}}{\ctxext{\jcomp{}{e}{B}}{Q}}{\jcomp{}{e}{B}}{g}\\
+\jhom*{{{{\Gamma}{A}}{P}}{\jcomp{}{e}{B}}}{\ctxext{Q}{\jcomp{}{g}{Q}}}{Q}{h}.
+\end{align*}
+The quadruple $(\jcomp{}{e}{B},Q,g,h)$ is required to be an extension algebra
+in context $\ctxext{{\Gamma}{A}}{P}$.
+
+Suppose $\mathcal{A}$ is an extension algebra and $\mathcal{B}$ is an extension
+algebra family over $\mathcal{A}$. A term of $\mathcal{B}$ is a pair $(x,y)$
+consisting of
+\begin{align*}
+\jterm*{{\Gamma}{A}}{B}{x}\\
+\jterm*{{{\Gamma}{A}}{P}}{\subst{\jcomp{}{e}{x}}{Q}}{y}
+\end{align*}
+such that... (compatibility of the extensions)
 
 \subsection{Extension-empty algebras}
 \begin{defn}
