@@ -1104,7 +1104,11 @@
 \newcommand{\tounit}[1]{{!_{#1}}}
 \newcommand{\trwk}{\typefont{trwk}}
 \newcommand{\trext}{\typefont{trext}}
+\newcommand{\tfindf}[2][]{\typefont{ind}_{#2}^{#1}}
 
+\makeatletter
+\newcommand{\tfind}[3][]{\tfindf[#1]{#2}(\default@ctxext #3)}
+\makeatother
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% When investigation pointed structures we use the \pt macro.
 
