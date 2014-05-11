@@ -791,9 +791,11 @@ Thus we need to find out what $\subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{P}}}$ i
 \subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{P}}} 
 & \jdeq 
   \ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{P}}}
+  \tag{by \autoref{comp-ws-f}}
   \\
 & \jdeq 
   \ctxwk{P}{P},
+  \tag{by \autoref{idfunc-wk-defn}}
 \end{align*}
 where we find the term $\idtm{P}$. Therefore we define:
 
@@ -863,7 +865,7 @@ To prove the first judgmental equality, note that
 w 
 & \jdeq 
   \subst{w}{\idtm{\ctxext{A}{P}}} 
-  \tag{by \autoref{idfunc-subst-defn}}\\
+  \tag{by \autoref{cancellation-si}}\\
 & \jdeq 
   \subst
     { w}
@@ -934,34 +936,42 @@ $\jterm{\Gamma}{\subst{x}{P}}{u}$. Then we have
 \cprojfst{A}{P}{\tmext{A}{P}{x}{u}}
 & \jdeq 
   \subst{\tmext{A}{P}{x}{u}}{\ctxwk{P}{\idtm{A}}}
+  \tag{by definition}
   \\
 & \jdeq 
   \subst{u}{{x}{\ctxwk{P}{\idtm{A}}}} 
+  \tag{by \autoref{comp-es}}
   \\
 & \jdeq 
   \subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\idtm{A}}}}
+  \tag{by \autoref{comp-sw-t}}
   \\
 & \jdeq 
   \subst{x}{\idtm{A}}
+  \tag{by \autoref{cancellation-ws-t}}
   \\
 & \jdeq 
   x.
+  \tag{by \autoref{cancellation-si}}
 \end{align*}
 To prove the third judgmental equality, note that
 \begin{align*}
 \cprojsnd{A}{P}{\tmext{A}{P}{x}{u}}
 & \jdeq 
   \subst{\tmext{A}{P}{x}{u}}{\idtm{P}}
+  \tag{by definition}
   \\
 & \jdeq 
   \subst{u}{{x}{\idtm{P}}}
+  \tag{by \autoref{comp-es}}
   \\
 & \jdeq 
   \subst{u}{\idtm{\subst{x}{P}}}
+  \tag{by \autoref{comp-si-t}}
   \\
 & \jdeq 
   u.
-  \qedhere
+  \tag{by \autoref{cancellation-si}}
 \end{align*}
 \end{proof}
 
