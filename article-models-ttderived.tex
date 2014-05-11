@@ -78,14 +78,15 @@ is valid.
 
 \begin{proof}
 Let $\jfam{\Gamma}{A}$, $\jfam{\Gamma}{B}$, $\jfam{\Gamma}{C}$ and $\jhom{\Gamma}{A}{B}{f}$.
-Then we have the judgmental equalities\begin{align*}
+Then we have the judgmental equalities
+\begin{align*}
 \subst{f}{\ctxwk{A}{{B}{C}}}
 & \jdeq 
   \subst{f}{\ctxwk{{A}{B}}{{A}{C}}}
-  \\
+  \tag{by \autoref{comp-ww-f}}\\
 & \jdeq 
   \ctxwk{A}{C}.
-  \qedhere
+  \tag{by \autoref{cancellation-ws-t}}
 \end{align*}
 \end{proof}
 
@@ -151,15 +152,20 @@ are valid.
 
 \begin{proof}
 For the first, note that we have the judgmental equalities
-\begin{equation*}
+\begin{align*}
 \jcomp{A}{f}{\emptyf}
-  \jdeq
+& \jdeq
   \unfold{\jcomp{A}{f}{\emptyf}}
-  \jdeq
+  \tag{by definition}
+  \\
+& \jdeq
   \subst{f}{\emptyf}
-  \jdeq
+  \tag{by \autoref{comp-w0-c}}
+  \\
+& \jdeq
   \emptyf.
-\end{equation*}
+  \tag{by \autoref{comp-s0-c}}
+\end{align*}
 The second judgmental equality is proven similarly.
 \end{proof}
 
@@ -219,15 +225,19 @@ Let $\jfam{{{{\Gamma}{B}}{Q}}{R}}{S}$. Then we have the judgmental equalities
 \jcomp{A}{f}{\ctxext{R}{S}}
 & \jdeq
   \unfold{\jcomp{A}{f}{\ctxext{R}{S}}}
+  \tag{by definition}
   \\
 & \jdeq
   \subst{f}{\ctxext{\ctxwk{A}{R}}{\ctxwk{A}{S}}}
+  \tag{by \autoref{comp-we-f}}
   \\
 & \jdeq
   \unfoldall{\ctxext{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}}
+  \tag{by \autoref{comp-se-f}}
   \\
 & \jdeq
-  \ctxext{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}.\qedhere
+  \ctxext{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}.
+  \tag{by definition}
 \end{align*}
 \end{proof}
 
@@ -265,15 +275,19 @@ $\jfam{{{\Gamma}{B}}{Q}}{S}$. Then we have the judgmental equalities
 \jcomp{A}{f}{\ctxwk{R}{S}}
 & \jdeq
   \unfold{\jcomp{A}{f}{\ctxwk{R}{S}}}
+  \tag{by definition}
   \\
 & \jdeq
   \subst{f}{\ctxwk{{A}{R}}{{A}{S}}}
+  \tag{by \autoref{comp-ww-f}}
   \\
 & \jdeq
   \unfoldall{\ctxwk{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}}
+  \tag{by \autoref{comp-sw-f}}
   \\
 & \jdeq
   \ctxwk{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}.
+  \tag{by definition}
 \end{align*}
 The proof of the second property is similar.
 \end{proof}
@@ -312,15 +326,19 @@ Then we have the judgmental equalities
 \jcomp{A}{f}{\subst{h}{S}}
 & \jdeq
   \unfold{\jcomp{A}{f}{\subst{h}{S}}}
+  \tag{by definition}
   \\
 & \jdeq
   \subst{f}{{\ctxwk{A}{h}}{\ctxwk{A}{S}}}
+  \tag{by \autoref{comp-ws-f}}
   \\
 & \jdeq
   \unfoldall{\subst{\jcomp{A}{f}{h}}{\jcomp{A}{f}{S}}}
+  \tag{by \autoref{comp-ss-f}}
   \\
 & \jdeq
   \subst{\jcomp{A}{f}{h}}{\jcomp{A}{f}{S}}.
+  \tag{by definition}
 \end{align*}
 The proof of the second inference rule is similar.
 \end{proof}
@@ -347,15 +365,19 @@ Let $\jfam{{{\Gamma}{B}}{Q}}{R}$. We have the following judgmental equalities:
 \jcomp{A}{f}{\idtm{R}}
 & \jdeq
   \unfold{\jcomp{A}{f}{\idtm{R}}}
+  \tag{by definition}
   \\
 & \jdeq
   \subst{f}{\idtm{\ctxwk{A}{R}}}
+  \tag{by \autoref{comp-wi-t}}
   \\
 & \jdeq
   \unfoldall{\idtm{\jcomp{A}{f}{R}}}
+  \tag{by \autoref{comp-si-t}}
   \\
 & \jdeq
-  \idtm{\jcomp{A}{f}{R}}.\qedhere
+  \idtm{\jcomp{A}{f}{R}}.
+  \tag{by definition}
 \end{align*}
 \end{proof}
 
@@ -418,12 +440,15 @@ equalities\begin{align*}
 \subst{\jcomp{A}{f}{g}}{R} 
 & \jdeq 
   \subst{{f}{\ctxwk{A}{g}}}{R}
+  \tag{by definition}
   \\
 & \jdeq 
   \subst{{f}{\ctxwk{A}{g}}}{\subst{f}{\ctxwk{{A}{B}}{R}}}
+  \tag{by \autoref{cancellation-ws-f}}
   \\
 & \jdeq 
-  \subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{R}}}
+  \subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{R}}}.
+  \tag{by \autoref{comp-ss-f}}
 \end{align*}
 The proof that 
 $\subst{\jcomp{A}{f}{g}}{h}\jdeq\subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{h}}}$
@@ -433,24 +458,35 @@ Now suppose that $\jfam{{\Gamma}{C}}{R}$ instead. Then we have\begin{align*}
 \jcomp{A}{{A}{f}{g}}{R} 
 & \jdeq 
   \subst{\jcomp{A}{f}{g}}{\ctxwk{A}{R}}
+  \tag{by definition}
   \\
 & \jdeq 
   \subst{{f}{\ctxwk{A}{g}}}{\ctxwk{A}{R}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst{{f}{\ctxwk{A}{g}}}{{f}{\ctxwk{{A}{B}}{{A}{R}}}}
+  \tag{by \autoref{cancellation-ws-t}}
   \\
 & \jdeq 
   \subst{f}{{\ctxwk{A}{g}}{\ctxwk{{A}{B}}{{A}{R}}}}
+  \tag{by \autoref{comp-ss-f}}
   \\
 & \jdeq 
   \subst{f}{{\ctxwk{A}{g}}{\ctxwk{A}{{B}{R}}}}
+  \tag{by \autoref{comp-ww-f}}
   \\
 & \jdeq 
   \subst{f}{\ctxwk{A}{\subst{g}{\ctxwk{B}{R}}}}
+  \tag{by \autoref{comp-ws-f}}
   \\
 & \jdeq 
   \subst{f}{\ctxwk{A}{\jcomp{B}{g}{R}}}
+  \tag{by definition}
   \\
 & \jdeq 
   \jcomp{A}{f}{{B}{g}{R}}.
+  \tag{by definition}
 \end{align*}
 Again, the proof is similar for terms $h$ of $R$ in context $\ctxext{\Gamma}{C}$.
 \end{proof}
@@ -503,37 +539,45 @@ Then we have the judgmental equalities\begin{align*}
 \ctxwk{P}{\jcomp{A}{f}{g}} 
 & \jdeq 
   \ctxwk{P}{\subst{f}{\ctxwk{A}{g}}}
+  \tag{by definition}
   \\
 & \jdeq 
   \subst{\ctxwk{P}{f}}{\ctxwk{P}{{A}{g}}}
+  \tag{by \autoref{comp-ws-t}}
   \\
 & \jdeq 
   \subst{\ctxwk{P}{f}}{\ctxwk{\ctxext{A}{P}}{g}}
+  \tag{by \autoref{comp-ew-t}}
   \\
 & \jdeq 
   \jcomp{{A}{P}}{\ctxwk{P}{f}}{g}.
+  \tag{by definition}
 \end{align*}
 Now let $\jterm{\Gamma}{B}{y}$ and $\jhom{\Gamma}{B}{C}{g}$. Then we have the
 judgmental equalities\begin{align*}
 \jcomp{A}{\ctxwk{A}{y}}{g}
 & \jdeq 
   \subst{\ctxwk{A}{y}}{\ctxwk{A}{g}}
+  \tag{by definition}
   \\
 & \jdeq 
   \ctxwk{A}{\subst{y}{g}}.
+  \tag{by \autoref{comp-ws-t}}
 \end{align*}
 For the third assertion, let $\jhom{\Gamma}{A}{B}{f}$ and $\jterm{\Gamma}{C}{z}$.
 Then we have the judgmental equalities\begin{align*}
 \jcomp{A}{f}{\ctxwk{B}{z}} 
 & \jdeq 
   \subst{f}{\ctxwk{A}{{B}{z}}}
+  \tag{by definition}
   \\
 & \jdeq 
   \subst{f}{\ctxwk{{A}{B}}{{A}{z}}}
+  \tag{by \autoref{comp-ww-t}}
   \\
 & \jdeq 
   \ctxwk{A}{z}.
-  \qedhere
+  \tag{by \autoref{cancellation-ws-t}}
 \end{align*}
 \end{proof}
 
@@ -574,28 +618,34 @@ Then we have the judgmental equalities\begin{align*}
 \subst{x}{\jcomp{A}{f}{g}}
 & \jdeq 
   \subst{x}{{f}{\ctxwk{P}{g}}}
+  \tag{by definition}
   \\
 & \jdeq 
   \subst{{x}{f}}{{x}{\ctxwk{P}{g}}}
+  \tag{by \autoref{comp-ss-t}}
   \\
 & \jdeq 
   \subst{{x}{f}}{\ctxwk{\subst{x}{P}}{\subst{x}{g}}}
+  \tag{by \autoref{comp-sw-t}}
   \\
 & \jdeq 
   \jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{g}}.
+  \tag{by definition}
 \end{align*}
 Now let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$ and $\jterm{\Gamma}{A}{x}$.
 Then we have the judgmental equalities\begin{align*}
 \subst{x}{\jcomp{A}{f}{g}}
 & \jdeq 
   \subst{x}{{f}{\ctxwk{A}{g}}}
+  \tag{by definition}
   \\
 & \jdeq 
   \subst{{x}{f}}{{x}{\ctxwk{A}{g}}}
+  \tag{by \autoref{comp-ss-t}}
   \\
 & \jdeq 
   \subst{{x}{f}}{g}.
-  \qedhere
+  \tag{by \autoref{cancellation-ws-t}}
 \end{align*}
 \end{proof}
 
@@ -682,12 +732,12 @@ be terms and let $\jfam{{{\Gamma}{A}}{P}}{Q}$ be a family. Then we have
   \subst
     {{u}{{x}{\idtm{\ctxext{A}{P}}}}}
     {{x}{\ctxwk{A}{Q}}}
-  \tag{by \autoref{defn-ws-3}}\\
+  \tag{by \autoref{cancellation-ws-f}}\\
 & \jdeq 
   \subst
     {{u}{{x}{\idtm{\ctxext{A}{P}}}}}
     {{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\ctxwk{A}{Q}}}}}
-  \tag{by \autoref{defn-ws-3}}\\
+  \tag{by \autoref{cancellation-ws-f}}\\
 & \jdeq 
   \subst
     {{u}{{x}{\idtm{\ctxext{A}{P}}}}}
@@ -726,12 +776,14 @@ functions on the components in the apropriate way.
 To find out what the
 apropriate way is, note that
 \begin{align*}
-\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}} 
-& \jdeq 
-  \ctxwk{P}{{A}{\ctxext{A}{P}}}
+\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}
+& \jdeq
+  \ctxext{\ctxwk{\ctxext{A}{P}}{A}}{\ctxwk{\ctxext{A}{P}}{P}}
+  \tag{by \autoref{comp-we-f}}
   \\
-& \jdeq 
+& \jdeq
   \ctxext{\ctxwk{P}{{A}{A}}}{\ctxwk{P}{{A}{P}}}
+  \tag{by \autoref{comp-ew-f}}
 \end{align*}
 We have the term $\jterm{{\Gamma}{{A}{P}}}{\ctxwk{P}{A}}{\ctxwk{P}{\idtm{A}}}$.
 Thus we need to find out what $\subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{P}}}$ is:
@@ -859,7 +911,7 @@ w
         {\ctxwk{\ctxext{A}{P}}{\idtm{\ctxext{A}{P}}}}
         }
       }
-  \tag{by \autoref{idfunc-wk-comp}}\\
+  \tag{by \autoref{comp-wi-t}}\\
 & \jdeq 
   \subst
     { {w}
@@ -871,7 +923,7 @@ w
       { \idtm{\ctxext{A}{P}}
         }
       }
-  \tag{by \autoref{defn-ws-4}}\\
+  \tag{by \autoref{cancellation-ws-t}}\\
 & \jdeq 
   \tmext{A}{P}{\cprojfst{A}{P}{w}}{\cprojsnd{A}{P}{w}}
   \tag{by definition}
@@ -2238,6 +2290,35 @@ mimic extension by requiring to have terms
 \jhom*{\Gamma}{{A}{P}}{A}{e}\\
 \jhom*{{\Gamma}{A}}{{P}{\jcomp{}{e}{P}}}{P}{f}.
 \end{align*}
+
+\begin{rmk}
+Instead of looking at $f$ as a context morphism from $\ctxext{P}{\jcomp{}{e}{P}}$
+to $P$, one could also look at $f$ as a morphism \emph{over $\cprojfstf{A}{P}$},
+as indicated in the following diagram:
+\begin{equation*}
+\begin{tikzcd}
+P
+  \ar[fib]{d}
+& \jcomp{}{e}{P}
+  \ar[fib]{d}
+  \ar{l}[swap]{f}
+  \ar{r}
+& P
+  \ar[fib]{d}
+  \\
+A
+& \ctxext{A}{P}
+  \ar{l}{\cprojfstf{A}{P}}
+  \ar{r}[swap]{e}
+& A
+\end{tikzcd}
+\end{equation*}
+This makes it clear that $f$ takes a family over an extended context as an
+argument. The extended context consists of a `base part' and a `family part'. 
+The output of $f$ is a new (extended) family over that base part. Forgetting 
+the family part is what the projection takes care of.
+\end{rmk}
+
 Extension also satisfies the properties explained in \autoref{comp-ee}, so we
 must find the two judgmental equalities for $e$ and $f$ mimicing those. 
 The first of these judgmental equalities is easy to give: it says that the
@@ -2532,10 +2613,10 @@ term. We start with extension algebra families.
 Consider an extension algebra $\mathcal{A}\defeq(A,P,e,f)$. 
 An extension algebra family over $\mathcal{A}$ is likewise a quadruple
 $\mathcal{B}\defeq(B,Q,g,h)$. Here we have a family $\jfam{{\Gamma}{A}}{B}$, a
-family $\jfam{{{{\Gamma}{A}}{P}}{\jcomp{}{e}{B}}}{Q}$ and
+family $\jfam{{{{\Gamma}{A}}{P}}{\ctxwk{P}{B}}}{Q}$ and
 \begin{align*}
-\jhom*{{{\Gamma}{A}}{P}}{\ctxext{\jcomp{}{e}{B}}{Q}}{\jcomp{}{e}{B}}{g}\\
-\jhom*{{{{\Gamma}{A}}{P}}{\jcomp{}{e}{B}}}{\ctxext{Q}{\jcomp{}{g}{Q}}}{Q}{h}.
+\jhom*{{{\Gamma}{A}}{P}}{\ctxext{\ctxwk{P}{B}}{Q}}{\jcomp{}{e}{B}}{g}\\
+\jhom*{{{{\Gamma}{A}}{P}}{\ctxwk{P}{B}}}{\ctxext{Q}{\jcomp{}{g}{Q}}}{Q}{h}.
 \end{align*}
 The quadruple $(\jcomp{}{e}{B},Q,g,h)$ is required to be an extension algebra
 in context $\ctxext{{\Gamma}{A}}{P}$.
@@ -2592,10 +2673,6 @@ and
 commute.
 \end{defn}
 
-\begin{rmk}
-The compatibility 
-\end{rmk}
-
 \begin{defn}
 Suppose $\mathcal{A}$ and $\mathcal{B}$ are extension algebras in context
 $\Gamma$. We define the extension algebra $\ctxwk{\mathcal{A}}{\mathcal{B}}$
@@ -2607,6 +2684,32 @@ Note that $\ctxwk{\ctxext{A}{P}}{Q}$ is a family over $\ctxwk{\ctxext{A}{P}}{B}$
 whereas it should be a family over $\jcomp{}{e}{\ctxwk{A}{B}}$. These are the
 same by \autoref{lem:prehom}.
 \end{defn}
+
+\begin{rmk}
+Before we continue, let us explore what it means to be an extension algebra
+term of the extension algebra $\ctxwk{\mathcal{A}}{\mathcal{B}}$. Such an
+extension algebra term $(x,y)$ would consist of
+\begin{align*}
+\jterm*{{\Gamma}{A}}{\ctxwk{A}{B}}{x}\\
+\jterm*{{{\Gamma}{A}}{P}}{\subst{\jcomp{}{e}{x}}{\ctxwk{\ctxext{A}{P}}{Q}}}{y}.
+\end{align*}
+Thus, $x$ is a context morphism from $A$ to $B$ and $y$ is nothing but a term
+of $\jcomp{}{\jcomp{}{e}{x}}{Q}$. For $x$, we see that the diagram
+\begin{equation*}
+\begin{tikzcd}
+\ctxext{B}{Q} 
+  \ar{r}{g} 
+& B 
+  \\
+\ctxext{A}{P} 
+  \ar{u}{\jvcomp{}{x}{y}}
+  \ar{r}{e}
+& A
+  \ar{u}[swap]{x}
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{rmk}
 
 \subsection{Extension-empty algebras}
 \begin{defn}

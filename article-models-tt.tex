@@ -548,7 +548,7 @@ weakened, the result is the empty family.
     }
   { \jfameq{{\Gamma}{A}}{\ctxwk{A}{\emptyf}}{\emptyf}
     }
-  \\
+  \label{comp-w0-c}\\
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{\Gamma}{B}
@@ -558,6 +558,7 @@ weakened, the result is the empty family.
     {\ctxwk[\famsym]{A}{\emptyf}}
     {\emptyf}
     }
+  \label{comp-w0-f}
 \end{align}
 Note that we do not have to axiomatize the action of weakening
 by $A$ on the term of the empty family, because the result will be in the empty 
@@ -691,6 +692,7 @@ the empty families:
     }
   { \jfameq{\Gamma}{\subst{x}{\emptyf}}{\emptyf}
     }
+  \label{comp-s0-c}
   \\
 & \inference
   { \jterm{\Gamma}{A}{x}
@@ -701,6 +703,7 @@ the empty families:
       {\subst{x}{\emptyf}}
       {\emptyf}
     }
+  \label{comp-s0-f}
 \end{align}
 Note again that we do not have to axiomatize the action of substitution by $x$ on the term
 of the empty family, because the result will be in the empty family and every
@@ -1078,7 +1081,7 @@ $\jterm{\Gamma}{B}{y}$.
 \subsubsection{The identity term of a weakened family}
 \label{comp-wi}
 The identity term of a weakened family is the weakened identity term:
-\begin{equation}\label{idfunc-wk-comp}
+\begin{equation}
 \inference
   { \jfam{\Gamma}{A}
     \jfam{\Gamma}{B}
@@ -1090,12 +1093,13 @@ The identity term of a weakened family is the weakened identity term:
       {\ctxwk{A}{\idtm{B}}}
       {\idtm{\ctxwk{A}{B}}}
     }}
+  \label{comp-wi-t}
 \end{equation}
 
 \subsubsection{The identity term of a substituted family}
 \label{comp-si}
 The identity term of a substituted family is the substitution of the identity term
-\begin{equation}\label{idfunc-subst-comp}
+\begin{equation}
 \inference
   { \jterm{\Gamma}{A}{x}
     \jfam{{\Gamma}{A}}{P}
@@ -1107,6 +1111,7 @@ The identity term of a substituted family is the substitution of the identity te
       {\subst{x}{\idtm{P}}}
       {\idtm{\subst{x}{P}}}
     }}
+  \label{comp-si-t}
 \end{equation}
 
 \subsubsection{Currying for weakening}
@@ -1157,14 +1162,14 @@ compose context morphisms (terms of weakened contexts).
     }
   { \jfameq{{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}
     }
-  \label{defn-ws-3}\\
+  \label{cancellation-ws-f}\\
 & \inference
   { \jterm{\Gamma}{A}{x}
     \jterm{{\Gamma}{B}}{Q}{g}
     }
   { \jtermeq{{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}
     }
-  \label{defn-ws-4}
+  \label{cancellation-ws-t}
 \end{align}
 
 \subsubsection{The cancellation properties of identity terms}
