@@ -1612,7 +1612,7 @@ $\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ over them. Then we have\begin{equation*}
   {{\Gamma}{A}}
   {\jcomp{A}{f}{Q}}
   {\jcomp{A}{f}{{B}{g}{R}}}
-  {\unfold{\jcomp{A}{f}{G}}}
+  {\jcomp{A}{f}{G}}
 \end{equation*}
 Because we also have $\jhom{{\Gamma}{A}}{P}{\jcomp{A}{f}{Q}}{F}$, we have the
 composition\begin{equation*}
@@ -1620,31 +1620,224 @@ composition\begin{equation*}
   {{\Gamma}{A}}
   {P}
   {\jcomp{A}{f}{{B}{g}{R}}}
-  {\jcomp{P}{F}{\unfold{\jcomp{A}{f}{G}}}}.
+  {\jcomp{P}{F}{\jcomp{A}{f}{G}}}.
 \end{equation*}
 Because of 
 the judgmental equality $\jcomp{A}{f}{{B}{g}{R}}\jdeq
 \jcomp{A}{{A}{f}{g}}{R}$, it follows that 
-$\jcomp{P}{F}{\unfold{\jcomp{A}{f}{G}}}$ is a morphism from $P$ to $R$ over
-$\jcomp{A}{f}{g}$. We make the following definition:
+$\jcomp{P}{F}{\jcomp{A}{f}{G}}$ is a morphism from $P$ to $R$ over
+$\jcomp{A}{f}{g}$. This could be considered as the composition of $G$ with $F$.
+In the following definition, we formulate this more generally.
 
 \begin{defn}
-Let $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
-be morphisms and let $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ and
-$\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ be morphisms over them. Then we define\begin{equation*}
-\jfhomdefn
-  {\Gamma}
-  {A}
-  {C}
-  {\jcomp{A}{f}{g}}
-  {P}
-  {R}
-  {\jfcomp{A}{f}{P}{F}{G}}
-  {\unfold{\jfcomp{A}{f}{P}{F}{G}}}.
+\emph{Horizontal composition of morphisms over morphisms} is defined by
+\begin{align*}
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jfamdefn
+      {{{\Gamma}{A}}{P}}
+      {\jfcomp{A}{f}{P}{F}{R}}
+      {\unfold{\jfcomp{A}{f}{P}{F}{R}}}
+    }
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    }
+  { \jfamdefn
+      {{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{R}}}
+      {\jfcomp{A}{f}{P}{F}{S}}
+      {\unfold{\jfcomp{A}{f}{P}{F}{S}}}
+    }
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jterm{{{{\Gamma}{B}}{Q}}{R}}{S}{k}
+    }
+  { \jtermdefn
+      {{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{R}}}
+      {\jfcomp{A}{f}{P}{F}{S}}
+      {\jfcomp{A}{f}{P}{F}{k}}
+      {\unfold{\jfcomp{A}{f}{P}{F}{S}}}
+    }
+\end{align*}
+\end{defn}
+
+There is also a notion of vertical composition, although this is not an
+operation the way horizontal composition is. Nevertheless, to analyze the
+properties of horizontal composition it is useful to
+consider vertical composition.
+
+\begin{defn}
+Let $\jhom{\Gamma}{A}{B}{f}$ be a morphism from $A$ to $B$ in context $\Gamma$
+and let $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ be a morphism over $f$ in context 
+$\Gamma$. We define
+\begin{equation*}
+\jhomdefn{\Gamma}{{A}{P}}{{B}{Q}}{\jvcomp{P}{f}{F}}{\unfold{\jvcomp{P}{f}{F}}}
 \end{equation*}
 \end{defn}
 
-This composition is also judgmentally associative.
+\begin{lem}
+The following inference rule is valid:
+\begin{equation*}
+\inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{P}}
+      {\jfcomp{A}{f}{P}{F}{R}}
+      {\jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{R}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+Let $F$ be a morphism from $P$ to $Q$ over $f$ in context $\Gamma$ and let
+$R$ be a family over $\ctxext{{\Gamma}{B}}{Q}$. Then we have
+\begin{align*}
+\jfcomp{A}{f}{P}{F}{R}
+& \jdeq
+  \unfold{\jfcomp{A}{f}{P}{F}{R}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst{F}{{\ctxwk{P}{f}}{\ctxwk{P}{{A}{R}}}}
+  \tag{by \autoref{comp-ws-f}}
+  \\
+& \jdeq
+  \subst{F}{{\ctxwk{P}{f}}{\ctxwk{\ctxext{A}{P}}{R}}}
+  \tag{by \autoref{comp-ew-f}}
+  \\
+& \jdeq
+  \subst{\tmext{\ctxwk{P}{f}}{F}}{\ctxwk{\ctxext{A}{P}}{R}}
+  \tag{by \autoref{comp-es}}
+  \\
+& \jdeq
+  \jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{R}.
+  \tag{by definition}
+\end{align*}
+\end{proof}
+
+\begin{lem}
+We have the following composition threesome:
+\begin{equation*}
+\inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}
+    }
+  { \jhomeq
+      {\Gamma}
+      {{A}{P}}
+      {{C}{R}}
+      {\jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{\jvcomp{Q}{g}{G}}}
+      {\jvcomp{P}{\jcomp{A}{f}{g}}{\jfcomp{A}{f}{P}{F}{G}}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+Consider $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ and 
+$\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$. Then we have
+\begin{align*}
+\jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{\jvcomp{Q}{g}{G}}
+& \jdeq
+  \unfold{\jcomp{{A}{P}}{\unfold{\jvcomp{P}{f}{F}}}{\unfold{\jvcomp{Q}{g}{G}}}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst
+    {F}
+    { {\ctxwk{P}{f}}
+      {\ctxwk{\ctxext{A}{P}}{\tmext{\ctxwk{Q}{g}}{G}}}
+      }
+  \tag{by \autoref{comp-es}}
+  \\
+& \jdeq
+  \subst
+    {F}
+    { {\ctxwk{P}{f}}
+      {\ctxwk{P}{{A}{\tmext{\ctxwk{Q}{g}}{G}}}}
+      }
+  \tag{by \autoref{comp-ew-t}}
+  \\
+& \jdeq
+  \subst
+    {F}
+    { \ctxwk{P}{\subst{f}{\ctxwk{A}{\tmext{\ctxwk{Q}{g}}{G}}}}
+      }
+  \tag{by \autoref{comp-ws-t}}
+  \\
+& \jdeq
+  \jcomp{P}{F}{\jcomp{A}{f}{\tmext{}{}{\ctxwk{Q}{g}}{G}}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst
+    {F}
+    {\ctxwk{P}{\tmext{}{}{\jcomp{A}{f}{\ctxwk{Q}{g}}}{\jcomp{A}{f}{G}}}}
+\end{align*}
+\end{proof}
+
+\begin{lem}
+Horizontal composition of morphisms over morphisms is associative, i.e.~the
+following inference rules are valid:
+\begin{align*}
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}
+    \jfam{{{\Gamma}{C}}{R}}{S}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{P}}
+      {\jfcomp{A}{f}{P}{F}{\jfcomp{B}{g}{Q}{G}{S}}}
+      {\jfcomp{A}{\jcomp{A}{f}{g}}{P}{\jfcomp{A}{f}{P}{F}{G}}{S}}
+    }
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}
+    \jfam{{{{\Gamma}{C}}{R}}{S}}{T}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{\jfcomp{B}{g}{Q}{G}{S}}}}
+      {\jfcomp{A}{f}{P}{F}{\jfcomp{B}{g}{Q}{G}{T}}}
+      {\jfcomp{A}{\jcomp{A}{f}{g}}{P}{\jfcomp{A}{f}{P}{F}{G}}{T}}
+    }
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}
+    \jterm{{{{\Gamma}{C}}{R}}{S}}{T}{l}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{\jfcomp{B}{g}{Q}{G}{S}}}}
+      {\jfcomp{A}{f}{P}{F}{\jfcomp{B}{g}{Q}{G}{T}}}
+      {\jfcomp{A}{f}{P}{F}{\jfcomp{B}{g}{Q}{G}{l}}}
+      {\jfcomp{A}{\jcomp{A}{f}{g}}{P}{\jfcomp{A}{f}{P}{F}{G}}{l}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+We only prove the first inference rule. Let
+$\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$, $\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$ and
+$\jfam{{{\Gamma}{C}}{R}}{S}$. Then we have the judgmental equalities
+\begin{align*}
+\jfcomp{A}{f}{P}{F}{\jfcomp{B}{g}{Q}{G}{S}}
+& \jdeq
+  \jcomp{P}{F}{\jcomp{A}{f}{\jcomp{Q}{G}{\jcomp{B}{g}{S}}}}
+  \tag{by definition}
+  \\
+& \jdeq 
+  \unfoldall{\jcomp{P}{F}{\jcomp{A}{f}{\jcomp{Q}{G}{\jcomp{B}{g}{S}}}}}
+  \tag{by definition}
+  \\
+& \jdeq 
+\end{align*}
+\end{proof}
 
 Now let $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$ be families. A
 morphism from $P$ to $Q$ over the identity term $\idtm{A}$ in context
@@ -1785,15 +1978,6 @@ judgmental equalities
   \qedhere
 \end{align*}
 \end{proof}
-
-\begin{defn}
-Let $\jhom{\Gamma}{A}{B}{f}$ be a morphism from $A$ to $B$ in context $\Gamma$
-and let $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ be a morphism over $f$ in context 
-$\Gamma$. We define
-\begin{equation*}
-\jhomdefn{\Gamma}{{A}{P}}{{B}{Q}}{\jvcomp{P}{f}{F}}{\unfold{\jvcomp{P}{f}{F}}}
-\end{equation*}
-\end{defn}
 
 \subsection{Fiber inclusions}
 We will use the insights of \autoref{extension-on-terms} to define and study
