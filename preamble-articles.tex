@@ -893,8 +893,9 @@
 %%%% FIBER INCLUSIONS
 
 \makeatletter
-\newcommand{\finc}[2]{\typefont{in}^{#2}_{#1}}
-\newcommand{\finc@unfold}[2]{\tmext{}{}{\ctxwk{\subst{x}{P}}{x}}{\idtm{\subst{x}{P}}}}
+\newcommand{\finc}[3][]{\typefont{in}^{#3}_{#2}}
+\newcommand{\finc@unfold}[3][]{%
+  \tmext{\ctxwk{\subst{#2}{#3}}{#1}}{\ctxwk{\subst{#2}{#3}}{#3}}{\ctxwk{\subst{#2}{#3}}{#2}}{\idtm{\subst{#2}{#3}}}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

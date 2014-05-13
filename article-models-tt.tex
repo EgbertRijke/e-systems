@@ -300,6 +300,7 @@ judgmentally equal.
       {x}
       {\emptytm[\Gamma]}
     }
+  \label{comp-00-t}
 \end{align}
 
 The empty context and the empty families together with the operation of
@@ -603,18 +604,21 @@ their terms, families over those families and terms of those unchanged:
     }
   { \jfameq{\Gamma}{\ctxwk{\emptyf}{B}}{B}
     }
+  \label{comp-0w-c}
   \\
 & \inference
   { \jfam{{\Gamma}{B}}{Q}
     }
   { \jfameq{{\Gamma}{B}}{\ctxwk{\emptyf}{Q}}{Q}
     }
+  \label{comp-0w-f}
   \\
 & \inference
   { \jterm{{\Gamma}{B}}{Q}{g}
     }
   { \jtermeq{{\Gamma}{B}}{Q}{\ctxwk{\emptyf}{g}}{g}
     }
+  \label{comp-0w-t}
 \end{align}
 
 \subsubsection{Substitution}
@@ -740,6 +744,7 @@ leaves everything unchanged.
     }
   { \jfameq{\Gamma}{\subst{\emptytm}{A}}{A}
     }
+  \label{comp-0s-c}
   \\
 %& \inference
 %  { \jterm{\Gamma}{A}{x}
@@ -752,12 +757,14 @@ leaves everything unchanged.
     }
   { \jfameq{{\Gamma}{A}}{\subst{\emptytm}{P}}{P}
     }
+  \label{comp-0s-f}
   \\
 & \inference
   { \jterm{{\Gamma}{A}}{P}{f}
     }
   { \jtermeq{{\Gamma}{A}}{P}{\subst{\emptytm}{f}}{f}
     }.
+  \label{comp-0s-t}
 \end{align}
 
 In \autoref{morphisms} we will use a combination of weakening and substitution

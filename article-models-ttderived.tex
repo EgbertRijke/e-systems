@@ -1815,6 +1815,167 @@ $\ctxext{A}{P}$ in context $\Gamma$ to be the morphism
 \end{equation*}
 \end{defn}
 
+We can immediately show that composing with a fiber inclusion is substitution.
+Thus, the following lemma asserts that we have a family pullback square
+\begin{equation*}
+\begin{tikzcd}
+\subst{x}{Q} \ar[fib]{d} \ar{r} & Q \ar[fib]{d} \\
+\subst{x}{P} \ar{r}[swap]{\finc{x}{P}} & \ctxext{A}{P}
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$.
+The upper arrow is just the identity morphism over $\finc{x}{P}$.
+
+\begin{lem}\label{lem:finc-precomp}
+Composition with $\finc{x}{P}$ is (the action on families of)
+substitution with $x$:
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\jcomp{\subst{x}{P}}{\finc{x}{P}}{Q}}
+      {\subst{x}{Q}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+      {\jcomp{\subst{x}{P}}{\finc{x}{P}}{R}}
+      {\subst{x}{R}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{h}
+    }
+  { \jtermeq
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+      {\subst{x}{R}}
+      {\jcomp{\subst{x}{P}}{\finc{x}{P}}{h}}
+      {\subst{x}{h}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+We only prove the validity of the first inference rule. Let $\jterm{\Gamma}{A}{x}$
+be a term and let $\jfam{{{\Gamma}{A}}{P}}{Q}$ be a family. Then we have the
+judgmental equalities
+\begin{align*}
+\jcomp{\subst{x}{P}}{\finc{x}{P}}{Q}
+& \jdeq
+  \unfold{\jcomp{\subst{x}{P}}{\unfold{\finc{x}{P}}}{Q}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst
+    {\idtm{\subst{x}{P}}}
+    {{\ctxwk{\subst{x}{P}}{x}}{\ctxwk{\subst{x}{P}}{Q}}}
+  \tag{by \autoref{comp-es}}
+  \\
+& \jdeq
+  \subst
+    {\idtm{\subst{x}{P}}}
+    {\ctxwk{\subst{x}{P}}{\subst{x}{Q}}}
+  \tag{by \autoref{comp-ws-f}}
+  \\
+& \jdeq
+  \subst{x}{Q}.
+  \tag{by \autoref{idfunc-precomp}}
+\end{align*}
+\end{proof}
+
+We can give a second characterization of fiber inclusions:
+
+\begin{lem}\label{lem:finc-char2}
+We have the following inference rule
+\begin{equation*}
+\inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jhomeq{\Gamma}{\subst{x}{P}}{{A}{P}}{\finc{x}{P}}{\subst{x}{\idtm{{A}{P}}}}
+    } 
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+The proof is the following calculation:
+\begin{align*}
+\finc{x}{P}
+& \jdeq 
+  \tmext{\ctxwk{\subst{x}{P}}{x}}{\idtm{\subst{x}{P}}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst
+    { \idtm{\subst{x}{P}}
+      }
+    { { \ctxwk{\subst{x}{P}}{x}
+        }
+      { \idtm{\ctxext{\ctxwk{\subst{x}{P}}{A}}{\ctxwk{\subst{x}{P}}{P}}}
+        }
+      }
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst
+    { \idtm{\subst{x}{P}}
+      }
+    { { \ctxwk{\subst{x}{P}}{x}
+        }
+      { \idtm{\ctxwk{\subst{x}{P}}{\ctxext{A}{P}}}
+        }
+      }
+  \tag{by \autoref{comp-we-f}}
+  \\
+& \jdeq
+  \subst
+    { \idtm{\subst{x}{P}}
+      }
+    { { \ctxwk{\subst{x}{P}}{x}
+        }
+      { \ctxwk{\subst{x}{P}}{\idtm{\ctxext{A}{P}}}
+        }
+      }
+  \tag{by \autoref{comp-wi-t}}
+  \\
+& \jdeq
+  \subst
+    { \idtm{\subst{x}{P}}
+      }
+    { \ctxwk
+        { \subst{x}{P}
+          }
+        { \subst{x}{\idtm{\ctxext{A}{P}}}
+          }
+      }
+  \tag{by \autoref{comp-ws-t}}
+  \\
+& \jdeq
+  \subst{x}{\idtm{\ctxext{A}{P}}}.
+  \tag{by \autoref{idfunc-precomp}}
+\end{align*}
+\end{proof}
+
+\begin{cor}
+The following inference rule is valid:
+\begin{equation*}
+\inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{\subst{x}{P}}{u}
+    }
+  { \jtermeq{\Gamma}{{A}{P}}{\subst{u}{\finc{x}{P}}}{\tmext{x}{u}}
+    }
+\end{equation*}
+\end{cor}
+
 We have the following lemmas expressing the compatibility of the fiber
 inclusions with the empty context, extension, weakening and substitution. 
 
@@ -1845,6 +2006,51 @@ inference rules are valid
 \end{align*}
 \end{lem}
 
+\begin{proof}
+Let $\jterm{\Gamma}{A}{x}$. We have the judgmental equalities
+\begin{align*}
+\finc{x}{\emptyf}
+& \jdeq
+  \unfold{\finc{x}{\emptyf}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \tmext{\ctxwk{\emptyf}{x}}{\idtm{\emptyf}}
+  \tag{by \autoref{comp-s0-c}}
+  \\
+& \jdeq
+  \tmext{x}{\idtm{\emptyf}}
+  \tag{by \autoref{comp-0w-t}}
+  \\
+& \jdeq
+  \tmext{x}{\emptytm}
+  \tag{by \autoref{comp-00-t}}
+  \\
+& \jdeq
+  x
+  \tag{by \autoref{lem:tmext-emp}}
+\end{align*}
+to prove the first judgmental equality. For the second, we have
+\begin{align*}
+\finc{\emptytm}{A}
+& \jdeq
+  \unfold{\finc{\emptytm}{A}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \tmext{\emptytm}{\idtm{\subst{\emptytm}{A}}}
+  \tag{by \autoref{comp-00-t}}
+  \\
+& \jdeq
+  \idtm{\subst{\emptytm}{A}}
+  \tag{by \autoref{lem:tmext-emp}}
+  \\
+& \jdeq
+  \idtm{A}
+  \tag{by \autoref{comp-0s-f}}.
+\end{align*}
+\end{proof}
+
 \begin{lem}
 The fiber inclusions are compatible with extension; i.e.~the following inference
 rule is valid
@@ -1863,6 +2069,33 @@ rule is valid
     }
 \end{equation*}
 \end{lem}
+
+\begin{proof}
+Let $\jterm{\Gamma}{A}{x}$, $\jterm{\Gamma}{\subst{x}{P}}{u}$ and
+$\jfam{{{\Gamma}{A}}{P}}{Q}$. Then we have the judgmental equalities
+\begin{align*}
+\finc{\tmext{x}{u}}{Q}
+& \jdeq
+  \subst{\tmext{}{}{x}{u}}{\idtm{{{A}{P}}{Q}}}
+  \tag{by \autoref{lem:finc-char2}}
+  \\
+& \jdeq
+  \subst{u}{{x}{\idtm{{{A}{P}}{Q}}}}
+  \tag{by \autoref{comp-es}}
+  \\
+& \jdeq
+  \subst{u}{{x}{\idtm{{A}{{P}{Q}}}}}
+  \tag{by \autoref{comp-ee-c}}
+  \\
+& \jdeq
+  \subst{u}{\finc{x}{\ctxext{P}{Q}}}
+  \tag{by \autoref{lem:finc-char2}}
+  \\
+& \jdeq
+  \jcomp{}{\finc{u}{\subst{x}{Q}}}{\finc{x}{\ctxext{P}{Q}}}
+  \tag{by \autoref{lem:finc-precomp}}
+\end{align*}
+\end{proof}
 
 \begin{lem}
 The fiber inclusions are compatible with weakening; i.e.~the following inference
