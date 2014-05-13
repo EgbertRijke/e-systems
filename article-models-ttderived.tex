@@ -2116,6 +2116,33 @@ rule is valid
 \end{equation*}
 \end{lem}
 
+\begin{proof}
+Let $\jterm{\Gamma}{B}{y}$ and $\jfam{{\Gamma}{B}}{Q}$. Then we have the
+judgmental equalities
+\begin{align*}
+\finc{\ctxwk{A}{y}}{\ctxwk{A}{Q}}
+& \jdeq
+  \subst{\ctxwk{A}{y}}{\idtm{\ctxext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}}}
+  \tag{by \autoref{lem:finc-char2}}
+  \\
+& \jdeq
+  \subst{\ctxwk{A}{y}}{\idtm{\ctxwk{A}{\ctxext{B}{Q}}}}
+  \tag{by \autoref{comp-we-f}}
+  \\
+& \jdeq
+  \subst{\ctxwk{A}{y}}{\ctxwk{A}{\idtm{\ctxext{B}{Q}}}}
+  \tag{by \autoref{comp-wi-t}}
+  \\
+& \jdeq
+  \ctxwk{A}{\subst{y}{\idtm{{B}{Q}}}}
+  \tag{by \autoref{comp-ws-t}}
+  \\
+& \jdeq
+  \ctxwk{A}{\finc{y}{Q}}.
+  \tag{by \autoref{lem:finc-char2}}
+\end{align*}
+\end{proof}
+
 \begin{lem}
 The fiber inclusions are compatible with substitution; i.e.~the following
 inference rule is valid
@@ -2135,6 +2162,33 @@ inference rule is valid
 \end{equation*}
 \end{lem}
 
+\begin{proof}
+Let $\jterm{\Gamma}{A}{x}$, $\jterm{{\Gamma}{A}}{P}{f}$ and 
+$\jfam{{{\Gamma}{A}}{P}}{Q}$. Then we have the judgmental equalities
+\begin{align*}
+\finc{\subst{x}{f}}{\subst{x}{Q}}
+& \jdeq
+  \subst{x}{{f}{\idtm{{P}{Q}}}}
+  \tag{by \autoref{lem:finc-char2}}
+  \\
+& \jdeq
+  \subst{{x}{f}}{{x}{\idtm{{P}{Q}}}}
+  \tag{by \autoref{comp-ss-t}}
+  \\
+& \jdeq
+  \subst{{x}{f}}{\idtm{\subst{x}{\ctxext{P}{Q}}}}
+  \tag{by \autoref{comp-si-t}}
+  \\
+& \jdeq
+  \subst{{x}{f}}{\idtm{\ctxext{\subst{x}{P}}{\subst{x}{Q}}}}
+  \tag{by \autoref{comp-se-f}}
+  \\
+& \jdeq
+  \finc{\subst{x}{f}}{\subst{x}{Q}}.
+  \tag{by \autoref{lem:finc-char2}}
+\end{align*}
+\end{proof}
+
 \begin{lem}
 The fiber inclusions are compatible with identity terms; i.e.~the following
 inference rule is valid
@@ -2151,6 +2205,28 @@ inference rule is valid
     }
 \end{equation*}
 \end{lem}
+
+\begin{proof}
+Let $\jfam{\Gamma}{A}$. Then we have the judgmental equalities
+\begin{align*}
+\finc{\idtm{A}}{\ctxwk{A}{P}}
+& \jdeq
+  \subst{\idtm{A}}{\idtm{\ctxext{\ctxwk{A}{A}}{\ctxwk{A}{P}}}}
+  \tag{by \autoref{lem:finc-char2}}
+  \\
+& \jdeq
+  \subst{\idtm{A}}{\idtm{\ctxwk{A}{\ctxext{A}{P}}}}
+  \tag{by \autoref{comp-we-f}}
+  \\
+& \jdeq
+  \subst{\idtm{A}}{\ctxwk{A}{\idtm{{A}{P}}}}
+  \tag{by \autoref{comp-wi-t}}
+  \\
+& \jdeq
+  \idtm{{A}{P}}
+  \tag{by \autoref{idfunc-precomp}}
+\end{align*}
+\end{proof}
 
 \subsection{Pullback squares and family pullback squares}
 \label{pullback}
