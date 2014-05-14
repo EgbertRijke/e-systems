@@ -132,7 +132,7 @@ We define\begin{align*}
 \end{align*}
 \end{defn}
 
-\begin{lem}
+\begin{lem}\label{lem:jcomp-emp}
 Let $\jhom{\Gamma}{A}{B}{f}$. Then the inference rules
 \begin{align*}
 & \inference
@@ -204,7 +204,7 @@ we substitute by a composition, or when we weaken or substitute a composition.
 Proving all these compatibility properties is the content of the rest of this
 subsection. None of it is very difficult.
 
-\begin{lem}
+\begin{lem}\label{lem:jcomp-ext}
 We have the following inference rule expressing that composition with $f$ is
 compatible with extension:
 \begin{equation*}
@@ -241,7 +241,7 @@ Let $\jfam{{{{\Gamma}{B}}{Q}}{R}}{S}$. Then we have the judgmental equalities
 \end{align*}
 \end{proof}
 
-\begin{lem}
+\begin{lem}\label{lem:jcomp-wk}
 We have the following inference rules expressing that composition with $f$ is
 compatible with weakening:
 \begin{align*}
@@ -292,7 +292,7 @@ $\jfam{{{\Gamma}{B}}{Q}}{S}$. Then we have the judgmental equalities
 The proof of the second property is similar.
 \end{proof}
 
-\begin{lem}
+\begin{lem}\label{lem:jcomp-subst}
 We have the following inference rules expressing that composition with $f$ is
 compatible with substitution:
 \begin{align*}
@@ -343,7 +343,7 @@ Then we have the judgmental equalities
 The proof of the second inference rule is similar.
 \end{proof}
 
-\begin{lem}
+\begin{lem}\label{lem:jcomp-idtm}
 We have the following inference rule expressing that composition with $f$ is
 compatible with identity terms:
 \begin{equation*}
@@ -381,7 +381,7 @@ Let $\jfam{{{\Gamma}{B}}{Q}}{R}$. We have the following judgmental equalities:
 \end{align*}
 \end{proof}
 
-\begin{lem}
+\begin{lem}\label{lem:jcomp-jcomp}
 We have the following inference rules about the situation where something is
 substituted by a composition:\begin{align*}
 & \inference
@@ -491,9 +491,14 @@ Now suppose that $\jfam{{\Gamma}{C}}{R}$ instead. Then we have\begin{align*}
 Again, the proof is similar for terms $h$ of $R$ in context $\ctxext{\Gamma}{C}$.
 \end{proof}
 
-\begin{lem}
-We have the following inference rules about the compatibility of composition with
-weakening:\begin{align*}
+We established already in \autoref{lem:jcomp-wk} that composition is compatible
+with weakening. However, in that lemma we did not consider the possibility
+of weakening a composition and neither did we consider the possibility of
+composition by or with a constant morphism. We do this in the following lemma.
+
+\begin{lem}\label{lem:jcomp-const}
+The inference
+\begin{align*}
 & \inference
   { \jhom{\Gamma}{A}{B}{f}
     \jhom{\Gamma}{B}{C}{g}
@@ -506,7 +511,12 @@ weakening:\begin{align*}
       {\ctxwk{P}{\jcomp{A}{f}{g}}}
       {\jcomp{{A}{P}}{\ctxwk{P}{f}}{g}}
     }
-  \\
+\end{align*}
+tells what happens when we weaken a composition, which is a term of 
+$\ctxwk{A}{C}$, by a family $P$ over $\ctxext{\Gamma}{P}$. We have the following
+inference rules expressing that compositions by or with constant morphisms are
+again constant morphisms.
+\begin{align*}
 & \inference
   { \jterm{\Gamma}{B}{y}
     \jhom{\Gamma}{B}{C}{g}
@@ -581,9 +591,16 @@ Then we have the judgmental equalities\begin{align*}
 \end{align*}
 \end{proof}
 
-\begin{lem}
-We have the following inference rules about the compatibility of composition with
-substitution:\begin{align*}
+Likewise, we can substitute a term $\jterm{\Gamma}{A}{x}$ in a composition
+$\jhom{\Gamma}{A}{C}{\jcomp{A}{f}{g}}$. What we get is the \emph{value}
+$\subst{{x}{f}}{g}$. There is a second case where we can substitute: when
+we consider morphisms $\jhom{{\Gamma}{A}}{P}{Q}{f}$ and 
+$\jhom{{\Gamma}{A}}{Q}{R}{g}$ we can restrict them to the fibers. We do this
+in the following lemma:
+
+\begin{lem}\label{lem:jcomp-fiber}
+The following inference rules are valid:
+\begin{align*}
 & \inference
   { \jhom{{\Gamma}{A}}{P}{Q}{f}
     \jhom{{\Gamma}{A}}{Q}{R}{g}
@@ -1267,8 +1284,9 @@ proving the second and the third judgmental equalities.
 \end{proof}
 
 \begin{lem}\label{lem:tmext-wk}\label{comp-we-t}
-When we weaken a term $\tmext{B}{Q}{y}{v}$ of $\ctxext{B}{Q}$ in context $\Gamma$ by
-a family $A$, the term that we get is $\tmext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{\ctxwk{A}{y}}{\ctxwk{A}{v}}$. More
+When we weaken a term $\tmext{B}{Q}{y}{v}$ of $\ctxext{B}{Q}$ in context 
+$\Gamma$ by a family $A$, the term that we get is 
+$\tmext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{\ctxwk{A}{y}}{\ctxwk{A}{v}}$. More
 precisely, the following inference rules are valid:
 \begin{align*}
 & \inference
@@ -1583,8 +1601,110 @@ we have the judgmental equalities
 \end{proof}
 
 \subsection{More on morphisms}
+For the following lemma, recall that the judgment $\jhom{\Gamma}{A}{{B}{Q}}{f}$
+unfolds as
+\begin{equation*}
+\unfold{\jhom{\Gamma}{A}{{B}{Q}}{f}}
+\end{equation*}
+and that we have the judgmental equality 
+$ \jfameq
+    {{\Gamma}{A}}
+    {\ctxwk{A}{\ctxext{B}{Q}}}
+    {\ctxext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}}.
+  $
+Therefore, each morphism into an extended family can itself be described as
+an extended term. The following lemma explains how this goes.
 
-There is also a notion of morphism \emph{over} a morphism. We will develop this
+\begin{lem}
+Let $\jhom{\Gamma}{A}{{B}{Q}}{f}$ be a morphism from $A$ to $\ctxext{B}{Q}$
+in a context $\Gamma$. Then we have
+\begin{equation*}
+\jhomeq
+  {\Gamma}
+  {A}
+  {{B}{Q}}
+  {f}
+  {\tmext{\jcomp{}{f}{\cprojfstf{B}{Q}}}{\jcomp{}{f}{\cprojsndf{B}{Q}}}}.
+\end{equation*}
+Alternatively, when $\jhom{\Gamma}{A}{B}{f_0}$ and 
+$\jterm{{\Gamma}{A}}{\jcomp{}{f_0}{Q}}{f_1}$ we obtain a morphism
+$\jhom{\Gamma}{A}{{B}{Q}}{\tmext{f_0}{f_1}}$ with the property that
+\begin{align*}
+\jhomeq*{\Gamma}{A}{B}{\jcomp{}{\tmext{f_0}{f_1}}{\cprojfstf{B}{Q}}}{f_0}\\
+\jtermeq*{{\Gamma}{A}}{\jcomp{}{f_0}{Q}}{\jcomp{}{\tmext{f_0}{f_1}}{\cprojsndf{B}{Q}}}{f_1}.
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Let $\jhom{\Gamma}{A}{{B}{Q}}{f}$ be a morphism in context $\Gamma$. Then we
+have the judgmental equalities
+\begin{align*}
+\cprojfst{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{f}
+& \jdeq
+  \subst{f}{\ctxwk{A}{\cprojfstf{B}{Q}}}
+  \\
+& \jdeq
+  \jcomp{}{f}{\cprojfstf{B}{Q}}
+  \\
+\cprojsnd{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{f}
+& \jdeq
+  \subst{f}{\ctxwk{A}{\cprojsndf{B}{Q}}}
+  \\
+& \jdeq
+  \jcomp{}{f}{\cprojsndf{B}{Q}}
+\end{align*}
+The alternative formulation of the statement is a direct corollary.
+\end{proof}
+
+We also have the following lemma about the compatibility of pairing and composition:
+
+\begin{lem}\label{lem:tmext-jcomp}
+The following inference rule is valid
+\begin{align*}
+& \inference
+  { \jhom{\Gamma}{A}{B}{f}
+    \jhom{\Gamma}{B}{C}{g}
+    \jfam{{\Gamma}{C}}{R}
+    \jterm{{\Gamma}{B}}{\subst{g}{\ctxwk{B}{R}}}{w}
+    }
+  { \jhomeq
+      {\Gamma}
+      {A}
+      {{C}{R}}
+      {\jcomp{A}{f}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}}
+      {\tmext{\ctxwk{A}{C}}{\ctxwk{A}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{w}}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$, $\jfam{{\Gamma}{C}}{R}$
+and $\jterm{{\Gamma}{B}}{\subst{g}{\ctxwk{B}{R}}}{w}$. Then we have the
+judgmental equalities
+\begin{align*}
+\jcomp{A}{f}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}
+& \jdeq 
+  \subst{f}{\ctxwk{A}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}}
+  \\
+& \jdeq 
+  \subst
+    {f}
+    {\tmext{\ctxwk{A}{{B}{C}}}{\ctxwk{A}{{B}{R}}}{\ctxwk{A}{g}}{\ctxwk{A}{w}}}
+  \\
+& \jdeq 
+  \tmext
+    {\ctxwk{A}{C}}
+    {\ctxwk{A}{R}}
+    {\subst{f}{\ctxwk{A}{g}}}
+    {\subst{f}{\ctxwk{A}{w}}}
+  \\
+& \jdeq 
+  \tmext{\ctxwk{A}{C}}{\ctxwk{A}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{w}}.
+  \qedhere
+\end{align*}
+\end{proof}
+
+There is a notion of morphism \emph{over} a morphism. We will develop this
 notion because it will be needed in the theory of models later on.
 
 \begin{defn}
@@ -1600,9 +1720,33 @@ $\Gamma$', to be the judgment\begin{equation*}
 \end{defn}
 
 \begin{rmk}
-The judgment $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ means the same thing as\begin{equation*}
+The judgment $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ means the same thing as
+\begin{equation*}
 \jhom{{\Gamma}{A}}{P}{\jcomp{A}{f}{Q}}{F}.
 \end{equation*}
+Thus we see that a morphism from $P$ to $Q$ over the identity term $\idtm{A}$ in
+context $\Gamma$ is the same thing as a morphism from $P$ to $Q$ in context
+$\ctxext{\Gamma}{A}$, i.e.~the following inference rules are valid:
+\begin{align*}
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{A}}{Q}
+    \jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}
+    }
+  { \jhom{{\Gamma}{A}}{P}{Q}{f}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{A}}{Q}
+    \jhom{{\Gamma}{A}}{P}{Q}{f}
+    }
+  { \jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}
+    }
+\end{align*}
+To see this, we only have to note that
+$\ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}}\jdeq\ctxwk{P}{Q}$, which
+holds by \autoref{idfunc-wk-defn}.
 \end{rmk}
 
 Suppose we have morphisms $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
@@ -1679,10 +1823,10 @@ $\Gamma$. We define
 \end{equation*}
 \end{defn}
 
-\begin{lem}
-The following inference rule is valid:
-\begin{equation*}
-\inference
+\begin{lem}\label{lem:composition-threesome}
+We have the following composition threesome:
+\begin{align*}
+& \inference
   { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
     \jfam{{{\Gamma}{B}}{Q}}{R}
     }
@@ -1691,7 +1835,28 @@ The following inference rule is valid:
       {\jfcomp{A}{f}{P}{F}{R}}
       {\jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{R}}
     }
-\end{equation*}
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{R}}}
+      {\jfcomp{A}{f}{P}{F}{S}}
+      {\jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{S}}
+    }
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jterm{{{{\Gamma}{B}}{Q}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{R}}}
+      {\jfcomp{A}{f}{P}{F}{S}}
+      {\jfcomp{A}{f}{P}{F}{k}}
+      {\jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{k}}
+    }
+\end{align*}
 \end{lem}
 
 \begin{proof}
@@ -1721,8 +1886,8 @@ $R$ be a family over $\ctxext{{\Gamma}{B}}{Q}$. Then we have
 \end{align*}
 \end{proof}
 
-\begin{lem}
-We have the following composition threesome:
+\begin{lem}\label{lem:composition-interchange}
+We have the following interchange law for composition:
 \begin{equation*}
 \inference
   { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
@@ -1744,40 +1909,48 @@ $\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$. Then we have
 \begin{align*}
 \jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{\jvcomp{Q}{g}{G}}
 & \jdeq
-  \unfold{\jcomp{{A}{P}}{\unfold{\jvcomp{P}{f}{F}}}{\unfold{\jvcomp{Q}{g}{G}}}}
-  \tag{by definition}
-  \\
-& \jdeq
-  \subst
-    {F}
-    { {\ctxwk{P}{f}}
-      {\ctxwk{\ctxext{A}{P}}{\tmext{\ctxwk{Q}{g}}{G}}}
-      }
-  \tag{by \autoref{comp-es}}
-  \\
-& \jdeq
-  \subst
-    {F}
-    { {\ctxwk{P}{f}}
-      {\ctxwk{P}{{A}{\tmext{\ctxwk{Q}{g}}{G}}}}
-      }
-  \tag{by \autoref{comp-ew-t}}
-  \\
-& \jdeq
-  \subst
-    {F}
-    { \ctxwk{P}{\subst{f}{\ctxwk{A}{\tmext{\ctxwk{Q}{g}}{G}}}}
-      }
-  \tag{by \autoref{comp-ws-t}}
-  \\
-& \jdeq
   \jcomp{P}{F}{\jcomp{A}{f}{\tmext{}{}{\ctxwk{Q}{g}}{G}}}
+  \tag{by \autoref{lem:composition-threesome}}
+  \\
+& \jdeq
+  \tmext{}{}
+    {\jcomp{P}{F}{\jcomp{A}{f}{\ctxwk{Q}{g}}}}
+    {\jcomp{P}{F}{\jcomp{A}{f}{G}}}
+  \tag{by \autoref{lem:tmext-jcomp}}
+  \\
+& \jdeq
+  \tmext{}{}
+    {\jcomp{P}{F}{\jcomp{A}{f}{\ctxwk{Q}{g}}}}
+    {\jfcomp{A}{f}{P}{F}{G}}
   \tag{by definition}
   \\
 & \jdeq
-  \subst
-    {F}
-    {\ctxwk{P}{\tmext{}{}{\jcomp{A}{f}{\ctxwk{Q}{g}}}{\jcomp{A}{f}{G}}}}
+  \tmext{}{}
+    {\jcomp{P}{F}{\ctxwk{\jcomp{A}{f}{Q}}{\jcomp{A}{f}{g}}}}
+    {\jfcomp{A}{f}{P}{F}{G}}
+  \tag{by \autoref{lem:jcomp-wk}}
+  \\
+& \jdeq
+  \tmext{}{}
+    {\subst{F}{\ctxwk{P}{\ctxwk{\jcomp{A}{f}{Q}}{\jcomp{A}{f}{g}}}}}
+    {\jfcomp{A}{f}{P}{F}{G}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \tmext{}{}
+    {\subst{F}{\ctxwk{{P}{\jcomp{A}{f}{Q}}}{{P}{\jcomp{A}{f}{g}}}}}
+    {\jfcomp{A}{f}{P}{F}{G}}
+  \tag{by \autoref{comp-ww-t}}
+  \\
+& \jdeq
+  \tmext{}{}
+    {\ctxwk{P}{\jcomp{A}{f}{g}}}
+    {\jfcomp{A}{f}{P}{F}{G}}
+  \tag{by \autoref{cancellation-ws-t}}
+  \\
+& \jdeq
+  \jvcomp{P}{\jcomp{A}{f}{g}}{\jfcomp{A}{f}{P}{F}{G}}
+  \tag{by definition}
 \end{align*}
 \end{proof}
 
@@ -1828,154 +2001,20 @@ $\jfam{{{\Gamma}{C}}{R}}{S}$. Then we have the judgmental equalities
 \begin{align*}
 \jfcomp{A}{f}{P}{F}{\jfcomp{B}{g}{Q}{G}{S}}
 & \jdeq
-  \jcomp{P}{F}{\jcomp{A}{f}{\jcomp{Q}{G}{\jcomp{B}{g}{S}}}}
-  \tag{by definition}
-  \\
-& \jdeq 
-  \unfoldall{\jcomp{P}{F}{\jcomp{A}{f}{\jcomp{Q}{G}{\jcomp{B}{g}{S}}}}}
-  \tag{by definition}
-  \\
-& \jdeq 
-\end{align*}
-\end{proof}
-
-Now let $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$ be families. A
-morphism from $P$ to $Q$ over the identity term $\idtm{A}$ in context
-$\Gamma$ is the same thing as a morphism from $P$ to $Q$ in context
-$\ctxext{\Gamma}{A}$:
-
-\begin{lem}\label{hom-over-id-is-hom}
-We have the following valid inference rules:\begin{align*}
-& \inference
-  { \jfam{{\Gamma}{A}}{P}
-    \jfam{{\Gamma}{A}}{Q}
-    \jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}
-    }
-  { \jhom{{\Gamma}{A}}{P}{Q}{f}
-    }
-  \\
-& \inference
-  { \jfam{{\Gamma}{A}}{P}
-    \jfam{{\Gamma}{A}}{Q}
-    \jhom{{\Gamma}{A}}{P}{Q}{f}
-    }
-  { \jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}
-    }
-\end{align*}
-\end{lem}
-
-\begin{proof}
-If we unfold the judgments $\jhom{{\Gamma}{A}}{P}{Q}{f}$ and
-$\jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}$, we get the judgments\begin{align*}
-& \unfold{\jhom{{\Gamma}{A}}{P}{Q}{f}}
-  \\
-& \unfold{\jfhom{\Gamma}{A}{A}{\idtm{A}}{P}{Q}{f}}
-\end{align*}
-respectively. Therefore, we only need to verify that
-$\ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}}\jdeq\ctxwk{P}{Q}$, which is indeed
-the case by \autoref{idfunc-wk-defn}.
-\end{proof}
-
-For the following lemma, recall that the judgment $\jhom{\Gamma}{A}{{B}{Q}}{f}$
-unfolds as
-\begin{equation*}
-\unfold{\jhom{\Gamma}{A}{{B}{Q}}{f}}
-\end{equation*}
-and that we have the judgmental equality 
-$ \jfameq
-    {{\Gamma}{A}}
-    {\ctxwk{A}{\ctxext{B}{Q}}}
-    {\ctxext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}}.
-  $
-Therefore, each morphism into an extended family can itself be described as
-an extended term. The following lemma explains how this goes.
-
-\begin{lem}
-Let $\jhom{\Gamma}{A}{{B}{Q}}{f}$ be a morphism from $A$ to $\ctxext{B}{Q}$
-in a context $\Gamma$. Then we have
-\begin{equation*}
-\jhomeq
-  {\Gamma}
-  {A}
-  {{B}{Q}}
-  {f}
-  {\tmext{\jcomp{}{f}{\cprojfstf{B}{Q}}}{\jcomp{}{f}{\cprojsndf{B}{Q}}}}.
-\end{equation*}
-Alternatively, when $\jhom{\Gamma}{A}{B}{f_0}$ and 
-$\jterm{{\Gamma}{A}}{\jcomp{}{f_0}{Q}}{f_1}$ we obtain a morphism
-$\jhom{\Gamma}{A}{{B}{Q}}{\tmext{f_0}{f_1}}$ with the property that
-\begin{align*}
-\jhomeq*{\Gamma}{A}{B}{\jcomp{}{\tmext{f_0}{f_1}}{\cprojfstf{B}{Q}}}{f_0}\\
-\jtermeq*{{\Gamma}{A}}{\jcomp{}{f_0}{Q}}{\jcomp{}{\tmext{f_0}{f_1}}{\cprojsndf{B}{Q}}}{f_1}.
-\end{align*}
-\end{lem}
-
-\begin{proof}
-Let $\jhom{\Gamma}{A}{{B}{Q}}{f}$ be a morphism in context $\Gamma$. Then we
-have the judgmental equalities
-\begin{align*}
-\cprojfst{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{f}
-& \jdeq
-  \subst{f}{\ctxwk{A}{\cprojfstf{B}{Q}}}
+  \jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{\jcomp{{B}{Q}}{\jvcomp{Q}{g}{G}}{S}}
+  \tag{by \autoref{lem:composition-threesome}}
   \\
 & \jdeq
-  \jcomp{}{f}{\cprojfstf{B}{Q}}
-  \\
-\cprojsnd{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{f}
-& \jdeq
-  \subst{f}{\ctxwk{A}{\cprojsndf{B}{Q}}}
+  \jcomp{{A}{P}}{\jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{\jvcomp{Q}{g}{G}}}{S}
+  \tag{by \autoref{lem:jcomp-jcomp}}
   \\
 & \jdeq
-  \jcomp{}{f}{\cprojsndf{B}{Q}}
-\end{align*}
-The alternative formulation of the statement is a direct corollary.
-\end{proof}
-
-We also have the following lemma about the compatibility of pairing and composition:
-
-\begin{lem}
-The following inference rule is valid
-\begin{align*}
-& \inference
-  { \jhom{\Gamma}{A}{B}{f}
-    \jhom{\Gamma}{B}{C}{g}
-    \jfam{{\Gamma}{C}}{R}
-    \jterm{{\Gamma}{B}}{\subst{g}{\ctxwk{B}{R}}}{w}
-    }
-  { \jhomeq
-      {\Gamma}
-      {A}
-      {{C}{R}}
-      {\jcomp{A}{f}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}}
-      {\tmext{\ctxwk{A}{C}}{\ctxwk{A}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{w}}}
-    }
-\end{align*}
-\end{lem}
-
-\begin{proof}
-Let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$, $\jfam{{\Gamma}{C}}{R}$
-and $\jterm{{\Gamma}{B}}{\subst{g}{\ctxwk{B}{R}}}{w}$. Then we have the
-judgmental equalities
-\begin{align*}
-\jcomp{A}{f}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}
-& \jdeq 
-  \subst{f}{\ctxwk{A}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}}
+  \jcomp{{A}{P}}{\jvcomp{P}{\jcomp{A}{f}{g}}{\jfcomp{A}{f}{P}{F}{G}}}{S}
+  \tag{by \autoref{lem:composition-interchange}}
   \\
-& \jdeq 
-  \subst
-    {f}
-    {\tmext{\ctxwk{A}{{B}{C}}}{\ctxwk{A}{{B}{R}}}{\ctxwk{A}{g}}{\ctxwk{A}{w}}}
-  \\
-& \jdeq 
-  \tmext
-    {\ctxwk{A}{C}}
-    {\ctxwk{A}{R}}
-    {\subst{f}{\ctxwk{A}{g}}}
-    {\subst{f}{\ctxwk{A}{w}}}
-  \\
-& \jdeq 
-  \tmext{\ctxwk{A}{C}}{\ctxwk{A}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{w}}.
-  \qedhere
+& \jdeq
+  \jfcomp{A}{\jcomp{A}{f}{g}}{P}{\jfcomp{A}{f}{P}{F}{G}}{S}.
+  \tag{by \autoref{lem:composition-threesome}}
 \end{align*}
 \end{proof}
 
