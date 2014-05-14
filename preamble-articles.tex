@@ -247,6 +247,7 @@
   \renewcommand{\sandwich}{\sandwich@unfold}%
   \renewcommand{\finc}{\finc@unfold}%
   \renewcommand{\jvcomp}{\jvcomp@unfold}%
+  \renewcommand{\jfvcomp}{\jfvcomp@unfold}
   \renewcommand{\subst@type@unfold}[1]{
     \@ifnextchar\cprojfstf{\@eatdo{\cprojfstf@parens}}{%
       ##1}
@@ -285,7 +286,8 @@
   \@ifnextchar\sandwich{\@eatdo{\sandwich@unfold}}{%
   \@ifnextchar\finc{\@eatdo{\finc@unfold}}{%
   \@ifnextchar\jvcomp{\@eatdo{\jvcomp@unfold}}{%
-  }}}}}}}}}}}}}}}}}}%}}
+  \@ifnextchar\jfvcomp{\@eatdo{\jfvcomp@unfold}}{%
+  }}}}}}}}}}}}}}}}}}}%}}
   #1}
 \makeatother
 
@@ -494,14 +496,18 @@
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
-  \@ctxext}}}}}}
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  \@ctxext
+  }}}}}}}
 \newcommand{\@ctxext@type}{%
   \@ifnextchar\ctxext{\@ctxext@nested}{%
   \@ifnextchar\subst{\@subst@nested}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
-  \@ctxext}}}}}}
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  \@ctxext
+  }}}}}}}
 \newcommand{\@@ctxext}[1]{\@ifnextchar\bgroup{\@ctxext@parens{#1}}{#1}}
 \newcommand{\@ctxext@parens}[2]{(\ctxext{#1}{#2})}
 \newcommand{\@ctxext@nested}[3]{\@ctxext@parens{#2}{#3}}
@@ -537,10 +543,11 @@
   \@ifnextchar\tmext{\@tmext@nested}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
 %  \@ifnextchar\mfam{\@mfam@nested}{%
 %  \@ifnextchar\mtm{\@mtm@nested}{%
   \subst@type@unfold{\@subst}
-  }}}}}}}%}}
+  }}}}}}}}%}}
 \newcommand{\subst@type@unfold}[1]{#1}
 \newcommand{\@subst@nested}[3]{%
   \@subst@parens{#2}{#3}}
@@ -569,10 +576,11 @@
   \@ifnextchar\tmext{\@tmext@nested}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
 %  \@ifnextchar\mfam{\@mfam@nested}{%
 %  \@ifnextchar\mtm{\@mtm@nested}{%
   \@ctxwk
-  }}}}}}}%}}
+  }}}}}}}}%}}
 \newcommand{\@ctxwk@parens}[2]{%
   (\ctxwk{#1}{#2})}
 \newcommand{\@ctxwk@nested}[3]{%
@@ -615,8 +623,9 @@
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
 %  \default@tmext
-  }}}}}}}
+  }}}}}}}}
 \newcommand{\tmext@testright}{%
   \@ifnextchar\bgroup{\@tmext@parens}{%
   \@ifnextchar\tmext{\@tmext@nested}{%
@@ -624,10 +633,11 @@
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
   \@ifnextchar\cprojfst{\cprojfst@nested}{%
   \@ifnextchar\cprojsnd{\cprojsnd@nested}{%
 %  \default@tmext
-  }}}}}}}}}
+  }}}}}}}}}}
 \newcommand{\@tmext@nested}[1]{%
   \@tmext@parens}
 \newcommand{\@tmext@parens}[2]{%
@@ -694,6 +704,14 @@
     {#5}}
 
 %%%% Composition of morphisms
+\newcommand{\comp@testtonest}[1]{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  #1
+  }}}}}
+
 \newcommand{\jcomp}[3]{%
   \jcomp@testleft #3 \circ \jcomp@testright #2}
 \newcommand{\jcomp@testleft}{%
@@ -704,7 +722,8 @@
   \@ifnextchar\tmext{\@tmext@nested}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
-  }}}}}}}}
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  }}}}}}}}}
 \newcommand{\jcomp@testright}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\subst{\@subst@nested}{%
@@ -713,7 +732,8 @@
   \@ifnextchar\tmext{\@tmext@nested}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
-  }}}}}}}}
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  }}}}}}}}}
 \newcommand{\@jcomp@nested}[4]{%
   \@jcomp@parens{#2}{#3}{#4}}
 \newcommand{\@jcomp@parens}[3]{%
@@ -736,25 +756,27 @@
 
 %%%% Vertical composition of morphisms.
 \newcommand{\jvcomp}[3]{%
-  \jcomp@testleft #2 * \jcomp@testright #3}
+  \jvcomp@testleft #2 * \jvcomp@testright #3}
 \newcommand{\jvcomp@testleft}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
   \@ifnextchar\ctxwk{\@ctxwk@nested}{%
   \@ifnextchar\ctxext{\@ctxext@nested}{%
   \@ifnextchar\bgroup{\@jvcomp@parens}{%
   \@ifnextchar\tmext{\@tmext@nested}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
-  }}}}}}}}
+  }}}}}}}}}
 \newcommand{\jvcomp@testright}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
   \@ifnextchar\subst{\@subst@nested}{%
   \@ifnextchar\ctxext{\@ctxext@nested}{%
   \@ifnextchar\bgroup{\@jvcomp@parens}{%
   \@ifnextchar\tmext{\@tmext@nested}{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
-  }}}}}}}}
+  }}}}}}}}}
 \newcommand{\@jvcomp@nested}[4]{%
   \@jvcomp@parens{#2}{#3}{#4}}
 \newcommand{\@jvcomp@parens}[3]{%
@@ -771,6 +793,30 @@
   \@jvcomp@unfold@parens{#2}{#3}{#4}}
 \newcommand{\@jvcomp@unfold@parens}[3]{%
   (\jvcomp@unfold{#1}{#2}{#3})}
+
+%%%% Vertical family composition
+\newcommand{\jfvcomp}[3]{%
+  \jfvcomp@testleft #2 \circledast \jfvcomp@testright #3}
+\newcommand{\jfvcomp@testleft}{%
+  \jvcomp@testleft}
+\newcommand{\jfvcomp@testright}{%
+  \jvcomp@testright}
+\newcommand{\@jfvcomp@nested}[4]{%
+  \@jfvcomp@parens{#2}{#3}{#4}}
+\newcommand{\@jfvcomp@parens}[3]{%
+  (\jfvcomp{#1}{#2}{#3})}
+
+\newcommand{\jfvcomp@unfold}[3]{%
+  \tmext{}{}{\ctxwk{#1}{#2}}{#3}
+  }
+\newcommand{\jfvcomp@unfold@test@preside}{%
+  \@ifnextchar\bgroup{\@jfvcomp@unfold@parens}{}}
+\newcommand{\jfvcomp@unfold@test@postside}{%
+  \@ifnextchar\bgroup{\@jfvcomp@unfold@parens}{}}
+\newcommand{\@jfvcomp@unfold@nested}[4]{%
+  \@jfvcomp@unfold@parens{#2}{#3}{#4}}
+\newcommand{\@jfvcomp@unfold@parens}[3]{%
+  (\jfvcomp@unfold{#1}{#2}{#3})}
 
 %%%% The judgment that F is a morphism from P to Q over f in context \Gamma.
 \newcommand{\jfhomsym}[3]{\jhomsym[{#1}]{#2}{#3}}
@@ -791,7 +837,7 @@
     {#7}}
     
 \newcommand{\jfcomp}[5]{%
-  \jfcomp@testleft #5 \bullet \jfcomp@testright #4}
+  \jfcomp@testleft #5 \circledcirc \jfcomp@testright #4}
 \newcommand{\jfcomp@testleft}{%
   \@ifnextchar\bgroup{\@jfcomp@parens}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
@@ -799,7 +845,8 @@
   \@ifnextchar\ctxwk{\@ctxwk@nested}{%
   \@ifnextchar\tmext{\@tmext@nested}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
-  }}}}}}}
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  }}}}}}}}
 \newcommand{\jfcomp@testright}{%
   \@ifnextchar\bgroup{\@jfcomp@parens}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
@@ -807,7 +854,8 @@
   \@ifnextchar\subst{\@subst@nested}{%
   \@ifnextchar\tmext{\@tmext@nested}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
-  }}}}}}}
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  }}}}}}}}
 \newcommand{\@jfcomp@nested}[1]{%
   \@jfcomp@parens}
 \newcommand{\@jfcomp@parens}[5]{%

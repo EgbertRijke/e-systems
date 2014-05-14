@@ -1600,7 +1600,17 @@ we have the judgmental equalities
 \end{align*}
 \end{proof}
 
-\subsection{More on morphisms}
+\subsection{Family morphisms}
+In this section we are going to develop dependent morphisms and analyze various
+sorts of composition. The notion of family morphism is the notion of `a 
+morphism over a context morphism'. When we have established all the associativity
+and interchange laws for all the compositions that come with the theory of
+family morphisms, we will also be able to consider \emph{family diagrams}. Those
+are graphical displays of situations in the theory of contexts, families and
+terms, but unlike diagrams in category theory they can contain families (which
+are strictly speaking not morphisms) and terms (which can be seen as morphisms,
+but not in the way we're about to display them).
+
 For the following lemma, recall that the judgment $\jhom{\Gamma}{A}{{B}{Q}}{f}$
 unfolds as
 \begin{equation*}
@@ -1808,6 +1818,172 @@ In the following definition, we formulate this more generally.
     }
 \end{align*}
 \end{defn}
+
+Since horizontal composition is just consecutive composition, we will get the
+compatibility with the empty context, extension, weakening, substitution and
+the identity terms for free. We will state these compatibility properities in
+\autoref{lem:jfcomp-emp,lem:jfcomp-ext,lem:jfcomp-wk,lem:jfcomp-subst,lem:jfcomp-idtm},
+but the proofs are left to the reader.
+
+\begin{lem}\label{lem:jfcomp-emp}
+Horizontal composition is compatible with the empty context:
+\begin{align*}
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{P}}
+      {\jfcomp{A}{f}{P}{F}{\emptyf}}
+      {\emptyf}
+    }
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{R}}}
+      {\jfcomp{A}{f}{P}{F}{\emptyf}}
+      {\emptyf}
+    }
+\end{align*}
+\end{lem}
+
+\begin{lem}\label{lem:jfcomp-ext}
+Horizontal composition is compatible with extension:
+\begin{align*}
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{P}}
+      {\jfcomp{A}{f}{P}{F}{\ctxext{R}{S}}}
+      {\ctxext{\jfcomp{A}{f}{P}{F}{R}}{\jfcomp{A}{f}{P}{F}{S}}}
+    }
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfam{{{{{\Gamma}{B}}{Q}}{R}}{S}}{T}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{R}}}
+      {\jfcomp{A}{f}{P}{F}{\ctxext{S}{T}}}
+      {\ctxext{\jfcomp{A}{f}{P}{F}{S}}{\jfcomp{A}{f}{P}{F}{T}}}
+    }
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jterm{{{{\Gamma}{B}}{Q}}{R}}{{S}{T}}{\tmext{k}{l}}
+    }
+  { \jtermdefn
+      {{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{R}}}
+      {\ctxext{\jfcomp{A}{f}{P}{F}{S}}{\jfcomp{A}{f}{P}{F}{T}}}
+      {\jfcomp{A}{f}{P}{F}{\tmext{k}{l}}}
+      {\tmext{\jfcomp{A}{f}{P}{F}{k}}{\jfcomp{A}{f}{P}{F}{l}}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{lem}\label{lem:jfcomp-wk}
+Horizontal composition is compatible with weakening:
+\begin{align*}
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{T}
+    }
+  { \jfameq
+      {{{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{R}}}{\jfcomp{A}{f}{P}{F}{S}}}
+      {\jfcomp{A}{f}{P}{F}{\ctxwk{S}{T}}}
+      {\ctxwk{\jfcomp{A}{f}{P}{F}{S}}{\jfcomp{A}{f}{P}{F}{T}}}
+    }
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    \jfam{{{{{\Gamma}{B}}{Q}}{R}}{T}}{U}
+    }
+  { \jfameq
+      {{{{{{\Gamma}{A}}{P}}
+        {\jfcomp{A}{f}{P}{F}{R}}}
+        {\jfcomp{A}{f}{P}{F}{S}}}
+        {\ctxwk{\jfcomp{A}{f}{P}{F}{S}}{\jfcomp{A}{f}{P}{F}{T}}}}
+      {\jfcomp{A}{f}{P}{F}{\ctxwk{S}{U}}}
+      {\ctxwk{\jfcomp{A}{f}{P}{F}{S}}{\jfcomp{A}{f}{P}{F}{U}}}
+    }
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    \jterm{{{{{\Gamma}{B}}{Q}}{R}}{T}}{U}{m}
+    }
+  { \jtermeq
+      {{{{{{\Gamma}{A}}{P}}
+        {\jfcomp{A}{f}{P}{F}{R}}}
+        {\jfcomp{A}{f}{P}{F}{S}}}
+        {\ctxwk{\jfcomp{A}{f}{P}{F}{S}}{\jfcomp{A}{f}{P}{F}{T}}}}
+      {\jfcomp{A}{f}{P}{F}{\ctxwk{S}{U}}}
+      {\jfcomp{A}{f}{P}{F}{\ctxwk{S}{m}}}
+      {\ctxwk{\jfcomp{A}{f}{P}{F}{S}}{\jfcomp{A}{f}{P}{F}{m}}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{lem}\label{lem:jfcomp-subst}
+Horizontal composition is compatible with substitution:
+\begin{align*}
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jterm{{{{\Gamma}{B}}{Q}}{R}}{S}{k}
+    \jfam{{{{{\Gamma}{B}}{Q}}{R}}{S}}{T}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{R}}}
+      {\jfcomp{A}{f}{P}{F}{\subst{k}{T}}}
+      {\subst{\jfcomp{A}{f}{P}{F}{k}}{\jfcomp{A}{f}{P}{F}{T}}}
+    }
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jterm{{{{\Gamma}{B}}{Q}}{R}}{S}{k}
+    \jfam{{{{{{\Gamma}{B}}{Q}}{R}}{S}}{T}}{U}
+    }
+  { \jfameq
+      {{{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{R}}}{\jfcomp{A}{f}{P}{F}{\subst{k}{T}}}}
+      {\jfcomp{A}{f}{P}{F}{\subst{k}{U}}}
+      {\subst{\jfcomp{A}{f}{P}{F}{k}}{\jfcomp{A}{f}{P}{F}{U}}}
+    }
+  \\
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jterm{{{{\Gamma}{B}}{Q}}{R}}{S}{k}
+    \jterm{{{{{{\Gamma}{B}}{Q}}{R}}{S}}{T}}{U}{m}
+    }
+  { \jfameq
+      {{{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{R}}}{\jfcomp{A}{f}{P}{F}{\subst{k}{T}}}}
+      {\jfcomp{A}{f}{P}{F}{\subst{k}{U}}}
+      {\jfcomp{A}{f}{P}{F}{\subst{k}{m}}}
+      {\subst{\jfcomp{A}{f}{P}{F}{k}}{\jfcomp{A}{f}{P}{F}{m}}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{lem}\label{lem:jfcomp-idtm}
+Horizontal composition is compatible with identity terms:
+\begin{equation*}
+\inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    }
+  { \jtermeq
+      {{{{{\Gamma}{A}}{P}}{\jfcomp{A}{f}{P}{F}{R}}}{\jfcomp{A}{f}{P}{F}{S}}}
+      {\ctxwk{{\jfcomp{A}{f}{P}{F}{S}}}{\jfcomp{A}{f}{P}{F}{S}}}
+      {\jfcomp{A}{f}{P}{F}{\idtm{S}}}
+      {\idtm{\jfcomp{A}{f}{P}{F}{S}}}
+    }
+\end{equation*}
+\end{lem}
 
 There is also a notion of vertical composition, although this is not an
 operation the way horizontal composition is. Nevertheless, to analyze the
@@ -2017,6 +2193,339 @@ $\jfam{{{\Gamma}{C}}{R}}{S}$. Then we have the judgmental equalities
   \tag{by \autoref{lem:composition-threesome}}
 \end{align*}
 \end{proof}
+
+\begin{lem}
+The following inference rules explain how vertically and horizontally composed 
+morphisms are evaluated:
+\begin{align*}
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{\subst{x}{P}}{u}
+    }
+  { \jtermeq
+      {\Gamma}
+      {{B}{Q}}
+      {\subst{\tmext{}{}{x}{u}}{\jvcomp{P}{f}{F}}}
+      {\tmext{}{}{\subst{x}{f}}{\subst{u}{{x}{F}}}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Let $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$, $\jterm{\Gamma}{A}{x}$ and
+$\jterm{\Gamma}{\subst{x}{P}}{u}$. Then we have the judgmental equalities
+\begin{align*}
+\subst{\tmext{}{}{x}{u}}{\jvcomp{P}{f}{F}}
+& \jdeq
+  \subst{\tmext{}{}{x}{u}}{\tmext{}{}{\ctxwk{P}{f}}{F}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \tmext{\subst{\tmext{x}{u}}{\ctxwk{P}{f}}}{\subst{\tmext{x}{u}}{F}}
+  \tag{by \autoref{lem:tmext-subst}}
+  \\
+& \jdeq
+  \tmext{\subst{u}{{x}{\ctxwk{P}{f}}}}{\subst{u}{{x}{F}}}
+  \tag{by \autoref{comp-es}}
+  \\
+& \jdeq
+  \tmext{\subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{f}}}}{\subst{u}{{x}{F}}}
+  \tag{by \autoref{comp-sw-t}}
+  \\
+& \jdeq
+  \tmext{\subst{x}{f}}{\subst{u}{{x}{F}}}.
+  \tag{by \autoref{cancellation-ws-t}}
+\end{align*}
+\end{proof}
+
+\label{pullback}
+Now that we have introduced the notions of morphisms and composition,
+we can develop a diagramatic style of of displaying type dependencies
+combined with morphisms. We give an informal, metatheoretical definition of
+such diagrams by indicating what the various components mean. The definition
+is informal because we will only use such diagrams occasionally to provide a
+graphical indication of the situation in which we're working. In particular,
+we will not shy away from using natural numbers and trust that the reader can
+figure out what we mean.
+
+\begin{defn}
+A diagram is said to be a \emph{dependency diagram in context $\Gamma$}
+if it is built up according to the following steps:
+\begin{itemize}
+\item The arrows appearing in a dependency diagram are either ordinary, like the
+arrow%
+$\begin{tikzcd}[ampersand replacement = \&]
+X \ar{r} \& Y,
+\end{tikzcd}$
+or double-headed, like
+$\begin{tikzcd}[ampersand replacement = \&]
+X \ar[fib]{r} \& Y.
+\end{tikzcd}$
+\item An ordinary arrow 
+\begin{equation*}
+\begin{tikzcd}
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation*}
+between two families $A$ and $B$ of contexts over $\Gamma$ indicates that
+$f$ is a morphism from $A$ to $B$ in context $\Gamma$, i.e.~that we have the
+judgment $\jhom{\Gamma}{A}{B}{f}$.
+\item The set of double-headed arrows must form a forest and the root of
+each maximal tree of double-headed arrows is a family of contexts over $\Gamma$.
+In particular, if an object is not the domain of a double-headed arrow it must
+be a family of contexts over $\Gamma$.
+\item A sequence of double-headed 
+arrows
+\begin{equation*}
+\begin{tikzcd}
+P_{n} \ar[fib]{r} & \cdots \ar[fib]{r} & P_1 \ar[fib]{r} & A
+\end{tikzcd}
+\end{equation*}
+indicates that $P_1$ is a family of contexts over $\ctxext{\Gamma}{A}$, that
+$P_2$ is a family of contexts over $\ctxext{{\Gamma}{A}}{P_1}$, etcetera.
+\item There can be two kinds of ladders of double-headed arrows:
+\begin{equation*}
+\begin{tikzcd}
+P_{n} \ar{r}{F_{n}} \ar[fib]{d} & Q_{n} \ar[fib]{d}\\
+\vdots \ar[fib]{d} & \vdots \ar[fib]{d}\\
+P_1 \ar{r}{F_1} \ar[fib]{d} & Q_1 \ar[fib]{d}\\
+A \ar{r}{f} & B
+\end{tikzcd}
+\qquad
+\begin{tikzcd}[column sep = tiny]
+P_{n+m} \ar{rr}{F_{n+m}} \ar[fib]{d} & & Q_{n+m} \ar[fib]{d}\\
+\vdots \ar[fib]{d} & & \vdots \ar[fib]{d}\\
+P_{n+1} \ar{rr}{F_{n+1}} \ar[fib]{dr} & & Q_{n+1} \ar[fib]{dl}\\
+& P_n \ar[fib]{d}\\
+& \vdots \ar[fib]{d}\\
+& P_1 \ar[fib]{d}\\
+& A
+\end{tikzcd}
+\end{equation*}
+The ladder on the left 
+indicates that $F_1$ is a morphism from $P_1$ to $Q_1$ \emph{over} $f$,
+i.e.~that the judgment $\jfhom{\Gamma}{A}{B}{f}{P_1}{Q_1}{F_1}$ holds, that
+$F_2$ is a morphism from $P_2$ to $Q_2$ over
+the morphism $\tmext{\ctxwk{P_1}{f}}{F_1}$ from $\ctxext{A}{P_1}$ to
+$\ctxext{B}{Q_1}$, etcetera.
+
+The ladder on the right indicates that $F_{n+1}$ is a morphism from $P_{n+1}$ to
+$Q_{n+1}$ in the appropriate context, that $F_{n+2}$ is a morphism from
+$P_{n+2}$ to $Q_{n+2}$ over $F_{n+1}$, etcetera.
+ 
+Note that the object(s) at the bottom of a ladder are always families of contexts
+over $\Gamma$, so that the typing of the various ingredients makes sense.
+\end{itemize}
+Such a diagram is said to be commutative if the subdiagram consisting of only
+the normal headed arrows is commutative in the usual sense (using judgmental
+equality). Note that the ladders are inherently commutative.
+\end{defn}
+
+The most basic illustrative example of a commutative dependency diagram is
+the diagram
+\begin{equation*}
+\begin{tikzcd}
+P \ar[fib]{d} \ar{r}{F} & Q \ar[fib]{d} \\
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation*}
+indicating a morphism $F$ from $P$ to $Q$ over the morphism $f$ from $A$ to
+$B$ in a context $\Gamma$.
+
+We can just copy the usual categorical definition of a pullback square to our
+current situation, but we have to require that each arrow in the pullback square
+is an ordinary arrow. When families (i.e. double-headed arrows) are involved
+in the diagram, we make the following definition of a family pullback:
+
+\begin{defn}
+We say that a commutative dependency diagram of the form
+\begin{equation*}
+\begin{tikzcd}
+P \ar[fib]{d} \ar{r}{F} & Q \ar[fib]{d} \\
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation*}
+is a \emph{family pullback} if the following inference rules are valid:
+\begin{align*}
+& \inference
+  { \jfam{{\Gamma}{A}}{P'}
+    \jfhom{\Gamma}{A}{B}{f}{P'}{Q}{F'}
+    }
+  { \jhom{{\Gamma}{A}}{P'}{P}{u}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P'}
+    \jfhom{\Gamma}{A}{B}{f}{P'}{Q}{F'}
+    }
+  { \jfhomeq{\Gamma}{A}{B}{f}{P'}{Q}{\jcomp{}{u}{F}}{F'}
+    }
+  \\
+& \inference
+  { \jhom{{\Gamma}{A}}{P'}{P}{v}
+    \jfhomeq{\Gamma}{A}{B}{f}{P'}{Q}{\jcomp{}{v}{F}}{F'}
+    }
+  { \jhomeq{{\Gamma}{A}}{P'}{P}{v}{u}
+    }
+\end{align*}
+\end{defn}
+
+The following lemma explains that when a square involving families is a
+family pullback square whenever the corresponding square involving projections is a
+pullback square. There is no proof in the the opposite direction.
+
+\begin{lem}
+A square
+\begin{equation}\label{eq:fpb_to_pb_eqv_fpb}
+\begin{tikzcd}
+P \ar[fib]{d} \ar{r}{F} & Q \ar[fib]{d} \\
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation}
+is a family pullback square whenever the square
+\begin{equation}\label{eq:fpb_to_pb_eqv_pb}
+\begin{tikzcd}[column sep = large]
+\ctxext{A}{P} \ar{d}[swap]{\cprojfstf{A}{P}} \ar{r}{\tmext{\ctxwk{P}{f}}{F}} & \ctxext{B}{Q} \ar{d}{\cprojfstf{B}{Q}} \\
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation}
+is a pullback square.
+\end{lem}
+
+The family pullback of a family along any morphism always exists. It is simply given
+by the precomposition of the family with the morphism. Note that this fact does
+not carry over to arbitrary pullbacks.
+
+\begin{lem}
+The diagram
+\begin{equation*}
+\begin{tikzcd}
+\jcomp{}{f}{Q} \ar[fib]{d} \ar{r}{\idtm{\jcomp{}{f}{Q}}} & Q \ar[fib]{d} \\
+A \ar{r}{f} & B
+\end{tikzcd}
+\end{equation*}
+is a family pullback diagram.
+\end{lem}
+
+\begin{proof}
+The proof is a triviality because $\jhom{{\Gamma}{A}}{P'}{\jcomp{}{f}{Q}}{F'}$
+is the same judgment as $\jfhom{\Gamma}{A}{B}{f}{P'}{Q}{F'}$ and
+$\jcomp{}{\idtm{\jcomp{}{f}{Q}}}{F'}\jdeq F'$.
+\end{proof}
+
+For arbitrary pullbacks we have the pasting lemma as usual, but for family
+pullbacks we can only derive one of the parts of the pasting lemma.
+
+\begin{lem}
+Suppose we have the diagram
+\begin{equation*}
+\begin{tikzcd}
+P \ar{r}{F} \ar[fib]{d} & Q \ar{r}{G} \ar[fib]{d} & R \ar[fib]{d}\\
+A \ar{r}{f} & B \ar{r}{g} & C
+\end{tikzcd}
+\end{equation*}
+where the square on the right and the outer rectangle are family pullback 
+diagrams. Then the square on the left is a family pullback diagram.
+\end{lem}
+
+\begin{proof}
+Let $\jfam{{\Gamma}{A}}{P'}$ be a family and let $\jfhom{\Gamma}{A}{B}{f}
+{P'}{Q}{F}$ be a morphism over $f$.
+\begin{itemize}
+\item Then we compose $F'$ with $G$ to obtain a morphism over $\jcomp{}{f}{g}$.
+\item Then we get $\jhom{{\Gamma}{A}}{P'}{P}{u}$ with a uniqueness property.
+      The property that $\jcomp{}{u}{F}\jdeq F'$ follows from the assumption
+      that the right square is a pullback.
+\item Now assume that we have another such $v$. Compose it with $F$ and $G$.
+      By the assumed properties this is the same as $u$ composed with $F$ and
+      $G$. By the pullback condition we now get $u\jdeq v$. 
+\end{itemize}
+\end{proof}
+
+\begin{lem}
+For any $\jterm{\Gamma}{A}{x}$ and any $\jfam{{\Gamma}{A}}{P}$, the square
+\begin{equation*}
+\begin{tikzcd}
+\subst{x}{P} \ar{d} \ar{r}{\finc{x}{P}} & \ctxext{A}{P} \ar{d}{\cprojfstf{A}{P}}\\
+\emptyf \ar{r}{\ctxwk{\emptyf}{x}} & A
+\end{tikzcd}
+\end{equation*}
+is a pullback square.
+\end{lem}
+
+In the following lemma we assert that pulling back a family $Q$ 
+over $\ctxext{{\Gamma}{A}}{P}$ along a fiber
+inclusion $\finc{x}{P}$ gives the family $\subst{x}{Q}$ over $\ctxext{\Gamma}{\subst{x}{P}}$. 
+
+\begin{lem}
+We have the following inference rule:
+\begin{equation*}
+\inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\jcomp{}{\finc{x}{P}}{Q}}
+      {\subst{x}{Q}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+We have the judgmental equalities:
+\begin{align*}
+\jcomp{\subst{x}{P}}{\finc{x}{P}}{Q}
+& \jdeq
+  \subst{\tmext{\ctxwk{\subst{x}{P}}{x}}{\idtm{\subst{x}{P}}}}{\ctxwk{\subst{x}{P}}{Q}}
+  \\
+& \jdeq
+  \subst{\idtm{\subst{x}{P}}}{{\ctxwk{\subst{x}{P}}{x}}{\ctxwk{\subst{x}{P}}{Q}}}
+  \\
+& \jdeq
+  \subst{\idtm{\subst{x}{P}}}{\ctxwk{\subst{x}{P}}{\subst{x}{Q}}}
+  \\
+& \jdeq
+  \subst{x}{Q}.
+\end{align*}
+\end{proof}
+
+\begin{lem}
+The following inference rule is valid:
+\begin{equation*}
+\inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{A}}{Q}
+    }
+  { \jfameq
+      {{\Gamma}{{A}{P}}}
+      {\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}}
+      {\ctxwk{P}{Q}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+Let $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$ be
+families. Then we have
+\begin{align*}
+\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}
+& \jdeq
+  \unfoldall{\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}}
+  \tag{by definition}\\
+& \jdeq 
+  \subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{Q}}} 
+  \tag{by \autoref{comp-ww-f}}\\
+& \jdeq 
+  \ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}} 
+  \tag{by \autoref{comp-ws-f}}\\
+& \jdeq 
+  \ctxwk{P}{Q} 
+  \tag{by \autoref{idfunc-wk-defn}}
+\end{align*}
+\end{proof}
+
 
 \subsection{Fiber inclusions}
 We will use the insights of \autoref{extension-on-terms} to define and study
@@ -2451,294 +2960,6 @@ Let $\jfam{\Gamma}{A}$. Then we have the judgmental equalities
 \end{align*}
 \end{proof}
 
-\subsection{Pullback squares and family pullback squares}
-\label{pullback}
-Now that we have introduced the notions of morphisms, composition and identity
-terms, we can develop a diagramatic style of of displaying type dependencies
-combined with morphisms. We give an informal, metatheoretical definition of
-such diagrams by indicating what the various components mean. The definition
-is informal because we will only use such diagrams occasionally to provide a
-graphical indication of the situation in which we're working. In particular,
-we will not shy away from using natural numbers and trust that the reader can
-figure out what we mean.
-
-\begin{defn}
-A diagram is said to be a \emph{dependency diagram in context $\Gamma$}
-if it is built up according to the following steps:
-\begin{itemize}
-\item The arrows appearing in a dependency diagram are either ordinary, like the
-arrow%
-$\begin{tikzcd}[ampersand replacement = \&]
-X \ar{r} \& Y,
-\end{tikzcd}$
-or double-headed, like
-$\begin{tikzcd}[ampersand replacement = \&]
-X \ar[fib]{r} \& Y.
-\end{tikzcd}$
-\item An ordinary arrow 
-\begin{equation*}
-\begin{tikzcd}
-A \ar{r}{f} & B
-\end{tikzcd}
-\end{equation*}
-between two families $A$ and $B$ of contexts over $\Gamma$ indicates that
-$f$ is a morphism from $A$ to $B$ in context $\Gamma$, i.e.~that we have the
-judgment $\jhom{\Gamma}{A}{B}{f}$.
-\item The set of double-headed arrows must form a forest and the root of
-each maximal tree of double-headed arrows is a family of contexts over $\Gamma$.
-In particular, if an object is not the domain of a double-headed arrow it must
-be a family of contexts over $\Gamma$.
-\item A sequence of double-headed 
-arrows
-\begin{equation*}
-\begin{tikzcd}
-P_{n} \ar[fib]{r} & \cdots \ar[fib]{r} & P_1 \ar[fib]{r} & A
-\end{tikzcd}
-\end{equation*}
-indicates that $P_1$ is a family of contexts over $\ctxext{\Gamma}{A}$, that
-$P_2$ is a family of contexts over $\ctxext{{\Gamma}{A}}{P_1}$, etcetera.
-\item There can be two kinds of ladders of double-headed arrows:
-\begin{equation*}
-\begin{tikzcd}
-P_{n} \ar{r}{F_{n}} \ar[fib]{d} & Q_{n} \ar[fib]{d}\\
-\vdots \ar[fib]{d} & \vdots \ar[fib]{d}\\
-P_1 \ar{r}{F_1} \ar[fib]{d} & Q_1 \ar[fib]{d}\\
-A \ar{r}{f} & B
-\end{tikzcd}
-\qquad
-\begin{tikzcd}[column sep = tiny]
-P_{n+m} \ar{rr}{F_{n+m}} \ar[fib]{d} & & Q_{n+m} \ar[fib]{d}\\
-\vdots \ar[fib]{d} & & \vdots \ar[fib]{d}\\
-P_{n+1} \ar{rr}{F_{n+1}} \ar[fib]{dr} & & Q_{n+1} \ar[fib]{dl}\\
-& P_n \ar[fib]{d}\\
-& \vdots \ar[fib]{d}\\
-& P_1 \ar[fib]{d}\\
-& A
-\end{tikzcd}
-\end{equation*}
-The ladder on the left 
-indicates that $F_1$ is a morphism from $P_1$ to $Q_1$ \emph{over} $f$,
-i.e.~that the judgment $\jfhom{\Gamma}{A}{B}{f}{P_1}{Q_1}{F_1}$ holds, that
-$F_2$ is a morphism from $P_2$ to $Q_2$ over
-the morphism $\tmext{\ctxwk{P_1}{f}}{F_1}$ from $\ctxext{A}{P_1}$ to
-$\ctxext{B}{Q_1}$, etcetera.
-
-The ladder on the right indicates that $F_{n+1}$ is a morphism from $P_{n+1}$ to
-$Q_{n+1}$ in the appropriate context, that $F_{n+2}$ is a morphism from
-$P_{n+2}$ to $Q_{n+2}$ over $F_{n+1}$, etcetera.
- 
-Note that the object(s) at the bottom of a ladder are always families of contexts
-over $\Gamma$, so that the typing of the various ingredients makes sense.
-\end{itemize}
-Such a diagram is said to be commutative if the subdiagram consisting of only
-the normal headed arrows is commutative in the usual sense (using judgmental
-equality). Note that the ladders are inherently commutative.
-\end{defn}
-
-The most basic illustrative example of a commutative dependency diagram is
-the diagram
-\begin{equation*}
-\begin{tikzcd}
-P \ar[fib]{d} \ar{r}{F} & Q \ar[fib]{d} \\
-A \ar{r}{f} & B
-\end{tikzcd}
-\end{equation*}
-indicating a morphism $F$ from $P$ to $Q$ over the morphism $f$ from $A$ to
-$B$ in a context $\Gamma$.
-
-We can just copy the usual categorical definition of a pullback square to our
-current situation, but we have to require that each arrow in the pullback square
-is an ordinary arrow. When families (i.e. double-headed arrows) are involved
-in the diagram, we make the following definition of a family pullback:
-
-\begin{defn}
-We say that a commutative dependency diagram of the form
-\begin{equation*}
-\begin{tikzcd}
-P \ar[fib]{d} \ar{r}{F} & Q \ar[fib]{d} \\
-A \ar{r}{f} & B
-\end{tikzcd}
-\end{equation*}
-is a \emph{family pullback} if the following inference rules are valid:
-\begin{align*}
-& \inference
-  { \jfam{{\Gamma}{A}}{P'}
-    \jfhom{\Gamma}{A}{B}{f}{P'}{Q}{F'}
-    }
-  { \jhom{{\Gamma}{A}}{P'}{P}{u}
-    }
-  \\
-& \inference
-  { \jfam{{\Gamma}{A}}{P'}
-    \jfhom{\Gamma}{A}{B}{f}{P'}{Q}{F'}
-    }
-  { \jfhomeq{\Gamma}{A}{B}{f}{P'}{Q}{\jcomp{}{u}{F}}{F'}
-    }
-  \\
-& \inference
-  { \jhom{{\Gamma}{A}}{P'}{P}{v}
-    \jfhomeq{\Gamma}{A}{B}{f}{P'}{Q}{\jcomp{}{v}{F}}{F'}
-    }
-  { \jhomeq{{\Gamma}{A}}{P'}{P}{v}{u}
-    }
-\end{align*}
-\end{defn}
-
-The following lemma explains that when a square involving families is a
-family pullback square whenever the corresponding square involving projections is a
-pullback square. There is no proof in the the opposite direction.
-
-\begin{lem}
-A square
-\begin{equation}\label{eq:fpb_to_pb_eqv_fpb}
-\begin{tikzcd}
-P \ar[fib]{d} \ar{r}{F} & Q \ar[fib]{d} \\
-A \ar{r}{f} & B
-\end{tikzcd}
-\end{equation}
-is a family pullback square whenever the square
-\begin{equation}\label{eq:fpb_to_pb_eqv_pb}
-\begin{tikzcd}[column sep = large]
-\ctxext{A}{P} \ar{d}[swap]{\cprojfstf{A}{P}} \ar{r}{\tmext{\ctxwk{P}{f}}{F}} & \ctxext{B}{Q} \ar{d}{\cprojfstf{B}{Q}} \\
-A \ar{r}{f} & B
-\end{tikzcd}
-\end{equation}
-is a pullback square.
-\end{lem}
-
-The family pullback of a family along any morphism always exists. It is simply given
-by the precomposition of the family with the morphism. Note that this fact does
-not carry over to arbitrary pullbacks.
-
-\begin{lem}
-The diagram
-\begin{equation*}
-\begin{tikzcd}
-\jcomp{}{f}{Q} \ar[fib]{d} \ar{r}{\idtm{\jcomp{}{f}{Q}}} & Q \ar[fib]{d} \\
-A \ar{r}{f} & B
-\end{tikzcd}
-\end{equation*}
-is a family pullback diagram.
-\end{lem}
-
-\begin{proof}
-The proof is a triviality because $\jhom{{\Gamma}{A}}{P'}{\jcomp{}{f}{Q}}{F'}$
-is the same judgment as $\jfhom{\Gamma}{A}{B}{f}{P'}{Q}{F'}$ and
-$\jcomp{}{\idtm{\jcomp{}{f}{Q}}}{F'}\jdeq F'$.
-\end{proof}
-
-For arbitrary pullbacks we have the pasting lemma as usual, but for family
-pullbacks we can only derive one of the parts of the pasting lemma.
-
-\begin{lem}
-Suppose we have the diagram
-\begin{equation*}
-\begin{tikzcd}
-P \ar{r}{F} \ar[fib]{d} & Q \ar{r}{G} \ar[fib]{d} & R \ar[fib]{d}\\
-A \ar{r}{f} & B \ar{r}{g} & C
-\end{tikzcd}
-\end{equation*}
-where the square on the right and the outer rectangle are family pullback 
-diagrams. Then the square on the left is a family pullback diagram.
-\end{lem}
-
-\begin{proof}
-Let $\jfam{{\Gamma}{A}}{P'}$ be a family and let $\jfhom{\Gamma}{A}{B}{f}
-{P'}{Q}{F}$ be a morphism over $f$.
-\begin{itemize}
-\item Then we compose $F'$ with $G$ to obtain a morphism over $\jcomp{}{f}{g}$.
-\item Then we get $\jhom{{\Gamma}{A}}{P'}{P}{u}$ with a uniqueness property.
-      The property that $\jcomp{}{u}{F}\jdeq F'$ follows from the assumption
-      that the right square is a pullback.
-\item Now assume that we have another such $v$. Compose it with $F$ and $G$.
-      By the assumed properties this is the same as $u$ composed with $F$ and
-      $G$. By the pullback condition we now get $u\jdeq v$. 
-\end{itemize}
-\end{proof}
-
-\begin{lem}
-For any $\jterm{\Gamma}{A}{x}$ and any $\jfam{{\Gamma}{A}}{P}$, the square
-\begin{equation*}
-\begin{tikzcd}
-\subst{x}{P} \ar{d} \ar{r}{\finc{x}{P}} & \ctxext{A}{P} \ar{d}{\cprojfstf{A}{P}}\\
-\emptyf \ar{r}{\ctxwk{\emptyf}{x}} & A
-\end{tikzcd}
-\end{equation*}
-is a pullback square.
-\end{lem}
-
-In the following lemma we assert that pulling back a family $Q$ 
-over $\ctxext{{\Gamma}{A}}{P}$ along a fiber
-inclusion $\finc{x}{P}$ gives the family $\subst{x}{Q}$ over $\ctxext{\Gamma}{\subst{x}{P}}$. 
-
-\begin{lem}
-We have the following inference rule:
-\begin{equation*}
-\inference
-  { \jfam{{{\Gamma}{A}}{P}}{Q}
-    \jterm{\Gamma}{A}{x}
-    }
-  { \jfameq
-      {{\Gamma}{\subst{x}{P}}}
-      {\jcomp{}{\finc{x}{P}}{Q}}
-      {\subst{x}{Q}}
-    }
-\end{equation*}
-\end{lem}
-
-\begin{proof}
-We have the judgmental equalities:
-\begin{align*}
-\jcomp{\subst{x}{P}}{\finc{x}{P}}{Q}
-& \jdeq
-  \subst{\tmext{\ctxwk{\subst{x}{P}}{x}}{\idtm{\subst{x}{P}}}}{\ctxwk{\subst{x}{P}}{Q}}
-  \\
-& \jdeq
-  \subst{\idtm{\subst{x}{P}}}{{\ctxwk{\subst{x}{P}}{x}}{\ctxwk{\subst{x}{P}}{Q}}}
-  \\
-& \jdeq
-  \subst{\idtm{\subst{x}{P}}}{\ctxwk{\subst{x}{P}}{\subst{x}{Q}}}
-  \\
-& \jdeq
-  \subst{x}{Q}.
-\end{align*}
-\end{proof}
-
-\begin{lem}
-The following inference rule is valid:
-\begin{equation*}
-\inference
-  { \jfam{{\Gamma}{A}}{P}
-    \jfam{{\Gamma}{A}}{Q}
-    }
-  { \jfameq
-      {{\Gamma}{{A}{P}}}
-      {\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}}
-      {\ctxwk{P}{Q}}
-    }
-\end{equation*}
-\end{lem}
-
-\begin{proof}
-Let $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$ be
-families. Then we have
-\begin{align*}
-\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}
-& \jdeq
-  \unfoldall{\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}}
-  \tag{by definition}\\
-& \jdeq 
-  \subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{Q}}} 
-  \tag{by \autoref{comp-ww-f}}\\
-& \jdeq 
-  \ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}} 
-  \tag{by \autoref{comp-ws-f}}\\
-& \jdeq 
-  \ctxwk{P}{Q} 
-  \tag{by \autoref{idfunc-wk-defn}}
-\end{align*}
-\end{proof}
-
 \begin{comment}
 \subsection{Another special case of projections}
 In this subsection we investigate the special case of a projection which
@@ -2823,28 +3044,25 @@ contexts, families and terms. In this article, their use will be mainly in
 universes. The theory of extension algebras requires the full power (i.e.~all
 of the ingredients) of the theory of contexts, families and terms in its
 formulation and it is (perhaps surprisingly) quite involved to formulate it.
-It is however a necessary task, because extension algebras stand at the basis
-of implementing any theory with dependency in the theory of contexts, families
-and terms (i.e.~you don't stand a chance without extension algebras).
 
 Let $P$ be a family over an extended context $\ctxext{\Gamma}{A}$. We could
 mimic extension by requiring to have terms
 \begin{align*}
-\jhom*{\Gamma}{{A}{P}}{A}{e}\\
-\jhom*{{\Gamma}{A}}{{P}{\jcomp{}{e}{P}}}{P}{f}.
+\jhom*{\Gamma}{{A}{P}}{A}{\epsilon_0}\\
+\jhom*{{\Gamma}{A}}{{P}{\jcomp{}{\epsilon_0}{P}}}{P}{\epsilon_1}.
 \end{align*}
 
 \begin{rmk}
-Instead of looking at $f$ as a context morphism from $\ctxext{P}{\jcomp{}{e}{P}}$
-to $P$, one could also look at $f$ as a morphism \emph{over $\cprojfstf{A}{P}$},
+Instead of looking at $\epsilon_1$ as a context morphism from $\ctxext{P}{\jcomp{}{\epsilon_0}{P}}$
+to $P$, one could also look at $\epsilon_1$ as a morphism \emph{over $\cprojfstf{A}{P}$},
 as indicated in the following diagram:
 \begin{equation*}
 \begin{tikzcd}
 P
   \ar[fib]{d}
-& \jcomp{}{e}{P}
+& \jcomp{}{\epsilon_0}{P}
   \ar[fib]{d}
-  \ar{l}[swap]{f}
+  \ar{l}[swap]{\epsilon_1}
   \ar{r}
 & P
   \ar[fib]{d}
@@ -2852,112 +3070,110 @@ P
 A
 & \ctxext{A}{P}
   \ar{l}{\cprojfstf{A}{P}}
-  \ar{r}[swap]{e}
+  \ar{r}[swap]{\epsilon_0}
 & A
 \end{tikzcd}
 \end{equation*}
-This makes it clear that $f$ takes a family over an extended context as an
+This makes it clear that $\epsilon_1$ takes a family over an extended context as an
 argument. The extended context consists of a `base part' and a `family part'. 
-The output of $f$ is a new (extended) family over that base part. Forgetting 
+The output of $\epsilon_1$ is a new (extended) family over that base part. Forgetting 
 the family part is what the projection takes care of.
 \end{rmk}
 
 Extension also satisfies the properties explained in \autoref{comp-ee}, so we
-must find the two judgmental equalities for $e$ and $f$ mimicing those. 
+must find the two judgmental equalities for $\epsilon_0$ and $\epsilon_1$ mimicing those. 
 The first of these judgmental equalities is easy to give: it says that the
 following diagram commutes:
 \begin{equation}\label{eq:ealg-eq1}
 \begin{tikzcd}[column sep=huge]
-\ctxext{A}{{P}{\jcomp{}{e}{P}}} 
-  \ar{d}[swap]{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}
-    %\tmext{\ctxwk{\jcomp{}{e}{P}}{e}}{\idtm{\jcomp{}{e}{P}}}
+\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}} 
+  \ar{d}[swap]{\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}
     } 
-  \ar{r}{\jvcomp{}{\idtm{A}}{f}
-    %\tmext{\ctxwk{\ctxext{P}{\jcomp{}{e}{P}}}{\idtm{A}}}{f}
+  \ar{r}{\jvcomp{}{\idtm{A}}{\epsilon_1}
     } 
-  & \ctxext{A}{P} \ar{d}{e}\\
-\ctxext{A}{P} \ar{r}[swap]{e} & A
+  & \ctxext{A}{P} \ar{d}{\epsilon_0}\\
+\ctxext{A}{P} \ar{r}[swap]{\epsilon_0} & A
 \end{tikzcd}
 \end{equation}
 To get a feel for this judgmental equality we include the following lemma.
 
 \begin{lem}
-Let $A$, $P$, $e$ and $f$ be as above, satisfying \autoref{eq:ealg-eq1} and
+Let $A$, $P$, $\epsilon_0$ and $\epsilon_1$ be as above, satisfying \autoref{eq:ealg-eq1} and
 let $x_0:A$,
-$x_1:\subst{x_0}{P}$ and $x_2:\subst{x_1}{{x_0}{\jcomp{}{e}{P}}}$.
+$x_1:\subst{x_0}{P}$ and $x_2:\subst{x_1}{{x_0}{\jcomp{}{\epsilon_0}{P}}}$.
 Then we have the judgmental equality
 \begin{equation*}
-\subst{{x_2}{{x_1}{f}}}{{x_0}{e}}
+\subst{{x_2}{{x_1}{\epsilon_1}}}{{x_0}{\epsilon_0}}
 \jdeq
-\subst{x_2}{{{x_1}{{x_0}{e}}}{e}}.
+\subst{x_2}{{{x_1}{{x_0}{\epsilon_0}}}{\epsilon_0}}.
 \end{equation*}
 \end{lem}
 
 \begin{proof}
 The proof is a simple computation:
 \begin{align*}
-\subst{{x_2}{{x_1}{f}}}{{x_0}{e}}
+\subst{{x_2}{{x_1}{\epsilon_1}}}{{x_0}{\epsilon_0}}
 & \jdeq
-  \subst{\tmext{x_0}{\subst{x_2}{{x_1}{f}}}}{e}
+  \subst{\tmext{x_0}{\subst{x_2}{{x_1}{\epsilon_1}}}}{\epsilon_0}
   \\
 & \jdeq 
-  \subst{{x_2}{{x_1}{{x_0}{\jvcomp{}{\idtm{A}}{f}}}}}{e}
+  \subst{{x_2}{{x_1}{{x_0}{\jvcomp{}{\idtm{A}}{\epsilon_1}}}}}{\epsilon_0}
   \\
 & \jdeq
-  \subst{x_2}{{x_1}{{x_0}{\jcomp{}{\jvcomp{}{\idtm{A}}{f}}{e}}}}
+  \subst{x_2}{{x_1}{{x_0}{\jcomp{}{\jvcomp{}{\idtm{A}}{\epsilon_1}}{\epsilon_0}}}}
   \\
 & \jdeq
-  \subst{x_2}{{x_1}{{x_0}{\jcomp{}{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}{e}}}}
+  \subst{x_2}{{x_1}{{x_0}{\jcomp{}{\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}{\epsilon_0}}}}
   \\
 & \jdeq 
-  \subst{{x_2}{{x_1}{{x_0}{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}}}}{e}
+  \subst{{x_2}{{x_1}{{x_0}{\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}}}}{\epsilon_0}
   \\
 & \jdeq
-  \subst{\tmext{\subst{x_1}{{x_0}{e}}}{x_2}}{e}
+  \subst{\tmext{\subst{x_1}{{x_0}{\epsilon_0}}}{x_2}}{\epsilon_0}
   \\
 & \jdeq
-  \subst{x_2}{{{x_1}{{x_0}{e}}}{e}}.\qedhere
+  \subst{x_2}{{{x_1}{{x_0}{\epsilon_0}}}{\epsilon_0}}.\qedhere
 \end{align*}
 \end{proof}
 
 The second of the judgmental equalities is harder to describe, however. We need
 to consider `higher' families, i.e.~families over families over families, and
-thus we need to look at the family $\jcomp{}{e}{\jcomp{}{e}{P}}$ and find the
+thus we need to look at the family $\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}$ and find the
 two dotted morphisms in the diagram
 \begin{equation*}
 \begin{tikzcd}
-\ctxext{P}{{\jcomp{}{e}{P}}{\jcomp{}{e}{\jcomp{}{e}{P}}}}
+\ctxext{P}{{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}
   \ar[densely dotted]{d}
   \ar[densely dotted]{r}
-& \ctxext{P}{\jcomp{}{e}{P}} \ar{d}{f}\\
-\ctxext{P}{\jcomp{}{e}{P}} \ar{r}{f} & P
+& \ctxext{P}{\jcomp{}{\epsilon_0}{P}} \ar{d}{\epsilon_1}\\
+\ctxext{P}{\jcomp{}{\epsilon_0}{P}} \ar{r}{\epsilon_1} & P
 \end{tikzcd}
 \end{equation*}
 The first is easy to find. Note that we have the judgmental equality
 \begin{equation*}
-\ctxext{\jcomp{}{e}{P}}{\jcomp{}{e}{\jcomp{}{e}{P}}}
+\ctxext{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
   \jdeq
-  \jcomp{}{e}{\ctxext{P}{\jcomp{}{e}{P}}}
+  \jcomp{}{\epsilon_0}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}
 \end{equation*}
 and therefore we may just take the morphism
 \begin{equation*}
 \jhom
   {{\Gamma}{A}}
-  {{P}{{\jcomp{}{e}{P}}{\jcomp{}{e}{\jcomp{}{e}{P}}}}}
-  {{P}{\jcomp{}{e}{P}}}
-  {\jvcomp{}{\idtm{P}}{\jcomp{}{e}{f}}}.
+  {{P}{{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}}
+  {{P}{\jcomp{}{\epsilon_0}{P}}}
+  {\jvcomp{}{\idtm{P}}{\jcomp{}{\epsilon_0}{\epsilon_1}}}.
 \end{equation*}
 For the other morphism we need to look at the family
-$\ctxext{P}{{\jcomp{}{e}{P}}{\jcomp{}{e}{\jcomp{}{e}{P}}}}$ differently. We do
+$\ctxext{P}{{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}$ differently. We do
 that in the following lemma.
 
 \begin{lem}
-Suppose we have $A$, $P$, $e$ and $f$ satisfying \autoref{eq:ealg-eq1}. Then
+Suppose we have $A$, $P$, $\epsilon_0$ and $\epsilon_1$ satisfying \autoref{eq:ealg-eq1}. Then
 we have the judgmental equality
 \begin{equation*}
-\jcomp{}{e}{\jcomp{}{e}{P}}
+\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}
   \jdeq
-  \jcomp{}{f}{\jcomp{}{e}{P}}.
+  \jcomp{}{\epsilon_1}{\jcomp{}{\epsilon_0}{P}}.
 \end{equation*}
 \end{lem}
 
@@ -2967,91 +3183,91 @@ application of \autoref{eq:ealg-eq1} and making the computation in both ways
 from there. The judgmental equality below where \autoref{eq:ealg-eq1} is applied,
 is marked with an $*$. The computation goes as follows:
 \begin{align*}
-\jcomp{}{e}{\jcomp{}{e}{P}}
+\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}
 & \jdeq
-  \subst{e}
-    {\ctxwk{\ctxext{A}{P}}{\jcomp{}{e}{P}}}
+  \subst{\epsilon_0}
+    {\ctxwk{\ctxext{A}{P}}{\jcomp{}{\epsilon_0}{P}}}
   \\
 & \jdeq
   \subst
-    {\idtm{\jcomp{}{e}{P}}}
+    {\idtm{\jcomp{}{\epsilon_0}{P}}}
     { \ctxwk
-        {\jcomp{}{e}{P}}{\subst{e}
-        {\ctxwk{\ctxext{A}{P}}{\jcomp{}{e}{P}}}}}
+        {\jcomp{}{\epsilon_0}{P}}{\subst{\epsilon_0}
+        {\ctxwk{\ctxext{A}{P}}{\jcomp{}{\epsilon_0}{P}}}}}
   \\
 & \jdeq
   \subst
-    {\idtm{\jcomp{}{e}{P}}}
-    { {\ctxwk{\jcomp{}{e}{P}}{e}}
-      {\ctxwk{\jcomp{}{e}{P}}{{\ctxext{A}{P}}{\jcomp{}{e}{P}}}}}
+    {\idtm{\jcomp{}{\epsilon_0}{P}}}
+    { {\ctxwk{\jcomp{}{\epsilon_0}{P}}{\epsilon_0}}
+      {\ctxwk{\jcomp{}{\epsilon_0}{P}}{{\ctxext{A}{P}}{\jcomp{}{\epsilon_0}{P}}}}}
   \\
 & \jdeq
   \subst
-    {\idtm{\jcomp{}{e}{P}}}
-    { {\ctxwk{\jcomp{}{e}{P}}{e}}
-      {\ctxwk{\ctxext{{A}{P}}{\jcomp{}{e}{P}}}{\jcomp{}{e}{P}}}}
+    {\idtm{\jcomp{}{\epsilon_0}{P}}}
+    { {\ctxwk{\jcomp{}{\epsilon_0}{P}}{\epsilon_0}}
+      {\ctxwk{\ctxext{{A}{P}}{\jcomp{}{\epsilon_0}{P}}}{\jcomp{}{\epsilon_0}{P}}}}
   \\
 & \jdeq
   \subst
-    {\idtm{\jcomp{}{e}{P}}}
-    { {\ctxwk{\jcomp{}{e}{P}}{e}}
-      {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}}
+    {\idtm{\jcomp{}{\epsilon_0}{P}}}
+    { {\ctxwk{\jcomp{}{\epsilon_0}{P}}{\epsilon_0}}
+      {\ctxwk{\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{P}}}}
   \\
 & \jdeq
   \subst
-    {\unfold{\jvcomp{\jcomp{}{e}{P}}{e}{\idtm{\jcomp{}{e}{P}}}}}
-    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}
+    {\unfold{\jvcomp{\jcomp{}{\epsilon_0}{P}}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}}
+    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{P}}}
   \\
 & \jdeq
   \subst
-    {\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}
-    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}
+    {\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}
+    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{P}}}
   \\
 & \jdeq
-  \jcomp{}{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}
+  \jcomp{}{\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{P}}
   \\
 & \jdeq
-  \jcomp{}{\jcomp{}{\jvcomp{}{e}{\idtm{\jcomp{}{e}{P}}}}{e}}{P}
+  \jcomp{}{\jcomp{}{\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}{\epsilon_0}}{P}
   \\
 & \stackrel{*}{\jdeq}
   \jcomp{}{
-    \jcomp{}{\jvcomp{}{\idtm{A}}{f}}{e}}{P}
+    \jcomp{}{\jvcomp{}{\idtm{A}}{\epsilon_1}}{\epsilon_0}}{P}
   \\
 & \jdeq
-  \jcomp{}{\jvcomp{}{\idtm{A}}{f}}{
-    \jcomp{}{e}{P}}
-  \\
-& \jdeq
-  \subst
-    {\tmext{\ctxwk{\ctxext{P}{\jcomp{}{e}{P}}}{\idtm{A}}}{f}}
-    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}
+  \jcomp{}{\jvcomp{}{\idtm{A}}{\epsilon_1}}{
+    \jcomp{}{\epsilon_0}{P}}
   \\
 & \jdeq
   \subst
-    {f}
-    { {\ctxwk{\ctxext{P}{\jcomp{}{e}{P}}}{\idtm{A}}}
-      {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}
+    {\tmext{\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{\idtm{A}}}{\epsilon_1}}
+    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{P}}}
+  \\
+& \jdeq
+  \subst
+    {\epsilon_1}
+    { {\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{\idtm{A}}}
+      {\ctxwk{\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{P}}}
       }
   \\
 & \jdeq
   \subst
-    {f}
-    { {\cprojfstf{A}{\ctxext{P}{\jcomp{}{e}{P}}}}
-      {\ctxwk{\ctxext{A}{{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}
+    {\epsilon_1}
+    { {\cprojfstf{A}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}}
+      {\ctxwk{\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{P}}}
       }
   \\
 & \jdeq
   \subst
-    {f}
-    {\jcomp{}{\cprojfstf{A}{\ctxext{P}{\jcomp{}{e}{P}}}}{\jcomp{}{e}{P}}}
+    {\epsilon_1}
+    {\jcomp{}{\cprojfstf{A}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{P}}}
   \\
 & \jdeq
   \subst
-    {f}
-    {\ctxwk{\ctxext{P}{\jcomp{}{e}{P}}}{\jcomp{}{e}{P}}}
+    {\epsilon_1}
+    {\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{\jcomp{}{\epsilon_0}{P}}}
   \\
 & \jdeq
-  \jcomp{}{f}{\jcomp{}{e}{P}}.
+  \jcomp{}{\epsilon_1}{\jcomp{}{\epsilon_0}{P}}.
   \qedhere
 \end{align*}
 \end{proof}
@@ -3060,33 +3276,33 @@ Now we see that we can use the morphism
 \begin{equation*}
 \jhom
   {{\Gamma}{A}}
-  {{P}{{\jcomp{}{e}{P}}{\jcomp{}{f}{{}{e}{P}}}}}
-  {{P}{\jcomp{}{e}{P}}}
-  {\jvcomp{}{f}{\idtm{\jcomp{}{f}{{}{e}{P}}}}}.
+  {{P}{{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_1}{{}{\epsilon_0}{P}}}}}
+  {{P}{\jcomp{}{\epsilon_0}{P}}}
+  {\jvcomp{}{\epsilon_1}{\idtm{\jcomp{}{\epsilon_1}{{}{\epsilon_0}{P}}}}}.
 \end{equation*}
 Thus, the second judgmental equality we will need is that the diagram
 \begin{equation}\label{eq:ealg-eq2}
 \begin{tikzcd}[column sep=huge]
-\ctxext{P}{{\jcomp{}{e}{P}}{\jcomp{}{e}{{}{e}{P}}}} 
-  \ar{r}{\jvcomp{}{\idtm{P}}{\jcomp{}{e}{f}}}
+\ctxext{P}{{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_0}{{}{\epsilon_0}{P}}}} 
+  \ar{r}{\jvcomp{}{\idtm{P}}{\jcomp{}{\epsilon_0}{\epsilon_1}}}
   \ar{d}[swap]{
-    \jvcomp{}{f}{\idtm{\jcomp{}{f}{{}{e}{P}}}}
+    \jvcomp{}{\epsilon_1}{\idtm{\jcomp{}{\epsilon_1}{{}{\epsilon_0}{P}}}}
 %    \tmext
 %      {\ctxwk{\jcomp{}{\bar{e}}{{}{e}{P}}}{f}}
 %      {\idtm{\jcomp{}{\bar{e}}{{}{e}{P}}}}
     }
-& \ctxext{P}{\jcomp{}{e}{P}} \ar{d}{f}\\
-\ctxext{P}{\jcomp{}{e}{P}} \ar{r}[swap]{f} & P
+& \ctxext{P}{\jcomp{}{\epsilon_0}{P}} \ar{d}{\epsilon_1}\\
+\ctxext{P}{\jcomp{}{\epsilon_0}{P}} \ar{r}[swap]{\epsilon_1} & P
 \end{tikzcd}
 \end{equation}
 commutes judgmentally. Now we can confidently formulate the definition of
 extension algebras.
 
 \begin{defn}
-An \emph{extension algebra in context $\Gamma$} is a quadruple $(A,P,e,f)$
+An \emph{extension algebra in context $\Gamma$} is a quadruple $(A,P,\epsilon_0,\epsilon_1)$
 consisting of a family $A$ over context $\Gamma$, a family $P$ over the context
-$\ctxext{\Gamma}{A}$, a morphism $e$ from $\ctxext{A}{P}$ to $A$ in context
-$\Gamma$ and a morphism $f$ from $\ctxext{P}{\jcomp{}{e}{P}}$ to $P$ in context
+$\ctxext{\Gamma}{A}$, a morphism $\epsilon_0$ from $\ctxext{A}{P}$ to $A$ in context
+$\Gamma$ and a morphism $\epsilon_1$ from $\ctxext{P}{\jcomp{}{\epsilon_0}{P}}$ to $P$ in context
 $\ctxext{\Gamma}{A}$, satisfying the judgmental equalities of
 \autoref{eq:ealg-eq1,eq:ealg-eq2}.
 \end{defn}
@@ -3095,33 +3311,33 @@ We also give a bit of intuition to the requirement of \autoref{eq:ealg-eq2} by
 means of the following lemma.
 
 \begin{lem}
-Let $(A,P,e,f)$ be an extension algebra in context $\Gamma$ and let
-$y_0:P$, $y_1:\subst{y_0}{\jcomp{}{e}{P}}$ and 
-$y_2:\subst{y_1}{{y_0}{\jcomp{}{e}{\jcomp{}{e}{P}}}}$. Then we have the
+Let $(A,P,\epsilon_0,\epsilon_1)$ be an extension algebra in context $\Gamma$ and let
+$y_0:P$, $y_1:\subst{y_0}{\jcomp{}{\epsilon_0}{P}}$ and 
+$y_2:\subst{y_1}{{y_0}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}$. Then we have the
 judgmental equality
 \begin{equation*}
-\subst{{y_2}{{y_1}{\jcomp{}{e}{f}}}}{{y_0}{f}}
+\subst{{y_2}{{y_1}{\jcomp{}{\epsilon_0}{\epsilon_1}}}}{{y_0}{\epsilon_1}}
   \jdeq
-  \subst{y_2}{{{y_1}{{y_0}{f}}}{f}}
+  \subst{y_2}{{{y_1}{{y_0}{\epsilon_1}}}{\epsilon_1}}
 \end{equation*}
 \end{lem}
 
 \begin{proof}
 The proof is a straightforward calculation:
 \begin{align*}
-\subst{{y_2}{{y_1}{\jcomp{}{e}{f}}}}{{y_0}{f}}
+\subst{{y_2}{{y_1}{\jcomp{}{\epsilon_0}{\epsilon_1}}}}{{y_0}{\epsilon_1}}
 & \jdeq
-  \subst{\tmext{y_0}{\subst{y_2}{{y_1}{\jcomp{}{e}{f}}}}}{f}
+  \subst{\tmext{y_0}{\subst{y_2}{{y_1}{\jcomp{}{\epsilon_0}{\epsilon_1}}}}}{\epsilon_1}
   \\
 & \jdeq
-  \subst{{y_2}{{y_1}{{y_0}{\jvcomp{}{\idtm{P}}{\jcomp{}{e}{f}}}}}}{f}
+  \subst{{y_2}{{y_1}{{y_0}{\jvcomp{}{\idtm{P}}{\jcomp{}{\epsilon_0}{\epsilon_1}}}}}}{\epsilon_1}
   \\
 & \jdeq
   \subst
     {y_2}
     { {y_1}
       { {y_0}
-        {\jcomp{}{\jvcomp{}{\idtm{P}}{\jcomp{}{e}{f}}}{f}}
+        {\jcomp{}{\jvcomp{}{\idtm{P}}{\jcomp{}{\epsilon_0}{\epsilon_1}}}{\epsilon_1}}
         }
       }
   \\
@@ -3130,21 +3346,22 @@ The proof is a straightforward calculation:
     {y_2}
     { {y_1}
       { {y_0}
-        {\jcomp{}{\jvcomp{}{f}{\idtm{\jcomp{}{f}{{}{e}{P}}}}}{f}}
+        {\jcomp{}{\jvcomp{}{\epsilon_1}{\idtm{\jcomp{}{\epsilon_1}{{}{\epsilon_0}{P}}}}}{\epsilon_1}}
         }
       }
   \\
 & \jdeq
-  \subst{{y_2}{{y_1}{{y_0}{\jvcomp{}{f}{\idtm{\jcomp{}{f}{{}{e}{P}}}}}}}}{f}
+  \subst{{y_2}{{y_1}{{y_0}{\jvcomp{}{\epsilon_1}{\idtm{\jcomp{}{\epsilon_1}{{}{\epsilon_0}{P}}}}}}}}{\epsilon_1}
   \\
 & \jdeq
-  \subst{\tmext{\subst{y_1}{{y_0}{f}}}{y_2}}{f}
+  \subst{\tmext{\subst{y_1}{{y_0}{\epsilon_1}}}{y_2}}{\epsilon_1}
   \\
 & \jdeq
-  \subst{y_2}{{{y_1}{{y_0}{f}}}{f}}.\qedhere
+  \subst{y_2}{{{y_1}{{y_0}{\epsilon_1}}}{\epsilon_1}}.\qedhere
 \end{align*}
 \end{proof}
 
+\begin{comment}
 Extension algebras don't come in isolation. There are also extension algebra
 families and extension algebra terms. We now aim to define these and to
 establish various constructions of new extension algebras out of old ones:
@@ -3158,10 +3375,10 @@ An extension algebra family over $\mathcal{A}$ is likewise a quadruple
 $\mathcal{B}\defeq(B,Q,g,h)$. Here we have a family $\jfam{{\Gamma}{A}}{B}$, a
 family $\jfam{{{{\Gamma}{A}}{P}}{\ctxwk{P}{B}}}{Q}$ and
 \begin{align*}
-\jhom*{{{\Gamma}{A}}{P}}{\ctxext{\ctxwk{P}{B}}{Q}}{\jcomp{}{e}{B}}{g}\\
+\jhom*{{{\Gamma}{A}}{P}}{\ctxext{\ctxwk{P}{B}}{Q}}{\jcomp{}{\epsilon_0}{B}}{g}\\
 \jhom*{{{{\Gamma}{A}}{P}}{\ctxwk{P}{B}}}{\ctxext{Q}{\jcomp{}{g}{Q}}}{Q}{h}.
 \end{align*}
-The quadruple $(\jcomp{}{e}{B},Q,g,h)$ is required to be an extension algebra
+The quadruple $(\jcomp{}{\epsilon_0}{B},Q,g,h)$ is required to be an extension algebra
 in context $\ctxext{{\Gamma}{A}}{P}$.
 \end{defn}
 
@@ -3171,19 +3388,19 @@ algebra family over $\mathcal{A}$. A term of $\mathcal{B}$ is a pair $(x,y)$
 consisting of
 \begin{align*}
 \jterm*{{\Gamma}{A}}{B}{x}\\
-\jterm*{{{\Gamma}{A}}{P}}{\subst{\jcomp{}{e}{x}}{Q}}{y}
+\jterm*{{{\Gamma}{A}}{P}}{\subst{\jcomp{}{\epsilon_0}{x}}{Q}}{y}
 \end{align*}
 such that the diagrams
 \begin{equation*}
 \begin{tikzcd}
-\ctxext{\jcomp{}{e}{B}}{Q} 
+\ctxext{\jcomp{}{\epsilon_0}{B}}{Q} 
   \ar{r}{g} 
   \ar[shift right=.7ex,fib]{d}
 & B 
   \ar[shift right=.7ex,fib]{d} 
   \\
 \ctxext{A}{P} 
-  \ar[shift right=.7ex,dotted]{u}[swap]{\tmext{\jcomp{}{e}{x}}{y}}
+  \ar[shift right=.7ex,dotted]{u}[swap]{\tmext{\jcomp{}{\epsilon_0}{x}}{y}}
   \ar{r}{e}
 & A
   \ar[shift right=.7ex,dotted]{u}[swap]{x}
@@ -3198,19 +3415,19 @@ and
 & Q
   \ar[shift right=.7ex,fib]{d}
   \\
-\jcomp{}{f}{\jcomp{}{e}{B}}
-  \ar{r}{\idtm{\jcomp{}{f}{\jcomp{}{e}{B}}}}
+\jcomp{}{f}{\jcomp{}{\epsilon_0}{B}}
+  \ar{r}{\idtm{\jcomp{}{f}{\jcomp{}{\epsilon_0}{B}}}}
   \ar[shift right=.7ex,fib]{d}
   \ar[shift right=.7ex,dotted,mapsto]{u}[swap]{\jcomp{}{f}{y}}
-& \jcomp{}{e}{B}
+& \jcomp{}{\epsilon_0}{B}
   \ar[shift right=.7ex,fib]{d}
   \ar[shift right=.7ex,dotted,mapsto]{u}[swap]{y}
   \\
-\ctxext{P}{\jcomp{}{e}{P}}
+\ctxext{P}{\jcomp{}{\epsilon_0}{P}}
   \ar{r}[swap]{f}
-  \ar[shift right=.7ex,dotted]{u}[swap]{\jcomp{}{f}{\jcomp{}{e}{x}}}
+  \ar[shift right=.7ex,dotted]{u}[swap]{\jcomp{}{f}{\jcomp{}{\epsilon_0}{x}}}
 & P
-  \ar[shift right=.7ex,dotted]{u}[swap]{\jcomp{}{e}{x}}
+  \ar[shift right=.7ex,dotted]{u}[swap]{\jcomp{}{\epsilon_0}{x}}
 \end{tikzcd}
 \end{equation*}
 commute.
@@ -3224,7 +3441,7 @@ to be the quadruple
 (\ctxwk{A}{B},\ctxwk{\ctxext{A}{P}}{Q},\ctxwk{\ctxext{A}{P}}{g},\ctxwk{\ctxext{A}{P}}{h}).
 \end{equation*}
 Note that $\ctxwk{\ctxext{A}{P}}{Q}$ is a family over $\ctxwk{\ctxext{A}{P}}{B}$,
-whereas it should be a family over $\jcomp{}{e}{\ctxwk{A}{B}}$. These are the
+whereas it should be a family over $\jcomp{}{\epsilon_0}{\ctxwk{A}{B}}$. These are the
 same by \autoref{lem:prehom}.
 \end{defn}
 
@@ -3234,10 +3451,10 @@ term of the extension algebra $\ctxwk{\mathcal{A}}{\mathcal{B}}$. Such an
 extension algebra term $(x,y)$ would consist of
 \begin{align*}
 \jterm*{{\Gamma}{A}}{\ctxwk{A}{B}}{x}\\
-\jterm*{{{\Gamma}{A}}{P}}{\subst{\jcomp{}{e}{x}}{\ctxwk{\ctxext{A}{P}}{Q}}}{y}.
+\jterm*{{{\Gamma}{A}}{P}}{\subst{\jcomp{}{\epsilon_0}{x}}{\ctxwk{\ctxext{A}{P}}{Q}}}{y}.
 \end{align*}
 Thus, $x$ is a context morphism from $A$ to $B$ and $y$ is nothing but a term
-of $\jcomp{}{\jcomp{}{e}{x}}{Q}$. For $x$, we see that the diagram
+of $\jcomp{}{\jcomp{}{\epsilon_0}{x}}{Q}$. For $x$, we see that the diagram
 \begin{equation*}
 \begin{tikzcd}
 \ctxext{B}{Q} 
@@ -3253,26 +3470,20 @@ of $\jcomp{}{\jcomp{}{e}{x}}{Q}$. For $x$, we see that the diagram
 \end{equation*}
 commutes.
 \end{rmk}
+\end{comment}
 
 \subsection{Extension-empty algebras}
 \begin{defn}
 Let $P$ be a family over the extended context $\ctxext{\Gamma}{A}$, let
-$\jterm{\Gamma}{A}{x}$ and $\jterm{{\Gamma}{A}}{P}{f}$ be terms. Then the
-quadruple $(A,P,x,f)$ is said to be an \emph{empty algebra in context $\Gamma$}
+$\jterm{\Gamma}{A}{\phi_0}$ and $\jterm{{\Gamma}{A}}{P}{\phi_1}$ be terms. Then the
+quadruple $(A,P,\phi_0,\phi_1)$ is said to be an \emph{empty algebra in context $\Gamma$}
 if the following judgmental equalities hold:
 \begin{align*}
-\jfameq*{\Gamma}{\subst{x}{P}}{A}\\
-\jtermeq*{\Gamma}{A}{\subst{x}{f}}{x}.
+\jfameq*{\Gamma}{\subst{\phi_0}{P}}{A}\\
+\jtermeq*{\Gamma}{A}{\subst{\phi_0}{\phi_1}}{\phi_0}.
 \end{align*}
 \end{defn}
 
-\begin{defn}
-Let $(A_0,P_0,x_0,f_0)$ be an empty algebra in context $\Gamma$ and consider
-\begin{enumerate}
-\item a family $\jfam{{\Gamma}{A_0}}{A_1}$.
-\item a family $\jfam{{{{\Gamma}{A_0}}{P_0}}{\ctxwk{P_0}{A_1}}}{P_1}$.
-\end{enumerate}
-\end{defn}
 
 \subsection{Extension-weakening algebras}
 
