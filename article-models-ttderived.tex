@@ -513,7 +513,7 @@ The inference
     }
 \end{align*}
 tells what happens when we weaken a composition, which is a term of 
-$\ctxwk{A}{C}$, by a family $P$ over $\ctxext{\Gamma}{P}$. We have the following
+$\ctxwk{A}{C}$, by a family $P$ over $\ctxext{\Gamma}{P}$. We also have the following
 inference rules expressing that compositions by or with constant morphisms are
 again constant morphisms.
 \begin{align*}
@@ -591,17 +591,16 @@ Then we have the judgmental equalities\begin{align*}
 \end{align*}
 \end{proof}
 
-Likewise, we can substitute a term $\jterm{\Gamma}{A}{x}$ in a composition
+Likewise, we can substitute a term $\jterm{\Gamma}{A}{x}$ in a composed morphism
 $\jhom{\Gamma}{A}{C}{\jcomp{A}{f}{g}}$. What we get is the \emph{value}
-$\subst{{x}{f}}{g}$. There is a second case where we can substitute: when
-we consider morphisms $\jhom{{\Gamma}{A}}{P}{Q}{f}$ and 
-$\jhom{{\Gamma}{A}}{Q}{R}{g}$ we can restrict them to the fibers. We do this
-in the following lemma:
+$\subst{{x}{f}}{g}$. This is the content of one part of the following lemma.
 
-\begin{lem}\label{lem:jcomp-fiber}
-The following inference rules are valid:
-\begin{align*}
-& \inference
+There is a second, related case where we can substitute: when
+we consider morphisms $\jhom{{\Gamma}{A}}{P}{Q}{f}$ and 
+$\jhom{{\Gamma}{A}}{Q}{R}{g}$ we can restrict them to the fibers, obtaining
+the inference rule
+\begin{equation*}
+\inference
   { \jhom{{\Gamma}{A}}{P}{Q}{f}
     \jhom{{\Gamma}{A}}{Q}{R}{g}
     \jterm{\Gamma}{A}{x}
@@ -613,7 +612,50 @@ The following inference rules are valid:
       {\subst{x}{\jcomp{P}{f}{g}}}
       {\jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{g}}}
     }
+\end{equation*}
+In the following lemma we prove the validity of a more general version of this
+inference rule.
+
+\begin{lem}\label{lem:jcomp-fiber}
+The following inference rules are valid:
+\begin{align*}
+& \inference
+  { \jhom{{\Gamma}{A}}{P}{Q}{f}
+    \jfam{{{\Gamma}{A}}{Q}}{R}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\jcomp{P}{f}{R}}}
+      {\jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{R}}}
+    }
   \\
+& \inference
+  { \jhom{{\Gamma}{A}}{P}{Q}{f}
+    \jfam{{{{\Gamma}{A}}{Q}}{R}}{S}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jfameq
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{\jcomp{P}{f}{R}}}}
+      {\subst{x}{\jcomp{P}{f}{S}}}
+      {\jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{S}}}
+    }
+  \\
+& \inference
+  { \jhom{{\Gamma}{A}}{P}{Q}{f}
+    \jterm{{{{\Gamma}{A}}{Q}}{R}}{S}{k}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{\jcomp{P}{f}{R}}}}
+      {\subst{x}{\jcomp{P}{f}{S}}}
+      {\subst{x}{\jcomp{P}{f}{k}}}
+      {\jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{k}}}
+    }
+\end{align*}
+Also, the following inference rule computing the value at $x$ of a composed
+morphism is valid:
+\begin{align*}
 & \inference
   { \jhom{\Gamma}{A}{B}{f}
     \jhom{\Gamma}{B}{C}{g}
@@ -629,24 +671,25 @@ The following inference rules are valid:
 \end{lem}
 
 \begin{proof}
-Let $\jhom{{\Gamma}{A}}{P}{Q}{f}$, $\jhom{{\Gamma}{A}}{Q}{R}{g}$ and 
+Of the first three inference rules, we only prove the first.
+Let $\jhom{{\Gamma}{A}}{P}{Q}{f}$, $\jfam{{{\Gamma}{A}}{Q}}{R}$ and 
 $\jterm{\Gamma}{A}{x}$.
 Then we have the judgmental equalities\begin{align*}
-\subst{x}{\jcomp{A}{f}{g}}
+\subst{x}{\jcomp{A}{f}{R}}
 & \jdeq 
-  \subst{x}{{f}{\ctxwk{P}{g}}}
+  \subst{x}{{f}{\ctxwk{P}{R}}}
   \tag{by definition}
   \\
 & \jdeq 
-  \subst{{x}{f}}{{x}{\ctxwk{P}{g}}}
-  \tag{by \autoref{comp-ss-t}}
+  \subst{{x}{f}}{{x}{\ctxwk{P}{R}}}
+  \tag{by \autoref{comp-ss-f}}
   \\
 & \jdeq 
-  \subst{{x}{f}}{\ctxwk{\subst{x}{P}}{\subst{x}{g}}}
-  \tag{by \autoref{comp-sw-t}}
+  \subst{{x}{f}}{\ctxwk{\subst{x}{P}}{\subst{x}{R}}}
+  \tag{by \autoref{comp-sw-f}}
   \\
 & \jdeq 
-  \jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{g}}.
+  \jcomp{\subst{x}{P}}{\subst{x}{f}}{\subst{x}{R}}.
   \tag{by definition}
 \end{align*}
 Now let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$ and $\jterm{\Gamma}{A}{x}$.
@@ -3478,14 +3521,162 @@ Let $P$ be a family over the extended context $\ctxext{\Gamma}{A}$, let
 $\jterm{\Gamma}{A}{\phi_0}$ and $\jterm{{\Gamma}{A}}{P}{\phi_1}$ be terms. Then the
 quadruple $(A,P,\phi_0,\phi_1)$ is said to be an \emph{empty algebra in context $\Gamma$}
 if the following judgmental equalities hold:
-\begin{align*}
-\jfameq*{\Gamma}{\subst{\phi_0}{P}}{A}\\
+\begin{align}
+\jfameq*{\Gamma}{\subst{\phi_0}{P}}{A}
+  \label{empalg-eq1}
+  \\
 \jtermeq*{\Gamma}{A}{\subst{\phi_0}{\phi_1}}{\phi_0}.
-\end{align*}
+  \label{empalg-eq2}
+\end{align}
 \end{defn}
 
+Thus, the empty algebras are the kind of algebras that require that families
+are compatible with contexts, just as our motivation in \autoref{empty}. We
+now combine the notion of extension algebras and empty algebras.
+
+An extension-empty algebra in context $\Gamma$ is going to be a sextuple
+$(A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ for which 
+the quadruple $(A,P,\epsilon_0,\epsilon_1)$ is an extension algebra in context 
+$\Gamma$, the quadruple $(A,P,\phi_0,\phi_1)$ is an empty algebra in context
+$\Gamma$, satisfying additional judgmental equalities expressing the 
+compatibility of $\epsilon_0$ and $\epsilon_1$ with $\phi_0$ and $\phi_1$.
+There will be four such judgmental equalities.
+
+We can immediately state the first two:
+\begin{align}
+\jtermeq*{{\Gamma}{A}}{\ctxwk{A}{A}}{\subst{\phi_0}{\epsilon_0}}{\idtm{A}}
+  \label{extempalg-eq1}
+  \\
+\jtermeq*{{\Gamma}{A}}{\ctxwk{A}{A}}{\subst{\phi_1}{\epsilon_0}}{\idtm{A}}
+  \label{extempalg-eq2}
+\end{align}
+To see what $\subst{\phi_0}{\epsilon_1}$ can be, we must know its type first.
+It is a morphism from $\subst{\phi_0}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}$ to
+$\subst{\phi_0}{P}$. We already know that $\subst{\phi_0}{P}\jdeq A$ by
+\autoref{empalg-eq1} and to compute $\subst{\phi_0}{\jcomp{}{\epsilon_0}{P}}$
+we use the following lemma.
+
+\begin{lem}
+Consider a sextuple $(A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ where
+the quadruple $(A,P,\epsilon_0,\epsilon_1)$ is an extension algebra in context 
+$\Gamma$, the quadruple $(A,P,\phi_0,\phi_1)$ is an empty algebra in context
+$\Gamma$, satisfying the judgmental equality \autoref{extempalg-eq1}. Then
+the following inference rules are valid:
+\begin{align*}
+& \inference
+  { \jfam{{\Gamma}{A}}{Q}
+    }
+  { \jfameq
+      {{\Gamma}{A}}
+      {\subst{\phi_0}{\jcomp{}{\epsilon_0}{Q}}}
+      {Q}
+    }
+  \\
+& \inference
+  { \jfam{{{\Gamma}{A}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\subst{\phi_0}{Q}}}
+      {\subst{\phi_0}{\jcomp{}{\epsilon_0}{R}}}
+      {R}
+    }
+  \\
+& \inference
+  { \jterm{{{\Gamma}{A}}{Q}}{R}{h}
+    }
+  { \jtermeq
+      {{{\Gamma}{A}}{\subst{\phi_0}{Q}}}
+      {\subst{\phi_0}{R}}
+      {\subst{\phi_0}{\jcomp{}{\epsilon_0}{h}}}
+      {h}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+We only prove the first inference rule.
+Let $Q$ be a family over $\ctxext{\Gamma}{A}$. Then we have the judgmental
+equalities
+\begin{align*}
+\subst{\phi_0}{\jcomp{}{\epsilon_0}{Q}}
+& \jdeq
+  \subst{\phi_0}{{\epsilon_0}{\ctxwk{\ctxext{A}{P}}{Q}}}
+  \\
+& \jdeq
+  \subst{{\phi_0}{\epsilon_0}}{{\phi_0}{\ctxwk{\ctxext{A}{P}}{Q}}}
+  \\
+& \jdeq
+  \subst{\idtm{A}}{{\phi_0}{\ctxwk{\ctxext{A}{P}}{Q}}}
+  \\
+& \jdeq
+  \subst{\idtm{A}}{{\phi_0}{\ctxwk{P}{{A}{Q}}}}
+  \\
+& \jdeq
+  \subst{\idtm{A}}{\ctxwk{\subst{\phi_0}{P}}{\subst{\phi_0}{\ctxwk{A}{Q}}}}
+  \\
+& \jdeq
+  \subst{\idtm{A}}{\ctxwk{\subst{\phi_0}{P}}{Q}}
+  \\
+& \jdeq
+  \subst{\idtm{A}}{\ctxwk{A}{Q}}
+  \\
+& \jdeq
+  Q.
+\end{align*}
+\end{proof}
+
+\begin{defn}
+An \emph{extension-empty algebra in context $\Gamma$} 
+is a sextuple $(A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ for which 
+the quadruple $(A,P,\epsilon_0,\epsilon_1)$ is an extension algebra in context 
+$\Gamma$, the quadruple $(A,P,\phi_0,\phi_1)$ is an empty algebra in context
+$\Gamma$, and the following additional judgmental equalities hold:
+\begin{align*}
+\jtermeq*{{\Gamma}{A}}{\ctxwk{A}{A}}{\subst{\phi_0}{\epsilon_0}}{\idtm{A}}
+  \\
+\jtermeq*{{\Gamma}{A}}{\ctxwk{A}{A}}{\subst{\phi_1}{\epsilon_0}}{\idtm{A}}
+  \\
+\jhomeq*{\Gamma}{{A}{P}}{A}{\subst{\phi_0}{\epsilon_1}}{\epsilon_0}
+  \\
+\jtermeq*{{{\Gamma}{A}}{P}}{\ctxwk{P}{P}}{\subst{\phi_1}{\epsilon_1}}{\idtm{P}}
+\end{align*}
+To see that the last two of these equalities make sense, one has to
+use the first two.
+\end{defn}
 
 \subsection{Extension-weakening algebras}
+The notion of (extension-)weakening algebra is dependent on the notion of extension algebra.
+Although it is strictly speaking not dependent on the notion of empty-algebra,
+we shall only formulate a weakening algebras in the setting of an
+extension-empty algebras. When one wants to have a weakening operation which
+also acts on the level of contexts in an extension algebra without empty
+context, extra work has to be done to introduce these separately.
+
+\begin{defn}
+An extension-weakening algebra in context $\Gamma$ is an octuple
+\begin{equation*}
+(A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1,\omega_0,\omega_1)
+\end{equation*}
+where $(A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ is an extension-empty algebra
+in context $\Gamma$ and where
+\begin{align*}
+\jhom*
+  {{{\Gamma}{A}}{P}}
+  {\ctxwk{P}{P}}
+  {\jcomp{}{\epsilon_0}{P}}
+  {\omega_0}
+  \\
+\jfhom*
+  {{{\Gamma}{A}}{P}}
+  {\ctxwk{P}{P}}
+  {\jcomp{}{\epsilon_0}{P}}
+  {\omega_0}
+  {\ctxwk{P}{\jcomp{}{\epsilon_0}{P}}}
+  {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
+  {\omega_1}
+\end{align*}
+satisfying the judgmental equalities
+\end{defn}
 
 \subsection{Extension-substitution algebras}
 
