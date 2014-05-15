@@ -3836,7 +3836,26 @@ weakening $\subst{x_2}{{x_1}{{x_0}{\omega_0}}}$, which is itself a family
 over $\subst{x_1}{{x_0}{\epsilon_0}}$. In other words, $\omega_1$
 is precisely the internalization of the action on families of weakening, as
 intended.
+
 \subsubsection{The compatibility of weakening with extension}
+The first rule expressing that weakening is compatible with extension is that
+the diagram
+\begin{equation}\label{wkalg-exteq1}
+\begin{tikzcd}[column sep=large]
+\ctxwk{P}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}
+  \ar{r}{\jvcomp{}{\omega_0}{\omega_1}}
+  \ar{d}[swap]{\ctxwk{P}{\epsilon_1}}
+& \ctxext
+    {\jcomp{}{\epsilon_0}{P}}
+    {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
+  \ar{d}{\jcomp{}{\epsilon_0}{\epsilon_1}}
+  \\
+\ctxwk{P}{P}
+  \ar{r}[swap]{\omega_0}
+& \jcomp{}{\epsilon_0}{P}
+\end{tikzcd}
+\end{equation}
+commutes judgmentally.
 
 \subsubsection{The compatibility of weakening with the empty context and family}
 The first two judgmental equalities expressing that $\omega_0$ and $\omega_1$
