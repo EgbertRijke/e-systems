@@ -709,6 +709,69 @@ Then we have the judgmental equalities\begin{align*}
 \end{align*}
 \end{proof}
 
+We end this subsection with a simple application of the above lemmas that is
+typical for the more general formulation of composition we have
+introduced. It is a special case of a consecutive composition where we consider
+a morphism $\jhom{\Gamma}{A}{B}{f}$ and a morphism
+$\jhom{{{\Gamma}{B}}{Q}}{R}{S}{g}$.
+
+\begin{lem}\label{lem:jcomp-higherjcomp}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{{{\Gamma}{B}}{Q}}{R}{S}{g}$ be context
+morphisms. Then the following inference rules are valid:
+\begin{align*}
+& \inference
+  { \jfam{{{{\Gamma}{B}}{Q}}{S}}{T}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}{\jcomp{A}{f}{R}}}
+      {\jcomp{A}{f}{\jcomp{R}{g}{T}}}
+      {\jcomp{\jcomp{A}{f}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{T}}}
+    }  
+  \\
+& \inference
+  { \jfam{{{{{\Gamma}{B}}{Q}}{S}}{T}}{U}
+    }
+  { \jfameq
+      {{{{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}{\jcomp{A}{f}{R}}}{\jcomp{A}{f}{\jcomp{R}{g}{T}}}}
+      {\jcomp{A}{f}{\jcomp{R}{g}{U}}}
+      {\jcomp{\jcomp{A}{f}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{U}}}
+    }  
+  \\
+& \inference
+  { \jterm{{{{{\Gamma}{B}}{Q}}{S}}{T}}{U}{m}
+    }
+  { \jtermeq
+      {{{{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}{\jcomp{A}{f}{R}}}{\jcomp{A}{f}{\jcomp{R}{g}{T}}}}
+      {\jcomp{A}{f}{\jcomp{R}{g}{U}}}
+      {\jcomp{A}{f}{\jcomp{R}{g}{m}}}
+      {\jcomp{\jcomp{A}{f}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{m}}}
+    }  
+\end{align*}
+\end{lem}
+
+\begin{proof}
+We only prove the first inference rule. Let $\jfam{{{{\Gamma}{B}}{Q}}{S}}{T}$ be
+a family. Then we have the judgmental equalities
+\begin{align*}
+\jcomp{A}{f}{\jcomp{R}{g}{T}}
+& \jdeq
+  \jcomp{A}{f}{\subst{g}{\ctxwk{R}{T}}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst{\jcomp{A}{f}{g}}{\jcomp{A}{f}{\ctxwk{R}{T}}}
+  \tag{by \autoref{lem:jcomp-subst}}
+  \\
+& \jdeq
+  \subst{\jcomp{A}{f}{g}}{\ctxwk{\jcomp{A}{f}{R}}{\jcomp{A}{f}{T}}}
+  \tag{by \autoref{lem:jcomp-wk}}
+  \\
+& \jdeq
+  \jcomp{\jcomp{A}{f}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{T}}.
+  \tag{by definition}
+\end{align*}
+\end{proof}
+
 \subsection{Projections and extension on terms}\label{extension-on-terms}
 In this subsection we consider the notion of extension on terms, which has now
 become definable inside our theory. Moreover, every compatibility rule one may
