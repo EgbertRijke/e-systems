@@ -3557,91 +3557,134 @@ $\subst{\phi_0}{P}$. We already know that $\subst{\phi_0}{P}\jdeq A$ by
 we use the following lemma.
 
 \begin{lem}
-Consider a sextuple $(A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ where
-the quadruple $(A,P,\epsilon_0,\epsilon_1)$ is an extension algebra in context 
-$\Gamma$, the quadruple $(A,P,\phi_0,\phi_1)$ is an empty algebra in context
-$\Gamma$, satisfying the judgmental equality \autoref{extempalg-eq1}. Then
-the following inference rules are valid:
+Consider an empty algebra $(A,P,\phi_0,\phi_1)$ in context $\Gamma$
+and a morphism $\jhom{\Gamma}{{A}{P}}{B}{f}$.
+Then $\subst{\phi_i}{f}$ is a morphism from $A$ to $B$ in context $\Gamma$ and
+the following inference rules are valid for $i$ being $0$ or $1$:
 \begin{align*}
 & \inference
   { \jfam{{\Gamma}{A}}{Q}
     }
   { \jfameq
       {{\Gamma}{A}}
-      {\subst{\phi_0}{\jcomp{}{\epsilon_0}{Q}}}
-      {Q}
+      {\subst{\phi_i}{\jcomp{}{f}{Q}}}
+      {\jcomp{}{\subst{\phi_i}{f}}{Q}}
     }
   \\
 & \inference
   { \jfam{{{\Gamma}{A}}{Q}}{R}
     }
   { \jfameq
-      {{{\Gamma}{A}}{\subst{\phi_0}{Q}}}
-      {\subst{\phi_0}{\jcomp{}{\epsilon_0}{R}}}
-      {R}
+      {{{\Gamma}{A}}{\jcomp{}{\subst{\phi_i}{f}}{Q}}}
+      {\subst{\phi_i}{\jcomp{}{f}{R}}}
+      {\jcomp{}{\subst{\phi_i}{f}}{R}}
     }
   \\
 & \inference
   { \jterm{{{\Gamma}{A}}{Q}}{R}{h}
     }
   { \jtermeq
-      {{{\Gamma}{A}}{\subst{\phi_0}{Q}}}
-      {\subst{\phi_0}{R}}
-      {\subst{\phi_0}{\jcomp{}{\epsilon_0}{h}}}
-      {h}
+      {{{\Gamma}{A}}{\jcomp{}{\subst{\phi_i}{f}}{Q}}}
+      {\jcomp{}{\subst{\phi_i}{f}}{R}}
+      {\subst{\phi_i}{\jcomp{}{f}{h}}}
+      {\jcomp{}{\subst{\phi_i}{f}}{h}}
     }
 \end{align*}
 \end{lem}
 
 \begin{proof}
-We only prove the first inference rule.
-Let $Q$ be a family over $\ctxext{\Gamma}{A}$. Then we have the judgmental
-equalities
+We only prove the first inference rule in both cases.
+Let $Q$ be a family over $\ctxext{\Gamma}{A}$. In the case $i=0$
+ we have the judgmental equalities
 \begin{align*}
-\subst{\phi_0}{\jcomp{}{\epsilon_0}{Q}}
+\subst{\phi_0}{\jcomp{}{f}{Q}}
 & \jdeq
-  \subst{\phi_0}{{\epsilon_0}{\ctxwk{\ctxext{A}{P}}{Q}}}
+  \subst{\phi_0}{{f}{\ctxwk{\ctxext{A}{P}}{Q}}}
   \\
 & \jdeq
-  \subst{{\phi_0}{\epsilon_0}}{{\phi_0}{\ctxwk{\ctxext{A}{P}}{Q}}}
+  \subst{{\phi_0}{f}}{{\phi_0}{\ctxwk{\ctxext{A}{P}}{Q}}}
   \\
 & \jdeq
-  \subst{\idtm{A}}{{\phi_0}{\ctxwk{\ctxext{A}{P}}{Q}}}
+  \subst{{\phi_0}{f}}{{\phi_0}{\ctxwk{P}{{A}{Q}}}}
   \\
 & \jdeq
-  \subst{\idtm{A}}{{\phi_0}{\ctxwk{P}{{A}{Q}}}}
+  \subst{{\phi_0}{f}}{\ctxwk{\subst{\phi_0}{P}}{\subst{\phi_0}{\ctxwk{A}{Q}}}}
   \\
 & \jdeq
-  \subst{\idtm{A}}{\ctxwk{\subst{\phi_0}{P}}{\subst{\phi_0}{\ctxwk{A}{Q}}}}
+  \subst{{\phi_0}{f}}{\ctxwk{\subst{\phi_0}{P}}{Q}}
   \\
 & \jdeq
-  \subst{\idtm{A}}{\ctxwk{\subst{\phi_0}{P}}{Q}}
+  \subst{{\phi_0}{f}}{\ctxwk{A}{Q}}
   \\
 & \jdeq
-  \subst{\idtm{A}}{\ctxwk{A}{Q}}
+  \jcomp{}{\subst{\phi_0}{f}}{Q}.
+\end{align*}
+In the case $i=1$ we have the judgmental equalities
+\begin{align*}
+\subst{\phi_1}{\jcomp{}{f}{Q}}
+& \jdeq
+  \subst{\phi_1}{{f}{\ctxwk{\ctxext{A}{P}}{Q}}}
   \\
 & \jdeq
-  Q.
+  \subst{{\phi_1}{f}}{{\phi_1}{\ctxwk{\ctxext{A}{P}}{Q}}}
+  \\
+& \jdeq
+  \subst{{\phi_1}{f}}{{\phi_1}{\ctxwk{P}{{A}{Q}}}}
+  \\
+& \jdeq
+  \subst{{\phi_1}{f}}{\ctxwk{A}{Q}}
+  \\
+& \jdeq
+  \jcomp{}{\subst{\phi_1}{f}}{Q}.
 \end{align*}
 \end{proof}
+
+As an immediate corollary, if we assume the judgmental equalities
+\autoref{extempalg-eq1,extempalg-eq2} we get that 
+\begin{equation*}
+\jfameq{{\Gamma}{A}}{\subst{\phi_i}{\jcomp{}{\epsilon_0}{P}}}{P}
+\end{equation*}
+and hence that $\subst{\phi_0}{\epsilon_1}$ is a 
+morphism from $\ctxext{A}{P}$ to $A$. Thus, we can require
+\begin{equation}\label{extempalg-eq3}
+\jhomeq{\Gamma}{{A}{P}}{A}{\subst{\phi_0}{\epsilon_1}}{\epsilon_0}.
+\end{equation}
+For the final judgmental equality we need to explain the term
+\begin{equation*}
+\jterm
+  {{{\Gamma}{A}}{\subst{\phi_1}{\jcomp{}{\epsilon_0}{P}}}}
+  {\subst{\phi_1}{\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{P}}}
+  {\subst{\phi_1}{\epsilon_1}}.
+\end{equation*}
+We have already established that $\subst{\phi_1}{\jcomp{}{\epsilon_0}{P}}\jdeq
+P$. We also see that 
+\begin{align*}
+\subst{\phi_1}{\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{P}}
+& \jdeq
+  \subst{\phi_1}{\ctxwk{\jcomp{}{\epsilon_0}{P}}{{P}{P}}}
+  \\
+& \jdeq
+  \ctxwk{\subst{\phi_1}{\jcomp{}{\epsilon_0}{P}}}{\subst{\phi_1}{\ctxwk{P}{P}}}
+  \\
+& \jdeq
+  \ctxwk{P}{\subst{\phi_1}{\ctxwk{P}{P}}}
+  \\
+& \jdeq
+  \ctxwk{P}{P}
+\end{align*}
+and we will therefore require that
+\begin{equation}\label{extempalg-eq4}
+\jtermeq{{{\Gamma}{A}}{P}}{\ctxwk{P}{P}}{\subst{\phi_1}{\epsilon_1}}{\idtm{P}}.
+\end{equation}
+We bring all this together in the definition of extension-empty algebras:
 
 \begin{defn}
 An \emph{extension-empty algebra in context $\Gamma$} 
 is a sextuple $(A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ for which 
 the quadruple $(A,P,\epsilon_0,\epsilon_1)$ is an extension algebra in context 
 $\Gamma$, the quadruple $(A,P,\phi_0,\phi_1)$ is an empty algebra in context
-$\Gamma$, and the following additional judgmental equalities hold:
-\begin{align*}
-\jtermeq*{{\Gamma}{A}}{\ctxwk{A}{A}}{\subst{\phi_0}{\epsilon_0}}{\idtm{A}}
-  \\
-\jtermeq*{{\Gamma}{A}}{\ctxwk{A}{A}}{\subst{\phi_1}{\epsilon_0}}{\idtm{A}}
-  \\
-\jhomeq*{\Gamma}{{A}{P}}{A}{\subst{\phi_0}{\epsilon_1}}{\epsilon_0}
-  \\
-\jtermeq*{{{\Gamma}{A}}{P}}{\ctxwk{P}{P}}{\subst{\phi_1}{\epsilon_1}}{\idtm{P}}
-\end{align*}
-To see that the last two of these equalities make sense, one has to
-use the first two.
+$\Gamma$, satisfying the judgmental equalities 
+\autoref{extempalg-eq1,extempalg-eq2,extempalg-eq3,extempalg-eq4}.
 \end{defn}
 
 \subsection{Extension-weakening algebras}
