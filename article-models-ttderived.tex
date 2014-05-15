@@ -3556,7 +3556,7 @@ $\subst{\phi_0}{P}$. We already know that $\subst{\phi_0}{P}\jdeq A$ by
 \autoref{empalg-eq1} and to compute $\subst{\phi_0}{\jcomp{}{\epsilon_0}{P}}$
 we use the following lemma.
 
-\begin{lem}
+\begin{lem}\label{lem:empalg-mor}
 Consider an empty algebra $(A,P,\phi_0,\phi_1)$ in context $\Gamma$
 and a morphism $\jhom{\Gamma}{{A}{P}}{B}{f}$.
 Then $\subst{\phi_i}{f}$ is a morphism from $A$ to $B$ in context $\Gamma$ and
@@ -3600,50 +3600,62 @@ Let $Q$ be a family over $\ctxext{\Gamma}{A}$. In the case $i=0$
 \subst{\phi_0}{\jcomp{}{f}{Q}}
 & \jdeq
   \subst{\phi_0}{{f}{\ctxwk{\ctxext{A}{P}}{Q}}}
+  \tag{by definition}
   \\
 & \jdeq
   \subst{{\phi_0}{f}}{{\phi_0}{\ctxwk{\ctxext{A}{P}}{Q}}}
+  \tag{by \autoref{comp-ss-f}}
   \\
 & \jdeq
   \subst{{\phi_0}{f}}{{\phi_0}{\ctxwk{P}{{A}{Q}}}}
+  \tag{by \autoref{comp-ew-f}}
   \\
 & \jdeq
   \subst{{\phi_0}{f}}{\ctxwk{\subst{\phi_0}{P}}{\subst{\phi_0}{\ctxwk{A}{Q}}}}
+  \tag{by \autoref{comp-sw-f}}
   \\
 & \jdeq
   \subst{{\phi_0}{f}}{\ctxwk{\subst{\phi_0}{P}}{Q}}
+  \tag{by \autoref{cancellation-ws-f}}
   \\
 & \jdeq
   \subst{{\phi_0}{f}}{\ctxwk{A}{Q}}
+  \tag{by \autoref{empalg-eq1}}
   \\
 & \jdeq
   \jcomp{}{\subst{\phi_0}{f}}{Q}.
+  \tag{by definition}
 \end{align*}
 In the case $i=1$ we have the judgmental equalities
 \begin{align*}
 \subst{\phi_1}{\jcomp{}{f}{Q}}
 & \jdeq
   \subst{\phi_1}{{f}{\ctxwk{\ctxext{A}{P}}{Q}}}
+  \tag{by definition}
   \\
 & \jdeq
   \subst{{\phi_1}{f}}{{\phi_1}{\ctxwk{\ctxext{A}{P}}{Q}}}
+  \tag{by \autoref{comp-ss-f}}
   \\
 & \jdeq
   \subst{{\phi_1}{f}}{{\phi_1}{\ctxwk{P}{{A}{Q}}}}
+  \tag{by \autoref{comp-ew-f}}
   \\
 & \jdeq
   \subst{{\phi_1}{f}}{\ctxwk{A}{Q}}
+  \tag{by \autoref{cancellation-ws-f}}
   \\
 & \jdeq
   \jcomp{}{\subst{\phi_1}{f}}{Q}.
+  \tag{by definition}
 \end{align*}
 \end{proof}
 
 As an immediate corollary, if we assume the judgmental equalities
 \autoref{extempalg-eq1,extempalg-eq2} we get that 
-\begin{equation*}
+\begin{equation}\label{cor:empalg-mor}
 \jfameq{{\Gamma}{A}}{\subst{\phi_i}{\jcomp{}{\epsilon_0}{P}}}{P}
-\end{equation*}
+\end{equation}
 and hence that $\subst{\phi_0}{\epsilon_1}$ is a 
 morphism from $\ctxext{A}{P}$ to $A$. Thus, we can require
 \begin{equation}\label{extempalg-eq3}
@@ -3662,15 +3674,19 @@ P$. We also see that
 \subst{\phi_1}{\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{P}}
 & \jdeq
   \subst{\phi_1}{\ctxwk{\jcomp{}{\epsilon_0}{P}}{{P}{P}}}
+  \tag{by \autoref{comp-ew-f}}
   \\
 & \jdeq
   \ctxwk{\subst{\phi_1}{\jcomp{}{\epsilon_0}{P}}}{\subst{\phi_1}{\ctxwk{P}{P}}}
+  \tag{by \autoref{comp-sw-f}}
   \\
 & \jdeq
   \ctxwk{P}{\subst{\phi_1}{\ctxwk{P}{P}}}
+  \tag{by \autoref{cor:empalg-mor}}
   \\
 & \jdeq
   \ctxwk{P}{P}
+  \tag{by \autoref{cancellation-ws-f}}
 \end{align*}
 and we will therefore require that
 \begin{equation}\label{extempalg-eq4}
