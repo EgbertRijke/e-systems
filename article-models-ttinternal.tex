@@ -997,6 +997,42 @@ We have the judgmental equalities
 \end{align*}
 \end{proof}
 
+This enables us to require that the diagram
+\begin{equation}\label{wkalg-exteq2}
+\begin{tikzcd}[column sep=huge]
+\ctxwk
+  {P}
+  { \ctxext
+      {\jcomp{}{\epsilon_0}{P}}
+      {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
+    }
+  \ar{r}{\jvcomp{}{\omega_1}{\jcomp{}{\ctxwk{P}{\epsilon_0}}{\omega_1}}}
+  \ar{d}[swap]{\ctxwk{P}{\jcomp{}{\epsilon_0}{\epsilon_1}}}
+& \jcomp{}{\omega_0}{%
+    \jcomp{}{\epsilon_0}{%
+      \jcomp{}{\epsilon_0}{%
+        \ctxext{P}{\jcomp{}{\epsilon_0}{P}}
+        }
+      }
+    }
+  \ar{d}{ \jcomp{}{\omega_0}{%
+            \jcomp{}{\epsilon_0}{%
+              \jcomp{}{\epsilon_0}{\epsilon_1}
+              }
+            }
+          }
+  \\
+\ctxwk{P}{\jcomp{}{\epsilon_0}{P}}
+  \ar{r}[swap]{\omega_1}
+& \jcomp{}{\omega_0}{%
+    \jcomp{}{\epsilon_0}{%
+      \jcomp{}{\epsilon_0}{P}
+      }
+    }
+\end{tikzcd}
+\end{equation}
+commutes judgmentally.
+
 \subsubsection{The compatibility of weakening with the empty context and family}
 The first two judgmental equalities expressing that $\omega_0$ and $\omega_1$
 are compatible with $\phi_1$ are easy to state:
