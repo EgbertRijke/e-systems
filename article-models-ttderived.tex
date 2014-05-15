@@ -3711,8 +3711,7 @@ extension-empty algebras. When one wants to have a weakening operation which
 also acts on the level of contexts in an extension algebra without empty
 context, extra work has to be done to introduce these separately.
 
-\begin{defn}
-An extension-weakening algebra in context $\Gamma$ is an octuple
+An extension-weakening algebra in context $\Gamma$ will be an octuple
 \begin{equation*}
 (A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1,\omega_0,\omega_1)
 \end{equation*}
@@ -3734,12 +3733,130 @@ in context $\Gamma$ and where
   {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
   {\omega_1}
 \end{align*}
-satisfying the judgmental equalities
-\end{defn}
+satisfying nine additional judgmental equalities expressing that $\omega_0$
+and $\omega_1$ are compatible with $\epsilon_1$, $\phi_1$
+and with each other. Our current goal is to figure out what these are. 
+
+Before we go into that, we develop a bit of intuition by explaining how
+$\omega_0$ and $\omega_1$ act when applied to a family $x_1:\subst{x_0}{P}$
+over $x_0:A$. Note that
+\begin{equation*}
+\jterm{{\Gamma}{\subst{x_0}{P}}}{\subst{{x_1}{{x_0}{\epsilon_0}}}{P}}{\subst{x_1}{{x_0}{\omega_0}}},
+\end{equation*}
+so $\subst{x_1}{{x_0}{\omega_0}}$ takes families over $x_0$ to families over
+the extended $\subst{x_1}{{x_0}{\epsilon_0}}$.
+
+To compute the type of $\subst{x_2}{{x_1}{{x_0}{\omega_1}}}$ for families
+$x_1,x_2:\subst{x_0}{P}$ over $x_0:A$ we have to do a
+bit more work. Note that
+\begin{align*}
+& \subst{x_2}{{x_1}{{x_0}{\jcomp{}{\omega_0}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}}}
+  \\
+& \jdeq
+  \subst{x_2}{{x_1}{{x_0}{\unfold{\jcomp{\ctxwk{P}{P}}{\omega_0}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}}}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst
+    { {x_2}
+      { {x_1}
+        { {x_0}
+          {\omega_0}
+          }
+        }
+      }
+    { {x_2}
+      { {x_1}
+        { {x_0}
+          {\ctxwk{{P}{P}}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}
+          }
+        }
+      }
+  \tag{by \autoref{comp-ss-f}}
+  \\
+& \jdeq
+  \subst
+    { {x_2}
+      { {x_1}
+        { {x_0}
+          {\omega_0}
+          }
+        }
+      }
+    { {x_2}
+      { \ctxwk
+          {\subst{x_1}{\ctxwk{\subst{x_0}{P}}{\subst{x_0}{P}}}}
+          {\subst{x_1}{{x_0}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}}
+        }
+      }
+  \tag{by \autoref{comp-sw-f}}
+  \\
+& \jdeq
+  \subst
+    { {x_2}
+      { {x_1}
+        { {x_0}
+          {\omega_0}
+          }
+        }
+      }
+    { {x_1}
+      { {x_0}
+        {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
+        }
+      }
+  \tag{by \autoref{cancellation-ws-f}}
+  \\
+& \jdeq
+  \subst
+    { {{x_2}{{x_1}{{x_0}{\omega_0}}}}
+      {{{x_1}{{x_0}{\epsilon_0}}}{\epsilon_0}}
+      }
+    { P
+      }.
+  \tag{by \autoref{comp-ss-f}}
+\end{align*}
+Therefore, we see that
+\begin{equation*}
+\jterm
+  {{\Gamma}{\subst{{x_2}{{x_0}{\epsilon_0}}}{P}}}
+  { \subst
+      { {{x_2}{{x_1}{{x_0}{\omega_0}}}}
+        {{{x_1}{{x_0}{\epsilon_0}}}{\epsilon_0}}
+        }
+      { P
+        }
+    }
+  { \subst{x_2}{{x_1}{{x_0}{\omega_1}}}
+    }
+\end{equation*}
+Thus, the term $\subst{x_2}{{x_1}{{x_0}{\omega_1}}}$ takes a family over the
+extended context $\subst{x_2}{{x_0}{\epsilon_0}}$ to a family over the
+weakening $\subst{x_2}{{x_1}{{x_0}{\omega_0}}}$, which is itself a family
+over $\subst{{x_1}{{x_0}{\epsilon_0}}}{\epsilon_0}$. In other words, $\omega_1$
+is precisely the internalization of the action on families of weakening, as
+intended.
+\subsubsection{The compatibility of weakening with extension}
+
+\subsubsection{The compatibility of weakening with the empty context and family}
+The first two judgmental equalities expressing that $\omega_0$ and $\omega_1$
+are compatible with $\phi_1$ are easy to state:
+\begin{align}
+\jhomeq*{{\Gamma}{A}}{P}{P}{\subst{\phi_1}{\omega_0}}{\idtm{P}}\\
+\jhomeq*{{\Gamma}{A}}{P}{P}{\subst{\phi_1}{\omega_1}}{\idtm{P}}
+\end{align}
+
+\subsubsection{The compatibility of weakening with itself}
+
+\subsubsection{The definition of weakening algebras}
 
 \subsection{Extension-substitution algebras}
 
 \subsection{Pre-universes}
 Pre-universes are internal versions of the theory of contexts, families and
 terms. They interpret extension, the empty context, weakening, substitution
-and identity terms all at once in a compatible way.
+and identity terms all at once in a compatible way. Besides the compatibility
+properties there will be judgmental equalities analoguous to the cancellation
+properties of \autoref{cancellation-ws,cancellation-i}. Pre-universes are to
+the theory of contexts, families and terms what internal categories to a
+category.
