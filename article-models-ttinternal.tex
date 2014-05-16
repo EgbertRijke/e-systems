@@ -477,6 +477,33 @@ This is a special case of \autoref{lem:extalg-twins}. The second judgmental
 equality, \autoref{eq:extalg-infty2}, is trivial.
 \end{proof}
 
+\begin{thm}
+Let $(Q,R,\eta_0,\eta_1)$ be an extension algebra in context $\ctxext{\Gamma}{B}$ and let
+$\jfam{\Gamma}{A}$. Then the quadruple
+\begin{equation*}
+(\ctxwk{A}{Q},\ctxwk{A}{R},\ctxwk{A}{\eta_0},\ctxwk{A}{\eta_1})
+\end{equation*}
+is an extension algebra in context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$.
+\end{thm}
+
+\begin{thm}
+Let $(Q,R,\eta_0,\eta_1)$ be an extension algebra in context $\ctxext{{\Gamma}{A}}{P}$
+and let $\jterm{\Gamma}{A}{x}$. Then the quadruple
+\begin{equation*}
+(\subst{x}{Q},\subst{x}{R},\subst{x}{\eta_0},\subst{x}{\eta_1})
+\end{equation*}
+is an extension algebra in context $\ctxext{\Gamma}{\subst{x}{P}}$.
+\end{thm}
+
+\begin{cor}
+Let $(Q,R,\eta_0,\eta_1)$ be an extension algebra in context $\ctxext{\Gamma}{B}$
+and let $\jhom{\Gamma}{A}{B}{f}$. Then the quadruple
+\begin{equation*}
+(\jcomp{A}{f}{Q},\jcomp{A}{f}{R},\jcomp{A}{f}{\eta_0},\jcomp{A}{f}{\eta_1})
+\end{equation*}
+is an extension algebra in context $\ctxext{\Gamma}{A}$.
+\end{cor}
+
 \begin{defn}
 An extension algebra homomorphism from $(A,P,\epsilon_0,\epsilon_1)$ to
 $(B,Q,\eta_0,\eta_1)$ in context $\Gamma$ is a pair $(f_0,f_1)$ consisting of
@@ -505,22 +532,52 @@ and
 \ctxext{P}{\jcomp{}{\epsilon_0}{P}}
   \ar{r}{\jvcomp{}{f_1}{\jcomp{}{\epsilon_0}{f_1}}}
   \ar{d}[swap]{\epsilon_1}
-& \ctxext{Q}{\jcomp{}{\eta_0}{Q}}
-  \ar{d}{\eta_1}
+& \jcomp{}{f_0}{\ctxext{Q}{\jcomp{}{\eta_0}{Q}}}
+  \ar{d}{\jcomp{}{f_0}{\eta_1}}
   \\
 P
   \ar{r}[swap]{f_1}
-& Q
+& \jcomp{}{f_0}{Q}
 \end{tikzcd}
 \end{equation}
 commute judgmentally.
 \end{defn}
 
 \begin{rmk}
+To see that the upper morphism in the diagram of \autoref{eq:extalg-hom2} has
+indeed the indicated codomain provided that the diagram of \autoref{eq:extalg-hom1}
+commutes judgmentally, note that we have the judgmental equalities
+\begin{align*}
+\jcomp{}{f_1}{\jcomp{}{f_0}{\jcomp{}{\eta_0}{Q}}}
+& \jdeq 
+  \jcomp{}{\jvcomp{}{f_0}{f_1}}{\jcomp{}{\eta_0}{Q}}
+  \tag{by \autoref{lem:composition-threesome}}
+  \\
+& \jdeq
+  \jcomp{}{\jcomp{}{\jvcomp{}{f_0}{f_1}}{\eta_0}}{Q}
+  \tag{by \autoref{lem:jcomp-jcomp}}
+  \\
+& \jdeq
+  \jcomp{}{\jcomp{}{\epsilon_0}{f_0}}{Q}
+  \tag{by \autoref{eq:extalg-hom1}}
+  \\
+& \jdeq
+  \jcomp{}{\epsilon_0}{\jcomp{}{f_0}{Q}}.
+  \tag{by \autoref{lem:jcomp-jcomp}}
+\end{align*}
+and we indeed have the morphism $\jcomp{}{\epsilon_0}{f_1}$ from 
+$\jcomp{}{\epsilon_0}{P}$ to $\jcomp{}{\epsilon_0}{\jcomp{}{f_0}{Q}}$.
+\end{rmk}
+
+\begin{rmk}
 I suspect that if we copy this theory of extension algebras to Martin-L\"of
 type theory, with the judgmental equalities replaced by identifications, with
 dependent pair types rather than those strict extensions, etcetera, then
 the type of $f_1$ for which these two diagrams commute is a mere proposition.
+
+With this notion of morphism, a term of an extension
+algebra $(A,P,\epsilon_0,\epsilon_1)$ is a pair $(x_0,x_1)$ such that
+$\subst{x_1}{{x_0}{\epsilon_0}}\jdeq x_0$.
 \end{rmk}
 
 \begin{comment}
