@@ -429,6 +429,11 @@ $\jfam{\Gamma}{A}$. Then the quadruple
 is an extension algebra in context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$.
 \end{thm}
 
+\begin{proof}
+The proof follows from the fact that weakening by $A$ is compatible with all
+the involved operations.
+\end{proof}
+
 \begin{thm}
 Let $(Q,R,\eta_0,\eta_1)$ be an extension algebra in context $\ctxext{{\Gamma}{A}}{P}$
 and let $\jterm{\Gamma}{A}{x}$. Then the quadruple
@@ -437,6 +442,11 @@ and let $\jterm{\Gamma}{A}{x}$. Then the quadruple
 \end{equation*}
 is an extension algebra in context $\ctxext{\Gamma}{\subst{x}{P}}$.
 \end{thm}
+
+\begin{proof}
+The proof follows from the fact that substitution with $x$ is compatible with
+all the involved operations.
+\end{proof}
 
 \begin{cor}
 Let $(Q,R,\eta_0,\eta_1)$ be an extension algebra in context $\ctxext{\Gamma}{B}$
@@ -649,6 +659,22 @@ if the following judgmental equalities hold:
 \end{align}
 \end{defn}
 
+\begin{defn}
+Let $(A,P,\phi_0,\phi_1)$ and $(B,Q,\psi_0,\psi_1)$ be empty algebras in context
+$\Gamma$. An empty homomorphism from $(A,P,\phi_0,\phi_1)$ to $(B,Q,\psi_0,\psi_1)$
+is a pair $(f_0,f_1)$ consisting of
+\begin{align*}
+\jhom*{\Gamma}{A}{B}{f_0}\\
+\jfhom*{\Gamma}{A}{B}{f}{P}{Q}{f_1}
+\end{align*}
+satisfying the judgmental equalities
+\begin{align*}
+\jtermeq*{\Gamma}{B}{\subst{\phi_0}{f_0}}{\psi_0}\\
+\jhomeq*{\Gamma}{A}{B}{\subst{\phi_0}{f_1}}{f_0}\\
+\jtermeq*{{\Gamma}{A}}{\jcomp{}{f_0}{Q}}{\subst{\phi_1}{f_1}}{\jcomp{}{f_0}{\psi_1}}.
+\end{align*}
+\end{defn}
+
 Thus, the empty algebras are the kind of algebras that require that families
 are compatible with contexts, just as our motivation in \autoref{empty}. We
 now combine the notion of extension algebras and empty algebras.
@@ -852,6 +878,22 @@ in context $\Gamma$ and where
   {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
   {\omega_1}
 \end{align*}
+such that $(\omega_0,\omega_1)$ is both an extension homomorphism
+\begin{equation*}
+\begin{tikzcd}
+( \ctxwk{P}{P},
+  \ctxwk{P}{\jcomp{}{\epsilon_0}{P}},
+  \ctxwk{P}{\epsilon_1},
+  \ctxwk{P}{\jcomp{}{\epsilon_0}{\epsilon_1}})
+\ar{r}{(\omega_0,\omega_1)}
+& ( \jcomp{}{\epsilon_0}{P},
+  \jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}},
+  \jcomp{}{\epsilon_0}{\epsilon_1},
+  \jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{\epsilon_1}})
+\end{tikzcd}
+\end{equation*}
+and an empty homomorphism
+
 satisfying five(?) additional judgmental equalities expressing that $\omega_0$
 and $\omega_1$ are compatible with $\epsilon_1$, $\phi_1$
 and with each other. Our current goal is to figure out what these are. 
@@ -1238,6 +1280,21 @@ are compatible with $\phi_1$ are easy to state:
 \end{align}
 
 \subsubsection{The compatibility of weakening with itself}
+To express the compatibility of weakening with itself, we must fill in the
+following diagram:
+\begin{equation*}
+\begin{tikzcd}
+\ctxwk{P}{{P}{P}}
+  \ar{r}{\ctxwk{P}{\omega_0}}
+  \ar{d}[swap]{\ctxwk{{P}{P}}{\omega_0}}
+& \ctxwk{P}{\jcomp{}{\epsilon_0}{P}}
+  \ar{d}{\omega_1}
+  \\
+\ctxwk{{P}{P}}{\jcomp{}{\epsilon_0}{P}}
+  \ar[densely dotted]{r}
+& \jcomp{}{\omega_0}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
+\end{tikzcd}
+\end{equation*}
 
 \subsubsection{The definition of weakening algebras}
 
