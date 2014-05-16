@@ -350,6 +350,25 @@ The proof is a straightforward calculation:
 \end{align*}
 \end{proof}
 
+There is a trivial class of examples of extension algebras we can give right
+away. More examples will be introduced by universes, later on.
+
+\begin{eg}
+Let $A$ be a family in context $\Gamma$. Then the quadruple
+\begin{equation*}
+(A,\emptyf,\idtm{A},\emptytm)
+\end{equation*}
+is an extension algebra in context $\Gamma$, as is the quadruple
+\begin{equation*}
+(\emptyf,A,\emptytm,\idtm{A}).
+\end{equation*}
+Also, the quadruple
+\begin{equation*}
+(A,\ctxwk{A}{A},\cprojfstf{A}{\ctxwk{A}{A}},\cprojfstf{\ctxwk{A}}{\ctxwk{A}{{A}{A}}})
+\end{equation*}
+is an extension algebra in context $\Gamma$.
+\end{eg}
+
 The following lemma explains how each extension algebra gives rise to infinitely
 many extension algebras.
 
@@ -457,6 +476,52 @@ Note that \autoref{eq:extalg-infty1} follows if we can show that
 This is a special case of \autoref{lem:extalg-twins}. The second judgmental
 equality, \autoref{eq:extalg-infty2}, is trivial.
 \end{proof}
+
+\begin{defn}
+An extension algebra homomorphism from $(A,P,\epsilon_0,\epsilon_1)$ to
+$(B,Q,\eta_0,\eta_1)$ in context $\Gamma$ is a pair $(f_0,f_1)$ consisting of
+\begin{align*}
+\jhom*{\Gamma}{A}{B}{f_0}
+  \\
+\jfhom*{\Gamma}{A}{B}{f_0}{P}{Q}{f_1}
+\end{align*}
+for which the diagrams
+\begin{equation}\label{eq:extalg-hom1}
+\begin{tikzcd}
+\ctxext{A}{P}
+  \ar{r}{\jvcomp{}{f_0}{f_1}}
+  \ar{d}[swap]{\epsilon_0}
+& \ctxext{B}{Q}
+  \ar{d}{\eta_0}
+  \\
+A
+  \ar{r}[swap]{f_0}
+& B
+\end{tikzcd}
+\end{equation}
+and
+\begin{equation}\label{eq:extalg-hom2}
+\begin{tikzcd}[column sep=large]
+\ctxext{P}{\jcomp{}{\epsilon_0}{P}}
+  \ar{r}{\jvcomp{}{f_1}{\jcomp{}{\epsilon_0}{f_1}}}
+  \ar{d}[swap]{\epsilon_1}
+& \ctxext{Q}{\jcomp{}{\eta_0}{Q}}
+  \ar{d}{\eta_1}
+  \\
+P
+  \ar{r}[swap]{f_1}
+& Q
+\end{tikzcd}
+\end{equation}
+commute judgmentally.
+\end{defn}
+
+\begin{rmk}
+I suspect that if we copy this theory of extension algebras to Martin-L\"of
+type theory, with the judgmental equalities replaced by identifications, with
+dependent pair types rather than those strict extensions, etcetera, then
+the type of $f_1$ for which these two diagrams commute is a mere proposition.
+\end{rmk}
 
 \begin{comment}
 Extension algebras don't come in isolation. There are also extension algebra
