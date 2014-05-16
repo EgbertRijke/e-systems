@@ -171,96 +171,37 @@ are valid.
 \end{lem}
 
 \begin{proof}
-The proof is a rather long computation. It was found by starting with the
-application of \autoref{eq:extalg-eq1} and making the computation in both ways
-from there. The judgmental equality below where \autoref{eq:extalg-eq1} is applied,
-is marked with an $*$. The computation goes as follows:
+We only prove the first inference rule. Let $\jfam{{\Gamma}{A}}{Q}$ be a family.
+Then we have the judgmental equalities
 \begin{align*}
 \jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{Q}}
 & \jdeq
-  \subst{\epsilon_0}
-    {\ctxwk{\ctxext{A}{P}}{\jcomp{}{\epsilon_0}{Q}}}
-  \\
-& \jdeq
-  \subst
-    {\idtm{\jcomp{}{\epsilon_0}{P}}}
-    { \ctxwk
-        {\jcomp{}{\epsilon_0}{P}}{\subst{\epsilon_0}
-        {\ctxwk{\ctxext{A}{P}}{\jcomp{}{\epsilon_0}{Q}}}}}
-  \\
-& \jdeq
-  \subst
-    {\idtm{\jcomp{}{\epsilon_0}{P}}}
-    { {\ctxwk{\jcomp{}{\epsilon_0}{P}}{\epsilon_0}}
-      {\ctxwk{\jcomp{}{\epsilon_0}{P}}{{\ctxext{A}{P}}{\jcomp{}{\epsilon_0}{Q}}}}}
-  \\
-& \jdeq
-  \subst
-    {\idtm{\jcomp{}{\epsilon_0}{P}}}
-    { {\ctxwk{\jcomp{}{\epsilon_0}{P}}{\epsilon_0}}
-      {\ctxwk{\ctxext{{A}{P}}{\jcomp{}{\epsilon_0}{P}}}{\jcomp{}{\epsilon_0}{Q}}}}
-  \\
-& \jdeq
-  \subst
-    {\idtm{\jcomp{}{\epsilon_0}{P}}}
-    { {\ctxwk{\jcomp{}{\epsilon_0}{P}}{\epsilon_0}}
-      {\ctxwk{\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{Q}}}}
-  \\
-& \jdeq
-  \subst
-    {\unfold{\jvcomp{\jcomp{}{\epsilon_0}{P}}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}}
-    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{Q}}}
-  \\
-& \jdeq
-  \subst
-    {\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}
-    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{Q}}}
+  \jcomp{}{\idtm{\jcomp{}{\epsilon_0}{P}}}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{Q}}}
+  \tag{by \autoref{idfunc-precomp}}
   \\
 & \jdeq
   \jcomp{}{\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{Q}}
+  \tag{by \autoref{lem:composition-threesome}}
   \\
 & \jdeq
   \jcomp{}{\jcomp{}{\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}{\epsilon_0}}{Q}
+  \tag{by \autoref{lem:jcomp-jcomp}}
   \\
-& \stackrel{*}{\jdeq}
+& \jdeq
   \jcomp{}{\jcomp{}{\jvcomp{}{\idtm{A}}{\epsilon_1}}{\epsilon_0}}{Q}
+  \tag{by \autoref{eq:extalg-eq1}}
   \\
 & \jdeq
-  \jcomp{}{\jvcomp{}{\idtm{A}}{\epsilon_1}}{
-    \jcomp{}{\epsilon_0}{Q}}
+  \jcomp{}{\jvcomp{}{\idtm{A}}{\epsilon_1}}{\jcomp{}{\epsilon_0}{Q}}
+  \tag{by \autoref{lem:jcomp-jcomp}}
   \\
 & \jdeq
-  \subst
-    {\tmext{\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{\idtm{A}}}{\epsilon_1}}
-    {\ctxwk{\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{Q}}}
-  \\
-& \jdeq
-  \subst
-    {\epsilon_1}
-    { {\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{\idtm{A}}}
-      {\ctxwk{\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{Q}}}
-      }
-  \\
-& \jdeq
-  \subst
-    {\epsilon_1}
-    { {\cprojfstf{A}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}}
-      {\ctxwk{\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{Q}}}
-      }
-  \\
-& \jdeq
-  \subst
-    {\epsilon_1}
-    {\jcomp{}{\cprojfstf{A}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{Q}}}
-  \\
-& \jdeq
-  \subst
-    {\epsilon_1}
-    {\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{\jcomp{}{\epsilon_0}{Q}}}
+  \jcomp{}{\epsilon_1}{\jcomp{}{\idtm{A}}{\jcomp{}{\epsilon_0}{Q}}}
+  \tag{by \autoref{lem:composition-threesome}}
   \\
 & \jdeq
   \jcomp{}{\epsilon_1}{\jcomp{}{\epsilon_0}{Q}}.
-  \qedhere
+  \tag{by \autoref{idfunc-precomp}}
 \end{align*}
 \end{proof}
 
