@@ -885,7 +885,29 @@ equalities follow from \autoref{lem:empalg-mor}.
 
 To complete the proof, we need to verify that
 \autoref{extempalg-eq1,extempalg-eq2,extempalg-eq3,extempalg-eq4} hold in our
-current setting.
+current setting. More precisely, we have to verify that
+\begin{align*}
+\subst{\phi_1}{\epsilon_1}
+& \jdeq 
+  \idtm{P}
+  \tag{1}
+  \\
+\subst{\jcomp{}{\epsilon_0}{\phi_1}}{\epsilon_1}
+& \jdeq 
+  \idtm{P}
+  \tag{2}
+  \\
+\subst{\phi_1}{\jcomp{}{\epsilon_0}{\epsilon_1}}
+& \jdeq
+  \epsilon_1
+  \tag{3}
+  \\
+\subst{\jcomp{}{\epsilon_0}{\phi_1}}{\jcomp{}{\epsilon_0}{\epsilon_1}}
+& \jdeq
+  \idtm{\jcomp{}{\epsilon_0}{P}}
+  \tag{4}
+  \\
+\end{align*}
 \end{proof}
 
 \subsection{Term-algebras and term-operations}
