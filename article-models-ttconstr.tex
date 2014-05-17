@@ -242,54 +242,5 @@ context appears in the codomain:
 
 \subsection{$\wtypesym$-types}
 
-\subsection{Pre-universes}
-We would like to investigate the universe operator, which assigns to a family
-$A$ over $\Gamma$ and a family $P$ over $\ctxext{\Gamma}{A}$ a universe
-$\UU(A,P)$, which is a family over $\Gamma$, and a decoding $\tilde{\UU}(A,P)$,
-which is a family over $\ctxext{\Gamma}{\UU(A,P)}$. However, we find it useful
-to first look at a pre-universe operator which extends the pair $(A,P)$ to a
-quadruple $(V_0(A,P),\tilde{V}_0(A,P),V_1(A,P),\tilde{V}_1(A,P))$ consisting of
-a family $V_0(A,P)$ in context $\Gamma$, a family $\tilde{V}_0(A,P)$ over
-$\ctxext{\Gamma}{V_0(A,P)}$, a family $V_1(A,P)$ over 
-$\ctxext{\Gamma}{V_0(A,P)}$ and a family $\tilde{V}_1(A,P)$ over.... and only
-later blur the distinction between $\subst{x}{V_1(A,P)}$ and family morphisms
-from $\subst{x}{\tilde{V}_0(A,P)}$ to $V_0(A,P)$ for terms $x:V_0(A,P)$. The
-pair $(V_0(A,P),V_1(A,P))$ can be seen as a version of $(A,P)$ which is
-expanded to incorporate extension, the empty context, weakening, substitution
-and identity terms.
-
-Our initial setup for pre-universes consists just of the two inverence rules
-calling for $V_0$ and $V_1$:
-\begin{align*}
-& \inference
-  { \jfam{{\Gamma}{A}}{P}
-    }
-  { \jfam{\Gamma}{V_0(A,P)}
-    }
-  \\
-& \inference
-  { \jfam{{\Gamma}{A}}{P}
-    }
-  { \jfam{{\Gamma}{V_0(A,P)}}{V_1(A,P)}
-    }
-\end{align*}
-
-
-\subsection{Universes}
-\label{universes}
-Now we investigate universes. When $A$ is a family over context $\Gamma$ and
-$P$ is a family over $\ctxext{\Gamma}{A}$, the universe at $(A,P)$ consists,
-among other things, of a family $\UU_0(A,P)$ over context $\Gamma$ and a family
-$\UU_1(A,P)$
-
-The type operator $\UU$ has as input a pair $(A,P)$ consisting of a family
-$A$ in context $\Gamma$ and a family $P$ in context $\ctxext{\Gamma}{A}$. Its
-output is a pair $(U(A,P),\tilde{U}(A,P))$ consisting of a family
-$U(A,P)$ in context $\Gamma$ and a family $\tilde{U}(A,P)$ over it for which
-there are terms representing the empty context, the operations of extension,
-weakening and substitution and the identity terms. Moreover there is a morphism
-$i$ from $A$ to $U(A,P)$ with the property that 
-$\jcomp{}{i}{\tilde{U}(A,P)}\jdeq P$.
-
 \subsection{The compatibility of the type constructors with each other}
 \label{compatibility-of-type-constructors}
