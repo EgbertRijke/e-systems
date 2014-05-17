@@ -1311,6 +1311,40 @@ homomorphisms.
 
 \subsection{Extension-substitution algebras}
 
+Let $(A,P,T,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ be a term-algebra. To define
+substitution algebras, we will consider
+\begin{align*}
+\jhom*
+  {{{{\Gamma}{A}}{P}}{T}}
+  {\ctxwk{T}{\jcomp{}{\epsilon_0}{P}}}
+  {P}
+  {\sigma_0}
+  \\
+\jfhom*
+  {{{{\Gamma}{A}}{P}}{T}}
+  {\ctxwk{T}{\jcomp{}{\epsilon_0}{P}}}
+  {P}
+  {\sigma_0}
+  {\ctxwk{T}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}
+  {\jcomp{}{\epsilon_0}{P}}
+  {\sigma_1}
+  \\
+\jfhom*
+  {{{{\Gamma}{A}}{P}}{T}}
+  { \ctxext
+      {\ctxwk{T}{\jcomp{}{\epsilon_0}{P}}}
+      {\ctxwk{T}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}
+    }
+  {\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}
+  {\jvcomp{}{\sigma_0}{\sigma_1}}
+  {\ctxwk{T}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{T}}}}
+  {\jcomp{}{\epsilon_0}{T}}
+  {\sigma_2}
+\end{align*}
+for which the pair $(\sigma_0,\sigma_1)$ is required to be an extension
+homomorphism and the triple $(\sigma_0,\sigma_1,\sigma_2)$ is required to
+be an empty term-homomorphism.
+
 \subsection{Pre-universes}
 Pre-universes are internal versions of the theory of contexts, families and
 terms. They interpret extension, the empty context, weakening, substitution
