@@ -3,6 +3,17 @@ One of the guiding ideas behind the design of the theory of contexts, families
 and terms was that it would have to be possible to consider internal versions
 of the theory. In this section we aim for this internalization.
 
+It would be interesting to write out a weak version of pre-universes, internal
+to Martin-L\"of type theory with the function extensionality principle. 
+To do this, the empty context needs to
+be replaced by a contractible type, extension by dependent pair types,
+judgmental equalities of terms by identifications and judgmental equalities
+of families by equivalences of types. We conjecture that it is possible to
+carry this out (in particular to make sure that all the constructions 
+type-check). Moreover, one could then extend the notion of `weak' pre-universes
+with the requirement that every internal morphism is weakly anodyne. This
+should give an internal theory of weak higher groupoids.
+
 \subsection{Extension algebras}
 In this subsection our goal is to define the notion of extension algebras,
 which are internal versions of the extension operation of the theory of
@@ -848,13 +859,78 @@ $\Gamma$, satisfying the judgmental equalities
 \autoref{extempalg-eq1,extempalg-eq2,extempalg-eq3,extempalg-eq4}.
 \end{defn}
 
-\subsection{Weakening algebras}
-The notion of (extension-)weakening algebra is dependent on the notion of extension algebra.
-Although it is strictly speaking not dependent on the notion of empty-algebra,
-we shall only formulate a weakening algebras in the setting of an
-extension-empty algebras. When one wants to have a weakening operation which
-also acts on the level of contexts in an extension algebra without empty
-context, extra work has to be done to introduce these separately.
+\subsection{Term-algebras and term-operations}
+Until now we had no need to consider term-algebras. Extension is an operation
+letting contexts and families interact and the empty object is a term which
+requires that contexts and families are compatible. However, to model the
+theory of contexts, families and terms we do need to take terms into account.
+
+\begin{defn}
+A term-algebra in context $\Gamma$ is a septuple 
+$(A,P,T,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ such that the quadruple
+$(A,P,\epsilon_0,\epsilon_1)$ is an extension algebra in context $\Gamma$, 
+the quadruple $(A,P,\phi_0,\phi_1)$ is an empty algebra in context $\Gamma$,
+for which we additionally have the following judgmental equality:
+\begin{align*}
+\jfameq*{{\Gamma}{A}}{\subst{\phi_1}{T}}{\emptyf}.
+\end{align*}
+\end{defn}
+
+\begin{thm}
+Let $\mathcal{A}\defeq(A,P,T,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ be a term-algebra in context
+$\Gamma$. Then the septuple
+\begin{equation*}
+(P,\jcomp{}{\epsilon_0}{P},\jcomp{}{\epsilon_0}{T},\epsilon_1,\jcomp{}{\epsilon_0}{\epsilon_1},\phi_1,\jcomp{}{\epsilon_0}{\phi_1})
+\end{equation*}
+is a term-algebra in context $\ctxext{\Gamma}{A}$, called the family term-algebra
+of $\mathcal{A}$.
+\end{thm}
+
+\begin{thm}
+Let $\mathcal{A}\defeq(A,P,T,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ be a term-algebra in context
+$\Gamma$ and let $X$ be a family in context $\Gamma$. Then
+\begin{equation*}
+\ctxwk{X}{\mathcal{A}}\defeq(\ctxwk{X}{A},\ctxwk{X}{P},\ctxwk{X}{T},\ctxwk{X}{\epsilon_0},\ctxwk{X}{\epsilon_1},\ctxwk{X}{\phi_0},\ctxwk{X}{\phi_1})
+\end{equation*}
+is a term-algebra in context $\ctxext{\Gamma}{X}$.
+\end{thm}
+
+\begin{thm}
+Let $\mathcal{A}\defeq(A,P,T,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ be a term-algebra in context
+$\ctxext{\Gamma}{X}$ and let $\jterm{\Gamma}{X}{x}$. Then
+\begin{equation*}
+\subst{x}{\mathcal{A}}\defeq
+(\subst{x}{A},\subst{x}{P},\subst{x}{T},\subst{x}{\epsilon_0},\subst{x}{\epsilon_1},
+\subst{x}{\phi_0},\subst{x}{\phi_1})
+\end{equation*}
+is a term-algebra in context $\Gamma$.
+\end{thm}
+
+\begin{defn}
+Let $\mathcal{A}$ and $\mathcal{B}$ be term-algebras in context $\Gamma$. 
+A term-operation from $\mathcal{A}$ to $\mathcal{B}$ is a triple $(f_0,f_1,f_2)$
+consisting of
+\begin{align*}
+\jhom*{\Gamma}{A}{B}{f_0}
+  \\
+\jfhom*{\Gamma}{A}{B}{f_0}{P}{Q}{f_1}
+  \\
+\jfhom*{\Gamma}{{A}{P}}{{B}{Q}}{\jvcomp{P}{f_0}{f_1}}{T}{U}{f_2}
+\end{align*}
+such that the pair $(f_0,f_1)$ is both an extension homomorphism from
+$(A,P,\epsilon_0,\epsilon_1)$ to $(B,Q,\eta_0,\eta_1)$ in context $\Gamma$
+and an empty homomorphism from $(A,P,\phi_0,\phi_1)$ to $(B,Q,\psi_0,\psi_1)$
+in context $\Gamma$.
+\end{defn}
+
+\subsection{Weakening term-algebras}
+Weakening term-algebras will be term-algebras with certain added structure.
+Although strictly speaking one could formulate a notion of weakening algebra
+which only depends on extension algebras and which omits both empty objects
+and terms, we shall not do so here. 
+
+Let $(A,P,T,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ be a term-algebra in context
+$\Gamma$. 
 
 An extension-weakening algebra in context $\Gamma$ will be an octuple
 \begin{equation*}
@@ -880,16 +956,16 @@ in context $\Gamma$ and where
 \end{align*}
 such that $(\omega_0,\omega_1)$ is both an extension homomorphism
 \begin{equation*}
-\begin{tikzcd}
-( \ctxwk{P}{P},
-  \ctxwk{P}{\jcomp{}{\epsilon_0}{P}},
-  \ctxwk{P}{\epsilon_1},
-  \ctxwk{P}{\jcomp{}{\epsilon_0}{\epsilon_1}})
+\begin{tikzcd}[column sep=large]
+\ctxwk{P}{(P,
+  \jcomp{}{\epsilon_0}{P},
+  \epsilon_1,
+  \jcomp{}{\epsilon_0}{\epsilon_1})}
 \ar{r}{(\omega_0,\omega_1)}
-& ( \jcomp{}{\epsilon_0}{P},
-  \jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}},
-  \jcomp{}{\epsilon_0}{\epsilon_1},
-  \jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{\epsilon_1}})
+& \jcomp{}{\epsilon_0}{(P,
+  \jcomp{}{\epsilon_0}{P},
+  \epsilon_1,
+  \jcomp{}{\epsilon_0}{\epsilon_1})}
 \end{tikzcd}
 \end{equation*}
 and an empty homomorphism
@@ -1297,17 +1373,6 @@ following diagram:
 \end{equation*}
 
 \subsubsection{The definition of weakening algebras}
-
-\subsection{Term-algebras}
-Until now we had no need to consider term-algebras. Extension is an operation
-letting contexts and families interact, the empty object is a term which
-requires that contexts and families are compatible and weakening is an operation
-which takes families to extended families. However, we need to consider
-the notion of term-algebras before we can go into the internalization of
-substitution. In this subsection we will define the notion of term-algebras
-with extension and an empty object (which are simply called term-algebras),
-term-homomorphisms between them and weakening term-algebras with their
-homomorphisms.
 
 \subsection{Extension-substitution algebras}
 
