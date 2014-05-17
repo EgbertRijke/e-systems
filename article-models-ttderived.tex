@@ -1172,7 +1172,7 @@ These equalities are very easy to verify. We only display a proof of the first:
 \end{equation*}
 \end{proof}
 
-\begin{lem}\label{lem:tmext-ext}
+\begin{lem}\label{lem:tmext-ext}\label{lem:tmext-tmext}
 The following compatibility rules for two consecutive term extensions are valid:
 \begin{align*}
 & \inference
@@ -2236,7 +2236,7 @@ $\jfhom{\Gamma}{B}{C}{g}{Q}{R}{G}$. Then we have
 \end{align*}
 \end{proof}
 
-\begin{lem}
+\begin{lem}\label{lem:jfcomp-jfcomp}
 Horizontal composition of morphisms over morphisms is associative, i.e.~the
 following inference rules are valid:
 \begin{align*}
@@ -2300,6 +2300,77 @@ $\jfam{{{\Gamma}{C}}{R}}{S}$. Then we have the judgmental equalities
 \end{align*}
 \end{proof}
 
+Likewise, vertical composition is associative. For the following lemma, keep in
+mind that the inference rules
+\begin{align*}
+& \inference
+  { \jfhom{\Gamma}{{A}{P}}{{B}{Q}}{\jvcomp{P}{f_0}{f_1}}{R}{S}{f_2}
+    }
+  { \jfhom{{\Gamma}{A}}{P}{\jcomp{A}{f_0}{Q}}{f_1}{R}{\jcomp{A}{f_0}{S}}{f_2}
+    }
+  \\
+& \inference
+  { \jfhom{{\Gamma}{A}}{P}{\jcomp{A}{f_0}{Q}}{f_1}{R}{\jcomp{A}{f_0}{S}}{f_2}
+    }
+  { \jfhom{\Gamma}{{A}{P}}{{B}{Q}}{\jvcomp{P}{f_0}{f_1}}{R}{S}{f_2}
+    }
+\end{align*}
+are valid. Thus, a morphism over the vertical composition of $f_1$ over $f_0$
+is the same thing as a morphism over $f_1$ in the appropriate sense. Thus, we
+have vertical composition also available to compose $f_2$ with $f_1$ vertically
+and we don't need to introduce a seperate `vertical composition' for this.
+
+\begin{lem}\label{lem:jvcomp-jvcomp}
+Vertical composition is associative: the inverence rule
+\begin{equation*}
+\inference
+  { \jhom{\Gamma}{A}{B}{f_0}
+    \jfhom{\Gamma}{A}{B}{f_0}{P}{Q}{f_1}
+    \jfhom{\Gamma}{{A}{P}}{{B}{Q}}{\jvcomp{P}{f_0}{f_1}}{R}{S}{f_2}
+    }
+  { \jhomeq
+      {\Gamma}
+      {{{A}{P}}{R}}
+      {{{B}{Q}}{S}}
+      {\jvcomp{R}{\jvcomp{P}{f_0}{f_1}}{f_2}}
+      {\jvcomp{{P}{R}}{f_0}{\jvcomp{R}{f_1}{f_2}}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+Consider the morphisms $\jhom{\Gamma}{A}{B}{f_0}$, 
+$\jfhom{\Gamma}{A}{B}{f_0}{P}{Q}{f_1}$ and 
+$\jfhom{\Gamma}{{A}{P}}{{B}{Q}}{\jvcomp{P}{f_0}{f_1}}{R}{S}{f_2}$. Then we have
+the judgmental equalities
+\begin{align*}
+\jvcomp{R}{\jvcomp{P}{f_0}{f_1}}{f_2}
+& \jdeq 
+  \tmext{\ctxwk{R}{\tmext{\ctxwk{P}{f_0}}{f_1}}}{f_2}
+  \tag{by definition}
+  \\
+& \jdeq
+  \tmext{{\ctxwk{R}{{P}{f_0}}}{\ctxwk{R}{f_1}}}{f_2}
+  \tag{by \autoref{lem:tmext-wk}}
+  \\
+& \jdeq
+  \tmext{\ctxwk{R}{{P}{f_0}}}{{\ctxwk{R}{f_1}}{f_2}}
+  \tag{by \autoref{lem:tmext-tmext}}
+  \\
+& \jdeq
+  \tmext{\ctxwk{R}{{P}{f_0}}}{\jvcomp{R}{f_1}{f_2}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \tmext{\ctxwk{\ctxext{P}{R}}{f_0}}{\jvcomp{R}{f_1}{f_2}}
+  \tag{by \autoref{comp-ew-t}}
+  \\
+& \jdeq
+  \jvcomp{{P}{R}}{f_0}{\jvcomp{R}{f_1}{f_2}}.
+  \tag{by definition}
+\end{align*}
+\end{proof}
+
 \begin{lem}
 The following inference rules explain how vertically and horizontally composed 
 morphisms are evaluated:
@@ -2348,7 +2419,12 @@ $\jterm{\Gamma}{\subst{x}{P}}{u}$. Then we have the judgmental equalities
 \label{pullback}
 Now that we have introduced the notions of morphisms and composition,
 we can develop a diagramatic style of of displaying type dependencies
-combined with morphisms. We give an informal, metatheoretical definition of
+combined with morphisms. We have proved all the possible associativity and
+interchange properties concerning the various kinds of composition, which
+ensures that when a diagram is asserted to commute, the order in which
+morphisms are combined has no relevance.
+
+We give an informal, metatheoretical definition of
 such diagrams by indicating what the various components mean. The definition
 is informal because we will only use such diagrams occasionally to provide a
 graphical indication of the situation in which we're working. In particular,
