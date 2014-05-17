@@ -10,9 +10,12 @@ be replaced by a contractible type, extension by dependent pair types,
 judgmental equalities of terms by identifications and judgmental equalities
 of families by equivalences of types. We conjecture that it is possible to
 carry this out (in particular to make sure that all the constructions 
-type-check). Moreover, one could then extend the notion of `weak' pre-universes
+type-check). This could serve as a starting point for investigating internal
+models without truncatedness assumptions and for investigating internal higher
+categories. 
+Moreover, one could then extend the notion of `weak' pre-universes
 with the requirement that every internal morphism is weakly anodyne. This
-should give an internal theory of weak higher groupoids.
+could give an internal theory of weak higher groupoids.
 
 \subsection{Extension algebras}
 In this subsection our goal is to define the notion of extension algebras,
@@ -858,6 +861,28 @@ $\Gamma$, the quadruple $(A,P,\phi_0,\phi_1)$ is an empty algebra in context
 $\Gamma$, satisfying the judgmental equalities 
 \autoref{extempalg-eq1,extempalg-eq2,extempalg-eq3,extempalg-eq4}.
 \end{defn}
+
+\begin{thm}
+Let $(A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ be an extension-empty algebra
+in context $\Gamma$. Then the sextuple
+\begin{equation*}
+(P,\jcomp{}{\epsilon_0}{P},\epsilon_1,\jcomp{}{\epsilon_0}{\epsilon_1},\phi_1,
+\jcomp{}{\epsilon_0}{\phi_1})
+\end{equation*}
+is an extension-empty algebra in context $\ctxext{\Gamma}{A}$. 
+\end{thm}
+
+\begin{proof}
+We first check whether the quadruple $(P,\jcomp{}{\epsilon_0}{P},\phi_1,\jcomp{}{\epsilon_0}{\phi_1})$
+is an empty algebra in context $\ctxext{\Gamma}{A}$. Thus we need to verify
+that $\subst{\phi_1}{\jcomp{}{\epsilon_0}{P}}\jdeq P$ and that
+$\subst{\phi_1}{\jcomp{}{\epsilon_0}{\phi_1}}\jdeq\phi_1$. Both these judgmental
+equalities follow from \autoref{lem:empalg-mor}.
+
+To complete the proof, we need to verify that
+\autoref{extempalg-eq1,extempalg-eq2,extempalg-eq3,extempalg-eq4} hold in our
+current setting.
+\end{proof}
 
 \subsection{Term-algebras and term-operations}
 Until now we had no need to consider term-algebras. Extension is an operation
