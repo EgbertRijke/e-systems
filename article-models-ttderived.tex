@@ -1731,7 +1731,7 @@ $ \jfameq
 Therefore, each morphism into an extended family can itself be described as
 an extended term. The following lemma explains how this goes.
 
-\begin{lem}
+\begin{lem}\label{lem:mor-tmext-cproj}
 Let $\jhom{\Gamma}{A}{{B}{Q}}{f}$ be a morphism from $A$ to $\ctxext{B}{Q}$
 in a context $\Gamma$. Then we have
 \begin{equation*}
@@ -1770,6 +1770,44 @@ have the judgmental equalities
   \jcomp{}{f}{\cprojsndf{B}{Q}}
 \end{align*}
 The alternative formulation of the statement is a direct corollary.
+\end{proof}
+
+In the same spirit, we have the following compatibility of composition with
+projections:
+
+\begin{lem}\label{lem:jcomp-cprojfstf}
+The following inference rule is valid:
+\begin{equation*}
+\inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{A}}{Q}
+    }
+  { \jfameq
+      {{\Gamma}{{A}{P}}}
+      {\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}}
+      {\ctxwk{P}{Q}}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+Let $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$ be
+families. Then we have
+\begin{align*}
+\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}
+& \jdeq
+  \unfoldall{\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}}
+  \tag{by definition}\\
+& \jdeq 
+  \subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{Q}}} 
+  \tag{by \autoref{comp-ww-f}}\\
+& \jdeq 
+  \ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}} 
+  \tag{by \autoref{comp-ws-f}}\\
+& \jdeq 
+  \ctxwk{P}{Q} 
+  \tag{by \autoref{idfunc-wk-defn}}
+\end{align*}
 \end{proof}
 
 We also have the following lemma about the compatibility of pairing and composition:
@@ -1864,6 +1902,8 @@ To see this, we only have to note that
 $\ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}}\jdeq\ctxwk{P}{Q}$, which
 holds by \autoref{idfunc-wk-defn}.
 \end{rmk}
+
+\subsubsection{Horizontal and vertical composition}
 
 Suppose we have morphisms $\jhom{\Gamma}{A}{B}{f}$ and $\jhom{\Gamma}{B}{C}{g}$
 and that we have the morphisms $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ and
@@ -2105,8 +2145,95 @@ $\Gamma$. We define
 \end{equation*}
 \end{defn}
 
+\begin{lem}
+The following inference rule explains how vertically and horizontally composed 
+morphisms are evaluated:
+\begin{align*}
+& \inference
+  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
+    \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{\subst{x}{P}}{u}
+    }
+  { \jtermeq
+      {\Gamma}
+      {{B}{Q}}
+      {\subst{\tmext{}{}{x}{u}}{\jvcomp{P}{f}{F}}}
+      {\tmext{}{}{\subst{x}{f}}{\subst{u}{{x}{F}}}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Let $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$, $\jterm{\Gamma}{A}{x}$ and
+$\jterm{\Gamma}{\subst{x}{P}}{u}$. Then we have the judgmental equalities
+\begin{align*}
+\subst{\tmext{}{}{x}{u}}{\jvcomp{P}{f}{F}}
+& \jdeq
+  \subst{\tmext{}{}{x}{u}}{\tmext{}{}{\ctxwk{P}{f}}{F}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \tmext{\subst{\tmext{x}{u}}{\ctxwk{P}{f}}}{\subst{\tmext{x}{u}}{F}}
+  \tag{by \autoref{lem:tmext-subst}}
+  \\
+& \jdeq
+  \tmext{\subst{u}{{x}{\ctxwk{P}{f}}}}{\subst{u}{{x}{F}}}
+  \tag{by \autoref{comp-es}}
+  \\
+& \jdeq
+  \tmext{\subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{f}}}}{\subst{u}{{x}{F}}}
+  \tag{by \autoref{comp-sw-t}}
+  \\
+& \jdeq
+  \tmext{\subst{x}{f}}{\subst{u}{{x}{F}}}.
+  \tag{by \autoref{cancellation-ws-t}}
+\end{align*}
+\end{proof}
+
+\begin{lem}\label{lem:jvcomp-cprojfstf}
+Consider $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then
+the diagram
+\begin{equation*}
+\begin{tikzcd}
+\ctxext{A}{P}
+  \ar{r}{\jvcomp{P}{f}{F}}
+  \ar{d}[swap]{\cprojfstf{A}{P}}
+& \ctxext{B}{Q}
+  \ar{d}{\cprojfstf{B}{Q}}
+  \\
+A \ar{r}[swap]{f}
+& B
+\end{tikzcd}
+\end{equation*}
+commutes judgmentally.
+\end{lem}
+
+\begin{proof}
+We have the judgmental equalities
+\begin{align*}
+\jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{\cprojfstf{B}{Q}}
+& \jdeq
+  \jcomp{{A}{P}}{\tmext{\ctxwk{P}{f}}{F}}{\cprojfstf{B}{Q}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \ctxwk{P}{f}
+  \tag{by \autoref{lem:mor-tmext-cproj}}
+  \\
+& \jdeq
+  \jcomp{{A}{P}}{\cprojfstf{A}{P}}{f}
+  \tag{by \autoref{lem:jcomp-cprojfstf}}
+\end{align*}
+\end{proof}
+
+\subsubsection{Interactions of the composition threesome}
+Our current goal is to show that the three sorts of composition are all
+compatbile with each other. This includes showing associativity and interchange
+properties. The following lemma of the composition threesome stands at the
+basis of the further compatibility results.
+
 \begin{lem}\label{lem:composition-threesome}
-We have the following composition threesome:
+The following inference rules are valid:
 \begin{align*}
 & \inference
   { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
@@ -2371,51 +2498,7 @@ the judgmental equalities
 \end{align*}
 \end{proof}
 
-\begin{lem}
-The following inference rules explain how vertically and horizontally composed 
-morphisms are evaluated:
-\begin{align*}
-& \inference
-  { \jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}
-    \jterm{\Gamma}{A}{x}
-    \jterm{\Gamma}{\subst{x}{P}}{u}
-    }
-  { \jtermeq
-      {\Gamma}
-      {{B}{Q}}
-      {\subst{\tmext{}{}{x}{u}}{\jvcomp{P}{f}{F}}}
-      {\tmext{}{}{\subst{x}{f}}{\subst{u}{{x}{F}}}}
-    }
-\end{align*}
-\end{lem}
-
-\begin{proof}
-Let $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$, $\jterm{\Gamma}{A}{x}$ and
-$\jterm{\Gamma}{\subst{x}{P}}{u}$. Then we have the judgmental equalities
-\begin{align*}
-\subst{\tmext{}{}{x}{u}}{\jvcomp{P}{f}{F}}
-& \jdeq
-  \subst{\tmext{}{}{x}{u}}{\tmext{}{}{\ctxwk{P}{f}}{F}}
-  \tag{by definition}
-  \\
-& \jdeq
-  \tmext{\subst{\tmext{x}{u}}{\ctxwk{P}{f}}}{\subst{\tmext{x}{u}}{F}}
-  \tag{by \autoref{lem:tmext-subst}}
-  \\
-& \jdeq
-  \tmext{\subst{u}{{x}{\ctxwk{P}{f}}}}{\subst{u}{{x}{F}}}
-  \tag{by \autoref{comp-es}}
-  \\
-& \jdeq
-  \tmext{\subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{f}}}}{\subst{u}{{x}{F}}}
-  \tag{by \autoref{comp-sw-t}}
-  \\
-& \jdeq
-  \tmext{\subst{x}{f}}{\subst{u}{{x}{F}}}.
-  \tag{by \autoref{cancellation-ws-t}}
-\end{align*}
-\end{proof}
-
+\subsubsection{Diagrams in the theory of contexts, families and terms}
 \label{pullback}
 Now that we have introduced the notions of morphisms and composition,
 we can develop a diagramatic style of of displaying type dependencies
@@ -2625,90 +2708,6 @@ Let $\jfam{{\Gamma}{A}}{P'}$ be a family and let $\jfhom{\Gamma}{A}{B}{f}
 \end{itemize}
 \end{proof}
 
-\begin{lem}
-For any $\jterm{\Gamma}{A}{x}$ and any $\jfam{{\Gamma}{A}}{P}$, the square
-\begin{equation*}
-\begin{tikzcd}
-\subst{x}{P} \ar{d} \ar{r}{\finc{x}{P}} & \ctxext{A}{P} \ar{d}{\cprojfstf{A}{P}}\\
-\emptyf \ar{r}{\ctxwk{\emptyf}{x}} & A
-\end{tikzcd}
-\end{equation*}
-is a pullback square.
-\end{lem}
-
-In the following lemma we assert that pulling back a family $Q$ 
-over $\ctxext{{\Gamma}{A}}{P}$ along a fiber
-inclusion $\finc{x}{P}$ gives the family $\subst{x}{Q}$ over $\ctxext{\Gamma}{\subst{x}{P}}$. 
-
-\begin{lem}
-We have the following inference rule:
-\begin{equation*}
-\inference
-  { \jfam{{{\Gamma}{A}}{P}}{Q}
-    \jterm{\Gamma}{A}{x}
-    }
-  { \jfameq
-      {{\Gamma}{\subst{x}{P}}}
-      {\jcomp{}{\finc{x}{P}}{Q}}
-      {\subst{x}{Q}}
-    }
-\end{equation*}
-\end{lem}
-
-\begin{proof}
-We have the judgmental equalities:
-\begin{align*}
-\jcomp{\subst{x}{P}}{\finc{x}{P}}{Q}
-& \jdeq
-  \subst{\tmext{\ctxwk{\subst{x}{P}}{x}}{\idtm{\subst{x}{P}}}}{\ctxwk{\subst{x}{P}}{Q}}
-  \\
-& \jdeq
-  \subst{\idtm{\subst{x}{P}}}{{\ctxwk{\subst{x}{P}}{x}}{\ctxwk{\subst{x}{P}}{Q}}}
-  \\
-& \jdeq
-  \subst{\idtm{\subst{x}{P}}}{\ctxwk{\subst{x}{P}}{\subst{x}{Q}}}
-  \\
-& \jdeq
-  \subst{x}{Q}.
-\end{align*}
-\end{proof}
-
-\begin{lem}
-The following inference rule is valid:
-\begin{equation*}
-\inference
-  { \jfam{{\Gamma}{A}}{P}
-    \jfam{{\Gamma}{A}}{Q}
-    }
-  { \jfameq
-      {{\Gamma}{{A}{P}}}
-      {\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}}
-      {\ctxwk{P}{Q}}
-    }
-\end{equation*}
-\end{lem}
-
-\begin{proof}
-Let $\jfam{{\Gamma}{A}}{P}$ and $\jfam{{\Gamma}{A}}{Q}$ be
-families. Then we have
-\begin{align*}
-\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}
-& \jdeq
-  \unfoldall{\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}}
-  \tag{by definition}\\
-& \jdeq 
-  \subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{Q}}} 
-  \tag{by \autoref{comp-ww-f}}\\
-& \jdeq 
-  \ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}} 
-  \tag{by \autoref{comp-ws-f}}\\
-& \jdeq 
-  \ctxwk{P}{Q} 
-  \tag{by \autoref{idfunc-wk-defn}}
-\end{align*}
-\end{proof}
-
-
 \subsection{Fiber inclusions}
 We will use the insights of \autoref{extension-on-terms} to define and study
 \emph{fiber inclusions}. The fiber inclusion of the \emph{fiber}
@@ -2804,6 +2803,17 @@ judgmental equalities
   \tag{by \autoref{idfunc-precomp}}
 \end{align*}
 \end{proof}
+
+\begin{lem}
+For any $\jterm{\Gamma}{A}{x}$ and any $\jfam{{\Gamma}{A}}{P}$, the square
+\begin{equation*}
+\begin{tikzcd}
+\subst{x}{P} \ar{d} \ar{r}{\finc{x}{P}} & \ctxext{A}{P} \ar{d}{\cprojfstf{A}{P}}\\
+\emptyf \ar{r}{\ctxwk{\emptyf}{x}} & A
+\end{tikzcd}
+\end{equation*}
+is a pullback square.
+\end{lem}
 
 We can give a second characterization of fiber inclusions:
 
