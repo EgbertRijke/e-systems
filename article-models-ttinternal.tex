@@ -703,7 +703,10 @@ the quadruple $(A,P,\epsilon_0,\epsilon_1)$ is an extension algebra in context
 $\Gamma$, the quadruple $(A,P,\phi_0,\phi_1)$ is an empty algebra in context
 $\Gamma$, satisfying additional judgmental equalities expressing the 
 compatibility of $\epsilon_0$ and $\epsilon_1$ with $\phi_0$ and $\phi_1$.
-There will be four such judgmental equalities.
+There will be five such judgmental equalities. Four of them will express that
+extension acts as the identity term when applied to the empty object in one of
+its arguments. The other expresses that extension of families restricted to
+families above the empty object is the same as extension of contexts.
 
 We can immediately state the first two:
 \begin{align}
@@ -820,17 +823,25 @@ As an immediate corollary, if we assume the judgmental equalities
 \jfameq{{\Gamma}{A}}{\subst{\phi_i}{\jcomp{}{\epsilon_0}{P}}}{P}
 \end{equation}
 and hence that $\subst{\phi_0}{\epsilon_1}$ is a 
-morphism from $\ctxext{A}{P}$ to $A$. Thus, we can require
+morphism from $\ctxext{A}{P}$ to $A$. Thus, we can require that
 \begin{equation}\label{extempalg-eq3}
-\jhomeq{\Gamma}{{A}{P}}{A}{\subst{\phi_0}{\epsilon_1}}{\epsilon_0}.
+\jhomeq{\Gamma}{{A}{P}}{A}{\subst{\phi_0}{\epsilon_1}}{\epsilon_0},
 \end{equation}
-For the final judgmental equality we need to explain the term
+expressing that the action of extension at the level of families, restricted to the empty object
+$\phi_0$, is just extension at the level of contexts. We also have two judgmental
+equalities expressing that $\epsilon_1$ restricted to $\phi_1$ and
+$\jcomp{}{\epsilon_0}{\phi_1}$ are both the identity term on $P$. Note that
+the term $\jcomp{}{\epsilon_0}{\phi_1}$ serves as the empty family of families,
+being a term of $\jcomp{}{\epsilon_0}{P}$.
+
+Before we can require that $\subst{\phi_1}{\epsilon_1}\jdeq\idtm{P}$, we need
+to compute the family
 \begin{equation*}
-\jterm
+\jfam
   {{{\Gamma}{A}}{\subst{\phi_1}{\jcomp{}{\epsilon_0}{P}}}}
-  {\subst{\phi_1}{\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{P}}}
-  {\subst{\phi_1}{\epsilon_1}}.
+  {\subst{\phi_1}{\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{P}}}.
 \end{equation*}
+of which $\subst{\phi_1}{\epsilon_1}$ is a term.
 We have already established that $\subst{\phi_1}{\jcomp{}{\epsilon_0}{P}}\jdeq
 P$. We also see that 
 \begin{align*}
@@ -848,13 +859,33 @@ P$. We also see that
   \tag{by \autoref{cor:empalg-mor}}
   \\
 & \jdeq
-  \ctxwk{P}{P}
+  \ctxwk{P}{P},
   \tag{by \autoref{cancellation-ws-f}}
 \end{align*}
-and we will therefore require that
+so we see that it indeed makes sense to require that
 \begin{equation}\label{extempalg-eq4}
 \jtermeq{{{\Gamma}{A}}{P}}{\ctxwk{P}{P}}{\subst{\phi_1}{\epsilon_1}}{\idtm{P}}.
 \end{equation}
+For the last judgmental equality, we need to compute the family
+\begin{equation*}
+\jfam
+  {{{\Gamma}{A}}{\subst{\phi_1}{\jcomp{}{\epsilon_0}{P}}}}
+  {\subst{\jcomp{}{\epsilon_0}{\phi_1}}{\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{P}}}.
+\end{equation*}
+This is easy:
+\begin{align*}
+\subst{\jcomp{}{\epsilon_0}{\phi_1}}{\ctxwk{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}{P}}
+& \jdeq
+  \subst{\jcomp{}{\epsilon_0}{\phi_1}}{\ctxwk{\jcomp{}{\epsilon_0}{P}}{{P}{P}}}
+  \\
+& \jdeq
+  \ctxwk{P}{P}.
+\end{align*}
+Thus we are allowed to require that
+\begin{equation}\label{extempalg-eq5}
+\subst{\jcomp{}{\epsilon_0}{\phi_1}}{\epsilon_1}.
+\end{equation}
+
 We bring all this together in the definition of extension-empty algebras:
 
 \begin{defn}
