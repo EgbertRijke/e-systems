@@ -894,7 +894,7 @@ is a sextuple $(A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ for which
 the quadruple $(A,P,\epsilon_0,\epsilon_1)$ is an extension algebra in context 
 $\Gamma$, the quadruple $(A,P,\phi_0,\phi_1)$ is an empty algebra in context
 $\Gamma$, satisfying the judgmental equalities 
-\autoref{extempalg-eq1,extempalg-eq2,extempalg-eq3,extempalg-eq4}.
+\autoref{extempalg-eq1,extempalg-eq2,extempalg-eq3,extempalg-eq4,extempalg-eq5}.
 \end{defn}
 
 \begin{thm}
@@ -915,30 +915,30 @@ $\subst{\phi_1}{\jcomp{}{\epsilon_0}{\phi_1}}\jdeq\phi_1$. Both these judgmental
 equalities follow from \autoref{lem:empalg-mor}.
 
 To complete the proof, we need to verify that
-\autoref{extempalg-eq1,extempalg-eq2,extempalg-eq3,extempalg-eq4} hold in our
+\autoref{extempalg-eq1,extempalg-eq2,extempalg-eq3,extempalg-eq4,extempalg-eq5} hold in our
 current setting. More precisely, we have to verify that
 \begin{align*}
 \subst{\phi_1}{\epsilon_1}
 & \jdeq 
   \idtm{P}
-  \tag{1}
   \\
 \subst{\jcomp{}{\epsilon_0}{\phi_1}}{\epsilon_1}
 & \jdeq 
   \idtm{P}
-  \tag{2}
   \\
 \subst{\phi_1}{\jcomp{}{\epsilon_0}{\epsilon_1}}
 & \jdeq
   \epsilon_1
-  \tag{3}
   \\
 \subst{\jcomp{}{\epsilon_0}{\phi_1}}{\jcomp{}{\epsilon_0}{\epsilon_1}}
 & \jdeq
   \idtm{\jcomp{}{\epsilon_0}{P}}
-  \tag{4}
   \\
+\subst{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{\phi_1}}}{\jcomp{}{\epsilon_0}{\epsilon_1}}
+& \jdeq
+  \idtm{\jcomp{}{\epsilon_0}{P}}
 \end{align*}
+None of these present any difficulties.
 \end{proof}
 
 \subsection{Term-algebras and term-operations}
@@ -962,7 +962,7 @@ for which we additionally have the following judgmental equality:
 Let $\mathcal{A}\defeq(A,P,T,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ be a term-algebra in context
 $\Gamma$. Then the septuple
 \begin{equation*}
-(P,\jcomp{}{\epsilon_0}{P},\jcomp{}{\epsilon_0}{T},\epsilon_1,\jcomp{}{\epsilon_0}{\epsilon_1},\phi_1,\jcomp{}{\epsilon_0}{\phi_1})
+\mathcal{F}_{\mathcal{A}}\defeq(P,\jcomp{}{\epsilon_0}{P},\jcomp{}{\epsilon_0}{T},\epsilon_1,\jcomp{}{\epsilon_0}{\epsilon_1},\phi_1,\jcomp{}{\epsilon_0}{\phi_1})
 \end{equation*}
 is a term-algebra in context $\ctxext{\Gamma}{A}$, called the family term-algebra
 of $\mathcal{A}$.
@@ -1012,14 +1012,13 @@ which only depends on extension algebras and which omits both empty objects
 and terms, we shall not do so here. 
 
 Let $(A,P,T,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ be a term-algebra in context
-$\Gamma$. 
+$\Gamma$. The weakening homomorphism $\omega$ will be a term-homomorphism from 
+$\ctxwk{P}{\mathcal{F}_\mathcal{A}}$ to 
+$\jcomp{}{\epsilon_0}{\mathcal{F}_\mathcal{A}}$ satisfying certain extra
+judgmental equalities. The goal of this subsection is to spell these out.
 
-An extension-weakening algebra in context $\Gamma$ will be an octuple
-\begin{equation*}
-(A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1,\omega_0,\omega_1)
-\end{equation*}
-where $(A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ is an extension-empty algebra
-in context $\Gamma$ and where
+Concretely, the weakening homomorphism is a triple $(\omega_0,\omega_1,\omega_2)$
+consisting of
 \begin{align*}
 \jhom*
   {{{\Gamma}{A}}{P}}
@@ -1035,30 +1034,42 @@ in context $\Gamma$ and where
   {\ctxwk{P}{\jcomp{}{\epsilon_0}{P}}}
   {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
   {\omega_1}
+  \\
+\jfhom*
+  {{{\Gamma}{A}}{P}}
+  {\ctxwk{P}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}}
+  {\jcomp{}{\epsilon_0}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}}
+  {\jvcomp{\ctxwk{P}{\jcomp{}{\epsilon_0}{P}}}{\omega_0}{\omega_1}}
+  {\ctxwk{P}{\jcomp{}{\epsilon_0}{T}}}
+  {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{T}}}
+  {\omega_2}
 \end{align*}
-such that $(\omega_0,\omega_1)$ is both an extension homomorphism
+We could also summarize the situation in a diagram:
 \begin{equation*}
-\begin{tikzcd}[column sep=large]
-\ctxwk{P}{(P,
-  \jcomp{}{\epsilon_0}{P},
-  \epsilon_1,
-  \jcomp{}{\epsilon_0}{\epsilon_1})}
-\ar{r}{(\omega_0,\omega_1)}
-& \jcomp{}{\epsilon_0}{(P,
-  \jcomp{}{\epsilon_0}{P},
-  \epsilon_1,
-  \jcomp{}{\epsilon_0}{\epsilon_1})}
+\begin{tikzcd}
+\ctxwk{P}{\jcomp{}{\epsilon_0}{T}}
+  \ar[fib]{d}
+  \ar{r}{\omega_2}
+& \jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{T}}
+  \ar[fib]{d}
+  \\
+\ctxwk{P}{\jcomp{}{\epsilon_0}{P}}
+  \ar[fib]{d}
+  \ar{r}{\omega_1}
+& \jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}
+  \ar[fib]{d}
+  \\
+\ctxwk{P}{P}
+  \ar{r}[swap]{\omega_0}
+& \jcomp{}{\epsilon_0}{P}
 \end{tikzcd}
 \end{equation*}
-and an empty homomorphism
 
-satisfying five(?) additional judgmental equalities expressing that $\omega_0$
-and $\omega_1$ are compatible with $\epsilon_1$, $\phi_1$
-and with each other. Our current goal is to figure out what these are. 
-
-Before we go into that, we develop a bit of intuition by explaining how
+Before we go into chasing the judgmental equalities that are to be imposed on
+weakening, we develop a bit of intuition by explaining how
 $\omega_0$ and $\omega_1$ act when applied to a family $x_1:\subst{x_0}{P}$
-over $x_0:A$. Note that
+over $x_0:A$, and we will provide the explicit requirements that make
+$\omega$ a term-homomorphism. Note that
 \begin{equation*}
 \jterm{{\Gamma}{\subst{x_0}{P}}}{\subst{{x_1}{{x_0}{\epsilon_0}}}{P}}{\subst{x_1}{{x_0}{\omega_0}}},
 \end{equation*}
@@ -1156,9 +1167,8 @@ over $\subst{x_1}{{x_0}{\epsilon_0}}$. In other words, $\omega_1$
 is precisely the internalization of the action on families of weakening, as
 intended.
 
-\subsubsection{The compatibility of weakening with extension}
-The first rule, expressing that $\omega_0$ is compatible with $\epsilon_1$ is that
-the diagram
+Because the pair $(\omega_0,\omega_1)$ is required to be an extension homomorphism,
+the diagrams
 \begin{equation}\label{wkalg-exteq1}
 \begin{tikzcd}[column sep=large]
 \ctxwk{P}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}
@@ -1174,9 +1184,8 @@ the diagram
 & \jcomp{}{\epsilon_0}{P}
 \end{tikzcd}
 \end{equation}
-commutes judgmentally. For the second rule, expressing that $\omega_1$ is 
-compatible with $\epsilon_1$, we wish to fill in a commutative diagram
-\begin{equation*}
+in context $\ctxext{{\Gamma}{A}}{P}$, and
+\begin{equation}\label{wkalg-exteq2}
 \begin{tikzcd}[column sep=huge]
 \ctxwk
   {P}
@@ -1184,7 +1193,7 @@ compatible with $\epsilon_1$, we wish to fill in a commutative diagram
       {\jcomp{}{\epsilon_0}{P}}
       {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
     }
-  \ar[densely dotted]{r}{\jvcomp{}{\omega_1}{?}}
+  \ar{r}{\jvcomp{}{\omega_1}{\jcomp{}{\ctxwk{P}{\epsilon_1}}{\omega_1}}}
   \ar{d}[swap]{\ctxwk{P}{\jcomp{}{\epsilon_0}{\epsilon_1}}}
 & \jcomp{}{\omega_0}{%
     \jcomp{}{\epsilon_0}{%
@@ -1208,65 +1217,10 @@ compatible with $\epsilon_1$, we wish to fill in a commutative diagram
       }
     }
 \end{tikzcd}
-\end{equation*}
-The morphism indicated by the question mark is a morphism from
-$\ctxwk{P}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}$ to
-$%
-\jcomp{}{\omega_1}{%
-  \jcomp{}{\omega_0}{%
-    \jcomp{}{\epsilon_0}{%
-      \jcomp{}{\epsilon_0}{%
-        \ctxext{P}{\jcomp{}{\epsilon_0}{P}}
-        }
-      }
-    }
-  }
-$ in context $\ctxext{{\Gamma}{A}}{P}$. One would expect this morphism to be
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\jcomp{}{\ctxwk{P}{\epsilon_0}}{\ctxwk{P}{\jcomp{}{\epsilon_0}{P}}}
-  \ar{r}{\jcomp{}{\ctxwk{P}{\epsilon_0}}{\omega_1}}
-& \jcomp{}{\ctxwk{P}{\epsilon_0}}{%
-    \jcomp{}{\omega_0}{%
-      \jcomp{}{\epsilon_0}{%
-        \jcomp{}{\epsilon_0}{%
-          P
-          }
-        }
-      }
-    }
-\end{tikzcd}
-\end{equation*}
-in the context $\ctxext{{\Gamma}{A}}{P}$, 
-so we must verify the judgmental equalities
-\begin{align*}
-\jcomp{}{\ctxwk{P}{\epsilon_0}}{\ctxwk{P}{\jcomp{}{\epsilon_0}{P}}}
-& \jdeq 
-  \ctxwk{P}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
-  \\
-\jcomp{}{\ctxwk{P}{\epsilon_0}}{%
-    \jcomp{}{\omega_0}{%
-      \jcomp{}{\epsilon_0}{%
-        \jcomp{}{\epsilon_0}{%
-          P
-          }
-        }
-      }
-    }
-& \jdeq
-  \jcomp{}{\omega_1}{%
-    \jcomp{}{\omega_0}{%
-      \jcomp{}{\epsilon_0}{%
-        \jcomp{}{\epsilon_0}{%
-          \ctxext{P}{\jcomp{}{\epsilon_0}{P}}
-          }
-        }
-      }
-    } 
-\end{align*}
-of families over the context $\ctxext{{\Gamma}{A}}{P}$. The first of these
-judgmental equalities is nothing special: it follows at straight from
-\autoref{comp-ws-f}. We prove the second equality in the following lemma.
+\end{equation}
+in context $\ctxext{{{\Gamma}{A}}{P}}{\ctxwk{P}{P}}$, commute judgmentally.
+To see that the morphism $\jvcomp{}{\omega_1}{\jcomp{}{\ctxwk{P}{\epsilon_0}}{\omega_1}}$
+indeed has the suggested codomain, we have the following lemma:
 
 \begin{lem}
 Let $(A,P,\epsilon_0,\epsilon_1)$ be an extension algebra and let
@@ -1392,42 +1346,6 @@ We have the judgmental equalities
   \tag{by \autoref{lem:jcomp-jcomp}}
 \end{align*}
 \end{proof}
-
-This enables us to require that the diagram
-\begin{equation}\label{wkalg-exteq2}
-\begin{tikzcd}[column sep=huge]
-\ctxwk
-  {P}
-  { \ctxext
-      {\jcomp{}{\epsilon_0}{P}}
-      {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
-    }
-  \ar{r}{\jvcomp{}{\omega_1}{\jcomp{}{\ctxwk{P}{\epsilon_0}}{\omega_1}}}
-  \ar{d}[swap]{\ctxwk{P}{\jcomp{}{\epsilon_0}{\epsilon_1}}}
-& \jcomp{}{\omega_0}{%
-    \jcomp{}{\epsilon_0}{%
-      \jcomp{}{\epsilon_0}{%
-        \ctxext{P}{\jcomp{}{\epsilon_0}{P}}
-        }
-      }
-    }
-  \ar{d}{ \jcomp{}{\omega_0}{%
-            \jcomp{}{\epsilon_0}{%
-              \jcomp{}{\epsilon_0}{\epsilon_1}
-              }
-            }
-          }
-  \\
-\ctxwk{P}{\jcomp{}{\epsilon_0}{P}}
-  \ar{r}[swap]{\omega_1}
-& \jcomp{}{\omega_0}{%
-    \jcomp{}{\epsilon_0}{%
-      \jcomp{}{\epsilon_0}{P}
-      }
-    }
-\end{tikzcd}
-\end{equation}
-commutes judgmentally.
 
 \subsubsection{The compatibility of weakening with the empty context and family}
 The first two judgmental equalities expressing that $\omega_0$ and $\omega_1$
