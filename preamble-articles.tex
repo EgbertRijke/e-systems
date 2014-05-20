@@ -997,6 +997,41 @@
 \newcommand{\jfun}[2]{#1\to#2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% ALGEBRAS FOR THE THEORY OF CONTEXTS, FAMILIES AND TERMS
+
+\newcommand{\cftalg}{\mathcal}
+
+%%%% The intended use of `\cftctx` is `\cftctx{\cftalg{#1}}`.
+\newcommand{\cftctx}[1]{%
+  { \renewcommand{\cftalg}[1]{##1}
+    #1
+    }
+  }
+%%%% The intended use of `\cftfam` is `\cftfam{\cftalg{#1}}`.
+\newcommand{\cftfam}[1]{F_{#1}}
+\newcommand{\cfttm}[1]{T_{#1}}
+
+\newcommand{\cftext}[2][]{\epsilon_{#1}^{#2}}
+\newcommand{\cftctxext}[1]{\cftext[0]{#1}}
+\newcommand{\cftfamext}[1]{\cftext[1]{#1}}
+
+\newcommand{\cftemp}[2][]{\phi_{#1}^{#2}}
+\newcommand{\cftempc}[1]{\cftemp[\mathsf{c}]{#1}}
+\newcommand{\cftempf}[1]{\cftemp[\mathsf{f}]{#1}}
+
+\newcommand{\cftwk}[2][]{\omega_{#1}^{#2}}
+\newcommand{\cftwkc}[1]{\cftwk[\mathsf{c}]{#1}}
+\newcommand{\cftwkf}[1]{\cftwk[\mathsf{f}]{#1}}
+\newcommand{\cftwkt}[1]{\cftwk[\mathsf{t}]{#1}}
+
+\newcommand{\cftsubst}[2][]{\sigma_{#1}^{#2}}
+\newcommand{\cftsubstc}[1]{\cftsubst[\mathsf{c}]{#1}}
+\newcommand{\cftsubstf}[1]{\cftsubst[\mathsf{f}]{#1}}
+\newcommand{\cftsubstt}[1]{\cftsubst[\mathsf{t}]{#1}}
+
+\newcommand{\cftidtm}[1]{\iota^{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% THE CONSTRUCTORS OF THE TYPE THEORY OF MODELS
 
 \makeatletter
