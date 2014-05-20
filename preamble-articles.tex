@@ -999,17 +999,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% ALGEBRAS FOR THE THEORY OF CONTEXTS, FAMILIES AND TERMS
 
-\newcommand{\cftalg}{\mathcal}
+\newcommand{\cftalg}{\mathbf}
+\newcommand{\cfthom}{\mathbf}
 
 %%%% The intended use of `\cftctx` is `\cftctx{\cftalg{#1}}`.
-\newcommand{\cftctx}[1]{%
+\newcommand{\cftalgc}[1]{%
   { \renewcommand{\cftalg}[1]{##1}
     #1
     }
   }
+\newcommand{\cfthomc}[1]{%
+  { \renewcommand{\cfthom}[1]{##1}
+    #1
+    }
+  }
 %%%% The intended use of `\cftfam` is `\cftfam{\cftalg{#1}}`.
-\newcommand{\cftfam}[1]{F_{#1}}
-\newcommand{\cfttm}[1]{T_{#1}}
+\newcommand{\cftalgf}[1]{\mathcal{F}_{#1}}
+\newcommand{\cfthomf}[1]{\mathcal{F}_{#1}}
+\newcommand{\cftalgt}[1]{\mathcal{T}_{#1}}
+\newcommand{\cfthomt}[1]{\mathcal{T}_{#1}}
 
 \newcommand{\cftext}[2][]{\epsilon_{#1}^{#2}}
 \newcommand{\cftctxext}[1]{\cftext[0]{#1}}
@@ -1030,6 +1038,11 @@
 \newcommand{\cftsubstt}[1]{\cftsubst[\mathsf{t}]{#1}}
 
 \newcommand{\cftidtm}[1]{\iota^{#1}}
+
+%%%% The family algebra
+\newcommand{\cftfamalg}[1]{\mathcal{F}_{#1}}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% THE CONSTRUCTORS OF THE TYPE THEORY OF MODELS

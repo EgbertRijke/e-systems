@@ -247,11 +247,19 @@ commutes judgmentally. Now we can confidently formulate the definition of
 extension algebras.
 
 \begin{defn}
-An \emph{extension algebra in context $\Gamma$} is a quadruple $(A,P,\epsilon_0,\epsilon_1)$
-consisting of a family $A$ over context $\Gamma$, a family $P$ over the context
-$\ctxext{\Gamma}{A}$, a morphism $\epsilon_0$ from $\ctxext{A}{P}$ to $A$ in context
-$\Gamma$ and a morphism $\epsilon_1$ from $\ctxext{P}{\jcomp{}{\epsilon_0}{P}}$ to $P$ in context
-$\ctxext{\Gamma}{A}$, satisfying the judgmental equalities of
+An \emph{extension algebra $\cftalg{A}$ in context $\Gamma$} is a quadruple 
+\begin{equation*}
+(\cftalgc{\cftalg{A}},\cftalgf{\cftalg{A}},\cftctxext{\cftalg{A}},\cftfamext{\cftalg{A}})
+\end{equation*}
+consisting of a family $\cftalgc{\cftalg{A}}$ over context $\Gamma$, 
+a family $\cftalgf{\cftalg{A}}$ over the context
+$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$,
+a morphism $\cftctxext{\cftalg{A}}$ from $\ctxext{\cftalgc{\cftalg{A}}}{
+\cftalgf{\cftalg{A}}}$ to $\cftalgc{\cftalg{A}}$ in context
+$\Gamma$ and a morphism $\cftfamext{\cftalg{A}}$ from 
+$\ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}$ 
+to $\cftalgf{\cftalg{A}}$ in context
+$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$, satisfying the judgmental equalities of
 \autoref{eq:extalg-eq1,eq:extalg-eq2}.
 \end{defn}
 
@@ -989,21 +997,65 @@ is a term-algebra in context $\Gamma$.
 \end{thm}
 
 \begin{defn}
-Let $\mathcal{A}$ and $\mathcal{B}$ be term-algebras in context $\Gamma$. 
-A term-operation from $\mathcal{A}$ to $\mathcal{B}$ is a triple $(f_0,f_1,f_2)$
+Let $\cftalg{A}$ and $\cftalg{B}$ be term-algebras in context $\Gamma$. 
+A term-operation $\cfthom{f}$ from $\cftalg{A}$ to $\cftalg{B}$ in context
+$\Gamma$ is a triple $(\cfthomc{\cfthom{f}},\cfthomf{\cfthom{f}},\cfthomt{\cfthom{f}})$
 consisting of
 \begin{align*}
-\jhom*{\Gamma}{A}{B}{f_0}
+\jhom*{\Gamma}{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{B}}}{\cfthomc{\cfthom{f}}}
   \\
-\jfhom*{\Gamma}{A}{B}{f_0}{P}{Q}{f_1}
+\jfhom*
+  {\Gamma}
+  {\cftalgc{\cftalg{A}}}
+  {\cftalgc{\cftalg{B}}}
+  {\cfthomc{\cfthom{f}}}
+  {\cftalgf{\cftalg{A}}}
+  {\cftalgf{\cftalg{B}}}
+  {\cfthomf{\cfthom{f}}}
   \\
-\jfhom*{\Gamma}{{A}{P}}{{B}{Q}}{\jvcomp{P}{f_0}{f_1}}{T}{U}{f_2}
+\jfhom*
+  {\Gamma}
+  {{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+  {{\cftalgc{\cftalg{B}}}{\cftalgf{\cftalg{B}}}}
+  {\jvcomp{\cftalgf{\cftalg{A}}}{\cfthomc{\cfthom{f}}}{\cfthomf{\cfthom{f}}}}
+  {\cftalgt{\cftalg{A}}}
+  {\cftalgt{\cftalg{B}}}
+  {\cfthomt{\cfthom{f}}}
 \end{align*}
-such that the pair $(f_0,f_1)$ is both an extension homomorphism from
-$(A,P,\epsilon_0,\epsilon_1)$ to $(B,Q,\eta_0,\eta_1)$ in context $\Gamma$
-and an empty homomorphism from $(A,P,\phi_0,\phi_1)$ to $(B,Q,\psi_0,\psi_1)$
+such that the pair $(\cfthomc{\cfthom{f}},\cfthomf{\cfthom{f}})$ is both an 
+extension homomorphism from
+$(\cftalgc{\cftalg{A}},\cftalgf{\cftalg{A}},\cftctxext{\cftalg{A}},\cftfamext{\cftalg{A}})$ 
+to 
+$(\cftalgc{\cftalg{B}},\cftalgf{\cftalg{B}},\cftctxext{\cftalg{B}},\cftfamext{\cftalg{B}})$ 
+in context $\Gamma$
+and an empty homomorphism from 
+$(\cftalgc{\cftalg{A}},\cftalgf{\cftalg{A}},\cftempc{\cftalg{A}},\cftempf{\cftalg{A}})$
+to
+$(\cftalgc{\cftalg{B}},\cftalgf{\cftalg{B}},\cftempc{\cftalg{B}},\cftempf{\cftalg{B}})$
 in context $\Gamma$.
 \end{defn}
+
+Thus, when $\cfthom{f}$ is a term-operation from $\cftalg{A}$ to $\cftalg{B}$, we are
+in the situation of the following judgmentally commutative diagram:
+\begin{equation*}
+\begin{tikzcd}
+\cftalgt{\cftalg{A}}
+  \ar[fib]{d}
+  \ar{r}{\cfthomt{\cfthom{f}}}
+& \cftalgt{\cftalg{B}}
+  \ar[fib]{d}
+  \\
+\cftalgf{\cftalg{A}}
+  \ar[fib]{d}
+  \ar{r}{\cfthomf{\cfthom{f}}}
+& \cftalgf{\cftalg{B}}
+  \ar[fib]{d}
+  \\
+\cftalgc{\cftalg{A}}
+  \ar{r}{\cfthomc{\cfthom{f}}}
+& \cftalgc{\cftalg{B}}
+\end{tikzcd}
+\end{equation*}
 
 \subsection{Weakening term-algebras}
 Weakening term-algebras will be term-algebras with certain added structure.
