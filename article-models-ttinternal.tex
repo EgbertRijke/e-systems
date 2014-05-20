@@ -956,13 +956,16 @@ requires that contexts and families are compatible. However, to model the
 theory of contexts, families and terms we do need to take terms into account.
 
 \begin{defn}
-A term-algebra in context $\Gamma$ is a septuple 
-$(A,P,T,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ such that the quadruple
-$(A,P,\epsilon_0,\epsilon_1)$ is an extension algebra in context $\Gamma$, 
-the quadruple $(A,P,\phi_0,\phi_1)$ is an empty algebra in context $\Gamma$,
+A term-algebra $\cftalg{A}$ in context $\Gamma$ is a septuple 
+\begin{equation*}
+\unfold{\cftalg{A}}
+\end{equation*}
+such that the quadruple
+$\unfold{\extalg{A}}$ is an extension algebra in context $\Gamma$, 
+the quadruple $\unfold{\empalg{A}}$ is an empty algebra in context $\Gamma$,
 for which we additionally have the following judgmental equality:
 \begin{align*}
-\jfameq*{{\Gamma}{A}}{\subst{\phi_1}{T}}{\emptyf}.
+\jfameq*{{\Gamma}{\cftalgc{\cftalg{A}}}}{\subst{\cftempf{\cftalg{A}}}{\cftalgt{\cftalg{A}}}}{\emptyf}.
 \end{align*}
 \end{defn}
 

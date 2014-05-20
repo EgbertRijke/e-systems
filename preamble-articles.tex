@@ -287,7 +287,11 @@
   \@ifnextchar\finc{\@eatdo{\finc@unfold}}{%
   \@ifnextchar\jvcomp{\@eatdo{\jvcomp@unfold}}{%
   \@ifnextchar\jfvcomp{\@eatdo{\jfvcomp@unfold}}{%
-  }}}}}}}}}}}}}}}}}}}%}}
+  \@ifnextchar\cftalg{\@eatdo{\cftalg@unfold}}{%
+  \@ifnextchar\cfthom{\@eatdo{\cfthom@unfold}}{%
+  \@ifnextchar\empalg{\@eatdo{\empalg@unfold}}{%
+  \@ifnextchar\extalg{\@eatdo{\extalg@unfold}}{%
+  }}}}}}}}}}}}}}}}}}}}}}}%}}
   #1}
 \makeatother
 
@@ -999,8 +1003,37 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% ALGEBRAS FOR THE THEORY OF CONTEXTS, FAMILIES AND TERMS
 
+\makeatletter
 \newcommand{\cftalg}{\mathbf}
+\newcommand{\cftalg@unfold}[1]{%
+  ( \cftalgc{\cftalg{#1}},
+    \cftalgf{\cftalg{#1}},
+    \cftalgt{\cftalg{#1}},
+    \cftctxext{\cftalg{#1}},
+    \cftfamext{\cftalg{#1}},
+    \cftempc{\cftalg{#1}},
+    \cftempf{\cftalg{#1}})
+  }
+\newcommand{\extalg}[1]{\mathbf{#1}}
+\newcommand{\extalg@unfold}[1]{%
+(\cftalgc{\extalg{#1}},
+    \cftalgf{\extalg{#1}},
+    \cftctxext{\extalg{#1}},
+    \cftfamext{\extalg{#1}})
+  }
+\newcommand{\empalg}[1]{\mathbf{#1}}
+\newcommand{\empalg@unfold}[1]{%
+  ( \cftalgc{\empalg{#1}},
+    \cftalgf{\empalg{#1}},
+    \cftempc{\empalg{#1}},
+    \cftempf{\empalg{#1}})
+  }
 \newcommand{\cfthom}{\mathbf}
+\newcommand{\cfthom@unfold}[1]{%
+  ( \cfthomc{\cfthom{#1}},
+    \cfthomf{\cfthom{#1}},
+    \cfthomt{\cfthom{#1}})
+  }
 
 %%%% The intended use of `\cftctx` is `\cftctx{\cftalg{#1}}`.
 \newcommand{\cftalgc}[1]{%
@@ -1041,6 +1074,7 @@
 
 %%%% The family algebra
 \newcommand{\cftfamalg}[1]{\mathcal{F}_{#1}}
+\makeatother
 
 
 
