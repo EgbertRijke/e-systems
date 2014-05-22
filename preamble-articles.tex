@@ -20,6 +20,12 @@
 \newcommand{\xmark}{\ding{55}\xspace}
 
 \usepackage{graphicx}
+\usepackage{caption}
+\usepackage{xcolor}
+
+\DeclareCaptionFormat{myformat}{#1#2#3{\color{black!20}\hrulefill}}
+\captionsetup[figure]{format=myformat}
+
 \usepackage{tikz-cd}
 \usepackage{tikz}
 \usetikzlibrary{decorations.pathmorphing}
