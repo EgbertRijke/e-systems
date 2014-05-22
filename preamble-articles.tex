@@ -23,7 +23,7 @@
 \usepackage{caption}
 \usepackage{xcolor}
 
-\DeclareCaptionFormat{myformat}{#1#2#3{\color{black!20}\hrulefill}}
+\DeclareCaptionFormat{myformat}{{\bf #1}#2#3{\color{black!20}\hrulefill}}
 \captionsetup[figure]{format=myformat}
 
 \usepackage{tikz-cd}
@@ -1079,10 +1079,11 @@
 \newcommand{\empalg}{\algfont}
 
 \newcommand{\empalg@unfold}[1]{%
-  ( \cftalgc{\algfont{#1}},
-    \cftalgf{\algfont{#1}},
-    \cftempc{\algfont{#1}},
-    \cftempf{\algfont{#1}})
+  ( \cftalgc{\cftalg{#1}},
+    \cftalgf{\cftalg{#1}},
+    \cftalgt{\cftalg{#1}},
+    \cftempc{\cftalg{#1}},
+    \cftempf{\cftalg{#1}})
   }
 
 \newcommand{\cfthom}{\algfont}

@@ -787,16 +787,163 @@ as displayed in \autoref{fig:empty-object-hom}, satisfying the judgmental equali
 $\cftalg{A}$ to $\cftalg{B}$ in context $\Gamma$.}
 \end{figure}
 
-Thus, the empty algebras are the kind of algebras that require that families
-are compatible with contexts, just as our motivation in \autoref{empty}. We
-now combine the notion of extension algebras and empty algebras.
+The following lemma presents a property of empty-object algebras that will get
+a lot of use.
 
-An extension-empty algebra in context $\Gamma$ is going to be a sextuple
-$(A,P,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ for which 
-the quadruple $(A,P,\epsilon_0,\epsilon_1)$ is an extension algebra in context 
-$\Gamma$, the quadruple $(A,P,\phi_0,\phi_1)$ is an empty algebra in context
+\begin{lem}\label{lem:empalg-mor}
+Consider an empty-object algebra $\cftalg{A}$ in context $\Gamma$
+and a morphism 
+\begin{equation*}
+\jhom{\Gamma}{{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{B}{f}.
+\end{equation*}
+Then $\subst{\cftemp[i]{\cftalg{A}}}{f}$ is a morphism from $\cftalgc{\cftalg{A}}$ to $B$ 
+in context $\Gamma$ and the following inference rules are valid for $i$ being 
+$\mathsf{c}$ or $\mathsf{f}$:
+\begin{align*}
+& \inference
+  { \jfam{{\Gamma}{\cftalgc{\cftalg{A}}}}{Q}
+    }
+  { \jfameq
+      {{\Gamma}{\cftalgc{\cftalg{A}}}}
+      {\subst{\cftemp[i]{\cftalg{A}}}{\jcomp{}{f}{Q}}}
+      {\jcomp{}{\subst{\cftemp[i]{\cftalg{A}}}{f}}{Q}}
+    }
+  \\
+& \inference
+  { \jfam{{{\Gamma}{\cftalgc{\cftalg{A}}}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\jcomp{}{\subst{\cftemp[i]{\cftalg{A}}}{f}}{Q}}}
+      {\subst{\cftemp[i]{\cftalg{A}}}{\jcomp{}{f}{R}}}
+      {\jcomp{}{\subst{\cftemp[i]{\cftalg{A}}}{f}}{R}}
+    }
+  \\
+& \inference
+  { \jterm{{{\Gamma}{\cftalgc{\cftalg{A}}}}{Q}}{R}{h}
+    }
+  { \jtermeq
+      {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\jcomp{}{\subst{\cftemp[i]{\cftalg{A}}}{f}}{Q}}}
+      {\jcomp{}{\subst{\cftemp[i]{\cftalg{A}}}{f}}{R}}
+      {\subst{\cftemp[i]{\cftalg{A}}}{\jcomp{}{f}{h}}}
+      {\jcomp{}{\subst{\cftemp[i]{\cftalg{A}}}{f}}{h}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+We only prove the first inference rule in both cases.
+Let $Q$ be a family over $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$. In the case 
+$i=\mathsf{c}$ we have the judgmental equalities
+\begin{align*}
+\subst{\cftempc{\cftalg{A}}}{\jcomp{}{f}{Q}}
+& \jdeq
+  \subst
+    {\cftempc{\cftalg{A}}}
+    {{f}{\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst
+    { {\cftempc{\cftalg{A}}}{f}
+      }
+    { {\cftempc{\cftalg{A}}}
+      {\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}
+      }
+  \tag{by \autoref{comp-ss-f}}
+  \\
+& \jdeq
+  \subst
+    { {\cftempc{\cftalg{A}}}{f}
+      }
+    { {\cftempc{\cftalg{A}}}
+      {\ctxwk{\cftalgf{\cftalg{A}}}{{\cftalgc{\cftalg{A}}}{Q}}}
+      }
+  \tag{by \autoref{comp-ew-f}}
+  \\
+& \jdeq
+  \subst
+    { {\cftempc{\cftalg{A}}}{f}
+      }
+    { \ctxwk
+        {\subst{\cftempc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+        {\subst{\cftempc{\cftalg{A}}}{\ctxwk{\cftalgc{\cftalg{A}}}{Q}}}
+      }
+  \tag{by \autoref{comp-sw-f}}
+  \\
+& \jdeq
+  \subst
+    { {\cftempc{\cftalg{A}}}{f}
+      }
+    { \ctxwk
+        {\subst{\cftempc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+        {Q}
+      }
+  \tag{by \autoref{cancellation-ws-f}}
+  \\
+& \jdeq
+  \subst{{\cftempc{\cftalg{A}}}{f}}{\ctxwk{\cftalgc{\cftalg{A}}}{Q}}
+  \tag{by \autoref{empalg-eq1}}
+  \\
+& \jdeq
+  \jcomp{}{\subst{\cftempc{\cftalg{A}}}{f}}{Q}.
+  \tag{by definition}
+\end{align*}
+In the case $i=\mathsf{f}$ we have the judgmental equalities
+\begin{align*}
+\subst{\cftempf{\cftalg{A}}}{\jcomp{}{f}{Q}}
+& \jdeq
+  \subst
+    { \cftempf{\cftalg{A}}
+      }
+    { {f}
+      {\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}
+      }
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst
+    { {\cftempf{\cftalg{A}}}{f}
+      }
+    { {\cftempf{\cftalg{A}}}
+      {\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}
+      }
+  \tag{by \autoref{comp-ss-f}}
+  \\
+& \jdeq
+  \subst
+    { {\cftempf{\cftalg{A}}}{f}
+      }
+    { {\cftempf{\cftalg{A}}}
+      {\ctxwk{\cftalgf{\cftalg{A}}}{{\cftalgc{\cftalg{A}}}{Q}}}
+      }
+  \tag{by \autoref{comp-ew-f}}
+  \\
+& \jdeq
+  \subst
+    { {\cftempf{\cftalg{A}}}{f}
+      }
+    { \ctxwk{\cftalgc{\cftalg{A}}}{Q}
+      }
+  \tag{by \autoref{cancellation-ws-f}}
+  \\
+& \jdeq
+  \jcomp{}{\subst{\cftempf{\cftalg{A}}}{f}}{Q}.
+  \tag{by definition}
+\end{align*}
+\end{proof}
+
+A term-algebra $\cftalg{A}$ in context $\Gamma$ is going to be a septuple
+\begin{equation*}
+(\cftalgc{\cftalg{A}},\cftalgf{\cftalg{A}},\cftalgt{\cftalg{A}},
+\cftctxext{\cftalg{A}},\cftfamext{\cftalg{A}},\cftempc{\cftalg{A}},
+\cftempf{\cftalg{A}})
+\end{equation*}
+for which 
+the quadruple $\unfold{\extalg{A}}$ is an extension algebra in context 
+$\Gamma$, the quintuple $\unfold{\empalg{A}}$ is an empty algebra in context
 $\Gamma$, satisfying additional judgmental equalities expressing the 
-compatibility of $\epsilon_0$ and $\epsilon_1$ with $\phi_0$ and $\phi_1$.
+compatibility of $\cftctxext{\cftalg{A}}$ and $\cftfamext{\cftalg{A}}$ with 
+$\cftempc{\cftalg{A}}$ and $\cftempf{\cftalg{A}}$.
 There will be five such judgmental equalities. Four of them will express that
 extension acts as the identity term when applied to the empty object in one of
 its arguments. The other expresses that extension of families restricted to
@@ -804,10 +951,10 @@ families above the empty object is the same as extension of contexts.
 
 We can immediately state the first two:
 \begin{align}
-\jtermeq*{{\Gamma}{A}}{\ctxwk{A}{A}}{\subst{\phi_0}{\epsilon_0}}{\idtm{A}}
+\jtermeq*{{\Gamma}{\cftalgc{\cftalg{A}}}}{\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}{\subst{\cftempc{\cftalg{A}}}{\cftctxext{\cftalg{A}}}}{\idtm{\cftalgc{\cftalg{A}}}}
   \label{extempalg-eq1}
   \\
-\jtermeq*{{\Gamma}{A}}{\ctxwk{A}{A}}{\subst{\phi_1}{\epsilon_0}}{\idtm{A}}
+\jtermeq*{{\Gamma}{\cftalgc{\cftalg{A}}}}{\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}{\subst{\cftempf{\cftalg{A}}}{\cftctxext{\cftalg{A}}}}{\idtm{\cftalgc{\cftalg{A}}}}
   \label{extempalg-eq2}
 \end{align}
 To see what $\subst{\phi_0}{\epsilon_1}$ can be, we must know its type first.
@@ -815,101 +962,6 @@ It is a morphism from $\subst{\phi_0}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}$ to
 $\subst{\phi_0}{P}$. We already know that $\subst{\phi_0}{P}\jdeq A$ by
 \autoref{empalg-eq1} and to compute $\subst{\phi_0}{\jcomp{}{\epsilon_0}{P}}$
 we use the following lemma.
-
-\begin{lem}\label{lem:empalg-mor}
-Consider an empty algebra $(A,P,\phi_0,\phi_1)$ in context $\Gamma$
-and a morphism $\jhom{\Gamma}{{A}{P}}{B}{f}$.
-Then $\subst{\phi_i}{f}$ is a morphism from $A$ to $B$ in context $\Gamma$ and
-the following inference rules are valid for $i$ being $0$ or $1$:
-\begin{align*}
-& \inference
-  { \jfam{{\Gamma}{A}}{Q}
-    }
-  { \jfameq
-      {{\Gamma}{A}}
-      {\subst{\phi_i}{\jcomp{}{f}{Q}}}
-      {\jcomp{}{\subst{\phi_i}{f}}{Q}}
-    }
-  \\
-& \inference
-  { \jfam{{{\Gamma}{A}}{Q}}{R}
-    }
-  { \jfameq
-      {{{\Gamma}{A}}{\jcomp{}{\subst{\phi_i}{f}}{Q}}}
-      {\subst{\phi_i}{\jcomp{}{f}{R}}}
-      {\jcomp{}{\subst{\phi_i}{f}}{R}}
-    }
-  \\
-& \inference
-  { \jterm{{{\Gamma}{A}}{Q}}{R}{h}
-    }
-  { \jtermeq
-      {{{\Gamma}{A}}{\jcomp{}{\subst{\phi_i}{f}}{Q}}}
-      {\jcomp{}{\subst{\phi_i}{f}}{R}}
-      {\subst{\phi_i}{\jcomp{}{f}{h}}}
-      {\jcomp{}{\subst{\phi_i}{f}}{h}}
-    }
-\end{align*}
-\end{lem}
-
-\begin{proof}
-We only prove the first inference rule in both cases.
-Let $Q$ be a family over $\ctxext{\Gamma}{A}$. In the case $i=0$
- we have the judgmental equalities
-\begin{align*}
-\subst{\phi_0}{\jcomp{}{f}{Q}}
-& \jdeq
-  \subst{\phi_0}{{f}{\ctxwk{\ctxext{A}{P}}{Q}}}
-  \tag{by definition}
-  \\
-& \jdeq
-  \subst{{\phi_0}{f}}{{\phi_0}{\ctxwk{\ctxext{A}{P}}{Q}}}
-  \tag{by \autoref{comp-ss-f}}
-  \\
-& \jdeq
-  \subst{{\phi_0}{f}}{{\phi_0}{\ctxwk{P}{{A}{Q}}}}
-  \tag{by \autoref{comp-ew-f}}
-  \\
-& \jdeq
-  \subst{{\phi_0}{f}}{\ctxwk{\subst{\phi_0}{P}}{\subst{\phi_0}{\ctxwk{A}{Q}}}}
-  \tag{by \autoref{comp-sw-f}}
-  \\
-& \jdeq
-  \subst{{\phi_0}{f}}{\ctxwk{\subst{\phi_0}{P}}{Q}}
-  \tag{by \autoref{cancellation-ws-f}}
-  \\
-& \jdeq
-  \subst{{\phi_0}{f}}{\ctxwk{A}{Q}}
-  \tag{by \autoref{empalg-eq1}}
-  \\
-& \jdeq
-  \jcomp{}{\subst{\phi_0}{f}}{Q}.
-  \tag{by definition}
-\end{align*}
-In the case $i=1$ we have the judgmental equalities
-\begin{align*}
-\subst{\phi_1}{\jcomp{}{f}{Q}}
-& \jdeq
-  \subst{\phi_1}{{f}{\ctxwk{\ctxext{A}{P}}{Q}}}
-  \tag{by definition}
-  \\
-& \jdeq
-  \subst{{\phi_1}{f}}{{\phi_1}{\ctxwk{\ctxext{A}{P}}{Q}}}
-  \tag{by \autoref{comp-ss-f}}
-  \\
-& \jdeq
-  \subst{{\phi_1}{f}}{{\phi_1}{\ctxwk{P}{{A}{Q}}}}
-  \tag{by \autoref{comp-ew-f}}
-  \\
-& \jdeq
-  \subst{{\phi_1}{f}}{\ctxwk{A}{Q}}
-  \tag{by \autoref{cancellation-ws-f}}
-  \\
-& \jdeq
-  \jcomp{}{\subst{\phi_1}{f}}{Q}.
-  \tag{by definition}
-\end{align*}
-\end{proof}
 
 As an immediate corollary, if we assume the judgmental equalities
 \autoref{extempalg-eq1,extempalg-eq2} we get that 
