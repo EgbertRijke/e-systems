@@ -41,7 +41,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% To include references in TOC we should use this package rather than a hack.
 \usepackage{tocbibind}
-%\usepackage{etoolbox}           % get \apptocmd
+\usepackage{etoolbox}           % get \apptocmd
 %\apptocmd{\thebibliography}{\addcontentsline{toc}{section}{References}}{}{} % tell bibliography to get itself into the table of contents
 
 
@@ -265,7 +265,46 @@
 
 %%%% The intention of '\unfoldnext' is to unfold only the definition of the
 %%%% next character, provided that it is in the list of unfoldable macros.
-\newcommand{\unfoldnext}[1]{
+\newcommand{\unfoldnext}[1]{%
+  \unfold@#1%
+}
+\newcommand*{\unfold@}[1]{%
+  \@ifundefined{unfold@@\detokenize{#1}}{#1}{%
+    \csname unfold@@\detokenize{#1}\endcsname
+  }%
+}
+\newcommand*{\unfold@def}[1]{%
+  \expandafter\def\csname unfold@@\detokenize{#1}\expandafter\endcsname
+  \expandafter{%
+    \csname\expandafter\@gobble\string#1@unfold\endcsname
+  }%
+}
+\unfold@def\jhom
+\unfold@def\jhomeq
+\unfold@def\jhomdefn
+\unfold@def\jfhom
+\unfold@def\jcomp
+\unfold@def\@jcomp@nested
+\unfold@def\@jcomp@parens
+\unfold@def\tmext
+\unfold@def\@tmext@nested
+\unfold@def\@tmext@parens
+\unfold@def\cprojfstf
+\unfold@def\cprojfst
+\unfold@def\cprojsndf
+\unfold@def\cprojsnd
+\unfold@def\jfcomp
+\unfold@def\sandwich
+\unfold@def\finc
+\unfold@def\jvcomp
+\unfold@def\jfvcomp
+\unfold@def\cftalg
+\unfold@def\cfthom
+\unfold@def\extalg
+\unfold@def\empalg
+
+\begin{comment}
+\newcommand{\unfoldnext}[1]{%
   \@ifnextchar\jhom{\@eatdo{\jhom@unfold}}{%
   \@ifnextchar\jhomeq{\@eatdo{\jhomeq@unfold}}{%
   \@ifnextchar\jhomdefn{\@eatdo{\jhomdefn@unfold}}{%
@@ -293,6 +332,7 @@
   \@ifnextchar\extalg{\@eatdo{\extalg@unfold}}{%
   }}}}}}}}}}}}}}}}}}}}}}}%}}
   #1}
+\end{comment}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1004,7 +1044,10 @@
 %%%% ALGEBRAS FOR THE THEORY OF CONTEXTS, FAMILIES AND TERMS
 
 \makeatletter
-\newcommand{\cftalg}{\mathbf}
+\newcommand{\algfont}{\mathbf}
+
+\newcommand{\cftalg}{\algfont}
+
 \newcommand{\cftalg@unfold}[1]{%
   ( \cftalgc{\cftalg{#1}},
     \cftalgf{\cftalg{#1}},
@@ -1014,21 +1057,29 @@
     \cftempc{\cftalg{#1}},
     \cftempf{\cftalg{#1}})
   }
-\newcommand{\extalg}[1]{\mathbf{#1}}
+  
+%%%% For some mysterious reason LaTeX confuses extalg and empalg when
+%%%% `\newcommand` is used rather than `\def`. I'm completely clueless about
+%%%% why this happens.
+\newcommand{\extalg}{\algfont}
+
 \newcommand{\extalg@unfold}[1]{%
-(\cftalgc{\extalg{#1}},
-    \cftalgf{\extalg{#1}},
-    \cftctxext{\extalg{#1}},
-    \cftfamext{\extalg{#1}})
+  (\cftalgc{\algfont{#1}},
+    \cftalgf{\algfont{#1}},
+    \cftctxext{\algfont{#1}},
+    \cftfamext{\algfont{#1}})
   }
-\newcommand{\empalg}[1]{\mathbf{#1}}
+
+\newcommand{\empalg}{\algfont}
+
 \newcommand{\empalg@unfold}[1]{%
-  ( \cftalgc{\empalg{#1}},
-    \cftalgf{\empalg{#1}},
-    \cftempc{\empalg{#1}},
-    \cftempf{\empalg{#1}})
+  ( \cftalgc{\algfont{#1}},
+    \cftalgf{\algfont{#1}},
+    \cftempc{\algfont{#1}},
+    \cftempf{\algfont{#1}})
   }
-\newcommand{\cfthom}{\mathbf}
+
+\newcommand{\cfthom}{\algfont}
 \newcommand{\cfthom@unfold}[1]{%
   ( \cfthomc{\cfthom{#1}},
     \cfthomf{\cfthom{#1}},
@@ -1036,11 +1087,7 @@
   }
 
 %%%% The intended use of `\cftctx` is `\cftctx{\cftalg{#1}}`.
-\newcommand{\cftalgc}[1]{%
-  { \renewcommand{\cftalg}[1]{##1}
-    #1
-    }
-  }
+\newcommand{\cftalgc}[1]{\@gobble #1}
 \newcommand{\cfthomc}[1]{%
   { \renewcommand{\cfthom}[1]{##1}
     #1
@@ -1057,20 +1104,20 @@
 \newcommand{\cftfamext}[1]{\cftext[1]{#1}}
 
 \newcommand{\cftemp}[2][]{\phi_{#1}^{#2}}
-\newcommand{\cftempc}[1]{\cftemp[\mathsf{c}]{#1}}
-\newcommand{\cftempf}[1]{\cftemp[\mathsf{f}]{#1}}
+\newcommand{\cftempc}{\cftemp[\mathsf{c}]}
+\newcommand{\cftempf}{\cftemp[\mathsf{f}]}
 
-\newcommand{\cftwk}[2][]{\omega_{#1}^{#2}}
-\newcommand{\cftwkc}[1]{\cftwk[\mathsf{c}]{#1}}
-\newcommand{\cftwkf}[1]{\cftwk[\mathsf{f}]{#1}}
-\newcommand{\cftwkt}[1]{\cftwk[\mathsf{t}]{#1}}
+\newcommand{\cftwk}[1]{\boldsymbol\omega^{#1}}
+\newcommand{\cftwkc}[1]{\omega^{#1}}
+\newcommand{\cftwkf}[1]{\mathcal{F}_{\omega^{#1}}}
+\newcommand{\cftwkt}[1]{\mathcal{T}_{\omega^{#1}}}
 
-\newcommand{\cftsubst}[2][]{\sigma_{#1}^{#2}}
+\newcommand{\cftsubst}[2][]{\boldsymbol\sigma_{#1}^{#2}}
 \newcommand{\cftsubstc}[1]{\cftsubst[\mathsf{c}]{#1}}
 \newcommand{\cftsubstf}[1]{\cftsubst[\mathsf{f}]{#1}}
 \newcommand{\cftsubstt}[1]{\cftsubst[\mathsf{t}]{#1}}
 
-\newcommand{\cftidtm}[1]{\iota^{#1}}
+\newcommand{\cftidtm}[1]{\boldsymbol\iota^{#1}}
 
 %%%% The family algebra
 \newcommand{\cftfamalg}[1]{\mathcal{F}_{#1}}

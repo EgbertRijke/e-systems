@@ -670,36 +670,122 @@ commutes.
 \end{rmk}
 \end{comment}
 
-\subsection{Extension-empty algebras}
+\subsection{Term-algebras}
+In studying extension algebras we had no need to consider terms. However, we
+do need to consider terms if we want a full interpretation of the theory of
+contexts, families and terms. Therefore, we shall now consider algebras where
+we have a further family 
+$\jfam{{{\Gamma}{A}}{\cftalgf{\cftalg{A}}}}{\cftalgt{\cftalg{A}}}$, assigning
+terms to families of $\cftalg{A}$. The notion of term-algebras that we will
+study in this subsection will also have an empty object $(\cftempc{\cftalg{A}},
+\cftempf{\cftalg{A}})$ and guarantiees that families over the empty object
+are just the terms of the underlying family $\cftalgc{\cftalg{A}}$ of contexts
+of the term-algebra $\cftalg{A}$. As with the theory of contexts, families and
+terms, this enables us to speak of terms of contexts of $\cftalg{A}$, and this
+will provide the categorical structure for $\cftalg{A}$ when we also consider
+internal weakening, substitution and identity terms.
+
 \begin{defn}
-Let $P$ be a family over the extended context $\ctxext{\Gamma}{A}$, let
-$\jterm{\Gamma}{A}{\phi_0}$ and $\jterm{{\Gamma}{A}}{P}{\phi_1}$ be terms. Then the
-quadruple $(A,P,\phi_0,\phi_1)$ is said to be an \emph{empty algebra in context $\Gamma$}
-if the following judgmental equalities hold:
+A quintuple $(\cftalgc{\cftalg{A}},\cftalgf{\cftalg{A}},\cftalgt{\cftalg{A}},
+\cftempc{\cftalg{A}},\cftempf{\cftalg{A}})$ consisting of
+\begin{enumerate}
+\item A family $\cftalgc{\cftalg{A}}$ in context $\Gamma$,
+\item A family $\cftalgf{\cftalg{A}}$ in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$,
+\item A family $\cftalgt{\cftalg{A}}$ in context $\ctxext{{\Gamma}{A}}{\cftalgf{\cftalg{A}}}$,
+\item A term $\cftempc{\cftalg{A}}$ of $\cftalgc{\cftalg{A}}$ in context $\Gamma$,
+\item A term $\cftempf{\cftalg{A}}$ of $\cftalgf{\cftalg{A}}$ in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$,
+\end{enumerate}
+is said to be an \emph{empty-object algebra in context $\Gamma$} if additionally
+the following judgmental equalities hold:
 \begin{align}
-\jfameq*{\Gamma}{\subst{\phi_0}{P}}{A}
+\jfameq*{\Gamma}{\subst{\cftempc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{\cftalgc{\cftalg{A}}}
   \label{empalg-eq1}
   \\
-\jtermeq*{\Gamma}{A}{\subst{\phi_0}{\phi_1}}{\phi_0}.
+\jtermeq*{\Gamma}{\cftalgc{\cftalg{A}}}{\subst{\cftempc{\cftalg{A}}}{\cftempf{\cftalg{A}}}}{\cftempc{\cftalg{A}}}.
   \label{empalg-eq2}
+  \\
+\jfameq*{{\Gamma}{\cftalgc{\cftalg{A}}}}{\subst{\cftempf{\cftalg{A}}}{\cftalgt{\cftalg{A}}}}{\emptyf}
 \end{align}
+When $(\cftalgc{\cftalg{A}},\cftalgf{\cftalg{A}},\cftalgt{\cftalg{A}},
+\cftempc{\cftalg{A}},\cftempf{\cftalg{A}})$ is an empty-object algebra
+in context $\Gamma$, we will
+also refer to the pair $(\cftempc{\cftalg{A}},\cftempf{\cftalg{A}})$ as the
+\emph{empty object of $\cftalg{A}$}.
 \end{defn}
 
 \begin{defn}
-Let $(A,P,\phi_0,\phi_1)$ and $(B,Q,\psi_0,\psi_1)$ be empty algebras in context
-$\Gamma$. An empty homomorphism from $(A,P,\phi_0,\phi_1)$ to $(B,Q,\psi_0,\psi_1)$
-is a pair $(f_0,f_1)$ consisting of
+Let $\cftalg{A}$ and $\cftalg{B}$ be empty-object algebras in context $\Gamma$.
+An \emph{empty-object homomorphism $\cfthom{f}$ from $\cftalg{A}$ to $\cftalg{B}$
+in context $\Gamma$} is a triple $(\cfthomc{\cfthom{f}},\cfthomf{\cfthom{f}},\cfthomt{\cfthom{f}})$ consisting of
 \begin{align*}
-\jhom*{\Gamma}{A}{B}{f_0}\\
-\jfhom*{\Gamma}{A}{B}{f}{P}{Q}{f_1}
+\jhom*
+  {\Gamma}
+  {\cftalgc{\cftalg{A}}}
+  {\cftalgc{\cftalg{B}}}
+  {\cfthomc{\cfthom{f}}}\\
+\jfhom*
+  {\Gamma}
+  {\cftalgc{\cftalg{A}}}
+  {\cftalgc{\cftalg{B}}}
+  {\cfthomc{\cfthom{f}}}
+  {\cftalgf{\cftalg{A}}}
+  {\cftalgf{\cftalg{B}}}
+  {\cfthomf{\cfthom{f}}}\\
+\jfhom*
+  {\Gamma}
+  {{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+  {{\cftalgc{\cftalg{B}}}{\cftalgf{\cftalg{B}}}}
+  {\jvcomp{\cftalgf{\cftalg{A}}}{\cfthomc{\cfthom{f}}}{\cfthomf{\cfthom{f}}}}
+  {\cftalgt{\cftalg{A}}}
+  {\cftalgt{\cftalg{B}}}
+  {\cfthomt{\cfthom{f}}}
 \end{align*}
-satisfying the judgmental equalities
+as displayed in \autoref{fig:empty-object-hom}, satisfying the judgmental equalities
 \begin{align*}
-\jtermeq*{\Gamma}{B}{\subst{\phi_0}{f_0}}{\psi_0}\\
-\jhomeq*{\Gamma}{A}{B}{\subst{\phi_0}{f_1}}{f_0}\\
-\jtermeq*{{\Gamma}{A}}{\jcomp{}{f_0}{Q}}{\subst{\phi_1}{f_1}}{\jcomp{}{f_0}{\psi_1}}.
+\jtermeq*
+  {\Gamma}
+  {\cftalgc{\cftalg{B}}}
+  {\subst{\cftemp{\cftalg{A}}}{\cfthomc{\cfthom{f}}}}
+  {\cftempc{\cftalg{B}}}
+  \\
+\jhomeq*
+  {\Gamma}
+  {\cftalgc{\cftalg{A}}}
+  {\cftalgc{\cftalg{B}}}
+  {\subst{\cftempc{\cftalg{A}}}{\cfthomf{\cfthom{f}}}}
+  {\cfthomc{\cfthom{f}}}
+  \\
+\jtermeq*
+  {{\Gamma}{\cftalgc{\cftalg{A}}}}
+  {\jcomp{\cftalgc{\cftalg{A}}}{\cfthomc{\cfthom{f}}}{\cftalgf{\cftalg{B}}}}
+  {\subst{\cftempf{\cftalg{A}}}{\cfthomf{\cfthom{f}}}}
+  {\jcomp{\cftalgc{\cftalg{A}}}{\cfthomc{\cfthom{f}}}{\cftempf{\cftalg{B}}}}.
 \end{align*}
 \end{defn}
+
+\begin{figure}
+\begin{equation*}
+\begin{tikzcd}
+\cftalgt{\cftalg{A}}
+  \ar[fib]{d}
+  \ar{r}{\cfthomt{\cfthom{f}}}
+& \cftalgt{\cftalg{B}}
+  \ar[fib]{d}
+  \\
+\cftalgf{\cftalg{A}}
+  \ar[fib]{d}
+  \ar{r}{\cfthomf{\cfthom{f}}}
+& \cftalgf{\cftalg{B}}
+  \ar[fib]{d}
+  \\
+\cftalgc{\cftalg{A}}
+  \ar{r}[swap]{\cfthomc{\cfthom{f}}}
+& \cftalgc{\cftalg{B}}
+\end{tikzcd}
+\end{equation*}
+\caption{\label{fig:empty-object-hom}The ingredients of an empty-object homomorphism $\cfthom{f}$ from 
+$\cftalg{A}$ to $\cftalg{B}$ in context $\Gamma$.}
+\end{figure}
 
 Thus, the empty algebras are the kind of algebras that require that families
 are compatible with contexts, just as our motivation in \autoref{empty}. We
@@ -961,7 +1047,7 @@ A term-algebra $\cftalg{A}$ in context $\Gamma$ is a septuple
 \unfold{\cftalg{A}}
 \end{equation*}
 such that the quadruple
-$\unfold{\extalg{A}}$ is an extension algebra in context $\Gamma$, 
+$\unfold{\extalg}{A}$ is an extension algebra in context $\Gamma$, 
 the quadruple $\unfold{\empalg{A}}$ is an empty algebra in context $\Gamma$,
 for which we additionally have the following judgmental equality:
 \begin{align*}
