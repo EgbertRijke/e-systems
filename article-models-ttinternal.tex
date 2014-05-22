@@ -32,21 +32,21 @@ formulation and it is (perhaps surprisingly) quite involved to formulate it.
 Let $P$ be a family over an extended context $\ctxext{\Gamma}{A}$. We could
 mimic extension by requiring to have terms
 \begin{align*}
-\jhom*{\Gamma}{{A}{P}}{A}{\epsilon_0}\\
-\jhom*{{\Gamma}{A}}{{P}{\jcomp{}{\epsilon_0}{P}}}{P}{\epsilon_1}.
+\jhom*{\Gamma}{{A}{P}}{A}{e_0}\\
+\jhom*{{\Gamma}{A}}{{P}{\jcomp{}{e_0}{P}}}{P}{e_1}.
 \end{align*}
 
 \begin{rmk}
-Instead of looking at $\epsilon_1$ as a context morphism from $\ctxext{P}{\jcomp{}{\epsilon_0}{P}}$
-to $P$, one could also look at $\epsilon_1$ as a morphism \emph{over $\cprojfstf{A}{P}$},
+Instead of looking at $e_1$ as a context morphism from $\ctxext{P}{\jcomp{}{e_0}{P}}$
+to $P$, one could also look at $e_1$ as a morphism \emph{over $\cprojfstf{A}{P}$},
 as indicated in the following diagram:
 \begin{equation*}
 \begin{tikzcd}
 P
   \ar[fib]{d}
-& \jcomp{}{\epsilon_0}{P}
+& \jcomp{}{e_0}{P}
   \ar[fib]{d}
-  \ar{l}[swap]{\epsilon_1}
+  \ar{l}[swap]{e_1}
   \ar{r}
 & P
   \ar[fib]{d}
@@ -54,47 +54,203 @@ P
 A
 & \ctxext{A}{P}
   \ar{l}{\cprojfstf{A}{P}}
-  \ar{r}[swap]{\epsilon_0}
+  \ar{r}[swap]{e_0}
 & A
 \end{tikzcd}
 \end{equation*}
-This makes it clear that $\epsilon_1$ takes a family over an extended context as an
+This makes it clear that $e_1$ takes a family over an extended context as an
 argument. The extended context consists of a `base part' and a `family part'. 
-The output of $\epsilon_1$ is a new (extended) family over that base part. Forgetting 
+The output of $e_1$ is a new (extended) family over that base part. Forgetting 
 the family part is what the projection takes care of.
 \end{rmk}
 
 Extension also satisfies the properties explained in \autoref{comp-ee}, so we
-must find the two judgmental equalities for $\epsilon_0$ and $\epsilon_1$ mimicing those. 
+must find the two judgmental equalities for $e_0$ and $e_1$ mimicing those. 
 The first of these judgmental equalities is easy to give: it says that the
 following diagram commutes:
 \begin{equation}\label{eq:extalg-eq1}
 \begin{tikzcd}[column sep=huge]
-\ctxext{A}{{P}{\jcomp{}{\epsilon_0}{P}}} 
-  \ar{d}[swap]{\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}
+\ctxext{A}{{P}{\jcomp{}{e_0}{P}}} 
+  \ar{d}[swap]{\jvcomp{}{e_0}{\idtm{\jcomp{}{e_0}{P}}}
     } 
-  \ar{r}{\jvcomp{}{\idtm{A}}{\epsilon_1}
+  \ar{r}{\jvcomp{}{\idtm{A}}{e_1}
     } 
-  & \ctxext{A}{P} \ar{d}{\epsilon_0}\\
-\ctxext{A}{P} \ar{r}[swap]{\epsilon_0} & A
+  & \ctxext{A}{P} \ar{d}{e_0}\\
+\ctxext{A}{P} \ar{r}[swap]{e_0} & A
 \end{tikzcd}
 \end{equation}
-To get a feel for this judgmental equality we include the following lemma.
 
-\begin{lem}
-Let $A$, $P$, $\epsilon_0$ and $\epsilon_1$ be as above, satisfying \autoref{eq:extalg-eq1} and
-let $x_0:A$,
-$x_1:\subst{x_0}{P}$ and $x_2:\subst{x_1}{{x_0}{\jcomp{}{\epsilon_0}{P}}}$.
-Then we have the judgmental equality
+The second of the judgmental equalities is harder to describe, however. We need
+to consider `higher' families, i.e.~families over families over families, and
+thus we need to look at the family $\jcomp{}{e_0}{\jcomp{}{e_0}{P}}$ and find the
+two dotted morphisms in the diagram
 \begin{equation*}
-\subst{{x_2}{{x_1}{\epsilon_1}}}{{x_0}{\epsilon_0}}
-\jdeq
-\subst{x_2}{{{x_1}{{x_0}{\epsilon_0}}}{\epsilon_0}}.
+\begin{tikzcd}
+\ctxext{P}{{\jcomp{}{e_0}{P}}{\jcomp{}{e_0}{\jcomp{}{e_0}{P}}}}
+  \ar[densely dotted]{d}
+  \ar[densely dotted]{r}
+& \ctxext{P}{\jcomp{}{e_0}{P}} \ar{d}{e_1}\\
+\ctxext{P}{\jcomp{}{e_0}{P}} \ar{r}{e_1} & P
+\end{tikzcd}
 \end{equation*}
+The first is easy to find. Note that we have the judgmental equality
+\begin{equation*}
+\ctxext{\jcomp{}{e_0}{P}}{\jcomp{}{e_0}{\jcomp{}{e_0}{P}}}
+  \jdeq
+  \jcomp{}{e_0}{\ctxext{P}{\jcomp{}{e_0}{P}}}
+\end{equation*}
+and therefore we may just take the morphism
+\begin{equation*}
+\jhom
+  {{\Gamma}{A}}
+  {{P}{{\jcomp{}{e_0}{P}}{\jcomp{}{e_0}{\jcomp{}{e_0}{P}}}}}
+  {{P}{\jcomp{}{e_0}{P}}}
+  {\jvcomp{}{\idtm{P}}{\jcomp{}{e_0}{e_1}}}.
+\end{equation*}
+For the other morphism we need to look at the family
+$\ctxext{P}{{\jcomp{}{e_0}{P}}{\jcomp{}{e_0}{\jcomp{}{e_0}{P}}}}$ differently. We do
+that in the following lemma.
+
+\begin{lem}\label{lem:extalg-twins}
+Suppose we have $A$, $P$, $e_0$ and $e_1$ satisfying \autoref{eq:extalg-eq1}. Then
+the inference rules
+\begin{align*}
+& \inference
+  { \jfam{{\Gamma}{A}}{Q}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{P}}{\jcomp{}{e_0}{P}}}
+      {\jcomp{}{e_0}{\jcomp{}{e_0}{Q}}}
+      {\jcomp{}{e_1}{\jcomp{}{e_0}{Q}}}
+    }
+  \\
+& \inference
+  { \jfam{{{\Gamma}{A}}{Q}}{R}
+    }
+  { \jfameq
+      {{{{{\Gamma}{A}}{P}}{\jcomp{}{e_0}{P}}}
+        {\jcomp{}{e_0}{\jcomp{}{e_0}{Q}}}}
+      {\jcomp{}{e_0}{\jcomp{}{e_0}{R}}}
+      {\jcomp{}{e_1}{\jcomp{}{e_0}{R}}}
+    }
+  \\
+& \inference
+  { \jterm{{{\Gamma}{A}}{Q}}{R}{h}
+    }
+  { \jtermeq
+      {{{{{\Gamma}{A}}{P}}{\jcomp{}{e_0}{P}}}
+        {\jcomp{}{e_0}{\jcomp{}{e_0}{Q}}}}
+      {\jcomp{}{e_0}{\jcomp{}{e_0}{R}}}
+      {\jcomp{}{e_0}{\jcomp{}{e_0}{h}}}
+      {\jcomp{}{e_1}{\jcomp{}{e_0}{h}}}
+    }
+\end{align*}
+are valid.
 \end{lem}
 
 \begin{proof}
-The proof is a simple computation:
+We only prove the first inference rule. Let $\jfam{{\Gamma}{A}}{Q}$ be a family.
+Then we have the judgmental equalities
+\begin{align*}
+\jcomp{}{e_0}{\jcomp{}{e_0}{Q}}
+& \jdeq
+  \jcomp{}{\idtm{\jcomp{}{e_0}{P}}}{\jcomp{}{e_0}{\jcomp{}{e_0}{Q}}}
+  \tag{by \autoref{idfunc-precomp}}
+  \\
+& \jdeq
+  \jcomp{}{\jvcomp{}{e_0}{\idtm{\jcomp{}{e_0}{P}}}}{\jcomp{}{e_0}{Q}}
+  \tag{by \autoref{lem:composition-threesome}}
+  \\
+& \jdeq
+  \jcomp{}{\jcomp{}{\jvcomp{}{e_0}{\idtm{\jcomp{}{e_0}{P}}}}{e_0}}{Q}
+  \tag{by \autoref{lem:jcomp-jcomp}}
+  \\
+& \jdeq
+  \jcomp{}{\jcomp{}{\jvcomp{}{\idtm{A}}{e_1}}{e_0}}{Q}
+  \tag{by \autoref{eq:extalg-eq1}}
+  \\
+& \jdeq
+  \jcomp{}{\jvcomp{}{\idtm{A}}{e_1}}{\jcomp{}{e_0}{Q}}
+  \tag{by \autoref{lem:jcomp-jcomp}}
+  \\
+& \jdeq
+  \jcomp{}{e_1}{\jcomp{}{\idtm{A}}{\jcomp{}{e_0}{Q}}}
+  \tag{by \autoref{lem:composition-threesome}}
+  \\
+& \jdeq
+  \jcomp{}{e_1}{\jcomp{}{e_0}{Q}}.
+  \tag{by \autoref{idfunc-precomp}}
+\end{align*}
+\end{proof}
+
+Now we see that we can use the morphism
+\begin{equation*}
+\jhom
+  {{\Gamma}{A}}
+  {{P}{{\jcomp{}{e_0}{P}}{\jcomp{}{e_1}{{}{e_0}{P}}}}}
+  {{P}{\jcomp{}{e_0}{P}}}
+  {\jvcomp{}{e_1}{\idtm{\jcomp{}{e_1}{{}{e_0}{P}}}}}.
+\end{equation*}
+Thus, the second judgmental equality we will need is that the diagram
+\begin{equation}\label{eq:extalg-eq2}
+\begin{tikzcd}[column sep=huge]
+\ctxext{P}{{\jcomp{}{e_0}{P}}{\jcomp{}{e_0}{{}{e_0}{P}}}} 
+  \ar{r}{\jvcomp{}{\idtm{P}}{\jcomp{}{e_0}{e_1}}}
+  \ar{d}[swap]{
+    \jvcomp{}{e_1}{\idtm{\jcomp{}{e_1}{{}{e_0}{P}}}}
+    }
+& \ctxext{P}{\jcomp{}{e_0}{P}} \ar{d}{e_1}\\
+\ctxext{P}{\jcomp{}{e_0}{P}} \ar{r}[swap]{e_1} & P
+\end{tikzcd}
+\end{equation}
+commutes judgmentally. Now we can confidently formulate the definition of
+extension algebras.
+
+\begin{defn}
+An \emph{extension algebra $\extalg{A}$ in context $\Gamma$} is a quadruple 
+\begin{equation*}
+\unfold{\extalg{A}}
+\end{equation*}
+consisting of a family $\cftalgc{\cftalg{A}}$ over context $\Gamma$, 
+a family $\cftalgf{\cftalg{A}}$ over the context
+$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$,
+a morphism $\cftctxext{\cftalg{A}}$ from $\ctxext{\cftalgc{\cftalg{A}}}{
+\cftalgf{\cftalg{A}}}$ to $\cftalgc{\cftalg{A}}$ in context
+$\Gamma$ and a morphism $\cftfamext{\cftalg{A}}$ from 
+$\ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}$ 
+to $\cftalgf{\cftalg{A}}$ in context
+$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$, satisfying the judgmental equalities of
+\autoref{eq:extalg-eq1,eq:extalg-eq2}.
+\end{defn}
+
+The following lemma both provides intuition behind the judgmental equalities
+we have required for context and family extension and it proves that context 
+and family extension in fact satisfy the compatibility rules stated in 
+\autoref{comp-ee}. 
+
+\begin{lem}
+Let $\extalg{A}$ be an extension algebra in context $\Gamma$.
+Then $\cftctxext{\extalg{A}}$ and $\cftfamext{\extalg{A}}$ 
+correctly interpret the rules for context
+extension and family extension. 
+
+More precisely, for $x_0:\cftalgc{\cftalg{A}}$, $x_1:\subst{x_0}{\cftalgf{\cftalg{A}}}$ and 
+$x_2:\subst{{x_1}{{x_0}{\cftctxext{\extalg{A}}}}}{\cftalgf{\cftalg{A}}}$ we have the judgmental equality
+\begin{align*}
+\subst{{x_2}{{x_1}{\cftfamext{\extalg{A}}}}}{{x_0}{\cftctxext{\extalg{A}}}}
+& \jdeq
+\subst{x_2}{{{x_1}{{x_0}{\cftctxext{\extalg{A}}}}}{\cftctxext{\extalg{A}}}}.
+\intertext{and for $y_0:\cftalgf{\extalg{A}}$, $y_1:\subst{y_0}{\jcomp{}{\cftctxext{\extalg{A}}}{\cftalgf{\extalg{A}}}}$ and 
+$y_2:\subst{y_1}{{y_0}{\jcomp{}{\cftctxext{\extalg{A}}}{\jcomp{}{\cftctxext{\extalg{A}}}{\cftalgf{\extalg{A}}}}}}$
+we have the judgmental equality}
+\subst{{y_2}{{y_1}{\jcomp{}{\cftctxext{\extalg{A}}}{\cftfamext{\extalg{A}}}}}}{{y_0}{\cftfamext{\extalg{A}}}}
+& \jdeq
+  \subst{y_2}{{{y_1}{{y_0}{\cftfamext{\extalg{A}}}}}{\cftfamext{\extalg{A}}}}.
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Both proofs are simple calculations. For the first judgmental equality we have
 \begin{align*}
 \subst{{x_2}{{x_1}{\epsilon_1}}}{{x_0}{\epsilon_0}}
 & \jdeq
@@ -116,170 +272,9 @@ The proof is a simple computation:
   \subst{\tmext{\subst{x_1}{{x_0}{\epsilon_0}}}{x_2}}{\epsilon_0}
   \\
 & \jdeq
-  \subst{x_2}{{{x_1}{{x_0}{\epsilon_0}}}{\epsilon_0}}.\qedhere
+  \subst{x_2}{{{x_1}{{x_0}{\epsilon_0}}}{\epsilon_0}}.
 \end{align*}
-\end{proof}
-
-The second of the judgmental equalities is harder to describe, however. We need
-to consider `higher' families, i.e.~families over families over families, and
-thus we need to look at the family $\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}$ and find the
-two dotted morphisms in the diagram
-\begin{equation*}
-\begin{tikzcd}
-\ctxext{P}{{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}
-  \ar[densely dotted]{d}
-  \ar[densely dotted]{r}
-& \ctxext{P}{\jcomp{}{\epsilon_0}{P}} \ar{d}{\epsilon_1}\\
-\ctxext{P}{\jcomp{}{\epsilon_0}{P}} \ar{r}{\epsilon_1} & P
-\end{tikzcd}
-\end{equation*}
-The first is easy to find. Note that we have the judgmental equality
-\begin{equation*}
-\ctxext{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
-  \jdeq
-  \jcomp{}{\epsilon_0}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}
-\end{equation*}
-and therefore we may just take the morphism
-\begin{equation*}
-\jhom
-  {{\Gamma}{A}}
-  {{P}{{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}}
-  {{P}{\jcomp{}{\epsilon_0}{P}}}
-  {\jvcomp{}{\idtm{P}}{\jcomp{}{\epsilon_0}{\epsilon_1}}}.
-\end{equation*}
-For the other morphism we need to look at the family
-$\ctxext{P}{{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}$ differently. We do
-that in the following lemma.
-
-\begin{lem}\label{lem:extalg-twins}
-Suppose we have $A$, $P$, $\epsilon_0$ and $\epsilon_1$ satisfying \autoref{eq:extalg-eq1}. Then
-the inference rules
-\begin{align*}
-& \inference
-  { \jfam{{\Gamma}{A}}{Q}
-    }
-  { \jfameq
-      {{{{\Gamma}{A}}{P}}{\jcomp{}{\epsilon_0}{P}}}
-      {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{Q}}}
-      {\jcomp{}{\epsilon_1}{\jcomp{}{\epsilon_0}{Q}}}
-    }
-  \\
-& \inference
-  { \jfam{{{\Gamma}{A}}{Q}}{R}
-    }
-  { \jfameq
-      {{{{{\Gamma}{A}}{P}}{\jcomp{}{\epsilon_0}{P}}}
-        {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{Q}}}}
-      {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{R}}}
-      {\jcomp{}{\epsilon_1}{\jcomp{}{\epsilon_0}{R}}}
-    }
-  \\
-& \inference
-  { \jterm{{{\Gamma}{A}}{Q}}{R}{h}
-    }
-  { \jtermeq
-      {{{{{\Gamma}{A}}{P}}{\jcomp{}{\epsilon_0}{P}}}
-        {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{Q}}}}
-      {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{R}}}
-      {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{h}}}
-      {\jcomp{}{\epsilon_1}{\jcomp{}{\epsilon_0}{h}}}
-    }
-\end{align*}
-are valid.
-\end{lem}
-
-\begin{proof}
-We only prove the first inference rule. Let $\jfam{{\Gamma}{A}}{Q}$ be a family.
-Then we have the judgmental equalities
-\begin{align*}
-\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{Q}}
-& \jdeq
-  \jcomp{}{\idtm{\jcomp{}{\epsilon_0}{P}}}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{Q}}}
-  \tag{by \autoref{idfunc-precomp}}
-  \\
-& \jdeq
-  \jcomp{}{\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}{\jcomp{}{\epsilon_0}{Q}}
-  \tag{by \autoref{lem:composition-threesome}}
-  \\
-& \jdeq
-  \jcomp{}{\jcomp{}{\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}{\epsilon_0}}{Q}
-  \tag{by \autoref{lem:jcomp-jcomp}}
-  \\
-& \jdeq
-  \jcomp{}{\jcomp{}{\jvcomp{}{\idtm{A}}{\epsilon_1}}{\epsilon_0}}{Q}
-  \tag{by \autoref{eq:extalg-eq1}}
-  \\
-& \jdeq
-  \jcomp{}{\jvcomp{}{\idtm{A}}{\epsilon_1}}{\jcomp{}{\epsilon_0}{Q}}
-  \tag{by \autoref{lem:jcomp-jcomp}}
-  \\
-& \jdeq
-  \jcomp{}{\epsilon_1}{\jcomp{}{\idtm{A}}{\jcomp{}{\epsilon_0}{Q}}}
-  \tag{by \autoref{lem:composition-threesome}}
-  \\
-& \jdeq
-  \jcomp{}{\epsilon_1}{\jcomp{}{\epsilon_0}{Q}}.
-  \tag{by \autoref{idfunc-precomp}}
-\end{align*}
-\end{proof}
-
-Now we see that we can use the morphism
-\begin{equation*}
-\jhom
-  {{\Gamma}{A}}
-  {{P}{{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_1}{{}{\epsilon_0}{P}}}}}
-  {{P}{\jcomp{}{\epsilon_0}{P}}}
-  {\jvcomp{}{\epsilon_1}{\idtm{\jcomp{}{\epsilon_1}{{}{\epsilon_0}{P}}}}}.
-\end{equation*}
-Thus, the second judgmental equality we will need is that the diagram
-\begin{equation}\label{eq:extalg-eq2}
-\begin{tikzcd}[column sep=huge]
-\ctxext{P}{{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_0}{{}{\epsilon_0}{P}}}} 
-  \ar{r}{\jvcomp{}{\idtm{P}}{\jcomp{}{\epsilon_0}{\epsilon_1}}}
-  \ar{d}[swap]{
-    \jvcomp{}{\epsilon_1}{\idtm{\jcomp{}{\epsilon_1}{{}{\epsilon_0}{P}}}}
-    }
-& \ctxext{P}{\jcomp{}{\epsilon_0}{P}} \ar{d}{\epsilon_1}\\
-\ctxext{P}{\jcomp{}{\epsilon_0}{P}} \ar{r}[swap]{\epsilon_1} & P
-\end{tikzcd}
-\end{equation}
-commutes judgmentally. Now we can confidently formulate the definition of
-extension algebras.
-
-\begin{defn}
-An \emph{extension algebra $\cftalg{A}$ in context $\Gamma$} is a quadruple 
-\begin{equation*}
-(\cftalgc{\cftalg{A}},\cftalgf{\cftalg{A}},\cftctxext{\cftalg{A}},\cftfamext{\cftalg{A}})
-\end{equation*}
-consisting of a family $\cftalgc{\cftalg{A}}$ over context $\Gamma$, 
-a family $\cftalgf{\cftalg{A}}$ over the context
-$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$,
-a morphism $\cftctxext{\cftalg{A}}$ from $\ctxext{\cftalgc{\cftalg{A}}}{
-\cftalgf{\cftalg{A}}}$ to $\cftalgc{\cftalg{A}}$ in context
-$\Gamma$ and a morphism $\cftfamext{\cftalg{A}}$ from 
-$\ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}$ 
-to $\cftalgf{\cftalg{A}}$ in context
-$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$, satisfying the judgmental equalities of
-\autoref{eq:extalg-eq1,eq:extalg-eq2}.
-\end{defn}
-
-We also give a bit of intuition to the requirement of \autoref{eq:extalg-eq2} by
-means of the following lemma.
-
-\begin{lem}
-Let $(A,P,\epsilon_0,\epsilon_1)$ be an extension algebra in context $\Gamma$ and let
-$y_0:P$, $y_1:\subst{y_0}{\jcomp{}{\epsilon_0}{P}}$ and 
-$y_2:\subst{y_1}{{y_0}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}$. Then we have the
-judgmental equality
-\begin{equation*}
-\subst{{y_2}{{y_1}{\jcomp{}{\epsilon_0}{\epsilon_1}}}}{{y_0}{\epsilon_1}}
-  \jdeq
-  \subst{y_2}{{{y_1}{{y_0}{\epsilon_1}}}{\epsilon_1}}
-\end{equation*}
-\end{lem}
-
-\begin{proof}
-The proof is a straightforward calculation:
+and to prove the second judgmental equality we calculate
 \begin{align*}
 \subst{{y_2}{{y_1}{\jcomp{}{\epsilon_0}{\epsilon_1}}}}{{y_0}{\epsilon_1}}
 & \jdeq
