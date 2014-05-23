@@ -1058,8 +1058,8 @@
   ( \cftalgc{\cftalg{#1}},
     \cftalgf{\cftalg{#1}},
     \cftalgt{\cftalg{#1}},
-    \cftctxext{\cftalg{#1}},
-    \cftfamext{\cftalg{#1}},
+    \cftctxext[\cftalg{#1}],
+    \cftfamext[\cftalg{#1}],
     \cftempc{\cftalg{#1}},
     \cftempf{\cftalg{#1}})
   }
@@ -1072,8 +1072,8 @@
 \newcommand{\extalg@unfold}[1]{%
   (\cftalgc{\algfont{#1}},
     \cftalgf{\algfont{#1}},
-    \cftctxext{\algfont{#1}},
-    \cftfamext{\algfont{#1}})
+    \cftctxext[\algfont{#1}],
+    \cftfamext[\algfont{#1}])
   }
 
 \newcommand{\empalg}{\algfont}
@@ -1107,8 +1107,8 @@
 \newcommand{\cfthomt}[1]{\mathcal{T}_{#1}}
 
 \newcommand{\cftext}[2][]{\epsilon_{#1}^{#2}}
-\newcommand{\cftctxext}[1]{\cftext[0]{#1}}
-\newcommand{\cftfamext}[1]{\cftext[1]{#1}}
+\newcommand{\cftctxext}[1][]{\cftext[0]{#1}}
+\newcommand{\cftfamext}[1][]{\cftext[1]{#1}}
 
 \newcommand{\cftemp}[2][]{\phi_{#1}^{#2}}
 \newcommand{\cftempc}{\cftemp[\mathsf{c}]}

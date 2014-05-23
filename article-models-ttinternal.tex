@@ -214,10 +214,10 @@ An \emph{extension algebra $\extalg{A}$ in context $\Gamma$} is a quadruple
 consisting of a family $\cftalgc{\cftalg{A}}$ over context $\Gamma$, 
 a family $\cftalgf{\cftalg{A}}$ over the context
 $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$,
-a morphism $\cftctxext{\cftalg{A}}$ from $\ctxext{\cftalgc{\cftalg{A}}}{
+a morphism $\cftctxext[\cftalg{A}]$ from $\ctxext{\cftalgc{\cftalg{A}}}{
 \cftalgf{\cftalg{A}}}$ to $\cftalgc{\cftalg{A}}$ in context
-$\Gamma$ and a morphism $\cftfamext{\cftalg{A}}$ from 
-$\ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}$ 
+$\Gamma$ and a morphism $\cftfamext[\cftalg{A}]$ from 
+$\ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}$ 
 to $\cftalgf{\cftalg{A}}$ in context
 $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$, satisfying the judgmental equalities of
 \autoref{eq:extalg-eq1,eq:extalg-eq2}.
@@ -230,65 +230,83 @@ and family extension in fact satisfy the compatibility rules stated in
 
 \begin{lem}
 Let $\extalg{A}$ be an extension algebra in context $\Gamma$.
-Then $\cftctxext{\extalg{A}}$ and $\cftfamext{\extalg{A}}$ 
+Then $\cftctxext[\extalg{A}]$ and $\cftfamext[\extalg{A}]$ 
 correctly interpret the rules for context
 extension and family extension. 
 
-More precisely, for $x_0:\cftalgc{\cftalg{A}}$, $x_1:\subst{x_0}{\cftalgf{\cftalg{A}}}$ and 
-$x_2:\subst{{x_1}{{x_0}{\cftctxext{\extalg{A}}}}}{\cftalgf{\cftalg{A}}}$ we have the judgmental equality
+More precisely, for $x_0:\cftalgc{\cftalg{A}}$, 
+$x_1:\subst{x_0}{\cftalgf{\cftalg{A}}}$ and 
+$x_2:\subst{{x_1}{{x_0}{\cftctxext[\extalg{A}]}}}{\cftalgf{\cftalg{A}}}$ 
+we have the judgmental equality
 \begin{align*}
-\subst{{x_2}{{x_1}{\cftfamext{\extalg{A}}}}}{{x_0}{\cftctxext{\extalg{A}}}}
+\subst{{x_2}{{x_1}{\cftfamext[\extalg{A}]}}}{{x_0}{\cftfamext[\extalg{A}]}}
 & \jdeq
-\subst{x_2}{{{x_1}{{x_0}{\cftctxext{\extalg{A}}}}}{\cftctxext{\extalg{A}}}}.
-\intertext{and for $y_0:\cftalgf{\extalg{A}}$, $y_1:\subst{y_0}{\jcomp{}{\cftctxext{\extalg{A}}}{\cftalgf{\extalg{A}}}}$ and 
-$y_2:\subst{y_1}{{y_0}{\jcomp{}{\cftctxext{\extalg{A}}}{\jcomp{}{\cftctxext{\extalg{A}}}{\cftalgf{\extalg{A}}}}}}$
+  \subst
+    {x_2}
+    {{{x_1}{{x_0}{\cftfamext[\extalg{A}]}}}{\cftfamext[\extalg{A}]}}.
+  \intertext{%
+and for $y_0:\cftalgf{\extalg{A}}$, 
+$y_1:\subst{y_0}{\jcomp{}{\cftfamext[\extalg{A}]}{\cftalgf{\extalg{A}}}}$ and 
+$y_2:
+  \subst
+    {y_1}
+    { {y_0}
+      { \jcomp
+          {}
+          {\cftfamext[\extalg{A}]}
+          {\jcomp{}{\cftfamext[\extalg{A}]}{\cftalgf{\extalg{A}}}}
+        }
+      }
+$
 we have the judgmental equality}
-\subst{{y_2}{{y_1}{\jcomp{}{\cftctxext{\extalg{A}}}{\cftfamext{\extalg{A}}}}}}{{y_0}{\cftfamext{\extalg{A}}}}
+\subst
+  {{y_2}{{y_1}{\jcomp{}{\cftfamext[\extalg{A}]}{\cftfamext[\extalg{A}]}}}}
+  {{y_0}{\cftfamext[\extalg{A}]}}
 & \jdeq
-  \subst{y_2}{{{y_1}{{y_0}{\cftfamext{\extalg{A}}}}}{\cftfamext{\extalg{A}}}}.
+  \subst{y_2}{{{y_1}{{y_0}{\cftfamext[\extalg{A}]}}}{\cftfamext[\extalg{A}]}}.
 \end{align*}
 \end{lem}
 
 \begin{proof}
 Both proofs are simple calculations. For the first judgmental equality we have
 \begin{align*}
-\subst{{x_2}{{x_1}{\epsilon_1}}}{{x_0}{\epsilon_0}}
+\subst{{x_2}{{x_1}{\cftfamext[\cftalg{A}]}}}{{x_0}{\cftctxext[\cftalg{A}]}}
 & \jdeq
-  \subst{\tmext{x_0}{\subst{x_2}{{x_1}{\epsilon_1}}}}{\epsilon_0}
+  \subst{\tmext{x_0}{\subst{x_2}{{x_1}{\cftfamext[\cftalg{A}]}}}}{\cftctxext[\cftalg{A}]}
   \\
 & \jdeq 
-  \subst{{x_2}{{x_1}{{x_0}{\jvcomp{}{\idtm{A}}{\epsilon_1}}}}}{\epsilon_0}
+  \subst{{x_2}{{x_1}{{x_0}{\jvcomp{}{\idtm{\cftalgc{\cftalg{A}}}}{\cftfamext[\cftalg{A}]}}}}}{\cftctxext[\cftalg{A}]}
   \\
 & \jdeq
-  \subst{x_2}{{x_1}{{x_0}{\jcomp{}{\jvcomp{}{\idtm{A}}{\epsilon_1}}{\epsilon_0}}}}
+  \subst{x_2}{{x_1}{{x_0}{\jcomp{}{\jvcomp{}{\idtm{\cftalgc{\cftalg{A}}}}{\cftfamext[\cftalg{A}]}}{\cftctxext[\cftalg{A}]}}}}
   \\
 & \jdeq
-  \subst{x_2}{{x_1}{{x_0}{\jcomp{}{\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}{\epsilon_0}}}}
+  \subst{x_2}{{x_1}{{x_0}{\jcomp{}{\jvcomp{}{\cftctxext[\cftalg{A}]}{\idtm{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}}}{\cftctxext[\cftalg{A}]}}}}
   \\
 & \jdeq 
-  \subst{{x_2}{{x_1}{{x_0}{\jvcomp{}{\epsilon_0}{\idtm{\jcomp{}{\epsilon_0}{P}}}}}}}{\epsilon_0}
+  \subst{{x_2}{{x_1}{{x_0}{\jvcomp{}{\cftctxext[\cftalg{A}]}{\idtm{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}}}}}}{\cftctxext[\cftalg{A}]}
   \\
 & \jdeq
-  \subst{\tmext{\subst{x_1}{{x_0}{\epsilon_0}}}{x_2}}{\epsilon_0}
+  \subst{\tmext{\subst{x_1}{{x_0}{\cftctxext[\cftalg{A}]}}}{x_2}}{\cftctxext[\cftalg{A}]}
   \\
 & \jdeq
-  \subst{x_2}{{{x_1}{{x_0}{\epsilon_0}}}{\epsilon_0}}.
+  \subst{x_2}{{{x_1}{{x_0}{\cftctxext[\cftalg{A}]}}}{\cftctxext[\cftalg{A}]}}.
 \end{align*}
 and to prove the second judgmental equality we calculate
 \begin{align*}
-\subst{{y_2}{{y_1}{\jcomp{}{\epsilon_0}{\epsilon_1}}}}{{y_0}{\epsilon_1}}
+\subst{{y_2}{{y_1}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftfamext[\cftalg{A}]}}}}{{y_0}{\cftfamext[\cftalg{A}]}}
 & \jdeq
-  \subst{\tmext{y_0}{\subst{y_2}{{y_1}{\jcomp{}{\epsilon_0}{\epsilon_1}}}}}{\epsilon_1}
+  \subst{\tmext{y_0}{\subst{y_2}{{y_1}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftfamext[\cftalg{A}]}}}}}{\cftfamext[\cftalg{A}]}
   \\
 & \jdeq
-  \subst{{y_2}{{y_1}{{y_0}{\jvcomp{}{\idtm{P}}{\jcomp{}{\epsilon_0}{\epsilon_1}}}}}}{\epsilon_1}
+  \subst{{y_2}{{y_1}{{y_0}{\jvcomp{}{\idtm{P}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftfamext[\cftalg{A}]}}}}}}{\cftfamext[\cftalg{A}]}
   \\
 & \jdeq
   \subst
     {y_2}
     { {y_1}
       { {y_0}
-        {\jcomp{}{\jvcomp{}{\idtm{P}}{\jcomp{}{\epsilon_0}{\epsilon_1}}}{\epsilon_1}}
+        {\jcomp{}{\jvcomp{}{\idtm{P}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftfamext[\cftalg{A}]}}}{\cftfamext[\cftalg{A}]}}
         }
       }
   \\
@@ -297,18 +315,18 @@ and to prove the second judgmental equality we calculate
     {y_2}
     { {y_1}
       { {y_0}
-        {\jcomp{}{\jvcomp{}{\epsilon_1}{\idtm{\jcomp{}{\epsilon_1}{{}{\epsilon_0}{P}}}}}{\epsilon_1}}
+        {\jcomp{}{\jvcomp{}{\cftfamext[\cftalg{A}]}{\idtm{\jcomp{}{\cftfamext[\cftalg{A}]}{{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}}}}{\cftfamext[\cftalg{A}]}}
         }
       }
   \\
 & \jdeq
-  \subst{{y_2}{{y_1}{{y_0}{\jvcomp{}{\epsilon_1}{\idtm{\jcomp{}{\epsilon_1}{{}{\epsilon_0}{P}}}}}}}}{\epsilon_1}
+  \subst{{y_2}{{y_1}{{y_0}{\jvcomp{}{\cftfamext[\cftalg{A}]}{\idtm{\jcomp{}{\cftfamext[\cftalg{A}]}{{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}}}}}}}{\cftfamext[\cftalg{A}]}
   \\
 & \jdeq
-  \subst{\tmext{\subst{y_1}{{y_0}{\epsilon_1}}}{y_2}}{\epsilon_1}
+  \subst{\tmext{\subst{y_1}{{y_0}{\cftfamext[\cftalg{A}]}}}{y_2}}{\cftfamext[\cftalg{A}]}
   \\
 & \jdeq
-  \subst{y_2}{{{y_1}{{y_0}{\epsilon_1}}}{\epsilon_1}}.\qedhere
+  \subst{y_2}{{{y_1}{{y_0}{\cftfamext[\cftalg{A}]}}}{\cftfamext[\cftalg{A}]}}.\qedhere
 \end{align*}
 \end{proof}
 
@@ -335,96 +353,103 @@ The following lemma explains how each extension algebra gives rise to infinitely
 many extension algebras.
 
 \begin{thm}
-Suppose that $(A,P,\epsilon_0,\epsilon_1)$ is an extension algebra in context
+Suppose that $\extalg{A}$ is an extension algebra in context
 $\Gamma$. Then 
-$(P,\jcomp{}{\epsilon_0}{P},\epsilon_1,\jcomp{}{\epsilon_0}{\epsilon_1})$
-is an extension algebra in context $\ctxext{\Gamma}{A}$.
+\begin{equation*}
+\cftalg{F_A}\defeq(\cftalgf{\cftalg{A}},\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}},\cftfamext,\jcomp{}{\cftctxext}{\cftfamext})
+\end{equation*}
+is an extension algebra in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$.
 \end{thm}
 
 \begin{proof}
-We first need to verify that $\jcomp{}{\epsilon_0}{\epsilon_1}$ is a morphism
-from $\ctxext{\jcomp{}{\epsilon_0}{P}}{\jcomp{}{\epsilon_1}{{}{\epsilon_0}{P}}}$
-to $\jcomp{}{\epsilon_0}{P}$. This follows from the judgmental equality
-$\jcomp{}{\epsilon_1}{{}{\epsilon_0}{P}}\jdeq
-\jcomp{}{\epsilon_0}{{}{\epsilon_0}{P}}$, which we have proved in
+In this proof, we shall use the short-hand notations $\cftctxext$ and $\cftfamext$
+only to refer to $\cftctxext[\cftalg{A}]$ and $\cftfamext[\cftalg{A}]$, respectively,
+and not to $\cftctxext[\cftalg{F_A}]$ or $\cftfamext[\cftalg{F_A}]$.
+
+We first need to verify that the domain of the morphism 
+$\jcomp{}{\cftctxext}{\cftfamext}$ is indeed
+$\ctxext{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}{\jcomp{}{\cftfamext}{{}{\cftctxext}{\cftalgf{\cftalg{A}}}}}$. 
+This follows from the judgmental equality
+$\jcomp{}{\cftfamext}{{}{\cftctxext}{\cftalgf{\cftalg{A}}}}\jdeq
+\jcomp{}{\cftctxext}{{}{\cftctxext}{\cftalgf{\cftalg{A}}}}$, which we have proved in
 \autoref{lem:extalg-twins}. Notice how the diagram in \autoref{eq:extalg-eq2} is
 of exactly the right sort, so the quadruple
-$(P,\jcomp{}{\epsilon_0}{P},\epsilon_1,\jcomp{}{\epsilon_0}{\epsilon_1})$
+$(\cftalgf{\cftalg{A}},\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}},\cftfamext,\jcomp{}{\cftctxext}{\cftfamext})$
 satisfies its version of \autoref{eq:extalg-eq1}. It is left to verify that the diagram
 \begin{small}
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \ctxext
-  { \jcomp{}{\epsilon_0}{P}
+  { \jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}
     }
-  { { \jcomp{}{\epsilon_1}{%
-        \jcomp{}{\epsilon_0}{P}
+  { { \jcomp{}{\cftfamext}{%
+        \jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}
         }
       }
-    { \jcomp{}{\epsilon_1}{%
-        \jcomp{}{\epsilon_1}{%
-          \jcomp{}{\epsilon_0}{P}
+    { \jcomp{}{\cftfamext}{%
+        \jcomp{}{\cftfamext}{%
+          \jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}
           }
         }
       }
     } 
   \ar{r}
-    { \jvcomp{}{\idtm{\jcomp{}{\epsilon_0}{P}}}{%
-        \jcomp{}{\epsilon_1}{%
-          \jcomp{}{\epsilon_0}{\epsilon_1}}}}
+    { \jvcomp{}{\idtm{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}}{%
+        \jcomp{}{\cftfamext}{%
+          \jcomp{}{\cftctxext}{\cftfamext}}}}
   \ar{d}[swap]{
-    \jvcomp{}{\jcomp{}{\epsilon_0}{\epsilon_1}}{%
+    \jvcomp{}{\jcomp{}{\cftctxext}{\cftfamext}}{%
       \idtm{
-        \jcomp{}{\jcomp{}{\epsilon_0}{\epsilon_1}}{%
-          \jcomp{}{\epsilon_1}{%
-            \jcomp{}{\epsilon_0}{P}
+        \jcomp{}{\jcomp{}{\cftctxext}{\cftfamext}}{%
+          \jcomp{}{\cftfamext}{%
+            \jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}
             }
           }
         }
       }
     }
 & \ctxext
-    {\jcomp{}{\epsilon_0}{P}}
-    {\jcomp{}{\epsilon_1}{\jcomp{}{\epsilon_0}{P}}} 
-  \ar{d}{\jcomp{}{\epsilon_0}{\epsilon_1}}
+    {\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}
+    {\jcomp{}{\cftfamext}{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}} 
+  \ar{d}{\jcomp{}{\cftctxext}{\cftfamext}}
   \\
 \ctxext
-  {\jcomp{}{\epsilon_0}{P}}
-  {\jcomp{}{\epsilon_1}{\jcomp{}{\epsilon_0}{P}}} 
-  \ar{r}[swap]{\jcomp{}{\epsilon_0}{\epsilon_1}} 
-& \jcomp{}{\epsilon_0}{P}
+  {\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}
+  {\jcomp{}{\cftfamext}{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}} 
+  \ar{r}[swap]{\jcomp{}{\cftctxext}{\cftfamext}} 
+& \jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}
 \end{tikzcd}
 \end{equation*}
-\end{small}
+\end{small}%
 commutes judgmentally; this diagram is the version of \autoref{eq:extalg-eq2}
 for the quadruple
-$(P,\jcomp{}{\epsilon_0}{P},\epsilon_1,\jcomp{}{\epsilon_0}{\epsilon_1})$. Note
+$(\cftalgf{\cftalg{A}},\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}},\cftfamext,\jcomp{}{\cftctxext}{\cftfamext})$. Note
 that this follows from \autoref{eq:extalg-eq2} provided that we can show that
 \begin{align}
-\jvcomp{}{\idtm{\jcomp{}{\epsilon_0}{P}}}{%
-  \jcomp{}{\epsilon_1}{%
-    \jcomp{}{\epsilon_0}{\epsilon_1}}}
+\jvcomp{}{\idtm{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}}{%
+  \jcomp{}{\cftfamext}{%
+    \jcomp{}{\cftctxext}{\cftfamext}}}
 & \jdeq
-  \jcomp{}{\epsilon_0}{%
-    \jvcomp{}{\idtm{P}}{\jcomp{}{\epsilon_0}{\epsilon_1}}
+  \jcomp{}{\cftctxext}{%
+    \jvcomp{}{\idtm{\cftalgf{\cftalg{A}}}}{\jcomp{}{\cftctxext}{\cftfamext}}
     }
   \label{eq:extalg-infty1}
   \\
-\jvcomp{}{\jcomp{}{\epsilon_0}{\epsilon_1}}{%
+\jvcomp{}{\jcomp{}{\cftctxext}{\cftfamext}}{%
   \idtm{
-    \jcomp{}{\jcomp{}{\epsilon_0}{\epsilon_1}}{%
-      \jcomp{}{\epsilon_1}{%
-        \jcomp{}{\epsilon_0}{P}
+    \jcomp{}{\jcomp{}{\cftctxext}{\cftfamext}}{%
+      \jcomp{}{\cftfamext}{%
+        \jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}
         }
       }
     }
   }
 & \jdeq
-\jcomp{}{\epsilon_0}{%
-  \jvcomp{}{\epsilon_1}{%
+\jcomp{}{\cftctxext}{%
+  \jvcomp{}{\cftfamext}{%
     \idtm{
-      \jcomp{}{\epsilon_1}{%
-        \jcomp{}{\epsilon_0}{P}
+      \jcomp{}{\cftfamext}{%
+        \jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}
         }
       }
     }
@@ -433,9 +458,9 @@ that this follows from \autoref{eq:extalg-eq2} provided that we can show that
 \end{align}
 Note that \autoref{eq:extalg-infty1} follows if we can show that
 \begin{equation*}
-\jcomp{}{\epsilon_1}{\jcomp{}{\epsilon_0}{\epsilon_1}}
+\jcomp{}{\cftfamext}{\jcomp{}{\cftctxext}{\cftfamext}}
   \jdeq
-  \jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{\epsilon_1}}.
+  \jcomp{}{\cftctxext}{\jcomp{}{\cftctxext}{\cftfamext}}.
 \end{equation*}
 This is a special case of \autoref{lem:extalg-twins}. The second judgmental
 equality, \autoref{eq:extalg-infty2}, is trivial.
@@ -930,14 +955,14 @@ In the case $i=\mathsf{f}$ we have the judgmental equalities
 A term-algebra $\cftalg{A}$ in context $\Gamma$ is going to be a septuple
 \begin{equation*}
 (\cftalgc{\cftalg{A}},\cftalgf{\cftalg{A}},\cftalgt{\cftalg{A}},
-\cftctxext{\cftalg{A}},\cftfamext{\cftalg{A}},\cftempc{\cftalg{A}},
+\cftctxext[\cftalg{A}],\cftfamext[\cftalg{A}],\cftempc{\cftalg{A}},
 \cftempf{\cftalg{A}})
 \end{equation*}
 for which 
 the quadruple $\unfold{\extalg{A}}$ is an extension algebra in context 
 $\Gamma$, the quintuple $\unfold{\empalg{A}}$ is an empty algebra in context
 $\Gamma$, satisfying additional judgmental equalities expressing the 
-compatibility of $\cftctxext{\cftalg{A}}$ and $\cftfamext{\cftalg{A}}$ with 
+compatibility of $\cftctxext[\cftalg{A}]$ and $\cftfamext[\cftalg{A}]$ with 
 $\cftempc{\cftalg{A}}$ and $\cftempf{\cftalg{A}}$.
 There will be five such judgmental equalities. Four of them will express that
 extension acts as the identity term when applied to the empty object in one of
@@ -946,10 +971,10 @@ families above the empty object is the same as extension of contexts.
 
 We can immediately state the first two:
 \begin{align}
-\jtermeq*{{\Gamma}{\cftalgc{\cftalg{A}}}}{\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}{\subst{\cftempc{\cftalg{A}}}{\cftctxext{\cftalg{A}}}}{\idtm{\cftalgc{\cftalg{A}}}}
+\jtermeq*{{\Gamma}{\cftalgc{\cftalg{A}}}}{\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}{\subst{\cftempc{\cftalg{A}}}{\cftctxext[\cftalg{A}]}}{\idtm{\cftalgc{\cftalg{A}}}}
   \label{extempalg-eq1}
   \\
-\jtermeq*{{\Gamma}{\cftalgc{\cftalg{A}}}}{\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}{\subst{\cftempf{\cftalg{A}}}{\cftctxext{\cftalg{A}}}}{\idtm{\cftalgc{\cftalg{A}}}}
+\jtermeq*{{\Gamma}{\cftalgc{\cftalg{A}}}}{\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}{\subst{\cftempf{\cftalg{A}}}{\cftctxext[\cftalg{A}]}}{\idtm{\cftalgc{\cftalg{A}}}}
   \label{extempalg-eq2}
 \end{align}
 To see what $\subst{\phi_0}{\epsilon_1}$ can be, we must know its type first.
@@ -1160,9 +1185,9 @@ consisting of
 \end{align*}
 such that the pair $(\cfthomc{\cfthom{f}},\cfthomf{\cfthom{f}})$ is both an 
 extension homomorphism from
-$(\cftalgc{\cftalg{A}},\cftalgf{\cftalg{A}},\cftctxext{\cftalg{A}},\cftfamext{\cftalg{A}})$ 
+$(\cftalgc{\cftalg{A}},\cftalgf{\cftalg{A}},\cftctxext[\cftalg{A}],\cftfamext[\cftalg{A}])$ 
 to 
-$(\cftalgc{\cftalg{B}},\cftalgf{\cftalg{B}},\cftctxext{\cftalg{B}},\cftfamext{\cftalg{B}})$ 
+$(\cftalgc{\cftalg{B}},\cftalgf{\cftalg{B}},\cftfamext[\cftalg{B}],\cftfamext[\cftalg{B}])$ 
 in context $\Gamma$
 and an empty homomorphism from 
 $(\cftalgc{\cftalg{A}},\cftalgf{\cftalg{A}},\cftempc{\cftalg{A}},\cftempf{\cftalg{A}})$

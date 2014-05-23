@@ -31,13 +31,28 @@ The intuition behind this equivalence relation is indeed that unstructured
 usually appear in type theoretical syntax, may be regarded as contexts.
 
 Besides contexts, families and terms there will also be a notion of `type in
-a context'. Only a family of contexts over a context $\Gamma$ is eligible to
+a context', which one may assume.
+Only a family of contexts over a context $\Gamma$ is eligible to
 be a type in the context $\Gamma$ and we have the intuition that `being a type'
 expresses the property of `being an atomic or irreducible family of contexts'.
 We will not axiomatize that every context is either judgmentally equal to the
 empty context or judgmentally equal to the extension of a context by a type,
 although it is certainly worth investigating the class of contexts which fall
-under this category.
+under this category. However, we will primarily investigate families of
+contexts and leave discussion on the possibility of a typing judgment until the
+end of this section. With families of contexts being the principal things of
+study, we have added a bit more generality to the theory, compared to the
+theory of categories with families presented in \cite{Dybjer1996}. The reason
+for this added generality is twofold:
+\begin{enumerate}
+\item We want to be very sure that we can interpret all the rules of type theory
+in a straightforward manner in any context.
+\item We do want do end up with a categorical structure on the contexts, derived
+from the theory by requiring that a morphism from $\Gamma$ to $\Delta$ is a
+term of the weakening of $\Delta$ by $\Gamma$ in context $\Gamma$. Thus, we
+must be able to lift the context $\Delta$ to become a family of contexts over
+$\Gamma$ and it is not reasonable to expect that this results in a type.
+\end{enumerate}
 
 We will formulate fairly strict rules governing the judgmental equalities,
 expressing that extension, weakening and substitution are combatible with
