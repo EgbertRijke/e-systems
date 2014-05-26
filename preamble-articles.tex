@@ -308,6 +308,7 @@
 \unfold@def\cfthom
 \unfold@def\extalg
 \unfold@def\empalg
+\unfold@def\exthom
 
 \begin{comment}
 \newcommand{\unfoldnext}[1]{%
@@ -1091,6 +1092,12 @@
   ( \cfthomc{\cfthom{#1}},
     \cfthomf{\cfthom{#1}},
     \cfthomt{\cfthom{#1}})
+  }
+
+\newcommand{\exthom}{\algfont}
+\newcommand{\exthom@unfold}[1]{%
+  ( \cfthomc{\cfthom{#1}},
+    \cfthomf{\cfthom{#1}})
   }
 
 %%%% The intended use of `\cftctx` is `\cftctx{\cftalg{#1}}`.

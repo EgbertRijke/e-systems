@@ -21,13 +21,14 @@ Moreover, one could then extend the notion of `weak' pre-universes
 with the requirement that every internal morphism is weakly anodyne. This
 could give an internal theory of weak higher groupoids.
 
-\subsection{Extension algebras}
+\subsection{Extension algebras}\label{sec:extension-algebras}
 In this subsection our goal is to define the notion of extension algebras,
 which are internal versions of the extension operation of the theory of
 contexts, families and terms. In this article, their use will be mainly in
 universes. The theory of extension algebras requires the full power (i.e.~all
 of the ingredients) of the theory of contexts, families and terms in its
 formulation and it is (perhaps surprisingly) quite involved to formulate it.
+The definition of extension algebras is given in \autoref{defn:extension-algebras}.
 
 Let $P$ be a family over an extended context $\ctxext{\Gamma}{A}$. We could
 mimic extension by requiring to have terms
@@ -206,7 +207,7 @@ Thus, the second judgmental equality we will need is that the diagram
 commutes judgmentally. Now we can confidently formulate the definition of
 extension algebras.
 
-\begin{defn}
+\begin{defn}\label{defn:extension-algebras}
 An \emph{extension algebra $\extalg{A}$ in context $\Gamma$} is a quadruple 
 \begin{equation*}
 \unfold{\extalg{A}}
@@ -467,10 +468,12 @@ equality, \autoref{eq:extalg-infty2}, is trivial.
 \end{proof}
 
 \begin{thm}
-Let $(Q,R,\eta_0,\eta_1)$ be an extension algebra in context $\ctxext{\Gamma}{B}$ and let
-$\jfam{\Gamma}{A}$. Then the quadruple
+Let $\extalg{Q}$ be an extension algebra in context $\ctxext{\Gamma}{B}$ and let
+$\jfam{\Gamma}{A}$ be a family of contexts. Then the quadruple
 \begin{equation*}
-(\ctxwk{A}{Q},\ctxwk{A}{R},\ctxwk{A}{\eta_0},\ctxwk{A}{\eta_1})
+\ctxwk{A}{\extalg{Q}}
+  \defeq
+  (\ctxwk{A}{\cftalgc{\cftalg{Q}}},\ctxwk{A}{\cftalgf{\cftalg{Q}}},\ctxwk{A}{\cftctxext[\cftalg{Q}]},\ctxwk{A}{\cftfamext[\cftalg{Q}]})
 \end{equation*}
 is an extension algebra in context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$.
 \end{thm}
@@ -481,10 +484,12 @@ the involved operations.
 \end{proof}
 
 \begin{thm}
-Let $(Q,R,\eta_0,\eta_1)$ be an extension algebra in context $\ctxext{{\Gamma}{A}}{P}$
-and let $\jterm{\Gamma}{A}{x}$. Then the quadruple
+Let $\extalg{Q}$ be an extension algebra in context $\ctxext{{\Gamma}{A}}{P}$
+and let $\jterm{\Gamma}{A}{x}$ be a term. Then the quadruple
 \begin{equation*}
-(\subst{x}{Q},\subst{x}{R},\subst{x}{\eta_0},\subst{x}{\eta_1})
+\subst{x}{\cftalg{Q}}
+  \defeq
+  (\subst{x}{\cftalgc{\cftalg{Q}}},\subst{x}{\cftalgf{\cftalg{Q}}},\subst{x}{\cftctxext[\cftalg{Q}]},\subst{x}{\cftfamext[\cftalg{Q}]})
 \end{equation*}
 is an extension algebra in context $\ctxext{\Gamma}{\subst{x}{P}}$.
 \end{thm}
@@ -495,48 +500,50 @@ all the involved operations.
 \end{proof}
 
 \begin{cor}
-Let $(Q,R,\eta_0,\eta_1)$ be an extension algebra in context $\ctxext{\Gamma}{B}$
+Let $\extalg{Q}$ be an extension algebra in context $\ctxext{\Gamma}{B}$
 and let $\jhom{\Gamma}{A}{B}{f}$. Then the quadruple
 \begin{equation*}
-(\jcomp{A}{f}{Q},\jcomp{A}{f}{R},\jcomp{A}{f}{\eta_0},\jcomp{A}{f}{\eta_1})
+\jcomp{A}{f}{\extalg{Q}}
+  \defeq
+  (\jcomp{A}{f}{\cftalgc{\cftalg{Q}}},\jcomp{A}{f}{\cftalgf{\cftalg{Q}}},\jcomp{A}{f}{\cftctxext[\cftalg{Q}]},\jcomp{A}{f}{\cftfamext[\cftalg{Q}]})
 \end{equation*}
 is an extension algebra in context $\ctxext{\Gamma}{A}$.
 \end{cor}
 
 \begin{defn}
-An \emph{extension homomorphism} from $(A,P,\epsilon_0,\epsilon_1)$ to
-$(B,Q,\eta_0,\eta_1)$ in context $\Gamma$ is a pair $(f_0,f_1)$ consisting of
+An \emph{extension homomorphism $\exthom{f}$ from $\extalg{A}$ to
+$\extalg{B}$ in context $\Gamma$} is a pair $\unfold{\exthom{f}}$ consisting of
 \begin{align*}
-\jhom*{\Gamma}{A}{B}{f_0}
+\jhom*{\Gamma}{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{B}}}{\cfthomc{\cfthom{f}}}
   \\
-\jfhom*{\Gamma}{A}{B}{f_0}{P}{Q}{f_1}
+\jfhom*{\Gamma}{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{B}}}{\cfthomc{\cfthom{f}}}{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{B}}}{\cfthomf{\cfthom{f}}}
 \end{align*}
 for which the diagrams
 \begin{equation}\label{eq:extalg-hom1}
 \begin{tikzcd}
-\ctxext{A}{P}
-  \ar{r}{\jvcomp{}{f_0}{f_1}}
-  \ar{d}[swap]{\epsilon_0}
-& \ctxext{B}{Q}
-  \ar{d}{\eta_0}
+\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}
+  \ar{r}{\jvcomp{}{\cfthomc{\cfthom{f}}}{\cfthomf{\cfthom{f}}}}
+  \ar{d}[swap]{\cftctxext[\cftalg{A}]}
+& \ctxext{\cftalgc{\cftalg{B}}}{\cftalgf{\cftalg{B}}}
+  \ar{d}{\cftctxext[\cftalg{B}]}
   \\
-A
-  \ar{r}[swap]{f_0}
-& B
+\cftalgc{\cftalg{A}}
+  \ar{r}[swap]{\cfthomc{\cfthom{f}}}
+& \cftalgc{\cftalg{A}}
 \end{tikzcd}
 \end{equation}
 and
 \begin{equation}\label{eq:extalg-hom2}
 \begin{tikzcd}[column sep=large]
-\ctxext{P}{\jcomp{}{\epsilon_0}{P}}
-  \ar{r}{\jvcomp{}{f_1}{\jcomp{}{\epsilon_0}{f_1}}}
-  \ar{d}[swap]{\epsilon_1}
-& \jcomp{}{f_0}{\ctxext{Q}{\jcomp{}{\eta_0}{Q}}}
-  \ar{d}{\jcomp{}{f_0}{\eta_1}}
+\ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}
+  \ar{r}{\jvcomp{}{\cfthomf{\cfthom{f}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomf{\cfthom{f}}}}}
+  \ar{d}[swap]{\cftfamext[\cftalg{A}]}
+& \jcomp{}{\cfthomc{\cfthom{f}}}{\ctxext{\cftalgf{\cftalg{B}}}{\jcomp{}{\cftctxext[\cftalg{B}]}{\cftalgf{\cftalg{B}}}}}
+  \ar{d}{\jcomp{}{\cfthomc{\cfthom{f}}}{\cftfamext[\cftalg{B}]}}
   \\
-P
-  \ar{r}[swap]{f_1}
-& \jcomp{}{f_0}{Q}
+\cftalgf{\cftalg{A}}
+  \ar{r}[swap]{\cfthomf{\cfthom{f}}}
+& \jcomp{}{\cfthomc{\cfthom{f}}}{\cftalgf{\cftalg{B}}}
 \end{tikzcd}
 \end{equation}
 commute judgmentally.
@@ -547,27 +554,28 @@ To see that the upper morphism in the diagram of \autoref{eq:extalg-hom2} has
 indeed the indicated codomain provided that the diagram of \autoref{eq:extalg-hom1}
 commutes judgmentally, note that we have the judgmental equalities
 \begin{align*}
-\jcomp{}{f_1}{\jcomp{}{f_0}{\jcomp{}{\eta_0}{Q}}}
+\jcomp{}{\cfthomf{\cfthom{f}}}{\jcomp{}{\cfthomc{\cfthom{f}}}{\jcomp{}{\cftctxext[\cftalg{B}]}{\cftalgf{\cftalg{B}}}}}
 & \jdeq 
-  \jcomp{}{\jvcomp{}{f_0}{f_1}}{\jcomp{}{\eta_0}{Q}}
+  \jcomp{}{\jvcomp{}{\cfthomc{\cfthom{f}}}{\cfthomf{\cfthom{f}}}}{\jcomp{}{\cftctxext[\cftalg{B}]}{\cftalgf{\cftalg{B}}}}
   \tag{by \autoref{lem:composition-threesome}}
   \\
 & \jdeq
-  \jcomp{}{\jcomp{}{\jvcomp{}{f_0}{f_1}}{\eta_0}}{Q}
+  \jcomp{}{\jcomp{}{\jvcomp{}{\cfthomc{\cfthom{f}}}{\cfthomf{\cfthom{f}}}}{\cftctxext[\cftalg{B}]}}{\cftalgf{\cftalg{B}}}
   \tag{by \autoref{lem:jcomp-jcomp}}
   \\
 & \jdeq
-  \jcomp{}{\jcomp{}{\epsilon_0}{f_0}}{Q}
+  \jcomp{}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomc{\cfthom{f}}}}{\cftalgf{\cftalg{B}}}
   \tag{by \autoref{eq:extalg-hom1}}
   \\
 & \jdeq
-  \jcomp{}{\epsilon_0}{\jcomp{}{f_0}{Q}}.
+  \jcomp{}{\cftctxext[\cftalg{A}]}{\jcomp{}{\cfthomc{\cfthom{f}}}{\cftalgf{\cftalg{B}}}}.
   \tag{by \autoref{lem:jcomp-jcomp}}
 \end{align*}
-and we indeed have the morphism $\jcomp{}{\epsilon_0}{f_1}$ from 
-$\jcomp{}{\epsilon_0}{P}$ to $\jcomp{}{\epsilon_0}{\jcomp{}{f_0}{Q}}$.
+and we indeed have the morphism $\jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomf{\cfthom{f}}}$ from 
+$\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}$ to $\jcomp{}{\cftctxext[\cftalg{A}]}{\jcomp{}{\cfthomc{\cfthom{f}}}{\cftalgf{\cftalg{B}}}}$.
 \end{rmk}
 
+\begin{comment}
 \begin{rmk}
 I suspect that if we copy this theory of extension algebras to Martin-L\"of
 type theory, with the judgmental equalities replaced by identifications, with
@@ -578,6 +586,7 @@ With this notion of morphism, a term of an extension
 algebra $(A,P,\epsilon_0,\epsilon_1)$ is a pair $(x_0,x_1)$ such that
 $\subst{x_1}{{x_0}{\epsilon_0}}\jdeq x_0$.
 \end{rmk}
+\end{comment}
 
 \begin{comment}
 Extension algebras don't come in isolation. There are also extension algebra
