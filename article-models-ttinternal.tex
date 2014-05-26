@@ -534,7 +534,7 @@ for which the diagrams
 \end{equation}
 and
 \begin{equation}\label{eq:extalg-hom2}
-\begin{tikzcd}[column sep=large]
+\begin{tikzcd}[column sep=huge]
 \ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}
   \ar{r}{\jvcomp{}{\cfthomf{\cfthom{f}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomf{\cfthom{f}}}}}
   \ar{d}[swap]{\cftfamext[\cftalg{A}]}
@@ -574,6 +574,24 @@ commutes judgmentally, note that we have the judgmental equalities
 and we indeed have the morphism $\jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomf{\cfthom{f}}}$ from 
 $\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}$ to $\jcomp{}{\cftctxext[\cftalg{A}]}{\jcomp{}{\cfthomc{\cfthom{f}}}{\cftalgf{\cftalg{B}}}}$.
 \end{rmk}
+
+\begin{thm}
+Let $\cfthom{f}$ be an extension homomorphism from $\cftalg{A}$ to $\cftalg{B}$
+in context $\Gamma$. Then
+\begin{equation*}
+\cfthom{F_f}
+  \defeq
+  (\cfthomf{\cfthom{f}},\jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomf{\cfthom{f}}})
+\end{equation*}
+is an extension homomorphism from $\cftalg{F_A}$ to $\jcomp{}{\cfthomc{\cfthom{f}}}{\cftalg{F_B}}$
+in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$. 
+\end{thm}
+
+\begin{proof}
+We have to verify that the diagrams in \autoref{eq:extalg-hom1,eq:extalg-hom2}
+commute for $\cfthom{F_f}$. Unfolding the ingredients of \autoref{eq:extalg-hom1}
+for $\cfthom{F_f}$ gives us quite directly \autoref{eq:extalg-hom2}.
+\end{proof}
 
 \begin{comment}
 \begin{rmk}
@@ -774,7 +792,7 @@ as displayed in \autoref{fig:empty-object-hom}, satisfying the judgmental equali
 \jtermeq*
   {\Gamma}
   {\cftalgc{\cftalg{B}}}
-  {\subst{\cftemp{\cftalg{A}}}{\cfthomc{\cfthom{f}}}}
+  {\subst{\cftempc{\cftalg{A}}}{\cfthomc{\cfthom{f}}}}
   {\cftempc{\cftalg{B}}}
   \\
 \jhomeq*
