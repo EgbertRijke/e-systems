@@ -212,16 +212,25 @@ An \emph{extension algebra $\extalg{A}$ in context $\Gamma$} is a quadruple
 \begin{equation*}
 \unfold{\extalg{A}}
 \end{equation*}
-consisting of a family $\cftalgc{\cftalg{A}}$ over context $\Gamma$, 
-a family $\cftalgf{\cftalg{A}}$ over the context
+consisting of 
+\begin{enumerate}
+\item a family $\cftalgc{\cftalg{A}}$ over context $\Gamma$, 
+\item a family $\cftalgf{\cftalg{A}}$ over the context
 $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$,
-a morphism $\cftctxext[\cftalg{A}]$ from $\ctxext{\cftalgc{\cftalg{A}}}{
+\item a morphism $\cftctxext[\cftalg{A}]$ from $\ctxext{\cftalgc{\cftalg{A}}}{
 \cftalgf{\cftalg{A}}}$ to $\cftalgc{\cftalg{A}}$ in context
-$\Gamma$ and a morphism $\cftfamext[\cftalg{A}]$ from 
+$\Gamma$
+\item a morphism $\cftfamext[\cftalg{A}]$ from 
 $\ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}$ 
 to $\cftalgf{\cftalg{A}}$ in context
-$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$, satisfying the judgmental equalities of
+$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$,
+\end{enumerate}
+satisfying the judgmental equalities of
 \autoref{eq:extalg-eq1,eq:extalg-eq2}.
+
+When $\extalg{A}$ is an extension algebra in context $\Gamma$, we also refer to
+$\cftctxext[\cftalg{A}]$ as the \emph{context extension of $\extalg{A}$} and to
+$\cftfamext[\cftalg{A}]$ as the \emph{family extension of $\extalg{A}$}.
 \end{defn}
 
 The following lemma both provides intuition behind the judgmental equalities
@@ -350,8 +359,13 @@ Also, the quadruple
 is an extension algebra in context $\Gamma$.
 \end{eg}
 
-The following lemma explains how each extension algebra gives rise to infinitely
-many extension algebras.
+As a consequence of the following theorem, every extension algebra gives rise
+to infinitely many extension algebras by constructing the extension algebra
+of families of $\cftalg{A}$ for each extension algebra $\cftalg{A}$. Notice
+that this also explains that the family $\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}$
+over $\ctxext{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}$ is the family
+of families over families. Likewise, higher families are obtained by pulling
+back more times along $\cftctxext[\cftalg{A}]$.
 
 \begin{thm}
 Suppose that $\extalg{A}$ is an extension algebra in context
@@ -590,7 +604,10 @@ in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$.
 \begin{proof}
 We have to verify that the diagrams in \autoref{eq:extalg-hom1,eq:extalg-hom2}
 commute for $\cfthom{F_f}$. Unfolding the ingredients of \autoref{eq:extalg-hom1}
-for $\cfthom{F_f}$ gives us quite directly \autoref{eq:extalg-hom2}.
+for $\cfthom{F_f}$ gives us quite directly \autoref{eq:extalg-hom2}. The
+diagram in \autoref{eq:extalg-hom2} for $\cfthom{F_f}$ is judgmentally equal
+to the pullback of everything in the diagram in \autoref{eq:extalg-hom2} for
+$\cfthom{f}$ by $\epsilon_0$, and therefore it commutes too.
 \end{proof}
 
 \begin{comment}
@@ -760,10 +777,35 @@ also refer to the pair $(\cftempc{\cftalg{A}},\cftempf{\cftalg{A}})$ as the
 \emph{empty object of $\cftalg{A}$}.
 \end{defn}
 
+Below, we give the definition of empty-object homomorphisms. They have, like
+extension homomorphisms, an action on contexts and an action on families and
+in addition they have an action on terms. Thus, we can picture a term
+homomorphism as follows:
+\begin{equation*}
+\begin{tikzcd}
+\cftalgt{\cftalg{A}}
+  \ar[fib]{d}
+  \ar{r}{\cfthomt{\cfthom{f}}}
+& \cftalgt{\cftalg{B}}
+  \ar[fib]{d}
+  \\
+\cftalgf{\cftalg{A}}
+  \ar[fib]{d}
+  \ar{r}{\cfthomf{\cfthom{f}}}
+& \cftalgf{\cftalg{B}}
+  \ar[fib]{d}
+  \\
+\cftalgc{\cftalg{A}}
+  \ar{r}[swap]{\cfthomc{\cfthom{f}}}
+& \cftalgc{\cftalg{B}}
+\end{tikzcd}
+\end{equation*}
+
 \begin{defn}
-Let $\cftalg{A}$ and $\cftalg{B}$ be empty-object algebras in context $\Gamma$.
+Let $\cftalg{A}$ and $\cftalg{B}$ be term algebras in context $\Gamma$.
 An \emph{empty-object homomorphism $\cfthom{f}$ from $\cftalg{A}$ to $\cftalg{B}$
-in context $\Gamma$} is a triple $(\cfthomc{\cfthom{f}},\cfthomf{\cfthom{f}},\cfthomt{\cfthom{f}})$ consisting of
+in context $\Gamma$} is a triple 
+$(\cfthomc{\cfthom{f}},\cfthomf{\cfthom{f}},\cfthomt{\cfthom{f}})$ consisting of
 \begin{align*}
 \jhom*
   {\Gamma}
@@ -787,7 +829,7 @@ in context $\Gamma$} is a triple $(\cfthomc{\cfthom{f}},\cfthomf{\cfthom{f}},\cf
   {\cftalgt{\cftalg{B}}}
   {\cfthomt{\cfthom{f}}}
 \end{align*}
-as displayed in \autoref{fig:empty-object-hom}, satisfying the judgmental equalities
+satisfying the judgmental equalities
 \begin{align*}
 \jtermeq*
   {\Gamma}
@@ -809,30 +851,6 @@ as displayed in \autoref{fig:empty-object-hom}, satisfying the judgmental equali
   {\jcomp{\cftalgc{\cftalg{A}}}{\cfthomc{\cfthom{f}}}{\cftempf{\cftalg{B}}}}.
 \end{align*}
 \end{defn}
-
-\begin{figure}
-\begin{equation*}
-\begin{tikzcd}
-\cftalgt{\cftalg{A}}
-  \ar[fib]{d}
-  \ar{r}{\cfthomt{\cfthom{f}}}
-& \cftalgt{\cftalg{B}}
-  \ar[fib]{d}
-  \\
-\cftalgf{\cftalg{A}}
-  \ar[fib]{d}
-  \ar{r}{\cfthomf{\cfthom{f}}}
-& \cftalgf{\cftalg{B}}
-  \ar[fib]{d}
-  \\
-\cftalgc{\cftalg{A}}
-  \ar{r}[swap]{\cfthomc{\cfthom{f}}}
-& \cftalgc{\cftalg{B}}
-\end{tikzcd}
-\end{equation*}
-\caption{\label{fig:empty-object-hom}The ingredients of an empty-object homomorphism $\cfthom{f}$ from 
-$\cftalg{A}$ to $\cftalg{B}$ in context $\Gamma$.}
-\end{figure}
 
 The following lemma presents a property of empty-object algebras that will get
 a lot of use.
@@ -987,14 +1005,57 @@ A term-algebra $\cftalg{A}$ in context $\Gamma$ is going to be a septuple
 \end{equation*}
 for which 
 the quadruple $\unfold{\extalg{A}}$ is an extension algebra in context 
-$\Gamma$, the quintuple $\unfold{\empalg{A}}$ is an empty algebra in context
+$\Gamma$, the quintuple $\unfold{\empalg{A}}$ is an empty-object algebra in context
 $\Gamma$, satisfying additional judgmental equalities expressing the 
 compatibility of $\cftctxext[\cftalg{A}]$ and $\cftfamext[\cftalg{A}]$ with 
 $\cftempc{\cftalg{A}}$ and $\cftempf{\cftalg{A}}$.
 There will be five such judgmental equalities. Four of them will express that
 extension acts as the identity term when applied to the empty object in one of
-its arguments. The other expresses that extension of families restricted to
-families above the empty object is the same as extension of contexts.
+its arguments. The other expresses that family extension restricted to
+families above the empty object is the same as context extension. To be able
+to state these, we need to know that $\unfold{\empalg{A}}$ is an empty-object
+algebra. In the following, we verify step-by-step that we can indeed make the
+suggested requirements.
+\begin{enumerate}
+\item The type of $\subst{\cftempc{\cftalg{A}}}{\cftctxext[\cftalg{A}]}$ is
+$\subst
+  { \cftempc{\cftalg{A}}
+    }
+  { \ctxwk
+      {\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+      {\cftalgc{\cftalg{A}}}
+    }$.
+We have the judgmental equalities
+\begin{align*}
+\subst
+  { \cftempc{\cftalg{A}}
+    }
+  { \ctxwk
+      {\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+      {\cftalgc{\cftalg{A}}}
+    }
+& \jdeq
+  \subst
+    { \cftempc{\cftalg{A}}
+      }
+    { \ctxwk
+        { \cftalgf{\cftalg{A}}
+          }
+        { {\cftalgc{\cftalg{A}}}
+          {\cftalgc{\cftalg{A}}}
+          }
+      }
+  \tag{by \autoref{comp-ew-f}}
+  \\
+& \jdeq
+  \ctxwk
+    { \subst{\cftempc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}
+      }
+    { \subst{\cftempc{\cftalg{A}}}{\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}
+      }
+  \tag{by \autoref{comp-sw-f}}
+\end{align*}
+\end{enumerate}
 
 We can immediately state the first two:
 \begin{align}
@@ -1008,20 +1069,20 @@ To see what $\subst{\phi_0}{\epsilon_1}$ can be, we must know its type first.
 It is a morphism from $\subst{\phi_0}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}$ to
 $\subst{\phi_0}{P}$. We already know that $\subst{\phi_0}{P}\jdeq A$ by
 \autoref{empalg-eq1} and to compute $\subst{\phi_0}{\jcomp{}{\epsilon_0}{P}}$
-we use the following lemma.
-
-As an immediate corollary, if we assume the judgmental equalities
-\autoref{extempalg-eq1,extempalg-eq2} we get that 
+we use \autoref{lem:empalg-mor}. Note that in combination with 
+\autoref{extempalg-eq1} and \autoref{extempalg-eq2} we get the judgmental
+equalities
 \begin{equation}\label{cor:empalg-mor}
 \jfameq{{\Gamma}{A}}{\subst{\phi_i}{\jcomp{}{\epsilon_0}{P}}}{P}
 \end{equation}
-and hence that $\subst{\phi_0}{\epsilon_1}$ is a 
-morphism from $\ctxext{A}{P}$ to $A$. Thus, we can require that
+for $i$ being $\mathsf{c}$ or $\mathsf{f}$. Consequently, 
+$\subst{\phi_0}{\epsilon_1}$ is a morphism from $\ctxext{A}{P}$ to $A$, so we 
+can require that
 \begin{equation}\label{extempalg-eq3}
-\jhomeq{\Gamma}{{A}{P}}{A}{\subst{\phi_0}{\epsilon_1}}{\epsilon_0},
+\jhomeq{\Gamma}{{A}{P}}{A}{\subst{\phi_0}{\epsilon_1}}{\epsilon_0}.
 \end{equation}
-expressing that the action of extension at the level of families, restricted to the empty object
-$\phi_0$, is just extension at the level of contexts. We also have two judgmental
+This judgmental equality expresses that family extension restricted to the empty object
+$\phi_0$ is context extension. We also have two judgmental
 equalities expressing that $\epsilon_1$ restricted to $\phi_1$ and
 $\jcomp{}{\epsilon_0}{\phi_1}$ are both the identity term on $P$. Note that
 the term $\jcomp{}{\epsilon_0}{\phi_1}$ serves as the empty family of families,
