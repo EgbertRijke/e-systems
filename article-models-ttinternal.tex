@@ -1054,7 +1054,24 @@ We have the judgmental equalities
     { \subst{\cftempc{\cftalg{A}}}{\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}
       }
   \tag{by \autoref{comp-sw-f}}
+  \\
+& \jdeq
+  \ctxwk
+    { \subst{\cftempc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}
+      }
+    { A
+      }
+  \tag{by \autoref{cancellation-ws-f}}
+  \\
+& \jdeq
+  \ctxwk{A}{A}
+  \tag{by \autoref{empalg-eq2}}
 \end{align*}
+Thus, we require that
+\begin{equation}
+\jtermeq{{\Gamma}{\cftalgc{\cftalg{A}}}}{\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}{\subst{\cftempc{\cftalg{A}}}{\cftctxext[\cftalg{A}]}}{\idtm{\cftalgc{\cftalg{A}}}}
+  \label{extempalg-eq1}
+\end{equation}
 \end{enumerate}
 
 We can immediately state the first two:
