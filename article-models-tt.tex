@@ -381,12 +381,11 @@ $\emptytm[\Gamma]$ by $\emptytm$.
 
 \subsubsection{Extension}
 \label{extension}
-The operation of extension has its place right at the core of the theory of
-contexts, families and terms since it enables one to consider families over
-families and higher level families alike.
+The operations of extension enable one to consider families over
+families and higher level families alike. We will need both a context extension
+operation and a family extension operation.
 
-We will need the extension operation at the level of contexts and families 
-over them and at the level of families and families over them. 
+The inference rules introducing context and family extension are as follows:
 \begin{align}
 & \inference
   { \jfam{\Gamma}{A}
@@ -468,6 +467,34 @@ the empty family are neutral objects when extension is concerned.
   \label{comp-0e-f}
 \end{align}
 Note the special case where we take $\Gamma$ to be the empty context.
+
+\paragraph{Associativity of extension}
+\label{comp-ee}
+The inference rules asserting that extension is compatible with itself assert
+that contexts are unstructured lists of type declarations. This rule is
+unavoidable if we want that for a family $A$ in context $\Gamma$, a family over
+$A$ is the same thing as a family over $\ctxext{\Gamma}{A}$. 
+\begin{align}
+%& \inference
+%  { \jfam{\Gamma}{A}
+%    \jfam{{\Gamma}{A}}{P}
+%    }
+%  { \jctxeq{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}
+%    }
+%  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq{\Gamma}{\ctxext{A}{{P}{Q}}}{\ctxext{{A}{P}}{Q}}
+    }
+  \label{comp-ee-c}
+\end{align}
+Note that we may take the point of view that extension distributes over
+extensions. If we want to extend an extended family $\ctxext{P}{Q}$ over
+$\ctxext{\Gamma}{A}$ by the family $A$, the result is the extension of (1)
+the extension of $P$ by $A$ and (2) the extension of $Q$ by $A$. The latter is
+simply $Q$ since extension acts trivially at the level of families (and terms).
 
 \subsubsection{Weakening}
 \label{weakening}
@@ -610,30 +637,57 @@ of weakening, weakening also acts on the terms of $B$. The weakening of a term
 $y$ of $B$ by $A$ can be seen as the constant term (or function) of the
 family $\ctxwk{A}{B}$.
 
-Note that we can also weaken by the empty family over $\Gamma$ itself.
-Weakening by the empty family $\emptyf$ over a context $\Gamma$ leaves families, 
-their terms, families over those families and terms of those unchanged:
-\label{comp-0w}\begin{align}
+\paragraph{Weakenings of extensions}
+\label{comp-we}
+The following rules assert that when an extended family is weakened, the
+weakening distributes over the extension factors.
+\begin{align}\label{comp-we-f}
 & \inference
-  { \jfam{\Gamma}{B}
+  { \jfam{\Gamma}{A}
+    \jfam{{{\Gamma}{B}}{Q}}{R}
     }
-  { \jfameq{\Gamma}{\ctxwk{\emptyf}{B}}{B}
+  { \jfameq
+      {\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{\ctxext{Q}{R}}}
+      {\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
     }
-  \label{comp-0w-c}
-  \\
+\end{align}
+When thinking of terms of $\ctxwk{A}{B}$ as morphisms of families from $A$ to
+$B$, this looks already like form of type theoretic choice. It is weaker in that
+it is not stated with function types, yet it is stronger in that it states a
+judgmental equality between two families.
+
+There is also a version of this property where an extended term is weakened.
+This variant is stated and proved in \autoref{comp-we-t}.
+
+\paragraph{Weakening of weakenings}
+When a weakened family is weakened even further, the outer weakening distributes
+over the `weakening factors'.
+\label{comp-ww}
+\begin{align}
 & \inference
-  { \jfam{{\Gamma}{B}}{Q}
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jfam{{\Gamma}{C}}{R}
     }
-  { \jfameq{{\Gamma}{B}}{\ctxwk{\emptyf}{Q}}{Q}
+  { \jfameq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
+      {\ctxwk{A}{{B}{R}}}
+      {\ctxwk{{A}{B}}{{A}{R}}}
     }
-  \label{comp-0w-f}
-  \\
+  \label{comp-ww-f}\\
 & \inference
-  { \jterm{{\Gamma}{B}}{Q}{g}
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jterm{{\Gamma}{C}}{R}{t}
     }
-  { \jtermeq{{\Gamma}{B}}{Q}{\ctxwk{\emptyf}{g}}{g}
+  { \jtermeq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
+      {\ctxwk{{A}{B}}{{A}{R}}}
+      {\ctxwk{A}{{B}{t}}}
+      {\ctxwk{{A}{B}}{{A}{t}}}
     }
-  \label{comp-0w-t}
+  \label{comp-ww-t}
 \end{align}
 
 \subsubsection{Substitution}
@@ -750,42 +804,126 @@ terms of $P$. Thus, given terms $\jterm{\Gamma}{A}{x}$ and $\jterm{{\Gamma}{A}}{
 we get a term $\jterm{\Gamma}{\subst{x}{P}}{\subst{x}{f}}$, the \emph{value of
 $f$ at $x$}.
 
-\label{comp-0s}
-The following rules assert that substituting by the term $\jterm{\Gamma}{\emptyf}{\emptytm}$
-leaves everything unchanged.
-\begin{align}
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jfameq{\Gamma}{\subst{\emptytm}{A}}{A}
-    }
-  \label{comp-0s-c}
-  \\
-%& \inference
-%  { \jterm{\Gamma}{A}{x}
-%    }
-%  { \jtermeq{\Gamma}{A}{\subst{\emptytm}{x}}{x}
-%    }
-%  \\
-& \inference
-  { \jfam{{\Gamma}{A}}{P}
-    }
-  { \jfameq{{\Gamma}{A}}{\subst{\emptytm}{P}}{P}
-    }
-  \label{comp-0s-f}
-  \\
-& \inference
-  { \jterm{{\Gamma}{A}}{P}{f}
-    }
-  { \jtermeq{{\Gamma}{A}}{P}{\subst{\emptytm}{f}}{f}
-    }.
-  \label{comp-0s-t}
-\end{align}
-
 In \autoref{morphisms} we will use a combination of weakening and substitution
 to define composition of morphisms of families. However, we have to rely
 on the cancellation rule stated in \autoref{cancellation-ws} before we can
 meaningfully state the definition of composition.
+
+\paragraph{Fibers of extensions}
+\label{comp-se}
+The following inference rule asserts that if we take the fiber of an extended
+family at a term $x$ of $A$ in context $\Gamma$, the substitution by $x$
+distributes over the factors of the extension.
+\begin{align}\label{comp-se-f}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\ctxext{Q}{R}}}
+      {\ctxext{\subst{x}{Q}}{\subst{x}{R}}}
+    }
+\end{align}
+There is also a version of this statement in which extended terms are considered.
+This variant is stated and proved in \autoref{comp-se-t}.
+
+\paragraph{Fibers of weakenings}\label{comp-sw}
+Substitutions distribute over weakenings:
+\begin{align}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    \jfam{{{\Gamma}{A}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}
+      {\subst{x}{\ctxwk{P}{R}}}
+      {\ctxwk{\subst{x}{P}}{\subst{x}{R}}}
+    }
+  \label{comp-sw-f}\\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    \jterm{{{\Gamma}{A}}{Q}}{R}{h}
+    }
+  { \jtermeq
+      {\ctxext{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}
+      {\subst{x}{\ctxwk{P}{R}}}
+      {\subst{x}{\ctxwk{P}{h}}}
+      {\ctxwk{\subst{x}{P}}{\subst{x}{h}}}
+    }
+  \label{comp-sw-t}
+\end{align}
+
+\paragraph{Fibers of fibers}
+\label{comp-ss}
+
+We require that substitution is compatible with itself, which is roughly the
+assertion that substitution is associative. However, we cannot just state that
+$\subst{x}{{f}{g}}\jdeq\subst{{x}{f}}{g}$ since the expression $\subst{{x}{f}}{g}$
+is not well-formed. The term $\subst{x}{f}$ can be substituted in (terms of) families over
+$\subst{x}{P}$; the term $\subst{x}{g}$ is such. Therefore, associativity of
+substitution takes the form $\subst{x}{{f}{g}}\jdeq\subst{{x}{f}}{{x}{g}}$.
+Note that the term $\subst{{x}{f}}{{x}{g}}$ may be written down more conveniently
+as $\subst{x,\subst{x}{f}}{g}$, although we will not do that. In fact, after
+we have introduced extension on terms in \autoref{extension-on-terms}, we will 
+see that $\subst{{x}{f}}{{x}{g}}\jdeq\subst{\tmext{x}{\subst{x}{f}}}{g}$.
+
+In the following inference rules we assume
+$\jterm{\Gamma}{A}{x}$ and $\jterm{{\Gamma}{A}}{P}{f}$.
+\begin{align}
+& \inference
+  { \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{{f}{Q}}}}
+      {\subst{x}{{f}{R}}}
+      {\subst{{x}{f}}{{x}{R}}}
+    }
+  \label{comp-ss-f}\\
+& \inference
+  { \jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{h}
+    }
+  { \jtermeq
+      {{\Gamma}{\subst{x}{{f}{Q}}}}
+      {\subst{x}{{f}{R}}}
+      {\subst{x}{{f}{h}}}
+      {\subst{{x}{f}}{{x}{h}}}
+    }
+  \label{comp-ss-t}
+\end{align}
+
+\paragraph{Weakenings of fibers}
+\label{comp-ws}
+We already have rules for the compatibility of substitution with weakening, but
+we still need the rules the other way around, asserting that there is a 
+judgmental equality $\ctxwk{A}{\subst{y}{Q}}\jdeq\subst{\ctxwk{A}{y}}{\ctxwk{A}{Q}}$
+together with all its variants.
+
+In the following inference rules we assume that $\jfam{\Gamma}{A}$ and that
+$\jterm{\Gamma}{B}{y}$.
+\begin{align}
+& \inference
+  { \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}
+      {\ctxwk{A}{\subst{y}{R}}}
+      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{R}}}
+    }
+  \label{comp-ws-f}\\
+& \inference
+  { \jterm{{{\Gamma}{B}}{Q}}{R}{h}
+    }
+  { \jtermeq
+      {{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}
+      {\ctxwk{A}{\subst{y}{R}}}
+      {\ctxwk{A}{\subst{y}{h}}}
+      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{h}}}
+    }
+  \label{comp-ws-t}
+\end{align}
 
 \subsubsection{Identity terms}
 \label{identityterms}
@@ -806,8 +944,68 @@ inference rules are required to be valid:
       }
 \end{align}
 
-\subsection{The judgmental equalities of the theory of contexts, families and
+\paragraph{The identity term of an extended family}
+The fact that identity terms are compatible with extensions is derived in
+\autoref{comp-ie}.
+
+\paragraph{The identity term of a weakened family}
+\label{comp-wi}
+The identity term of a weakened family is the weakened identity term:
+\begin{equation}
+\inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    }
+  { \unfoldall{\jhomeq
+      {{\Gamma}{A}}
+      {\ctxwk{A}{B}}
+      {\ctxwk{A}{B}}
+      {\ctxwk{A}{\idtm{B}}}
+      {\idtm{\ctxwk{A}{B}}}
+    }}
+  \label{comp-wi-t}
+\end{equation}
+
+\paragraph{The identity term of a substituted family}
+\label{comp-si}
+The identity term of a substituted family is the substitution of the identity term
+\begin{equation}
+\inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \unfoldall{\jhomeq
+      {\Gamma}
+      {\subst{x}{P}}
+      {\subst{x}{P}}
+      {\subst{x}{\idtm{P}}}
+      {\idtm{\subst{x}{P}}}
+    }}
+  \label{comp-si-t}
+\end{equation}
+
+\subsection{Further judgmental equalities of the theory of contexts, families and
 terms}
+We have already seen that empty families, extension, weakening, substitution
+and the identity terms are compatible with each other. There are, however, a
+few more judgmental equalities explaining what happens when
+\begin{enumerate}
+\item something is weakend by the empty family. This is used to consider a term
+      $x$ of $A$ in context $\Gamma$ as a morphism from $\emptyf$ to $A$ in
+      context $\Gamma$, see \autoref{morphisms};
+\item something is substituted by the term of the empty family;
+\item something is weakened by an extended family. This is Currying for weakening;
+\item something is first weakened by a family $A$ in context $\Gamma$ and then
+      substituted by a term of $A$. This is used to show that composition is
+      compatible with itself (i.e. that composition is associative);
+\item the identity terms are joining the party. Identity terms are empty contexts
+      in certain models, so they should behave accordingly.
+\end{enumerate}
+In other words, the rules seem to not fit in the scheme that all operations are
+compatible with each other, but in fact each of these rules plays a role in
+completing the scheme (work out further).
+
+\begin{comment}
 In this section we extend the judgmental equality relation in such a way that
 the empty context, extension, weakening, substitution and the identity terms
 all become compatible with each other. Since we have five operations, there
@@ -902,239 +1100,68 @@ axioms which \emph{do} have a variant for terms, but those require the notion
 of extension on terms, can be proved and therefore need not be included in our
 list of compatibility axioms. In each of these sections, we give a forward
 reference to the lemma in which this variant is stated and proved.
+\end{comment}
 
-\subsubsection{Extensions of extensions are extensions by extensions}
-\label{comp-ee}
-The inference rules asserting that extension is compatible with itself assert
-that contexts are unstructured lists of type declarations. This rule is
-unavoidable if we want that for a family $A$ in context $\Gamma$, a family over
-$A$ is the same thing as a family over $\ctxext{\Gamma}{A}$. 
+\subsubsection{Weakening by the empty family}
+Note that we can also weaken by the empty family over $\Gamma$.
+Weakening by the empty family $\emptyf$ over a context $\Gamma$ leaves families, 
+their terms, families over those families and terms of those unchanged:
+\label{comp-0w}
 \begin{align}
+& \inference
+  { \jfam{\Gamma}{B}
+    }
+  { \jfameq{\Gamma}{\ctxwk{\emptyf}{B}}{B}
+    }
+  \label{comp-0w-c}
+  \\
+& \inference
+  { \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq{{\Gamma}{B}}{\ctxwk{\emptyf}{Q}}{Q}
+    }
+  \label{comp-0w-f}
+  \\
+& \inference
+  { \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jtermeq{{\Gamma}{B}}{Q}{\ctxwk{\emptyf}{g}}{g}
+    }
+  \label{comp-0w-t}
+\end{align}
+
+\subsubsection{Substituting by the term of the empty family}
+\label{comp-0s}
+The following rules assert that substituting by the term $\jterm{\Gamma}{\emptyf}{\emptytm}$
+leaves everything unchanged.
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{\subst{\emptytm}{A}}{A}
+    }
+  \label{comp-0s-c}
+  \\
 %& \inference
-%  { \jfam{\Gamma}{A}
-%    \jfam{{\Gamma}{A}}{P}
+%  { \jterm{\Gamma}{A}{x}
 %    }
-%  { \jctxeq{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}
+%  { \jtermeq{\Gamma}{A}{\subst{\emptytm}{x}}{x}
 %    }
 %  \\
 & \inference
   { \jfam{{\Gamma}{A}}{P}
-    \jfam{{{\Gamma}{A}}{P}}{Q}
     }
-  { \jfameq{\Gamma}{\ctxext{A}{{P}{Q}}}{\ctxext{{A}{P}}{Q}}
+  { \jfameq{{\Gamma}{A}}{\subst{\emptytm}{P}}{P}
     }
-  \label{comp-ee-c}
+  \label{comp-0s-f}
+  \\
+& \inference
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jtermeq{{\Gamma}{A}}{P}{\subst{\emptytm}{f}}{f}
+    }.
+  \label{comp-0s-t}
 \end{align}
-Note that we may take the point of view that extension distributes over
-extensions. If we want to extend an extended family $\ctxext{P}{Q}$ over
-$\ctxext{\Gamma}{A}$ by the family $A$, the result is the extension of (1)
-the extension of $P$ by $A$ and (2) the extension of $Q$ by $A$. The latter is
-simply $Q$ since extension acts trivially at the level of families (and terms).
-
-\subsubsection{Weakenings of extensions}
-\label{comp-we}
-The following rules assert that when an extended family is weakened, the
-weakening distributes over the extension factors.
-\begin{align}\label{comp-we-f}
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{{\Gamma}{B}}{Q}}{R}
-    }
-  { \jfameq
-      {\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}
-      {\ctxwk{A}{\ctxext{Q}{R}}}
-      {\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
-    }
-\end{align}
-When thinking of terms of $\ctxwk{A}{B}$ as morphisms of families from $A$ to
-$B$, this looks already like form of type theoretic choice. It is weaker in that
-it is not stated with function types, yet it is stronger in that it states a
-judgmental equality between two families.
-
-There is also a version of this property where an extended term is weakened.
-This variant is stated and proved in \autoref{comp-we-t}.
-
-\subsubsection{Fibers of extensions}
-\label{comp-se}
-The following inference rule asserts that if we take the fiber of an extended
-family at a term $x$ of $A$ in context $\Gamma$, the substitution by $x$
-distributes over the factors of the extension.
-\begin{align}\label{comp-se-f}
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
-    }
-  { \jfameq
-      {{\Gamma}{\subst{x}{P}}}
-      {\subst{x}{\ctxext{Q}{R}}}
-      {\ctxext{\subst{x}{Q}}{\subst{x}{R}}}
-    }
-\end{align}
-There is also a version of this statement in which extended terms are considered.
-This variant is stated and proved in \autoref{comp-se-t}.
-
-\subsubsection{Weakening of weakenings}
-When a weakened family is weakened even further, the outer weakening distributes
-over the `weakening factors'.
-\label{comp-ww}
-\begin{align}
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{\Gamma}{B}
-    \jfam{{\Gamma}{C}}{R}
-    }
-  { \jfameq
-      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
-      {\ctxwk{A}{{B}{R}}}
-      {\ctxwk{{A}{B}}{{A}{R}}}
-    }
-  \label{comp-ww-f}\\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{\Gamma}{B}
-    \jterm{{\Gamma}{C}}{R}{t}
-    }
-  { \jtermeq
-      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
-      {\ctxwk{{A}{B}}{{A}{R}}}
-      {\ctxwk{A}{{B}{t}}}
-      {\ctxwk{{A}{B}}{{A}{t}}}
-    }
-  \label{comp-ww-t}
-\end{align}
-
-\subsubsection{Fibers of weakenings}\label{comp-sw}
-Substitutions distribute over weakenings:
-\begin{align}
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jfam{{\Gamma}{A}}{P}
-    \jfam{{{\Gamma}{A}}{Q}}{R}
-    }
-  { \jfameq
-      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}
-      {\subst{x}{\ctxwk{P}{R}}}
-      {\ctxwk{\subst{x}{P}}{\subst{x}{R}}}
-    }
-  \label{comp-sw-f}\\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jfam{{\Gamma}{A}}{P}
-    \jterm{{{\Gamma}{A}}{Q}}{R}{h}
-    }
-  { \jtermeq
-      {\ctxext{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}
-      {\subst{x}{\ctxwk{P}{R}}}
-      {\subst{x}{\ctxwk{P}{h}}}
-      {\ctxwk{\subst{x}{P}}{\subst{x}{h}}}
-    }
-  \label{comp-sw-t}
-\end{align}
-
-\subsubsection{Fibers of fibers}
-\label{comp-ss}
-
-We require that substitution is compatible with itself, which is roughly the
-assertion that substitution is associative. However, we cannot just state that
-$\subst{x}{{f}{g}}\jdeq\subst{{x}{f}}{g}$ since the expression $\subst{{x}{f}}{g}$
-is not well-formed. The term $\subst{x}{f}$ can be substituted in (terms of) families over
-$\subst{x}{P}$; the term $\subst{x}{g}$ is such. Therefore, associativity of
-substitution takes the form $\subst{x}{{f}{g}}\jdeq\subst{{x}{f}}{{x}{g}}$.
-Note that the term $\subst{{x}{f}}{{x}{g}}$ may be written down more conveniently
-as $\subst{x,\subst{x}{f}}{g}$, although we will not do that. In fact, after
-we have introduced extension on terms in \autoref{extension-on-terms}, we will 
-see that $\subst{{x}{f}}{{x}{g}}\jdeq\subst{\tmext{x}{\subst{x}{f}}}{g}$.
-
-In the following inference rules we assume
-$\jterm{\Gamma}{A}{x}$ and $\jterm{{\Gamma}{A}}{P}{f}$.
-\begin{align}
-& \inference
-  { \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
-    }
-  { \jfameq
-      {{\Gamma}{\subst{x}{{f}{Q}}}}
-      {\subst{x}{{f}{R}}}
-      {\subst{{x}{f}}{{x}{R}}}
-    }
-  \label{comp-ss-f}\\
-& \inference
-  { \jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{h}
-    }
-  { \jtermeq
-      {{\Gamma}{\subst{x}{{f}{Q}}}}
-      {\subst{x}{{f}{R}}}
-      {\subst{x}{{f}{h}}}
-      {\subst{{x}{f}}{{x}{h}}}
-    }
-  \label{comp-ss-t}
-\end{align}
-
-\subsubsection{Weakenings of fibers}
-\label{comp-ws}
-We already have rules for the compatibility of substitution with weakening, but
-we still need the rules the other way around, asserting that there is a 
-judgmental equality $\ctxwk{A}{\subst{y}{Q}}\jdeq\subst{\ctxwk{A}{y}}{\ctxwk{A}{Q}}$
-together with all its variants.
-
-In the following inference rules we assume that $\jfam{\Gamma}{A}$ and that
-$\jterm{\Gamma}{B}{y}$.
-\begin{align}
-& \inference
-  { \jfam{{{\Gamma}{B}}{Q}}{R}
-    }
-  { \jfameq
-      {{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}
-      {\ctxwk{A}{\subst{y}{R}}}
-      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{R}}}
-    }
-  \label{comp-ws-f}\\
-& \inference
-  { \jterm{{{\Gamma}{B}}{Q}}{R}{h}
-    }
-  { \jtermeq
-      {{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}
-      {\ctxwk{A}{\subst{y}{R}}}
-      {\ctxwk{A}{\subst{y}{h}}}
-      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{h}}}
-    }
-  \label{comp-ws-t}
-\end{align}
-
-\subsubsection{The identity term of a weakened family}
-\label{comp-wi}
-The identity term of a weakened family is the weakened identity term:
-\begin{equation}
-\inference
-  { \jfam{\Gamma}{A}
-    \jfam{\Gamma}{B}
-    }
-  { \unfoldall{\jhomeq
-      {{\Gamma}{A}}
-      {\ctxwk{A}{B}}
-      {\ctxwk{A}{B}}
-      {\ctxwk{A}{\idtm{B}}}
-      {\idtm{\ctxwk{A}{B}}}
-    }}
-  \label{comp-wi-t}
-\end{equation}
-
-\subsubsection{The identity term of a substituted family}
-\label{comp-si}
-The identity term of a substituted family is the substitution of the identity term
-\begin{equation}
-\inference
-  { \jterm{\Gamma}{A}{x}
-    \jfam{{\Gamma}{A}}{P}
-    }
-  { \unfoldall{\jhomeq
-      {\Gamma}
-      {\subst{x}{P}}
-      {\subst{x}{P}}
-      {\subst{x}{\idtm{P}}}
-      {\idtm{\subst{x}{P}}}
-    }}
-  \label{comp-si-t}
-\end{equation}
 
 \subsubsection{Currying for weakening}
 \label{comp-ew}
