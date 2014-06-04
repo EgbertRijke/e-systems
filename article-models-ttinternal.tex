@@ -208,25 +208,74 @@ commutes judgmentally. Now we can confidently formulate the definition of
 extension algebras.
 
 \begin{defn}\label{defn:extension-algebras}
-An \emph{extension algebra $\extalg{A}$ in context $\Gamma$} is a quadruple 
+We define the judgment
 \begin{equation*}
-\unfold{\extalg{A}}
+\jextalg{\Gamma}{A}
 \end{equation*}
-consisting of 
-\begin{enumerate}
-\item a family $\cftalgc{\cftalg{A}}$ over context $\Gamma$, 
-\item a family $\cftalgf{\cftalg{A}}$ over the context
-$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$,
-\item a morphism $\cftctxext[\cftalg{A}]$ from $\ctxext{\cftalgc{\cftalg{A}}}{
-\cftalgf{\cftalg{A}}}$ to $\cftalgc{\cftalg{A}}$ in context
-$\Gamma$
-\item a morphism $\cftfamext[\cftalg{A}]$ from 
-$\ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}$ 
-to $\cftalgf{\cftalg{A}}$ in context
-$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$,
-\end{enumerate}
+asserting that $\extalg{A}$ is an \emph{extension algebra in context $\Gamma$}
+to be the conjunction of the following six judmgents:
+\begin{align*}
+\jextalgctx*{\Gamma}{A}
+  \\
+\jextalgfam*{\Gamma}{A}
+  \\
+\jextalgctxext*{\Gamma}{A}
+  \\
+\jextalgfamext*{\Gamma}{A}
+  \\
+\jhomeq*
+  { \Gamma}
+  { {\cftalgc{\cftalg{A}}}
+    { {\cftalgf{\cftalg{A}}}
+      {\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}
+      }
+    }
+  { \cftalgc{\cftalg{A}}}
+  { \jcomp{}
+      { \jvcomp{}
+          {\cftctxext[\cftalg{A}]}
+          {\idtm{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}}
+        }
+      { \cftctxext[\cftalg{A}]}
+    }
+  { \jcomp{}
+      { \jvcomp{}
+          {\idtm{\cftalgc{\cftalg{A}}}}
+          {\cftfamext[\cftalg{A}]}
+        }
+      { \cftctxext[\cftalg{A}]}
+    }
+  \\
+\jhomeq*
+  { {\Gamma}{\cftalgc{\cftalg{A}}}}
+  { { \cftalgf{\cftalg{A}}}
+    { { \jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}
+      { \jcomp{}
+          {\cftctxext[\cftalg{A}]}
+          {{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}
+        }
+      }
+    }
+  { \cftalgf{\cftalg{A}}}
+  { \jcomp{}
+      { \cftfamext[\cftalg{A}]}
+      { \jvcomp{}
+          {\cftfamext[\cftalg{A}]}
+          {\idtm{\jcomp{}{\cftfamext[\cftalg{A}]}{{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}}}}
+    }
+  { \jcomp{}
+      { \cftfamext[\cftalg{A}]}
+      { \jvcomp{}
+          {\idtm{\cftalgf{\cftalg{A}}}}
+          {\jcomp{}{\cftctxext[\cftalg{A}]}{\cftfamext[\cftalg{A}]}}
+        }
+    }
+\end{align*}
+In other words, an extension algebra $\extalg{A}$ in context $\Gamma$
+is a quadruple $\unfold{\extalg{A}}$ 
 satisfying the judgmental equalities of
-\autoref{eq:extalg-eq1,eq:extalg-eq2}.
+\autoref{eq:extalg-eq1,eq:extalg-eq2}. Extension algebras are judgmentally
+equal if they are componentwise judgmentally equal.
 
 When $\extalg{A}$ is an extension algebra in context $\Gamma$, we also refer to
 $\cftctxext[\cftalg{A}]$ as the \emph{context extension of $\extalg{A}$} and to
@@ -367,7 +416,7 @@ over $\ctxext{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}$ is the fami
 of families over families. Likewise, higher families are obtained by pulling
 back more times along $\cftctxext[\cftalg{A}]$.
 
-\begin{thm}
+\begin{thm}\label{thm:extalg-fam}
 Suppose that $\extalg{A}$ is an extension algebra in context
 $\Gamma$. Then 
 \begin{equation*}
@@ -524,6 +573,12 @@ and let $\jhom{\Gamma}{A}{B}{f}$. Then the quadruple
 is an extension algebra in context $\ctxext{\Gamma}{A}$.
 \end{cor}
 
+\begin{cor}
+Let $\extalg{A}$ be an extension algebra in context $\Gamma$. Then
+$\extalg{F_{F_A}}$ and $\jcomp{}{\cftctxext[\extalg{A}]}{\extalg{F_A}}$ are
+judgmentally equal extension algebras in context $\ctxext{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}$.
+\end{cor}
+
 \begin{defn}
 An \emph{extension homomorphism $\exthom{f}$ from $\extalg{A}$ to
 $\extalg{B}$ in context $\Gamma$} is a pair $\unfold{\exthom{f}}$ consisting of
@@ -533,7 +588,7 @@ $\extalg{B}$ in context $\Gamma$} is a pair $\unfold{\exthom{f}}$ consisting of
 \jfhom*{\Gamma}{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{B}}}{\cfthomc{\cfthom{f}}}{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{B}}}{\cfthomf{\cfthom{f}}}
 \end{align*}
 for which the diagrams
-\begin{equation}\label{eq:extalg-hom1}
+\begin{equation}\label{eq:exthom1}
 \begin{tikzcd}
 \ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}
   \ar{r}{\jvcomp{}{\cfthomc{\cfthom{f}}}{\cfthomf{\cfthom{f}}}}
@@ -547,7 +602,7 @@ for which the diagrams
 \end{tikzcd}
 \end{equation}
 and
-\begin{equation}\label{eq:extalg-hom2}
+\begin{equation}\label{eq:exthom2}
 \begin{tikzcd}[column sep=huge]
 \ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}
   \ar{r}{\jvcomp{}{\cfthomf{\cfthom{f}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomf{\cfthom{f}}}}}
@@ -564,8 +619,8 @@ commute judgmentally.
 \end{defn}
 
 \begin{rmk}
-To see that the upper morphism in the diagram of \autoref{eq:extalg-hom2} has
-indeed the indicated codomain provided that the diagram of \autoref{eq:extalg-hom1}
+To see that the upper morphism in the diagram of \autoref{eq:exthom2} has
+indeed the indicated codomain provided that the diagram of \autoref{eq:exthom1}
 commutes judgmentally, note that we have the judgmental equalities
 \begin{align*}
 \jcomp{}{\cfthomf{\cfthom{f}}}{\jcomp{}{\cfthomc{\cfthom{f}}}{\jcomp{}{\cftctxext[\cftalg{B}]}{\cftalgf{\cftalg{B}}}}}
@@ -579,7 +634,7 @@ commutes judgmentally, note that we have the judgmental equalities
   \\
 & \jdeq
   \jcomp{}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomc{\cfthom{f}}}}{\cftalgf{\cftalg{B}}}
-  \tag{by \autoref{eq:extalg-hom1}}
+  \tag{by \autoref{eq:exthom1}}
   \\
 & \jdeq
   \jcomp{}{\cftctxext[\cftalg{A}]}{\jcomp{}{\cfthomc{\cfthom{f}}}{\cftalgf{\cftalg{B}}}}.
@@ -602,13 +657,89 @@ in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$.
 \end{thm}
 
 \begin{proof}
-We have to verify that the diagrams in \autoref{eq:extalg-hom1,eq:extalg-hom2}
-commute for $\cfthom{F_f}$. Unfolding the ingredients of \autoref{eq:extalg-hom1}
-for $\cfthom{F_f}$ gives us quite directly \autoref{eq:extalg-hom2}. The
-diagram in \autoref{eq:extalg-hom2} for $\cfthom{F_f}$ is judgmentally equal
-to the pullback of everything in the diagram in \autoref{eq:extalg-hom2} for
+We have to verify that the diagrams in \autoref{eq:exthom1,eq:exthom2}
+commute for $\cfthom{F_f}$. Unfolding the ingredients of \autoref{eq:exthom1}
+for $\cfthom{F_f}$ gives us quite directly \autoref{eq:exthom2}. The
+diagram in \autoref{eq:exthom2} for $\cfthom{F_f}$ is judgmentally equal
+to the pullback of everything in the diagram in \autoref{eq:exthom2} for
 $\cfthom{f}$ by $\epsilon_0$, and therefore it commutes too.
 \end{proof}
+
+\begin{defn}
+Let $\exthom{f}$ and $\exthom{g}$ be extension homomorphisms from
+$\extalg{A}$ to $\extalg{B}$ and from $\extalg{B}$ to $\extalg{C}$, respectively.
+We define the composition
+\begin{equation*}
+\exthomcomp{\exthom{f}}{\exthom{g}}
+  \defeq
+  \unfold{\exthomcomp{\exthom{f}}{\exthom{g}}}.
+\end{equation*}
+In other words, extension homomorphisms are composed by taking the outer rectangle
+in the diagram
+\begin{equation*}
+\begin{tikzcd}
+\extalgf{\extalg{A}} 
+  \ar[fib]{d}
+  \ar{r}{\exthomf{\exthom{f}}}
+& \extalgf{\extalg{B}} 
+  \ar[fib]{d}
+  \ar{r}{\exthomf{\exthom{g}}}
+& \extalgf{\extalg{C}}
+  \ar[fib]{d}
+  \\
+\extalgc{\extalg{A}}
+  \ar{r}{\exthomc{\exthom{f}}}
+& \extalgc{\extalg{B}}
+  \ar{r}{\exthomc{\exthom{g}}}
+& \extalgc{\extalg{C}}
+\end{tikzcd}
+\end{equation*}
+\end{defn}
+
+\begin{rmk}
+It follows from \autoref{lem:jcomp-jcomp,lem:jfcomp-jfcomp} that composition
+of extension homomorphisms is associative.
+\end{rmk}
+
+\begin{thm}
+Let $\exthom{f}$ and $\exthom{g}$ be extension homomorphisms from
+$\extalg{A}$ to $\extalg{B}$ and from $\extalg{B}$ to $\extalg{C}$, respectively.
+Then $\exthomcomp{\exthom{f}}{\exthom{g}}$ is an extension homomorphism from
+$\extalg{A}$ to $\extalg{C}$. 
+\end{thm}
+
+\begin{proof}
+Both judgmental equalities are applications of the interchange law for composition,
+\autoref{lem:composition-interchange}. 
+\end{proof}
+
+The following theorem explains how context extension can be seen as an extension
+homomorphism. Note that in combination with \autoref{thm:extalg-fam}, this also
+explains how family extension can be seen as an extension homomorphism.
+
+\begin{thm}
+Let $\extalg{A}$ be an extension algebra in context $\Gamma$. Then
+\begin{align*}
+& ( \ctxext{\extalgc{\extalg{A}}}{\extalgf{\extalg{A}}},
+    \jcomp{}{\cftctxext}{\extalgf{\extalg{A}}},
+    \jvcomp{}{\ctxwk{\extalgf{\extalg{A}}}{\idtm{\extalgc{\extalg{A}}}}}{\cftfamext},
+    \jcomp{}{\cftctxext}{\cftfamext}
+    )
+\intertext{and}
+& ( \ctxext{\extalgc{\extalg{A}}}{\extalgf{\extalg{A}}},
+    \jcomp{}{\cftctxext}{\extalgf{\extalg{A}}},
+    \jvcomp{}{\cftctxext}{\idtm{\jcomp{}{\cftctxext}{\extalgf{\extalg{A}}}}},
+    \jcomp{}{\cftctxext}{\cftfamext}
+    )
+\end{align*}
+are extension algebras in context $\Gamma$ and
+\begin{equation*}
+\boldsymbol{\cftctxext}\defeq ( \cftctxext,
+  \idtm{\jcomp{}{\cftctxext}{\extalgf{\extalg{A}}}}
+  )
+\end{equation*}
+is an extension homomorphism from both of them to $\extalg{A}$. 
+\end{thm}
 
 \begin{comment}
 \begin{rmk}

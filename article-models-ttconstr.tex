@@ -244,3 +244,26 @@ context appears in the codomain:
 
 \subsection{The compatibility of the type constructors with each other}
 \label{compatibility-of-type-constructors}
+
+\begin{comment}
+\section{Intensional algebras for the theory of contexts, families and terms}
+In this section we investigate intensional algebras for the theory of contexts,
+families and terms. These are algebras in a weak sense: the judgmental
+equalities are replaced by propositional equalities and in some cases coherence
+properties are added. The goal writing intensional algebras is twofold: first,
+it allows for easy formalization in existing proof assistants such as \Coq;
+second, we are shooting at an internal definition of internal weak 
+$\infty$-groupoids.
+
+\subsection{Intensional extension algebras}
+
+\begin{defn}
+An intensional extension algebra in context $\Gamma$ consists of
+\begin{enumerate}
+\item A type $C$ in context $\Gamma$
+\item A type family $F:C\to\type$
+\item A function $\epsilon_0:(\sm{x:C}F(x))\to C$.
+\item A function $\epsilon_1:\prd{x:C}(\sm{y:F(x)}F(\epsilon_0(x,y)))\to F(x)$
+\end{enumerate}
+\end{defn}
+\end{comment}

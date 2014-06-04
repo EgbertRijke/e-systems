@@ -309,6 +309,7 @@
 \unfold@def\extalg
 \unfold@def\empalg
 \unfold@def\exthom
+\unfold@def\exthomcomp
 
 \begin{comment}
 \newcommand{\unfoldnext}[1]{%
@@ -1065,10 +1066,11 @@
     \cftempf{\cftalg{#1}})
   }
   
-%%%% For some mysterious reason LaTeX confuses extalg and empalg when
-%%%% `\newcommand` is used rather than `\def`. I'm completely clueless about
-%%%% why this happens.
 \newcommand{\extalg}{\algfont}
+\newcommand{\extalg@sym}{\@judgment@kind{ExtAlg}}
+\newcommand{\jextalg}{\@ifnextchar*{\@jextalgAlignTrue}{\@jextalgAlignFalse}}
+\newcommand{\@jextalgAlignTrue}[3]{\judgment*{#2}{}{}{}{}{\extalg{#3}}{\extalg@sym}}
+\newcommand{\@jextalgAlignFalse}[2]{\judgment{#1}{}{}{}{}{\extalg{#2}}{\extalg@sym}}
 
 \newcommand{\extalg@unfold}[1]{%
   (\cftalgc{\algfont{#1}},
@@ -1076,6 +1078,45 @@
     \cftctxext[\algfont{#1}],
     \cftfamext[\algfont{#1}])
   }
+
+\newcommand{\jextalgctx}{%
+  \@ifnextchar*{\@jextalgctxAlignTrue}{\@jextalgctxAlignFalse}}
+\newcommand{\@jextalgctxAlignTrue}[3]{%
+  \jfam*{#2}{\cftalgc{\cftalg{#3}}}}
+\newcommand{\@jextalgctxAlignFalse}[2]{%
+  \jfam{#1}{\cftalgc{\cftalg{#2}}}}
+
+\newcommand{\jextalgfam}{%
+  \@ifnextchar*{\@jextalgfamAlignTrue}{\@jextalgfamAlignFalse}}
+\newcommand{\@jextalgfamAlignTrue}[3]{%
+  \jfam*{#2}{\cftalgf{\cftalg{#3}}}}
+\newcommand{\@jextalgfamAlignFalse}[2]{%
+  \jfam{#1}{\cftalgf{\cftalg{#2}}}}
+
+\newcommand{\jextalgctxext}{%
+  \@ifnextchar*{\@jextalgctxextAlignTrue}{\@jextalgctxextAlignFalse}}
+\newcommand{\@jextalgctxextAlignTrue}[3]{%
+  \jhom*{#2}{{\cftalgc{\cftalg{#3}}}{\cftalgf{\cftalg{#3}}}}{\cftalgc{\cftalg{#3}}}{\cftctxext[\cftalg{#3}]}}
+\newcommand{\@jextalgctxextAlignFalse}[2]{%
+  \jhom{#1}{{\cftalgc{\cftalg{#2}}}{\cftalgf{\cftalg{#2}}}}{\cftalgc{\cftalg{#2}}}{\cftctxext[\cftalg{#2}]}}
+
+\newcommand{\jextalgfamext}{%
+  \@ifnextchar*{\@jextalgfamextAlignTrue}{\@jextalgfamextAlignFalse}}
+\newcommand{\@jextalgfamextAlignTrue}[3]{%
+  \jhom*{{#2}{\cftalgc{\cftalg{#3}}}}{{\cftalgf{\cftalg{#3}}}{\jcomp{}{\cftctxext[\cftalg{#3}]}{\cftalgf{\cftalg{#3}}}}}{\cftalgf{\cftalg{#3}}}{\cftfamext[\cftalg{#3}]}}
+\newcommand{\@jextalgfamextAlignFalse}[2]{%
+  \jhom{{#1}{\cftalgc{\cftalg{#2}}}}{{\cftalgf{\cftalg{#2}}}{\jcomp{}{\cftctxext{\cftalg{#2}}}{\cftalgf{\cftalg{#2}}}}}{\cftalgf{\cftalg{#2}}}{\cftfamext[\cftalg{#2}]}}
+  
+\newcommand{\exthomcomp}[2]{#2\circ #1}
+\newcommand{\exthomcomp@unfold}[2]{%
+  ( \jcomp{}{\exthomc{#1}}{\exthomc{#2}},
+    \jfcomp{}{}{}{\exthomf{#1}}{\exthomf{#2}})
+  }
+
+\newcommand{\extalgc}[1]{\@gobble #1}
+\newcommand{\extalgf}[1]{\mathcal{F}_{#1}}
+\newcommand{\exthomc}[1]{\@gobble #1}
+\newcommand{\exthomf}[1]{\mathcal{F}_{#1}}
 
 \newcommand{\empalg}{\algfont}
 
