@@ -310,6 +310,7 @@
 \unfold@def\empalg
 \unfold@def\exthom
 \unfold@def\exthomcomp
+\unfold@def\jtermashom
 
 \begin{comment}
 \newcommand{\unfoldnext}[1]{%
@@ -915,6 +916,14 @@
   
 \newcommand{\jfcomp@unfold}[5]{%
   \jcomp{#3}{#4}{{#1}{#2}{#5}}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% TERMS AS MORPHISMS
+
+\makeatletter
+\newcommand{\jtermashom}[1]{\hat{#1}}
+\newcommand{\jtermashom@unfold}[1]{\tmext{\idtm{A}}{#1}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

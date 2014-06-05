@@ -1105,6 +1105,51 @@ To prove the third judgmental equality, note that
 \end{align*}
 \end{proof}
 
+Note that we can directly view any term $x$ of $A$ in context $\Gamma$ as a
+morphism from the empty family $\emptyf$ to $A$ in context $\Gamma$. 
+
+Now let $\jterm{{\Gamma}{A}}{P}{f}$ be a term of $P$. Then we can view $f$ as a
+morphism from $A$ to $\ctxext{A}{P}$ in the following way:
+
+\begin{defn}
+Let $\jterm{{\Gamma}{A}}{P}{f}$ be a term. Then we define
+\begin{equation*}
+\jhomdefn{\Gamma}{A}{{A}{P}}{\jtermashom{f}}{\unfold{\jtermashom{f}}}
+\end{equation*}
+\end{defn}
+
+In the following lemma we will see that $\jtermashom{f}$ is a section for
+$\cprojfstf{A}{P}$.
+
+\begin{lem}
+Consider a family $\jfam{{\Gamma}{A}}{P}$ and a term $\jterm{\Gamma}{A}{x}$.
+Then we have the judgmental equality
+\begin{equation*}
+\jhomeq{\Gamma}{A}{A}{\jcomp{A}{\jtermashom{f}}{\cprojfstf{A}{P}}}{\idtm{A}}.
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+We have the judgmental equalities
+\begin{align*}
+\jtermashom{f}
+& \jdeq
+  \unfold{\jtermashom{f}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \jcomp{}{f}{\jcomp{}{\idtm{A}}{\cprojfstf{A}{P}}}
+  \tag{by \autoref{lem:composition-threesome}}
+  \\
+& \jdeq
+  \jcomp{}{f}{\cprojfstf{A}{P}}
+  \tag{by \autoref{lem:jcomp-idtm}}
+  \\
+& \jdeq
+  \jcomp{}{f}{\ctxwk{P}{\idtm{A}}}
+\end{align*}
+\end{proof}
+
 In \autoref{lem:tmext-emp,lem:tmext-ext,lem:tmext-wk,lem:tmext-subst,lem:tmext-id}
 we show that term extension and the projections are
 compatible with the empty families, extension,
