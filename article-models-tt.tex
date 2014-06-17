@@ -1,15 +1,14 @@
-\section{The algebraic theory of contexts, families and terms}\label{tt}
+\section{The generalized algebraic theory of contexts, families and terms (the E-system)}\label{tt}
 In this section we give a description of dependent type theory before type
 constructors. Apart from contexts, families and terms -- which provide for the
 core of the language of dependent logic -- the basic ingredients
-of this theory will be the operations of extension, weakening and substitution
-and the identity terms. An empty context (and empty families) are also included
-in the theory. The resulting theory can be seen as a manifestation of the 
+of this theory will be the operations of extension, empty families, weakening and substitution
+and the identity terms. The resulting theory can be seen as a manifestation of the 
 structure underlying dependent type theory.
 
 We will
 formulate the theory of contexts, families and terms in such a way that contexts aren't defined
-to be lists of variable declarations. The variable-free (or name-free) approach 
+to be lists of variable declarations. The variable-free (a.k.a.~\emph{name-free}) approach 
 we take here is rather different than those appearing in 
 \cite{hofmann1995extensional,TheBook} but it has appeared in the work of Coquand
 and in \cite{Dybjer1996}.
@@ -19,8 +18,8 @@ approach of type theory and higher category theory. Thirdly, we will not have to
 be burdened with superficial comments about variables being bounded or not, or 
 fresh or free or not occuring at all.
 
-In our treatment, a context can be the empty context or it can be a binary
-planar tree of which `the leaves are (families of) contexts'. 
+In our treatment, a contexts can be seen as binary
+planar trees of which the leaves are (families of) contexts. 
 The judgmental equality relation on contexts is an equivalence relation which 
 expresses that binary planar
 trees of contexts are judgmentally equal if their leaves are, taking only
@@ -32,18 +31,21 @@ usually appear in type theoretical syntax, may be regarded as contexts.
 
 Besides contexts, families and terms there will also be a notion of `type in
 a context', which one may assume.
-Only a family of contexts over a context $\Gamma$ is eligible to
-be a type in the context $\Gamma$ and we have the intuition that `being a type'
-expresses the property of `being an atomic or irreducible family of contexts'.
-We will not axiomatize that every context is either judgmentally equal to the
-empty context or judgmentally equal to the extension of a context by a type,
-although it is certainly worth investigating the class of contexts which fall
-under this category. However, we will primarily investigate families of
-contexts and leave discussion on the possibility of a typing judgment until the
-end of this section. With families of contexts being the principal things of
+A context is eligible to be a \emph{closed type} and over a context, a family
+may be a type. We have the intuition that `being a type'
+expresses the property of `being atomic or irreducible'. With a notion of types,
+one has the means to require a stratification by which every context is a finite
+extension of types starting at a closed type, and every family is likewise a
+finite extension of types. The idea behind this is to recover the theory of
+\autoref{Garner2014} {\color{red}(and possibly B-systems?)}. We stress that
+we will not include axioms asserting such a stratification in the E-system
+and we leave discussion on the possibility of a typing judgment until the
+end of this section. 
+
+With families of contexts being the principal things of
 study, we have added a bit more generality to the theory, compared to the
-theory of categories with families presented in \cite{Dybjer1996}. The reason
-for this added generality is twofold:
+theory of categories with families presented in \cite{Dybjer1996}. Here are
+a couple of reasons for this extra generality:
 \begin{enumerate}
 \item We want to be very sure that we can interpret all the rules of type theory
 in a straightforward manner in any context.
@@ -52,6 +54,13 @@ from the theory by requiring that a morphism from $\Gamma$ to $\Delta$ is a
 term of the weakening of $\Delta$ by $\Gamma$ in context $\Gamma$. Thus, we
 must be able to lift the context $\Delta$ to become a family of contexts over
 $\Gamma$ and it is not reasonable to expect that this results in a type.
+\item It is very easy in this setting to assert that an operation has an action
+on very high levels of families, i.e.~when $F$ is an operation taking things in
+context $\Gamma$ to things in context $\Delta$, then it takes a family $A$ in
+context $\Gamma$ to $F(A)$ in context $\Delta$; a family $P$ in context
+$\ctxext{\Gamma}{A}$ to a family $F(P)$ in context $\ctxext{\Delta}{(F(A))}$,
+and so on. The reason it becomes simple is that we don't have to explain what
+`and so on' means.
 \end{enumerate}
 
 We will formulate fairly strict rules governing the judgmental equalities,
@@ -244,18 +253,23 @@ of judgmental equality, which sets it apart from equivalences or identifications
 \end{align*}
 
 \subsection{The operations of the theory of contexts, families and terms}
-In this subsection we introduce the notions of empty context,
-extension, weakening, substitution and identity terms. These are all viewed as
-operations of the theory of contexts, families and terms. 
+In this subsection we introduce the notions of
+extension, empty families, 
+weakening by families, weakening by contexts, 
+substitution and identity terms. The weakenings and substitution are both
+operations of the theory of contexts, families and terms and therefore they will
+have three levels of actions: on contexts (at the appropriate level), families
+and terms.
 
+\begin{comment}
 Generally, 
 each operation should
 have an action on contexts, on families and on terms at the `appropriate level'
 and should be compatible with each of the operations we introduce here. In
 that will become more practical after the theory of contexts, families and terms
 is formulated, this means that when we will write down a type theory that
-interprets itself in \autoref{ttmodels}, each of the notions of empty context,
-extension, weakening, substitution and identity terms are going to be internalized
+interprets itself in \autoref{ttmodels}, each of the notions of
+extension, empty family, weakening, substitution and identity terms are going to be internalized
 as terms of the theory and all terms are going to be compatible with these.
 That vague idea will be our guiding light.
 
@@ -277,6 +291,15 @@ contexts'. We will state the relevant judgmental equality rules for the empty
 context in this section rather than in the next, since they are required to
 state that the action on families of an operation is compatible with the
 original operation.
+\end{comment}
+
+We note upfront that both context extension and family extension can also be
+seen as operations of contexts, families and terms, even though we will not
+introduce them as such. The reason is that extension is used to define what it
+means to be a family over a family over a context (namely, a family over an
+extended context). As such, it will have a trivial action on families and terms
+which will not need to be introduced. We will come back to this point in
+\autoref{extension}.
 
 \subsubsection{Extension}
 \label{extension}
@@ -342,13 +365,13 @@ that contexts are unstructured lists of type declarations. This rule is
 unavoidable if we want that for a family $A$ in context $\Gamma$, a family over
 $A$ is the same thing as a family over $\ctxext{\Gamma}{A}$. 
 \begin{align}
-%& \inference
-%  { \jfam{\Gamma}{A}
-%    \jfam{{\Gamma}{A}}{P}
-%    }
-%  { \jctxeq{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}
-%    }
-%  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jctxeq{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}
+    }
+  \\
 & \inference
   { \jfam{{\Gamma}{A}}{P}
     \jfam{{{\Gamma}{A}}{P}}{Q}
@@ -530,7 +553,7 @@ the empty family are neutral objects when extension is concerned.
 \end{align}
 %Note the special case where we take $\Gamma$ to be the empty context.
 
-\subsubsection{Weakening}
+\subsubsection{Weakening by a family}
 \label{weakening}
 When $A$ is a family in context $\Gamma$, the operation of weakening by $A$
 takes a family $B$ in context $\Gamma$ and provides a family $\ctxwk{A}{B}$
@@ -610,7 +633,7 @@ a term $g$ of $Q$ to a term $\ctxwk[\tmsym]{A}{g}$ of $\ctxwk[\famsym]{A}{Q}$.
         {\ctxwk[\tmsym]{A'}{g'}}
       }
 \end{align}
-The following inference rules express that when the empty context or family is
+The following inference rules express that when the empty family is
 weakened, the result is the empty family.
 \label{comp-w0}
 \begin{align}
@@ -637,10 +660,12 @@ weakened, the result is the empty family.
     }
   \label{comp-w0-f}
 \end{align}
+\begin{comment}
 Note that we do not have to axiomatize the action of weakening
 by $A$ on the term of the empty family, because the result will be in the empty 
 family and every term in the empty family is judgmentally equal to the term 
 $\emptytm$.
+\end{comment}
 
 Because a family over $\Gamma$ is the same as a family over 
 $\ctxext{\Gamma}{\emptyf}$, we can apply both the action on contexts and the
@@ -723,6 +748,73 @@ over the `weakening factors'.
     }
   \label{comp-ww-t}
 \end{align}
+
+\subsubsection{Weakening by a context}
+Since we have not required that there is an empty context with the property that
+a context is the same thing as a family in the empty context, we will have to
+explicitly introduce weakening by contexts. Since it will allways be clear
+whether something is weakened by a context or by a family, we shall use the
+same notation for weakening by contexts as for weakening by families. We shall
+have to repeat all the compatibility rules for weakening by families for
+weakening by contexts; there is no way around it. It is
+actually this sort of inconvenience that has originally led us to include an
+empty context and be done with it.
+
+In the following inference rules we assume that we have a context $\Gamma$ and
+that $\jctxeq{\Gamma}{\Gamma'}$ in the rules where $\Gamma'$ makes an appearence.
+\begin{align}
+& \inference
+  { \jctx{\Delta}
+    }
+  { \jfam{\Gamma}{\ctxwk{\Gamma}{\Delta}}
+    }
+& & \inference
+  { \jctxeq{\Delta}{\Delta'}
+    }
+  { \jfameq{\Gamma}{\ctxwk{\Gamma}{\Delta}}{\ctxwk{\Gamma'}{\Delta'}}
+    }
+  \\
+& \inference
+  { \jfam{\Delta}{B}
+    }
+  { \jfam{\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}{\ctxwk{\Gamma}{B}}
+    }
+& & \inference
+  { \jfameq{\Delta}{B}{B'}
+    }
+  { \jfameq
+      {\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}
+      {\ctxwk{\Gamma}{B}}
+      {\ctxwk{\Gamma'}{B'}}
+    }
+  \\
+& \inference
+  { \jterm{\Delta}{B}{y}
+    }
+  { \jterm
+      {\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}
+      {\ctxwk{\Gamma}{B}}
+      {\ctxwk{\Gamma}{y}}
+    }
+& & \inference
+  { \jtermeq{\Delta}{B}{y}{y'}
+    }
+  { \jtermeq
+      {\ctxext{\Gamma}{\ctxwk{\Gamma}{\Delta}}}
+      {\ctxwk{\Gamma}{B}}
+      {\ctxwk{\Gamma}{y}}
+      {\ctxwk{\Gamma}{y'}}
+    }
+\end{align}
+Note that we do not employ three different notations for the three different
+actions of weakening by a context because there can be no confusion about which
+of the three actions is meant. If there were an empty context we should have
+distinguished the three as we did for weakening by a family.
+
+We shall have similar compatibility rules for weakening by a context as we did
+for weakening by a family.
+
+{\color{red}To do. It will look exactly the same as for weakening by families}
 
 \subsubsection{Substitution}
 \label{substitution}
@@ -812,9 +904,11 @@ the empty families:
     }
   \label{comp-s0-f}
 \end{align}
+\begin{comment}
 Note again that we do not have to axiomatize the action of substitution by $x$ on the term
 of the empty family, because the result will be in the empty family and every
 term in the empty family is judgmentally equal to the term $\emptytm$.
+\end{comment}
 
 We use the above rule to state the compatibility of the action on families of
 substitution with the action on contexts of substitution. Note that a family
@@ -963,7 +1057,8 @@ $\jterm{\Gamma}{B}{y}$.
 \label{identityterms}
 Last, but not least, we introduce the identity terms. In combination with
 weakening and substitution, identity terms will allow us to speak of projections,
-of a variant of extension for terms and of fiber inclusions. The following
+of a variant of extension for terms and of fiber inclusions.
+The following
 inference rules are required to be valid:
 \begin{align}
 & \inference
@@ -977,6 +1072,26 @@ inference rules are required to be valid:
     { \unfoldall{\jhomeq{\Gamma}{A}{A}{\idtm{A}}{\idtm{A'}}}
       }
 \end{align}
+We stress again
+that because we have not required there to be an empty context, we need to
+explicitly call for identity terms $\idtm{\Gamma}$ of $\ctxwk{\Gamma}{\Gamma}$
+in context $\Gamma$ for each context $\Gamma$. Thus, we will also require
+the inference rule
+\begin{align}
+& \inference
+  { \jctx{\Gamma}
+    }
+  { \jterm{\Gamma}{\ctxwk{\Gamma}{\Gamma}}{\idtm{\Gamma}}
+    }
+& &
+  \inference
+  { \jctxeq{\Gamma}{\Gamma'}
+    }
+  { \jtermeq{\Gamma}{\ctxwk{\Gamma}{\Gamma}}{\idtm{\Gamma}}{\idtm{\Gamma'}}
+    }
+\end{align}
+For the following inference rules, there should also be versions of identity
+terms at contexts.
 
 \paragraph{The identity term of an extended family}
 The fact that identity terms are compatible with extensions is derived in
@@ -1164,6 +1279,7 @@ their terms, families over those families and terms of those unchanged:
   \label{comp-0w-t}
 \end{align}
 
+\begin{comment}
 \subsubsection{Substituting by the term of the empty family}
 \label{comp-0s}
 The following rules assert that substituting by the term $\jterm{\Gamma}{\emptyf}{\emptytm}$
@@ -1196,6 +1312,7 @@ leaves everything unchanged.
     }.
   \label{comp-0s-t}
 \end{align}
+\end{comment}
 
 \subsubsection{Currying for weakening}
 \label{comp-ew}
@@ -1317,8 +1434,8 @@ terms}
 We have deliberately not spoken of types so far because we have taken the point
 of view that a type in a context is nothing but a family in that context which
 belongs to the class of types. We think of types as \emph{irreducible} families,
-i.e.\ families which are neither the empty context nor the extension of two
-families which are both not the empty context (in algebraic terminology: which
+i.e.\ families which are neither empty nor the extension of two
+families which are both not empty (in algebraic terminology: which
 are both non-trivial). To allow ourselves to speak of types we introduce two
 new judgments: the judgment that something is a type and the judgment that two
 types are equal.
@@ -1358,11 +1475,11 @@ context $\Gamma$. This is expressed by the following four inference rules:
       }
 \end{align*}
 As pointed out at the beginning of this subsection, 
-we do not assume that the empty context is a type, that would be like
+we do not assume that the empty family is a type, that would be like
 assuming that the multiplicative unit of a ring is prime. We envision a
 categorical interpretation of the theory of contexts, families and terms where 
 contexts are interpreted as finite paths of arrows belonging to a predetermined
-class. The empty context would be such a path of length $0$ whereas the types
+class. The empty family would be such a path of length $0$ whereas the types
 would be such paths of length $1$.
 
 We add rules asserting that a weakened type is again a type that 
