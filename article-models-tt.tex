@@ -766,25 +766,25 @@ over the `weakening factors'.
 \begin{align}
 & \inference
   { \jfam{\Gamma}{A}
-    \jfam{\Gamma}{B}
-    \jfam{{\Gamma}{C}}{R}
+    \jfam{{\Gamma}{B}}{Q}
+    \jfam{{{\Gamma}{B}}{R}}{S}
     }
   { \jfameq
-      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
-      {\ctxwk{A}{{B}{R}}}
-      {\ctxwk{{A}{B}}{{A}{R}}}
+      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{{A}{Q}}{{A}{R}}}
+      {\ctxwk{A}{{Q}{S}}}
+      {\ctxwk{{A}{Q}}{{A}{S}}}
     }
   \label{comp-ww-f}\\
 & \inference
   { \jfam{\Gamma}{A}
-    \jfam{\Gamma}{B}
-    \jterm{{\Gamma}{C}}{R}{t}
+    \jfam{{\Gamma}{B}}{Q}
+    \jterm{{{\Gamma}{B}}{R}}{S}{k}
     }
   { \jtermeq
-      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{{A}{B}}{{A}{C}}}}
-      {\ctxwk{{A}{B}}{{A}{R}}}
-      {\ctxwk{A}{{B}{t}}}
-      {\ctxwk{{A}{B}}{{A}{t}}}
+      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{{A}{Q}}{{A}{R}}}
+      {\ctxwk{A}{{Q}{S}}}
+      {\ctxwk{A}{{Q}{k}}}
+      {\ctxwk{{A}{Q}}{{A}{k}}}
     }
   \label{comp-ww-t}
 \end{align}
