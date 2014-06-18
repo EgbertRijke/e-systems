@@ -108,7 +108,62 @@ Likewise, we define the judgment\begin{equation*}
 to be the judgment\begin{equation*}
 \unfold{\jhomeq{\Gamma}{A}{B}{f}{f'}}.
 \end{equation*}
+As usual, when $f$ is a morphism from $A$ to $B$ in context $\Gamma$ we say that
+$A$ is the \emph{domain of $f$} and that $B$ is the \emph{codomain of $f$}. 
 \end{defn}
+
+In two special cases we have alternative explanations of what a morphism is.
+These special cases are when the domain is either empty or an extension.
+
+\begin{lem}
+We have the following valid inference rules expressing that a morphism from
+the empty family in context $\Gamma$ is the same thing as a term:
+\begin{align*}
+& \inference
+  { \jhom{\Gamma}{\emptyf}{A}{x}
+    }
+  { \jterm{\Gamma}{A}{x}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jhom{\Gamma}{\emptyf}{A}{x}
+    }
+\end{align*}
+\end{lem}
+
+\begin{lem}
+We have the following valid inference rules expressing that a morphism from
+an extension $\ctxext{A}{P}$ to $B$ is the same thing as a morphism from $P$ into
+$\ctxwk{A}{B}$:
+\begin{align*}
+& \inference
+  { \jhom{\Gamma}{{A}{P}}{B}{f}
+    }
+  { \jhom{{\Gamma}{A}}{P}{\ctxwk{A}{B}}{f}
+    }
+  \\
+& \inference
+  { \jhom{{\Gamma}{A}}{P}{\ctxwk{A}{B}}{f}
+    }
+  { \jhom{\Gamma}{{A}{P}}{B}{f}
+    }
+\end{align*}
+\end{lem}
+
+We devote the rest of this subsection to precomposition by a morphism. We treat
+precomposition by a morphism $f$ from $A$ to $B$ in context $\Gamma$ as an
+\emph{operation} from things in context $\ctxext{\Gamma}{B}$ to things in
+context $\ctxext{\Gamma}{A}$ rather than as something which only acts on
+morphisms with domain $B$. Since precomposition by a morphism is seen as an
+operation, we will give it an `action on contexts', an `action on families' and
+and `action on terms' and we will follow the usual scheme in verifying that
+it is compatible with the empty context and families, with context and family
+extension, weakening, substitution and identity terms. Moreover, we will show
+that precomposition is compatible with itself; this is a slight generalization
+of associativity of composition. We will be able to retrieve the usual
+composition of morphisms via the action on terms of the precomposition operation.
 
 \begin{defn}
 Let $\jhom{\Gamma}{A}{B}{f}$ and consider a family $\jfam{{\Gamma}{B}}{Q}$,
@@ -195,14 +250,6 @@ however very convenient to see composition as an operation of the theory of
 contexts, families and terms. This allows us to follow the scheme of
 compatibility rules which are provable for this form of composition. 
 \end{rmk}
-
-We have lots of compatibility properties for composition. On the one hand we
-have the properties that composition with a morphism $f$ is compatible with
-the empty family, extension, weakening, substitution and identity terms. On
-the other hand, there are compatibility properties saying what happens when
-we substitute by a composition, or when we weaken or substitute a composition.
-Proving all these compatibility properties is the content of the rest of this
-subsection. None of it is very difficult.
 
 \begin{lem}\label{lem:jcomp-ext}
 We have the following inference rule expressing that composition with $f$ is
@@ -772,7 +819,37 @@ a family. Then we have the judgmental equalities
 \end{align*}
 \end{proof}
 
-Because composition is proven to be associative, we can draw diagrams involving
+\begin{lem}
+The following inference rule is valid
+\begin{equation*}
+\inference
+  { \jhom{\Gamma}{A}{B}{f}
+    }
+  { \jhomeq{\Gamma}{A}{B}{\jcomp{A}{f}{\idtm{B}}}{f}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+We have the judgmental equalities
+\begin{align*}
+\jcomp{A}{f}{\idtm{B}}
+& \jdeq
+  \subst{f}{\ctxwk{A}{\idtm{B}}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst{f}{\idtm{\ctxwk{A}{B}}}
+  \tag{by \autoref{comp-wi}}
+  \\
+& \jdeq
+  f.
+  \tag{by \autoref{cancellation-si}}
+\end{align*}
+\end{proof}
+
+Because composition is proven to be associative and because identity morphisms
+are neutral for both pre- and postcomposition, we can draw diagrams involving
 families and morphisms between them in a context $\Gamma$, just as is usual in
 category theory and the order in which the morphisms are composed has no
 relevance. We can also speak about pullback diagrams, with universality in a
@@ -892,7 +969,7 @@ be terms and let $\jfam{{{\Gamma}{A}}{P}}{Q}$ be a family. Then we have
   \subst
     {u}
     {{x}{Q}}
-  \tag{by \autoref{idfunc-wk-defn}}
+  \tag{by \autoref{precomp-idtm-c}}
 \end{align*}
 \end{proof}
 
@@ -925,7 +1002,7 @@ Thus we need to find out what $\subst{\ctxwk{P}{\idtm{A}}}{\ctxwk{P}{{A}{P}}}$ i
   \\
 & \jdeq 
   \ctxwk{P}{P},
-  \tag{by \autoref{idfunc-wk-defn}}
+  \tag{by \autoref{precomp-idtm-c}}
 \end{align*}
 where we find the term $\idtm{P}$. Therefore we define:
 
@@ -1169,18 +1246,23 @@ $\jterm{\Gamma}{\subst{u}{{x}{Q}}}{v}$. Then we have
 & \jdeq 
   \subst
     {\tmext{u}{v}}{{x}{\idtm{\ctxext{A}{{P}{Q}}}}}
+  \tag{by \autoref{comp-es}}
   \\
 & \jdeq 
   \subst{v}{{u}{{x}{\idtm{\ctxext{A}{{P}{Q}}}}}}
+  \tag{by \autoref{comp-es}}
   \\
 & \jdeq 
   \subst{v}{{u}{{x}{\idtm{\ctxext{{A}{P}}{Q}}}}}
+  \tag{by \autoref{comp-ee-c}}
   \\
 & \jdeq 
   \subst{v}{{\tmext{x}{u}}{\idtm{\ctxext{{A}{P}}{Q}}}}
+  \tag{by \autoref{comp-es}}
   \\
 & \jdeq 
   \tmext{{x}{u}}{v}.
+  \tag{by \autoref{comp-es}}
 \end{align*}
 To prove the judmental equality
 \begin{equation*}
@@ -1196,14 +1278,17 @@ note that we have the judgmental equalities
 \jcomp{{{A}{P}}{Q}}{\cprojfstf{{A}{P}}{Q}}{\cprojfstf{A}{P}}
 & \jdeq 
   \unfoldall{\jcomp{{{A}{P}}{Q}}{\cprojfstf{{A}{P}}{Q}}{\cprojfstf{A}{P}}}
+  \tag{by definition}
   \\
 & \jdeq 
   \subst
     {\ctxwk{Q}{\idtm{{A}{P}}}}
     {\ctxwk{Q}{{\ctxext{A}{P}}{{P}{\idtm{A}}}}}
+  \tag{by \autoref{comp-ew-t}}
   \\
 & \jdeq
   \ctxwk{Q}{\subst{\idtm{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{{P}{\idtm{A}}}}}
+  \tag{by \autoref{comp-ws-t}}
   \\
 & \jdeq
   \ctxwk{Q}{{P}{\idtm{A}}}
@@ -1745,7 +1830,7 @@ families. Then we have
   \tag{by \autoref{comp-ws-f}}\\
 & \jdeq 
   \ctxwk{P}{Q} 
-  \tag{by \autoref{idfunc-wk-defn}}
+  \tag{by \autoref{precomp-idtm-c}}
 \end{align*}
 \end{proof}
 
@@ -1869,7 +1954,7 @@ $\ctxext{\Gamma}{A}$, i.e.~the following inference rules are valid:
 \end{align*}
 To see this, we only have to note that
 $\ctxwk{P}{\subst{\idtm{A}}{\ctxwk{A}{Q}}}\jdeq\ctxwk{P}{Q}$, which
-holds by \autoref{idfunc-wk-defn}.
+holds by \autoref{precomp-idtm-c}.
 \end{rmk}
 
 \subsubsection{Horizontal and vertical composition}
@@ -2769,7 +2854,7 @@ judgmental equalities
   \\
 & \jdeq
   \subst{x}{Q}.
-  \tag{by \autoref{idfunc-precomp}}
+  \tag{by \autoref{precomp-idtm-t}}
 \end{align*}
 \end{proof}
 
@@ -2853,7 +2938,7 @@ The proof is the following calculation:
   \\
 & \jdeq
   \subst{x}{\idtm{\ctxext{A}{P}}}.
-  \tag{by \autoref{idfunc-precomp}}
+  \tag{by \autoref{precomp-idtm-t}}
 \end{align*}
 \end{proof}
 
@@ -3045,7 +3130,7 @@ Let $\jfam{\Gamma}{A}$. Then we have the judgmental equalities
   \\
 & \jdeq
   \idtm{{A}{P}}
-  \tag{by \autoref{idfunc-precomp}}
+  \tag{by \autoref{precomp-idtm-t}}
 \end{align*}
 \end{proof}
 

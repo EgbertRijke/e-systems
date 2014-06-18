@@ -1400,7 +1400,15 @@ weakening. The identity terms will also be subject to compatibility rules.
     }
   { \jfameq{{\Gamma}{A}}{\subst{\idtm{A}}{\ctxwk{A}{P}}}{P}
     }
-  \label{idfunc-wk-defn}\\
+  \label{precomp-idtm-c}
+  \\
+& \inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq{{{\Gamma}{A}}{P}}{\subst{\idtm{A}}{\ctxwk{A}{Q}}}{Q}
+    }
+  \label{precomp-idtm-f}
+  \\
 %An unnecessary rule:
 %& \inference
 %  { \jfam{{\Gamma}{A}}{P}
@@ -1412,15 +1420,15 @@ weakening. The identity terms will also be subject to compatibility rules.
 %    }
 %  \label{idfunc-wk-defn2}\\
 & \inference
-  { \jterm{{\Gamma}{A}}{P}{f}
+  { \jterm{{{\Gamma}{A}}{P}}{Q}{g}
     }
   { \jtermeq
-      {{\Gamma}{A}}
-      {P}
-      {\subst{\idtm{A}}{\ctxwk{A}{f}}}
-      {f}
+      {{{\Gamma}{A}}{P}}
+      {Q}
+      {\subst{\idtm{A}}{\ctxwk{A}{g}}}
+      {g}
     }
-  \label{idfunc-precomp}\\
+  \label{precomp-idtm-t}
 %An unnecessary rule:
 %& \inference
 %  { \jterm{{\Gamma}{A}}{P}{f}
@@ -1431,13 +1439,7 @@ weakening. The identity terms will also be subject to compatibility rules.
 %      {\subst{\idtm{A}}{\ctxwk{{A}{A}}{f}}}
 %      {f}
 %    }
-%  \label{idfunc-precomp}\\
-& \inference
-  { \unfoldall{\jhom{\Gamma}{A}{B}{f}}
-    }
-  { \unfoldall{\jhomeq{\Gamma}{A}{B}{\jcomp{A}{f}{\idtm{B}}}{f}}
-    }
-  \label{idfunc-postcomp}
+%  \label{precomp-idtm-t}
 \end{align}
 
 \subsection{The possiblity of types in the theory of contexts, families and
