@@ -1107,77 +1107,9 @@ To prove the third judgmental equality, note that
 
 In \autoref{lem:tmext-emp,lem:tmext-ext,lem:tmext-wk,lem:tmext-subst,lem:tmext-id}
 we show that term extension and the projections are
-compatible with the empty families, extension,
-weakening, substitution and the identity terms (in that order). \autoref{lem:tmext-id}
+compatible with extension (\autoref{lem:tmext-tmext}),
+weakening (\autoref{lem:tmext-wk}), substitution (\autoref{lem:tmext-subst}) and the identity terms (\autoref{lem:tmext-id}). The latter property, \autoref{lem:tmext-id},
 is in fact a generalization of the above \autoref{lem:tmext-basic}.
-
-\begin{lem}\label{lem:tmext-emp}
-The following compatibility rules for extensions of the term of the empty family
-are valid:
-\begin{align*}
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    }
-  { \jtermeq{\Gamma}{A}{\tmext{\emptytm}{x}}{x}
-    }
-& & \inference
-  { \jterm{\Gamma}{A}{x}
-    }
-  { \jtermeq{\Gamma}{A}{\tmext{x}{\emptytm}}{x}
-    }
-  \\
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jtermeq
-      {{\Gamma}{A}}
-      {\emptyf}
-      {\cprojfstf{\emptyf}{A}}
-      {\emptytm}
-    }
-& & \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jhomeq
-      {\Gamma}
-      {A}
-      {A}
-      {\cprojfstf{A}{\emptyf}}
-      {\idtm{A}}
-    }
-  \\
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jhomeq
-      {\Gamma}
-      {A}
-      {A}
-      {\cprojsndf{\emptyf}{A}}
-      {\idtm{A}}
-    }
-& & \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jtermeq
-      {{\Gamma}{A}}
-      {\emptyf}
-      {\cprojsndf{A}{\emptyf}}
-      {\emptytm}
-    }
-\end{align*}
-\end{lem}
-
-\begin{proof}
-These equalities are very easy to verify. We only display a proof of the first:
-\begin{equation*}
-\tmext{\emptytm}{x}
-\jdeq \unfold{\tmext{\emptyf}{A}{\emptytm}{x}}
-\jdeq \subst{x}{\idtm{{\emptyf}{A}}}
-\jdeq \subst{x}{\idtm{A}}
-\jdeq x.\qedhere
-\end{equation*}
-\end{proof}
 
 \begin{lem}\label{lem:tmext-ext}\label{lem:tmext-tmext}
 The following compatibility rules for two consecutive term extensions are valid:
@@ -2938,79 +2870,7 @@ The following inference rule is valid:
 \end{cor}
 
 We have the following lemmas expressing the compatibility of the fiber
-inclusions with the empty context, extension, weakening and substitution. 
-
-\begin{lem}
-The fiber inclusions are compatible with the empty families; i.e.~the following
-inference rules are valid
-\begin{align*}
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    }
-  { \jtermeq
-      {\Gamma}
-      {A}
-      {\finc{x}{\emptyf}}
-      {x}
-    }
-  \\
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jhomeq
-      {\Gamma}
-      {A}
-      {A}
-      {\finc{\emptytm}{A}}
-      {\idtm{A}}
-    }
-\end{align*}
-\end{lem}
-
-\begin{proof}
-Let $\jterm{\Gamma}{A}{x}$. We have the judgmental equalities
-\begin{align*}
-\finc{x}{\emptyf}
-& \jdeq
-  \unfold{\finc{x}{\emptyf}}
-  \tag{by definition}
-  \\
-& \jdeq
-  \tmext{\ctxwk{\emptyf}{x}}{\idtm{\emptyf}}
-  \tag{by \autoref{comp-s0-c}}
-  \\
-& \jdeq
-  \tmext{x}{\idtm{\emptyf}}
-  \tag{by \autoref{comp-0w-t}}
-  \\
-& \jdeq
-  \tmext{x}{\emptytm}
-  \tag{by \autoref{comp-00-t}}
-  \\
-& \jdeq
-  x
-  \tag{by \autoref{lem:tmext-emp}}
-\end{align*}
-to prove the first judgmental equality. For the second, we have
-\begin{align*}
-\finc{\emptytm}{A}
-& \jdeq
-  \unfold{\finc{\emptytm}{A}}
-  \tag{by definition}
-  \\
-& \jdeq
-  \tmext{\emptytm}{\idtm{\subst{\emptytm}{A}}}
-  \tag{by \autoref{comp-00-t}}
-  \\
-& \jdeq
-  \idtm{\subst{\emptytm}{A}}
-  \tag{by \autoref{lem:tmext-emp}}
-  \\
-& \jdeq
-  \idtm{A}
-  \tag{by \autoref{comp-0s-f}}.
-\end{align*}
-\end{proof}
+inclusions with extension, weakening and substitution. 
 
 \begin{lem}
 The fiber inclusions are compatible with extension; i.e.~the following inference
@@ -3265,3 +3125,234 @@ We have the judgmental equality
 for any family $Q$ of contexts over $\ctxext{{\Gamma}{A}}{\mfam{A}}$ 
 \end{lem}
 \end{comment}
+
+\subsection{The terms of the empty families}
+In this subsection we will define and derive properties of the term of the empty
+family in a context. We will leave most proofs to the reader.
+
+For the following definition, note that we have the judgmental equalities
+$\jctxeq{\Gamma}{{\Gamma}{\emptyf}}$ and 
+$\jfameq{\Gamma}{\ctxwk{\emptyf}{\emptyf}}{\emptyf}$.
+
+\begin{defn}
+Let $\Gamma$ be a context. We define
+\begin{equation*}
+\jtermdefn{\Gamma}{\emptyf}{\emptytm}{\idtm{\emptyf}}
+\end{equation*}
+\end{defn}
+
+\begin{rmk}
+There seems to be no way to derive that this term is
+judgmentally unique. Also, there seems to be no reason we need that. This has
+been a suggestion of Voevodsky and Garner.
+\end{rmk}
+
+We will first show that the terms of the empty families are compatible with
+weakening and substitution before we show that they are compatible with
+extension on terms.
+
+\begin{lem}\label{lem:emptytm-wk}
+The following inference rule expressing that the terms of the empty families are
+compatible with weakening is valid:
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jtermeq
+      {{\Gamma}{A}}
+      {\emptyf}
+      {\ctxwk{A}{\emptytm}}
+      {\emptytm}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{lem}\label{lem:emptytm-subst}
+The following inference rule expressing that the terms of the empty families are
+compatible with substitutuion is valid:
+\begin{equation*}
+\inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq
+      {\Gamma}
+      {\emptyf}
+      {\subst{x}{\emptytm}}
+      {\emptytm}
+    }
+\end{equation*}
+\end{lem}
+
+\begin{lem}\label{comp-0s}
+The following rules asserting that substituting by the term $\jterm{\Gamma}{\emptyf}{\emptytm}$
+leaves everything unchanged are valid:
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{\subst{\emptytm}{A}}{A}
+    }
+  \\
+%& \inference
+%  { \jterm{\Gamma}{A}{x}
+%    }
+%  { \jtermeq{\Gamma}{A}{\subst{\emptytm}{x}}{x}
+%    }
+%  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq{{\Gamma}{A}}{\subst{\emptytm}{P}}{P}
+    }
+  \\
+& \inference
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jtermeq{{\Gamma}{A}}{P}{\subst{\emptytm}{f}}{f}
+    }.
+\end{align}
+\end{lem}
+
+\begin{proof}
+This follows directly from the properties in \autoref{comp-0w,cancellation-i}.
+\end{proof}
+
+\begin{lem}\label{lem:tmext-emp}
+The following compatibility rules for extensions of the term of the empty family
+are valid:
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq{\Gamma}{A}{\tmext{\emptytm}{x}}{x}
+    }
+& & \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq{\Gamma}{A}{\tmext{x}{\emptytm}}{x}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jtermeq
+      {{\Gamma}{A}}
+      {\emptyf}
+      {\cprojfstf{\emptyf}{A}}
+      {\emptytm}
+    }
+& & \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq
+      {\Gamma}
+      {A}
+      {A}
+      {\cprojfstf{A}{\emptyf}}
+      {\idtm{A}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq
+      {\Gamma}
+      {A}
+      {A}
+      {\cprojsndf{\emptyf}{A}}
+      {\idtm{A}}
+    }
+& & \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jtermeq
+      {{\Gamma}{A}}
+      {\emptyf}
+      {\cprojsndf{A}{\emptyf}}
+      {\emptytm}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+We only display a proof of the first:
+\begin{equation*}
+\tmext{\emptytm}{x}
+\jdeq \unfold{\tmext{\emptyf}{A}{\emptytm}{x}}
+\jdeq \subst{x}{\idtm{{\emptyf}{A}}}
+\jdeq \subst{x}{\idtm{A}}
+\jdeq x.\qedhere
+\end{equation*}
+\end{proof}
+
+\begin{lem}\label{lem:finc-emp}
+The fiber inclusions are compatible with the empty families; i.e.~the following
+inference rules are valid
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq
+      {\Gamma}
+      {A}
+      {\finc{x}{\emptyf}}
+      {x}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jhomeq
+      {\Gamma}
+      {A}
+      {A}
+      {\finc{\emptytm}{A}}
+      {\idtm{A}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Let $\jterm{\Gamma}{A}{x}$. We have the judgmental equalities
+\begin{align*}
+\finc{x}{\emptyf}
+& \jdeq
+  \unfold{\finc{x}{\emptyf}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \tmext{\ctxwk{\emptyf}{x}}{\idtm{\emptyf}}
+  \tag{by \autoref{comp-s0-c}}
+  \\
+& \jdeq
+  \tmext{x}{\idtm{\emptyf}}
+  \tag{by \autoref{comp-0w-t}}
+  \\
+& \jdeq
+  \tmext{x}{\emptytm}
+  \tag{by definition}
+  \\
+& \jdeq
+  x
+  \tag{by \autoref{lem:tmext-emp}}
+\end{align*}
+to prove the first judgmental equality. For the second, we have
+\begin{align*}
+\finc{\emptytm}{A}
+& \jdeq
+  \unfold{\finc{\emptytm}{A}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \tmext{\emptytm}{\idtm{\subst{\emptytm}{A}}}
+  \tag{by \autoref{lem:emptytm-wk}}
+  \\
+& \jdeq
+  \idtm{\subst{\emptytm}{A}}
+  \tag{by \autoref{lem:tmext-emp}}
+  \\
+& \jdeq
+  \idtm{A}
+  \tag{by \autoref{comp-0s}}.
+\end{align*}
+\end{proof}

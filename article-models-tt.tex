@@ -1326,41 +1326,6 @@ their terms, families over those families and terms of those unchanged:
   \label{comp-0w-t}
 \end{align}
 
-\begin{comment}
-\subsubsection{Substituting by the term of the empty family}
-\label{comp-0s}
-The following rules assert that substituting by the term $\jterm{\Gamma}{\emptyf}{\emptytm}$
-leaves everything unchanged.
-\begin{align}
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jfameq{\Gamma}{\subst{\emptytm}{A}}{A}
-    }
-  \label{comp-0s-c}
-  \\
-%& \inference
-%  { \jterm{\Gamma}{A}{x}
-%    }
-%  { \jtermeq{\Gamma}{A}{\subst{\emptytm}{x}}{x}
-%    }
-%  \\
-& \inference
-  { \jfam{{\Gamma}{A}}{P}
-    }
-  { \jfameq{{\Gamma}{A}}{\subst{\emptytm}{P}}{P}
-    }
-  \label{comp-0s-f}
-  \\
-& \inference
-  { \jterm{{\Gamma}{A}}{P}{f}
-    }
-  { \jtermeq{{\Gamma}{A}}{P}{\subst{\emptytm}{f}}{f}
-    }.
-  \label{comp-0s-t}
-\end{align}
-\end{comment}
-
 \subsubsection{Currying for weakening}
 \label{comp-ew}
 The rules expressing that extension is compatible with weakening assert that
