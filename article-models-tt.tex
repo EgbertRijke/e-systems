@@ -740,7 +740,18 @@ family $\ctxwk{A}{B}$.
 \label{comp-we}
 The following rules assert that when an extended family is weakened, the
 weakening distributes over the extension factors.
-\begin{align}\label{comp-we-f}
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq
+      {\ctxext{\Gamma}{A}}
+      {\ctxwk{A}{\ctxext{B}{Q}}}
+      {\ctxext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}}
+    }
+  \label{comp-we-c}
+  \\
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{{\Gamma}{B}}{Q}}{R}
@@ -750,6 +761,7 @@ weakening distributes over the extension factors.
       {\ctxwk{A}{\ctxext{Q}{R}}}
       {\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
     }
+  \label{comp-we-f}
 \end{align}
 When thinking of terms of $\ctxwk{A}{B}$ as morphisms of families from $A$ to
 $B$, this looks already like form of type theoretic choice. It is weaker in that
@@ -760,17 +772,35 @@ There is also a version of this property where an extended term is weakened.
 This variant is stated and proved in \autoref{comp-we-t}.
 
 \paragraph{Weakening of weakenings}
-When a weakened family is weakened even further, the outer weakening distributes
-over the `weakening factors'.
+Weakening by a family $A$ in context $\Gamma$ brings things in context $\Gamma$
+to things in context $\ctxext{\Gamma}{A}$. Since we have all the ingredients of
+the theory of contexts, families and terms in the context $\Gamma$ as well it
+has in particular it's own weakening by families. Suppose we have a family
+$\jfam{{\Gamma}{B}}{Q}$ over $B$ in context $\Gamma$. Weakening by $Q$ brings
+things from context $\ctxext{\Gamma}{B}$ to $\ctxext{{\Gamma}{B}}{Q}$. Thus
+we can provide rules asserting what will happen when we first weaken by $Q$ and
+then (via the action on families) by $A$. We will require the following
+inference rules to be valid:
 \label{comp-ww}
 \begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    \jfam{{\Gamma}{B}}{R}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
+      {\ctxwk{A}{{Q}{R}}}
+      {\ctxwk{{A}{Q}}{{A}{R}}}
+    }
+  \label{comp-ww-c}\\
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{B}}{Q}
     \jfam{{{\Gamma}{B}}{R}}{S}
     }
   { \jfameq
-      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{{A}{Q}}{{A}{R}}}
+      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{{Q}{R}}}}
       {\ctxwk{A}{{Q}{S}}}
       {\ctxwk{{A}{Q}}{{A}{S}}}
     }
@@ -781,13 +811,67 @@ over the `weakening factors'.
     \jterm{{{\Gamma}{B}}{R}}{S}{k}
     }
   { \jtermeq
-      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{{A}{Q}}{{A}{R}}}
+      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{{Q}{R}}}}
       {\ctxwk{A}{{Q}{S}}}
       {\ctxwk{A}{{Q}{k}}}
       {\ctxwk{{A}{Q}}{{A}{k}}}
     }
   \label{comp-ww-t}
 \end{align}
+
+\begin{rmk}
+As an important special case of these inference rules we have the following
+valid inference rules:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jfam{\Gamma}{C}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{{B}{C}}}
+      {\ctxwk{{A}{B}}{{A}{C}}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jfam{{\Gamma}{C}}{R}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{{B}{C}}}}
+      {\ctxwk{A}{{B}{R}}}
+      {\ctxwk{{A}{B}}{{A}{R}}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jterm{{\Gamma}{C}}{R}{h}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{{B}{C}}}}
+      {\ctxwk{A}{{B}{R}}}
+      {\ctxwk{A}{{B}{h}}}
+      {\ctxwk{{A}{B}}{{A}{h}}}
+    }
+\end{align*}
+Moreover, we have
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jterm{\Gamma}{C}{z}
+    }
+  { \jtermeq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{{B}{C}}}
+      {\ctxwk{A}{{B}{z}}}
+      {\ctxwk{{A}{B}}{{A}{z}}}
+    }
+\end{equation*}
+\end{rmk}
 
 \begin{comment}
 \subsubsection{Weakening by a context}
@@ -983,10 +1067,21 @@ meaningfully state the definition of composition.
 
 \paragraph{Fibers of extensions}
 \label{comp-se}
-The following inference rule asserts that if we take the fiber of an extended
+The following inference rules assert that if we take the fiber of an extended
 family at a term $x$ of $A$ in context $\Gamma$, the substitution by $x$
 distributes over the factors of the extension.
-\begin{align}\label{comp-se-f}
+\begin{align}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq
+      {\Gamma}
+      {\subst{x}{\ctxext{P}{Q}}}
+      {\ctxext{\subst{x}{P}}{\subst{x}{Q}}}
+    }
+  \label{comp-se-c}
+  \\
 & \inference
   { \jterm{\Gamma}{A}{x}
     \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
@@ -996,13 +1091,69 @@ distributes over the factors of the extension.
       {\subst{x}{\ctxext{Q}{R}}}
       {\ctxext{\subst{x}{Q}}{\subst{x}{R}}}
     }
+  \label{comp-se-f}
 \end{align}
 There is also a version of this statement in which extended terms are considered.
 This variant is stated and proved in \autoref{comp-se-t}.
 
 \paragraph{Fibers of weakenings}\label{comp-sw}
-Substitutions distribute over weakenings:
+The following rules assert what happens when we first weaken by a family
+$Q$ over $P$ in context $\ctxext{\Gamma}{A}$ and then substitute by a term
+$x$ of $A$:
 \begin{align}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jfam{{{\Gamma}{A}}{P}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+      {\subst{x}{\ctxwk{Q}{R}}}
+      {\ctxwk{\subst{x}{Q}}{\subst{x}{R}}}
+    }
+  \label{comp-sw-c}
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jfam{{{{\Gamma}{A}}{P}}{R}}{S}
+    }
+  { \jfameq
+      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{\ctxwk{Q}{R}}}}
+      {\subst{x}{\ctxwk{Q}{S}}}
+      {\ctxwk{\subst{x}{Q}}{\subst{x}{S}}}
+    }
+  \label{comp-sw-f}
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jterm{{{{\Gamma}{A}}{P}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{\ctxwk{Q}{R}}}}
+      {\subst{x}{\ctxwk{Q}{S}}}
+      {\subst{x}{\ctxwk{Q}{k}}}
+      {\ctxwk{\subst{x}{Q}}{\subst{x}{k}}}
+    }
+  \label{comp-sw-t}
+\end{align}
+
+\begin{rmk}
+As an important special case of these inference rules we have the following
+valid inference rules:
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{A}}{Q}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\ctxwk{P}{Q}}}
+      {\ctxwk{\subst{x}{P}}{\subst{x}{Q}}}
+    }
+  \\
 & \inference
   { \jterm{\Gamma}{A}{x}
     \jfam{{\Gamma}{A}}{P}
@@ -1013,49 +1164,110 @@ Substitutions distribute over weakenings:
       {\subst{x}{\ctxwk{P}{R}}}
       {\ctxwk{\subst{x}{P}}{\subst{x}{R}}}
     }
-  \label{comp-sw-f}\\
+  \\
 & \inference
   { \jterm{\Gamma}{A}{x}
     \jfam{{\Gamma}{A}}{P}
     \jterm{{{\Gamma}{A}}{Q}}{R}{h}
     }
   { \jtermeq
-      {\ctxext{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}
       {\subst{x}{\ctxwk{P}{R}}}
       {\subst{x}{\ctxwk{P}{h}}}
       {\ctxwk{\subst{x}{P}}{\subst{x}{h}}}
     }
-  \label{comp-sw-t}
-\end{align}
+\end{align*}
+Moreover, we get
+\begin{equation*}
+\inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    \jterm{{\Gamma}{A}}{Q}{g}
+    }
+  { \jtermeq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\ctxwk{P}{Q}}}
+      {\subst{x}{\ctxwk{P}{g}}}
+      {\ctxwk{\subst{x}{P}}{\subst{x}{g}}}
+    }
+\end{equation*}
+\end{rmk}
 
 \paragraph{Fibers of fibers}
 \label{comp-ss}
 
-We require that substitution is compatible with itself, which is roughly the
-assertion that substitution is associative. However, we cannot just state that
-$\subst{x}{{f}{g}}\jdeq\subst{{x}{f}}{g}$ since the expression $\subst{{x}{f}}{g}$
-is not well-formed. The term $\subst{x}{f}$ can be substituted in (terms of) families over
-$\subst{x}{P}$; the term $\subst{x}{g}$ is such. Therefore, associativity of
-substitution takes the form $\subst{x}{{f}{g}}\jdeq\subst{{x}{f}}{{x}{g}}$.
-Note that the term $\subst{{x}{f}}{{x}{g}}$ may be written down more conveniently
-as $\subst{x,\subst{x}{f}}{g}$, although we will not do that. In fact, after
-we have introduced extension on terms in \autoref{extension-on-terms}, we will 
-see that $\subst{{x}{f}}{{x}{g}}\jdeq\subst{\tmext{x}{\subst{x}{f}}}{g}$.
-
-In the following inference rules we assume
-$\jterm{\Gamma}{A}{x}$ and $\jterm{{\Gamma}{A}}{P}{f}$.
+The following rules explain what happens when we first substitute by a term
+$g$ of $Q$ over $P$ in context $\ctxext{\Gamma}{A}$ and then by a term $x$ of
+$A$:
 \begin{align}
 & \inference
-  { \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+      {\subst{x}{{g}{R}}}
+      {\subst{{x}{g}}{{x}{R}}}
+    }
+  \label{comp-ss-c}
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jfam{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{{g}{R}}}}
+      {\subst{x}{{g}{S}}}
+      {\subst{{x}{g}}{{x}{S}}}
+    }
+  \label{comp-ss-f}
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jterm{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{{g}{R}}}}
+      {\subst{x}{{g}{S}}}
+      {\subst{x}{{g}{k}}}
+      {\subst{{x}{g}}{{x}{k}}}
+    }
+  \label{comp-ss-f}
+\end{align}
+
+\begin{rmk}
+As an important special case of these inference rules we have the following
+valid inference rules:
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{\Gamma}{A}}{P}{f}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq
+      {\Gamma}
+      {\subst{x}{{f}{Q}}}
+      {\subst{{x}{f}}{{x}{Q}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{\Gamma}{A}}{P}{f}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
     }
   { \jfameq
       {{\Gamma}{\subst{x}{{f}{Q}}}}
       {\subst{x}{{f}{R}}}
       {\subst{{x}{f}}{{x}{R}}}
     }
-  \label{comp-ss-f}\\
+  \\
 & \inference
-  { \jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{h}
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{\Gamma}{A}}{P}{f}
+    \jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{h}
     }
   { \jtermeq
       {{\Gamma}{\subst{x}{{f}{Q}}}}
@@ -1063,30 +1275,97 @@ $\jterm{\Gamma}{A}{x}$ and $\jterm{{\Gamma}{A}}{P}{f}$.
       {\subst{x}{{f}{h}}}
       {\subst{{x}{f}}{{x}{h}}}
     }
-  \label{comp-ss-t}
-\end{align}
+\end{align*}
+Moreover, we get
+\begin{equation*}
+\inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{\Gamma}{A}}{P}{f}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    }
+  { \jtermeq
+      {\Gamma}
+      {\subst{x}{{f}{Q}}}
+      {\subst{x}{{f}{g}}}
+      {\subst{{x}{f}}{{x}{g}}}
+    }
+\end{equation*}
+\end{rmk}
 
 \paragraph{Weakenings of fibers}
 \label{comp-ws}
-We already have rules for the compatibility of substitution with weakening, but
-we still need the rules the other way around, asserting that there is a 
-judgmental equality $\ctxwk{A}{\subst{y}{Q}}\jdeq\subst{\ctxwk{A}{y}}{\ctxwk{A}{Q}}$
-together with all its variants.
-
-In the following inference rules we assume that $\jfam{\Gamma}{A}$ and that
-$\jterm{\Gamma}{B}{y}$.
+The following inference rules explain what happens when we first weaken by a
+term $g$ of $Q$ in context $\ctxext{\Gamma}{B}$ and then weaken by a family
+$A$ over $\Gamma$.
 \begin{align}
 & \inference
-  { \jfam{{{\Gamma}{B}}{Q}}{R}
+  { \jfam{\Gamma}{A}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{\subst{g}{R}}}
+      {\subst{\ctxwk{A}{g}}{\ctxwk{A}{R}}}
+    }
+  \label{comp-ws-c}
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{\subst{g}{R}}}}
+      {\ctxwk{A}{\subst{g}{S}}}
+      {\subst{\ctxwk{A}{g}}{\ctxwk{A}{S}}}
+    }
+  \label{comp-ws-f}
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    \jterm{{{{\Gamma}{B}}{Q}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{\subst{g}{R}}}}
+      {\ctxwk{A}{\subst{g}{S}}}
+      {\ctxwk{A}{\subst{g}{k}}}
+      {\subst{\ctxwk{A}{g}}{\ctxwk{A}{k}}}
+    }
+  \label{comp-ws-t}
+\end{align}
+
+\begin{rmk}
+As an important special case of these inference rules we have the following 
+valid inference rules:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jterm{\Gamma}{B}{y}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq
+      {{\Gamma}{A}}
+      {\ctxwk{A}{\subst{y}{Q}}}
+      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{Q}}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jterm{\Gamma}{B}{y}
+    \jfam{{{\Gamma}{B}}{Q}}{R}
     }
   { \jfameq
       {{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}
       {\ctxwk{A}{\subst{y}{R}}}
       {\subst{\ctxwk{A}{y}}{\ctxwk{A}{R}}}
     }
-  \label{comp-ws-f}\\
+  \\
 & \inference
-  { \jterm{{{\Gamma}{B}}{Q}}{R}{h}
+  { \jfam{\Gamma}{A}
+    \jterm{\Gamma}{B}{y}
+    \jterm{{{\Gamma}{B}}{Q}}{R}{h}
     }
   { \jtermeq
       {{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}
@@ -1094,8 +1373,22 @@ $\jterm{\Gamma}{B}{y}$.
       {\ctxwk{A}{\subst{y}{h}}}
       {\subst{\ctxwk{A}{y}}{\ctxwk{A}{h}}}
     }
-  \label{comp-ws-t}
-\end{align}
+\end{align*}
+Moreover, we get
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    \jterm{\Gamma}{B}{y}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jtermeq
+      {{\Gamma}{A}}
+      {\ctxwk{A}{\subst{y}{Q}}}
+      {\ctxwk{A}{\subst{y}{g}}}
+      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{g}}}
+    }
+\end{equation*}
+\end{rmk}
 
 \subsubsection{Identity terms}
 \label{identityterms}
@@ -1150,17 +1443,32 @@ The identity term of a weakened family is the weakened identity term:
 \begin{equation}
 \inference
   { \jfam{\Gamma}{A}
-    \jfam{\Gamma}{B}
+    \jfam{{\Gamma}{B}}{Q}
     }
   { \unfoldall{\jhomeq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{Q}}
+      {\ctxwk{A}{Q}}
+      {\ctxwk{A}{\idtm{Q}}}
+      {\idtm{\ctxwk{A}{Q}}}
+      }
+    }
+  \label{comp-wi-t}
+\end{equation}
+
+\begin{rmk}
+An important special case is the judgmental equality
+\begin{equation*}
+\unfoldall{\jhomeq
       {{\Gamma}{A}}
       {\ctxwk{A}{B}}
       {\ctxwk{A}{B}}
       {\ctxwk{A}{\idtm{B}}}
       {\idtm{\ctxwk{A}{B}}}
-    }}
-  \label{comp-wi-t}
-\end{equation}
+      }
+\end{equation*}
+for a family $\jfam{\Gamma}{B}$.
+\end{rmk}
 
 \paragraph{The identity term of a substituted family}
 \label{comp-si}
@@ -1168,17 +1476,31 @@ The identity term of a substituted family is the substitution of the identity te
 \begin{equation}
 \inference
   { \jterm{\Gamma}{A}{x}
-    \jfam{{\Gamma}{A}}{P}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
     }
   { \unfoldall{\jhomeq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{Q}}
+      {\subst{x}{Q}}
+      {\subst{x}{\idtm{Q}}}
+      {\idtm{\subst{x}{Q}}}
+    }}
+  \label{comp-si-t}
+\end{equation}
+
+\begin{rmk}
+An important special case is the judgmental equality
+\begin{equation*}
+\unfoldall{\jhomeq
       {\Gamma}
       {\subst{x}{P}}
       {\subst{x}{P}}
       {\subst{x}{\idtm{P}}}
       {\idtm{\subst{x}{P}}}
-    }}
-  \label{comp-si-t}
-\end{equation}
+    }
+\end{equation*}
+for a family $\jfam{{\Gamma}{A}}{P}$.
+\end{rmk}
 
 \subsection{Further judgmental equalities of the theory of contexts, families and
 terms}
@@ -1335,6 +1657,17 @@ appropriate way.
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{A}}{P}
+    \jfam{\Gamma}{B}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{P}}
+      {\ctxwk{\ctxext{A}{P}}{B}}
+      {\ctxwk{P}{{A}{B}}}
+    }
+  \label{comp-ew-c}\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
     \jfam{{\Gamma}{B}}{Q}
     }
   { \jfameq
@@ -1367,6 +1700,17 @@ mapping everything to $y:B$. Thus, these rules actually establish the weakening
 as the weakening. After stating the rules we will describe what it means to
 compose context morphisms (terms of weakened contexts).
 \begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jfameq
+      {\Gamma}
+      {\subst{x}{\ctxwk{A}{B}}}
+      {B}
+    }
+  \label{cancellation-ws-c}\\
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{B}}{Q}
