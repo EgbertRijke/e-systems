@@ -1048,7 +1048,7 @@
   \lambda^{{\default@ctxext@parens #1},{\default@ctxext@parens #2}}
   (\default@ctxext #3)
   }
-\newcommand{\sev}[1]{\tfev(#1)}
+\newcommand{\sev}[3]{\tfev^{{\default@ctxext@parens #1},{\default@ctxext@parens #2}}(#3)}
 
 \makeatother
 
@@ -1326,7 +1326,7 @@
 \newcommand{\eqrel}{\typefont{EqRel}}
 \newcommand{\piw}{\ensuremath{\Pi\typefont{W}}} %% to be used in conjunction with -pretopos.
 \renewcommand{\sslash}{/\!\!/}
-\newcommand{\mprd}[2]{\Pi(#1,#2)}
+\newcommand{\mprd}[3][]{\Pi^{#1}(#2,#3)}
 \newcommand{\msm}[2]{\Sigma(#1,#2)}
 \newcommand{\midt}[1]{\idvartype_#1}
 \newcommand{\reflf}[1]{\typefont{refl}^{#1}}
