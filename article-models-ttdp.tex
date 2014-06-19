@@ -1,0 +1,267 @@
+\section{The dependent function constructor}
+As we have done with most everything so far, we will take the point of view that
+the dependent function constructor is an operation with an action on contexts,
+on families and on terms. When $A$ is a family of contexts over $\Gamma$,
+$\mprd{A}{\blank}$ takes things in context $\ctxext{\Gamma}{A}$ to the context
+$\Gamma$. It's action on terms restricted to the empty context is usually 
+denoted by $\lambda$, so we shall denote the entire action by $\lambda$. As
+usual, $\lambda$ is reversed by evaluation. 
+
+The dependent function type constructor not only acts on families $P$ of
+contexts over $\ctxext{\Gamma}{A}$, but it also sends families $Q$ of contexts
+over $\ctxext{{\Gamma}{A}}{P}$ to families $\mprd[\famsym]{A}{Q}$ over $\ctxext{\Gamma}
+{\mprd{A}{P}}$. Moreover, we will also have a version of $\lambda$-abstraction
+for terms of such families $Q$.
+
+\begin{align*}
+& \inference
+    { \jfam{{\Gamma}{A}}{P}
+      }
+    { \jfam{\Gamma}{\mprd{A}{P}}
+      }
+& & \inference
+      { \jfameq{\Gamma}{A}{A'}
+        \jfameq{{\Gamma}{A}}{P}{P'}
+        }
+      { \jfameq{\Gamma}{\mprd{A}{P}}{\mprd{A'}{P'}}
+        }
+  \\
+& \inference
+    { \jfam{{{\Gamma}{A}}{P}}{Q}
+      }
+    { \jfam{{\Gamma}{\mprd{A}{P}}}{\mprd[\famsym]{A}{Q}}
+      }
+& & \inference
+      { \jfameq{\Gamma}{A}{A'}
+        \jfameq{{{\Gamma}{A}}{P}}{Q}{Q'}
+        }
+      { \jfameq{{\Gamma}{\mprd{A}{P}}}{\mprd[\famsym]{A}{Q}}{\mprd[\famsym]{A'}{Q'}}
+        }
+  \\
+& \inference
+    { \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+      }
+    { \jterm{{\Gamma}{\mprd{A}{P}}}{\mprd[\famsym]{A}{Q}}{\slam{A}{Q}{g}}
+      }
+& & \inference
+      { \jfameq{\Gamma}{A}{A'}
+        \jtermeq{{{\Gamma}{A}}{P}}{Q}{g}{g'}
+        }
+      { \jtermeq{{\Gamma}{\mprd{A}{P}}}{\mprd[\famsym]{A}{Q}}{\slam{A}{Q}{g}}{\slam{A'}{Q}{g'}}
+        }
+  \\
+& \inference
+    { \jterm{{\Gamma}{\mprd{A}{P}}}{\mprd[\famsym]{A}{Q}}{g}
+      }
+    { \jterm{{{\Gamma}{A}}{P}}{Q}{\sev{A}{Q}{g}}
+      }
+& & \inference
+      { \jfameq{\Gamma}{A}{A'}
+        \jtermeq{{\Gamma}{\mprd{A}{P}}}{\mprd[\famsym]{A}{Q}}{g}{g'}
+        }
+      { \jtermeq{{{\Gamma}{A}}{P}}{Q}{\sev{A}{Q}{g}}{\sev{A'}{Q}{g'}}
+        }
+\end{align*}
+
+\begin{defn}
+Let $A$ and $B$ be families of contexts over $\Gamma$. Then we define
+\begin{equation*}
+\jfamdefn{\Gamma}{\jfun{A}{B}}{\sprd{A}{\ctxwk{A}{B}}}.
+\end{equation*}
+\end{defn}
+
+\subsection{The compatibility rules for the dependent product constructor}
+In this subsection we lay out the compatibility rules which we will require
+for the dependent product constructor.
+
+\subsubsection{Dependent products are compatible with the empty context}
+The empty context can appear in the domain and in the codomain of the dependent
+function type constructor. We have the following inference rules explaining
+what happens when the empty context appears in the domain:
+\begin{align}
+& \inference
+    { \jfam{\Gamma}{P}
+      }
+    { \jfameq{\Gamma}{\mprd{\emptyf}{P}}{P}
+      }
+  \\
+& \inference
+    { \jfam{{\Gamma}{P}}{Q}
+      }
+    { \jfameq{{\Gamma}{P}}{\mprd[\famsym]{\emptyf}{Q}}{Q}
+      }
+  \\
+& \inference
+    { \jterm{{\Gamma}{P}}{Q}{g}
+      }
+    { \jtermeq{{\Gamma}{P}}{Q}{\slam{\emptyf}{Q}{g}}{g}
+      }
+  \\
+& \inference
+    { \jterm{{\Gamma}{P}}{Q}{g}
+      }
+    { \jtermeq{{\Gamma}{P}}{Q}{\sev{\emptyf}{Q}{g}}{g}
+      }
+\end{align}
+We have the following infernece rules explaining what happens when the empty
+context appears in the codomain:
+\begin{align}
+& \inference
+    { \jfam{\Gamma}{A}
+      }
+    { \jfameq{\Gamma}{\mprd{A}{\emptyf}}{\emptyf}
+      }
+  \\
+& \inference
+    { \jfam{{\Gamma}{A}}{P}
+      }
+    { \jfameq{{\Gamma}{\mprd{A}{P}}}{\mprd[\famsym]{A}{\emptyf}}{\emptyf}
+      }
+\end{align}
+Now we see that we can compare $\mprd{A}{P}$ with $\mprd[\famsym]{A}{P}$ by
+seeing $P$ as a family over $\ctxext{{\Gamma}{A}}{\emptyf}$. We will require
+the following inference rule to be valid:
+\begin{equation}
+\inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq{\Gamma}{\mprd{A}{P}}{\mprd[\famsym]{A}{P}}
+    }
+\end{equation}
+This rule will allow us to omit the annotation indicating the action on families,
+which we will do from now on. We also note that because the empty family over
+$\ctxext{\Gamma}{A}$ is mapped to the empty family over $\Gamma$ by the
+dependent function constructor, we obtain the important special cases of
+lambda abstraction and evaluation that
+\begin{align*}
+& \inference
+  { \jterm{{\Gamma}{A}}{P}{f}
+    }
+  { \jterm{\Gamma}{\mprd{A}{P}}{\slam{A}{P}{f}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{\mprd{A}{P}}{f}
+    }
+  { \jterm{{\Gamma}{A}}{P}{\sev{A}{P}{f}}
+    }
+\end{align*}
+Thus, we retrieve what is originally meant by lambda abstraction.
+
+\subsubsection{Dependent products are compatible with extension}
+\begin{align}
+& \inference
+  { \jfam{{{{\Gamma}{A}}{B}}{P}}{Q}
+    }
+  { \jfameq
+      {\Gamma}
+      {\sprd{{A}{B}}{{P}{Q}}}
+      {\ctxext{\sprd{A}{\sprd{B}{P}}}{\sprd{A}{\sprd{B}{Q}}}}
+    }
+  \\
+& \inference
+  { \jterm{{{\Gamma}{A}}{B}}{P}{f}
+    }
+  { \jtermeq
+      {\Gamma}
+      {\sprd{A}{\sprd{B}{P}}}
+      {\slam{{A}{B}}{P}{f}}
+      {\slam{A}{\sprd{B}{P}}{\slam{B}{P}{f}}}
+    }
+\end{align}
+
+\subsubsection{Weakening is compatible with the dependent product constructor}
+
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{\mprd{Q}{R}}}
+      {\mprd{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{\mprd{Q}{R}}}}
+      {\ctxwk{A}{\mprd{Q}{S}}}
+      {\mprd{\ctxwk{A}{Q}}{\ctxwk{A}{S}}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jterm{{{{\Gamma}{B}}{Q}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{\mprd{Q}{R}}}}
+      {\ctxwk{A}{\mprd{Q}{S}}}
+      {\ctxwk{A}{\slam{Q}{S}{k}}}
+      {\slam{\ctxwk{A}{Q}}{\ctxwk{A}{S}}{\ctxwk{A}{k}}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jterm{{{\Gamma}{B}}{\mprd{Q}{R}}}{\mprd{Q}{S}}{k}
+    }
+  { \jtermeq
+      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{R}}}
+      {\ctxwk{A}{S}}
+      {\ctxwk{A}{\sev{Q}{S}{k}}}
+      {\sev{\ctxwk{A}{Q}}{\ctxwk{A}{S}}{\ctxwk{A}{k}}}
+    }
+\end{align*}
+
+\subsection{Dependent products are taken fiberwise}
+The rules explaining that substitution is compatible with the dependent product
+constructor assert that dependent products are taken fiberwise (as is usual).
+
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\mprd{Q}{R}}}
+      {\mprd{\subst{x}{Q}}{\subst{x}{R}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{\Gamma}{\subst{x}{P}}}{\mprd{\subst{x}{Q}}{\subst{x}{R}}}}
+      {\subst{x}{\mprd{Q}{S}}}
+      {\mprd{\subst{x}{Q}}{\subst{x}{S}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{\Gamma}{\subst{x}{P}}}{\mprd{\subst{x}{Q}}{\subst{x}{R}}}}
+      {\subst{x}{\mprd{Q}{S}}}
+      {\subst{x}{\slam{Q}{S}{k}}}
+      {\slam{\subst{x}{Q}}{\subst{x}{S}}{\subst{x}{k}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{{\Gamma}{A}}{P}}{\mprd{Q}{R}}}{\mprd{Q}{S}}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{R}}}
+      {\subst{x}{S}}
+      {\subst{x}{\sev{Q}{S}{k}}}
+      {\sev{\subst{x}{Q}}{\subst{x}{S}}{\subst{x}{k}}}
+    } 
+\end{align*}
+
+\subsubsection{Dependent products are compatible with the identity functions}?
