@@ -149,26 +149,77 @@ lambda abstraction and evaluation that
 Thus, we retrieve what is originally meant by lambda abstraction.
 
 \subsubsection{Dependent products are compatible with extension}
-\begin{align}
+The following rules describe what happens when a dependent function constructor
+is taken over an extension
+
+\begin{align*}
 & \inference
-  { \jfam{{{{\Gamma}{A}}{B}}{P}}{Q}
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
     }
   { \jfameq
       {\Gamma}
-      {\sprd{{A}{B}}{{P}{Q}}}
-      {\ctxext{\sprd{A}{\sprd{B}{P}}}{\sprd{A}{\sprd{B}{Q}}}}
+      {\mprd{\ctxext{A}{P}}{Q}}
+      {\mprd{A}{\mprd{P}{Q}}}
     }
   \\
 & \inference
-  { \jterm{{{\Gamma}{A}}{B}}{P}{f}
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\mprd{\ctxext{A}{P}}{Q}}}
+      {\mprd{\ctxext{A}{P}}{R}}
+      {\mprd{A}{\mprd{P}{R}}}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{h}
     }
   { \jtermeq
-      {\Gamma}
-      {\sprd{A}{\sprd{B}{P}}}
-      {\slam{{A}{B}}{P}{f}}
-      {\slam{A}{\sprd{B}{P}}{\slam{B}{P}{f}}}
+      {{\Gamma}{\mprd{\ctxext{A}{P}}{Q}}}
+      {\mprd{\ctxext{A}{P}}{R}}
+      {\slam{\ctxext{A}{P}}{R}{h}}
+      {\slam{A}{\mprd{P}{R}}{\slam{P}{R}{h}}}
     }
-\end{align}
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jterm{{\Gamma}{\mprd{\ctxext{A}{P}}{Q}}}{\mprd{\ctxext{A}{P}}{R}}{h}
+    }
+  { \jtermeq
+      {{{\Gamma}{{A}{P}}}{Q}}
+      {R}
+      {\sev{\ctxext{A}{P}}{R}{h}}
+      {\sev{P}{R}{\sev{A}{\mprd{P}{R}}{h}}}
+    }
+\end{align*}
+
+When the dependent product constructor is applied to an extension, we get the
+following:
+
+\begin{align*}
+& \inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq
+      {\Gamma}
+      {\mprd{A}{\ctxext{P}{Q}}}
+      {\ctxext{\mprd{A}{P}}{\mprd{A}{Q}}}
+    }
+  \\
+& \inference
+  { \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\mprd{A}{P}}}
+      {\mprd{A}{\ctxext{Q}{R}}}
+      {\ctxext{\mprd{A}{Q}}{\mprd{A}{R}}}
+    }
+\end{align*}
+We show in \autoref{lem:slam-ext} that the remaining two properties
+involving lambda abstraction and evaluation are derivable.
 
 \subsubsection{Weakening is compatible with the dependent product constructor}
 
@@ -264,4 +315,198 @@ constructor assert that dependent products are taken fiberwise (as is usual).
     } 
 \end{align*}
 
-\subsubsection{Dependent products are compatible with the identity functions}
+\subsubsection{The dependent function constructor is compatible with weakening}
+\begin{align*}
+& \inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jfam{{{\Gamma}{Q}}{P}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{\mprd{A}{P}}}{\mprd{A}{Q}}}
+      {\mprd{A}{\ctxwk{Q}{R}}}
+      {\ctxwk{\mprd{A}{Q}}{\mprd{A}{R}}}
+    }
+  \\
+& \inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jfam{{{{\Gamma}{P}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{{\Gamma}{\mprd{A}{P}}}{\mprd{A}{Q}}}{\mprd{A}{\ctxwk{Q}{R}}}}
+      {\mprd{A}{\ctxwk{Q}{S}}}
+      {\ctxwk{\mprd{A}{Q}}{\mprd{A}{S}}}
+    }
+  \\
+& \inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jterm{{{{\Gamma}{P}}{Q}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{\mprd{A}{P}}}{\mprd{A}{Q}}}{\mprd{A}{\ctxwk{Q}{R}}}}
+      {\mprd{A}{\ctxwk{Q}{S}}}
+      {\slam{A}{\ctxwk{Q}{S}}{\ctxwk{Q}{k}}}
+      {\ctxwk{\mprd{A}{Q}}{\slam{A}{S}{k}}}
+    }
+  \\
+& \inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jfam{{{{\Gamma}{P}}{Q}}{R}}{S}
+    \jterm{{{\Gamma}{\mprd{A}{P}}}{\mprd{A}{R}}}{\mprd{A}{S}}{k}
+    }
+  { \jtermeq
+      {{{{{\Gamma}{A}}{P}}{Q}}{\ctxwk{Q}{R}}}
+      {\ctxwk{Q}{S}}
+      {\sev{A}{\ctxwk{Q}{S}}{\ctxwk{\mprd{A}{Q}}{k}}}
+      {\ctxwk{Q}{\sev{A}{S}{k}}}
+    }
+\end{align*}
+
+\subsubsection{The dependent function constructor is compatible with substitution}
+\begin{align*}
+& \inference
+  { \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\mprd{A}{P}}}
+      {\mprd{A}{\subst{g}{R}}}
+      {\subst{\slam{A}{Q}{g}}{\mprd{A}{R}}}
+    }
+  \\
+& \inference
+  { \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jfam{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{\Gamma}{\mprd{A}{P}}}{\mprd{A}{\subst{g}{R}}}}
+      {\mprd{A}{\subst{g}{S}}}
+      {\subst{\slam{A}{Q}{g}}{\mprd{A}{S}}}
+    }
+  \\
+& \inference
+  { \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jterm{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{\Gamma}{\mprd{A}{P}}}{\mprd{A}{\subst{g}{R}}}}
+      {\mprd{A}{\subst{g}{S}}}
+      {\slam{A}{\subst{g}{S}}{\subst{g}{k}}}
+      {\subst{\slam{A}{Q}{g}}{\slam{A}{S}{k}}}
+    }
+  \\
+& \inference
+  { \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jterm{{\Gamma}{\mprd{A}{\ctxext{{P}{Q}}{R}}}}{\mprd{A}{S}}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{P}}{\subst{g}{R}}}
+      {\subst{g}{S}}
+      {\sev{A}{\subst{g}{S}}{\subst{\slam{A}{Q}{g}}{k}}}
+      {\subst{g}{\sev{A}{S}{k}}}
+    }
+\end{align*}
+
+\subsubsection{The dependent function constructor is compatible with the identity terms}
+\begin{align*}
+& \inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jtermeq
+      {{{\Gamma}{\mprd{A}{P}}}{\mprd{A}{Q}}}
+      {\ctxwk{\mprd{A}{Q}}{\mprd{A}{Q}}}
+      {\slam{A}{\ctxwk{Q}{Q}}{\idtm{Q}}}
+      {\idtm{\mprd{A}{Q}}}
+    }
+  \\
+& \inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{P}}{Q}}
+      {\ctxwk{Q}{Q}}
+      {\sev{A}{\ctxwk{Q}{Q}}{\idtm{\mprd{A}{Q}}}}
+      {\idtm{Q}}
+    }
+\end{align*}
+
+\subsection{Consequences of the rules for the dependent function constructors}
+
+\begin{lem}\label{lem:slam-ext}
+The inference rules asserting that lambda abstraction is compatible with term
+extension
+\begin{align*}
+& \inference
+  { \jterm{{{\Gamma}{A}}{P}}{{Q}{R}}{h}
+    }
+  { \jtermeq
+      {{\Gamma}{\mprd{A}{P}}}
+      {\mprd{A}{\ctxext{Q}{R}}}
+      {\cprojfst{\mprd{A}{Q}}{\mprd{A}{R}}{\slam{A}{\ctxext{Q}{R}}{h}}}
+      {\slam{A}{Q}{\cprojfst{Q}{R}{h}}}
+    }
+  \\
+& \inference
+  { \jterm{{{\Gamma}{A}}{P}}{{Q}{R}}{h}
+    }
+  { \jtermeq
+      {{\Gamma}{\mprd{A}{P}}}
+      {\mprd{A}{\ctxext{Q}{R}}}
+      {\cprojfst{\mprd{A}{Q}}{\mprd{A}{R}}{\slam{A}{\ctxext{Q}{R}}{h}}}
+      {\slam{A}{R}{\cprojsnd{Q}{R}{h}}}
+    }
+\intertext{and the inference rules asserting that evaluation is compatible with
+term extension}
+& \inference
+  { \jterm{{\Gamma}{\mprd{A}{P}}}{\mprd{A}{\ctxext{Q}{R}}}{h}
+    }
+  { \jtermeq
+      {{{\Gamma}{A}}{P}}
+      {{Q}{R}}
+      {\cprojfst{Q}{R}{\sev{A}{\ctxext{Q}{R}}{h}}}
+      {\sev{A}{Q}{\cprojfst{\mprd{A}{Q}}{\mprd{A}{R}}{h}}}
+    }
+  \\
+& \inference
+  { \jterm{{\Gamma}{\mprd{A}{P}}}{\mprd{A}{\ctxext{Q}{R}}}{h}
+    }
+  { \jtermeq
+      {{{\Gamma}{A}}{P}}
+      {{Q}{R}}
+      {\cprojsnd{Q}{R}{\sev{A}{\ctxext{Q}{R}}{h}}}
+      {\sev{A}{R}{\cprojsnd{\mprd{A}{Q}}{\mprd{A}{R}}{h}}}
+    }
+\end{align*}
+are valid.
+\end{lem}
+
+\begin{proof}
+We have the judgmental equalities
+\begin{align*}
+\cprojfst{\mprd{A}{Q}}{\mprd{A}{R}}{\slam{A}{\ctxext{Q}{R}}{h}}
+& \jdeq
+  \subst{\slam{A}{\ctxext{Q}{R}}{h}}{\ctxwk{\mprd{A}{R}}{\idtm{\mprd{A}{Q}}}}
+  \\
+& \jdeq 
+  \subst{\slam{A}{\ctxext{Q}{R}}{h}}{\ctxwk{\mprd{A}{R}}{\slam{A}{\ctxwk{Q}{Q}}{\idtm{Q}}}}
+  \\
+& \jdeq
+  \subst{\slam{A}{\ctxext{Q}{R}}{h}}{\slam{A}{\ctxwk{R}{{Q}{Q}}}{\ctxwk{R}{\idtm{Q}}}}
+  \\
+& \jdeq
+  \subst{\slam{A}{\ctxext{Q}{R}}{h}}{\slam{A}{\ctxwk{\ctxext{Q}{R}}{Q}}{\ctxwk{R}{\idtm{Q}}}}
+  \\
+& \jdeq
+  \slam{A}{Q}{\subst{h}{\ctxwk{R}{\idtm{Q}}}}
+  \\
+& \jdeq
+  \slam{A}{Q}{\cprojfst{Q}{R}{h}}
+\end{align*}
+\end{proof}
+
+\begin{rmk}
+It follows from these rules that on the projections (i.e.~on the fibrations),
+lambda abstraction and evaluation are each other's inverses even though we
+have not even postulated that evaluation is a retraction of lambda 
+abstraction. Thus, in combination with univalence this should give that
+they are homotopically inverse to each other.
+\end{rmk}
