@@ -49,18 +49,6 @@ for terms of such families $Q$.
         }
       { \jtermeq{{\Gamma}{\mprd{A}{P}}}{\mprd[\famsym]{A}{Q}}{\slam{A}{Q}{g}}{\slam{A'}{Q}{g'}}
         }
-  \\
-& \inference
-    { \jterm{{\Gamma}{\mprd{A}{P}}}{\mprd[\famsym]{A}{Q}}{g}
-      }
-    { \jterm{{{\Gamma}{A}}{P}}{Q}{\sev{A}{Q}{g}}
-      }
-& & \inference
-      { \jfameq{\Gamma}{A}{A'}
-        \jtermeq{{\Gamma}{\mprd{A}{P}}}{\mprd[\famsym]{A}{Q}}{g}{g'}
-        }
-      { \jtermeq{{{\Gamma}{A}}{P}}{Q}{\sev{A}{Q}{g}}{\sev{A'}{Q}{g'}}
-        }
 \end{align*}
 
 \begin{defn}
@@ -95,12 +83,6 @@ what happens when the empty context appears in the domain:
     { \jterm{{\Gamma}{P}}{Q}{g}
       }
     { \jtermeq{{\Gamma}{P}}{Q}{\slam{\emptyf}{Q}{g}}{g}
-      }
-  \\
-& \inference
-    { \jterm{{\Gamma}{P}}{Q}{g}
-      }
-    { \jtermeq{{\Gamma}{P}}{Q}{\sev{\emptyf}{Q}{g}}{g}
       }
 \end{align}
 We have the following infernece rules explaining what happens when the empty
@@ -139,12 +121,6 @@ lambda abstraction and evaluation that
     }
   { \jterm{\Gamma}{\mprd{A}{P}}{\slam{A}{P}{f}}
     }
-  \\
-& \inference
-  { \jterm{\Gamma}{\mprd{A}{P}}{f}
-    }
-  { \jterm{{\Gamma}{A}}{P}{\sev{A}{P}{f}}
-    }
 \end{align*}
 Thus, we retrieve what is originally meant by lambda abstraction.
 
@@ -182,17 +158,6 @@ is taken over an extension
       {\mprd{\ctxext{A}{P}}{R}}
       {\slam{\ctxext{A}{P}}{R}{h}}
       {\slam{A}{\mprd{P}{R}}{\slam{P}{R}{h}}}
-    }
-  \\
-& \inference
-  { \jfam{{\Gamma}{A}}{P}
-    \jterm{{\Gamma}{\mprd{\ctxext{A}{P}}{Q}}}{\mprd{\ctxext{A}{P}}{R}}{h}
-    }
-  { \jtermeq
-      {{{\Gamma}{{A}{P}}}{Q}}
-      {R}
-      {\sev{\ctxext{A}{P}}{R}{h}}
-      {\sev{P}{R}{\sev{A}{\mprd{P}{R}}{h}}}
     }
 \end{align*}
 
@@ -254,17 +219,6 @@ involving lambda abstraction and evaluation are derivable.
       {\ctxwk{A}{\slam{Q}{S}{k}}}
       {\slam{\ctxwk{A}{Q}}{\ctxwk{A}{S}}{\ctxwk{A}{k}}}
     }
-  \\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jterm{{{\Gamma}{B}}{\mprd{Q}{R}}}{\mprd{Q}{S}}{k}
-    }
-  { \jtermeq
-      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{R}}}
-      {\ctxwk{A}{S}}
-      {\ctxwk{A}{\sev{Q}{S}{k}}}
-      {\sev{\ctxwk{A}{Q}}{\ctxwk{A}{S}}{\ctxwk{A}{k}}}
-    }
 \end{align*}
 
 \subsubsection{Dependent products are taken fiberwise}
@@ -302,17 +256,6 @@ constructor assert that dependent products are taken fiberwise (as is usual).
       {\subst{x}{\slam{Q}{S}{k}}}
       {\slam{\subst{x}{Q}}{\subst{x}{S}}{\subst{x}{k}}}
     }
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jterm{{{{\Gamma}{A}}{P}}{\mprd{Q}{R}}}{\mprd{Q}{S}}{k}
-    }
-  { \jtermeq
-      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{R}}}
-      {\subst{x}{S}}
-      {\subst{x}{\sev{Q}{S}{k}}}
-      {\sev{\subst{x}{Q}}{\subst{x}{S}}{\subst{x}{k}}}
-    } 
 \end{align*}
 
 \subsubsection{The dependent function constructor is compatible with weakening}
@@ -346,18 +289,6 @@ constructor assert that dependent products are taken fiberwise (as is usual).
       {\mprd{A}{\ctxwk{Q}{S}}}
       {\slam{A}{\ctxwk{Q}{S}}{\ctxwk{Q}{k}}}
       {\ctxwk{\mprd{A}{Q}}{\slam{A}{S}{k}}}
-    }
-  \\
-& \inference
-  { \jfam{{{\Gamma}{A}}{P}}{Q}
-    \jfam{{{{\Gamma}{P}}{Q}}{R}}{S}
-    \jterm{{{\Gamma}{\mprd{A}{P}}}{\mprd{A}{R}}}{\mprd{A}{S}}{k}
-    }
-  { \jtermeq
-      {{{{{\Gamma}{A}}{P}}{Q}}{\ctxwk{Q}{R}}}
-      {\ctxwk{Q}{S}}
-      {\sev{A}{\ctxwk{Q}{S}}{\ctxwk{\mprd{A}{Q}}{k}}}
-      {\ctxwk{Q}{\sev{A}{S}{k}}}
     }
 \end{align*}
 
@@ -510,3 +441,228 @@ have not even postulated that evaluation is a retraction of lambda
 abstraction. Thus, in combination with univalence this should give that
 they are homotopically inverse to each other.
 \end{rmk}
+
+\subsection{The evaluation term}
+Until now we have just introduced the dependent function constructor, but we 
+have not treated one of its main characteristic, the evaluation map. Usually
+in type theory, evaluation is introduces by a rule like
+\begin{equation*}
+\inference
+    { \jterm{\Gamma}{\mprd{A}{P}}{f}
+      }
+    { \jterm{{\Gamma}{A}}{P}{\mathsf{ev}(f)}
+      }
+\end{equation*}
+or even a rule like
+\begin{equation*}
+\inference
+    { \jterm{\Gamma}{\mprd{A}{P}}{f}
+      \jterm{\Gamma}{A}{x}
+      }
+    { \jterm{\Gamma}{\subst{x}{P}}{\mathsf{ev}(f,x)}
+      }
+\end{equation*}
+involving a term of $A$. We immediately discard the latter as a viable option.
+In the current setting however, there is an even better option than the first. 
+We need a better option because given a family 
+$\jfam{{{\Gamma}{A}}{P}}{Q}$, we will need to have a family over
+$\ctxext{{\Gamma}{\mprd{A}{P}}}{\ctxwk{\mprd{A}{P}}{A}}$ with fibers
+$\subst{{x}{\mathsf{ev}(f)}}{{x}{Q}}$ at $f:\mprd{A}{P}$ and $x:A$. In a 
+name-free setting, such a family is impossible to obtain when using evaluation
+as introduced above. The solution is to introduce evaluation via the rule
+\begin{equation}\label{eq:evtm}
+\inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jterm
+      {{{\Gamma}{\mprd{A}{P}}}{\ctxwk{\mprd{A}{P}}{A}}}
+      {\ctxwk{\mprd{A}{P}}{P}}
+      {\evtm{A}{P}}
+    }
+\end{equation}
+The advantages are as follows:
+\begin{enumerate}
+\item It matches the categorical notion of locally cartesian closedness, where
+the unit and the counit consist of morphisms in the category.
+\item We now have the family 
+\begin{equation*}
+\jfam
+  {{{\Gamma}{\mprd{A}{P}}}{\ctxwk{\mprd{A}{P}}{A}}}
+  {\subst{\evtm{A}{P}}{\ctxwk{\mprd{A}{P}}{Q}}}
+\end{equation*}
+Using this family, we hope to find the judgmental equality
+\begin{equation*}
+\jfameq
+  {{\Gamma}{\mprd{A}{P}}}
+  {\mprd{A}{Q}}
+  {\mprd{\ctxwk{\mprd{A}{P}}{A}}{\subst{\evtm{A}{P}}{\ctxwk{\mprd{A}{P}}{Q}}}}
+\end{equation*}
+expressing the action on families of the dependent function constructor in terms
+of its action on contexts. This is in agreement with the usual approach of
+\cite{TheBook}, where no action on families of the dependent function type
+constructor is needed. We will also be able to use the family
+\begin{equation*}
+\jfam
+  {{\Gamma}{\mprd{A}{P}}}
+  {{\ctxwk{\mprd{A}{P}}{A}}{\subst{\evtm{A}{P}}{\ctxwk{\mprd{A}{P}}{Q}}}}
+\end{equation*}
+to formulate the compatibility of the dependent function constructor with itself.
+\end{enumerate}
+Of course, we will also need the following convertibility rule before we 
+continue:
+
+\begin{rmk}
+It is common practice, for example in \cite{TheBook}, to omit explicit notation
+for evaluation. In our setting that would mean that we would denote a term 
+$\subst{f}{\evtm{A}{P}}$ of $P$ in context $\ctxext{\Gamma}{A}$ by $f$.
+However, since the evaluation term is set to be an actual term of the theory,
+it seems to be harmful to the exposition of the theory to copy this practice.
+\end{rmk}
+
+\subsubsection{The compatibility rules of the evaluation terms}
+
+\paragraph{Compatibility with the empty context}
+The following rule explains that the evaluation term is judgmentally equal to
+the identity term when the domain of the dependent function constructor is the
+empty family over $\Gamma$.
+\begin{align*}
+& \inference
+    { \jfam{\Gamma}{P}
+      }
+    { \jtermeq
+        {{\Gamma}{P}}
+        {\ctxwk{P}{P}}
+        {\evtm{\emptyf}{P}}
+        {\idtm{P}}
+      }
+\end{align*}
+
+\paragraph{Currying for the evaluation term}
+We have asserted that there is a judgmental equality
+\begin{equation*}
+\jfameq
+      {\Gamma}
+      {\mprd{\ctxext{A}{P}}{Q}}
+      {\mprd{A}{\mprd{P}{Q}}}
+\end{equation*}
+for every family $Q$ over $\ctxext{{\Gamma}{A}}{P}$. It follows that we have
+the judgmental equalities
+\begin{align*}
+& \ctxwk{\mprd{A}{\mprd{P}{Q}}}{Q}
+  \\
+& \jdeq
+  \subst
+    { \evtm{A}{\mprd{P}{Q}}}
+    { \ctxwk
+        {{\mprd{A}{\mprd{P}{Q}}}{\mprd{P}{Q}}}
+        {{\mprd{A}{\mprd{P}{Q}}}{Q}}
+      }
+  \\
+& \jdeq
+  \subst
+    { \evtm{A}{\mprd{P}{Q}}}
+    { \ctxwk
+        {\mprd{A}{\mprd{P}{Q}}}
+        {{\mprd{P}{Q}}{Q}}
+      }
+\end{align*}
+Since $\evtm{P}{Q}$ is a term of $\ctxwk{\mprd{P}{Q}}{Q}$ in 
+context $\ctxext{{{\Gamma}{A}}{\mprd{P}{Q}}}{\ctxwk{\mprd{P}{Q}}{P}}$ we may
+require the following compatibility rule:
+\begin{align}
+& \inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \begin{array}{l}
+    \ctxext
+      {{\Gamma}{\mprd{\ctxext{A}{P}}{Q}}}{\ctxwk{\mprd{\ctxext{A}{P}}{Q}}{\ctxext{A}{P}}}
+      \\
+    \jtermeq
+      {\qquad}
+      {\ctxwk{\mprd{\ctxext{A}{P}}{Q}}{Q}}
+      {\evtm{\ctxext{A}{P}}{Q}}
+      {\subst{\evtm{A}{\mprd{P}{Q}}}{\ctxwk{\mprd{A}{\mprd{P}{Q}}}{\evtm{P}{Q}}}}
+    \end{array}
+    }
+\end{align}
+To get a feel for what it says we substitute terms in both expressions involved
+in the following lemma.
+
+\begin{lem}
+Consider $f:\mprd{\ctxext{A}{P}}{Q}$, $x:A$ and $u:\subst{x}{P}$ be terms in
+context $\Gamma$. Then we have the judgmental equality
+\begin{equation*}
+\jtermeq
+  {\Gamma}
+  {\subst{u}{{x}{Q}}}
+  {\subst{\tmext{x}{u}}{{f}{\evtm{\ctxext{A}{P}}{Q}}}}
+  {\subst{u}{{{x}{{f}{\evtm{A}{\mprd{P}{Q}}}}}{\evtm{\subst{x}{P}}{\subst{x}{Q}}}}}
+\end{equation*}
+is valid.
+\end{lem}
+
+\paragraph{Weakening is compatible with the evaluation term}
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \begin{array}{l}
+    \ctxext
+        { { { {\Gamma}
+              {A}
+              }
+            { \ctxwk{A}{B}
+              }
+            }
+          { \mprd{\ctxwk{A}{Q}}{\ctxwk{A}{R}}
+            }
+          }
+        { \ctxwk{\mprd{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}{\ctxwk{A}{Q}}
+          }
+      \\
+    \jtermeq
+      {\qquad}
+      {\ctxwk{\mprd{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}{\ctxwk{A}{R}}}
+      {\evtm{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+      {\ctxwk{A}{\evtm{Q}{R}}}  
+    \end{array}
+    }
+\end{align*}
+
+\paragraph{Substitution is compatible with the evaluation term}
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \begin{array}{l}
+    \ctxext
+      {{{\Gamma}{\subst{x}{P}}}{\mprd{\subst{x}{Q}}{\subst{x}{R}}}}
+      {\ctxwk{\mprd{\subst{x}{Q}}{\subst{x}{R}}}{\subst{x}{Q}}}
+      \\
+    \jtermeq
+      {\qquad}
+      {\ctxwk{\mprd{\subst{x}{Q}}{\subst{x}{R}}}{\subst{x}{R}}}
+      {\subst{x}{\evtm{Q}{R}}}
+      {\evtm{\subst{x}{Q}}{\subst{x}{R}}}
+    \end{array}
+    }  
+\end{align*}
+
+\paragraph{The evaluation term is compatible with weakening}
+\begin{align*}
+& \inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jfam{{{{\Gamma}{P}}{Q}}{R}}{S}
+    \jterm{{{\Gamma}{\mprd{A}{P}}}{\mprd{A}{R}}}{\mprd{A}{S}}{k}
+    }
+  { \jtermeq
+      {{{{{\Gamma}{A}}{P}}{Q}}{\ctxwk{Q}{R}}}
+      {\ctxwk{Q}{S}}
+      {\sev{A}{\ctxwk{Q}{S}}{\ctxwk{\mprd{A}{Q}}{k}}}
+      {\ctxwk{Q}{\sev{A}{S}{k}}}
+    }
+\end{align*}
+
+\subsection{Composition of dependent functions}
