@@ -519,6 +519,41 @@ However, since the evaluation term is set to be an actual term of the theory,
 it seems to be harmful to the exposition of the theory to copy this practice.
 \end{rmk}
 
+\begin{comment}
+\subsubsection{Introducing the evaluation operator}
+The operation $\ctxev{A}{P}{\blank}$ brings things in context $\ctxext{{\Gamma}{A}}{P}$ to
+the context $\ctxext{{\Gamma}{\mprd{A}{P}}}{\ctxwk{\mprd{A}{P}}{A}}$.
+\begin{align*}
+& \inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfamdefn
+      {{{\Gamma}{\mprd{A}{P}}}{\ctxwk{\mprd{A}{P}}{A}}}
+      {\ctxev{A}{P}{Q}}
+      {\subst{\evtm{A}{P}}{\ctxwk{\mprd{A}{P}}{Q}}}
+    }
+  \\
+& \inference
+  { \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfamdefn
+      {{{{\Gamma}{\mprd{A}{P}}}{\ctxwk{\mprd{A}{P}}{A}}}{\ctxev{A}{P}{Q}}}
+      {\ctxev[\famsym]{A}{P}{R}}
+      {\subst{\evtm{A}{P}}{\ctxwk{\mprd{A}{P}}{R}}}
+    }
+  \\
+& \inference
+  { \jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{h}
+    }
+  { \jtermdefn
+      {{{{\Gamma}{\mprd{A}{P}}}{\ctxwk{\mprd{A}{P}}{A}}}{\ctxev{A}{P}{Q}}}
+      {\ctxev[\famsym]{A}{P}{R}}
+      {\ctxev[\tmsym]{A}{P}{h}}
+      {\subst{\evtm{A}{P}}{\ctxwk{\mprd{A}{P}}{h}}}
+    }
+\end{align*}
+\end{comment}
+
 \subsubsection{The compatibility rules of the evaluation terms}
 
 \paragraph{Compatibility with the empty context}
