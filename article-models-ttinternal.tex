@@ -298,11 +298,11 @@ $x_1:\subst{x_0}{\cftalgf{\cftalg{A}}}$ and
 $x_2:\subst{{x_1}{{x_0}{\cftctxext[\extalg{A}]}}}{\cftalgf{\cftalg{A}}}$ 
 we have the judgmental equality
 \begin{align*}
-\subst{{x_2}{{x_1}{\cftfamext[\extalg{A}]}}}{{x_0}{\cftfamext[\extalg{A}]}}
+\subst{{x_2}{{x_1}{\cftfamext[\extalg{A}]}}}{{x_0}{\cftctxext[\extalg{A}]}}
 & \jdeq
   \subst
     {x_2}
-    {{{x_1}{{x_0}{\cftfamext[\extalg{A}]}}}{\cftfamext[\extalg{A}]}}.
+    {{{x_1}{{x_0}{\cftctxext[\extalg{A}]}}}{\cftctxext[\extalg{A}]}}.
   \intertext{%
 and for $y_0:\cftalgf{\extalg{A}}$, 
 $y_1:\subst{y_0}{\jcomp{}{\cftfamext[\extalg{A}]}{\cftalgf{\extalg{A}}}}$ and 
@@ -898,8 +898,8 @@ the following judgmental equalities hold:
   \\
 \jtermeq*{\Gamma}{\cftalgc{\cftalg{A}}}{\subst{\cftempc{\cftalg{A}}}{\cftempf{\cftalg{A}}}}{\cftempc{\cftalg{A}}}.
   \label{empalg-eq2}
-  \\
-\jfameq*{{\Gamma}{\cftalgc{\cftalg{A}}}}{\subst{\cftempf{\cftalg{A}}}{\cftalgt{\cftalg{A}}}}{\emptyf}
+%  \\
+%\jfameq*{{\Gamma}{\cftalgc{\cftalg{A}}}}{\subst{\cftempf{\cftalg{A}}}{\cftalgt{\cftalg{A}}}}{\emptyf}
 \end{align}
 When $(\cftalgc{\cftalg{A}},\cftalgf{\cftalg{A}},\cftalgt{\cftalg{A}},
 \cftempc{\cftalg{A}},\cftempf{\cftalg{A}})$ is an empty-object algebra
@@ -1454,13 +1454,90 @@ in the situation of the following judgmentally commutative diagram:
 \end{tikzcd}
 \end{equation*}
 
-\subsection{Weakening term-algebras}
-Weakening term-algebras will be term-algebras with certain added structure.
+\subsection{Weakening algebras}
+Weakening algebras will be term-algebras with certain added structure.
 Although strictly speaking one could formulate a notion of weakening algebra
 which only depends on extension algebras and which omits both empty objects
-and terms, we shall not do so here. 
+and terms, we shall not do so here.
 
-Let $(A,P,T,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ be a term-algebra in context
+Let $\cftalg{A}$ be a term-algebra in context $\Gamma$. Weakening will be a
+homomorphism
+\begin{equation*}
+\jhom
+  {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
+  {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_A}}}
+  {\jcomp{}{\cftctxext}{\cftalg{F_A}}}
+  {\cftwk{\cftalg{A}}}
+\end{equation*}
+satisfying judgmental equalities which express the compatibility with extension,
+the empty object and itself. Thus, the rules we interpret for weakening are
+the rules in sections \autoref{comp-we,comp-w0,comp-ww,comp-ew,comp-0w}. The
+definition of weakening algebras can be found in \autoref{sec:cftwkalg-defn}.
+
+\subsubsection{Weakening preserves itself}
+The following diagram displays the compatibility of weakening with itself:
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\ctxwk{\cftalgf{\cftalg{A}}}{{\cftalgf{\cftalg{F_A}}}{\cftalg{F_{F_A}}}}
+  \ar{d}
+    [swap]{ \ctxwk
+        {{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{F_A}}}}
+        {\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}
+      }
+  \ar{r}{\ctxwk{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}}
+& \ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_{F_{F_A}}}}
+  \ar{d}{\jcomp{}{\cftctxext}{\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}}
+  \\
+\jcomp{}{\cftwkc{A}}{
+\ctxwk{{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{F_A}}}}{\cftalg{F_{F_{F_A}}}}}
+  \ar{r}[swap]{\jcomp{}{\cftwkc{A}}{\jcomp{}{\cftctxext}{\cftwk{A}}}}
+& \jcomp{}{\cftwkc{A}}{\cftalg{F_{F_{F_{F_A}}}}}
+\end{tikzcd}
+\end{equation*}
+
+\subsubsection{Currying for weakening}
+\begin{equation*}
+\jhomeq
+  { {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
+    {\cftalgf{\cftalg{F_A}}}
+    }
+  { \ctxwk
+      {\cftalgf{\cftalg{F_A}}}
+      {\cftalg{F_{F_A}}}
+    }
+  { \cftalg{F_{F_{F_A}}}
+    }
+  { \jcomp{}{\cftfamext}{\cftwk{\cftalg{A}}}
+    }
+  { \jcomp{}{\cftwk{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
+    }
+\end{equation*}
+
+\subsubsection{Weakening by the empty family}
+\begin{equation*}
+\jhomeq
+  { {\Gamma}{\cftalgc{\cftalg{A}}}
+    }
+  { \cftalg{F_A}
+    }
+  { \cftalg{F_A}
+    }
+  { \subst{\cftempf{\cftalg{A}}}{\cftwk{\cftalg{A}}}
+    }
+  { id_{\cftalg{F_A}}
+    }
+\end{equation*}
+
+\subsubsection{The definition of weakening algebras}\label{sec:cftwkalg-defn}
+
+\subsubsection{Derivable properties of weakening algebras}
+We should theoremize the following statements:
+\begin{enumerate}
+\item If $\cftalg{A}$ is a weakening algebra, then so is $\cftalg{F_A}$ if we take
+$\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}$ as its weakening.
+\end{enumerate}
+
+Let $\cftalg{A}$ be a term-algebra in context
 $\Gamma$. The weakening homomorphism $\omega$ will be a term-homomorphism from 
 $\ctxwk{P}{\mathcal{F}_\mathcal{A}}$ to 
 $\jcomp{}{\epsilon_0}{\mathcal{F}_\mathcal{A}}$ satisfying certain extra
@@ -1820,8 +1897,6 @@ following diagram:
 & \jcomp{}{\omega_0}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
 \end{tikzcd}
 \end{equation*}
-
-\subsubsection{The definition of weakening algebras}
 
 \subsection{Extension-substitution algebras}
 
