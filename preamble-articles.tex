@@ -308,8 +308,8 @@
 \unfold@def\cfthom
 \unfold@def\extalg
 \unfold@def\empalg
-\unfold@def\exthom
-\unfold@def\exthomcomp
+\unfold@def\cfthom
+\unfold@def\cfthomcomp
 \unfold@def\jtermashom
 
 \begin{comment}
@@ -890,7 +890,8 @@
     {#7}}
     
 \newcommand{\jfcomp}[5]{%
-  \jfcomp@testleft #5 \circledcirc \jfcomp@testright #4}
+%  \jfcomp@testleft #5 \circledcirc \jfcomp@testright #4}
+  \jfcomp@testleft #5 \bullet \jfcomp@testright #4}
 \newcommand{\jfcomp@testleft}{%
   \@ifnextchar\bgroup{\@jfcomp@parens}{%
   \@ifnextchar\jfcomp{\@jfcomp@nested}{%
@@ -1088,6 +1089,7 @@
 \newcommand{\extalg@unfold}[1]{%
   (\cftalgc{\algfont{#1}},
     \cftalgf{\algfont{#1}},
+    \cftalgt{\algfont{#1}},
     \cftctxext[\algfont{#1}],
     \cftfamext[\algfont{#1}])
   }
@@ -1106,6 +1108,13 @@
 \newcommand{\@jextalgfamAlignFalse}[2]{%
   \jfam{#1}{\cftalgf{\cftalg{#2}}}}
 
+\newcommand{\jextalgtm}{%
+  \@ifnextchar*{\@jextalgtmAlignTrue}{\@jextalgtmAlignFalse}}
+\newcommand{\@jextalgtmAlignTrue}[3]{%
+  \jfam*{{#2}{\cftalgf{\cftalg{#3}}}}{\cftalgt{\cftalg{#3}}}}
+\newcommand{\@jextalgtmAlignFalse}[2]{%
+  \jfam{{#1}{\cftalgf{\cftalg{#2}}}}{\cftalgt{\cftalg{#2}}}}
+
 \newcommand{\jextalgctxext}{%
   \@ifnextchar*{\@jextalgctxextAlignTrue}{\@jextalgctxextAlignFalse}}
 \newcommand{\@jextalgctxextAlignTrue}[3]{%
@@ -1120,16 +1129,18 @@
 \newcommand{\@jextalgfamextAlignFalse}[2]{%
   \jhom{{#1}{\cftalgc{\cftalg{#2}}}}{{\cftalgf{\cftalg{#2}}}{\jcomp{}{\cftctxext{\cftalg{#2}}}{\cftalgf{\cftalg{#2}}}}}{\cftalgf{\cftalg{#2}}}{\cftfamext[\cftalg{#2}]}}
   
-\newcommand{\exthomcomp}[2]{#2\circ #1}
-\newcommand{\exthomcomp@unfold}[2]{%
-  ( \jcomp{}{\exthomc{#1}}{\exthomc{#2}},
-    \jfcomp{}{}{}{\exthomf{#1}}{\exthomf{#2}})
+\newcommand{\cfthomcomp}[2]{#2\circ #1}
+\newcommand{\cfthomcomp@unfold}[2]{%
+  ( \jcomp{}{\cfthomc{#1}}{\cfthomc{#2}},
+    \jfcomp{}{}{}{\cfthomf{#1}}{\cfthomf{#2}},
+    \jfcomp{}{}{}{\cfthomf{#1}}{\cfthomt{#2}})
   }
 
 \newcommand{\extalgc}[1]{\@gobble #1}
 \newcommand{\extalgf}[1]{\mathcal{F}_{#1}}
-\newcommand{\exthomc}[1]{\@gobble #1}
-\newcommand{\exthomf}[1]{\mathcal{F}_{#1}}
+\newcommand{\extalgt}[1]{\mathcal{T}_{#1}}
+%\newcommand{\cfthomc}[1]{\@gobble #1}
+\newcommand{\cfthomf}[1]{\mathcal{F}_{#1}}
 
 \newcommand{\empalg}{\algfont}
 
@@ -1148,12 +1159,6 @@
     \cfthomt{\cfthom{#1}})
   }
 
-\newcommand{\exthom}{\algfont}
-\newcommand{\exthom@unfold}[1]{%
-  ( \cfthomc{\cfthom{#1}},
-    \cfthomf{\cfthom{#1}})
-  }
-
 %%%% The intended use of `\cftctx` is `\cftctx{\cftalg{#1}}`.
 \newcommand{\cftalgc}[1]{\@gobble #1}
 \newcommand{\cfthomc}[1]{%
@@ -1163,7 +1168,7 @@
   }
 %%%% The intended use of `\cftfam` is `\cftfam{\cftalg{#1}}`.
 \newcommand{\cftalgf}[1]{\mathcal{F}_{#1}}
-\newcommand{\cfthomf}[1]{\mathcal{F}_{#1}}
+%\newcommand{\cfthomf}[1]{\mathcal{F}_{#1}}
 \newcommand{\cftalgt}[1]{\mathcal{T}_{#1}}
 \newcommand{\cfthomt}[1]{\mathcal{T}_{#1}}
 
@@ -1177,8 +1182,8 @@
 
 \newcommand{\cftwk}[1]{\boldsymbol\omega^{#1}}
 \newcommand{\cftwkc}[1]{\omega^{#1}}
-\newcommand{\cftwkf}[1]{\mathcal{F}_{\omega^{#1}}}
-\newcommand{\cftwkt}[1]{\mathcal{T}_{\omega^{#1}}}
+\newcommand{\cftwkf}[1]{\mathcal{F}_{\boldsymbol\omega^{#1}}}
+\newcommand{\cftwkt}[1]{\mathcal{T}_{\boldsymbol\omega^{#1}}}
 
 \newcommand{\cftsubst}[2][]{\boldsymbol\sigma_{#1}^{#2}}
 \newcommand{\cftsubstc}[1]{\cftsubst[\mathsf{c}]{#1}}

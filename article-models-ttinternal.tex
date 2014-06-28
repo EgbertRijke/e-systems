@@ -213,11 +213,13 @@ We define the judgment
 \jextalg{\Gamma}{A}
 \end{equation*}
 asserting that $\extalg{A}$ is an \emph{extension algebra in context $\Gamma$}
-to be the conjunction of the following six judmgents:
+to be the conjunction of the following seven judmgents:
 \begin{align*}
 \jextalgctx*{\Gamma}{A}
   \\
 \jextalgfam*{\Gamma}{A}
+  \\
+\jextalgtm*{\Gamma}{A}
   \\
 \jextalgctxext*{\Gamma}{A}
   \\
@@ -272,8 +274,8 @@ to be the conjunction of the following six judmgents:
     }
 \end{align*}
 In other words, an extension algebra $\extalg{A}$ in context $\Gamma$
-is a quadruple $\unfold{\extalg{A}}$ 
-satisfying the judgmental equalities of
+is a quintuple $\unfold{\extalg{A}}$ 
+satisfying the judgmental equalities displayed in the diagrams in
 \autoref{eq:extalg-eq1,eq:extalg-eq2}. Extension algebras are judgmentally
 equal if they are componentwise judgmentally equal.
 
@@ -395,15 +397,15 @@ away. More examples will be introduced by universes, later on.
 \begin{eg}
 Let $A$ be a family in context $\Gamma$. Then the quadruple
 \begin{equation*}
-(A,\emptyf,\idtm{A},\emptytm)
+(A,\emptyf,\emptyf,\idtm{A},\emptytm)
 \end{equation*}
 is an extension algebra in context $\Gamma$, as is the quadruple
 \begin{equation*}
-(\emptyf,A,\emptytm,\idtm{A}).
+(\emptyf,A,\emptyf,\emptytm,\idtm{A}).
 \end{equation*}
 Also, the quadruple
 \begin{equation*}
-(A,\ctxwk{A}{A},\cprojfstf{A}{\ctxwk{A}{A}},\cprojfstf{\ctxwk{A}}{\ctxwk{A}{{A}{A}}})
+(A,\ctxwk{A}{A},\emptyf,\cprojfstf{A}{\ctxwk{A}{A}},\cprojfstf{\ctxwk{A}}{\ctxwk{A}{{A}{A}}})
 \end{equation*}
 is an extension algebra in context $\Gamma$.
 \end{eg}
@@ -420,7 +422,13 @@ back more times along $\cftctxext[\cftalg{A}]$.
 Suppose that $\extalg{A}$ is an extension algebra in context
 $\Gamma$. Then 
 \begin{equation*}
-\cftalg{F_A}\defeq(\cftalgf{\cftalg{A}},\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}},\cftfamext,\jcomp{}{\cftctxext}{\cftfamext})
+\cftalg{F_A}
+\defeq
+( \cftalgf{\cftalg{A}},
+  \jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}},
+  \jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgt{\cftalg{A}}},
+  \cftfamext,
+  \jcomp{}{\cftctxext[\cftalg{A}]}{\cftfamext})
 \end{equation*}
 is an extension algebra in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$.
 \end{thm}
@@ -532,11 +540,15 @@ equality, \autoref{eq:extalg-infty2}, is trivial.
 
 \begin{thm}
 Let $\extalg{Q}$ be an extension algebra in context $\ctxext{\Gamma}{B}$ and let
-$\jfam{\Gamma}{A}$ be a family of contexts. Then the quadruple
+$\jfam{\Gamma}{A}$ be a family of contexts. Then the quintuple
 \begin{equation*}
 \ctxwk{A}{\extalg{Q}}
   \defeq
-  (\ctxwk{A}{\cftalgc{\cftalg{Q}}},\ctxwk{A}{\cftalgf{\cftalg{Q}}},\ctxwk{A}{\cftctxext[\cftalg{Q}]},\ctxwk{A}{\cftfamext[\cftalg{Q}]})
+  ( \ctxwk{A}{\cftalgc{\cftalg{Q}}},
+    \ctxwk{A}{\cftalgf{\cftalg{Q}}},
+    \ctxwk{A}{\cftalgt{\cftalg{Q}}},
+    \ctxwk{A}{\cftctxext[\cftalg{Q}]},
+    \ctxwk{A}{\cftfamext[\cftalg{Q}]})
 \end{equation*}
 is an extension algebra in context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$.
 \end{thm}
@@ -548,11 +560,15 @@ the involved operations.
 
 \begin{thm}
 Let $\extalg{Q}$ be an extension algebra in context $\ctxext{{\Gamma}{A}}{P}$
-and let $\jterm{\Gamma}{A}{x}$ be a term. Then the quadruple
+and let $\jterm{\Gamma}{A}{x}$ be a term. Then the quintuple
 \begin{equation*}
 \subst{x}{\cftalg{Q}}
   \defeq
-  (\subst{x}{\cftalgc{\cftalg{Q}}},\subst{x}{\cftalgf{\cftalg{Q}}},\subst{x}{\cftctxext[\cftalg{Q}]},\subst{x}{\cftfamext[\cftalg{Q}]})
+  ( \subst{x}{\cftalgc{\cftalg{Q}}},
+    \subst{x}{\cftalgf{\cftalg{Q}}},
+    \subst{x}{\cftalgt{\cftalg{Q}}},
+    \subst{x}{\cftctxext[\cftalg{Q}]},
+    \subst{x}{\cftfamext[\cftalg{Q}]})
 \end{equation*}
 is an extension algebra in context $\ctxext{\Gamma}{\subst{x}{P}}$.
 \end{thm}
@@ -564,11 +580,15 @@ all the involved operations.
 
 \begin{cor}
 Let $\extalg{Q}$ be an extension algebra in context $\ctxext{\Gamma}{B}$
-and let $\jhom{\Gamma}{A}{B}{f}$. Then the quadruple
+and let $\jhom{\Gamma}{A}{B}{f}$. Then the quintuple
 \begin{equation*}
 \jcomp{A}{f}{\extalg{Q}}
   \defeq
-  (\jcomp{A}{f}{\cftalgc{\cftalg{Q}}},\jcomp{A}{f}{\cftalgf{\cftalg{Q}}},\jcomp{A}{f}{\cftctxext[\cftalg{Q}]},\jcomp{A}{f}{\cftfamext[\cftalg{Q}]})
+  ( \jcomp{A}{f}{\cftalgc{\cftalg{Q}}},
+    \jcomp{A}{f}{\cftalgf{\cftalg{Q}}},
+    \jcomp{A}{f}{\cftalgt{\cftalg{Q}}},
+    \jcomp{A}{f}{\cftctxext[\cftalg{Q}]},
+    \jcomp{A}{f}{\cftfamext[\cftalg{Q}]})
 \end{equation*}
 is an extension algebra in context $\ctxext{\Gamma}{A}$.
 \end{cor}
@@ -579,13 +599,35 @@ $\extalg{F_{F_A}}$ and $\jcomp{}{\cftctxext[\extalg{A}]}{\extalg{F_A}}$ are
 judgmentally equal extension algebras in context $\ctxext{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}$.
 \end{cor}
 
+\subsection{Extension homomorphisms}
+
 \begin{defn}
-An \emph{extension homomorphism $\exthom{f}$ from $\extalg{A}$ to
-$\extalg{B}$ in context $\Gamma$} is a pair $\unfold{\exthom{f}}$ consisting of
+An \emph{extension homomorphism $\cfthom{f}$ from $\extalg{A}$ to
+$\extalg{B}$ in context $\Gamma$} is a triple $\unfold{\cfthom{f}}$ consisting of
 \begin{align*}
-\jhom*{\Gamma}{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{B}}}{\cfthomc{\cfthom{f}}}
+\jhom*
+  {\Gamma}
+  {\cftalgc{\cftalg{A}}}
+  {\cftalgc{\cftalg{B}}}
+  {\cfthomc{\cfthom{f}}}
   \\
-\jfhom*{\Gamma}{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{B}}}{\cfthomc{\cfthom{f}}}{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{B}}}{\cfthomf{\cfthom{f}}}
+\jfhom*
+  {\Gamma}
+  {\cftalgc{\cftalg{A}}}
+  {\cftalgc{\cftalg{B}}}
+  {\cfthomc{\cfthom{f}}}
+  {\cftalgf{\cftalg{A}}}
+  {\cftalgf{\cftalg{B}}}
+  {\cfthomf{\cfthom{f}}}
+  \\
+\jfhom*
+  {\Gamma}
+  {{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+  {{\cftalgc{\cftalg{B}}}{\cftalgf{\cftalg{B}}}}
+  {\jvcomp{}{\cfthomc{\cfthom{f}}}{\cfthomf{\cfthom{f}}}}
+  {\cftalgt{\cftalg{A}}}
+  {\cftalgt{\cftalg{B}}}
+  {\cfthomt{\cfthom{f}}}
 \end{align*}
 for which the diagrams
 \begin{equation}\label{eq:exthom1}
@@ -648,9 +690,11 @@ $\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}$ to $\jcomp{}{\cftctxext
 Let $\cfthom{f}$ be an extension homomorphism from $\cftalg{A}$ to $\cftalg{B}$
 in context $\Gamma$. Then
 \begin{equation*}
-\cfthom{F_f}
+\boldsymbol{\mathcal{F}}_\cfthom{f}
   \defeq
-  (\cfthomf{\cfthom{f}},\jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomf{\cfthom{f}}})
+  ( \cfthomf{\cfthom{f}},
+    \jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomf{\cfthom{f}}},
+    \jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomt{\cfthom{f}}})
 \end{equation*}
 is an extension homomorphism from $\cftalg{F_A}$ to $\jcomp{}{\cfthomc{\cfthom{f}}}{\cftalg{F_B}}$
 in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$. 
@@ -666,31 +710,40 @@ $\cfthom{f}$ by $\epsilon_0$, and therefore it commutes too.
 \end{proof}
 
 \begin{defn}
-Let $\exthom{f}$ and $\exthom{g}$ be extension homomorphisms from
+Let $\cfthom{f}$ and $\cfthom{g}$ be extension homomorphisms from
 $\extalg{A}$ to $\extalg{B}$ and from $\extalg{B}$ to $\extalg{C}$, respectively.
 We define the composition
 \begin{equation*}
-\exthomcomp{\exthom{f}}{\exthom{g}}
+\cfthomcomp{\cfthom{f}}{\cfthom{g}}
   \defeq
-  \unfold{\exthomcomp{\exthom{f}}{\exthom{g}}}.
+  \unfold{\cfthomcomp{\cfthom{f}}{\cfthom{g}}}.
 \end{equation*}
-In other words, extension homomorphisms are composed by taking the outer rectangle
-in the diagram
+In other words, extension homomorphisms are composed by taking the horizontal 
+rectangles in the diagram
 \begin{equation*}
 \begin{tikzcd}
+\extalgt{\extalg{A}} 
+  \ar[fib]{d}
+  \ar{r}{\cfthomt{\cfthom{f}}}
+& \extalgt{\extalg{B}} 
+  \ar[fib]{d}
+  \ar{r}{\cfthomt{\cfthom{g}}}
+& \extalgt{\extalg{C}}
+  \ar[fib]{d}
+  \\
 \extalgf{\extalg{A}} 
   \ar[fib]{d}
-  \ar{r}{\exthomf{\exthom{f}}}
+  \ar{r}{\cfthomf{\cfthom{f}}}
 & \extalgf{\extalg{B}} 
   \ar[fib]{d}
-  \ar{r}{\exthomf{\exthom{g}}}
+  \ar{r}{\cfthomf{\cfthom{g}}}
 & \extalgf{\extalg{C}}
   \ar[fib]{d}
   \\
 \extalgc{\extalg{A}}
-  \ar{r}{\exthomc{\exthom{f}}}
+  \ar{r}{\cfthomc{\cfthom{f}}}
 & \extalgc{\extalg{B}}
-  \ar{r}{\exthomc{\exthom{g}}}
+  \ar{r}{\cfthomc{\cfthom{g}}}
 & \extalgc{\extalg{C}}
 \end{tikzcd}
 \end{equation*}
@@ -702,9 +755,9 @@ of extension homomorphisms is associative.
 \end{rmk}
 
 \begin{thm}
-Let $\exthom{f}$ and $\exthom{g}$ be extension homomorphisms from
+Let $\cfthom{f}$ and $\cfthom{g}$ be extension homomorphisms from
 $\extalg{A}$ to $\extalg{B}$ and from $\extalg{B}$ to $\extalg{C}$, respectively.
-Then $\exthomcomp{\exthom{f}}{\exthom{g}}$ is an extension homomorphism from
+Then $\cfthomcomp{\cfthom{f}}{\cfthom{g}}$ is an extension homomorphism from
 $\extalg{A}$ to $\extalg{C}$. 
 \end{thm}
 
@@ -987,41 +1040,50 @@ The following lemma presents a property of empty-object algebras that will get
 a lot of use.
 
 \begin{lem}\label{lem:empalg-mor}
-Consider an empty-object algebra $\cftalg{A}$ in context $\Gamma$
-and a morphism 
+Consider a family $\jfam{\Gamma}{A}$ with a term $\jterm{\Gamma}{A}{x}$ and 
+a family $\jfam{{\Gamma}{A}}{P}$ with a term $\jterm{{\Gamma}{A}}{P}{y}$
+satisfying the judgmental equalities 
+\begin{align}
+\jfameq*{\Gamma}{\subst{x}{P}}{A}
+  \label{eq1:empalg-mor}
+  \\
+\jtermeq*{\Gamma}{A}{\subst{x}{y}}{x}.
+  \label{eq2:empalg-mor}
+\end{align}
+Consider also a morphism
 \begin{equation*}
-\jhom{\Gamma}{{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{B}{f}.
+\jhom{\Gamma}{{A}{P}}{B}{f}.
 \end{equation*}
-Then $\subst{\cftemp[i]{\cftalg{A}}}{f}$ is a morphism from $\cftalgc{\cftalg{A}}$ to $B$ 
-in context $\Gamma$ and the following inference rules are valid for $i$ being 
-$\mathsf{c}$ or $\mathsf{f}$:
+Then $\subst{\xi}{f}$ is a morphism from $A$ to $B$ 
+in context $\Gamma$ and the following inference rules are valid for $\xi$ being 
+$x$ or $y$:
 \begin{align*}
 & \inference
-  { \jfam{{\Gamma}{\cftalgc{\cftalg{A}}}}{Q}
+  { \jfam{{\Gamma}{B}}{Q}
     }
   { \jfameq
-      {{\Gamma}{\cftalgc{\cftalg{A}}}}
-      {\subst{\cftemp[i]{\cftalg{A}}}{\jcomp{}{f}{Q}}}
-      {\jcomp{}{\subst{\cftemp[i]{\cftalg{A}}}{f}}{Q}}
+      {{\Gamma}{A}}
+      {\subst{\xi}{\jcomp{}{f}{Q}}}
+      {\jcomp{}{\subst{\xi}{f}}{Q}}
     }
   \\
 & \inference
-  { \jfam{{{\Gamma}{\cftalgc{\cftalg{A}}}}{Q}}{R}
+  { \jfam{{{\Gamma}{B}}{Q}}{R}
     }
   { \jfameq
-      {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\jcomp{}{\subst{\cftemp[i]{\cftalg{A}}}{f}}{Q}}}
-      {\subst{\cftemp[i]{\cftalg{A}}}{\jcomp{}{f}{R}}}
-      {\jcomp{}{\subst{\cftemp[i]{\cftalg{A}}}{f}}{R}}
+      {{{\Gamma}{A}}{\jcomp{}{\subst{\xi}{f}}{Q}}}
+      {\subst{\xi}{\jcomp{}{f}{R}}}
+      {\jcomp{}{\subst{\xi}{f}}{R}}
     }
   \\
 & \inference
-  { \jterm{{{\Gamma}{\cftalgc{\cftalg{A}}}}{Q}}{R}{h}
+  { \jterm{{{\Gamma}{B}}{Q}}{R}{h}
     }
   { \jtermeq
-      {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\jcomp{}{\subst{\cftemp[i]{\cftalg{A}}}{f}}{Q}}}
-      {\jcomp{}{\subst{\cftemp[i]{\cftalg{A}}}{f}}{R}}
-      {\subst{\cftemp[i]{\cftalg{A}}}{\jcomp{}{f}{h}}}
-      {\jcomp{}{\subst{\cftemp[i]{\cftalg{A}}}{f}}{h}}
+      {{{\Gamma}{A}}{\jcomp{}{\subst{\xi}{f}}{Q}}}
+      {\jcomp{}{\subst{\xi}{f}}{R}}
+      {\subst{\xi}{\jcomp{}{f}{h}}}
+      {\jcomp{}{\subst{\xi}{f}}{h}}
     }
 \end{align*}
 \end{lem}
@@ -1031,65 +1093,65 @@ We only prove the first inference rule in both cases.
 Let $Q$ be a family over $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$. In the case 
 $i=\mathsf{c}$ we have the judgmental equalities
 \begin{align*}
-\subst{\cftempc{\cftalg{A}}}{\jcomp{}{f}{Q}}
+\subst{x}{\jcomp{}{f}{Q}}
 & \jdeq
   \subst
-    {\cftempc{\cftalg{A}}}
+    {x}
     {{f}{\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}}
   \tag{by definition}
   \\
 & \jdeq
   \subst
-    { {\cftempc{\cftalg{A}}}{f}
+    { {x}{f}
       }
-    { {\cftempc{\cftalg{A}}}
+    { {x}
       {\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}
       }
   \tag{by \autoref{comp-ss-f}}
   \\
 & \jdeq
   \subst
-    { {\cftempc{\cftalg{A}}}{f}
+    { {x}{f}
       }
-    { {\cftempc{\cftalg{A}}}
+    { {x}
       {\ctxwk{\cftalgf{\cftalg{A}}}{{\cftalgc{\cftalg{A}}}{Q}}}
       }
   \tag{by \autoref{comp-ew-f}}
   \\
 & \jdeq
   \subst
-    { {\cftempc{\cftalg{A}}}{f}
+    { {x}{f}
       }
     { \ctxwk
-        {\subst{\cftempc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
-        {\subst{\cftempc{\cftalg{A}}}{\ctxwk{\cftalgc{\cftalg{A}}}{Q}}}
+        {\subst{x}{\cftalgf{\cftalg{A}}}}
+        {\subst{x}{\ctxwk{\cftalgc{\cftalg{A}}}{Q}}}
       }
   \tag{by \autoref{comp-sw-f}}
   \\
 & \jdeq
   \subst
-    { {\cftempc{\cftalg{A}}}{f}
+    { {x}{f}
       }
     { \ctxwk
-        {\subst{\cftempc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+        {\subst{x}{\cftalgf{\cftalg{A}}}}
         {Q}
       }
   \tag{by \autoref{cancellation-ws-f}}
   \\
 & \jdeq
-  \subst{{\cftempc{\cftalg{A}}}{f}}{\ctxwk{\cftalgc{\cftalg{A}}}{Q}}
-  \tag{by \autoref{empalg-eq1}}
+  \subst{{x}{f}}{\ctxwk{\cftalgc{\cftalg{A}}}{Q}}
+  \tag{by \autoref{eq1:empalg-mor}}
   \\
 & \jdeq
-  \jcomp{}{\subst{\cftempc{\cftalg{A}}}{f}}{Q}.
+  \jcomp{}{\subst{x}{f}}{Q}.
   \tag{by definition}
 \end{align*}
 In the case $i=\mathsf{f}$ we have the judgmental equalities
 \begin{align*}
-\subst{\cftempf{\cftalg{A}}}{\jcomp{}{f}{Q}}
+\subst{y}{\jcomp{}{f}{Q}}
 & \jdeq
   \subst
-    { \cftempf{\cftalg{A}}
+    { y
       }
     { {f}
       {\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}
@@ -1098,32 +1160,32 @@ In the case $i=\mathsf{f}$ we have the judgmental equalities
   \\
 & \jdeq
   \subst
-    { {\cftempf{\cftalg{A}}}{f}
+    { {y}{f}
       }
-    { {\cftempf{\cftalg{A}}}
+    { {y}
       {\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}
       }
   \tag{by \autoref{comp-ss-f}}
   \\
 & \jdeq
   \subst
-    { {\cftempf{\cftalg{A}}}{f}
+    { {y}{f}
       }
-    { {\cftempf{\cftalg{A}}}
+    { {y}
       {\ctxwk{\cftalgf{\cftalg{A}}}{{\cftalgc{\cftalg{A}}}{Q}}}
       }
   \tag{by \autoref{comp-ew-f}}
   \\
 & \jdeq
   \subst
-    { {\cftempf{\cftalg{A}}}{f}
+    { {y}{f}
       }
     { \ctxwk{\cftalgc{\cftalg{A}}}{Q}
       }
   \tag{by \autoref{cancellation-ws-f}}
   \\
 & \jdeq
-  \jcomp{}{\subst{\cftempf{\cftalg{A}}}{f}}{Q}.
+  \jcomp{}{\subst{y}{f}}{Q}.
   \tag{by definition}
 \end{align*}
 \end{proof}
@@ -1343,6 +1405,13 @@ current setting. More precisely, we have to verify that
 None of these present any difficulties.
 \end{proof}
 
+\subsection{Homorphisms of term-algebras}
+\begin{defn}
+A homomorphism of term algebras $\cfthom{f}$ from $\cftalg{A}$ to $\cftalg{B}$
+consists of a triple $(\cfthomc{\cfthom{f}},\cfthomf{\cfthom{f}},\cfthomt{\cfthom{f}})$
+such that $(\cfthomc{\cfthom{f}},\cfthomf{\cfthom{f}})$ is an extension homomorphism
+\end{defn}
+
 \subsection{Term-algebras and term-operations}
 Until now we had no need to consider term-algebras. Extension is an operation
 letting contexts and families interact and the empty object is a term which
@@ -1462,21 +1531,76 @@ and terms, we shall not do so here.
 
 Let $\cftalg{A}$ be a term-algebra in context $\Gamma$. Weakening will be a
 homomorphism
-\begin{equation*}
+\begin{equation}\label{cftwk}
 \jhom
   {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
   {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_A}}}
-  {\jcomp{}{\cftctxext}{\cftalg{F_A}}}
+  {\cftalg{F_{F_A}}}
   {\cftwk{\cftalg{A}}}
-\end{equation*}
+\end{equation}
 satisfying judgmental equalities which express the compatibility with extension,
 the empty object and itself. Thus, the rules we interpret for weakening are
 the rules in sections \autoref{comp-we,comp-w0,comp-ww,comp-ew,comp-0w}. The
 definition of weakening algebras can be found in \autoref{sec:cftwkalg-defn}.
 
+We begin with some trivial remarks to familiarize ourselves with the situation.
+The morphism $\cftwk{\cftalg{A}}$ of \autoref{cftwk} is a triple
+$(\cftwkc{\cftalg{A}},\cftwkf{\cftalg{A}},\cftwkt{\cftalg{A}})$ consisting of
+the morphisms displayed in the following diagram:
+\begin{equation*}
+\begin{tikzcd}
+\ctxwk{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftalgt{\cftalg{A}}}}
+  \ar[fib]{d}
+  \ar{r}{\cftwkt{\cftalg{A}}}
+& \jcomp{}{\cftctxext}{\jcomp{}{\cftctxext}{\cftalgt{\cftalg{A}}}}
+  \ar[fib]{d}
+  \\
+\ctxwk{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}
+  \ar[fib]{d}
+  \ar{r}{\cftwkf{\cftalg{A}}}
+& \jcomp{}{\cftctxext}{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}
+  \ar[fib]{d}
+  \\
+\ctxwk{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{A}}}
+  \ar{r}[swap]{\cftwkc{\cftalg{A}}}
+& \jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}
+\end{tikzcd}
+\end{equation*}
+
+\begin{rmk}
+Let $\cftalg{A}$ be a term-algebra and let $\cftwk{\cftalg{A}}$ be as in
+\autoref{cftwk}. Then we have
+\begin{equation*}
+\jterm
+  {\Gamma}
+  {\subst{{a}{{\gamma}{\cftctxext}}}{\cftalgf{\cftalg{A}}}}
+  {\subst{b}{{a}{{\gamma}{\cftwkc{\cftalg{A}}}}}}
+\end{equation*}
+for $\gamma:A$ and $a,b:\subst{\gamma}{\cftalgf{\cftalg{A}}}$. We have
+\begin{equation*}
+\jterm
+  {\Gamma}
+  {\subst{{{b}{{a}{{\gamma}{\cftwkc{\cftalg{A}}}}}}{{{a}{{\gamma}{\cftctxext}}}{\cftctxext}}}{\cftalgf{\cftalg{A}}}}
+  {\subst{q}{{b}{{a}{{\gamma}{\cftwkf{\cftalg{A}}}}}}}
+\end{equation*}
+for $\gamma:A$, $a,b:\subst{\gamma}{\cftalgf{\cftalg{A}}}$ and
+$q:\subst{{b}{{\gamma}{\cftctxext}}}{\cftalgf{\cftalg{A}}}$. Finally, we have
+\begin{equation*}
+\jterm
+  {\Gamma}
+  {\subst{{q}{{b}{{a}{{\gamma}{\cftwkf{\cftalg{A}}}}}}}{{{{b}{{a}{{\gamma}{\cftwkc{\cftalg{A}}}}}}{{{a}{{\gamma}{\cftctxext}}}{\cftctxext}}}{\cftalgt{\cftalg{A}}}}}
+  {\subst{g}{{q}{{b}{{a}{{\gamma}{\cftwkt{\cftalg{A}}}}}}}}
+\end{equation*}
+for $\gamma:A$, $a,b:\subst{\gamma}{\cftalgf{\cftalg{A}}}$,
+$q:\subst{{b}{{\gamma}{\cftctxext}}}{\cftalgf{\cftalg{A}}}$ and
+$g:\subst{q}{{{b}{{\gamma}{\cftctxext}}}{\cftalgt{\cftalg{A}}}}$.
+These observations show that the weakening morphism $\cftwk{\cftalg{A}}$ is
+indeed an abstraction of the introduction rules for the weakening operation.
+\end{rmk}
+
 \subsubsection{Weakening preserves itself}
 The following diagram displays the compatibility of weakening with itself:
-\begin{equation*}
+\begin{equation*}\label{diag:cftwk-cftwk}
 \begin{tikzcd}[column sep=huge]
 \ctxwk{\cftalgf{\cftalg{A}}}{{\cftalgf{\cftalg{F_A}}}{\cftalg{F_{F_A}}}}
   \ar{d}
@@ -1488,12 +1612,37 @@ The following diagram displays the compatibility of weakening with itself:
 & \ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_{F_{F_A}}}}
   \ar{d}{\jcomp{}{\cftctxext}{\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}}
   \\
-\jcomp{}{\cftwkc{A}}{
-\ctxwk{{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{F_A}}}}{\cftalg{F_{F_{F_A}}}}}
+\ctxwk{{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{F_A}}}}{\jcomp{}{\cftwkc{A}}{\cftalg{F_{F_{F_A}}}}}
   \ar{r}[swap]{\jcomp{}{\cftwkc{A}}{\jcomp{}{\cftctxext}{\cftwk{A}}}}
 & \jcomp{}{\cftwkc{A}}{\cftalg{F_{F_{F_{F_A}}}}}
 \end{tikzcd}
 \end{equation*}
+This is a complicated diagram and it is not immediately clear that all of it
+makes sense. Therefore we examine its ingredients in more detail.
+
+The morphisms on the top and on the right are fine as they are displayed
+
+\begin{lem}
+Let $\cftalg{A}$ be a term-algebra in context $\Gamma$ and let
+\begin{equation*}
+\jhom
+  {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
+  {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_A}}}
+  {\jcomp{}{\cftctxext}{\cftalg{F_A}}}
+  {\cftwk{\cftalg{A}}}
+\end{equation*}
+be a homomorphism of term-algebras satisfying \autoref{diag:cftwk-cftwk}. Then
+we have the judgmental equality
+\begin{equation*}
+\jtermeq
+  {}
+  {}
+  {}
+  {}
+\end{equation*}
+for $\gamma:A$, $x:\cftalgf{\cftalg{A}}$, $y_0:\cftalgf{\cftalg{A}}$ and
+$y_1:\cftalgf{\cftalg{F_A}}$.
+\end{lem}
 
 \subsubsection{Currying for weakening}
 \begin{equation*}
@@ -1537,162 +1686,7 @@ We should theoremize the following statements:
 $\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}$ as its weakening.
 \end{enumerate}
 
-Let $\cftalg{A}$ be a term-algebra in context
-$\Gamma$. The weakening homomorphism $\omega$ will be a term-homomorphism from 
-$\ctxwk{P}{\mathcal{F}_\mathcal{A}}$ to 
-$\jcomp{}{\epsilon_0}{\mathcal{F}_\mathcal{A}}$ satisfying certain extra
-judgmental equalities. The goal of this subsection is to spell these out.
-
-Concretely, the weakening homomorphism is a triple $(\omega_0,\omega_1,\omega_2)$
-consisting of
-\begin{align*}
-\jhom*
-  {{{\Gamma}{A}}{P}}
-  {\ctxwk{P}{P}}
-  {\jcomp{}{\epsilon_0}{P}}
-  {\omega_0}
-  \\
-\jfhom*
-  {{{\Gamma}{A}}{P}}
-  {\ctxwk{P}{P}}
-  {\jcomp{}{\epsilon_0}{P}}
-  {\omega_0}
-  {\ctxwk{P}{\jcomp{}{\epsilon_0}{P}}}
-  {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
-  {\omega_1}
-  \\
-\jfhom*
-  {{{\Gamma}{A}}{P}}
-  {\ctxwk{P}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}}
-  {\jcomp{}{\epsilon_0}{\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}}
-  {\jvcomp{\ctxwk{P}{\jcomp{}{\epsilon_0}{P}}}{\omega_0}{\omega_1}}
-  {\ctxwk{P}{\jcomp{}{\epsilon_0}{T}}}
-  {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{T}}}
-  {\omega_2}
-\end{align*}
-We could also summarize the situation in a diagram:
-\begin{equation*}
-\begin{tikzcd}
-\ctxwk{P}{\jcomp{}{\epsilon_0}{T}}
-  \ar[fib]{d}
-  \ar{r}{\omega_2}
-& \jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{T}}
-  \ar[fib]{d}
-  \\
-\ctxwk{P}{\jcomp{}{\epsilon_0}{P}}
-  \ar[fib]{d}
-  \ar{r}{\omega_1}
-& \jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}
-  \ar[fib]{d}
-  \\
-\ctxwk{P}{P}
-  \ar{r}[swap]{\omega_0}
-& \jcomp{}{\epsilon_0}{P}
-\end{tikzcd}
-\end{equation*}
-
-Before we go into chasing the judgmental equalities that are to be imposed on
-weakening, we develop a bit of intuition by explaining how
-$\omega_0$ and $\omega_1$ act when applied to a family $x_1:\subst{x_0}{P}$
-over $x_0:A$, and we will provide the explicit requirements that make
-$\omega$ a term-homomorphism. Note that
-\begin{equation*}
-\jterm{{\Gamma}{\subst{x_0}{P}}}{\subst{{x_1}{{x_0}{\epsilon_0}}}{P}}{\subst{x_1}{{x_0}{\omega_0}}},
-\end{equation*}
-so $\subst{x_1}{{x_0}{\omega_0}}$ takes families over $x_0$ to families over
-the extended $\subst{x_1}{{x_0}{\epsilon_0}}$.
-
-To compute the type of $\subst{x_2}{{x_1}{{x_0}{\omega_1}}}$ for families
-$x_1,x_2:\subst{x_0}{P}$ over $x_0:A$ we have to do a
-bit more work. Note that
-\begin{align*}
-& \subst{x_2}{{x_1}{{x_0}{\jcomp{}{\omega_0}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}}}
-  \\
-& \jdeq
-  \subst{x_2}{{x_1}{{x_0}{\unfold{\jcomp{\ctxwk{P}{P}}{\omega_0}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}}}}
-  \tag{by definition}
-  \\
-& \jdeq
-  \subst
-    { {x_2}
-      { {x_1}
-        { {x_0}
-          {\omega_0}
-          }
-        }
-      }
-    { {x_2}
-      { {x_1}
-        { {x_0}
-          {\ctxwk{{P}{P}}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}
-          }
-        }
-      }
-  \tag{by \autoref{comp-ss-f}}
-  \\
-& \jdeq
-  \subst
-    { {x_2}
-      { {x_1}
-        { {x_0}
-          {\omega_0}
-          }
-        }
-      }
-    { {x_2}
-      { \ctxwk
-          {\subst{x_1}{\ctxwk{\subst{x_0}{P}}{\subst{x_0}{P}}}}
-          {\subst{x_1}{{x_0}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}}
-        }
-      }
-  \tag{by \autoref{comp-sw-f}}
-  \\
-& \jdeq
-  \subst
-    { {x_2}
-      { {x_1}
-        { {x_0}
-          {\omega_0}
-          }
-        }
-      }
-    { {x_1}
-      { {x_0}
-        {\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
-        }
-      }
-  \tag{by \autoref{cancellation-ws-f}}
-  \\
-& \jdeq
-  \subst
-    { {{x_2}{{x_1}{{x_0}{\omega_0}}}}
-      {{{x_1}{{x_0}{\epsilon_0}}}{\epsilon_0}}
-      }
-    { P
-      }.
-  \tag{by \autoref{comp-ss-f}}
-\end{align*}
-Therefore, we see that
-\begin{equation*}
-\jterm
-  {{\Gamma}{\subst{{x_2}{{x_0}{\epsilon_0}}}{P}}}
-  { \subst
-      { {{x_2}{{x_1}{{x_0}{\omega_0}}}}
-        {{{x_1}{{x_0}{\epsilon_0}}}{\epsilon_0}}
-        }
-      { P
-        }
-    }
-  { \subst{x_2}{{x_1}{{x_0}{\omega_1}}}
-    }
-\end{equation*}
-Thus, the term $\subst{x_2}{{x_1}{{x_0}{\omega_1}}}$ takes a family over the
-extended context $\subst{x_2}{{x_0}{\epsilon_0}}$ to a family over the
-weakening $\subst{x_2}{{x_1}{{x_0}{\omega_0}}}$, which is itself a family
-over $\subst{x_1}{{x_0}{\epsilon_0}}$. In other words, $\omega_1$
-is precisely the internalization of the action on families of weakening, as
-intended.
-
+\begin{comment}
 Because the pair $(\omega_0,\omega_1)$ is required to be an extension homomorphism,
 the diagrams
 \begin{equation}\label{wkalg-exteq1}
@@ -1897,8 +1891,11 @@ following diagram:
 & \jcomp{}{\omega_0}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}
 \end{tikzcd}
 \end{equation*}
+\end{comment}
 
-\subsection{Extension-substitution algebras}
+\subsection{Projection algebras}
+
+\subsection{Substitution algebras}
 
 Let $(A,P,T,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ be a term-algebra. To define
 substitution algebras, we will consider
@@ -1933,6 +1930,8 @@ substitution algebras, we will consider
 for which the pair $(\sigma_0,\sigma_1)$ is required to be an extension
 homomorphism and the triple $(\sigma_0,\sigma_1,\sigma_2)$ is required to
 be an empty term-homomorphism.
+
+\subsection{E-algebras}
 
 \subsection{Pre-universes}
 Pre-universes are internal versions of the theory of contexts, families and
