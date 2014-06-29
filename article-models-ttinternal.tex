@@ -2017,44 +2017,41 @@ following diagram:
 \end{comment}
 
 \subsection{Projection algebras}
+Projection algebras will be weakening algebras with additional terms implementing
+the identity terms. We call these algebras projection algebras because the
+identity terms can only be formulated in weakening algebras and together with
+weakening, the identity terms provide for all the projections. In a weakening
+algebra $\cftalg{A}$ in context $\Gamma$, identity terms are implemented by a term
+\begin{equation*}
+\jterm
+  {context}
+  {\subst{{\idtm{\cftalgf{\cftalg{A}}}}{\cftwkc{\cftalg{A}}}}{\cftalgt{\cftalg{F_{F_A}}}}}
+  {\cftidtm{\cftalg{A}}}
+\end{equation*}
+We will require additionally that identity terms are compatible with weakening.
+Thus we will formulate an abstraction of the rule stated in \autoref{comp-wi}.
 
 \subsection{Substitution algebras}
-
-Let $(A,P,T,\epsilon_0,\epsilon_1,\phi_0,\phi_1)$ be a term-algebra. To define
-substitution algebras, we will consider
-\begin{align*}
-\jhom*
-  {{{{\Gamma}{A}}{P}}{T}}
-  {\ctxwk{T}{\jcomp{}{\epsilon_0}{P}}}
-  {P}
-  {\sigma_0}
-  \\
-\jfhom*
-  {{{{\Gamma}{A}}{P}}{T}}
-  {\ctxwk{T}{\jcomp{}{\epsilon_0}{P}}}
-  {P}
-  {\sigma_0}
-  {\ctxwk{T}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}
-  {\jcomp{}{\epsilon_0}{P}}
-  {\sigma_1}
-  \\
-\jfhom*
-  {{{{\Gamma}{A}}{P}}{T}}
-  { \ctxext
-      {\ctxwk{T}{\jcomp{}{\epsilon_0}{P}}}
-      {\ctxwk{T}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{P}}}}
-    }
-  {\ctxext{P}{\jcomp{}{\epsilon_0}{P}}}
-  {\jvcomp{}{\sigma_0}{\sigma_1}}
-  {\ctxwk{T}{\jcomp{}{\epsilon_0}{\jcomp{}{\epsilon_0}{T}}}}
-  {\jcomp{}{\epsilon_0}{T}}
-  {\sigma_2}
-\end{align*}
-for which the pair $(\sigma_0,\sigma_1)$ is required to be an extension
-homomorphism and the triple $(\sigma_0,\sigma_1,\sigma_2)$ is required to
-be an empty term-homomorphism.
+Substitution algebras will be CFT-algebras with an additional substitution 
+operation. Given a CFT-algebra $\cftalg{A}$ in context $\Gamma$, substitution 
+will be a CFT-homomorphism
+\begin{equation*}
+\jhom
+  {{{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}{\cftalgt{\cftalg{A}}}}
+  {\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}
+  {\cftalgf{\cftalg{A}}}
+  {\cftsubst{\cftalg{A}}}
+\end{equation*}
+We will require additionally that substitution preserves itself. Thus, we will
+formulate an abstraction of the rules stated in \autoref{comp-ss}.
 
 \subsection{E-algebras}
+E-algebras will be CFT-algebras with a weakening operation, identity terms and
+a substitution operation making it a projection algebra and a substitution 
+algebra at the same time. Additionally the weakening operation, identity terms
+and the substitution operation are all required to be compatible with each
+other. Thus, we need to require the abstractions of the rules stated in
+\autoref{comp-sw,comp-ws,cancellation-ws,cancellation-i}.
 
 \subsection{Pre-universes}
 Pre-universes are internal versions of the theory of contexts, families and
