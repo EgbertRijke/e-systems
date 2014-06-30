@@ -2024,8 +2024,13 @@ weakening, the identity terms provide for all the projections. In a weakening
 algebra $\cftalg{A}$ in context $\Gamma$, identity terms are implemented by a term
 \begin{equation*}
 \jterm
-  {context}
-  {\subst{{\idtm{\cftalgf{\cftalg{A}}}}{\cftwkc{\cftalg{A}}}}{\cftalgt{\cftalg{F_{F_A}}}}}
+  { { {\Gamma}
+      {\cftalgc{\cftalg{A}}}
+      }
+    { \cftalgf{\cftalg{A}}
+      }
+    }
+  {\subst{{\idtm{\cftalgf{\cftalg{A}}}}{\cftwkc{\cftalg{A}}}}{\cftalgt{\cftalg{F_A}}}}
   {\cftidtm{\cftalg{A}}}
 \end{equation*}
 We will require additionally that identity terms are compatible with weakening.
