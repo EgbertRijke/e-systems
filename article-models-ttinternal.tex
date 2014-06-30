@@ -2036,6 +2036,43 @@ algebra $\cftalg{A}$ in context $\Gamma$, identity terms are implemented by a te
 We will require additionally that identity terms are compatible with weakening.
 Thus we will formulate an abstraction of the rule stated in \autoref{comp-wi}.
 
+\begin{equation}
+\jtermeq
+  { \xi}
+  { \xi}
+  { \subst
+      { \jcomp
+          { }
+          { \cftctxext}
+          { \cftidtm{\cftalg{A}}
+            }
+        }
+      { { { \idtm
+              { \jcomp
+                  { }
+                  { \cftctxext}
+                  { \cftalgf{\cftalg{A}}
+                    }
+                }
+            }
+            { \jcomp
+                { }
+                { \cftctxext
+                  }
+                { \cftwkc{\cftalg{A}}
+                  }
+              }
+          }
+        { \jcomp
+            { }
+            { \jcomp{}{\cftctxext}{\cftfamext}}
+            { \cftwkt{\cftalg{A}}}
+          }
+        }
+    }
+  { \xi}
+\end{equation}
+
 \subsection{Substitution algebras}
 Substitution algebras will be CFT-algebras with an additional substitution 
 operation. Given a CFT-algebra $\cftalg{A}$ in context $\Gamma$, substitution 
@@ -2044,7 +2081,7 @@ will be a CFT-homomorphism
 \jhom
   {{{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}{\cftalgt{\cftalg{A}}}}
   {\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}
-  {\cftalgf{\cftalg{A}}}
+  {\cftalg{F_A}}
   {\cftsubst{\cftalg{A}}}
 \end{equation*}
 We will require additionally that substitution preserves itself. Thus, we will
