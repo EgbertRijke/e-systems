@@ -1723,8 +1723,8 @@ indeed an abstraction of the introduction rules for the weakening operation.
 
 \subsubsection{Weakening preserves itself}
 The following diagram displays the compatibility of weakening with itself:
-\begin{equation*}\label{diag:cftwk-cftwk}
-\begin{tikzcd}[column sep=huge]
+\begin{equation}\label{diag:cftwk-cftwk}
+\begin{tikzcd}[column sep=10em]
 \ctxwk{\cftalgf{\cftalg{A}}}{{\cftalgf{\cftalg{F_A}}}{\cftalg{F_{F_A}}}}
   \ar{d}
     [swap]{ \ctxwk
@@ -1733,13 +1733,26 @@ The following diagram displays the compatibility of weakening with itself:
       }
   \ar{r}{\ctxwk{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}}
 & \ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_{F_{F_A}}}}
-  \ar{d}{\jcomp{}{\cftctxext}{\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}}
+  \ar{d}{\jcomp{}{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}{\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}}
   \\
 \ctxwk{{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{F_A}}}}{\jcomp{}{\cftwkc{A}}{\cftalg{F_{F_{F_A}}}}}
-  \ar{r}[swap]{\jcomp{}{\cftwkc{A}}{\jcomp{}{\cftctxext}{\cftwk{A}}}}
+  \ar{r}[swap]{%
+    \jcomp{}
+      { \cftwkf{\cftalg{A}}}
+      { \jcomp{}
+          {\cftwkc{\cftalg{A}}}
+          { \jcomp{}
+              {\cftctxext}
+              { \jcomp{}
+                  {\cftctxext}
+                  {\cftwk{\cftalg{A}}}
+                }
+            }
+        }
+    }
 & \jcomp{}{\cftwkc{A}}{\cftalg{F_{F_{F_{F_A}}}}}
 \end{tikzcd}
-\end{equation*}
+\end{equation}
 This is a complicated diagram and it is not immediately clear that all of it
 makes sense. Therefore we examine its ingredients in more detail.
 
@@ -1754,17 +1767,38 @@ Let $\cftalg{A}$ be a term-algebra in context $\Gamma$ and let
   {\jcomp{}{\cftctxext}{\cftalg{F_A}}}
   {\cftwk{\cftalg{A}}}
 \end{equation*}
-be a homomorphism of term-algebras satisfying \autoref{diag:cftwk-cftwk}. Then
+be a homomorphism of term-algebras for which the diagram in
+\autoref{diag:cftwk-cftwk} commutes judgmentally. Then
 we have the judgmental equality
-\begin{equation*}
-\jtermeq
-  {}
-  {}
-  {}
-  {}
-\end{equation*}
-for $\gamma:A$, $x:\cftalgf{\cftalg{A}}$, $y_0:\cftalgf{\cftalg{A}}$ and
-$y_1:\cftalgf{\cftalg{F_A}}$.
+\begin{align*}
+& \jcomp{}
+  { \subst{q}{{{b}{{\gamma}{\cftctxext}}}{\cftwk{\cftalg{A}}}}
+    }
+  { \subst
+      {{q}{{b}{\cftfamext}}}
+      {{a}{{\gamma}{\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}}}
+    }
+  \\
+& \jdeq
+  \jcomp{}
+    { \subst{b}{{a}{{\gamma}{\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}}}
+      }
+    { \subst
+        { {q}{{b}{{a}{{\gamma}{\cftwkf{\cftalg{A}}}}}}}
+        { {{{b}{{a}{{\gamma}{\cftwkc{\cftalg{A}}}}}}{{{a}{{\gamma}{\cftctxext}}}{\cftctxext}}}
+          {\cftwk{\cftalg{A}}}
+          }
+      }
+\end{align*}
+of CFT-homomorphisms from $\subst{b}{{\gamma}{\cftalg{F_{F_A}}}}$ to
+$ \subst
+      { {q}{{b}{{a}{{\gamma}{\cftwkf{\cftalg{A}}}}}}
+        }
+      { {{b}{{a}{{\gamma}{\cftwkc{\cftalg{A}}}}}}
+        {{a}{{\gamma}{\cftalg{F_{F_{F_{F_{A}}}}}}}}
+        }$
+in context $\Gamma$, for $\gamma:A$, $a,b:\subst{\gamma}{\cftalgf{\cftalg{A}}}$ and
+$q:\subst{b}{{\gamma}{\cftalgf{\cftalg{F_A}}}}$.
 \end{lem}
 
 \subsubsection{Currying for weakening}
