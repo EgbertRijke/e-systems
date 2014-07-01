@@ -1759,7 +1759,7 @@ makes sense. Therefore we examine its ingredients in more detail.
 The morphisms on the top and on the right are fine as they are displayed
 
 \begin{lem}
-Let $\cftalg{A}$ be a term-algebra in context $\Gamma$ and let
+Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$ and let
 \begin{equation*}
 \jhom
   {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
@@ -1802,22 +1802,45 @@ $q:\subst{b}{{\gamma}{\cftalgf{\cftalg{F_A}}}}$.
 \end{lem}
 
 \subsubsection{Currying for weakening}
-\begin{equation*}
+\begin{equation}\label{eq:cftwk-currying}
 \jhomeq
   { {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
     {\cftalgf{\cftalg{F_A}}}
     }
   { \ctxwk
-      {\cftalgf{\cftalg{F_A}}}
-      {\cftalg{F_{F_A}}}
+      {\ctxext{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{F_A}}}}
+      {\cftalg{F_A}}
     }
   { \cftalg{F_{F_{F_A}}}
     }
   { \jcomp{}{\cftfamext}{\cftwk{\cftalg{A}}}
     }
-  { \jcomp{}{\cftwk{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
+  { \jcomp{}{\ctxwk{\cftalgf{\cftalg{F_A}}}{\cftwk{\cftalg{A}}}}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
     }
+\end{equation}
+
+\begin{lem}
+Let $\cftalg{A}$ be a CFT-algebra in context gamma with a CFT-homomorphism 
+$ \jhom
+  {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
+  {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_A}}}
+  {\jcomp{}{\cftctxext}{\cftalg{F_A}}}
+  {\cftwk{\cftalg{A}}}
+$
+satisfying the judgmental equality of \autoref{eq:cftwk-currying}. Then we
+have the judgmental equality
+\begin{equation*}
+\subst{{p}{{a}{\cftfamext}}}{{\gamma}{\cftwk{\cftalg{A}}}}
+\jdeq
+\jcomp{}
+    {\subst{a}{{\gamma}{\cftwk{\cftalg{A}}}}}
+    {\subst{p}{{{a}{{\gamma}{\cftctxext}}}{\cftwk{\cftalg{A}}}}}
 \end{equation*}
+of CFT-homomorphisms from $\subst{\gamma}{\cftalg{F_A}}$ to 
+$\subst{p}{{a}{{\gamma}{\cftalg{F_{F_{F_A}}}}}}$ in context $\Gamma$,
+for every $\gamma:A$, $a:\subst{\gamma}{\cftalgf{\cftalg{A}}}$ and
+$p:\subst{a}{{\gamma}{\cftalgf{\cftalg{F_A}}}}$. 
+\end{lem}
 
 \subsubsection{Weakening by the empty family}
 \begin{equation*}
