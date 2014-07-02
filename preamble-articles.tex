@@ -312,6 +312,23 @@
 \unfold@def\cfthomcomp
 \unfold@def\jtermashom
 
+\newcommand{\apply}[1]{%
+\apply@#1%
+}%
+\newcommand*{\apply@}[1]{%
+  \@ifundefined{apply@@\detokenize{#1}}{#1}{%
+    \csname apply@@\detokenize{#1}\endcsname
+  }%
+}
+\newcommand*{\apply@def}[1]{%
+  \expandafter\def\csname apply@@\detokenize{#1}\expandafter\endcsname
+  \expandafter{%
+    \csname\expandafter\@gobble\string#1@apply\endcsname
+  }%
+}
+\apply@def\cftctxext
+\apply@def\cftfamext
+
 \begin{comment}
 \newcommand{\unfoldnext}[1]{%
   \@ifnextchar\jhom{\@eatdo{\jhom@unfold}}{%
@@ -1174,7 +1191,9 @@
 
 \newcommand{\cftext}[2][]{\epsilon_{#1}^{#2}}
 \newcommand{\cftctxext}[1][]{\cftext[0]{#1}}
+\newcommand{\cftctxext@apply}[3][]{\subst{#3}{{#2}{\cftctxext[#1]}}}
 \newcommand{\cftfamext}[1][]{\cftext[1]{#1}}
+\newcommand{\cftfamext@apply}[4][]{\subst{#4}{{#3}{{#2}{\cftfamext[#1]}}}}
 
 \newcommand{\cftemp}[2][]{\phi_{#1}^{#2}}
 \newcommand{\cftempc}{\cftemp[\mathsf{c}]}
