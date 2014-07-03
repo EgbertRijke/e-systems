@@ -609,7 +609,7 @@ for which the diagrams
   \\
 \cftalgc{\cftalg{A}}
   \ar{r}[swap]{\cfthomc{\cfthom{f}}}
-& \cftalgc{\cftalg{A}}
+& \cftalgc{\cftalg{B}}
 \end{tikzcd}
 \end{equation}
 and
@@ -762,6 +762,25 @@ are extension algebras in context $\Gamma$ and
 \end{equation*}
 is an extension homomorphism from both of them to $\extalg{A}$. 
 \end{thm}
+
+As with ordinary morphisms, extension homomorphism can be considered \emph{over} a
+morphism.
+
+\begin{defn}
+Let $\jhom{\Gamma}{A}{B}{f}$ be a morphism, let $\extalg{P}$ be an extension
+algebra in context $\ctxext{\Gamma}{A}$ and let $\extalg{Q}$ be an extension
+algebra in context $\ctxext{\Gamma}{B}$. An \emph{extension homomorphism from
+$\cftalg{P}$ to $\cftalg{Q}$ over $f$ in context $\Gamma$} is defined to be
+an extension homomorphism from $\extalg{P}$ to $\jcomp{A}{f}{\extalg{Q}}$ in
+context $\ctxext{\Gamma}{A}$. 
+\end{defn}
+
+\begin{eg}
+Let $\cfthom{f}$ be an extension homomorphism from $\extalg{A}$ to $\extalg{B}$
+in context $\Gamma$. Then $\boldsymbol{\mathcal{F}}_{\cfthom{f}}$ is an
+extension homomorphism from $\extalg{F_A}$ to $\extalg{F_B}$ over
+$\cfthomc{\cfthom{f}}$ in context $\Gamma$.
+\end{eg}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{CFT-algebras}
@@ -1233,7 +1252,7 @@ CFT-homomorphism
   {\cftwk{\cftalg{A}}}
 \end{equation}
 satisfying judgmental equalities which express abstracted analogues of
-the rules in sections \autoref{comp-ww,comp-ew,comp-0w}. The
+the rules in \autoref{comp-ww,comp-ew,comp-0w}. The
 definition of weakening algebras can be found in \autoref{sec:cftwkalg-defn}.
 
 We begin with some trivial remarks to familiarize ourselves with the situation.
@@ -1259,6 +1278,9 @@ the morphisms displayed in the following diagram:
 & \jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}
 \end{tikzcd}
 \end{equation*}
+In particular, we see that $\cftwk{\cftalg{A}}$ is a CFT-homomorphism from
+$\ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_A}}$ to $\cftalg{F_A}$ over
+$\cftctxext$ in context $\Gamma$. 
 
 \begin{rmk}
 Let $\cftalg{A}$ be a CFT-algebra and let $\cftwk{\cftalg{A}}$ be as in
@@ -1342,7 +1364,9 @@ condition that the diagram
             }
         }
     }
-& \jcomp{}{\cfthomc{\cfthom{w}}}{\cftalg{F_{F_{F_{F_A}}}}}
+& \jcomp{}
+    {\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}
+    {\jcomp{}{\cfthomc{\cfthom{w}}}{\cftalg{F_{F_{F_A}}}}}
 \end{tikzcd}
 \end{equation}
 of CFT-algebras in context 
@@ -1361,9 +1385,33 @@ $ \ctxext
         {\cftalgf{\cftalg{A}}}
         {\cftalgf{\cftalg{F_A}}}
       }$ %
-commutes. In this diagram, it is not immediately obvious that the domain and
-codomain of the CFT-homomorphism
-$ \jcomp{}
+commutes. In this diagram, it is not immediately obvious that 
+\begin{enumerate}
+\item the domain of the CFT-homomorphism
+$\jcomp{}{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}{\boldsymbol{\mathcal{F}}_{\cfthom{w}}}$
+is the indicated domain. Note that we have the judgmental equalities
+\begin{align*}
+\jcomp{}
+  {\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}
+  {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{F_A}}}}
+& \jdeq
+\ctxwk
+  {\cftalgf{\cftalg{A}}}
+  {\jcomp{}{\cftfamext}{\cftalg{F_{F_A}}}}
+  \\
+& \jdeq
+\ctxwk
+  {\cftalgf{\cftalg{A}}}
+  {\jcomp{}{\jcomp{}{\cftctxext}{\cftfamext}}{\cftalg{F_{F_A}}}}
+  \\
+& \jdeq
+\ctxwk
+  {\cftalgf{\cftalg{A}}}
+  {\cftalg{F_{F_{F_A}}}}.
+\end{align*}
+\item the domain and codomain of the CFT-homomorphism
+\begin{equation*}
+\jcomp{}
       { \cfthomf{\cfthom{w}}}
       { \jcomp{}
           {\cfthomc{\cfthom{w}}}
@@ -1374,7 +1422,8 @@ $ \jcomp{}
                   {\cfthom{w}}
                 }
             }
-        }$ %
+        }
+\end{equation*}
 from
 $ \jcomp{}
       { \cfthomf{\cfthom{w}}}
@@ -1401,7 +1450,13 @@ $ \jcomp{}
                 }
             }
         }
-$ are indeed judgmentally equal to the indicated domain and codomain.
+$ are indeed judgmentally equal to the indicated domain and codomain. To see
+this, we have the following lemma:
+\end{enumerate}
+
+\begin{lem}
+The following three inference rules are valid
+\end{lem}
 
 \begin{lem}
 Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$ and let
@@ -1610,6 +1665,8 @@ will be a CFT-homomorphism
 \end{equation*}
 We will require additionally that substitution preserves itself. Thus, we will
 formulate an abstraction of the rules stated in \autoref{comp-ss}.
+
+\subsubsection{Substitution is compatible with itself}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{E-algebras}
