@@ -1347,8 +1347,20 @@ condition that the diagram
 \end{equation}
 of CFT-algebras in context 
 $ \ctxext
-    {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
-    {\cftalgf{\cftalg{F_A}}}$ %
+    { { { {\Gamma}
+          {\cftalgc{\cftalg{A}}}
+          }
+        { \cftalgf{\cftalg{A}}}
+        }
+      { \ctxwk
+          {\cftalgf{\cftalg{A}}}
+          {\cftalgf{\cftalg{A}}}
+        }
+      }
+    { \ctxwk
+        {\cftalgf{\cftalg{A}}}
+        {\cftalgf{\cftalg{F_A}}}
+      }$ %
 commutes. In this diagram, it is not immediately obvious that the domain and
 codomain of the CFT-homomorphism
 $ \jcomp{}
