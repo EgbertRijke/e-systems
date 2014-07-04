@@ -33,8 +33,8 @@ The definition of extension algebras is given in \autoref{defn:extension-algebra
 Let $P$ be a family over an extended context $\ctxext{\Gamma}{A}$. We could
 mimic extension by requiring to have terms
 \begin{align*}
-\jhom*{\Gamma}{{A}{P}}{A}{e_0}\\
-\jhom*{{\Gamma}{A}}{{P}{\jcomp{}{e_0}{P}}}{P}{e_1}.
+\jalign\jhom{\Gamma}{{A}{P}}{A}{e_0}\\
+\jalign\jhom{{\Gamma}{A}}{{P}{\jcomp{}{e_0}{P}}}{P}{e_1}.
 \end{align*}
 
 \begin{rmk}
@@ -574,7 +574,7 @@ judgmentally equal extension algebras in context $\ctxext{{\Gamma}{\cftalgc{\cft
 An \emph{extension homomorphism $\cfthom{f}$ from $\extalg{A}$ to
 $\extalg{B}$ in context $\Gamma$} is a triple $\unfold{\cfthom{f}}$ consisting of
 \begin{align*}
-\jhom*
+\jalign\jhom
   {\Gamma}
   {\cftalgc{\cftalg{A}}}
   {\cftalgc{\cftalg{B}}}
@@ -796,10 +796,10 @@ Consider a family $\jfam{\Gamma}{A}$ with a term $\jterm{\Gamma}{A}{x}$ and
 a family $\jfam{{\Gamma}{A}}{P}$ % with a term $\jterm{{\Gamma}{A}}{P}{y}$
 satisfying the judgmental equality
 \begin{align}
-\jfameq*{\Gamma}{\subst{x}{P}}{A}
+\jalign\jfameq{\Gamma}{\subst{x}{P}}{A}
   \label{eq1:empalg-mor}
 %  \\
-%\jtermeq*{\Gamma}{A}{\subst{x}{y}}{x}.
+%\jalign\jtermeq{\Gamma}{A}{\subst{x}{y}}{x}.
 %  \label{eq2:empalg-mor}
 \end{align}
 Consider also a morphism
@@ -950,15 +950,15 @@ A \emph{CFT-algebra $\cftalg{A}$ in context $\Gamma$} is a septuple
 where the quintuple $\unfold{\extalg{A}}$ is an extension
 algebra in context $\Gamma$, and where
 \begin{align*}
-\jterm*{\Gamma}{\cftalgc{\cftalg{A}}}{\cftempc{\cftalg{A}}}
+\jalign\jterm{\Gamma}{\cftalgc{\cftalg{A}}}{\cftempc{\cftalg{A}}}
   \\
-\jterm*{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}{\cftempf{\cftalg{A}}}
+\jalign\jterm{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}{\cftempf{\cftalg{A}}}
 \end{align*}
 which satisfy the following judgmental equalities
 \begin{enumerate}
 \item Families over the empty context in $\cftalg{A}$ are contexts of $\cftalg{A}$:
 \begin{align}
-\jfameq*
+\jalign\jfameq
   {\Gamma}
   {\subst{\cftempc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
   {\cftalgc{\cftalg{A}}}
@@ -1333,7 +1333,7 @@ Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$ and let
   {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
   {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_A}}}
   {\jcomp{}{\cftctxext}{\cftalg{F_A}}}
-  {\cfthom{w}}
+  {\cftwk{\cftalg{A}}}
 \end{equation*}
 be a CFT-homomorphism. The abstraction of the rules in \autoref{comp-ww} is the
 condition that the diagram
@@ -1343,30 +1343,30 @@ condition that the diagram
   \ar{d}
     [swap]{ \ctxwk
         {{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{F_A}}}}
-        {\boldsymbol{\mathcal{F}}_{\cfthom{w}}}
+        {\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}
       }
-  \ar{r}{\ctxwk{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cfthom{w}}}}
+  \ar{r}{\ctxwk{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}}
 & \ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_{F_{F_A}}}}
-  \ar{d}{\jcomp{}{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}{\boldsymbol{\mathcal{F}}_{\cfthom{w}}}}
+  \ar{d}{\jcomp{}{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}{\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}}
   \\
-\ctxwk{{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{F_A}}}}{\jcomp{}{\cfthomc{\cfthom{w}}}{\cftalg{F_{F_{F_A}}}}}
+\ctxwk{{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{F_A}}}}{\jcomp{}{\cftwkc{\cftalg{A}}}{\cftalg{F_{F_{F_A}}}}}
   \ar{r}[swap]{%
     \jcomp{}
-      { \cfthomf{\cfthom{w}}}
+      { \cftwkf{\cftalg{A}}}
       { \jcomp{}
-          {\cfthomc{\cfthom{w}}}
+          {\cftwkc{\cftalg{A}}}
           { \jcomp{}
               {\cftctxext}
               { \jcomp{}
                   {\cftctxext}
-                  {\cfthom{w}}
+                  {\cftwk{\cftalg{A}}}
                 }
             }
         }
     }
 & \jcomp{}
     {\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}
-    {\jcomp{}{\cfthomc{\cfthom{w}}}{\cftalg{F_{F_{F_A}}}}}
+    {\jcomp{}{\cftwkc{\cftalg{A}}}{\cftalg{F_{F_{F_A}}}}}
 \end{tikzcd}
 \end{equation}
 of CFT-algebras in context 
@@ -1388,7 +1388,7 @@ $ \ctxext
 commutes. In this diagram, it is not immediately obvious that 
 \begin{enumerate}
 \item the domain of the CFT-homomorphism
-$\jcomp{}{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}{\boldsymbol{\mathcal{F}}_{\cfthom{w}}}$
+$\jcomp{}{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}{\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}$
 is the indicated domain. Note that we have the judgmental equalities
 \begin{align*}
 \jcomp{}
@@ -1412,23 +1412,23 @@ is the indicated domain. Note that we have the judgmental equalities
 \item the domain and codomain of the CFT-homomorphism
 \begin{equation*}
 \jcomp{}
-      { \cfthomf{\cfthom{w}}}
+      { \cftwkf{\cftalg{A}}}
       { \jcomp{}
-          {\cfthomc{\cfthom{w}}}
+          {\cftwkc{\cftalg{A}}}
           { \jcomp{}
               {\cftctxext}
               { \jcomp{}
                   {\cftctxext}
-                  {\cfthom{w}}
+                  {\cftwk{\cftalg{A}}}
                 }
             }
         }
 \end{equation*}
 from
 $ \jcomp{}
-      { \cfthomf{\cfthom{w}}}
+      { \cftwkf{\cftalg{A}}}
       { \jcomp{}
-          {\cfthomc{\cfthom{w}}}
+          {\cftwkc{\cftalg{A}}}
           { \jcomp{}
               {\cftctxext}
               { \jcomp{}
@@ -1439,9 +1439,9 @@ $ \jcomp{}
         }
 $ to
 $ \jcomp{}
-      { \cfthomf{\cfthom{w}}}
+      { \cftwkf{\cftalg{A}}}
       { \jcomp{}
-          {\cfthomc{\cfthom{w}}}
+          {\cftwkc{\cftalg{A}}}
           { \jcomp{}
               {\cftctxext}
               { \jcomp{}
@@ -1465,36 +1465,36 @@ Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$ and let
   {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
   {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_A}}}
   {\jcomp{}{\cftctxext}{\cftalg{F_A}}}
-  {\cfthom{w}}
+  {\cftwk{\cftalg{A}}}
 \end{equation*}
 be a homomorphism of CFT-algebras for which the diagram in
 \autoref{diag:cftwk-cftwk} commutes judgmentally. Then
 we have the judgmental equality
 \begin{align*}
 & \jcomp{}
-  { \subst{q}{{\apply\cftctxext{\gamma}{b}}{\cfthom{w}}}
+  { \subst{q}{{\apply\cftctxext{\gamma}{b}}{\cftwk{\cftalg{A}}}}
     }
   { \subst
       {\apply\cftfamext{\gamma}{b}{q}}
-      {{a}{{\gamma}{\boldsymbol{\mathcal{F}}_{\cfthom{w}}}}}
+      {{a}{{\gamma}{\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}}}
     }
   \\
 & \jdeq
   \jcomp{}
-    { \subst{b}{{a}{{\gamma}{\boldsymbol{\mathcal{F}}_{\cfthom{w}}}}}
+    { \subst{b}{{a}{{\gamma}{\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}}}
       }
     { \subst
-        { {q}{{b}{{a}{{\gamma}{\cfthomf{\cfthom{w}}}}}}}
-        { {\apply\cftctxext{\apply\cftctxext{\gamma}{a}}{\subst{b}{{a}{{\gamma}{\cfthomc{\cfthom{w}}}}}}}
-          {\cfthom{w}}
+        { {q}{{b}{{a}{{\gamma}{\cftwkf{\cftalg{A}}}}}}}
+        { {\apply\cftctxext{\apply\cftctxext{\gamma}{a}}{\subst{b}{{a}{{\gamma}{\cftwkc{\cftalg{A}}}}}}}
+          {\cftwk{\cftalg{A}}}
           }
       }
 \end{align*}
 of CFT-homomorphisms from $\subst{b}{{\gamma}{\cftalg{F_{F_A}}}}$ to
 $ \subst
-      { {q}{{b}{{a}{{\gamma}{\cfthomf{\cfthom{w}}}}}}
+      { {q}{{b}{{a}{{\gamma}{\cftwkf{\cftalg{A}}}}}}
         }
-      { {{b}{{a}{{\gamma}{\cfthomc{\cfthom{w}}}}}}
+      { {{b}{{a}{{\gamma}{\cftwkc{\cftalg{A}}}}}}
         {{a}{{\gamma}{\cftalg{F_{F_{F_{F_{A}}}}}}}}
         }$
 in context $\Gamma$, for $\gamma:A$, $a,b:\subst{\gamma}{\cftalgf{\cftalg{A}}}$ and
@@ -1508,7 +1508,7 @@ Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$ and let
   {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
   {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_A}}}
   {\jcomp{}{\cftctxext}{\cftalg{F_A}}}
-  {\cfthom{w}}
+  {\cftwk{\cftalg{A}}}
 \end{equation*}
 be a CFT-homomorphism. The abstraction of the rules in \autoref{comp-ew} is the
 condition that the diagram
@@ -1517,10 +1517,10 @@ condition that the diagram
 \ctxwk
   {\ctxext{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{F_A}}}}
   {\cftalg{F_A}}
-  \ar{r}{\ctxwk{\cftalgf{\cftalg{F_A}}}{\cfthom{w}}}
-  \ar{dr}[swap]{\jcomp{}{\cftfamext}{\cfthom{w}}}
+  \ar{r}{\ctxwk{\cftalgf{\cftalg{F_A}}}{\cftwk{\cftalg{A}}}}
+  \ar{dr}[swap]{\jcomp{}{\cftfamext}{\cftwk{\cftalg{A}}}}
 & \ctxwk{\cftalgf{\cftalg{F_A}}}{\cftalg{F_{F_A}}}
-  \ar{d}{\jcomp{}{\cftctxext}{\cfthom{w}}}
+  \ar{d}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
   \\
 & \cftalg{F_{F_{F_A}}}
 \end{tikzcd}
@@ -1538,16 +1538,16 @@ $ \jhom
   {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
   {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalg{F_A}}}
   {\jcomp{}{\cftctxext}{\cftalg{F_A}}}
-  {\cfthom{w}}
+  {\cftwk{\cftalg{A}}}
 $
 satisfying the judgmental equality of \autoref{eq:cftwk-cftextcurry}. Then we
 have the judgmental equality
 \begin{equation*}
-\subst{\apply\cftfamext{\gamma}{a}{p}}{{\gamma}{\cfthom{w}}}
+\apply\cftwk{\cftalg{A}}{\gamma}{\apply\cftfamext{\gamma}{a}{p}}
 \jdeq
 \jcomp{}
-    {\subst{a}{{\gamma}{\cfthom{w}}}}
-    {\subst{p}{{\apply\cftctxext{\gamma}{a}}{\cfthom{w}}}}
+    {\apply\cftwk{\cftalg{A}}{\gamma}{a}}
+    {\apply\cftwk{\cftalg{A}}{\apply\cftctxext{\gamma}{a}}{p}}
 \end{equation*}
 of CFT-homomorphisms from $\subst{\gamma}{\cftalg{F_A}}$ to 
 $\subst{p}{{a}{{\gamma}{\cftalg{F_{F_{F_A}}}}}}$ in context $\Gamma$,
@@ -1564,7 +1564,7 @@ $p:\subst{a}{{\gamma}{\cftalgf{\cftalg{F_A}}}}$.
     }
   { \cftalg{F_A}
     }
-  { \subst{\cftempf{\cftalg{A}}}{\cfthom{w}}
+  { \subst{\cftempf{\cftalg{A}}}{\cftwk{\cftalg{A}}}
     }
   { id_{\cftalg{F_A}}
     }

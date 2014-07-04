@@ -182,28 +182,6 @@
 
 \makeatletter
 
-%%%% The judgment that f is a morphism from A to B in context \Gamma.
-\newcommand{\jhomsym}[3][]{%
-  ~~\textit{hom}_{#1}(\default@ctxext #2,\default@ctxext #3)}
-\newcommand{\jhom}{%
-  \@ifnextchar*{\@jhomAlignTrue}{\@jhomAlignFalse}}
-\newcommand{\@jhomAlignTrue}[5]{%
-  \judgment*{#2}{}{}{#5}{}{}{\jhomsym{#3}{#4}}}
-\newcommand{\@jhomAlignFalse}[4]{%
-  \judgment{#1}{}{}{#4}{}{}{\jhomsym{#2}{#3}}}
-\newcommand{\jhomeq}{%
-  \@ifnextchar*{\@jhomeqAlignTrue}{\@jhomeqAlignFalse}}
-\newcommand{\@jhomeqAlignTrue}[6]{%
-  \judgment*{#2}{#5}{\jdeq}{#6}{}{}{\jhomsym{#3}{#4}}}
-\newcommand{\@jhomeqAlignFalse}[5]{%
-  \judgment{#1}{#4}{\jdeq}{#5}{}{}{\jhomsym{#2}{#3}}}
-\newcommand{\jhomdefn}{%
-  \@ifnextchar*{\@jhomdefnAlignTrue}{\@jhomdefnAlignFalse}}
-\newcommand{\@jhomdefnAlignTrue}[6]{%
-  \judgment*{#2}{#5}{\defeq}{#6}{}{}{\jhomsym{#3}{#4}}}
-\newcommand{\@jhomdefnAlignFalse}[5]{%
-  \judgment{#1}{#4}{\defeq}{#5}{}{}{\jhomsym{#2}{#3}}}
-
 %%%% Composition of morphisms
 \newcommand{\comp@testtonest}[1]{%
   \@ifnextchar\jcomp{\@jcomp@nested}{%

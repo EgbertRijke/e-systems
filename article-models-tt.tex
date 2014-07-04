@@ -96,14 +96,14 @@ Thus we make eight kinds of judgments: ``$\Gamma$ is a context'',
 and ``$x$ is a term of the family $A$ of contexts over $\Gamma$''. The other four
 judgments are for judgmental equality.
 \begin{align*}
-\jctx*{\Gamma} 
-& \jctxeq*{\Gamma}{\Gamma'}
+\jalign\jctx{\Gamma} 
+& \jalign\jctxeq{\Gamma}{\Gamma'}
   \\
-\jfam*{\Gamma}{A} 
-& \jfameq*{\Gamma}{A}{B}
+\jalign\jfam{\Gamma}{A} 
+& \jalign\jfameq{\Gamma}{A}{B}
   \\
-\jterm*{\Gamma}{A}{x} 
-& \jtermeq*{\Gamma}{A}{x}{y}.
+\jalign\jterm{\Gamma}{A}{x} 
+& \jalign\jtermeq{\Gamma}{A}{x}{y}.
 \end{align*}
 
 Strictly speaking, we have three different judgmental equalities in play and one
@@ -1784,8 +1784,8 @@ are both non-trivial). To allow ourselves to speak of types we introduce two
 new judgments: the judgment that something is a type and the judgment that two
 types are equal.
 \begin{align*}
-\jtype*{\Gamma}{A} 
-& \jtypeeq*{\Gamma}{A}{B}
+\jalign\jtype{\Gamma}{A} 
+& \jalign\jtypeeq{\Gamma}{A}{B}
 \end{align*}
 But only families of contexts are eligible to be types. If $A$ is a type
 in context $\Gamma$, then $A$ is also a family of contexts over $\Gamma$. 
