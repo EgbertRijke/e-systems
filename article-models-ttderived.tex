@@ -96,17 +96,21 @@ with $g$ to obtain a term of $\ctxwk{A}{C}$ in context $\ctxext{\Gamma}{A}$.
 In the following definition, we work with in a slightly greater generality.
 
 \begin{defn}
-We define the judgment\begin{equation*}
+We define the judgment
+\begin{equation*}
 \jhom{\Gamma}{A}{B}{f},
 \end{equation*}
 which is pronounced as `$f$ is a morphism from $A$ to $B$ in context $\Gamma$',
-to be the judgment\begin{equation*}
+to be the judgment
+\begin{equation*}
 \unfold{\jhom{\Gamma}{A}{B}{f}}.
 \end{equation*}
-Likewise, we define the judgment\begin{equation*}
+Likewise, we define the judgment
+\begin{equation*}
 \jhomeq{\Gamma}{A}{B}{f}{f'}
 \end{equation*}
-to be the judgment\begin{equation*}
+to be the judgment
+\begin{equation*}
 \unfold{\jhomeq{\Gamma}{A}{B}{f}{f'}}.
 \end{equation*}
 As usual, when $f$ is a morphism from $A$ to $B$ in context $\Gamma$ we say that
@@ -134,7 +138,7 @@ the empty family in context $\Gamma$ is the same thing as a term:
 \end{align*}
 \end{lem}
 
-\begin{lem}
+\begin{lem}\label{lem:jhomdomext-jhomcodwk}
 We have the following valid inference rules expressing that a morphism from
 an extension $\ctxext{A}{P}$ to $B$ is the same thing as a morphism from $P$ into
 $\ctxwk{A}{B}$:
@@ -169,18 +173,19 @@ composition of morphisms via the action on terms of the precomposition operation
 \begin{defn}
 Let $\jhom{\Gamma}{A}{B}{f}$ and consider a family $\jfam{{\Gamma}{B}}{Q}$,
 a family $\jfam{{{\Gamma}{B}}{Q}}{R}$ and a term $\jterm{{{\Gamma}{B}}{Q}}{R}{h}$.
-We define\begin{align*}
-\jfamdefn*
+We define
+\begin{align*}
+\jalign\jfamdefn
   {{\Gamma}{A}}
   {\jcomp{A}{f}{Q}}
   {\unfold{\jcomp{A}{f}{Q}}}
   \\
-\jfamdefn*
+\jalign\jfamdefn
   {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
   {\jcomp{A}{f}{R}}
   {\unfold{\jcomp{A}{f}{R}}}
   \\
-\jtermdefn*
+\jalign\jtermdefn
   {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
   {\jcomp{A}{f}{R}}
   {\jcomp{A}{f}{h}}
@@ -841,7 +846,7 @@ We have the judgmental equalities
   \\
 & \jdeq
   \subst{f}{\idtm{\ctxwk{A}{B}}}
-  \tag{by \autoref{comp-wi}}
+  \tag{by \autoref{comp-wi-t}}
   \\
 & \jdeq
   f.
@@ -1011,14 +1016,14 @@ where we find the term $\idtm{P}$. Therefore we define:
 \begin{defn}
 Let $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ be families. We define
 \begin{align*}
-\jhomdefn*
+\jalign\jhomdefn
   {\Gamma}
   {{A}{P}}
   {A}
   {\cprojfstf{A}{P}}
   {\unfold{\cprojfstf{A}{P}}}
   \\
-\jtermdefn*
+\jalign\jtermdefn
   {\ctxext{\Gamma}{{A}{P}}}
   {\ctxwk{P}{P}}
   {\cprojsndf{A}{P}}
@@ -1930,7 +1935,7 @@ $\Gamma$', to be the judgment\begin{equation*}
 \end{equation*}
 \end{defn}
 
-\begin{rmk}
+\begin{rmk}\label{rmk:jhom-as-jfhom}
 The judgment $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$ means the same thing as
 \begin{equation*}
 \jhom{{\Gamma}{A}}{P}{\jcomp{A}{f}{Q}}{F}.
@@ -3445,4 +3450,86 @@ to prove the first judgmental equality. For the second, we have
   \idtm{A}
   \tag{by \autoref{comp-0s}}.
 \end{align*}
+\end{proof}
+
+\subsection{Morphisms with extended domains}
+
+We cover some properties of morphisms with extended domains because we will
+need them later on.
+
+\begin{lem}
+Let $\jhom{\Gamma}{{A}{P}}{B}{f}$ be a morphism and let $\jterm{\Gamma}{A}{x}$
+be a term. The following three inference rules are valid
+\begin{align*}
+& \inference
+  { \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\jcomp{}{f}{Q}}}
+      {\jcomp{}{\subst{x}{f}}{Q}}
+    }
+  \\
+& \inference
+  { \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{\subst{x}{P}}}{\jcomp{}{\subst{x}{f}}{Q}}}
+      {\subst{x}{\jcomp{}{f}{R}}}
+      {\jcomp{}{\subst{x}{f}}{R}}
+    }
+  \\
+& \inference
+  { \jterm{{{\Gamma}{B}}{Q}}{R}{h}
+    }
+  { \jfameq
+      {{{\Gamma}{\subst{x}{P}}}{\jcomp{}{\subst{x}{f}}{Q}}}
+      {\jcomp{}{\subst{x}{f}}{R}}
+      {\subst{x}{\jcomp{}{f}{h}}}
+      {\jcomp{}{\subst{x}{f}}{h}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+This follows from the observation in \autoref{lem:jhomdomext-jhomcodwk} 
+that a morphism from
+$\ctxext{A}{P}$ to $B$ in context $\Gamma$ is the same thing as a morphism
+from $P$ to $\ctxwk{A}{B}$ in context $\ctxext{\Gamma}{A}$.
+\end{proof}
+
+\begin{lem}
+Consider a morphism $\jhom{{\Gamma}{A}}{{P}{Q}}{R}{f}$ and a morphism
+$\jhom{\Gamma}{{A}{R}}{B}{g}$. Then the diagram
+\begin{equation*}
+\begin{tikzcd}
+\ctxext{A}{{P}{Q}}
+  \ar{r}{\jvcomp{}{\idtm{A}}{f}}
+  \ar{dr}[swap]{\jcomp{}{f}{g}}
+  &
+\ctxext{A}{R}
+  \ar{d}{g}
+  \\
+  &
+B
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$ commutes judgmentally.
+\end{lem}
+
+\begin{proof}
+It is just a triviality, as we have the judgmental equalities
+\begin{align*}
+\jcomp{}{f}{g}
+& \jdeq
+  \jcomp{}{f}{\jcomp{}{\idtm{A}}{g}}
+  \tag{by \autoref{precomp-idtm-t}}
+  \\
+& \jdeq
+  \jcomp{}{\jvcomp{}{\idtm{A}}{f}}{g}.
+  \tag{by \autoref{lem:composition-threesome}}
+\end{align*}
+Note that we may apply \autoref{lem:composition-threesome} because by
+\autoref{rmk:jhom-as-jfhom} every ordinary morphism is a morphism over the
+identity morphism.
 \end{proof}

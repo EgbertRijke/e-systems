@@ -208,6 +208,18 @@ commutes judgmentally. Now we can confidently formulate the definition of
 extension algebras.
 
 \begin{defn}\label{defn:extension-algebras}
+An \emph{extension algebra $\extalg{A}$ in context $\Gamma$} is a quintuple
+\begin{equation*}
+\unfold{\extalg{A}}
+\end{equation*}
+consisting of a family $\jextalgctx{\Gamma}{A}$ of \emph{$\extalg{A}$-contexts}, 
+a family $\jextalgfam{\Gamma}{A}$ of \emph{$\extalg{A}$-families}, a family 
+$\jextalgtm{\Gamma}{A}$ of \emph{$\extalg{A}$-terms}, a term
+$\jextalgctxext{\Gamma}{A}$ called the \emph{$\extalg{A}$-context extension}
+and a term $\jextalgfamext{\Gamma}{A}$ called the \emph{$\extalg{A}$-family
+extension}, satisfying the judgmental equalities of
+\autoref{eq:extalg-eq1,eq:extalg-eq2}.
+\begin{comment}
 We define the judgment
 \begin{equation*}
 \jextalg{\Gamma}{A}
@@ -215,17 +227,17 @@ We define the judgment
 asserting that $\extalg{A}$ is an \emph{extension algebra in context $\Gamma$}
 to be the conjunction of the following seven judmgents:
 \begin{align*}
-\jextalgctx*{\Gamma}{A}
+\jalign\jextalgctx{\Gamma}{A}
   \\
-\jextalgfam*{\Gamma}{A}
+\jalign\jextalgfam{\Gamma}{A}
   \\
-\jextalgtm*{\Gamma}{A}
+\jalign\jextalgtm{\Gamma}{A}
   \\
-\jextalgctxext*{\Gamma}{A}
+\jalign\jextalgctxext{\Gamma}{A}
   \\
-\jextalgfamext*{\Gamma}{A}
+\jalign\jextalgfamext{\Gamma}{A}
   \\
-\jhomeq*
+\jalign\jhomeq
   { \Gamma}
   { {\cftalgc{\cftalg{A}}}
     { {\cftalgf{\cftalg{A}}}
@@ -248,7 +260,7 @@ to be the conjunction of the following seven judmgents:
       { \cftctxext[\cftalg{A}]}
     }
   \\
-\jhomeq*
+\jalign\jhomeq
   { {\Gamma}{\cftalgc{\cftalg{A}}}}
   { { \cftalgf{\cftalg{A}}}
     { { \jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}
@@ -276,7 +288,9 @@ to be the conjunction of the following seven judmgents:
 In other words, an extension algebra $\extalg{A}$ in context $\Gamma$
 is a quintuple $\unfold{\extalg{A}}$ 
 satisfying the judgmental equalities displayed in the diagrams in
-\autoref{eq:extalg-eq1,eq:extalg-eq2}. Extension algebras are judgmentally
+\autoref{eq:extalg-eq1,eq:extalg-eq2}.
+\end{comment}
+Extension algebras are judgmentally
 equal if they are componentwise judgmentally equal.
 
 When $\extalg{A}$ is an extension algebra in context $\Gamma$, we also refer to
@@ -320,6 +334,7 @@ Both proofs are simple calculations. For the first judgmental equality we have
   \subst
     {\tmext{\gamma}{\apply\cftfamext[\extalg{A}]{\gamma}{a}{p}}}
     {\cftctxext[\cftalg{A}]}
+  \tag{by \autoref{comp-es}}
   \\
 & \jdeq 
   \subst
@@ -1289,7 +1304,7 @@ Let $\cftalg{A}$ be a CFT-algebra and let $\cftwk{\cftalg{A}}$ be as in
 \jterm
   {\Gamma}
   {\subst{\apply\cftctxext{\gamma}{a}}{\cftalgf{\cftalg{A}}}}
-  {\subst{b}{{a}{{\gamma}{\cftwkc{\cftalg{A}}}}}}
+  {\apply\cftwkc{\cftalg{A}}{\gamma}{a}{b}}
 \end{equation*}
 for $\gamma:A$ and $a,b:\subst{\gamma}{\cftalgf{\cftalg{A}}}$. We have
 \begin{equation*}
@@ -1298,10 +1313,10 @@ for $\gamma:A$ and $a,b:\subst{\gamma}{\cftalgf{\cftalg{A}}}$. We have
   { \subst
       { \apply\cftctxext
           {\apply\cftctxext{\gamma}{a}}
-          {\subst{b}{{a}{{\gamma}{\cftwkc{\cftalg{A}}}}}}
+          {\apply\cftwkc{\cftalg{A}}{\gamma}{a}{b}}
         }
       { \cftalgf{\cftalg{A}}}}
-  { \subst{q}{{b}{{a}{{\gamma}{\cftwkf{\cftalg{A}}}}}}}
+  { \apply\cftwkf{\cftalg{A}}{\gamma}{a}{b}{q}}
 \end{equation*}
 for $\gamma:A$, $a,b:\subst{\gamma}{\cftalgf{\cftalg{A}}}$ and
 $q:\subst{\apply\cftctxext{\gamma}{b}}{\cftalgf{\cftalg{A}}}$. Finally, we have
@@ -1309,10 +1324,10 @@ $q:\subst{\apply\cftctxext{\gamma}{b}}{\cftalgf{\cftalg{A}}}$. Finally, we have
 \jterm
   { \Gamma}
   { \subst
-      { {q}{{b}{{a}{{\gamma}{\cftwkf{\cftalg{A}}}}}}}
+      { \apply\cftwkf{\cftalg{A}}{\gamma}{a}{b}{q}}
       { { \apply\cftctxext
             {\apply\cftctxext{\gamma}{a}}
-            {{b}{{a}{{\gamma}{\cftwkc{\cftalg{A}}}}}}
+            {\apply\cftwkc{\cftalg{A}}{\gamma}{a}{b}}
           }
         {\cftalgt{\cftalg{A}}}
         }
@@ -1484,17 +1499,17 @@ we have the judgmental equality
     { \subst{b}{{a}{{\gamma}{\boldsymbol{\mathcal{F}}_{\cftwk{\cftalg{A}}}}}}
       }
     { \subst
-        { {q}{{b}{{a}{{\gamma}{\cftwkf{\cftalg{A}}}}}}}
-        { {\apply\cftctxext{\apply\cftctxext{\gamma}{a}}{\subst{b}{{a}{{\gamma}{\cftwkc{\cftalg{A}}}}}}}
+        { \apply\cftwkf{\cftalg{A}}{\gamma}{a}{b}{q}}
+        { {\apply\cftctxext{\apply\cftctxext{\gamma}{a}}{\apply\cftwkc{\cftalg{A}}{\gamma}{a}{b}}}
           {\cftwk{\cftalg{A}}}
           }
       }
 \end{align*}
 of CFT-homomorphisms from $\subst{b}{{\gamma}{\cftalg{F_{F_A}}}}$ to
 $ \subst
-      { {q}{{b}{{a}{{\gamma}{\cftwkf{\cftalg{A}}}}}}
+      { \apply\cftwkf{\cftalg{A}}{\gamma}{a}{b}{q}
         }
-      { {{b}{{a}{{\gamma}{\cftwkc{\cftalg{A}}}}}}
+      { {\apply\cftwkc{\cftalg{A}}{\gamma}{a}{b}}
         {{a}{{\gamma}{\cftalg{F_{F_{F_{F_{A}}}}}}}}
         }$
 in context $\Gamma$, for $\gamma:A$, $a,b:\subst{\gamma}{\cftalgf{\cftalg{A}}}$ and
@@ -1666,7 +1681,61 @@ will be a CFT-homomorphism
 We will require additionally that substitution preserves itself. Thus, we will
 formulate an abstraction of the rules stated in \autoref{comp-ss}.
 
-\subsubsection{Substitution is compatible with itself}
+\begin{defn}
+Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$ and let
+\begin{equation*}
+\jhom
+  {{{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}{\cftalgt{\cftalg{A}}}}
+  {\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}
+  {\cftalg{F_A}}
+  {\cftsubst{\cftalg{A}}}
+\end{equation*}
+be a CFT-homomorphism. We say that the pair $(\cftalg{A},\cftsubst{\cftalg{A}})$
+is a substitution algebra in context $\Gamma$ if the diagram
+\begin{equation}\label{diag:substalg}
+\begin{tikzcd}
+X
+  \ar{r}
+  \ar{d}
+& X
+  \ar{d}
+  \\
+X 
+  \ar{r}
+& X
+\end{tikzcd}
+\end{equation}
+of CFT-algebras in context ... commutes judgmentally.
+\end{defn}
+
+\begin{lem}
+Let $\cftalg{A}$ be a substitution algebra in context $\Gamma$. Then we have the
+judgmental equality
+\begin{align*}
+& \jcomp{}
+    { \apply\cftsubst{\cftalg{A}}%
+      { \apply\cftctxext%
+          { \apply\cftctxext{\gamma}{a}}{p}
+        }
+      { q}
+      { g}
+      }
+    { \subst
+        { q}
+        { { p}
+          { \boldsymbol{\mathcal{F}}_{\apply\cftsubst{\cftalg{A}}{\gamma}{a}{x}}}
+          }
+      }
+  \\
+& \jdeq
+\end{align*}
+of CFT-homomorphisms from ... to ... in context $\Gamma$,
+for $\gamma:A$, $a:\subst{\gamma}{\cftalgf{\cftalg{A}}}$, 
+$x:\subst{a}{{\gamma}{\cftalgt{\cftalg{A}}}}$,
+$p:\subst{\apply\cftctxext{\gamma}{a}}{\cftalgf{\cftalg{A}}}$
+$q:\subst{\apply\cftctxext{\apply\cftctxext{\gamma}{a}}{p}}{\cftalgf{\cftalg{A}}}$
+and $g:\subst{\apply\cftctxext{\apply\cftctxext{\apply\cftctxext{\gamma}{a}}{p}}{q}}{\cftalgt{\cftalg{A}}}$
+\end{lem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{E-algebras}

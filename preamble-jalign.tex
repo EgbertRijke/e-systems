@@ -89,4 +89,39 @@
   \jalign\judgment{#1}{#4}{\defeq}{#5}{}{}{\jhomsym{#2}{#3}}}
 \jalign@def\jhomdefn
 
+\newcommand{\jextalg@jalign}[2]{%
+  \jalign\judgment{#1}{}{}{}{}{\extalg{#2}}{\extalg@sym}}
+\jalign@def\jextalg
+
+\newcommand{\jextalgctx@jalign}[2]{%
+  \jalign\jfam{#1}{\cftalgc{\cftalg{#2}}}}
+\jalign@def\jextalgctx
+
+\newcommand{\jextalgfam@jalign}[2]{%
+  \jalign\jfam{#1}{\cftalgf{\cftalg{#2}}}}
+\jalign@def\jextalgfam
+
+\newcommand{\jextalgtm@jalign}[2]{%
+  \jalign\jfam{{#1}{\cftalgf{\cftalg{#2}}}}{\cftalgt{\cftalg{#2}}}}
+\jalign@def\jextalgtm
+
+\newcommand{\jextalgctxext@jalign}[2]{%
+  \jalign\jhom%
+    {#1}%
+    {{\cftalgc{\cftalg{#2}}}{\cftalgf{\cftalg{#2}}}}%
+    {\cftalgc{\cftalg{#2}}}%
+    {\cftctxext[\cftalg{#2}]}}
+\jalign@def\jextalgctxext
+
+\newcommand{\jextalgfamext@jalign}[2]{%
+  \jalign\jhom
+    { {#1}{\cftalgc{\cftalg{#2}}}}
+    { {\cftalgf{\cftalg{#2}}}
+      {\jcomp{}{\cftctxext{\cftalg{#2}}}{\cftalgf{\cftalg{#2}}}}}
+    { \cftalgf{\cftalg{#2}}}
+    { \cftfamext[\cftalg{#2}]}}
+\jalign@def\jextalgfamext
+
+
+
 \makeatother

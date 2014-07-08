@@ -250,44 +250,22 @@
   
 \newcommand{\extalg}{\algfont}
 \newcommand{\extalg@sym}{\@judgment@kind{ExtAlg}}
-\newcommand{\jextalg}{\@ifnextchar*{\@jextalgAlignTrue}{\@jextalgAlignFalse}}
-\newcommand{\@jextalgAlignTrue}[3]{\judgment*{#2}{}{}{}{}{\extalg{#3}}{\extalg@sym}}
-\newcommand{\@jextalgAlignFalse}[2]{\judgment{#1}{}{}{}{}{\extalg{#2}}{\extalg@sym}}
+\newcommand{\jextalg}[2]{\judgment{#1}{}{}{}{}{\extalg{#2}}{\extalg@sym}}
 
-\newcommand{\jextalgctx}{%
-  \@ifnextchar*{\@jextalgctxAlignTrue}{\@jextalgctxAlignFalse}}
-\newcommand{\@jextalgctxAlignTrue}[3]{%
-  \jfam*{#2}{\cftalgc{\cftalg{#3}}}}
-\newcommand{\@jextalgctxAlignFalse}[2]{%
+\newcommand{\jextalgctx}[2]{%
   \jfam{#1}{\cftalgc{\cftalg{#2}}}}
 
-\newcommand{\jextalgfam}{%
-  \@ifnextchar*{\@jextalgfamAlignTrue}{\@jextalgfamAlignFalse}}
-\newcommand{\@jextalgfamAlignTrue}[3]{%
-  \jfam*{#2}{\cftalgf{\cftalg{#3}}}}
-\newcommand{\@jextalgfamAlignFalse}[2]{%
-  \jfam{#1}{\cftalgf{\cftalg{#2}}}}
+\newcommand{\jextalgfam}[2]{%
+  \jfam{{#1}{\cftalgc{\cftalg{#2}}}}{\cftalgf{\cftalg{#2}}}}
 
-\newcommand{\jextalgtm}{%
-  \@ifnextchar*{\@jextalgtmAlignTrue}{\@jextalgtmAlignFalse}}
-\newcommand{\@jextalgtmAlignTrue}[3]{%
-  \jfam*{{#2}{\cftalgf{\cftalg{#3}}}}{\cftalgt{\cftalg{#3}}}}
-\newcommand{\@jextalgtmAlignFalse}[2]{%
-  \jfam{{#1}{\cftalgf{\cftalg{#2}}}}{\cftalgt{\cftalg{#2}}}}
+\newcommand{\jextalgtm}[2]{%
+  \jfam{{{#1}{\cftalgc{\cftalg{#2}}}}{\cftalgf{\cftalg{#2}}}}{\cftalgt{\cftalg{#2}}}}
 
-\newcommand{\jextalgctxext}{%
-  \@ifnextchar*{\@jextalgctxextAlignTrue}{\@jextalgctxextAlignFalse}}
-\newcommand{\@jextalgctxextAlignTrue}[3]{%
-  \jhom*{#2}{{\cftalgc{\cftalg{#3}}}{\cftalgf{\cftalg{#3}}}}{\cftalgc{\cftalg{#3}}}{\cftctxext[\cftalg{#3}]}}
-\newcommand{\@jextalgctxextAlignFalse}[2]{%
+\newcommand{\jextalgctxext}[2]{%
   \jhom{#1}{{\cftalgc{\cftalg{#2}}}{\cftalgf{\cftalg{#2}}}}{\cftalgc{\cftalg{#2}}}{\cftctxext[\cftalg{#2}]}}
 
-\newcommand{\jextalgfamext}{%
-  \@ifnextchar*{\@jextalgfamextAlignTrue}{\@jextalgfamextAlignFalse}}
-\newcommand{\@jextalgfamextAlignTrue}[3]{%
-  \jhom*{{#2}{\cftalgc{\cftalg{#3}}}}{{\cftalgf{\cftalg{#3}}}{\jcomp{}{\cftctxext[\cftalg{#3}]}{\cftalgf{\cftalg{#3}}}}}{\cftalgf{\cftalg{#3}}}{\cftfamext[\cftalg{#3}]}}
-\newcommand{\@jextalgfamextAlignFalse}[2]{%
-  \jhom{{#1}{\cftalgc{\cftalg{#2}}}}{{\cftalgf{\cftalg{#2}}}{\jcomp{}{\cftctxext{\cftalg{#2}}}{\cftalgf{\cftalg{#2}}}}}{\cftalgf{\cftalg{#2}}}{\cftfamext[\cftalg{#2}]}}
+\newcommand{\jextalgfamext}[2]{%
+  \jhom{{#1}{\cftalgc{\cftalg{#2}}}}{{\cftalgf{\cftalg{#2}}}{\jcomp{}{\cftctxext[\cftalg{#2}]}{\cftalgf{\cftalg{#2}}}}}{\cftalgf{\cftalg{#2}}}{\cftfamext[\cftalg{#2}]}}
   
 \newcommand{\cfthomcomp}[2]{#2\circ #1}
 
@@ -325,10 +303,10 @@
 \newcommand{\cftwkf}[1]{\mathcal{F}_{\boldsymbol\omega^{#1}}}
 \newcommand{\cftwkt}[1]{\mathcal{T}_{\boldsymbol\omega^{#1}}}
 
-\newcommand{\cftsubst}[2][]{\boldsymbol\sigma_{#1}^{#2}}
-\newcommand{\cftsubstc}[1]{\cftsubst[\mathsf{c}]{#1}}
-\newcommand{\cftsubstf}[1]{\cftsubst[\mathsf{f}]{#1}}
-\newcommand{\cftsubstt}[1]{\cftsubst[\mathsf{t}]{#1}}
+\newcommand{\cftsubst}[1]{\boldsymbol\sigma^{#1}}
+\newcommand{\cftsubstc}[1]{\sigma^{#1}}
+\newcommand{\cftsubstf}[1]{\mathcal{F}_{\cftsubst{#1}}}
+\newcommand{\cftsubstt}[1]{\mathcal{T}_{\cftsubst{#1}}}
 
 \newcommand{\cftidtm}[1]{\boldsymbol\iota^{#1}}
 
