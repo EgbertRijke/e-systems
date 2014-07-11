@@ -89,6 +89,18 @@
   \jalign\judgment{#1}{#4}{\defeq}{#5}{}{}{\jhomsym{#2}{#3}}}
 \jalign@def\jhomdefn
 
+\newcommand{\jfhom@jalign}[7]{
+  \jalign\judgment{#1}{}{}{#7}{}{}{\jfhomsym{#4}{#5}{#6}}}
+\jalign@def\jfhom
+
+\newcommand{\jfhomeq@jalign}[8]{%
+  \jalign\judgment{#1}{#7}{\jdeq}{#8}{}{}{\jhomsym[{#4}]{#5}{#6}}}
+\jalign@def\jfhomeq
+
+\newcommand{\jfhomdefn@jalign}[8]{%
+  \jalign\judgment{#1}{#7}{\defeq}{#8}{}{}{\jhomsym[{#4}]{#5}{#6}}}
+\jalign@def\jfhomdefn
+
 \newcommand{\jextalg@jalign}[2]{%
   \jalign\judgment{#1}{}{}{}{}{\extalg{#2}}{\extalg@sym}}
 \jalign@def\jextalg

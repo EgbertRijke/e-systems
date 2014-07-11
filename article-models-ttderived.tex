@@ -3452,12 +3452,35 @@ to prove the first judgmental equality. For the second, we have
 \end{align*}
 \end{proof}
 
-\subsection{Morphisms with extended domains}
+\subsection{Morphisms with extended domains}\label{sec:ehom}
 
 We cover some properties of morphisms with extended domains because we will
 need them later on.
 
-\begin{lem}
+\begin{rmk}
+Suppose $\jhom{\Gamma}{{A}{P}}{B}{f}$ is a morphism with an extended domain.
+Then the inference rules
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jhom{\Gamma}{\subst{x}{P}}{B}{\subst{x}{f}}
+    }
+  \\
+& \inference
+  { \jterm{{\Gamma}{A}}{P}{y}
+    }
+  { \jhom{\Gamma}{A}{B}{\subst{y}{f}}
+    }
+\end{align*}
+are valid.
+This follows from the observation in \autoref{lem:jhomdomext-jhomcodwk} 
+that a morphism from
+$\ctxext{A}{P}$ to $B$ in context $\Gamma$ is the same thing as a morphism
+from $P$ to $\ctxwk{A}{B}$ in context $\ctxext{\Gamma}{A}$.
+\end{rmk}
+
+\begin{lem}\label{lem:ehom-subst}
 Let $\jhom{\Gamma}{{A}{P}}{B}{f}$ be a morphism and let $\jterm{\Gamma}{A}{x}$
 be a term. The following three inference rules are valid
 \begin{align*}
@@ -3482,7 +3505,7 @@ be a term. The following three inference rules are valid
 & \inference
   { \jterm{{{\Gamma}{B}}{Q}}{R}{h}
     }
-  { \jfameq
+  { \jtermeq
       {{{\Gamma}{\subst{x}{P}}}{\jcomp{}{\subst{x}{f}}{Q}}}
       {\jcomp{}{\subst{x}{f}}{R}}
       {\subst{x}{\jcomp{}{f}{h}}}
@@ -3492,11 +3515,104 @@ be a term. The following three inference rules are valid
 \end{lem}
 
 \begin{proof}
-This follows from the observation in \autoref{lem:jhomdomext-jhomcodwk} 
-that a morphism from
-$\ctxext{A}{P}$ to $B$ in context $\Gamma$ is the same thing as a morphism
-from $P$ to $\ctxwk{A}{B}$ in context $\ctxext{\Gamma}{A}$.
+Let $Q$ be a family over $\ctxext{\Gamma}{A}$.
+We have the judgmental equalities
+\begin{align*}
+\subst{x}{\jcomp{}{f}{Q}}
+& \jdeq
+  \subst
+    {x}
+    {{f}{\ctxwk{\ctxext{A}{P}}{Q}}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst
+    { {x}{f}
+      }
+    { {x}
+      {\ctxwk{\ctxext{A}{P}}{Q}}
+      }
+  \tag{by \autoref{comp-ss-f}}
+  \\
+& \jdeq
+  \subst
+    { {x}{f}
+      }
+    { {x}
+      {\ctxwk{P}{{A}{Q}}}
+      }
+  \tag{by \autoref{comp-ew-f}}
+  \\
+& \jdeq
+  \subst
+    { {x}{f}
+      }
+    { \ctxwk
+        {\subst{x}{P}}
+        {\subst{x}{\ctxwk{A}{Q}}}
+      }
+  \tag{by \autoref{comp-sw-f}}
+  \\
+& \jdeq
+  \subst
+    { {x}{f}
+      }
+    { \ctxwk
+        {\subst{x}{P}}
+        {Q}
+      }
+  \tag{by \autoref{cancellation-ws-f}}
+  \\
+& \jdeq
+  \jcomp{}{\subst{x}{f}}{Q}.
+  \tag{by definition}
+\end{align*}
+\begin{comment}
+In the case where $\xi$ is $y$ we have the judgmental equalities
+\begin{align*}
+\subst{y}{\jcomp{}{f}{Q}}
+& \jdeq
+  \subst
+    { y
+      }
+    { {f}
+      {\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}
+      }
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst
+    { {y}{f}
+      }
+    { {y}
+      {\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}
+      }
+  \tag{by \autoref{comp-ss-f}}
+  \\
+& \jdeq
+  \subst
+    { {y}{f}
+      }
+    { {y}
+      {\ctxwk{\cftalgf{\cftalg{A}}}{{\cftalgc{\cftalg{A}}}{Q}}}
+      }
+  \tag{by \autoref{comp-ew-f}}
+  \\
+& \jdeq
+  \subst
+    { {y}{f}
+      }
+    { \ctxwk{\cftalgc{\cftalg{A}}}{Q}
+      }
+  \tag{by \autoref{cancellation-ws-f}}
+  \\
+& \jdeq
+  \jcomp{}{\subst{y}{f}}{Q}.
+  \tag{by definition}
+\end{align*}
+\end{comment}
 \end{proof}
+
 
 \begin{lem}
 Consider a morphism $\jhom{{\Gamma}{A}}{{P}{Q}}{R}{f}$ and a morphism

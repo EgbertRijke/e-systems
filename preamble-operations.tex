@@ -260,11 +260,7 @@
 
 %%%% The judgment that F is a morphism from P to Q over f in context \Gamma.
 \newcommand{\jfhomsym}[3]{\jhomsym[{#1}]{#2}{#3}}
-\newcommand{\jfhom}{%
-  \@ifnextchar*{\jfhomAlignTrue}{\jfhomAlignFalse}}
-\newcommand{\jfhomAlignTrue}[8]{
-  \judgment*{#2}{}{}{#8}{}{}{\jfhomsym{#5}{#6}{#7}}}
-\newcommand{\jfhomAlignFalse}[7]{
+\newcommand{\jfhom}[7]{
   \judgment{#1}{}{}{#7}{}{}{\jfhomsym{#4}{#5}{#6}}}
 \newcommand{\jfhomeq}[8]{%
   \judgment{#1}{#7}{\jdeq}{#8}{}{}{\jhomsym[{#4}]{#5}{#6}}}

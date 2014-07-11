@@ -582,6 +582,24 @@ $\extalg{F_{F_A}}$ and $\jcomp{}{\cftctxext[\extalg{A}]}{\extalg{F_A}}$ are
 judgmentally equal extension algebras in context $\ctxext{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}$.
 \end{cor}
 
+\begin{lem}
+Let $\extalg{Q}$ be an extension algebra in context $\ctxext{\Gamma}{B}$ and let
+$\jfam{\Gamma}{A}$. Then we have the judgmental equality
+\begin{equation*}
+\ctxwk{A}{\extalg{F_Q}}\jdeq\extalg{F}_{\ctxwk{A}{\extalg{Q}}}
+\end{equation*}
+of extension algebras in context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$.
+\end{lem}
+
+\begin{lem}
+Let $\extalg{Q}$ be an extension algebra in context $\ctxext{{\Gamma}{A}}{P}$ 
+and let $\jterm{\Gamma}{A}{x}$. Then we have the judgmental equality
+\begin{equation*}
+\subst{x}{\extalg{F_Q}}\jdeq\extalg{F}_{\subst{x}{\extalg{Q}}}
+\end{equation*}
+of extension algebras in context $\ctxext{\Gamma}{\subst{x}{P}}$.
+\end{lem}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Extension homomorphisms}
 
@@ -595,7 +613,7 @@ $\extalg{B}$ in context $\Gamma$} is a triple $\unfold{\cfthom{f}}$ consisting o
   {\cftalgc{\cftalg{B}}}
   {\cfthomc{\cfthom{f}}}
   \\
-\jfhom*
+\jalign\jfhom
   {\Gamma}
   {\cftalgc{\cftalg{A}}}
   {\cftalgc{\cftalg{B}}}
@@ -604,7 +622,7 @@ $\extalg{B}$ in context $\Gamma$} is a triple $\unfold{\cfthom{f}}$ consisting o
   {\cftalgf{\cftalg{B}}}
   {\cfthomf{\cfthom{f}}}
   \\
-\jfhom*
+\jalign\jfhom
   {\Gamma}
   {{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
   {{\cftalgc{\cftalg{B}}}{\cftalgf{\cftalg{B}}}}
@@ -803,159 +821,7 @@ The notion of CFT-algebras that we will
 study in this subsection will be extension algebras which also have an empty 
 context $\cftempc{\cftalg{A}}$ and an empty family $\cftempf{\cftalg{A}}$ 
 satisfying (among other conditions) that families over the empty context in
-$\cftalg{A}$ are just the contexts of $\cftalg{A}$. We will begin with an 
-auxilary lemma which will help us dealing with the internal empty contexts:
-
-\begin{lem}\label{lem:empalg-mor}
-Consider a family $\jfam{\Gamma}{A}$ with a term $\jterm{\Gamma}{A}{x}$ and 
-a family $\jfam{{\Gamma}{A}}{P}$ % with a term $\jterm{{\Gamma}{A}}{P}{y}$
-satisfying the judgmental equality
-\begin{align}
-\jalign\jfameq{\Gamma}{\subst{x}{P}}{A}
-  \label{eq1:empalg-mor}
-%  \\
-%\jalign\jtermeq{\Gamma}{A}{\subst{x}{y}}{x}.
-%  \label{eq2:empalg-mor}
-\end{align}
-Consider also a morphism
-\begin{equation*}
-\jhom{\Gamma}{{A}{P}}{B}{f}.
-\end{equation*}
-Then $\subst{\xi}{f}$ is a morphism from $A$ to $B$ 
-in context $\Gamma$ and the following inference rules are valid for $\xi$ being 
-$x$ or $y$:
-\begin{align*}
-& \inference
-  { \jfam{{\Gamma}{B}}{Q}
-    }
-  { \jfameq
-      {{\Gamma}{A}}
-      {\subst{\xi}{\jcomp{}{f}{Q}}}
-      {\jcomp{}{\subst{\xi}{f}}{Q}}
-    }
-  \\
-& \inference
-  { \jfam{{{\Gamma}{B}}{Q}}{R}
-    }
-  { \jfameq
-      {{{\Gamma}{A}}{\jcomp{}{\subst{\xi}{f}}{Q}}}
-      {\subst{\xi}{\jcomp{}{f}{R}}}
-      {\jcomp{}{\subst{\xi}{f}}{R}}
-    }
-  \\
-& \inference
-  { \jterm{{{\Gamma}{B}}{Q}}{R}{h}
-    }
-  { \jtermeq
-      {{{\Gamma}{A}}{\jcomp{}{\subst{\xi}{f}}{Q}}}
-      {\jcomp{}{\subst{\xi}{f}}{R}}
-      {\subst{\xi}{\jcomp{}{f}{h}}}
-      {\jcomp{}{\subst{\xi}{f}}{h}}
-    }
-\end{align*}
-\end{lem}
-
-\begin{proof}
-We only prove the first inference rule in both cases.
-Let $Q$ be a family over $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$. In the case 
-where $\xi$ is $x$ we have the judgmental equalities
-\begin{align*}
-\subst{x}{\jcomp{}{f}{Q}}
-& \jdeq
-  \subst
-    {x}
-    {{f}{\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}}
-  \tag{by definition}
-  \\
-& \jdeq
-  \subst
-    { {x}{f}
-      }
-    { {x}
-      {\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}
-      }
-  \tag{by \autoref{comp-ss-f}}
-  \\
-& \jdeq
-  \subst
-    { {x}{f}
-      }
-    { {x}
-      {\ctxwk{\cftalgf{\cftalg{A}}}{{\cftalgc{\cftalg{A}}}{Q}}}
-      }
-  \tag{by \autoref{comp-ew-f}}
-  \\
-& \jdeq
-  \subst
-    { {x}{f}
-      }
-    { \ctxwk
-        {\subst{x}{\cftalgf{\cftalg{A}}}}
-        {\subst{x}{\ctxwk{\cftalgc{\cftalg{A}}}{Q}}}
-      }
-  \tag{by \autoref{comp-sw-f}}
-  \\
-& \jdeq
-  \subst
-    { {x}{f}
-      }
-    { \ctxwk
-        {\subst{x}{\cftalgf{\cftalg{A}}}}
-        {Q}
-      }
-  \tag{by \autoref{cancellation-ws-f}}
-  \\
-& \jdeq
-  \subst{{x}{f}}{\ctxwk{\cftalgc{\cftalg{A}}}{Q}}
-  \tag{by \autoref{eq1:empalg-mor}}
-  \\
-& \jdeq
-  \jcomp{}{\subst{x}{f}}{Q}.
-  \tag{by definition}
-\end{align*}
-In the case where $\xi$ is $y$ we have the judgmental equalities
-\begin{align*}
-\subst{y}{\jcomp{}{f}{Q}}
-& \jdeq
-  \subst
-    { y
-      }
-    { {f}
-      {\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}
-      }
-  \tag{by definition}
-  \\
-& \jdeq
-  \subst
-    { {y}{f}
-      }
-    { {y}
-      {\ctxwk{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{Q}}
-      }
-  \tag{by \autoref{comp-ss-f}}
-  \\
-& \jdeq
-  \subst
-    { {y}{f}
-      }
-    { {y}
-      {\ctxwk{\cftalgf{\cftalg{A}}}{{\cftalgc{\cftalg{A}}}{Q}}}
-      }
-  \tag{by \autoref{comp-ew-f}}
-  \\
-& \jdeq
-  \subst
-    { {y}{f}
-      }
-    { \ctxwk{\cftalgc{\cftalg{A}}}{Q}
-      }
-  \tag{by \autoref{cancellation-ws-f}}
-  \\
-& \jdeq
-  \jcomp{}{\subst{y}{f}}{Q}.
-  \tag{by definition}
-\end{align*}
-\end{proof}
+$\cftalg{A}$ are just the contexts of $\cftalg{A}$.
 
 \begin{defn}
 A \emph{CFT-algebra $\cftalg{A}$ in context $\Gamma$} is a septuple
@@ -981,7 +847,7 @@ which satisfy the following judgmental equalities
 \end{align}
 \item The empty family over the empty context of $\cftalg{A}$ is the empty context of $\cftalg{A}$:
 \begin{align}
-\jtermeq*
+\jalign\jtermeq
   {\Gamma}
   {\cftalgc{\cftalg{A}}}
   {\subst{\cftempc{\cftalg{A}}}{\cftempf{\cftalg{A}}}}
@@ -991,14 +857,14 @@ which satisfy the following judgmental equalities
 \item Context extension of $\cftalg{A}$ is compatible with the empty context and
 family of $\cftalg{A}$:
 \begin{align}
-\jtermeq*
+\jalign\jtermeq
   {{\Gamma}{\cftalgc{\cftalg{A}}}}
   {\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}
   {\subst{\cftempc{\cftalg{A}}}{\cftctxext[\cftalg{A}]}}
   {\idtm{\cftalgc{\cftalg{A}}}}
   \label{cftalg-eq1}
   \\
-\jtermeq*
+\jalign\jtermeq
   {{\Gamma}{\cftalgc{\cftalg{A}}}}
   {\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}
   {\subst{\cftempf{\cftalg{A}}}{\cftctxext[\cftalg{A}]}}
@@ -1008,14 +874,14 @@ family of $\cftalg{A}$:
 \item Family extension of $\cftalg{A}$ is compatible with the empty family and the empty family
 over families of $\cftalg{A}$:
 \begin{align}
-\jtermeq*
+\jalign\jtermeq
   {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
   {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
   {\subst{\cftempf{\cftalg{A}}}{\cftfamext}}
   {\idtm{\cftalgf{\cftalg{A}}}}
   \label{cftalg-eq3}
   \\
-\jtermeq*
+\jalign\jtermeq
   {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
   {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
   {\subst{\jcomp{}{\cftctxext}{\cftempf{\cftalg{A}}}}{\cftfamext}}
@@ -1025,7 +891,7 @@ over families of $\cftalg{A}$:
 \item Family extension over the empty context of $\cftalg{A}$ is context extension
 of $\cftalg{A}$:
 \begin{align}
-\jhomeq*
+\jalign\jhomeq
   {\Gamma}
   {{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
   {\cftalgc{\cftalg{A}}}
@@ -1041,7 +907,7 @@ We need to verify that the judgmental equalities
 \autoref{cftalg-eq1,cftalg-eq2,cftalg-eq3,cftalg-eq4,cftalg-eq5}
 are indeed well-typed (i.e.~compare two terms of the same type).
 \begin{enumerate}
-\item \autoref{lem:empalg-mor} implies that the morphisms 
+\item \autoref{lem:ehom-subst} implies that the morphisms 
 $\subst{\cftempc{\cftalg{A}}}{\cftctxext}$ and
 $\subst{\cftempf{\cftalg{A}}}{\cftctxext}$ both go from $\cftalgc{\cftalg{A}}$ 
 to $\cftalgc{\cftalg{A}}$.
@@ -1051,7 +917,7 @@ Now we have the judgmental equalities
 \subst{\cftempf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}
 & \jdeq
   \jcomp{}{\subst{\cftempf{\cftalg{A}}}{\cftctxext}}{\cftalgf{\cftalg{A}}}
-  \tag{by \autoref{lem:empalg-mor}}
+  \tag{by \autoref{lem:ehom-subst}}
   \\
 & \jdeq
   \jcomp{}{\idtm{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}
@@ -1061,7 +927,7 @@ Now we have the judgmental equalities
   \cftalgf{\cftalg{A}}
   \tag{by \autoref{precomp-idtm-c}}
 \end{align*}
-Therefore we can apply \autoref{lem:empalg-mor} with the triple
+Therefore we can apply \autoref{lem:ehom-subst} with the triple
 $(\cftalgf{\cftalg{A}},\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}},
 \cftempf{\cftalg{A}})$ and the morphism $\cftfamext$ to see that both 
 $\subst{\cftempf{\cftalg{A}}}{\cftfamext}$ and
@@ -1137,13 +1003,13 @@ was verified in \autoref{rmkenum:famfamempf-jdeq-fam} of \autoref{rmk:cftalg-def
   {\subst{\cftempf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftempf{\cftalg{A}}}}}
   {\cftempf{\cftalg{A}}}.
 \end{equation*}
-Note that we can apply \autoref{lem:empalg-mor}, so we get the judgmental
+Note that we can apply \autoref{lem:ehom-subst}, so we get the judgmental
 equalities
 \begin{align*}
 \subst{\cftempf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftempf{\cftalg{A}}}}
 & \jdeq
   \jcomp{}{\subst{\cftempf{\cftalg{A}}}{\cftctxext}}{\cftempf{\cftalg{A}}}
-  \tag{by \autoref{lem:empalg-mor}}
+  \tag{by \autoref{lem:ehom-subst}}
   \\
 & \jdeq
   \jcomp{}{\idtm{\cftalgf{\cftalg{A}}}}{\cftempf{\cftalg{A}}}
@@ -1229,7 +1095,7 @@ is verified as follows:
 \subst{\cftempf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftfamext}}
 & \jdeq
   \jcomp{}{\subst{\cftempf{\cftalg{A}}}{\cftctxext}}{\cftfamext}
-  \tag{by \autoref{lem:empalg-mor}}
+  \tag{by \autoref{lem:ehom-subst}}
   \\
 & \jdeq
   \jcomp{}{\idtm{\cftalgc{\cftalg{A}}}}{\cftfamext}
@@ -1241,6 +1107,91 @@ is verified as follows:
 \end{align*}
 \end{enumerate}
 \end{proof}
+
+\begin{thm}\label{thm:cftalg-wk}
+Let $\cftalg{Q}$ be a CFT-algebra in context $\ctxext{\Gamma}{B}$ and let
+$\jfam{\Gamma}{A}$ be a family of contexts. Then the septuple
+\begin{equation*}
+\ctxwk{A}{\cftalg{Q}}
+  \defeq
+  ( \ctxwk{A}{\cftalgc{\cftalg{Q}}},
+    \ctxwk{A}{\cftalgf{\cftalg{Q}}},
+    \ctxwk{A}{\cftalgt{\cftalg{Q}}},
+    \ctxwk{A}{\cftctxext[\cftalg{Q}]},
+    \ctxwk{A}{\cftfamext[\cftalg{Q}]},
+    \ctxwk{A}{\cftempc{\cftalg{Q}}},
+    \ctxwk{A}{\cftempf{\cftalg{Q}}})
+\end{equation*}
+is a CFT-algebra in context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$.
+\end{thm}
+
+\begin{proof}
+The proof follows from the fact that weakening by $A$ is compatible with all
+the involved operations.
+\end{proof}
+
+\begin{thm}\label{thm:cftalg-subst}
+Let $\extalg{Q}$ be a CFT-algebra in context $\ctxext{{\Gamma}{A}}{P}$
+and let $\jterm{\Gamma}{A}{x}$ be a term. Then the septuple
+\begin{equation*}
+\subst{x}{\cftalg{Q}}
+  \defeq
+  ( \subst{x}{\cftalgc{\cftalg{Q}}},
+    \subst{x}{\cftalgf{\cftalg{Q}}},
+    \subst{x}{\cftalgt{\cftalg{Q}}},
+    \subst{x}{\cftctxext[\cftalg{Q}]},
+    \subst{x}{\cftfamext[\cftalg{Q}]},
+    \subst{x}{\cftempc{\cftalg{Q}}},
+    \subst{x}{\cftempf{\cftalg{Q}}})
+\end{equation*}
+is a CFT-algebra in context $\ctxext{\Gamma}{\subst{x}{P}}$.
+\end{thm}
+
+\begin{proof}
+The proof follows from the fact that substitution with $x$ is compatible with
+all the involved operations.
+\end{proof}
+
+\begin{cor}
+Let $\cftalg{Q}$ be a CFT-algebra in context $\ctxext{\Gamma}{B}$
+and let $\jhom{\Gamma}{A}{B}{f}$. Then the septuple
+\begin{equation*}
+\jcomp{A}{f}{\cftalg{Q}}
+  \defeq
+  ( \jcomp{A}{f}{\cftalgc{\cftalg{Q}}},
+    \jcomp{A}{f}{\cftalgf{\cftalg{Q}}},
+    \jcomp{A}{f}{\cftalgt{\cftalg{Q}}},
+    \jcomp{A}{f}{\cftctxext[\cftalg{Q}]},
+    \jcomp{A}{f}{\cftfamext[\cftalg{Q}]},
+    \jcomp{A}{f}{\cftempc{\cftalg{Q}}},
+    \jcomp{A}{f}{\cftempf{\cftalg{Q}}})
+\end{equation*}
+is a CFT-algebra in context $\ctxext{\Gamma}{A}$.
+\end{cor}
+
+\begin{cor}
+Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$. Then
+$\cftalg{F_{F_A}}$ and $\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalg{F_A}}$ are
+judgmentally equal CFT-algebras in context $\ctxext{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}$.
+\end{cor}
+
+\begin{lem}
+Let $\cftalg{Q}$ be a CFT-algebra in context $\ctxext{\Gamma}{B}$ and let
+$\jfam{\Gamma}{A}$. Then we have the judgmental equality
+\begin{equation*}
+\ctxwk{A}{\cftalg{F_Q}}\jdeq\cftalg{F}_{\ctxwk{A}{\cftalg{Q}}}
+\end{equation*}
+of CFT-algebras in context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$.
+\end{lem}
+
+\begin{lem}
+Let $\cftalg{Q}$ be a CFT-algebra in context $\ctxext{{\Gamma}{A}}{P}$ 
+and let $\jterm{\Gamma}{A}{x}$. Then we have the judgmental equality
+\begin{equation*}
+\subst{x}{\cftalg{F_Q}}\jdeq\cftalg{F}_{\subst{x}{\cftalg{Q}}}
+\end{equation*}
+of CFT-algebras in context $\ctxext{\Gamma}{\subst{x}{P}}$.
+\end{lem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{CFT-homomorphisms}
