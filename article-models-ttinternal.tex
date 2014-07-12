@@ -1400,7 +1400,7 @@ Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$ and let
 \end{equation*}
 be a CFT-homomorphism. The abstraction of the rules in \autoref{comp-ew} is the
 condition that the diagram
-\begin{equation}\label{eq:cftwk-cftextcurry}
+\begin{equation}\label{diag:cftwk-curry}
 \begin{tikzcd}[column sep=large]
 \ctxwk
   {\ctxext{\cftalgf{\cftalg{A}}}{\cftalgf{\cftfamalg{\cftalg{A}}}}}
@@ -1428,7 +1428,7 @@ $ \jhom
   {\jcomp{}{\cftctxext}{\cftfamalg{\cftalg{A}}}}
   {\cftwk{\cftalg{A}}}
 $
-satisfying the judgmental equality of \autoref{eq:cftwk-cftextcurry}. Then we
+satisfying the judgmental equality of \autoref{diag:cftwk-curry}. Then we
 have the judgmental equality
 \begin{equation*}
 \apply\cftwk{\cftalg{A}}{\gamma}{\apply\cftfamext{\gamma}{a}{p}}
@@ -1785,6 +1785,319 @@ $\cftfamalg{\cftalg{A}}$ together with the CFT-homomorphism
 \end{equation*}
 forms a weakening algebra in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$.
 \end{thm}
+
+\begin{proof}
+To show that $\cftwk{\cftfamalg{\cftalg{A}}}$ satisfies the Currying rule, we
+must verify that the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\ctxwk
+  {\ctxext{\cftalgf{\cftfamalg{\cftalg{A}}}}{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
+  {\cftfamalg{\cftfamalg{\cftalg{A}}}}
+  \ar{r}{\ctxwk{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}{\cftwk{\cftfamalg{\cftalg{A}}}}}
+  \ar{dr}[swap]{\jcomp{}{\jcomp{}{\cftctxext}{\cftfamext}}{\cftwk{\cftfamalg{\cftalg{A}}}}}
+& \ctxwk{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}{\cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}
+  \ar{d}{\jcomp{}{\cftfamext}{\cftwk{\cftfamalg{\cftalg{A}}}}}
+  \\
+& \cftfamalg{\cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}
+\end{tikzcd}
+\end{equation*}
+commutes judgmentally. We do this by showing that each of the ingredients of this
+diagram is judgmentally equal to the corresponding ingredient of the diagram in
+\autoref{diag:cftwk-curry} pulled back along $\cftctxext$. Thus, we are going
+to show that
+\begin{align*}
+\ctxwk{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}{\cftwk{\cftfamalg{\cftalg{A}}}}
+& \jdeq
+\jcomp{}{\cftctxext}{\ctxwk{\cftalgf{\cftfamalg{\cftalg{A}}}}{\cftwk{\cftalg{A}}}}
+  \tag{1}
+  \\
+\jcomp{}{\cftfamext}{\cftwk{\cftfamalg{\cftalg{A}}}}
+& \jdeq
+\jcomp{}{\cftctxext}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
+  \tag{2}
+  \\
+\jcomp{}{\jcomp{}{\cftctxext}{\cftfamext}}{\cftwk{\cftfamalg{\cftalg{A}}}}
+& \jdeq
+\jcomp{}{\cftctxext}{\jcomp{}{\cftfamext}{\cftwk{\cftalg{A}}}}
+  \tag{3}
+\end{align*}
+For the first, we have the judgmental equalities
+
+To show that $\cftwk{\cftfamalg{\cftalg{A}}}$ preserves itself, we must verify
+that the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\ctxwk{\cftalgf{\cftfamalg{\cftalg{A}}}}{{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}{\cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
+  \ar{d}
+    [swap]{ \ctxwk
+        {{\cftalgf{\cftfamalg{\cftalg{A}}}}{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
+        {\cftfamhom{\cftwk{\cftfamalg{\cftalg{A}}}}}
+      }
+  \ar{r}{\ctxwk{\cftalgf{\cftfamalg{\cftalg{A}}}}{\jcomp{}{\cftfamext}{\cftwk{\cftfamalg{\cftalg{A}}}}}}
+& \ctxwk{\cftalgf{\cftfamalg{\cftalg{A}}}}{\cftfamalg{\cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
+  \ar{d}{\jcomp{}{\ctxwk{\cftalgf{\cftfamalg{\cftalg{A}}}}{\jcomp{}{\cftctxext}{\cftfamext}}}{\cftfamhom{\cftwk{\cftfamalg{\cftalg{A}}}}}}
+  \\
+\ctxwk{{\cftalgf{\cftfamalg{\cftalg{A}}}}{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}{\jcomp{}{\cftwkc{\cftfamalg{\cftalg{A}}}}{\cftfamalg{\cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}}
+  \ar{r}[swap,yshift=-1em]{%
+    \jcomp{}
+      { \cftwkf{\cftfamalg{\cftalg{A}}}}
+      { \jcomp{}
+          {\cftwkc{\cftfamalg{\cftalg{A}}}}
+          { \jcomp{}
+              {\cftfamext}
+              { \jcomp{}
+                  {\cftfamext}
+                  {\cftwk{\cftfamalg{\cftalg{A}}}}
+                }
+            }
+        }
+    }
+& \jcomp{}
+    {\ctxwk{\cftalgf{\cftfamalg{\cftalg{A}}}}{\jcomp{}{\cftctxext}{\cftfamext}}}
+    {\jcomp{}{\cftwkc{\cftfamalg{\cftalg{A}}}}{\cftfamalg{\cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}}
+\end{tikzcd}
+\end{equation*}
+commutes judgmentally. We do this by showing that each of the ingredients of this
+diagram is judgmentally equal to the corresponding ingredient of the diagram in
+\autoref{diag:cftwk-cftwk} pulled back along $\cftctxext$. Thus, we are going
+to show that
+\begin{align*}
+\ctxwk
+  {\cftalgf{\cftfamalg{\cftalg{A}}}}
+  {\jcomp{}{\cftfamext}{\cftwk{\cftfamalg{\cftalg{A}}}}}
+& \jdeq
+  \jcomp{}
+    { \cftctxext}
+    { \ctxwk{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}}
+  \tag{1}
+  \\
+\jcomp{}
+  {\ctxwk{\cftalgf{\cftfamalg{\cftalg{A}}}}{\jcomp{}{\cftctxext}{\cftfamext}}}
+  {\cftfamhom{\cftwk{\cftfamalg{\cftalg{A}}}}}
+& \jdeq
+  \jcomp{}
+    { \cftctxext}
+    { \jcomp{}
+        {\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}
+        {\cftfamhom{\cftwk{\cftalg{A}}}}
+      }
+  \tag{2}
+  \\
+\ctxwk
+  {{\cftalgf{\cftfamalg{\cftalg{A}}}}{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
+  {\cftfamhom{\cftwk{\cftfamalg{\cftalg{A}}}}}
+& \jdeq
+  \jcomp{}
+    { \cftctxext}
+    { \ctxwk
+        {{\cftalgf{\cftalg{A}}}{\cftalgf{\cftfamalg{\cftalg{A}}}}}
+        {\cftfamhom{\cftwk{\cftalg{A}}}}
+      }
+  \tag{3}
+  \\
+\jcomp{}
+      { \cftwkf{\cftfamalg{\cftalg{A}}}}
+      { \jcomp{}
+          {\cftwkc{\cftfamalg{\cftalg{A}}}}
+          { \jcomp{}
+              {\cftfamext}
+              { \jcomp{}
+                  {\cftfamext}
+                  {\cftwk{\cftfamalg{\cftalg{A}}}}
+                }
+            }
+        }
+& \jdeq
+  \jcomp{}
+    { \cftctxext}
+    { \jcomp{}
+        { \cftwkf{\cftalg{A}}}
+        { \jcomp{}
+            {\cftwkc{\cftalg{A}}}
+            { \jcomp{}
+                {\cftctxext}
+                { \jcomp{}
+                    {\cftctxext}
+                    {\cftwk{\cftalg{A}}}
+                  }
+              }
+          }
+      }
+  \tag{4}
+\end{align*}
+For the first, note that we have the judgmental equalities
+\begin{align*}
+\ctxwk
+  {\cftalgf{\cftfamalg{\cftalg{A}}}}
+  {\jcomp{}{\cftfamext}{\cftwk{\cftfamalg{\cftalg{A}}}}}
+& \jdeq 
+  \ctxwk
+    {\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}
+    {\jcomp{}{\cftfamext}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}}
+  \\
+& \jdeq
+  \ctxwk
+    {\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}
+    {\jcomp{}{\cftctxext}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}}
+  \\
+& \jdeq
+  \jcomp{}
+    { \cftctxext}
+    { \ctxwk{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}}
+\end{align*}
+For the second, note that we have the judgmental equalities
+\begin{align*}
+\jcomp{}
+  {\ctxwk{\cftalgf{\cftfamalg{\cftalg{A}}}}{\jcomp{}{\cftctxext}{\cftfamext}}}
+  {\cftfamhom{\cftwk{\cftfamalg{\cftalg{A}}}}}
+& \jdeq
+  \jcomp{}
+    {\ctxwk{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}{\jcomp{}{\cftctxext}{\cftfamext}}}
+    {\cftfamhom{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}}
+  \\
+& \jdeq
+  \jcomp{}
+    {\jcomp{}{\cftctxext}{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}}
+    {\cftfamhom{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}}
+  \\
+& \jdeq
+  \jcomp{}
+    {\jcomp{}{\cftctxext}{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}}
+    {\jcomp{}{\cftctxext}{\cftfamhom{\cftwk{\cftalg{A}}}}}
+  \\
+& \jdeq
+  \jcomp{}
+    { \cftctxext}
+    { \jcomp{}
+        {\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}
+        {\cftfamhom{\cftwk{\cftalg{A}}}}
+      }
+\end{align*}
+For the third, note that we have the judgmental equalities
+\begin{align*}
+\ctxwk
+  {{\cftalgf{\cftfamalg{\cftalg{A}}}}{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
+  {\cftfamhom{\cftwk{\cftfamalg{\cftalg{A}}}}}
+& \jdeq
+  \ctxwk
+    {{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}{\jcomp{}{\cftctxext}{\cftalgf{\cftfamalg{\cftalg{A}}}}}}
+    {\cftfamhom{\cftwk{\cftfamalg{\cftalg{A}}}}}
+  \\
+& \jdeq
+  \ctxwk
+    {\jcomp{}{\cftctxext}{\ctxwk{\cftalgf{\cftalg{A}}}{\cftalgf{\cftfamalg{\cftalg{A}}}}}}
+    {\cftfamhom{\cftwk{\cftfamalg{\cftalg{A}}}}}
+  \\
+& \jdeq
+  \ctxwk
+    {\jcomp{}{\cftctxext}{\ctxwk{\cftalgf{\cftalg{A}}}{\cftalgf{\cftfamalg{\cftalg{A}}}}}}
+    {\cftfamhom{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}}
+  \\
+& \jdeq
+  \ctxwk
+    {\jcomp{}{\cftctxext}{\ctxwk{\cftalgf{\cftalg{A}}}{\cftalgf{\cftfamalg{\cftalg{A}}}}}}
+    {\jcomp{}{\cftctxext}{\cftfamhom{\cftwk{\cftalg{A}}}}}
+  \\
+& \jdeq
+  \jcomp{}
+    { \cftctxext}
+    { \ctxwk
+        {{\cftalgf{\cftalg{A}}}{\cftalgf{\cftfamalg{\cftalg{A}}}}}
+        {\cftfamhom{\cftwk{\cftalg{A}}}}
+      }
+\end{align*}
+For the forth, note that we have the judgmental equalities
+\begin{align*}
+\jcomp{}
+      { \cftwkf{\cftfamalg{\cftalg{A}}}}
+      { \jcomp{}
+          {\cftwkc{\cftfamalg{\cftalg{A}}}}
+          { \jcomp{}
+              {\cftfamext}
+              { \jcomp{}
+                  {\cftfamext}
+                  {\cftwk{\cftfamalg{\cftalg{A}}}}
+                }
+            }
+        }
+& \jdeq
+  \jcomp{}
+      { \cftwkf{\cftfamalg{\cftalg{A}}}}
+      { \jcomp{}
+          { \jcomp{}{\cftctxext}{\cftwkc{\cftalg{A}}}}
+          { \jcomp{}
+              {\cftfamext}
+              { \jcomp{}
+                  {\cftfamext}
+                  {\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
+                }
+            }
+        }
+  \\
+& \jdeq
+  \jcomp{}
+      { \cftwkf{\cftfamalg{\cftalg{A}}}}
+      { \jcomp{}
+          { \jcomp{}{\cftctxext}{\cftwkc{\cftalg{A}}}}
+          { \jcomp{}
+              {\cftctxext}
+              { \jcomp{}
+                  {\cftctxext}
+                  {\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
+                }
+            }
+        }
+  \\
+& \jdeq
+  \jcomp{}
+      { \cftwkf{\cftfamalg{\cftalg{A}}}}
+      { \jcomp{}
+          { \cftctxext}
+          { \jcomp{}
+              { \cftwkc{\cftalg{A}}}
+              { \jcomp{}
+                  {\cftctxext}
+                  {\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
+                }
+            }
+        }
+  \\
+& \jdeq
+  \jcomp{}
+      { \jcomp{}{\cftctxext}{\cftwkf{\cftalg{A}}}}
+      { \jcomp{}
+          { \cftctxext}
+          { \jcomp{}
+              { \cftwkc{\cftalg{A}}}
+              { \jcomp{}
+                  {\cftctxext}
+                  {\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
+                }
+            }
+        }
+  \\
+& \jdeq
+  \jcomp{}
+    { \cftctxext}
+    { \jcomp{}
+        { \cftwkf{\cftalg{A}}}
+        { \jcomp{}
+            {\cftwkc{\cftalg{A}}}
+            { \jcomp{}
+                {\cftctxext}
+                { \jcomp{}
+                    {\cftctxext}
+                    {\cftwk{\cftalg{A}}}
+                  }
+              }
+          }
+      }
+\end{align*}
+Thus we may conclude that the diagram above of which we had the aim to show that
+it commutes judgmentally is a pullback of the diagram in \autoref{diag:cftwk-cftwk}
+by $\cftctxext$ and therefore it commutes as desired.
+\end{proof}
 
 \begin{thm}
 Suppose $\cftalg{Q}$ is a weakening algebra in context $\ctxext{\Gamma}{B}$ and
