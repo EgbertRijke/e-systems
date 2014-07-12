@@ -1824,45 +1824,130 @@ algebra $\cftalg{A}$ in context $\Gamma$, identity terms are implemented by a te
   {\subst{{\idtm{\cftalgf{\cftalg{A}}}}{\cftwkc{\cftalg{A}}}}{\cftalgt{\cftfamalg{\cftalg{A}}}}}
   {\cftidtm{\cftalg{A}}}
 \end{equation*}
-We will require additionally that identity terms are compatible with weakening.
-Thus we will formulate an abstraction of the rule stated in \autoref{comp-wi}.
+We will require additionally that identity terms are compatible with weakening,
+i.e.~an abstraction of the rule stated in \autoref{comp-wi}. Since this is the
+only additional rule for projection algebras, we immediately state the 
+definition.
 
-\begin{equation}
-\jtermeq
-  { \xi}
-  { \xi}
-  { \subst
+\begin{defn}
+A \emph{projection algebra $\cftalg{A}$ in context $\Gamma$} is a weakening algebra
+$\cftalg{A}$ in context $\Gamma$ together with a term
+\begin{equation*}
+\jterm
+  { { {\Gamma}
+      {\cftalgc{\cftalg{A}}}
+      }
+    { \cftalgf{\cftalg{A}}
+      }
+    }
+  {\subst{{\idtm{\cftalgf{\cftalg{A}}}}{\cftwkc{\cftalg{A}}}}{\cftalgt{\cftfamalg{\cftalg{A}}}}}
+  {\cftidtm{\cftalg{A}}}
+\end{equation*}
+satisfying the judgmental equality
+\begin{align*}
+& \subst
+  { \ctxwk
+      { \cftalgf{\cftalg{A}}}
       { \jcomp
-          { }
-          { \cftctxext}
-          { \cftidtm{\cftalg{A}}
-            }
-        }
-      { { { \idtm
-              { \jcomp
-                  { }
-                  { \cftctxext}
-                  { \cftalgf{\cftalg{A}}
-                    }
-                }
-            }
-            { \jcomp
-                { }
-                { \cftctxext
-                  }
-                { \cftwkc{\cftalg{A}}
-                  }
-              }
-          }
-        { \jcomp
-            { }
-            { \jcomp{}{\cftctxext}{\cftfamext}}
-            { \cftwkt{\cftalg{A}}}
+        { }
+        { \cftctxext}
+        { \cftidtm{\cftalg{A}}
           }
         }
     }
-  { \xi}
-\end{equation}
+  { { \ctxwk
+        { \cftalgf{\cftalg{A}}}
+        { \subst { \idtm
+            { \jcomp
+                { }
+                { \cftctxext}
+                { \cftalgf{\cftalg{A}}
+                  }
+              }
+          }
+          { \jcomp
+              { }
+              { \cftctxext
+                }
+              { \cftwkc{\cftalg{A}}
+                }
+            }
+          }
+      }
+    { \jcomp
+        { }
+        { \ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}
+        { \cftwkt{\cftalg{A}}}
+      }
+    }
+  \\
+& \jdeq
+  \jcomp{}
+    { \cftwkf{\cftalg{A}}}
+    { \jcomp{}
+        { \cftwkc{\cftalg{A}}}
+        { \jcomp{}
+            { \cftctxext}
+            { \jcomp{}
+              { \cftctxext}
+              { \cftidtm{\cftalg{A}}}
+              }
+          }
+      }
+\end{align*}
+of terms of %
+$ \jcomp{}
+    { \cftwkf{\cftalg{A}}}
+    { \jcomp{}
+        { \cftwkc{\cftalg{A}}}
+        { \jcomp{}
+            { \cftctxext}
+            { \jcomp{}
+              { \cftctxext}
+              { \subst
+                  { {\idtm{\cftalgf{\cftalg{A}}}}
+                    {\cftwkc{\cftalg{A}}}
+                    }
+                  { \cftalgt{\cftfamalg{\cftalg{A}}}
+                    }
+                }
+              }
+          }
+      }$
+in context \ldots.
+
+The term $\cftidtm{\cftalg{A}}$ of a projection algebra $\cftalg{A}$ in context
+$\Gamma$ is called the \emph{internal identity term of $\cftalg{A}$}.
+\end{defn}
+
+\begin{rmk}
+We shall have to verify that the condition on the internal identity term 
+$\cftidtm{\cftalg{A}}$ of a projection algebra $\cftalg{A}$ in context $\Gamma$
+is indeed well-typed. More precisely, we have to demonstrate that the judgmental
+equality
+\begin{align*}
+& \jdeq
+  \jcomp{}
+    { \cftwkf{\cftalg{A}}}
+    { \jcomp{}
+        { \cftwkc{\cftalg{A}}}
+        { \jcomp{}
+            { \cftctxext}
+            { \jcomp{}
+              { \cftctxext}
+              { \subst
+                  { {\idtm{\cftalgf{\cftalg{A}}}}
+                    {\cftwkc{\cftalg{A}}}
+                    }
+                  { \cftalgt{\cftfamalg{\cftalg{A}}}
+                    }
+                }
+              }
+          }
+      }  
+\end{align*}
+of families in context \ldots holds.
+\end{rmk}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Substitution algebras}
@@ -1942,7 +2027,19 @@ a substitution operation making it a projection algebra and a substitution
 algebra at the same time. Additionally the weakening operation, identity terms
 and the substitution operation are all required to be compatible with each
 other. Thus, we need to require the abstractions of the rules stated in
-\autoref{comp-sw,comp-ws,cancellation-ws,cancellation-i}.
+\autoref{comp-sw,comp-ws,cancellation-ws,comp-si,cancellation-i}.
+
+\subsection{E-homomorphisms}
+\begin{defn}
+An \emph{E-homomorphism from $\cftalg{A}$ to $\cftalg{B}$ in context $\Gamma$}
+is a CFT-homomorphism which is both a projection homomorphism and a
+substitution homomorphism.
+\end{defn}
+
+\subsection{E-transformations}
+E-transformations are going to be the analogues of natural transformations.
+
+\subsection{E-adjunctions}
 
 \subsection{Pre-universes}
 Pre-universes are internal versions of the theory of contexts, families and
