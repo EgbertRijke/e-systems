@@ -1400,7 +1400,7 @@ Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$ and let
 \end{equation*}
 be a CFT-homomorphism. The abstraction of the rules in \autoref{comp-ew} is the
 condition that the diagram
-\begin{equation}\label{diag:cftwk-curry}
+\begin{equation}\label{diag:cftwk-cftextcurry}
 \begin{tikzcd}[column sep=large]
 \ctxwk
   {\ctxext{\cftalgf{\cftalg{A}}}{\cftalgf{\cftfamalg{\cftalg{A}}}}}
@@ -1428,7 +1428,7 @@ $ \jhom
   {\jcomp{}{\cftctxext}{\cftfamalg{\cftalg{A}}}}
   {\cftwk{\cftalg{A}}}
 $
-satisfying the judgmental equality of \autoref{diag:cftwk-curry}. Then we
+satisfying the judgmental equality of \autoref{diag:cftwk-cftextcurry}. Then we
 have the judgmental equality
 \begin{equation*}
 \apply\cftwk{\cftalg{A}}{\gamma}{\apply\cftfamext{\gamma}{a}{p}}
@@ -1771,7 +1771,7 @@ $\Gamma$ for which there is a CFT-homomorphism
   {\cftwk{\cftalg{A}}}
 \end{equation*}
 satisfying the judgmental equalities of %
-\autoref{diag:cftwk-cftwk,eq:cftwk-cftextcurry,eq:cftwk-cftempcurry}.
+\autoref{diag:cftwk-cftwk,diag:cftwk-cftextcurry,eq:cftwk-cftempcurry}.
 \end{defn}
 
 \subsubsection{Derivable properties of weakening algebras}
@@ -1804,7 +1804,7 @@ must verify that the diagram
 \end{equation*}
 commutes judgmentally. We do this by showing that each of the ingredients of this
 diagram is judgmentally equal to the corresponding ingredient of the diagram in
-\autoref{diag:cftwk-curry} pulled back along $\cftctxext$. Thus, we are going
+\autoref{diag:cftwk-cftextcurry} pulled back along $\cftctxext$. Thus, we are going
 to show that
 \begin{align*}
 \ctxwk{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}{\cftwk{\cftfamalg{\cftalg{A}}}}
@@ -1823,6 +1823,36 @@ to show that
   \tag{3}
 \end{align*}
 For the first, we have the judgmental equalities
+\begin{align*}
+\ctxwk{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}{\cftwk{\cftfamalg{\cftalg{A}}}}
+& \jdeq
+\ctxwk
+  {\jcomp{}{\cftctxext}{\cftalgf{\cftfamalg{\cftalg{A}}}}}
+  {\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
+  \\
+& \jdeq
+\jcomp{}{\cftctxext}{\ctxwk{\cftalgf{\cftfamalg{\cftalg{A}}}}{\cftwk{\cftalg{A}}}}
+\end{align*}
+For the second, we have the judgmental equalities
+\begin{align*}
+\jcomp{}{\cftfamext}{\cftwk{\cftfamalg{\cftalg{A}}}}
+& \jdeq
+  \jcomp{}{\cftfamext}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
+  \\
+& \jdeq
+  \jcomp{}{\cftctxext}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
+\end{align*}
+For the third, note that we have the judgmental equalities
+\begin{align*}
+\jcomp{}{\jcomp{}{\cftctxext}{\cftfamext}}{\cftwk{\cftfamalg{\cftalg{A}}}}
+& \jdeq
+  \jcomp{}{\jcomp{}{\cftctxext}{\cftfamext}}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
+  \\
+& \jdeq
+\jcomp{}{\cftctxext}{\jcomp{}{\cftfamext}{\cftwk{\cftalg{A}}}}
+\end{align*}
+Thus we may conclude that the diagram above a pullback of the diagram in 
+\autoref{diag:cftwk-cftextcurry} by $\cftctxext$ and therefore it commutes as desired.
 
 To show that $\cftwk{\cftfamalg{\cftalg{A}}}$ preserves itself, we must verify
 that the diagram
@@ -2007,7 +2037,7 @@ For the third, note that we have the judgmental equalities
         {\cftfamhom{\cftwk{\cftalg{A}}}}
       }
 \end{align*}
-For the forth, note that we have the judgmental equalities
+For the fourth, note that we have the judgmental equalities
 \begin{align*}
 \jcomp{}
       { \cftwkf{\cftfamalg{\cftalg{A}}}}
@@ -2094,8 +2124,7 @@ For the forth, note that we have the judgmental equalities
           }
       }
 \end{align*}
-Thus we may conclude that the diagram above of which we had the aim to show that
-it commutes judgmentally is a pullback of the diagram in \autoref{diag:cftwk-cftwk}
+Thus we may conclude that the diagram above a pullback of the diagram in \autoref{diag:cftwk-cftwk}
 by $\cftctxext$ and therefore it commutes as desired.
 \end{proof}
 
@@ -2262,6 +2291,35 @@ equality
 of families in context \ldots holds.
 \end{rmk}
 
+\begin{thm}
+Suppose $\cftalg{A}$ is a projection algebra in context $\Gamma$. Then
+$\cftfamalg{\cftalg{A}}$ with the internal identity term
+\begin{equation*}
+\cftidtm{\cftfamalg{\cftalg{A}}}\defeq\jcomp{}{\cftctxext}{\cftidtm{\cftalg{A}}}
+\end{equation*}
+is a projection algebra in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$.
+\end{thm}
+
+\begin{thm}
+Suppose $\cftalg{Q}$ is a projection algebra in context $\ctxext{\Gamma}{B}$ and
+let $\jfam{\Gamma}{A}$. Then $\ctxwk{A}{\cftalg{Q}}$ together with the
+internal identity term
+\begin{equation*}
+\cftidtm{\ctxwk{A}{\cftalg{Q}}}\defeq \ctxwk{A}\cftidtm{\cftalg{Q}}
+\end{equation*}
+is a projection algebra in context $\ctxext{{\Gamma}{A}}{B}$.
+\end{thm}
+
+\begin{thm}
+Suppose $\cftalg{Q}$ is a projection algebra in context $\ctxext{{\Gamma}{A}}{P}$
+and let $\jterm{\Gamma}{A}{x}$. Then $\subst{x}{\cftalg{Q}}$ together with the
+internal identity term
+\begin{equation*}
+\cftidtm{\subst{x}{\cftalg{Q}}} \defeq \subst{x}{\cftidtm{\cftalg{Q}}}
+\end{equation*}
+is a projection algebra in context $\ctxext{\Gamma}{\subst{x}{P}}$.
+\end{thm}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Substitution algebras}
 Substitution algebras will be CFT-algebras with an additional substitution 
@@ -2288,21 +2346,73 @@ Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$ and let
 \end{equation*}
 be a CFT-homomorphism. We say that the pair $(\cftalg{A},\cftsubst{\cftalg{A}})$
 is a substitution algebra in context $\Gamma$ if the diagram
-\begin{equation}\label{diag:substalg}
-\begin{tikzcd}
-X
+\begin{equation}\label{diag:cftsubst-cftsubst}
+\begin{tikzcd}[column sep=9em]
+\ctxwk
+  { \cftalgt{\cftalg{A}}}
+  { { \cftalgt{\cftfamalg{\cftfamalg{\cftalg{A}}}}}
+    { \cftfamalg{\cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
+    }
   \ar{r}
-  \ar{d}
-& X
-  \ar{d}
+    { \ctxwk
+        { \cftalgt{\cftalg{A}}}
+        { \jcomp{}
+            { \cftctxext}
+            { \jcomp{}
+                { \cftctxext}
+                { \cftsubst{\cftalg{A}}}
+              }
+          }
+      }
+  \ar{d}[swap]
+    { \ctxwk
+        { { \cftalgt{\cftalg{A}}}
+          { \cftalgt{\cftfamalg{\cftfamalg{\cftalg{A}}}}}
+          }
+        { \jcomp{}{\ctxwk{\cftalgt{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftfamext}}}{\cftfamhom{\cftsubst{\cftalg{A}}}}}
+      }
+  & 
+\ctxwk
+  { \cftalgt{\cftalg{A}}}
+  { \cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}
+  \ar{d}{ \cftfamhom{\cftsubst{\cftalg{A}}}}
   \\
-X 
+\ctxwk
+  { { \cftalgt{\cftalg{A}}}
+    { \cftalgt{\cftfamalg{\cftfamalg{\cftalg{A}}}}}
+    }
+  { \jcomp{}
+      { \ctxwk{\cftalgt{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftfamext}}}
+      { \jcomp{}
+          {\cftsubstc{\cftalg{A}}}
+          {\cftfamalg{\cftfamalg{\cftalg{A}}}}
+        }
+    }
   \ar{r}
-& X
+& \jcomp{}{\cftsubstc{\cftalg{A}}}{\cftfamalg{\cftfamalg{\cftalg{A}}}}
 \end{tikzcd}
 \end{equation}
-of CFT-algebras in context ... commutes judgmentally.
+of CFT-algebras in context 
+$ \ctxext
+    { { { { { {\Gamma}
+              {\cftalgc{\cftalg{A}}}
+              }
+            { \cftalgf{\cftalg{A}}}
+            }
+          { \cftalgt{\cftalg{A}}}
+          }
+        { \ctxwk{\cftalgt{\cftalg{A}}}{\cftalgf{\cftfamalg{\cftalg{A}}}}}
+        }
+      { \ctxwk{\cftalgt{\cftalg{A}}}{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
+      }
+    { \ctxwk{\cftalgt{\cftalg{A}}}{\cftalgt{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}$
+commutes judgmentally.
 \end{defn}
+
+\begin{rmk}
+We shall have to verify that the diagram in \autoref{diag:cftsubst-cftsubst} is
+well-typed.
+\end{rmk}
 
 \begin{lem}
 Let $\cftalg{A}$ be a substitution algebra in context $\Gamma$. Then we have the
