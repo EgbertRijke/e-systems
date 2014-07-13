@@ -210,9 +210,6 @@
   }
 \unfold@def\cftalg
 
-
-\unfold@def\cfthom
-
 \newcommand{\extalg@unfold}[1]{%
   (\cftalgc{\algfont{#1}},
     \cftalgf{\algfont{#1}},
@@ -228,6 +225,13 @@
     \cfthomt{\cfthom{#1}})
   }
 \unfold@def\cfthom
+
+\newcommand{\cftidhom@unfold}[1]{
+  ( \idtm{\cftalgc{#1}},
+    \idtm{\cftalgf{#1}},
+    \idtm{\cftalgt{#1}})
+  }
+\unfold@def\cftidhom
 
 \newcommand{\cfthomcomp@unfold}[2]{%
   ( \jcomp{}{\cfthomc{#1}}{\cfthomc{#2}},

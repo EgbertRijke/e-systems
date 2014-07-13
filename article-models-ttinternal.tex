@@ -690,6 +690,15 @@ $\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}$ to $\jcomp{}{\cftctxext
 \end{rmk}
 
 \begin{thm}
+Let $\extalg{A}$ be an extension algebra in context $\Gamma$. Then the triple
+\begin{equation*}
+\cftidhom{\extalg{A}}\defeq\unfold{\cftidhom{\extalg{A}}}
+\end{equation*}
+is an extension homomorphism from $\cftalg{A}$ to $\cftalg{A}$ in context
+$\Gamma$.
+\end{thm}
+
+\begin{thm}
 Let $\cfthom{f}$ be an extension homomorphism from $\cftalg{A}$ to $\cftalg{B}$
 in context $\Gamma$. Then
 \begin{equation*}
@@ -1267,6 +1276,11 @@ from $\extalg{A}$ to $\extalg{B}$ in context $\Gamma$.
 \end{defn}
 
 \begin{lem}
+For any CFT-algebra $\cftalg{A}$, the extension homomorphism $\cftidhom{\cftalg{A}}$
+is a CFT-homomorphism.
+\end{lem}
+
+\begin{lem}
 Suppose that $\cfthom{f}$ is a CFT-homomorphism from $\cftalg{A}$ to $\cftalg{B}$
 in context $\Gamma$ and that $\cfthom{g}$ is a CFT-homomorphism from $\cftalg{B}$
 to $\cftalg{C}$ in context $\Gamma$. Then $\jcomp{}{\cfthom{f}}{\cfthom{g}}$
@@ -1303,8 +1317,9 @@ Although strictly speaking one could formulate a notion of weakening algebra
 which only depends on extension algebras and which omits both empty objects
 and terms, we shall not do so here.
 
-Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$. Weakening will be a
-CFT-homomorphism
+\begin{defn}
+A pre-weakening algebra $\cftalg{A}$ in context $\Gamma$ is a CFT-algebra
+$\cftalg{A}$ in context $\Gamma$ together with a CFT-homomorphism
 \begin{equation}\label{cftwk}
 \jhom
   {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
@@ -1312,12 +1327,17 @@ CFT-homomorphism
   {\cftfamalg{\cftfamalg{\cftalg{A}}}}
   {\cftwk{\cftalg{A}}}
 \end{equation}
-satisfying judgmental equalities which express abstracted analogues of
+called the \emph{weakening of $\cftalg{A}$}.
+\end{defn}
+
+Weakening algebras will be pre-weakening algebras for which the weakening
+satisfies judgmental equalities which express abstracted analogues of
 the rules in \autoref{comp-ww,comp-ew,comp-0w}. The
 definition of weakening algebras can be found in \autoref{sec:cftwkalg-defn}.
 
-We begin with some trivial remarks to familiarize ourselves with the situation.
-The morphism $\cftwk{\cftalg{A}}$ of \autoref{cftwk} is a triple
+We begin with some trivial remarks to familiarize ourselves with the situation
+of pre-weakening algebras.
+The CFT-homomorphism $\cftwk{\cftalg{A}}$ of \autoref{cftwk} is a triple
 $(\cftwkc{\cftalg{A}},\cftwkf{\cftalg{A}},\cftwkt{\cftalg{A}})$ consisting of
 the morphisms displayed in the following diagram:
 \begin{equation*}
@@ -1387,6 +1407,173 @@ $q:\subst{\apply\cftctxext{\gamma}{b}}{\cftalgf{\cftalg{A}}}$ and
 $g:\subst{q}{{\apply\cftctxext{\gamma}{b}}{\cftalgt{\cftalg{A}}}}$.
 These observations show that the weakening morphism $\cftwk{\cftalg{A}}$ is
 indeed an abstraction of the introduction rules for the weakening operation.
+\end{rmk}
+
+\begin{defn}
+Suppose $\cftalg{A}$ is a pre-weakening algebra in context $\Gamma$. Then we
+define the pre-weakening algebra $\cftfamalg{\cftalg{A}}$ in context 
+$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$ by taking
+\begin{equation*}
+\cftwk{\cftfamalg{\cftalg{A}}}
+  \defeq \jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+Suppose $\cftalg{Q}$ is a pre-weakening algebra in context $\ctxext{\Gamma}{B}$ and
+let $\jfam{\Gamma}{A}$. Then we define the pre-weakening algebra 
+$\ctxwk{A}{\cftalg{Q}}$ in context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$ by 
+taking
+\begin{equation*}
+\cftwk{\ctxwk{A}{\cftalg{Q}}}\defeq \ctxwk{A}\cftwk{\cftalg{Q}}.
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+Suppose $\cftalg{Q}$ is a pre-weakening algebra in context $\ctxext{{\Gamma}{A}}{P}$
+and let $\jterm{\Gamma}{A}{x}$. Then we define the pre-weakening algebra 
+$\subst{x}{\cftalg{Q}}$ in context $\ctxext{\Gamma}{\subst{x}{P}}$ by taking
+\begin{equation*}
+\cftwk{\subst{x}{\cftalg{Q}}} \defeq \subst{x}{\cftwk{\cftalg{Q}}}.
+\end{equation*}
+\end{defn}
+
+\subsubsection{Pre-weakening homomorphisms}
+It is useful to start with the definition of pre-weakening homomorphisms. Those
+are CFT-homomorphisms which also preserve weakening. Before we give the
+definition, recall from \autoref{lem:jvcomp-cprojfstf} that we have a
+commutative square
+\begin{equation*}
+\begin{tikzcd}
+\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}
+  \ar{r}{\jvcomp{}{\cfthomc{\cfthom{f}}}{\cfthomf{\cfthom{f}}}}
+  \ar{d}[swap]{\cprojfstf{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+  &
+\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{B}}}
+  \ar{d}{\cprojfstf{\cftalgc{\cftalg{B}}}{\cftalgf{\cftalg{B}}}}
+  \\
+\cftalgc{\cftalg{A}}
+  \ar{r}[swap]{\cfthomc{\cfthom{f}}}
+  &
+\cftalgc{\cftalg{B}}
+\end{tikzcd}
+\end{equation*}
+of morphisms in context $\Gamma$ for every CFT-homomorphism $\cfthom{f}$ from
+$\cftalg{A}$ to $\cftalg{B}$ in context $\Gamma$. Because weakening is the
+same thing as pulling back along projection, we therefore see that the
+judgmental equality
+\begin{equation*}
+\jfameq
+  {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
+  { \ctxwk
+      {\cftalgf{\cftalg{A}}}
+      {\jcomp{}{\cfthomc{\cfthom{f}}}{\cftfamalg{\cftalg{B}}}}
+    }
+  { \jcomp{}
+      { \cfthomf{\cfthom{f}}}
+      { \jcomp{}
+        {\cfthomc{\cfthom{f}}}
+        {\ctxwk{\cftalgf{\cftalg{B}}}{\cftfamalg{\cftalg{B}}}}
+        }
+    }
+\end{equation*}
+is valid for every CFT-homomorphism $\cfthom{f}$ from $\cftalg{A}$ to $\cftalg{B}$
+in context $\Gamma$. This judgmental equality helps us seeing that the condition
+on pre-weakening homomorphisms is well-typed.
+
+\begin{defn}
+Let $\cftalg{A}$ and $\cftalg{B}$ be pre-weakening algebras in context $\Gamma$.
+A \emph{pre-weakening homomorphism from $\cftalg{A}$ to $\cftalg{B}$ in context
+$\Gamma$} is a CFT-homomorphism $\cfthom{f}$ from $\cftalg{A}$ to $\cftalg{B}$
+in context $\Gamma$ for which the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}
+  \ar{r}{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamhom{\cfthom{f}}}}
+  \ar{d}[swap]{\cftwk{\cftalg{A}}}
+  &
+\jcomp{}
+  { \cfthomf{\cfthom{f}}}
+  { \jcomp{}
+    {\cfthomc{\cfthom{f}}}
+    {\ctxwk{\cftalgf{\cftalg{B}}}{\cftfamalg{\cftalg{B}}}}
+    }
+  \ar{d}
+    { \jcomp{}
+        {\cfthomf{\cfthom{f}}}
+        {\jcomp{}{\cfthomc{\cfthom{f}}}{\cftwk{\cftalg{B}}}}
+      }
+  \\
+\cftfamalg{\cftfamalg{\cftalg{A}}}
+  \ar{r}[swap]{\cftfamhom{\cftfamhom{\cfthom{f}}}}
+  &
+\jcomp{}
+  {\cfthomf{\cfthom{f}}}
+  {\jcomp{}{\cfthomc{\cfthom{f}}}{\cftfamalg{\cftfamalg{\cftalg{B}}}}}
+\end{tikzcd}
+\end{equation*}
+of CFT-algebras in context 
+$\ctxext{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}$ commutes
+judgmentally.
+\end{defn}
+
+\begin{rmk}
+In this remark we explain what it means that weakening is a pre-weakening
+homomorphism. Let $\cftalg{A}$ be a pre-weakening algebra. Then its weakening
+$\cftwk{\cftalg{A}}$ is a CFT-homomorphism from
+$\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}$ to
+$\cftfamalg{\cftfamalg{\cftalg{A}}}$. Therefore, $\cftwk{\cftalg{A}}$ is a
+pre-weakening homomorphism if the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=8em]
+\ctxwk
+  {\cftalgf{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}}
+  {\cftfamalg{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}}
+  \ar{r}
+    { \ctxwk
+        {\cftalgf{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}}
+        {\cftfamhom{\cftwk{\cftalg{A}}}}
+      }
+  \ar{d}[swap]{\cftwk{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}}
+  &
+\jcomp{}
+  { \cftwkf{\cftalg{A}}}
+  { \jcomp{}
+    {\cftwkc{\cftalg{A}}}
+    {\ctxwk{\cftalgf{\cftalg{B}}}{\cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
+    }
+  \ar{d}
+    { \jcomp{}
+        { \cftwkf{\cftalg{A}}}
+        { \jcomp{}
+            { \cftwkc{\cftalg{A}}}
+            { \cftwk{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
+      }
+  \\
+\cftfamalg{\cftfamalg{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}}
+  \ar{r}[swap]
+    { \cftfamhom
+        { \cftfamhom
+            { \cftwk{\cftalg{A}}}
+          }
+      }
+  &
+\jcomp{}
+  { \cftwkf{\cftalg{A}}}
+  { \jcomp{}
+      {\cftwkc{\cftalg{A}}}
+      {\cftfamalg{\cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
+    }
+\end{tikzcd}
+\end{equation*}
+Both the domain and the codomain are
+again pre-weakening algebras: the weakening of
+$\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}$ is
+$\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamhom{\cftwk{\cftalg{A}}}}$; the weakening of
+$\cftfamalg{\cftfamalg{\cftalg{A}}}$ is
+$\cftfamhom{\cftfamhom{\cftwk{\cftalg{A}}}}$. Therefore, the condition that
+the weakening of $\cftalg{A}$ is a pre-weakening homomorphism becomes that
+the diagram
 \end{rmk}
 
 \subsubsection{Currying for weakening}
