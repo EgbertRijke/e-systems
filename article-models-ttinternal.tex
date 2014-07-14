@@ -1972,7 +1972,7 @@ expressing that: (1) the diagram
 & \cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}
 \end{tikzcd}
 \end{equation}
-and (2) that
+of pre-weakening algebras in context $\ctxext{{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}{\cftalgf{\cftfamalg{\cftalg{A}}}}$ commutes judgmentally and (2) that
 \begin{equation}\label{eq:cftwk-cftempcurry}
 \jhomeq
   { {\Gamma}{\cftalgc{\cftalg{A}}}
@@ -2378,27 +2378,12 @@ forms a weakening algebra.
 Projection algebras will be weakening algebras with additional terms implementing
 the identity terms. We call these algebras projection algebras because the
 identity terms can only be formulated in weakening algebras and together with
-weakening, the identity terms provide for all the projections. In a weakening
-algebra $\cftalg{A}$ in context $\Gamma$, identity terms are implemented by a term
-\begin{equation*}
-\jterm
-  { { {\Gamma}
-      {\cftalgc{\cftalg{A}}}
-      }
-    { \cftalgf{\cftalg{A}}
-      }
-    }
-  {\subst{{\idtm{\cftalgf{\cftalg{A}}}}{\cftwkc{\cftalg{A}}}}{\cftalgt{\cftfamalg{\cftalg{A}}}}}
-  {\cftidtm{\cftalg{A}}}
-\end{equation*}
-We will require additionally that identity terms are compatible with weakening,
-i.e.~an abstraction of the rule stated in \autoref{comp-wi}. Since this is the
-only additional rule for projection algebras, we immediately state the 
-definition.
+weakening, the identity terms provide for all the projections. 
 
 \begin{defn}
-A \emph{projection algebra $\cftalg{A}$ in context $\Gamma$} is a weakening algebra
-$\cftalg{A}$ in context $\Gamma$ together with a term
+A \emph{pre-projection algebra $\cftalg{A}$ in context $\Gamma$} consists of a 
+weakening algebra $\cftalg{A}$ in context $\Gamma$ together with an 
+\emph{internal identity term}
 \begin{equation*}
 \jterm
   { { {\Gamma}
@@ -2408,142 +2393,107 @@ $\cftalg{A}$ in context $\Gamma$ together with a term
       }
     }
   {\subst{{\idtm{\cftalgf{\cftalg{A}}}}{\cftwkc{\cftalg{A}}}}{\cftalgt{\cftfamalg{\cftalg{A}}}}}
-  {\cftidtm{\cftalg{A}}}
+  {\cftidtm{\cftalg{A}}}.
 \end{equation*}
-satisfying the judgmental equality
-\begin{align*}
-& \subst
-  { \ctxwk
-      { \cftalgf{\cftalg{A}}}
-      { \jcomp
-        { }
-        { \cftctxext}
-        { \cftidtm{\cftalg{A}}
-          }
-        }
-    }
-  { { \ctxwk
-        { \cftalgf{\cftalg{A}}}
-        { \subst { \idtm
-            { \jcomp
-                { }
-                { \cftctxext}
-                { \cftalgf{\cftalg{A}}
-                  }
-              }
-          }
-          { \jcomp
-              { }
-              { \cftctxext
-                }
-              { \cftwkc{\cftalg{A}}
-                }
-            }
-          }
-      }
-    { \jcomp
-        { }
-        { \ctxwk{\cftalgf{\cftalg{A}}}{\cftfamext}}
-        { \cftwkt{\cftalg{A}}}
-      }
-    }
-  \\
-& \jdeq
-  \jcomp{}
-    { \cftwkf{\cftalg{A}}}
-    { \jcomp{}
-        { \cftwkc{\cftalg{A}}}
-        { \jcomp{}
-            { \cftctxext}
-            { \jcomp{}
-              { \cftctxext}
-              { \cftidtm{\cftalg{A}}}
-              }
-          }
-      }
-\end{align*}
-of terms of %
-$ \jcomp{}
-    { \cftwkf{\cftalg{A}}}
-    { \jcomp{}
-        { \cftwkc{\cftalg{A}}}
-        { \jcomp{}
-            { \cftctxext}
-            { \jcomp{}
-              { \cftctxext}
-              { \subst
-                  { {\idtm{\cftalgf{\cftalg{A}}}}
-                    {\cftwkc{\cftalg{A}}}
-                    }
-                  { \cftalgt{\cftfamalg{\cftalg{A}}}
-                    }
-                }
-              }
-          }
-      }$
-in context \ldots.
-
-The term $\cftidtm{\cftalg{A}}$ of a projection algebra $\cftalg{A}$ in context
-$\Gamma$ is called the \emph{internal identity term of $\cftalg{A}$}.
 \end{defn}
 
-\begin{rmk}
-We shall have to verify that the condition on the internal identity term 
-$\cftidtm{\cftalg{A}}$ of a projection algebra $\cftalg{A}$ in context $\Gamma$
-is indeed well-typed. More precisely, we have to demonstrate that the judgmental
-equality
-\begin{align*}
-& \jdeq
-  \jcomp{}
-    { \cftwkf{\cftalg{A}}}
-    { \jcomp{}
-        { \cftwkc{\cftalg{A}}}
-        { \jcomp{}
-            { \cftctxext}
-            { \jcomp{}
-              { \cftctxext}
-              { \subst
-                  { {\idtm{\cftalgf{\cftalg{A}}}}
-                    {\cftwkc{\cftalg{A}}}
-                    }
-                  { \cftalgt{\cftfamalg{\cftalg{A}}}
-                    }
-                }
-              }
-          }
-      }  
-\end{align*}
-of families in context \ldots holds.
-\end{rmk}
+\begin{defn}
+Suppose $\cftalg{A}$ is a pre-projection algebra in context $\Gamma$. Then we
+define the pre-projection algebra $\cftfamalg{\cftalg{A}}$ in context 
+$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$ by taking
+\begin{equation*}
+\cftidtm{\cftfamalg{\cftalg{A}}}
+  \defeq \jcomp{}{\cftctxext}{\cftidtm{\cftalg{A}}}.
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+Suppose $\cftalg{Q}$ is a pre-projection algebra in context $\ctxext{\Gamma}{B}$ and
+let $\jfam{\Gamma}{A}$. Then we define the pre-projection algebra 
+$\ctxwk{A}{\cftalg{Q}}$ in context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$ by 
+taking
+\begin{equation*}
+\cftidtm{\ctxwk{A}{\cftalg{Q}}}\defeq \ctxwk{A}\cftidtm{\cftalg{Q}}.
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+Suppose $\cftalg{Q}$ is a pre-projection algebra in context $\ctxext{{\Gamma}{A}}{P}$
+and let $\jterm{\Gamma}{A}{x}$. Then we define the pre-projection algebra 
+$\subst{x}{\cftalg{Q}}$ in context $\ctxext{\Gamma}{\subst{x}{P}}$ by taking
+\begin{equation*}
+\cftidtm{\subst{x}{\cftalg{Q}}} \defeq \subst{x}{\cftidtm{\cftalg{Q}}}.
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+A pre-projection homomorphism from $\cftalg{A}$ to $\cftalg{B}$ in context
+$\Gamma$ is a weakening homomorphism $\cfthom{f}$ from $\cftalg{A}$ to
+$\cftalg{B}$ in context $\Gamma$ for which the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=10em]
+\subst
+  {{\idtm{\cftalgf{\cftalg{A}}}}{\cftwkc{\cftalg{A}}}}
+  {\cftalgt{\cftfamalg{\cftalg{A}}}}
+  \ar{r}{\subst{{\idtm{\cftalgf{\cftalg{A}}}}{\cftwkc{\cftalg{A}}}}{\cfthomt{\cftfamhom{\cfthom{f}}}}}
+  \ar[fib,xshift=-.7ex]{d}
+  &
+\subst
+  {{\idtm{\cftalgf{\cftalg{B}}}}{\cftwkc{\cftalg{B}}}}
+  {\cftalgt{\cftfamalg{\cftalg{B}}}}
+  \ar[fib,xshift=-.7ex]{d}
+  \\
+\cftalgf{\cftalg{A}}
+  \ar{r}[swap]{\cfthomf{\cfthom{f}}}
+  \ar[fib]{d}
+  \ar[densely dotted,xshift=.7ex]{u}[swap]{\cftidtm{\cftalg{A}}}
+  &
+\cftalgf{\cftalg{B}}
+  \ar[fib]{d}
+  \ar[densely dotted,xshift=.7ex]{u}[swap]{\cftidtm{\cftalg{B}}}
+  \\
+\cftalgc{\cftalg{A}}
+  \ar{r}[swap]{\cfthomc{\cfthom{f}}}
+  &
+\cftalgc{\cftalg{B}}
+\end{tikzcd}
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+A projection algebra in context $\Gamma$ is a pre-projection algebra in context
+$\Gamma$ for which weakening is a pre-projection homomorphism.
+\end{defn}
+
+\begin{defn}
+A projection homomorphism is a pre-projection homomorphism between projection
+algebras.
+\end{defn}
 
 \begin{thm}
-Suppose $\cftalg{A}$ is a projection algebra in context $\Gamma$. Then
-$\cftfamalg{\cftalg{A}}$ with the internal identity term
-\begin{equation*}
-\cftidtm{\cftfamalg{\cftalg{A}}}\defeq\jcomp{}{\cftctxext}{\cftidtm{\cftalg{A}}}
-\end{equation*}
-is a projection algebra in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$.
+Suppose $\cftalg{A}$ is a projection algebra in context $\Gamma$. Then the 
+pre-projection algebra $\cftfamalg{\cftalg{A}}$ is a projection algebra in context 
+$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$.
 \end{thm}
 
 \begin{thm}
 Suppose $\cftalg{Q}$ is a projection algebra in context $\ctxext{\Gamma}{B}$ and
-let $\jfam{\Gamma}{A}$. Then $\ctxwk{A}{\cftalg{Q}}$ together with the
-internal identity term
-\begin{equation*}
-\cftidtm{\ctxwk{A}{\cftalg{Q}}}\defeq \ctxwk{A}\cftidtm{\cftalg{Q}}
-\end{equation*}
-is a projection algebra in context $\ctxext{{\Gamma}{A}}{B}$.
+let $\jfam{\Gamma}{A}$. Then the pre-projection algebra 
+$\ctxwk{A}{\cftalg{Q}}$ is a
+projection algebra in context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$.
 \end{thm}
 
 \begin{thm}
 Suppose $\cftalg{Q}$ is a projection algebra in context $\ctxext{{\Gamma}{A}}{P}$
-and let $\jterm{\Gamma}{A}{x}$. Then $\subst{x}{\cftalg{Q}}$ together with the
-internal identity term
-\begin{equation*}
-\cftidtm{\subst{x}{\cftalg{Q}}} \defeq \subst{x}{\cftidtm{\cftalg{Q}}}
-\end{equation*}
-is a projection algebra in context $\ctxext{\Gamma}{\subst{x}{P}}$.
+and let $\jterm{\Gamma}{A}{x}$. Then the pre-projection algebra 
+$\subst{x}{\cftalg{Q}}$ is a
+projection algebra in context $\ctxext{\Gamma}{\subst{x}{P}}$.
 \end{thm}
+
+\begin{cor}
+In a projection algebra $\cftalg{A}$ in context $\Gamma$, weakening is a
+projection homomorphism.
+\end{cor}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Substitution algebras}
@@ -2755,43 +2705,166 @@ A substitution homomorphism is a pre-substitution homomorphism between
 substitution algebras.
 \end{defn}
 
-\begin{lem}
-Let $\cftalg{A}$ be a substitution algebra in context $\Gamma$. Then we have the
-judgmental equality
-\begin{align*}
-& \jcomp{}
-    { \apply\cftsubst{\cftalg{A}}%
-      { \apply\cftctxext%
-          { \apply\cftctxext{\gamma}{a}}{p}
-        }
-      { q}
-      { g}
-      }
-    { \subst
-        { q}
-        { { p}
-          { \cftfamhom{\apply\cftsubst{\cftalg{A}}{\gamma}{a}{x}}}
-          }
-      }
-  \\
-& \jdeq
-\end{align*}
-of CFT-homomorphisms from ... to ... in context $\Gamma$,
-for $\gamma:A$, $a:\subst{\gamma}{\cftalgf{\cftalg{A}}}$, 
-$x:\subst{a}{{\gamma}{\cftalgt{\cftalg{A}}}}$,
-$p:\subst{\apply\cftctxext{\gamma}{a}}{\cftalgf{\cftalg{A}}}$
-$q:\subst{\apply\cftctxext{\apply\cftctxext{\gamma}{a}}{p}}{\cftalgf{\cftalg{A}}}$
-and $g:\subst{\apply\cftctxext{\apply\cftctxext{\apply\cftctxext{\gamma}{a}}{p}}{q}}{\cftalgt{\cftalg{A}}}$
-\end{lem}
+\begin{thm}
+Suppose $\cftalg{A}$ is a substitution algebra in context $\Gamma$. Then
+the pre-substitution algebra $\cftfamalg{\cftalg{A}}$ is a substitution algebra
+in context 
+$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$.
+\end{thm}
+
+\begin{thm}
+Suppose $\cftalg{Q}$ is a substitution algebra in context $\ctxext{\Gamma}{B}$ 
+and let $\jfam{\Gamma}{A}$. Then the pre-substitution algebra 
+$\ctxwk{A}{\cftalg{Q}}$ is a substitution algebra in context 
+$\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$.
+\end{thm}
+
+\begin{thm}
+Suppose $\cftalg{Q}$ is a substitution algebra in context $\ctxext{{\Gamma}{A}}{P}$
+and let $\jterm{\Gamma}{A}{x}$. Then the pre-substitution algebra 
+$\subst{x}{\cftalg{Q}}$ is a substitution algebra in context 
+$\ctxext{\Gamma}{\subst{x}{P}}$.
+\end{thm}
+
+\begin{cor}
+In a substitution algebra $\cftalg{A}$ in context $\Gamma$, substitution is a
+substitution homomorphism.
+\end{cor}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{E-algebras}
-E-algebras will be CFT-algebras with a weakening operation, identity terms and
-a substitution operation making it a projection algebra and a substitution 
-algebra at the same time. Additionally the weakening operation, identity terms
-and the substitution operation are all required to be compatible with each
-other. Thus, we need to require the abstractions of the rules stated in
-\autoref{comp-sw,comp-ws,cancellation-ws,comp-si,cancellation-i}.
+\begin{defn}
+A CFT-algebra $\cftalg{A}$ in context $\Gamma$ with internal weakening, identity terms and
+substitution
+\begin{align*}
+\jalign\jhom
+  {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
+  {\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}
+  {\cftfamalg{\cftfamalg{\cftalg{A}}}}
+  {\cftwk{\cftalg{A}}}
+  \\
+\jalign\jterm
+  { { {\Gamma}
+      {\cftalgc{\cftalg{A}}}
+      }
+    { \cftalgf{\cftalg{A}}
+      }
+    }
+  {\subst{{\idtm{\cftalgf{\cftalg{A}}}}{\cftwkc{\cftalg{A}}}}{\cftalgt{\cftfamalg{\cftalg{A}}}}}
+  {\cftidtm{\cftalg{A}}}
+  \\
+\jalign\jhom
+  {{{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}{\cftalgt{\cftalg{A}}}}
+  {\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}
+  {\ctxwk{\cftalgt{\cftalg{A}}}{{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}}
+  {\cftsubst{\cftalg{A}}}
+\end{align*}
+is said to be an \emph{E-algebra in context $\Gamma$} if both weakening and substitution are both
+projection and substitution homomorphisms and if (1) the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\ctxwk
+  { \cftalgt{\cftalg{A}}}
+  { { \cftalgf{\cftalg{A}}}
+    { \cftfamalg{\cftalg{A}}}
+    }
+  \ar{r}{\ctxwk{\cftalgt{\cftalg{A}}}{\cftwk{\cftalg{A}}}}
+  \ar{dr}[swap]{\cftidhom{}}
+  &
+\ctxwk
+  { \cftalgt{\cftalg{A}}}
+  { \cftfamalg{\cftfamalg{\cftalg{A}}}}
+  \ar{d}{\cftsubst{\cftalg{A}}}
+  \\
+  &
+\ctxwk
+  { \cftalgt{\cftalg{A}}}
+  { { \cftalgf{\cftalg{A}}}
+    { \cftfamalg{\cftalg{A}}}
+    }
+\end{tikzcd}
+\end{equation*}
+of CFT-algebras in context 
+$\ctxext{{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}{\cftalgt{\cftalg{A}}}$
+commutes judgmentally
+and (2) the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\cftfamalg{\cftfamalg{\cftalg{A}}}
+  \ar{r}{\subst{\idtm{\cftalgf{\cftalg{A}}}}{\cftfamhom{\cftwk{\cftalg{A}}}}}
+  \ar{dr}[swap]{\cftidhom{}}
+  &
+\subst
+  { \idtm{\cftalgf{\cftalg{A}}}}
+  { \jcomp{}
+      { \cftwk{\cftalg{A}}}
+      { \cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}
+    }
+  \ar{d}
+    { \subst
+        { \cftidtm{\cftalg{A}}}
+        { { { \idtm{\cftalgf{\cftalg{A}}}}
+            { \cftwkc{\cftalg{A}}}
+            }
+          { \cftsubst{\cftalgf{\cftalg{A}}}}
+          }
+      }
+  \\
+  &
+    { \subst
+        { \cftidtm{\cftalg{A}}}
+        { { { \idtm{\cftalgf{\cftalg{A}}}}
+            { \cftwkc{\cftalg{A}}}
+            }
+          { \ctxwk
+              { \cftalgt{\cftfamalg{\cftalg{A}}}}
+              { { \cftalgf{\cftfamalg{\cftalg{A}}}}
+                { \cftfamalg{\cftfamalg{\cftalg{A}}}}
+                }
+            }
+          }
+      }
+\end{tikzcd}
+\end{equation*}
+of CFT-algebras in context 
+$\ctxext{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}$ commutes
+judgmentally.
+
+E-algebras are considered judgmentally equal if their underlying CFT-algebras
+and their internal weakening, identity terms and substitution are judgmentally
+equal.
+\end{defn}
+
+\begin{thm}
+Suppose $\cftalg{A}$ is an E-algebra in context $\Gamma$. Then
+$\cftfamalg{\cftalg{A}}$ is an E-algebra in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$.
+\end{thm}
+
+\begin{thm}
+Suppose $\cftalg{Q}$ is an E-algebra in context $\ctxext{\Gamma}{B}$ and that
+$\jfam{\Gamma}{A}$. Then $\ctxwk{A}{\cftalg{Q}}$ is an E-algebra in context
+$\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$. 
+\end{thm}
+
+\begin{thm}
+Suppose $\cftalg{Q}$ is an E-algebra in context $\ctxext{{\Gamma}{A}}{P}$ and
+that $\jterm{\Gamma}{A}{x}$. Then $\subst{x}{\cftalg{Q}}$ is an E-algebra in
+context $\ctxext{\Gamma}{\subst{x}{P}}$.
+\end{thm}
+
+\begin{thm}
+Suppose $\cftalg{Q}$ is an E-algebra in context $\ctxext{\Gamma}{B}$ and that
+$\jfam{\Gamma}{A}$. Then we have the
+judgmental equality $\cftfamalg{\ctxwk{A}{\cftalg{Q}}}\jdeq\ctxwk{A}{\cftfamalg{\cftalg{Q}}}$
+of E-algebras in context $\ctxext{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{\cftalgc{\cftalg{Q}}}}$.
+\end{thm}
+
+\begin{thm}
+Suppose $\cftalg{Q}$ is an E-algebra in context $\ctxext{{\Gamma}{A}}{P}$ and
+that $\jterm{\Gamma}{A}{x}$. Then we have the judgmental equality
+$\cftfamalg{\subst{x}{\cftalg{Q}}}\jdeq\subst{x}{\cftfamalg{\cftalg{Q}}}$
+of E-algebras in context $\ctxext{{\Gamma}{\subst{x}{P}}}{\subst{x}{\cftalgc{\cftalg{Q}}}}$.
+\end{thm}
 
 \subsection{E-homomorphisms}
 \begin{defn}
