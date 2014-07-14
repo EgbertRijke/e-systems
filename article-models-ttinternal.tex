@@ -1517,7 +1517,7 @@ $\ctxext{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}$ commutes
 judgmentally.
 \end{defn}
 
-\begin{rmk}
+\begin{rmk}\label{rmk:cftwk-prewk}
 In this remark we explain what it means that weakening is a pre-weakening
 homomorphism. Let $\cftalg{A}$ be a pre-weakening algebra. Then its weakening
 $\cftwk{\cftalg{A}}$ is a CFT-homomorphism from
@@ -1540,7 +1540,7 @@ pre-weakening homomorphism if the diagram
   { \cftwkf{\cftalg{A}}}
   { \jcomp{}
     {\cftwkc{\cftalg{A}}}
-    {\ctxwk{\cftalgf{\cftalg{B}}}{\cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
+    {\ctxwk{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}{\cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
     }
   \ar{d}
     { \jcomp{}
@@ -1566,16 +1566,21 @@ pre-weakening homomorphism if the diagram
     }
 \end{tikzcd}
 \end{equation*}
-Both the domain and the codomain are
-again pre-weakening algebras: the weakening of
-$\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}$ is
-$\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamhom{\cftwk{\cftalg{A}}}}$; the weakening of
-$\cftfamalg{\cftfamalg{\cftalg{A}}}$ is
-$\cftfamhom{\cftfamhom{\cftwk{\cftalg{A}}}}$. Therefore, the condition that
-the weakening of $\cftalg{A}$ is a pre-weakening homomorphism becomes that
-the diagram
+of pre-weakening algebras in context
+$ \ctxext
+    { { { { \Gamma}
+          { \cftalgc{\cftalg{A}}}
+          }
+        { \cftalgf{\cftalg{A}}}
+        }
+      { \ctxwk{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+      }
+    { \cftalgf{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}
+      }$
+commutes judgmentally.
 \end{rmk}
 
+\begin{comment}
 \subsubsection{Currying for weakening}
 Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$ and let
 \begin{equation*}
@@ -1641,7 +1646,7 @@ $p:\subst{a}{{\gamma}{\cftalgf{\cftfamalg{\cftalg{A}}}}}$.
     }
   { \subst{\cftempf{\cftalg{A}}}{\cftwk{\cftalg{A}}}
     }
-  { id_{\cftfamalg{\cftalg{A}}}
+  { \cftidhom{\cftfamalg{\cftalg{A}}}
     }
 \end{equation}
 
@@ -1944,21 +1949,54 @@ All one has to do to prove this is to substitute all of the ingredients of
 the diagram in \autoref{diag:cftwk-cftwk} consecutively by
 $\gamma$, by $a$, by $b$ and finally by $q$.
 \end{proof}
+\end{comment}
 
 \subsubsection{The definition of weakening algebras}\label{sec:cftwkalg-defn}
 
 \begin{defn}
-A weakening algebra in context $\Gamma$ is a CFT-algebra $\cftalg{A}$ in context
-$\Gamma$ for which there is a CFT-homomorphism
-\begin{equation*}
-\jhom
-  {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
-  {\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}
-  {\cftalg{F_{F_A}}}
-  {\cftwk{\cftalg{A}}}
-\end{equation*}
-satisfying the judgmental equalities of %
-\autoref{diag:cftwk-cftwk,diag:cftwk-cftextcurry,eq:cftwk-cftempcurry}.
+A weakening algebra in context $\Gamma$ is a pre-weakening algebra $\cftalg{A}$
+in context $\Gamma$ for which the weakening $\cftwk{\cftalg{A}}$ is a
+pre-weakening homomorphism as explained in \autoref{rmk:cftwk-prewk},
+satisfying the two additional judgmental equalities
+expressing that: (1) the diagram
+\begin{equation}\label{diag:cftwk-cftextcurry}
+\begin{tikzcd}[column sep=large]
+\ctxwk
+  {\ctxext{\cftalgf{\cftalg{A}}}{\cftalgf{\cftfamalg{\cftalg{A}}}}}
+  {\cftfamalg{\cftalg{A}}}
+  \ar{r}{\ctxwk{\cftalgf{\cftfamalg{\cftalg{A}}}}{\cftwk{\cftalg{A}}}}
+  \ar{dr}[swap]{\jcomp{}{\cftfamext}{\cftwk{\cftalg{A}}}}
+& \ctxwk{\cftalgf{\cftfamalg{\cftalg{A}}}}{\cftfamalg{\cftfamalg{\cftalg{A}}}}
+  \ar{d}{\jcomp{}{\cftctxext}{\cftwk{\cftalg{A}}}}
+  \\
+& \cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}
+\end{tikzcd}
+\end{equation}
+and (2) that
+\begin{equation}\label{eq:cftwk-cftempcurry}
+\jhomeq
+  { {\Gamma}{\cftalgc{\cftalg{A}}}
+    }
+  { \cftfamalg{\cftalg{A}}
+    }
+  { \cftfamalg{\cftalg{A}}
+    }
+  { \subst{\cftempf{\cftalg{A}}}{\cftwk{\cftalg{A}}}
+    }
+  { \cftidhom{\cftfamalg{\cftalg{A}}}
+    }
+\end{equation}
+\end{defn}
+
+\begin{rmk}
+The condition in \autoref{diag:cftwk-cftextcurry} implements the rules of
+\autoref{comp-ew} and the condition in \autoref{eq:cftwk-cftempcurry} implements
+the rules of \autoref{comp-0w}.
+\end{rmk}
+
+\begin{defn}
+A \emph{weakening homomorphism} is a pre-weakening homomorphism between
+weakening algebras.
 \end{defn}
 
 \subsubsection{Derivable properties of weakening algebras}
@@ -2509,97 +2547,213 @@ is a projection algebra in context $\ctxext{\Gamma}{\subst{x}{P}}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Substitution algebras}
-Substitution algebras will be CFT-algebras with an additional substitution 
-operation. Given a CFT-algebra $\cftalg{A}$ in context $\Gamma$, substitution 
-will be a CFT-homomorphism
+\begin{defn}
+A \emph{pre-substitution algebra $\cftalg{A}$ in context $\Gamma$} consists of a
+CFT-algebra $\cftalg{A}$ in context $\Gamma$ and a CFT-homomorphism
 \begin{equation*}
 \jhom
   {{{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}{\cftalgt{\cftalg{A}}}}
   {\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}
-  {\cftfamalg{\cftalg{A}}}
-  {\cftsubst{\cftalg{A}}}
+  {\ctxwk{\cftalgt{\cftalg{A}}}{{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}}
+  {\cftsubst{\cftalg{A}}}.
 \end{equation*}
-We will require additionally that substitution preserves itself. Thus, we will
-formulate an abstraction of the rules stated in \autoref{comp-ss}.
+\end{defn}
 
 \begin{defn}
-Let $\cftalg{A}$ be a CFT-algebra in context $\Gamma$ and let
+Suppose $\cftalg{A}$ is a pre-substitution algebra in context $\Gamma$. Then we
+define the pre-substitution algebra $\cftfamalg{\cftalg{A}}$ in context 
+$\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$ by taking
 \begin{equation*}
-\jhom
-  {{{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}{\cftalgt{\cftalg{A}}}}
-  {\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}
-  {\cftfamalg{\cftalg{A}}}
-  {\cftsubst{\cftalg{A}}}
+\cftsubst{\cftfamalg{\cftalg{A}}}
+  \defeq \jcomp{}{\cftctxext}{\cftsubst{\cftalg{A}}}.
 \end{equation*}
-be a CFT-homomorphism. We say that the pair $(\cftalg{A},\cftsubst{\cftalg{A}})$
-is a substitution algebra in context $\Gamma$ if the diagram
-\begin{equation}\label{diag:cftsubst-cftsubst}
-\begin{tikzcd}[column sep=9em]
-\ctxwk
-  { \cftalgt{\cftalg{A}}}
-  { { \cftalgt{\cftfamalg{\cftfamalg{\cftalg{A}}}}}
-    { \cftfamalg{\cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
-    }
-  \ar{r}
-    { \ctxwk
-        { \cftalgt{\cftalg{A}}}
-        { \jcomp{}
-            { \cftctxext}
-            { \jcomp{}
-                { \cftctxext}
-                { \cftsubst{\cftalg{A}}}
-              }
-          }
-      }
-  \ar{d}[swap]
-    { \ctxwk
-        { { \cftalgt{\cftalg{A}}}
-          { \cftalgt{\cftfamalg{\cftfamalg{\cftalg{A}}}}}
-          }
-        { \jcomp{}{\ctxwk{\cftalgt{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftfamext}}}{\cftfamhom{\cftsubst{\cftalg{A}}}}}
-      }
-  & 
-\ctxwk
-  { \cftalgt{\cftalg{A}}}
-  { \cftfamalg{\cftfamalg{\cftfamalg{\cftalg{A}}}}}
-  \ar{d}{ \cftfamhom{\cftsubst{\cftalg{A}}}}
-  \\
-\ctxwk
-  { { \cftalgt{\cftalg{A}}}
-    { \cftalgt{\cftfamalg{\cftfamalg{\cftalg{A}}}}}
-    }
+\end{defn}
+
+\begin{defn}
+Suppose $\cftalg{Q}$ is a pre-substitution algebra in context $\ctxext{\Gamma}{B}$ and
+let $\jfam{\Gamma}{A}$. Then we define the pre-substitution algebra 
+$\ctxwk{A}{\cftalg{Q}}$ in context $\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$ by 
+taking
+\begin{equation*}
+\cftsubst{\ctxwk{A}{\cftalg{Q}}}\defeq \ctxwk{A}\cftsubst{\cftalg{Q}}.
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+Suppose $\cftalg{Q}$ is a pre-substitution algebra in context $\ctxext{{\Gamma}{A}}{P}$
+and let $\jterm{\Gamma}{A}{x}$. Then we define the pre-substitution algebra 
+$\subst{x}{\cftalg{Q}}$ in context $\ctxext{\Gamma}{\subst{x}{P}}$ by taking
+\begin{equation*}
+\cftsubst{\subst{x}{\cftalg{Q}}} \defeq \subst{x}{\cftsubst{\cftalg{Q}}}.
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+A \emph{pre-substitution homomorphism $\cfthom{f}$ from $\cftalg{A}$ to $\cftalg{B}$ in
+context $\Gamma$} is a CFT-homomorphism $\cfthom{f}$ for which the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=8em]
+\ctxwk{\cftalgt{\cftalg{A}}}{\cftfamalg{\cftfamalg{\cftalg{A}}}}
+  \ar{r}{\ctxwk{\cftalgt{\cftalg{A}}}{\cftfamhom{\cftfamhom{\cfthom{f}}}}}
+  \ar{d}[swap]{\cftsubst{\cftalg{A}}}
+  &
+\jcomp{}
+  { \cfthomt{\cfthom{f}}}
   { \jcomp{}
-      { \ctxwk{\cftalgt{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftfamext}}}
+      { \cfthomf{\cfthom{f}}}
       { \jcomp{}
-          {\cftsubstc{\cftalg{A}}}
-          {\cftfamalg{\cftfamalg{\cftalg{A}}}}
+          { \cfthomc{\cfthom{f}}}
+          { \ctxwk{\cftalgt{\cftalg{B}}}{\cftfamalg{\cftfamalg{\cftalg{B}}}}}
         }
     }
-  \ar{r}
-& \jcomp{}{\cftsubstc{\cftalg{A}}}{\cftfamalg{\cftfamalg{\cftalg{A}}}}
-\end{tikzcd}
-\end{equation}
-of CFT-algebras in context 
-$ \ctxext
-    { { { { { {\Gamma}
-              {\cftalgc{\cftalg{A}}}
+  \ar{d}
+    { \jcomp{}
+        { \cfthomt{\cfthom{f}}}
+        { \jcomp{}
+            { \cfthomf{\cfthom{f}}}
+            { \jcomp{}
+                { \cfthomc{\cfthom{f}}}
+                {\cftsubst{\cftalg{B}}}
               }
-            { \cftalgf{\cftalg{A}}}
-            }
-          { \cftalgt{\cftalg{A}}}
           }
-        { \ctxwk{\cftalgt{\cftalg{A}}}{\cftalgf{\cftfamalg{\cftalg{A}}}}}
+      }   
+  \\
+\ctxwk{\cftalgt{\cftalg{A}}}{{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}
+  \ar{r}[swap]
+    {\ctxwk{\cftalgt{\cftalg{A}}}{{\cftalgf{\cftalg{A}}}{\cftfamhom{\cfthom{f}}}}}
+  &
+\jcomp{}
+  { \cfthomt{\cfthom{f}}}
+  { \jcomp{}
+      { \cfthomf{\cfthom{f}}}
+      { \jcomp{}
+          { \cfthomc{\cfthom{f}}}
+          { \ctxwk
+              {\cftalgt{\cftalg{B}}}
+              {{\cftalgf{\cftalg{B}}}{\cftfamalg{\cftalg{B}}}}
+            }
         }
-      { \ctxwk{\cftalgt{\cftalg{A}}}{\cftalgf{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}
-      }
-    { \ctxwk{\cftalgt{\cftalg{A}}}{\cftalgt{\cftfamalg{\cftfamalg{\cftalg{A}}}}}}$
+    }
+\end{tikzcd}
+\end{equation*}
+of pre-substitution algebras in context
+$\ctxext{{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}{\cftalgt{\cftalg{A}}}$
 commutes judgmentally.
 \end{defn}
 
+\begin{defn}
+A \emph{substitution algebra in context $\Gamma$} is a pre-substitution algebra
+in context $\Gamma$ for which substitution is a pre-substitution homomorphism.
+\end{defn}
+
 \begin{rmk}
-We shall have to verify that the diagram in \autoref{diag:cftsubst-cftsubst} is
-well-typed.
+The condition that the substitution of a pre-substitution algebra is a
+pre-substitution homomorphism assert that the diagram
+\begin{small}
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\ctxwk
+  {\cftalgt{\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}}
+  {\cftfamalg{\cftfamalg{\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}}}
+  \ar{r}
+    { \ctxwk
+        {\cftalgt{\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}}
+        {\cftfamhom{\cftfamhom{\cftsubst{\cftalg{A}}}}}
+      }
+  \ar{d}[swap]
+    {\cftsubst{\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}}
+  &
+\jcomp{}
+  { \cftsubstt{\cftalg{A}}}
+  { \jcomp{}
+      { \cftsubstf{\cftalg{A}}}
+      { \jcomp{}
+          { \cftsubstc{\cftalg{A}}}
+          { \ctxwk
+              { \cftalgt
+                  { \ctxwk
+                      { \cftalgt{\cftalg{A}}}
+                      { {\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}
+                    }
+                }
+              { \cftfamalg
+                  { \cftfamalg
+                      { \ctxwk
+                          { \cftalgt{\cftalg{A}}}
+                          { {\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}
+                        }
+                    }
+                }
+            }
+        }
+    }
+  \ar{d}
+    { \jcomp{}
+        { \cftsubstt{\cftalg{A}}}
+        { \jcomp{}
+            { \cftsubstf{\cftalg{A}}}
+            { \jcomp{}
+                { \cftsubstc{\cftalg{A}}}
+                { \cftsubst
+                    { \ctxwk
+                        {\cftalgt{\cftalg{A}}}
+                        {{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}
+                      }
+                  }
+              }
+          }
+      }
+  \\
+\ctxwk
+  { \cftalgt{\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}}
+  { {\cftalgf{\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}}
+    {\cftfamalg{\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}}
+    }
+  \ar{r}[swap,yshift=-1em]
+    { \ctxwk
+        { \cftalgt{\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}}
+        { {\cftalgf{\ctxwk{\cftalgt{\cftalg{A}}}{\cftalg{F_{F_A}}}}}
+          {\cftfamhom{\cftsubst{\cftalg{A}}}}}
+          }
+  &
+\jcomp{}
+  { \cftsubstt{\cftalg{A}}}
+  { \jcomp{}
+      { \cftsubstf{\cftalg{A}}}
+      { \jcomp{}
+          { \cftsubstc{\cftalg{A}}}
+          { \ctxwk
+              { \cftalgt
+                  { \ctxwk
+                      {\cftalgt{\cftalg{A}}}
+                      {{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}
+                    }
+                }
+              { { \cftalgf
+                    { \ctxwk
+                        { \cftalgt{\cftalg{A}}}
+                        {{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}
+                      }
+                  }
+                { \cftfamalg
+                    { \ctxwk
+                        {\cftalgt{\cftalg{A}}}
+                        {{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}
+                      }
+                  }
+                }
+            }
+        }
+    }
+\end{tikzcd}
+\end{equation*}
+\end{small}
 \end{rmk}
+
+\begin{defn}
+A substitution homomorphism is a pre-substitution homomorphism between
+substitution algebras.
+\end{defn}
 
 \begin{lem}
 Let $\cftalg{A}$ be a substitution algebra in context $\Gamma$. Then we have the
