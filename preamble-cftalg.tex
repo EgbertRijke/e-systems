@@ -1,0 +1,97 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% ALGEBRAS FOR THE THEORY OF CONTEXTS, FAMILIES AND TERMS
+
+\makeatletter
+\newcommand{\algfont}{\mathbf}
+
+%%%% EXTENSION ALGEBRAS
+\newcommand{\extalg}{\algfont}
+\newcommand{\extalg@sym}{\@judgment@kind{ExtAlg}}
+\newcommand{\jextalg}[2]{\judgment{#1}{}{}{}{}{\extalg{#2}}{\extalg@sym}}
+
+\newcommand{\jextalgctx}[2]{%
+  \jfam{#1}{\cftalgc{\cftalg{#2}}}}
+
+\newcommand{\jextalgfam}[2]{%
+  \jfam{{#1}{\cftalgc{\cftalg{#2}}}}{\cftalgf{\cftalg{#2}}}}
+
+\newcommand{\jextalgtm}[2]{%
+  \jfam{{{#1}{\cftalgc{\cftalg{#2}}}}{\cftalgf{\cftalg{#2}}}}{\cftalgt{\cftalg{#2}}}}
+
+\newcommand{\jextalgctxext}[2]{%
+  \jhom{#1}{{\cftalgc{\cftalg{#2}}}{\cftalgf{\cftalg{#2}}}}{\cftalgc{\cftalg{#2}}}{\cftctxext[\cftalg{#2}]}}
+
+\newcommand{\jextalgfamext}[2]{%
+  \jhom{{#1}{\cftalgc{\cftalg{#2}}}}{{\cftalgf{\cftalg{#2}}}{\jcomp{}{\cftctxext[\cftalg{#2}]}{\cftalgf{\cftalg{#2}}}}}{\cftalgf{\cftalg{#2}}}{\cftfamext[\cftalg{#2}]}}
+  
+\newcommand{\extalgc}[1]{{\renewcommand\extalg[1]{##1}#1}}
+\newcommand{\extalgf}[1]{\mathcal{F}_{#1}}
+\newcommand{\extalgt}[1]{\mathcal{T}_{#1}}
+
+%%%% EXTENSION TERMS
+\newcommand{\cftext}[2][]{\epsilon_{#1}^{#2}}
+\newcommand{\cftctxext}[1][]{\cftext[0]{#1}}
+\newcommand{\cftfamext}[1][]{\cftext[1]{#1}}
+
+%%%% THE FAMILY EXTENSION ALGEBRA
+\newcommand{\extfamalg}[1]{\algfont{F}_{#1}}
+
+%%%% EXTENSION HOMOMORPHISMS
+\newcommand{\exthom}[1]{\algfont{#1}}
+\newcommand{\exthomc}[1]{{\renewcommand\exthom[1]{##1}#1}}
+\newcommand{\exthomf}[1]{\mathcal{F}_{#1}}
+\newcommand{\exthomt}[1]{\mathcal{T}_{#1}}
+\newcommand{\extfamhom}[1]{\algfont{F}_{#1}}
+
+%%%% CFT-ALGEBRAS
+\newcommand{\cftalg}{\algfont}
+
+%%%% The intended use of `\cftctx` is `\cftctx{\cftalg{#1}}`.
+\newcommand{\cftalgc}[1]{\@gobble #1}
+
+%%%% The intended use of `\cftfam` is `\cftfam{\cftalg{#1}}`.
+\newcommand{\cftalgf}[1]{\mathcal{F}_{#1}}
+\newcommand{\cftalgt}[1]{\mathcal{T}_{#1}}
+
+\newcommand{\cftemp}[2][]{\phi_{#1}^{#2}}
+\newcommand{\cftempc}{\cftemp[0]}
+\newcommand{\cftempf}{\cftemp[1]}
+
+\newcommand{\cftfamalg}[1]{\algfont{F}_{#1}}
+
+%%%% CFT-HOMOMORPHISMS
+\newcommand{\cfthom}{\algfont}
+
+\newcommand{\cfthomc}[1]{%
+  { \renewcommand{\cfthom}[1]{##1}
+    #1
+    }
+  }
+
+\newcommand{\cfthomf}[1]{\mathcal{F}_{#1}}
+
+\newcommand{\cfthomcomp}[2]{#2\circ #1}
+
+\newcommand{\cfthomt}[1]{\mathcal{T}_{#1}}
+
+\newcommand{\cftfamhom}[1]{\algfont{F}_{#1}}
+
+\newcommand{\cftidhom}[1]{\algfont{id}_{#1}}
+
+%%%% THE WEAKENING TERM
+\newcommand{\cftwk}[1]{\boldsymbol\omega^{#1}}
+\newcommand{\cftwkc}[1]{\omega^{#1}}
+\newcommand{\cftwkf}[1]{\mathcal{F}_{\boldsymbol\omega^{#1}}}
+\newcommand{\cftwkt}[1]{\mathcal{T}_{\boldsymbol\omega^{#1}}}
+
+%%%% THE SUBSTITUTION TERM
+\newcommand{\cftsubst}[1]{\boldsymbol\sigma^{#1}}
+\newcommand{\cftsubstc}[1]{\sigma^{#1}}
+\newcommand{\cftsubstf}[1]{\mathcal{F}_{\cftsubst{#1}}}
+\newcommand{\cftsubstt}[1]{\mathcal{T}_{\cftsubst{#1}}}
+
+%%%% THE IDENTITY TERM
+\newcommand{\cftidtm}[1]{\boldsymbol\iota^{#1}}
+
+\makeatother
+
