@@ -19,7 +19,7 @@ approach of type theory and higher category theory. Thirdly, we will not have to
 be burdened with superficial comments about variables being bounded or not, or 
 fresh or free or not occuring at all.
 
-In our treatment, a contexts can be seen as binary
+In the current presentation, contexts can be seen as binary
 planar trees of which the leaves are (families of) contexts. 
 The judgmental equality relation on contexts is an equivalence relation which 
 expresses that binary planar
@@ -347,17 +347,6 @@ $\jterm{{\Gamma}{A}}{{\Gamma}{P}}{\ctxext{\Gamma}{f}}$. Then there would be
 axioms stating the judgmental equalities $\ctxext{\Gamma}{P}\jdeq P$ and
 $\ctxext{\Gamma}{f}\jdeq f$. Thus, it is of no actual use to introduce the
 action of context extension on families and terms.
-
-Nevertheless, the fact that extension \emph{does} act on families
-and terms (albeit trivially) reflects in the internal extension term in the type theory of
-models of type theory, which is developed in \autoref{ttmodels}. Also, in the
-categorical semantics, the extension operation would be the concatenation of
-lists of arrows belonging to the class of arrows representing families. Since
-families over families are interpreted by lists of those family arrows extending
-concateneted lists of family arrows, the action of concatenation of such lists
-may be taken to be trivial. The $\Sigma$-functor, which is the version of this
-operation on those lists which have length one, acts trivially on morphisms;
-another manifestation of the same phenomenon.
 
 In \autoref{extension-on-terms} we will also define an extension operation
 on terms, which defines a term $\jterm{\Gamma}{{A}{P}}{\tmext{x}{u}}$ for
@@ -1820,11 +1809,15 @@ context $\Gamma$. This is expressed by the following four inference rules:
 \end{align*}
 As pointed out at the beginning of this subsection, 
 we do not assume that the empty family is a type, that would be like
-assuming that the multiplicative unit of a ring is prime. We envision a
+assuming that the multiplicative unit of a ring is prime. 
+
+\begin{comment}
+We envision a
 categorical interpretation of the theory of contexts, families and terms where 
 contexts are interpreted as finite paths of arrows belonging to a predetermined
 class. The empty family would be such a path of length $0$ whereas the types
 would be such paths of length $1$.
+\end{comment}
 
 We add rules asserting that a weakened type is again a type that 
 substitution preserves the property of being a type:

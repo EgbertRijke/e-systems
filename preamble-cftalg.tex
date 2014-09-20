@@ -93,5 +93,10 @@
 %%%% THE IDENTITY TERM
 \newcommand{\cftidtm}[1]{\boldsymbol\iota^{#1}}
 
-\makeatother
+\newcommand{\genealg}[3]{\algfont{E}(#1,#2,#3)}
+\newcommand{\genealgc}[3]{E(#1,#2,#3)}
+\newcommand{\genealgf}[3]{\cftalgf{\genealg{#1}{#2}{#3}}}
+\newcommand{\genealgt}[3]{\cftalgt{\genealg{#1}{#2}{#3}}}
+\newcommand{\genealgincl}[3]{\boldsymbol\eta_{#1,#2,#3}}
 
+\makeatother

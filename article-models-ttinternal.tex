@@ -1534,7 +1534,7 @@ $\cftwk{\cftalg{A}}$ is an extension homomorphism from
 $\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}$ to
 $\cftfamalg{\cftfamalg{\cftalg{A}}}$. Therefore, $\cftwk{\cftalg{A}}$ is a
 pre-weakening homomorphism if the diagram
-\begin{equation*}
+\begin{equation*}\label{diag:cftwk-cftwk}
 \begin{tikzcd}[column sep=8em]
 \ctxwk
   {\cftalgf{\ctxwk{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}}}
@@ -2359,7 +2359,7 @@ For the fourth, note that we have the judgmental equalities
           }
       }
 \end{align*}
-Thus we may conclude that the diagram above a pullback of the diagram in \autoref{diag:cftwk-cftwk}
+Thus we may conclude that the diagram above is a pullback of the diagram in \autoref{diag:cftwk-cftwk}
 by $\cftctxext$ and therefore it commutes as desired.
 \end{proof}
 
@@ -2888,12 +2888,3 @@ substitution homomorphism.
 E-transformations are going to be the analogues of natural transformations.
 
 \subsection{E-adjunctions}
-
-\subsection{Pre-universes}
-Pre-universes are internal versions of the theory of contexts, families and
-terms. They interpret extension, the empty context, weakening, substitution
-and identity terms all at once in a compatible way. Besides the compatibility
-properties there will be judgmental equalities analogous to the cancellation
-properties of \autoref{cancellation-ws,cancellation-i}. Pre-universes are to
-the theory of contexts, families and terms what internal categories to a
-category.
