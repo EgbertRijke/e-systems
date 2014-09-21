@@ -1083,7 +1083,7 @@ w
         { \idtm{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}}
         }
       }
-  \tag{by \autoref{idfunc-ext-comp}}\\
+  \tag{by \autoref{comp-ie}}\\
 & \jdeq 
   \subst
     { {w}
@@ -1184,11 +1184,15 @@ To prove the third judgmental equality, note that
 \end{align*}
 \end{proof}
 
-In \autoref{lem:tmext-emp,lem:tmext-ext,lem:tmext-wk,lem:tmext-subst,lem:tmext-id}
+In \autoref{lem:tmext-ext,lem:tmext-wk,lem:tmext-subst,comp-ie,lem:tmext-jcomp}
 we show that term extension and the projections are
 compatible with extension (\autoref{lem:tmext-tmext}),
-weakening (\autoref{lem:tmext-wk}), substitution (\autoref{lem:tmext-subst}) and the identity terms (\autoref{lem:tmext-id}). The latter property, \autoref{lem:tmext-id},
-is in fact a generalization of the above \autoref{lem:tmext-basic}.
+weakening (\autoref{lem:tmext-wk}), substitution (\autoref{lem:tmext-subst}), 
+the identity terms (\autoref{comp-ie}) and with precomposition (\autoref{lem:tmext-jcomp}). 
+The property that term extension and the projections are compatible with identity terms
+is in fact a generalization of the above \autoref{lem:tmext-basic}. In
+\autoref{lem:tmext-emp} we will also show that term extension and the projections
+are compatible with the empty object.
 
 \begin{lem}\label{lem:tmext-ext}\label{lem:tmext-tmext}
 The following compatibility rules for two consecutive term extensions are valid:
@@ -1294,12 +1298,15 @@ note that we have the judgmental equalities
   \\
 & \jdeq
   \ctxwk{Q}{{P}{\idtm{A}}}
+  \tag{by \autoref{precomp-idtm-t}}
   \\
 & \jdeq
   \ctxwk{\ctxext{P}{Q}}{\idtm{A}}
+  \tag{by \autoref{comp-ew-t}}
   \\
 & \jdeq
   \cprojfstf{A}{{P}{Q}}
+  \tag{by definition}
 \end{align*}
 To prove the judgmental equality
 \begin{equation*}
@@ -1315,21 +1322,27 @@ note that we have the judgmental equalities
 \jcomp{{{A}{P}}{Q}}{\cprojfstf{{A}{P}}{Q}}{\cprojsndf{A}{P}}
 & \jdeq 
   \unfoldall{\jcomp{{{A}{P}}{Q}}{\cprojfstf{{A}{P}}{Q}}{\cprojsndf{A}{P}}}
+  \tag{by definition}
   \\
 & \jdeq
   \subst{\ctxwk{Q}{\idtm{{A}{P}}}}{\ctxwk{Q}{{\ctxext{A}{P}}{\idtm{P}}}}
+  \tag{by \autoref{comp-ew-t}}
   \\
 & \jdeq
   \ctxwk{Q}{\subst{\idtm{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{\idtm{P}}}}
+  \tag{by \autoref{comp-ws-t}}
   \\
 & \jdeq
   \ctxwk{Q}{\idtm{P}}
+  \tag{by \autoref{precomp-idtm-t}}
   \\
 & \jdeq
   \unfoldall{\jcomp{{P}{Q}}{\cprojsndf{A}{{P}{Q}}}{\cprojfstf{P}{Q}}}
+  \tag{by \autoref{precomp-idtm-t}}
   \\
 & \jdeq
   \jcomp{{P}{Q}}{\cprojsndf{A}{{P}{Q}}}{\cprojfstf{P}{Q}}
+  \tag{by definition}
 \end{align*}
 To prove the judgmental equality
 \begin{equation*}
@@ -1345,74 +1358,16 @@ note that we have the judgmental equalities
 \cprojsndf{{A}{P}}{Q}
 & \jdeq
   \unfoldall{\cprojsndf{{A}{P}}{Q}}
+  \tag{by definition}
   \\
 & \jdeq 
   \unfoldall{\jcomp{{P}{Q}}{\cprojsndf{A}{{P}{Q}}}{\cprojsndf{P}{Q}}}
+  \tag{by \autoref{precomp-idtm-t}}
   \\
 & \jdeq
-  \jcomp{}{\cprojsndf{A}{{P}{Q}}}{\cprojsndf{P}{Q}}\qedhere
+  \jcomp{}{\cprojsndf{A}{{P}{Q}}}{\cprojsndf{P}{Q}}
+  \tag{by definition}
 \end{align*}
-\begin{comment}
-%%%% This was a proof of an old version of the statement
-Now consider a term $\jterm{\Gamma}{\ctxext{A}{{P}{Q}}}{w}$. Then we have
-\begin{align*}
-w 
-& \jdeq 
-  \tmext
-    {A}
-    {{P}{Q}}
-    {\cprojfst{A}{\ctxext{P}{Q}}{w}}
-    {\cprojsnd{A}{\ctxext{P}{Q}}{w}}
-  \\
-& \jdeq 
-  \tmext
-    {A}
-    {{P}{Q}}
-    {\cprojfst{A}{\ctxext{P}{Q}}{w}}
-    { {P}
-      {Q}
-      {\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
-      {\cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
-      }
-  \\
-& \jdeq 
-  \tmext
-    {{A}{P}}
-    {Q}
-    { {} % need to provide base and family, but there's no unfold.
-      {}
-      {\cprojfst{A}{\ctxext{P}{Q}}{w}}
-      {\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
-      }
-    { \cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}
-      }
-\end{align*}
-Thus we see that 
-\begin{align*}
-\cprojfst{\ctxext{A}{P}}{Q}{w} 
-& \jdeq 
-  \tmext
-    {A}
-    {P}
-    {\cprojfst{A}{\ctxext{P}{Q}}{w}}
-    {\cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}}}
-  \\ 
-\cprojsnd{\ctxext{A}{P}}{Q}{w} 
-& \jdeq 
-  \cprojsnd{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}},
-\end{align*}
-proving the fourth judgmental equality, and therefore also that
-\begin{align*}
-\cprojfst{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}} 
-& \jdeq 
-  \cprojfst{A}{\ctxext{P}{Q}}{w}
-  \\
-\cprojsnd{A}{P}{\cprojfst{\ctxext{A}{P}}{Q}{w}} 
-& \jdeq 
-  \cprojfst{P}{Q}{\cprojsnd{A}{\ctxext{P}{Q}}{w}},
-\end{align*}
-proving the second and the third judgmental equalities.
-\end{comment}
 \end{proof}
 
 \begin{lem}\label{lem:tmext-wk}\label{comp-we-t}
@@ -1460,24 +1415,30 @@ precisely, the following inference rules are valid:
 Consider $\jterm{{\Gamma}{B}}{Q}{g}$ and $\jterm{{\Gamma}{B}}{\subst{g}{R}}{t}$.
 Then we have the judgmental equalities
 \begin{align*}
-\ctxwk{A}{\ctxext{Q}{R}{g}{t}}
+\ctxwk{A}{\tmext{Q}{R}{g}{t}}
 & \jdeq 
   \ctxwk{A}{\subst{t}{{g}{\idtm{\ctxext{Q}{R}}}}}
+  \tag{by definition}
   \\
 & \jdeq 
   \subst{\ctxwk{A}{t}}{\ctxwk{A}{\subst{g}{\idtm{\ctxext{Q}{R}}}}}
+  \tag{by \autoref{comp-ws-t}}
   \\
 & \jdeq 
   \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\ctxwk{A}{\idtm{\ctxext{Q}{R}}}}}
+  \tag{by \autoref{comp-ws-t}}
   \\
 & \jdeq 
   \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\idtm{\ctxwk{A}{\ctxext{Q}{R}}}}}
+  \tag{by \autoref{comp-wi-t}}
   \\
 & \jdeq 
   \subst{\ctxwk{A}{t}}{{\ctxwk{A}{g}}{\idtm{\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}}}
+  \tag{by \autoref{comp-we-f}}
   \\
 & \jdeq 
   \tmext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}{\ctxwk{A}{g}}{\ctxwk{A}{t}}
+  \tag{by definition}
 \end{align*}
 Next, we want to prove the judgmental equality
 \begin{equation*}
@@ -1493,15 +1454,19 @@ Note that we have the judgmental equalities
 \cprojfstf{\ctxwk{A}{Q}}{\ctxwk{A}{R}}
 & \jdeq
   \unfoldall{\cprojfstf{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+  \tag{by definition}
   \\
 & \jdeq
   \ctxwk{{A}{R}}{{A}{\idtm{Q}}}
+  \tag{by \autoref{comp-wi-t}}
   \\
 & \jdeq
   \unfoldall{\ctxwk{A}{\cprojfstf{Q}{R}}}
+  \tag{by \autoref{comp-ww-t}}
   \\
 & \jdeq
   \ctxwk{A}{\cprojfstf{Q}{R}}.
+  \tag{by definition}
 \end{align*}
 Finally, we want to prove the judgmental equality
 \begin{equation*}
@@ -1517,13 +1482,15 @@ Note that we have the judgmental equalities
 \cprojsndf{\ctxwk{A}{Q}}{\ctxwk{A}{R}}
 & \jdeq
   \unfoldall{\cprojsndf{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+  \tag{by definition}
   \\
 & \jdeq
   \unfoldall{\ctxwk{A}{\cprojsndf{Q}{R}}}
+  \tag{by \autoref{comp-wi-t}}
   \\
 & \jdeq
   \ctxwk{A}{\cprojsndf{Q}{R}}.
-  \qedhere
+  \tag{by definition}
 \end{align*}
 \end{proof}
 
@@ -1577,21 +1544,27 @@ Then we have the judgmental equalities
 \subst{x}{\tmext{Q}{R}{g}{t}}
 & \jdeq 
   \subst{x}{{t}{{g}{\idtm{\ctxext{Q}{R}}}}}
+  \tag{by definition}
   \\
 & \jdeq 
   \subst{{x}{t}}{{x}{{g}{\idtm{\ctxext{Q}{R}}}}}
+  \tag{by \autoref{comp-ss-t}}
   \\
 & \jdeq 
   \subst{{x}{t}}{{{x}{g}}{{x}{\idtm{\ctxext{Q}{R}}}}}
+  \tag{by \autoref{comp-ss-t}}
   \\
 & \jdeq 
   \subst{{x}{t}}{{{x}{g}}{\idtm{\subst{x}{\ctxext{Q}{R}}}}}
+  \tag{by \autoref{comp-si-t}}
   \\
 & \jdeq 
   \subst{{x}{t}}{{{x}{g}}{\idtm{\ctxext{\subst{x}{Q}}{\subst{x}{R}}}}}
+  \tag{by \autoref{comp-se-f}}
   \\
 & \jdeq 
   \tmext{\subst{x}{Q}}{\subst{x}{R}}{\subst{x}{g}}{\subst{x}{t}}.
+  \tag{by definition}
 \end{align*}
 Next, we want to prove the judgmental equality
 \begin{equation*}
@@ -1607,15 +1580,19 @@ Note that we have the judgmental equalities
 \cprojfstf{\subst{x}{Q}}{\subst{x}{R}}
 & \jdeq
   \unfoldall{\cprojfstf{\subst{x}{Q}}{\subst{x}{R}}}
+  \tag{by definition}
   \\
 & \jdeq
   \ctxwk{\subst{x}{R}}{\subst{x}{\idtm{Q}}}
+  \tag{by \autoref{comp-si-t}}
   \\
 & \jdeq
   \unfoldall{\subst{x}{\cprojfstf{Q}{R}}}
+  \tag{by \autoref{comp-ss-t}}
   \\
 & \jdeq
   \subst{x}{\cprojfstf{Q}{R}}.
+  \tag{by definition}
 \end{align*}
 And finally we want to prove the judgmental equality
 \begin{equation*}
@@ -1631,22 +1608,24 @@ Note that we have the judgmental equalities
 \cprojsndf{\subst{x}{Q}}{\subst{x}{R}}
 & \jdeq
   \unfoldall{\cprojsndf{\subst{x}{Q}}{\subst{x}{R}}}
+  \tag{by definition}
   \\
 & \jdeq
   \unfoldall{\subst{x}{\cprojsndf{Q}{R}}}
+  \tag{by \autoref{comp-si-t}}
   \\
 & \jdeq
   \subst{x}{\cprojsndf{Q}{R}}.
-  \qedhere
+  \tag{by definition}
 \end{align*}
 \end{proof}
 
 We find the following inference rule, which expresses that the identity term
 is compatible with extension:
 
-\begin{lem}\label{lem:tmext-id}\label{comp-ie}
+\begin{lem}\label{comp-ie}
 For any $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ we have
-\begin{equation}\label{idfunc-ext-comp}
+\begin{equation*}
 \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{A}}{P}
@@ -1662,7 +1641,7 @@ For any $\jfam{\Gamma}{A}$ and $\jfam{{\Gamma}{A}}{P}$ we have
           {\cprojsndf{A}{P}}
         }
     }
-\end{equation}
+\end{equation*}
 \end{lem}
 
 \begin{proof}
@@ -1682,6 +1661,7 @@ we have the judgmental equalities
       {\cprojfstf{A}{P}}
       {\cprojsndf{A}{P}}
     }
+  \tag{by definition}
   \\
 & \jdeq 
   \subst
@@ -1690,6 +1670,7 @@ we have the judgmental equalities
     { {\ctxwk{P}{\idtm{A}}}
       {\idtm{\ctxwk{\ctxext{A}{P}}{\ctxext{A}{P}}}}
       }
+  \tag{by definition}
   \\
 & \jdeq 
   \subst
@@ -1698,6 +1679,7 @@ we have the judgmental equalities
     { {\ctxwk{P}{\idtm{A}}}
       {\ctxwk{\ctxext{A}{P}}{\idtm{\ctxext{A}{P}}}}
       }
+  \tag{by \autoref{comp-wi-t}}
   \\
 & \jdeq 
   \subst
@@ -1706,6 +1688,7 @@ we have the judgmental equalities
     { {\ctxwk{P}{\idtm{A}}}
       {\ctxwk{P}{{A}{\idtm{\ctxext{A}{P}}}}}
       }
+  \tag{by \autoref{comp-ew-t}}
   \\
 & \jdeq 
   \subst
@@ -1718,6 +1701,7 @@ we have the judgmental equalities
         {\ctxwk{A}{\idtm{\ctxext{A}{P}}}}
         }
       }
+  \tag{by \autoref{comp-ws-t}}
   \\
 & \jdeq 
   \subst
@@ -1725,26 +1709,131 @@ we have the judgmental equalities
       }
     { \ctxwk{A}{\idtm{\ctxext{A}{P}}}
       }
+  \tag{by \autoref{precomp-idtm-t}}
   \\
 & \jdeq 
   \idtm{\ctxext{A}{P}}.
-  \qedhere
+  \tag{by \autoref{precomp-idtm-t}}
 \end{align*}
 \end{proof}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Family morphisms}\label{sec:fhom}
-In this section we are going to develop dependent morphisms and analyze various
-sorts of composition. The notion of family morphism is the notion of `a 
-morphism over a context morphism'. When we have established all the associativity
-and interchange laws for all the compositions that come with the theory of
-family morphisms, we will also be able to consider \emph{family diagrams}. Those
-are graphical displays of situations in the theory of contexts, families and
-terms, but unlike diagrams in category theory they can contain families (which
-are strictly speaking not morphisms) and terms (which can be seen as morphisms,
-but not in the way we're about to display them).
+We also have the following lemma about the compatibility of pairing and composition:
 
-For the following lemma, recall that the judgment $\jhom{\Gamma}{A}{{B}{Q}}{f}$
+\begin{lem}\label{lem:tmext-jcomp}
+The following inference rules are valid
+\begin{align*}
+& \inference
+  { \jhom{\Gamma}{A}{B}{f}
+    \jterm{{{\Gamma}{B}}{Q}}{R}{h}
+    \jterm{{{\Gamma}{B}}{Q}}{\subst{h}{S}}{k}
+    }
+  { \jtermeq
+      {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
+      {\jcomp{A}{f}{\ctxext{R}{S}}}
+      {\jcomp{A}{f}{\tmext{h}{k}}}
+      {\tmext{\jcomp{A}{f}{h}}{\jcomp{A}{f}{k}}}
+    }
+  \\
+& \inference
+  { \jhom{\Gamma}{A}{B}{f}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    }
+  { \jhomeq
+      {{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}
+      {\jcomp{A}{f}{\ctxext{R}{S}}}
+      {\jcomp{A}{f}{R}}
+      {\jcomp{A}{f}{\cprojfstf{R}{S}}}
+      {\cprojfstf{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}}
+    }
+  \\
+& \inference
+  { \jhom{\Gamma}{A}{B}{f}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    }
+  { \jhomeq
+      {{{{\Gamma}{A}}{\jcomp{A}{f}{Q}}}{\jcomp{A}{f}{S}}}
+      {\jcomp{A}{f}{S}}
+      {\jcomp{A}{f}{S}}
+      {\jcomp{A}{f}{\cprojsndf{R}{S}}}
+      {\cprojsndf{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}}
+    }
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Let $\jhom{\Gamma}{A}{B}{f}$, $\jterm{{{\Gamma}{B}}{Q}}{R}{h}$
+and $\jterm{{{\Gamma}{B}}{Q}}{\subst{h}{S}}{k}$. Then we have the
+judgmental equalities
+\begin{align*}
+\jcomp{A}{f}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{h}}
+& \jdeq 
+  \subst{f}{\ctxwk{A}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{h}}}
+  \tag{by definition}
+  \\
+& \jdeq 
+  \subst
+    {f}
+    {\tmext{\ctxwk{A}{{B}{C}}}{\ctxwk{A}{{B}{R}}}{\ctxwk{A}{g}}{\ctxwk{A}{h}}}
+  \tag{by \autoref{lem:tmext-wk}}
+  \\
+& \jdeq 
+  \tmext
+    {\ctxwk{A}{C}}
+    {\ctxwk{A}{R}}
+    {\subst{f}{\ctxwk{A}{g}}}
+    {\subst{f}{\ctxwk{A}{h}}}
+  \tag{by \autoref{lem:tmext-subst}}
+  \\
+& \jdeq 
+  \tmext{\ctxwk{A}{C}}{\ctxwk{A}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{h}}
+  \tag{by definition}
+\end{align*}
+validating the first inference rule. For the second and the third, note that
+we have the judgmental equalities
+\begin{align*}
+\jcomp{A}{f}{\cprojfstf{R}{S}}
+& \jdeq
+  \unfold\jcomp{A}{f}{\cprojfstf{R}{S}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst{f}{\cprojfstf{\ctxwk{A}{R}}{\ctxwk{A}{S}}}
+  \tag{by \autoref{lem:tmext-wk}}
+  \\
+& \jdeq
+  \cprojfstf{\subst{f}{\ctxwk{A}{R}}}{\subst{f}{\ctxwk{A}{R}}}
+  \tag{by \autoref{lem:tmext-subst}}
+  \\
+& \jdeq
+  \cprojfstf{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}
+  \tag{by definition}
+\end{align*}
+and
+\begin{align*}
+\jcomp{A}{f}{\cprojsndf{R}{S}}
+& \jdeq
+  \unfold\jcomp{A}{f}{\cprojsndf{R}{S}}
+  \tag{by definition}
+  \\
+& \jdeq
+  \subst{f}{\cprojsndf{\ctxwk{A}{R}}{\ctxwk{A}{S}}}
+  \tag{by \autoref{lem:tmext-wk}}
+  \\
+& \jdeq
+  \cprojsndf{\subst{f}{\ctxwk{A}{R}}}{\subst{f}{\ctxwk{A}{R}}}
+  \tag{by \autoref{lem:tmext-subst}}
+  \\
+& \jdeq
+  \cprojsndf{\jcomp{A}{f}{R}}{\jcomp{A}{f}{S}}
+  \tag{by definition}
+\end{align*}
+\end{proof}
+
+In \autoref{lem:mor-tmext-cproj} below we will explain what happens in the
+case where the codomain of the function $f$ of the previous lemma is itself
+extended.
+
+Recall that the judgment $\jhom{\Gamma}{A}{{B}{Q}}{f}$
 unfolds as
 \begin{equation*}
 \unfold{\jhom{\Gamma}{A}{{B}{Q}}{f}}
@@ -1785,27 +1874,31 @@ have the judgmental equalities
 \cprojfst{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{f}
 & \jdeq
   \subst{f}{\ctxwk{A}{\cprojfstf{B}{Q}}}
+  \tag{by \autoref{lem:tmext-wk}}
   \\
 & \jdeq
   \jcomp{}{f}{\cprojfstf{B}{Q}}
+  \tag{by definition}
   \\
 \cprojsnd{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{f}
 & \jdeq
   \subst{f}{\ctxwk{A}{\cprojsndf{B}{Q}}}
+  \tag{by \autoref{lem:tmext-wk}}
   \\
 & \jdeq
   \jcomp{}{f}{\cprojsndf{B}{Q}}
+  \tag{by definition}
 \end{align*}
 The alternative formulation of the statement is a direct corollary.
 \end{proof}
 
-In the same spirit, we have the following compatibility of composition with
-projections:
+Precomposing by the first projection $\cprojfstf{A}{P}:\ctxext{A}{P}\to A$
+is judgmentally equal to weakening by $P$:
 
 \begin{lem}\label{lem:jcomp-cprojfstf}
 The following inference rule is valid:
-\begin{equation*}
-\inference
+\begin{align*}
+& \inference
   { \jfam{{\Gamma}{A}}{P}
     \jfam{{\Gamma}{A}}{Q}
     }
@@ -1814,7 +1907,28 @@ The following inference rule is valid:
       {\jcomp{{A}{P}}{\cprojfstf{A}{P}}{Q}}
       {\ctxwk{P}{Q}}
     }
-\end{equation*}
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{{\Gamma}{A}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{{A}{P}}}{\ctxwk{A}{Q}}}
+      {\jcomp{{A}{P}}{\cprojfstf{A}{P}}{R}}
+      {\ctxwk{P}{R}}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jterm{{{\Gamma}{A}}{Q}}{R}{h}
+    }
+  { \jtermeq
+      {{{\Gamma}{{A}{P}}}{\ctxwk{A}{Q}}}
+      {\ctxwk{A}{R}}
+      {\jcomp{{A}{P}}{\cprojfstf{A}{P}}{h}}
+      {\ctxwk{P}{h}}
+    }
+\end{align*}
 \end{lem}
 
 \begin{proof}
@@ -1835,54 +1949,7 @@ families. Then we have
   \ctxwk{P}{Q} 
   \tag{by \autoref{precomp-idtm-c}}
 \end{align*}
-\end{proof}
-
-We also have the following lemma about the compatibility of pairing and composition:
-
-\begin{lem}\label{lem:tmext-jcomp}
-The following inference rule is valid
-\begin{align*}
-& \inference
-  { \jhom{\Gamma}{A}{B}{f}
-    \jhom{\Gamma}{B}{C}{g}
-    \jfam{{\Gamma}{C}}{R}
-    \jterm{{\Gamma}{B}}{\subst{g}{\ctxwk{B}{R}}}{w}
-    }
-  { \jhomeq
-      {\Gamma}
-      {A}
-      {{C}{R}}
-      {\jcomp{A}{f}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}}
-      {\tmext{\ctxwk{A}{C}}{\ctxwk{A}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{w}}}
-    }
-\end{align*}
-\end{lem}
-
-\begin{proof}
-Let $\jhom{\Gamma}{A}{B}{f}$, $\jhom{\Gamma}{B}{C}{g}$, $\jfam{{\Gamma}{C}}{R}$
-and $\jterm{{\Gamma}{B}}{\subst{g}{\ctxwk{B}{R}}}{w}$. Then we have the
-judgmental equalities
-\begin{align*}
-\jcomp{A}{f}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}
-& \jdeq 
-  \subst{f}{\ctxwk{A}{\tmext{\ctxwk{B}{C}}{\ctxwk{B}{R}}{g}{w}}}
-  \\
-& \jdeq 
-  \subst
-    {f}
-    {\tmext{\ctxwk{A}{{B}{C}}}{\ctxwk{A}{{B}{R}}}{\ctxwk{A}{g}}{\ctxwk{A}{w}}}
-  \\
-& \jdeq 
-  \tmext
-    {\ctxwk{A}{C}}
-    {\ctxwk{A}{R}}
-    {\subst{f}{\ctxwk{A}{g}}}
-    {\subst{f}{\ctxwk{A}{w}}}
-  \\
-& \jdeq 
-  \tmext{\ctxwk{A}{C}}{\ctxwk{A}{R}}{\jcomp{A}{f}{g}}{\jcomp{A}{f}{w}}.
-  \qedhere
-\end{align*}
+The other proofs are similar.
 \end{proof}
 
 As an application of these lemmas we prove that every term $\jterm{{\Gamma}{A}}{P}{f}$
@@ -1915,8 +1982,18 @@ Then we have the judgmental equality
 The asserted judgmental equality follows immediately from \autoref{lem:mor-tmext-cproj}.
 \end{proof}
 
-There is a notion of morphism \emph{over} a morphism. We will develop this
-notion because it will be needed in the theory of models later on.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Family morphisms}\label{sec:fhom}
+In this section we are going to develop dependent morphisms and analyze various
+sorts of composition. The notion of family morphism is the notion of `a 
+morphism over a context morphism'. When we have established all the associativity
+and interchange laws for all the compositions that come with the theory of
+family morphisms, we will also be able to consider \emph{family diagrams}. Those
+are graphical displays of situations in the theory of contexts, families and
+terms, but unlike diagrams in category theory they can contain families (which
+are strictly speaking not morphisms) and terms (which can be seen as morphisms,
+but not in the way we're about to display them).
 
 \begin{defn}
 Let $\jhom{\Gamma}{A}{B}{f}$ be a morphism from $A$ to $B$ in context $\Gamma$
