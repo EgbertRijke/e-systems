@@ -1,0 +1,77 @@
+\section{E-objects in categories}
+In this section we assume that $\cat{C}$ is a finitely complete category and
+whenever we write a pullback, we assume that it is chosen.
+
+\subsection{Extension objects}
+\begin{defn}
+An extension object $CFT$ in $\cat{C}$ consists of objects $C$, $F$ and $T$ and the
+following morphisms:
+\begin{align*}
+c &:F\to C\\
+t &:T\to F\\
+e_0 &:F\to C\\
+e_1 & :F\times_{e_0,c} F\to F
+\end{align*}
+for which the following diagrams commute:
+\begin{equation*}
+\begin{tikzcd}
+F\times_{e_0,c} F \ar{r}{e_1} \ar{d}[swap]{e_0^\ast(c)} & F \ar{d}{c}\\
+F \ar{r}[swap]{c} & C
+\end{tikzcd}
+\end{equation*}
+\begin{equation*}
+\begin{tikzcd}
+F\times_{e_0,c} F \ar{d}[swap]{e_0^\ast(e_0)} \ar{r}{e_1} & F \ar{d}{e_0}\\
+F \ar{r}[swap]{e_0} & C
+\end{tikzcd}
+\end{equation*}
+\begin{equation*}
+\begin{tikzcd}
+(F\times_{e_0,c} F)\times_{e_1,e_0^\ast(c)}(F\times_{e_0,c} F) 
+  \ar{d}[swap]{e_0^\ast(e_1)}
+  \ar{r}{e_1^\ast(e_1)}
+& F\times_{e_0,c} F \ar{d}{e_1} \\
+F\times_{e_0,c} F \ar{r}{e_1} & F
+\end{tikzcd}
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+An extension homomorphism $f:CFT\to CFT'$ consists of
+\begin{align*}
+f_0 & : C\to C'\\
+f_1 & : F\to F'\\
+f_2 & : T\to T'\\
+\end{align*}
+for which the squares
+\begin{equation*}
+\begin{tikzcd}
+F \ar{d}[swap]{c} \ar{r}{f_1} & F' \ar{d}{c'}\\
+C \ar{r}[swap]{f_0} & C'
+\end{tikzcd}
+\end{equation*}
+\begin{equation*}
+\begin{tikzcd}
+F \ar{d}[swap]{e_0} \ar{r}{f_1} & F' \ar{d}{e_0'}\\
+C \ar{r}[swap]{f_0} & C'
+\end{tikzcd}
+\end{equation*}
+\begin{equation*}
+\begin{tikzcd}
+F\times_{e_0,c} F \ar{d}[swap]{e_1} \ar{r}{e_0^\ast(f_1)} & F'\times_{e_0',c'}F' \ar{d}{e_1'}\\
+F \ar{r}[swap]{f_1} & F'
+\end{tikzcd}
+\end{equation*}
+commute.
+\end{defn}
+
+\subsection{Weakening objects}
+\begin{defn}
+A weakening object $CFT$ in $\cat{C}$ is an extension object $CFT$ with the
+following additional structure:
+\begin{align*}
+w_0 & : F\times F\to F\times_{e_0,c} F\\
+w_1 & : F\times(F\times_{e_0,c} F) \to ...\\
+w_2 & : F\times(T\times_{e_0,c} F) \to ...
+\end{align*}
+\end{defn}
