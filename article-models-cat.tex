@@ -1,6 +1,14 @@
-\section{E-objects in categories}
+\section{E-objects in categories with finite limits}
 In this section we assume that $\cat{C}$ is a finitely complete category and
-whenever we write a pullback, we assume that it is chosen.
+whenever we write a pullback, we assume that it is chosen. Recall that for
+any morphism $f:A\to B$ in a category $\cat{C}$ with chosen pullbacks, there
+is a functor
+\begin{equation*}
+f^\ast : \cat{C}/B\to\cat{C}/A.
+\end{equation*}
+As usual, when $g:X\to B$ is a morphism, we will write $f^\ast(X)$ for the
+domain of $f^\ast(g)$. When there is more than one morphism $X\to B$ involved,
+as will be the case below, we will write $A\times_{f,g}X$.
 
 \subsection{Extension objects}
 \begin{defn}
@@ -65,13 +73,136 @@ F \ar{r}[swap]{f_1} & F'
 commute.
 \end{defn}
 
+\begin{defn}
+Suppose $CFT$ is an extension object of $\cat{C}$. Then we define the extension object
+$\mathbf{F}_{CFT}$ to consist of the objects $F$, $F\times_{e_0,c} F$, $F\times_{e_0,t\circ c} T$
+with the operations
+\begin{align*}
+e_0^\ast(c) & : F\times_{e_0,c} F\to F\\
+e_0^\ast(t) & : F\times_{e_0,t\circ c} T\to F\times_{e_0,c} F\\
+e_1 & : F\times_{e_0,c} F\to F\\
+e_0^\ast(e_1) & : F\times_{e_1,e_0^\ast(c)}(F\times_{e_0,c} F)\to F\times_{e_1,e_0^\ast(c)} F
+\end{align*}
+\end{defn}
+
+It requires proof that this is indeed an extension object of $\cat{C}$. However, the above
+construction is a special case of the following construction of new extension objects out
+of old ones with $\catid{C}:C\rightarrow C\leftarrow F:e_0$. Thus we postpone the proof
+that we have an extension object to the more general case. 
+
+\begin{defn}
+Suppose $CFT$ is an extension object of $\cat{C}$ and that $f:C\rightarrow X\leftarrow D:g$.
+Then we define the extension object $D\times_{g,f} CFT$ to consist of the objects $D\times_{g,f} C$,
+$D\times_{g,f\circ c} F$, $D\times_{g,t\circ f\circ c} T$ and the operations
+\begin{align*}
+g^\ast(c) & : D\times_{g,f\circ c} F\to D\times_{g,f} C\\
+g^\ast(t) & : D\times_{g,f\circ c\circ t} T\to D\times_{g,f\circ c} F\\
+g^\ast(e_0) & : D\times_{g,f\circ c} F\to D\times_{g,f} C\\
+g^\ast(e_1) & : (D\times_{g,f\circ c} F) \times_{g^\ast(e_0),g^\ast(c)} (D\times_{g,f\circ c} F)\to D\times_{g,f\circ c} F.
+\end{align*}
+\end{defn}
+
+\begin{proof}
+First we need to verify that the square
+\begin{equation*}
+\begin{tikzcd}
+(D\times_{g,f\circ c} F) \times_{g^\ast(e_0),g^\ast(c)} (D\times_{g,f\circ c} F)
+  \ar{r}{g^\ast(e_1)} 
+  \ar{d}[swap]{(g^\ast(e_0))^\ast(g^\ast(c))} 
+  & 
+D\times_{g,f\circ c} F
+  \ar{d}{g^\ast(c)}
+  \\
+D\times_{g,f\circ c} F
+  \ar{r}[swap]{g^\ast(c)} 
+  & 
+D\times_{g,f} C
+\end{tikzcd}
+\end{equation*}
+commutes. To see this, note that we have a commutative diagram
+\begin{equation*}
+\begin{tikzcd}
+  &
+(D\times_{g,f\circ c} F) \times_{g^\ast(e_0),g^\ast(c)} (D\times_{g,f\circ c} F)
+  \ar{dr}{g^\ast(e_1)}
+  \ar{dl}[swap]{(g^\ast(e_0))^\ast(g^\ast(c))}
+  \ar{dd}{\simeq}
+  \\
+D\times_{g,f\circ c} F
+  &
+  &
+D\times_{g,f\circ c} F
+  \\
+  &
+D\times_{g,f\circ c\circ e_0^\ast(c)}(F\times_{e_0,c} F)
+  \ar{ul}{g^\ast(e_0^\ast(c))}
+  \ar{ur}[swap]{g^\ast(e_1)}
+\end{tikzcd}
+\end{equation*}
+where the downwards arrow is an isomorphism. Using this observation, we see that
+it is equivalent to show that the square
+\begin{equation*}
+\begin{tikzcd}
+D\times_{g,f\circ c\circ e_0^\ast(c)}(F\times_{e_0,c} F)
+  \ar{r}{g^\ast(e_1)} 
+  \ar{d}[swap]{g^\ast(e_0^\ast(c))} 
+  & 
+D\times_{g,f\circ c} F
+  \ar{d}{g^\ast(c)}
+  \\
+D\times_{g,f\circ c} F
+  \ar{r}[swap]{g^\ast(c)} 
+  & 
+D\times_{g,f} C
+\end{tikzcd}
+\end{equation*}
+commutes. But this is just a pullback along $g$ of a square which commutes by assumption.
+\end{proof}
+
 \subsection{Weakening objects}
 \begin{defn}
 A weakening object $CFT$ in $\cat{C}$ is an extension object $CFT$ with the
 following additional structure:
 \begin{align*}
 w_0 & : F\times F\to F\times_{e_0,c} F\\
-w_1 & : F\times(F\times_{e_0,c} F) \to ...\\
-w_2 & : F\times(T\times_{e_0,c} F) \to ...
+w_1 & : F\times(F\times_{e_0,c} F) \to F\times_{e_0,c \circ e_0^\ast(c)} (F\times_{e_0,c}F)\\
+w_2 & : F\times(F\times_{e_0,t\circ c} T) \to F\times_{e_0,c}(F\times_{e_0,t\circ c} T)
 \end{align*}
+for which the following diagrams commute:
+\begin{equation*}
+\begin{tikzcd}
+F\times F \ar{r}{w_0} \ar{dr}[swap]{\pi_1} & F\times_{e_0,c}F \ar{d}{e_0^\ast(c)}\\
+& F
+\end{tikzcd}
+\end{equation*}
+\begin{equation*}
+\begin{tikzcd}
+F\times(F\times_{e_0,c} F) 
+  \ar{d}[swap]{\catid{F}\times e_0^\ast(c)}
+  \ar{r}{w_1}
+  &
+F\times_{e_0,c\circ e_0^\ast(c)} (F\times_{e_0,c}F)
+  \ar{d}{e_0^\ast(e_0^\ast(c))}
+  \\
+F\times F
+  \ar{r}[swap]{w_0}
+  &
+F\times_{e_0,c} F
+\end{tikzcd}
+\end{equation*}
+\begin{equation*}
+\begin{tikzcd}
+F\times(F\times_{e_0,t\circ c} T)
+  \ar{r}{w_2}
+  \ar{d}[swap]{\catid{F}\times e_0^\ast(t)}
+  &
+F\times_{e_0,c}(F\times_{e_0,t\circ c} T)
+  \ar{d}{e_0^\ast(e_0^\ast(t))}
+  \\
+F\times(F\times_{e_0,c} F)
+  \ar{r}[swap]{w_1}
+  &
+F\times_{e_0,c\circ e_0^\ast(c)} (F\times_{e_0,c}F)
+\end{tikzcd}
+\end{equation*}
 \end{defn}
