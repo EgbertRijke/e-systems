@@ -8,7 +8,22 @@ f^\ast : \cat{C}/B\to\cat{C}/A.
 \end{equation*}
 As usual, when $g:X\to B$ is a morphism, we will write $f^\ast(X)$ for the
 domain of $f^\ast(g)$. When there is more than one morphism $X\to B$ involved,
-as will be the case below, we will write $A\times_{f,g}X$.
+as will be the case below, we will write $A\times_{f,g}X$. The projections
+will be written as $\pi_1^{f,g}$ and $\pi_2^{f,g}$. So in this notation, a
+typical pullback diagram has the following form:
+\begin{equation*}
+\begin{tikzcd}
+A\times_{f,g} X
+  \ar{r}{\pi_1^{f,g}}
+  \ar{d}[swap]{\pi_2^{f,g}}
+  &
+A \ar{d}{f}
+  \\
+X \ar{r}[swap]{g}
+  &
+B
+\end{tikzcd}
+\end{equation*}
 
 \subsection{Extension objects}
 \begin{defn}
@@ -23,7 +38,7 @@ e_1 & :F\times_{e_0,c} F\to F
 for which the following diagrams commute:
 \begin{equation*}
 \begin{tikzcd}
-F\times_{e_0,c} F \ar{r}{e_1} \ar{d}[swap]{e_0^\ast(c)} & F \ar{d}{c}\\
+F\times_{e_0,c} F \ar{r}{e_1} \ar{d}[swap]{\pi_2^{\epsilon_0,c}} & F \ar{d}{c}\\
 F \ar{r}[swap]{c} & C
 \end{tikzcd}
 \end{equation*}
@@ -35,7 +50,7 @@ F \ar{r}[swap]{e_0} & C
 \end{equation*}
 \begin{equation*}
 \begin{tikzcd}
-(F\times_{e_0,c} F)\times_{e_1,e_0^\ast(c)}(F\times_{e_0,c} F) 
+(F\times_{e_0,c} F)\times_{e_1,\pi_2^{e_0,c}}(F\times_{e_0,c} F) 
   \ar{d}[swap]{e_0^\ast(e_1)}
   \ar{r}{e_1^\ast(e_1)}
 & F\times_{e_0,c} F \ar{d}{e_1} \\
@@ -78,10 +93,10 @@ Suppose $CFT$ is an extension object of $\cat{C}$. Then we define the extension 
 $\mathbf{F}_{CFT}$ to consist of the objects $F$, $F\times_{e_0,c} F$, $F\times_{e_0,t\circ c} T$
 with the operations
 \begin{align*}
-e_0^\ast(c) & : F\times_{e_0,c} F\to F\\
+\pi_2^{e_0,c} & : F\times_{e_0,c} F\to F\\
 e_0^\ast(t) & : F\times_{e_0,t\circ c} T\to F\times_{e_0,c} F\\
 e_1 & : F\times_{e_0,c} F\to F\\
-e_0^\ast(e_1) & : F\times_{e_1,e_0^\ast(c)}(F\times_{e_0,c} F)\to F\times_{e_1,e_0^\ast(c)} F
+e_0^\ast(e_1) & : F\times_{e_1,\pi_2^{e_0,c}}(F\times_{e_0,c} F)\to F\times_{e_1,\pi_2^{e_0,c}} F
 \end{align*}
 \end{defn}
 
@@ -122,32 +137,33 @@ D\times_{g,f} C
 commutes. To see this, note that we have a commutative diagram
 \begin{equation*}
 \begin{tikzcd}
+D\times_{g,f\circ c\circ \pi_2^{e_0,c}}(F\times_{e_0,c} F)  
+  \ar[bend right=10]{ddr}[swap]{g^\ast(\pi_2^{e_0,c})}
+  \ar[bend left=10]{drr}{g^\ast(e_1)}
+  \ar{dr}{\simeq}
+  \\
   {}
   &
 (D\times_{g,f\circ c} F)\times_{g^\ast(e_0),g^\ast(c)}(D\times_{g,f\circ c} F)
-  \ar{dr}{g^\ast(e_1)}
-  \ar{dl}[swap]{(g^\ast(e_0))^\ast(g^\ast(c))}
-  \ar{dd}{\simeq}
+  \ar{r}[swap]{g^\ast(e_1)}
+  \ar{d}{(g^\ast(e_0))^\ast(g^\ast(c))}
   &
+  D\times_{g,f\circ c} F
   \\
+  {}
+  &
 D\times_{g,f\circ c} F
   &
-  &
-D\times_{g,f\circ c} F
-  \\
-  &
-D\times_{g,f\circ c\circ e_0^\ast(c)}(F\times_{e_0,c} F)
-  \ar{ul}{g^\ast(e_0^\ast(c))}
-  \ar{ur}[swap]{g^\ast(e_1)}
+{}
 \end{tikzcd}
 \end{equation*}
 where the downwards arrow is an isomorphism. Using this observation, we see that
 it is equivalent to show that the square
 \begin{equation*}
 \begin{tikzcd}
-D\times_{g,f\circ c\circ e_0^\ast(c)}(F\times_{e_0,c} F)
+D\times_{g,f\circ c\circ \pi_2^{e_0,c}}(F\times_{e_0,c} F)
   \ar{r}{g^\ast(e_1)} 
-  \ar{d}[swap]{g^\ast(e_0^\ast(c))} 
+  \ar{d}[swap]{g^\ast(\pi_2^{e_0,c})} 
   & 
 D\times_{g,f\circ c} F
   \ar{d}{g^\ast(c)}
@@ -161,30 +177,87 @@ D\times_{g,f} C
 commutes. But this is just a pullback along $g$ of a square which commutes by assumption.
 \end{proof}
 
+\subsection{Homomorphisms of extension objects}
+\begin{defn}
+Let $CFT$ and $CFT'$ be extension algebras. An extension homomorphism from 
+$CFT$ to $CFT'$ is a triple $(f_0,f_1,f_2)$ consisting of morphisms
+\begin{equation*}
+\begin{tikzcd}
+T 
+  \ar{r}{f_2}
+  \ar{d}{t}
+  &
+T'
+  \ar{d}{t'}
+  \\
+F 
+  \ar{r}{f_1}
+  \ar{d}{c}
+  &
+F'
+  \ar{d}{c'}
+  \\
+C 
+  \ar{r}{f_0}
+  &
+C'
+\end{tikzcd}
+\end{equation*}
+such that the indicated squares commute, for which furthermore the squares
+\begin{equation*}
+\begin{tikzcd}
+F \ar{r}{f_1}
+  \ar{d}[swap]{\epsilon_0}
+  &
+F'
+  \ar{d}{\epsilon_0'}
+  \\
+C \ar{r}[swap]{f_0}
+  &
+C'
+\end{tikzcd}
+\end{equation*}
+and
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+F\times_{\epsilon_0,c} F
+  \ar{r}{f_1\times_{\epsilon_0,c} f_1}
+  \ar{d}[swap]{\epsilon_1}
+  &
+F'\times_{\epsilon_0',c'} F'
+  \ar{d}{\epsilon_1'}
+  \\
+F \ar{r}[swap]{f_1}
+  &
+F'
+\end{tikzcd}
+\end{equation*}
+\end{defn}
+
 \subsection{Weakening objects}
 \begin{defn}
 A weakening object $CFT$ in $\cat{C}$ is an extension object $CFT$ with the
 following additional structure:
 \begin{align*}
 w_0 & : F\times F\to F\times_{e_0,c} F\\
-w_1 & : F\times(F\times_{e_0,c} F) \to F\times_{e_0,c \circ e_0^\ast(c)} (F\times_{e_0,c}F)\\
+w_1 & : F\times(F\times_{e_0,c} F) \to F\times_{e_0,c \circ \pi_2^{e_0,c}} (F\times_{e_0,c}F)\\
 w_2 & : F\times(F\times_{e_0,t\circ c} T) \to F\times_{e_0,c}(F\times_{e_0,t\circ c} T)
 \end{align*}
 for which the following diagrams commute:
 \begin{equation*}
 \begin{tikzcd}
-F\times F \ar{r}{w_0} \ar{dr}[swap]{\pi_1} & F\times_{e_0,c}F \ar{d}{e_0^\ast(c)}\\
+F\times F \ar{r}{w_0} \ar{dr}[swap]{\pi_1} & F\times_{e_0,c}F \ar{d}{\pi_2^{e_0,c}}\\
 & F
 \end{tikzcd}
 \end{equation*}
 \begin{equation*}
 \begin{tikzcd}
 F\times(F\times_{e_0,c} F) 
-  \ar{d}[swap]{\catid{F}\times e_0^\ast(c)}
+  \ar{d}[swap]{\catid{F}\times \pi_2^{e_0,c}}
   \ar{r}{w_1}
   &
-F\times_{e_0,c\circ e_0^\ast(c)} (F\times_{e_0,c}F)
-  \ar{d}{e_0^\ast(e_0^\ast(c))}
+F\times_{e_0,c\circ \pi_2^{e_0,c}} (F\times_{e_0,c}F)
+  \ar{d}{e_0^\ast(\pi_2^{e_0,c})}
   \\
 F\times F
   \ar{r}[swap]{w_0}
@@ -204,7 +277,7 @@ F\times_{e_0,c}(F\times_{e_0,t\circ c} T)
 F\times(F\times_{e_0,c} F)
   \ar{r}[swap]{w_1}
   &
-F\times_{e_0,c\circ e_0^\ast(c)} (F\times_{e_0,c}F)
+F\times_{e_0,c\circ \pi_2^{e_0,c}} (F\times_{e_0,c}F)
 \end{tikzcd}
 \end{equation*}
 \end{defn}
