@@ -1,0 +1,44 @@
+\section{Categories with fibrations and sections}
+
+\subsection{The  model for extension}
+
+\begin{defn}
+Let $\cat{C}$ be a category with a class $\cat{F}\subseteq\mathrm{mor}(\cat{C})$ of fibrations and for each fibration $f:X\to Y$ in $\cat{F}$ a set $\cat{T}$ of sections of $f$. We call a category with this structure a category with fibrations and sections. The class of fibrations must have the property that 
+\begin{description}
+\item{weakening} whenever $f:X\to Y$ and $g:U\to V$ are fibrations, then so are $\catid{X}\times g:X\times U\to X\times V$ and $\pi_1\circ(\catid{X}\times g):X\times U\to X$. Whenever $s:Y\to X$ is a section of $g$, then so is $\catid{X}\times s$ a section of $\catid{X}\times g$ and 
+\item{substitution} 
+\end{defn}
+
+\begin{defn}
+A context $\Gamma$ in a category with fibrations and sections is a finite list $f_1:X_1\to X_0$, \dots, $f_n:X_n\to X_{n-1}$ of composable fibrations. When $\Gamma$ is has positive length, we write $\Gamma_0$ for the ultimate codomain and $\Gamma_1$ for the ultimate domain, i.e.~the composition of all the morphisms in
+$\Gamma$ is a morphism from $\Gamma_1$ to $\Gamma_0$. 
+\end{defn}
+
+\begin{defn}
+When $\Gamma$ is a context in a category with fibrations and sections, a family $A$ over $\Gamma$ consists of a finite list $g_1:Y_1\to Y_0$, \dots, $g_m:Y_m\to Y_{m-1}$ such that $Y_0\defeq \Gamma_1$. When $A$ has positive length, we will write $A_1$ for the ultimate domain and sometimes we will write $A_0$ for the ultimate codomain.
+\end{defn}
+
+\begin{defn}
+When $A$ is a family over $\Gamma$ of length $n$ in a category with fibrations and sections, a term $x$ of $A$ consists of a section $s_i:Y_{i-1}\to Y_i$ of $g_i$ for each $1\leq i\leq n$. 
+\end{defn}
+
+\begin{defn}
+Suppose $A$ is a family over $\Gamma$. The context extension of $\Gamma$ with $A$ is the concatenation of $\Gamma$ with $A$. It is denoted by $\ctxext{\Gamma}{A}$ as usual.
+\end{defn}
+
+\begin{defn}
+Suppose $P$ is a family over $\ctxext{\Gamma}{A}$. The family extension of $A$ with $P$ is the concatenation of $A$ with $P$. It is denoted by $\ctxext{\Gamma}{A}$. 
+\end{defn}
+
+Since list concatenation is taken to be associative, we automatically get that extension is associative. 
+
+\begin{defn}
+The empty list of fibrations is taken to be the empty context. In each context $\Gamma$, the empty list of fibrations is taken to be the empty family over $\Gamma$. With this choice of empty context and empty family, we immediately see that the empty list and empty family are neutral with respect to context extension and family extension. We also immediately see that every context is a family over the empty context. 
+\end{defn}
+
+\section{The model for weakening}
+
+\begin{defn}
+
+\end{defn}
+
