@@ -313,3 +313,140 @@ F'\times\mathbf{F}_{CFT'}
 \end{equation*}
 commutes
 \end{defn}
+
+\subsection{Projection objects}
+\begin{defn}
+A pre-projection object is a weakening object $CFT$ for which there is a term
+$\mathbf{i}:F\to F\times_{e_0,c}T$ such that the diagram
+\begin{equation*}
+\begin{tikzcd}
+{} & F\times_{e_0,c}T \ar{d}{F\times_{e_0,c}t}\\
+F \ar{ur}{\mathbf{i}} \ar{r}[swap]{w_0\circ\Delta} & F\times_{e_0,c}F
+\end{tikzcd}
+\end{equation*}
+commutes. In this diagram $\Delta:F\to F\times F$ is the diagonal.
+\end{defn}
+
+\begin{defn}
+A pre-projection homomorphism from $CFT$ to $CFT'$ is a weakening homomorphism
+$f:CFT\to CFT'$ such that the square
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+F\times_{e_0,c}T
+  \ar{r}{f_1\times_{e_0,c}f_2}
+  &
+F'\times_{e_0',c'}T'
+  \\
+F \ar{r}[swap]{f_1}
+  \ar{u}{\mathbf{i}}
+  &
+F'
+  \ar{u}[swap]{\mathbf{i}'}
+\end{tikzcd}
+\end{equation*}
+\end{defn}
+
+\begin{lem}
+The change of base of a pre-projection object is again a pre-projection object.
+\end{lem}
+
+\begin{lem}
+If $CFT$ is a pre-projection object, then so is $\mathbf{F}_{CFT}$, where
+$\mathbf{F}_{\mathbf{i}}$ is defined to be $F\times_{e_0,c}\mathbf{i}$ is
+a pre-projection algebra.
+\end{lem}
+
+\begin{defn}
+A projection algebra is a pre-projection algebra for which weakening is a
+pre-projection homomorphism.
+\end{defn}
+
+\begin{cor}
+The change of base of a projection object is again a projection object.
+\end{cor}
+
+\begin{cor}
+If $CFT$ is a projection object, then so is $\mathbf{F}_{CFT}$, where
+$\mathbf{F}_{\mathbf{i}}$ is defined to be $F\times_{e_0,c}\mathbf{i}$ is
+a projection algebra.
+\end{cor}
+
+\subsection{Substitution objects}
+
+\begin{defn}
+A pre-substitution object is an extension object for which the is an
+extension homomorphism
+\begin{equation*}
+\mathbf{s}:T\times\mathbf{F}_{\mathbf{F}_{CFT}}\to \mathbf{F}_{CFT}
+\end{equation*}
+such that the square
+\begin{equation*}
+\begin{tikzcd}
+T\times(F\times_{e_0,c}F)
+  \ar{r}{s_0}
+  \ar{d}[swap]{\pi_1(e_0,c)\circ\pi_2}
+  &
+F \ar{d}{c}
+  \\
+F \ar{r}[swap]{c}
+  &
+C
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{defn}
+
+\begin{defn}
+A pre-substitution homomorphism is an extension homomorphism $f:CFT\to CFT'$
+such that the square
+\begin{equation*}
+\begin{tikzcd}
+T\times\mathbf{F}_{\mathbf{F}_{CFT}}
+  \ar{r}{f_2\times\mathbf{F}_{\mathbf{F}_f}}
+  \ar{d}[swap]{\mathbf{s}}
+  &
+T'\times\mathbf{F}_{\mathbf{F}_{CFT'}}
+  \ar{d}{\mathbf{s}'}
+  \\
+\mathbf{F}_{CFT}
+  \ar{r}[swap]{\mathbf{F}_f}
+  &
+\mathbf{F}_{CFT'}
+\end{tikzcd}
+\end{equation*}
+\end{defn}
+
+\begin{lem}
+The change of base of a pre-substitution object is again a pre-substitution object.
+\end{lem}
+
+\begin{lem}
+If $CFT$ is a pre-substitution object, then so is $\mathbf{F}_{CFT}$ with
+$\mathbf{F}_{\mathbf{s}}=...$.
+\end{lem}
+
+\begin{defn}
+A substitution object is a pre-substitution object for which substitution is
+a pre-substitution homomorphism.
+\end{defn}
+
+\begin{cor}
+The change of base of a substitution object is again a substitution object.
+\end{cor}
+
+\begin{cor}
+If $CFT$ is a substitution object, then so is $\mathbf{F}_{CFT}$.
+\end{cor}
+
+\subsection{E-objects}
+\begin{defn}
+An E-object is an extension object with the structure of a projection object,
+the structure of a substitution object and which has an empty context and families,
+such that additionally:
+\begin{enumerate}
+\item substitution is a projection homomorphism
+\item weakening is a substitution homomorphism
+\item both weakening and substitution are empty-CF homomorphisms.
+\item 
+\end{enumerate}
+\end{defn}
