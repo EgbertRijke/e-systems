@@ -115,6 +115,8 @@ g^\ast(t) & : D\times_{g,f\circ c\circ t} T\to D\times_{g,f\circ c} F\\
 g^\ast(e_0) & : D\times_{g,f\circ c} F\to D\times_{g,f} C\\
 g^\ast(e_1) & : (D\times_{g,f\circ c} F) \times_{g^\ast(e_0),g^\ast(c)} (D\times_{g,f\circ c} F)\to D\times_{g,f\circ c} F.
 \end{align*}
+The process of obtaining the extension object $D\times_{g,f} CFT$ out of $CFT$
+and $g:D\to X$ is also called the \emph{change of base}.
 \end{defn}
 
 \begin{proof}
@@ -234,10 +236,19 @@ F'
 \end{equation*}
 \end{defn}
 
+\begin{lem}
+Suppose $f:CFT\to CFT'$ is an extension morphism and consider a morphism
+$C'\to X$ and $g:D\to X$. Then the change of base $g^\ast(f):g^\ast(CFT)\to
+g^\ast(CFT')$ is an extension morphism.
+\end{lem}
+
 \subsection{Weakening objects}
 \begin{defn}
-A weakening object $CFT$ in $\cat{C}$ is an extension object $CFT$ with the
-following additional structure:
+A pre-weakening object $CFT$ in $\cat{C}$ is an extension object $CFT$ with 
+an extension homomorphism $\mathbf{w}:F\times\mathbf{F_{CFT}}\to \mathbf{F_{F_{CFT}}}$.
+\end{defn}
+
+\begin{comment}
 \begin{align*}
 w_0 & : F\times F\to F\times_{e_0,c} F\\
 w_1 & : F\times(F\times_{e_0,c} F) \to F\times_{e_0,c \circ \pi_2^{e_0,c}} (F\times_{e_0,c}F)\\
@@ -280,4 +291,25 @@ F\times(F\times_{e_0,c} F)
 F\times_{e_0,c\circ \pi_2^{e_0,c}} (F\times_{e_0,c}F)
 \end{tikzcd}
 \end{equation*}
+\end{comment}
+
+\begin{defn}
+A pre-weakening morphism between preweakening objects $CFT$ and $CFT'$ is an
+extension homomorphism $f:CFT\to CFT'$ such that additionally the diagram
+\begin{equation*}
+\begin{tikzcd}
+F\times \mathbf{F}_{CFT}
+  \ar{d}[swap]{\mathbf{w}}
+  \ar{r}{f_1\times\mathbf{F}_f}
+  &
+F'\times\mathbf{F}_{CFT'}
+  \ar{d}{\mathbf{w'}}
+  \\
+\mathbf{F}_{\mathbf{F}_{CFT}}
+  \ar{r}[swap]{\mathbf{F}_{\mathbf{F}_f}}
+  &
+\mathbf{F}_{\mathbf{F}_{CFT'}}
+\end{tikzcd}
+\end{equation*}
+commutes
 \end{defn}

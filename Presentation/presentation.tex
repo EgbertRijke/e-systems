@@ -1,0 +1,850 @@
+\documentclass[handout]{beamer}
+
+\input{preamble-articles}
+
+\title{An algebraic formulation of dependent type theory}
+\author{Egbert Rijke}
+\institute{Carnegie Mellon University}
+\date{November 7th -- 10th, 2014}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Desired properties of the algebraic theory}
+\begin{itemize}
+\item Finitely many sorts. The basic ingredients are contexts, families and
+terms. Thus there will be 3 sorts.
+\item The theory is algebraic and the operations on it are homomorphisms. The
+wish that operations are homomorphisms tells which judgmental equalities to
+require.
+\item Finite set of rules. The theory is invariant under slicing as a consequence, rather than by
+convention. There will be no rule schemes.
+\item The theory is capable of interpreting itself. Investigations to internal
+models of type theory originally motivated me to write type theory this way.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Overview of the theories}
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&,column sep=tiny]
+{} \& \text{Extension} \ar{dr} \ar{d} \ar{dl}
+  \\
+\text{Weakening} \ar{d} \& \text{Substitution} \ar{dd} \& \text{Empty context} \ar{ddl}
+\\
+\text{Projection} \ar{dr}
+\\
+{} \& \text{Dependent Type Theory}
+\end{tikzcd}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{The basic judgments}
+\begin{align*}
+\jalign\jctx{\Gamma} 
+& \jalign\jctxeq{\Gamma}{\Gamma'}
+  \\
+\jalign\jfam{\Gamma}{A} 
+& \jalign\jfameq{\Gamma}{A}{B}
+  \\
+\jalign\jterm{\Gamma}{A}{x} 
+& \jalign\jtermeq{\Gamma}{A}{x}{y}.
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Judgmental equality is an equivalence relation}
+\begin{footnotesize}
+\begin{align*}
+& \inference
+  { \jctx{\Gamma}
+    }
+  { \jctxeq{\Gamma}{\Gamma}
+    } 
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      }
+    { \jctxeq{\Delta}{\Gamma}
+      } 
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      \jctxeq{\Delta}{\greek{E}}
+      }
+    { \jctxeq{\Gamma}{\greek{E}}
+      }
+    \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{A}{A}
+    } 
+& & \inference
+    { \jfameq{\Gamma}{A}{B}
+      }
+    { \jfameq{\Gamma}{B}{A}
+      }
+& & \inference
+    { \jfameq{\Gamma}{A}{B}
+      \jfameq{\Gamma}{B}{C}
+      }
+    { \jfameq{\Gamma}{A}{C}
+      }
+    \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq{\Gamma}{A}{x}{x}
+    }
+& & \inference
+    { \jtermeq{\Gamma}{A}{x}{y}
+      }
+    { \jtermeq{\Gamma}{A}{y}{x}
+      }
+& & \inference
+    { \jtermeq{\Gamma}{A}{x}{y}
+      \jtermeq{\Gamma}{A}{y}{z}
+      }
+    { \jtermeq{\Gamma}{A}{x}{z}
+      }
+\end{align*}
+\begin{align*}
+& \inference
+  { \jctxeq{\Gamma}{\Delta}
+    \jfam{\Gamma}{A}
+    }
+  { \jfam{\Delta}{A}
+    }
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      \jfameq{\Gamma}{A}{B}
+      }
+    { \jfameq{\Delta}{A}{B}
+      }
+    \\
+& \inference
+  { \jctxeq{\Gamma}{\Delta}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jterm{\Delta}{A}{x}
+    }
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      \jtermeq{\Gamma}{A}{x}{y}
+      }
+    { \jtermeq{\Delta}{A}{x}{y}
+      }
+    \\
+& \inference
+  { \jfameq{\Gamma}{A}{B}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jterm{\Gamma}{B}{x}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{B}
+      \jtermeq{\Gamma}{A}{x}{y}
+      }
+    { \jtermeq{\Gamma}{B}{x}{y}
+      }
+\end{align*}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Extension}
+Introduction rules for extension:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jctx{\ctxext{\Gamma}{A}}
+    }
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      \jfameq{\Gamma}{A}{B}
+      }
+    { \jctxeq{\ctxext{\Gamma}{A}}{\ctxext{\Delta}{B}}
+      }
+    \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfam{\Gamma}{\ctxext{A}{P}}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{B} 
+      \jfameq{{\Gamma}{A}}{P}{Q}
+      }
+    { \jfameq{\Gamma}{\ctxext{A}{P}}{\ctxext{B}{Q}}
+      }
+\end{align*}
+\pause
+Extension is associative:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jctxeq{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq{\Gamma}{\ctxext{A}{{P}{Q}}}{\ctxext{{A}{P}}{Q}}
+    }
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{The empty context and family}
+\begin{small}
+Introduction rules for the empty context and family:
+\begin{align*}
+& \inference
+  { }
+  { \jctx{\emptyc}
+    }
+& & \inference
+  { \jctx{\Gamma}
+    }
+  { \jfam{\Gamma}{\emptyf[\Gamma]}
+    }
+& & \inference
+  { \jctxeq{\Gamma}{\Gamma'}
+    }
+  { \jfameq{\Gamma}{\emptyf[\Gamma]}{\emptyf[\Gamma']}
+    }
+\end{align*}
+\pause
+Compatibility rules for families and contexts:
+\begin{align*}
+& \inference
+  { \jctx{\Gamma}
+    }
+  { \jfam{\emptyc}{\Gamma}
+    } 
+& & \inference
+    { \jfam{\emptyc}{\Gamma}
+      }
+    { \jctx{\Gamma}
+      }
+    \\
+& \inference
+  { \jctxeq{\Gamma}{\Delta}
+    }
+  { \jfameq{\emptyc}{\Gamma}{\Delta}
+    }
+& & \inference
+    { \jfameq{\emptyc}{\Gamma}{\Delta}
+      }
+    { \jctxeq{\Gamma}{\Delta}
+      }
+\end{align*}
+\pause
+Compatibility rules for extension and the empty families:
+\begin{align*}
+& \inference
+  { \jctx{\Gamma}
+    }
+  { \jctxeq{\ctxext{\emptyc}{\Gamma}}{\Gamma}
+    }
+& & \inference
+  { \jctx{\Gamma}
+    }
+  { \jctxeq{\ctxext{\Gamma}{\emptyf}}{\Gamma}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{\ctxext{\emptyf}{A}}{A}
+    }
+& & \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{{A}{\emptyf}}{A}
+    }
+\end{align*}
+Compatibility of context extension and family extension:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jctxeq{(\ctxext{\Gamma}{A})^c}{(\ctxext{\Gamma}{A})^\famsym}
+    }
+\end{align*}
+\end{small}
+\end{frame}
+
+\begin{frame}
+\frametitle{The theory of weakening}
+\begin{footnotesize}
+The introduction rules for weakening:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    }
+  { \jfam{{\Gamma}{A}}{\ctxwk{A}{B}}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{A'}
+      \jfameq{\Gamma}{B}{B'}
+      }
+    { \jfameq{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}
+      }
+    \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfam{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk[\famsym]{A}{Q}}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{A'}
+      \jfameq{{\Gamma}{B}}{Q}{Q'}
+      }
+    { \jfameq
+        {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+        {\ctxwk[\famsym]{A}{Q}}
+        {\ctxwk[\famsym]{A'}{Q'}}
+      }
+    \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jterm{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk[\famsym]{A}{Q}}{\ctxwk[\tmsym]{A}{g}}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{A'}
+      \jtermeq{{\Gamma}{B}}{Q}{g}{g'}
+      }
+    { \jtermeq
+        {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+        {\ctxwk[\famsym]{A}{Q}}
+        {\ctxwk[\tmsym]{A}{g}}
+        {\ctxwk[\tmsym]{A'}{g'}}
+      }
+\end{align*}
+\pause
+Weakening preserves extension:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq
+      {\ctxext{\Gamma}{A}}
+      {\ctxwk{A}{\ctxext{B}{Q}}}
+      {\ctxext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jfameq
+      {\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{\ctxext{Q}{R}}}
+      {\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+    }
+\end{align*}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}
+\frametitle{The theory of weakening (continued)}
+\begin{small}
+Weakening preserves itself:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    \jfam{{\Gamma}{B}}{R}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
+      {\ctxwk{A}{{Q}{R}}}
+      {\ctxwk{{A}{Q}}{{A}{R}}}
+    }
+\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    \jfam{{{\Gamma}{B}}{R}}{S}
+    }
+  { \jfameq
+      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{{Q}{R}}}}
+      {\ctxwk{A}{{Q}{S}}}
+      {\ctxwk{{A}{Q}}{{A}{S}}}
+    }
+\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    \jterm{{{\Gamma}{B}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{{Q}{R}}}}
+      {\ctxwk{A}{{Q}{S}}}
+      {\ctxwk{A}{{Q}{k}}}
+      {\ctxwk{{A}{Q}}{{A}{k}}}
+    }
+\end{align*}
+\pause
+Currying for weakening:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    \jfam{\Gamma}{B}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{P}}
+      {\ctxwk{\ctxext{A}{P}}{B}}
+      {\ctxwk{P}{{A}{B}}}
+    }
+\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
+      {\ctxwk{\ctxext{A}{P}}{Q}}
+      {\ctxwk{P}{{A}{Q}}}
+    }
+\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
+      {\ctxwk{P}{{A}{Q}}}
+      {\ctxwk{\ctxext{A}{P}}{g}}
+      {\ctxwk{P}{{A}{g}}}
+    } 
+\end{align*}
+\end{small}
+\end{frame}
+
+\begin{frame}
+\frametitle{The theory of projections}
+Introduction rules for identity morphisms:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \unfoldall{\jhom{\Gamma}{A}{A}{\idtm{A}}}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{A'}
+      }
+    { \unfoldall{\jhomeq{\Gamma}{A}{A}{\idtm{A}}{\idtm{A'}}}
+      }
+\end{align*}
+Weakening preserves the identity morphism:
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \unfoldall{\jhomeq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{Q}}
+      {\ctxwk{A}{Q}}
+      {\ctxwk{A}{\idtm{Q}}}
+      {\idtm{\ctxwk{A}{Q}}}
+      }
+    }
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{The theory of substitution}
+\begin{footnotesize}
+Introduction rules for substitution:
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfam{\Gamma}{\subst{x}{P}}
+    }
+& & \inference
+    { \jtermeq{\Gamma}{A}{x}{x'}
+      \jfameq{{\Gamma}{A}}{P}{P'}
+      }
+    { \jfameq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}
+      }
+    \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfam{{\Gamma}{\subst{x}{P}}}{\subst[\famsym]{x}{Q}}
+    }
+& & \inference
+    { \jtermeq{\Gamma}{A}{x}{x'}
+      \jfameq{{{\Gamma}{A}}{P}}{Q}{Q'}
+      }
+    { \jfameq{{\Gamma}{\subst{x}{P}}}{\subst[\famsym]{x}{Q}}{\subst[\famsym]{x'}{Q'}}
+      }
+    \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    }
+  { \jterm{{\Gamma}{\subst{x}{P}}}{\subst[\famsym]{x}{Q}}{\subst[\tmsym]{x}{g}}
+    }
+& & \inference
+    { \jtermeq{\Gamma}{A}{x}{x'}
+      \jtermeq{{{\Gamma}{A}}{P}}{Q}{g}{g'}
+      }
+    { \jtermeq
+        {{\Gamma}{\subst{x}{P}}}
+        {\subst[\famsym]{x}{Q}}
+        {\subst[\tmsym]{x}{g}}
+        {\subst[\tmsym]{x'}{g'}}
+      }
+\end{align*}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}
+\frametitle{The theory of substitution (continued)}
+Substitution is compatible with extension:
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq
+      {\Gamma}
+      {\subst{x}{\ctxext{P}{Q}}}
+      {\ctxext{\subst{x}{P}}{\subst{x}{Q}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\ctxext{Q}{R}}}
+      {\ctxext{\subst{x}{Q}}{\subst{x}{R}}}
+    }
+\end{align*}
+\pause
+Substitution is compatible with itself:
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+      {\subst{x}{{g}{R}}}
+      {\subst{{x}{g}}{{x}{R}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jfam{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{{g}{R}}}}
+      {\subst{x}{{g}{S}}}
+      {\subst{{x}{g}}{{x}{S}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jterm{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{{g}{R}}}}
+      {\subst{x}{{g}{S}}}
+      {\subst{x}{{g}{k}}}
+      {\subst{{x}{g}}{{x}{k}}}
+    }
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Joining the theories of projections, substitution and the empty context}
+To join the three theories we have formulated on top of the theory of extension,
+we need to provide rules describing:
+\begin{itemize}
+\item what happens when something is weakened by the empty family;\pause
+\item that weakening preserves the empty context and family;\pause
+\item that substitution preserves the empty context and family;\pause
+\item that weakening preserves substitution;\pause
+\item that substitution preserves weakening;\pause
+\item that weakenings are constant families;\pause
+\item that substitution preserves the identity morphisms;\pause
+\item that identity morphisms act as identity functions;\pause
+\item that pullback along the identity morphism has no effect.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Compatibility rules}
+Weakening by the empty family:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{B}
+    }
+  { \jfameq{\Gamma}{\ctxwk{\emptyf}{B}}{B}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq{{\Gamma}{B}}{\ctxwk{\emptyf}{Q}}{Q}
+    }
+  \\
+& \inference
+  { \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jtermeq{{\Gamma}{B}}{Q}{\ctxwk{\emptyf}{g}}{g}
+    }
+\end{align*}
+\pause
+Weakening of the empty family:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{{\Gamma}{A}}{\ctxwk{A}{\emptyf}}{\emptyf}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    }
+  { \jfameq
+    {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+    {\ctxwk[\famsym]{A}{\emptyf}}
+    {\emptyf}
+    }
+\end{align*}
+\pause
+Compatibility of weakening of a family with weakening of a context:
+\begin{equation*}
+\inference
+{ \jfam{\Gamma}{A}
+  \jfam{\Gamma}{B}
+  }
+{ \jfameq{{\Gamma}{A}}{\ctxwk[\famsym]{A}{B}}{\ctxwk{A}{B}}
+  }
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Compatibility rules (continued)}
+Substitution of an empty family
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jfameq{\Gamma}{\subst{x}{\emptyf}}{\emptyf}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\emptyf}}
+      {\emptyf}
+    }
+\end{align*}
+Compatibility of substitution of a family with substitution of a context:
+\begin{equation*}
+\inference
+{ \jfam{{\Gamma}{A}}{P}
+  }
+{ \jfameq{\Gamma}{\subst[\famsym]{x}{P}}{\subst{x}{P}}
+  }
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Compatibility rules (continued)}
+\begin{footnotesize}
+Weakening preserves substitution:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{\subst{g}{R}}}
+      {\subst{\ctxwk{A}{g}}{\ctxwk{A}{R}}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{\subst{g}{R}}}}
+      {\ctxwk{A}{\subst{g}{S}}}
+      {\subst{\ctxwk{A}{g}}{\ctxwk{A}{S}}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    \jterm{{{{\Gamma}{B}}{Q}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{\subst{g}{R}}}}
+      {\ctxwk{A}{\subst{g}{S}}}
+      {\ctxwk{A}{\subst{g}{k}}}
+      {\subst{\ctxwk{A}{g}}{\ctxwk{A}{k}}}
+    }
+\end{align*}
+\pause
+Substitution preserves weakening:
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jfam{{{\Gamma}{A}}{P}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+      {\subst{x}{\ctxwk{Q}{R}}}
+      {\ctxwk{\subst{x}{Q}}{\subst{x}{R}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jfam{{{{\Gamma}{A}}{P}}{R}}{S}
+    }
+  { \jfameq
+      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{\ctxwk{Q}{R}}}}
+      {\subst{x}{\ctxwk{Q}{S}}}
+      {\ctxwk{\subst{x}{Q}}{\subst{x}{S}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jterm{{{{\Gamma}{A}}{P}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{\ctxwk{Q}{R}}}}
+      {\subst{x}{\ctxwk{Q}{S}}}
+      {\subst{x}{\ctxwk{Q}{k}}}
+      {\ctxwk{\subst{x}{Q}}{\subst{x}{k}}}
+    }
+\end{align*}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Compatibility rules (continued)}
+Weakened families are constant:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jfameq
+      {\Gamma}
+      {\subst{x}{\ctxwk{A}{B}}}
+      {B}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jfameq{{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jtermeq{{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}
+    }
+\end{align*}
+\pause
+Substitution preserves the identity morphisms
+\begin{equation*}
+\inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \unfoldall{\jhomeq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{Q}}
+      {\subst{x}{Q}}
+      {\subst{x}{\idtm{Q}}}
+      {\idtm{\subst{x}{Q}}}
+    }}
+\end{equation*}
+\pause
+Identity morphisms act as identity functions:
+\begin{equation*}
+\inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq{\Gamma}{A}{\subst{x}{\idtm{A}}}{x}
+    }
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Compatibility rules (continued)}
+Pullback along identity morphisms has no effect:
+\begin{align*}
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfameq{{\Gamma}{A}}{\subst{\idtm{A}}{\ctxwk{A}{P}}}{P}
+    }
+  \\
+& \inference
+  { \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq{{{\Gamma}{A}}{P}}{\subst{\idtm{A}}{\ctxwk{A}{Q}}}{Q}
+    }
+  \\
+& \inference
+  { \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    }
+  { \jtermeq
+      {{{\Gamma}{A}}{P}}
+      {Q}
+      {\subst{\idtm{A}}{\ctxwk{A}{g}}}
+      {g}
+    }
+\end{align*}
+\end{frame}
+\end{document}
