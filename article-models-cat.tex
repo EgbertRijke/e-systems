@@ -27,7 +27,7 @@ B
 
 \subsection{Extension objects}
 \begin{defn}
-An \emph{extension object $\stesys$ in $\cat{C}$} consists of a \emph{fundamental structure}, which is a diagram of the form
+A \emph{pre-extension object $\stesys$ in $\cat{C}$} consists of a \emph{fundamental structure}, which is a diagram of the form
 \begin{equation*}
 \begin{tikzcd}
 \stesyst
@@ -44,7 +44,11 @@ in $\cat{C}$ together with the \emph{context extension} and \emph{family extensi
 \ectxext &:\stesysf\to \stesysc\\
 \efamext & :\stesysff\to \stesysf,
 \end{align*}
-respectively, for which the following diagrams are required to commute:
+respectively.
+\end{defn}
+
+\begin{defn} An extension object is a pre-extension object $\stesys$ for which 
+the following diagrams are required to commute:
 \begin{equation*}
 \begin{tikzcd}
 \stesysff 
@@ -122,7 +126,7 @@ where $\alpha$ is an auxilary name for the unique map which renders the diagram
 commutative.
 \end{defn}
 
-\begin{defn}[Change of base]
+\begin{defn}[Change of base]\label{cobesys}
 Suppose $\stesys$ is an extension object in $\cat{C}$ and that $p:\stesysc\rightarrow X\leftarrow Y:g$.
 Then we define the extension object $\cobesys{Y}{\stesys}{g}{p}$ to consist of
 \begin{equation*}
@@ -156,10 +160,17 @@ X
 and the operations
 \begin{align*}
 g^\ast(\ectxext) & : \pullback{Y}{\stesysf}{g}{p\circ\eft}\to \pullback{Y}{\stesysc}{g}{p}\\
-g^\ast(\efamext) & : (D\times_{g,f\circ c} F) \times_{g^\ast(e_0),g^\ast(c)} (D\times_{g,f\circ c} F)\to D\times_{g,f\circ c} F.
+g^\ast(\efamext) & : 
+  \pullback{%
+    \pullback{Y}{\stesysf}{g}{p\circ\eft}}{%
+    \pullback{Y}{\stesysf}{g}{p\circ\eft}}{%
+    g^\ast(\ectxext)}{%
+    g^\ast(\eft)}
+  \to 
+  \pullback{Y}{\stesysf}{g}{p\circ\eft}.
 \end{align*}
-The process of obtaining the extension object $D\times_{g,f} CFT$ out of $CFT$
-and $g:D\to X$ is also called the \emph{change of base}.
+The process of obtaining the extension object $\cobesys{Y}{\stesys}{g}{p}$ out of $\stesys$
+and $g:Y\to X$ is also called the \emph{change of base}.
 \end{defn}
 
 \begin{proof}
@@ -234,6 +245,38 @@ e_0^\ast(e_1) & : F\times_{e_1,\pi_2^{e_0,c}}(F\times_{e_0,c} F)\to F\times_{e_1
 \end{align*}
 \end{defn}
 
+\begin{proof}
+By \autoref{cobesys} we can consider the change of base
+\begin{equation*}
+\begin{tikzcd}
+\cobesys{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd}
+  \ar{r}
+  \ar{d}[swap]{\ectxext^\ast(\ebd)}
+  &
+\stesyst
+  \ar{d}{\ebd}
+  \\
+\cobesys{\stesysf}{\stesysf}{\ectxext}{\eft}
+  \ar{r}
+  \ar{d}[swap]{\ectxext^\ast(\eft)}
+  &
+\stesysf
+  \ar{d}{\eft}
+  \\
+\cobesys{\stesysf}{\stesysc}{\ectxext}{\catid{\stesysc}}
+  \ar{r}
+  \ar{d}[swap]{\pullbackpr{1}{\ectxext}{\catid{\stesysc}}}
+  &
+\stesysc
+  \ar[equals]{d}{\catid{\stesysc}}
+  \\
+\stesysf \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+\end{proof}
+
 It requires proof that this is indeed an extension object of $\cat{C}$. However, the above
 construction is a special case of the following construction of new extension objects out
 of old ones with $\catid{\eft}:C\rightarrow C\leftarrow F:e_0$. Thus we postpone the proof
@@ -241,8 +284,8 @@ that we have an extension object to the more general case.
 
 \subsection{Homomorphisms of extension objects}
 \begin{defn}
-Let $CFT$ and $CFT'$ be extension algebras. An extension homomorphism from 
-$CFT$ to $CFT'$ is a triple $(f_0,f_1,f_2)$ consisting of morphisms
+Let $CFT$ and $CFT'$ be (pre-)extension algebras. An \emph{(pre-)extension homomorphism from 
+$CFT$ to $CFT'$} is a triple $(f_0,f_1,f_2)$ consisting of morphisms
 \begin{equation*}
 \begin{tikzcd}
 T 
@@ -294,7 +337,15 @@ F \ar{r}[swap]{f_1}
 F'
 \end{tikzcd}
 \end{equation*}
+Composition and the identity homomorphism are defined in the expected way.
 \end{defn}
+
+\begin{lem}
+Suppose $f:\stesys\to\stesys'$ is a pre-extension homomorphism between
+pre-extension objects. If there is a pre-extension homomorphism $g:\stesys'\to
+\stesys$ such that $f\circ g=\catid{\stesys'}$ and $\stesys'$ is an extension
+algebra, then $\stesys$ is an extension algebra.
+\end{lem}
 
 \begin{lem}
 Suppose $f:CFT\to CFT'$ is an extension morphism and consider a morphism

@@ -2,8 +2,9 @@
 
 \makeatletter
 \newcommand{\pullback@test}{%
-  \@ifnextchar\pullback\pullback@parens{%
+  \@ifnextchar\pullback{\@eatdo{\pullback@parens}}{%
   \@ifnextchar\stesysff{\@eatdo{(\stesysff)}}{}}}
+\newcommand{\pullback@parens}[4]{(\pullback{#1}{#2}{#3}{#4})}
 \newcommand{\pullback}[4]{
   \pullback@test #1\times_{#3,#4} \pullback@test #2}
 \newcommand{\pullbackpr}[3]{\pi_{#1}(#2,#3)}
