@@ -12,10 +12,10 @@ as will be the case below, we will write $A\times_{f,g}X$. The projections
 will be written as $\pi_1^{f,g}$ and $\pi_2^{f,g}$. So in this notation, a
 typical pullback diagram has the following form:
 \begin{equation*}
-\begin{tikzcd}
-A\times_{f,g} X
-  \ar{r}{\pi_1^{f,g}}
-  \ar{d}[swap]{\pi_2^{f,g}}
+\begin{tikzcd}[column sep=large]
+\pullback{A}{X}{f}{g}
+  \ar{r}{\pullbackpr{1}{f}{g}}
+  \ar{d}[swap]{\pullbackpr{2}{f}{g}}
   &
 A \ar{d}{f}
   \\
@@ -27,34 +27,87 @@ B
 
 \subsection{Extension objects}
 \begin{defn}
-An extension object $CFT$ in $\cat{C}$ consists of objects $C$, $F$ and $T$ and the
+An extension object $\stesys$ in $\cat{C}$ consists of objects $\esysc{\stesys}$, $\esysf{\stesys}$ and $\esyst{\stesys}$ and the
 following morphisms:
 \begin{align*}
-c &:F\to C\\
-t &:T\to F\\
-e_0 &:F\to C\\
-e_1 & :F\times_{e_0,c} F\to F
+\eft &:\stesysf \to \stesysc\\
+\ebd &:\stesyst\to \stesysf\\
+\ectxext &:\stesysf\to \stesysc\\
+\efamext & :\stesysff\to \stesysf
 \end{align*}
 for which the following diagrams commute:
 \begin{equation*}
 \begin{tikzcd}
-F\times_{e_0,c} F \ar{r}{e_1} \ar{d}[swap]{\pi_2^{\epsilon_0,c}} & F \ar{d}{c}\\
-F \ar{r}[swap]{c} & C
+\stesysff 
+  \ar{r}{\efamext} 
+  \ar{d}[swap]{\pullbackpr{1}{\ectxext}{\eft}} 
+  & 
+\stesysf 
+  \ar{d}{\eft}
+  \\
+\stesysf
+  \ar{r}[swap]{\eft} 
+  & 
+\stesysc
 \end{tikzcd}
 \end{equation*}
 \begin{equation*}
 \begin{tikzcd}
-F\times_{e_0,c} F \ar{d}[swap]{e_0^\ast(e_0)} \ar{r}{e_1} & F \ar{d}{e_0}\\
-F \ar{r}[swap]{e_0} & C
+\stesysff 
+  \ar{d}[swap]{\pullbackpr{2}{\ectxext}{\eft}} 
+  \ar{r}{\efamext} 
+  & 
+\stesysf 
+  \ar{d}{\ectxext}
+  \\
+\stesysf 
+  \ar{r}[swap]{\ectxext} 
+  & 
+\stesysc
 \end{tikzcd}
 \end{equation*}
 \begin{equation*}
 \begin{tikzcd}
-(F\times_{e_0,c} F)\times_{e_1,\pi_2^{e_0,c}}(F\times_{e_0,c} F) 
-  \ar{d}[swap]{e_0^\ast(e_1)}
-  \ar{r}{e_1^\ast(e_1)}
-& F\times_{e_0,c} F \ar{d}{e_1} \\
-F\times_{e_0,c} F \ar{r}{e_1} & F
+\pullback{\stesysff}{\stesysff}{\efamext}{\pullbackpr{1}{\ectxext}{\eft}} 
+  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\pullbackpr{1}{\ectxext}{\eft}}}
+  \ar{r}{\alpha}
+  & 
+\stesysff 
+  \ar{d}{\efamext} 
+  \\
+\stesysff 
+  \ar{r}{\efamext} 
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+where $\alpha$ is the unique map which fits in the diagram
+\begin{equation*}
+\begin{tikzcd}
+\pullback{\stesysff}{\stesysff}{\efamext}{\pullbackpr{1}{\ectxext}{\eft}}
+  \ar[dotted]{dr}{\alpha}
+  \ar{rr}{\pullbackpr{2}{\efamext}{\pullbackpr{1}{\ectxext}{\eft}}}
+  \ar{dd}[swap]{\pullbackpr{1}{\efamext}{\pullbackpr{1}{\ectxext}{\eft}}}
+  & 
+  &
+\stesysff
+  \ar{d}{\efamext}
+  \\
+  &
+\stesysff
+  \ar{d}[swap]{\pullbackpr{1}{\ectxext}{\eft}}
+  \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
+  &
+\stesysf
+  \ar{d}{\eft}
+  \\
+\stesysff
+  \ar{r}[swap]{\pullbackpr{1}{\ectxext}{\eft}}
+  &
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
 \end{tikzcd}
 \end{equation*}
 \end{defn}
@@ -69,7 +122,7 @@ f_2 & : T\to T'\\
 for which the squares
 \begin{equation*}
 \begin{tikzcd}
-F \ar{d}[swap]{c} \ar{r}{f_1} & F' \ar{d}{c'}\\
+F \ar{d}[swap]{\eft} \ar{r}{f_1} & F' \ar{d}{c'}\\
 C \ar{r}[swap]{f_0} & C'
 \end{tikzcd}
 \end{equation*}
@@ -102,7 +155,7 @@ e_0^\ast(e_1) & : F\times_{e_1,\pi_2^{e_0,c}}(F\times_{e_0,c} F)\to F\times_{e_1
 
 It requires proof that this is indeed an extension object of $\cat{C}$. However, the above
 construction is a special case of the following construction of new extension objects out
-of old ones with $\catid{C}:C\rightarrow C\leftarrow F:e_0$. Thus we postpone the proof
+of old ones with $\catid{\eft}:C\rightarrow C\leftarrow F:e_0$. Thus we postpone the proof
 that we have an extension object to the more general case. 
 
 \begin{defn}
@@ -194,7 +247,7 @@ T'
   \\
 F 
   \ar{r}{f_1}
-  \ar{d}{c}
+  \ar{d}{\eft}
   &
 F'
   \ar{d}{c'}
@@ -386,9 +439,9 @@ T\times(F\times_{e_0,c}F)
   \ar{r}{s_0}
   \ar{d}[swap]{\pi_1(e_0,c)\circ\pi_2}
   &
-F \ar{d}{c}
+F \ar{d}{\eft}
   \\
-F \ar{r}[swap]{c}
+F \ar{r}[swap]{\eft}
   &
 C
 \end{tikzcd}
