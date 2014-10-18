@@ -27,15 +27,24 @@ B
 
 \subsection{Extension objects}
 \begin{defn}
-An extension object $\stesys$ in $\cat{C}$ consists of objects $\esysc{\stesys}$, $\esysf{\stesys}$ and $\esyst{\stesys}$ and the
-following morphisms:
+An \emph{extension object $\stesys$ in $\cat{C}$} consists of a \emph{fundamental structure}, which is a diagram of the form
+\begin{equation*}
+\begin{tikzcd}
+\stesyst
+  \ar{d}[swap]{\ebd}
+  \\
+\stesysf
+  \ar{d}[swap]{\eft}
+  \\
+\stesysc
+\end{tikzcd}
+\end{equation*}
+in $\cat{C}$ together with the \emph{context extension} and \emph{family extension} operations
 \begin{align*}
-\eft &:\stesysf \to \stesysc\\
-\ebd &:\stesyst\to \stesysf\\
 \ectxext &:\stesysf\to \stesysc\\
-\efamext & :\stesysff\to \stesysf
+\efamext & :\stesysff\to \stesysf,
 \end{align*}
-for which the following diagrams commute:
+respectively, for which the following diagrams are required to commute:
 \begin{equation*}
 \begin{tikzcd}
 \stesysff 
@@ -76,12 +85,12 @@ for which the following diagrams commute:
   \ar{d}{\efamext} 
   \\
 \stesysff 
-  \ar{r}{\efamext} 
+  \ar{r}[swap]{\efamext} 
   &
 \stesysf
 \end{tikzcd}
 \end{equation*}
-where $\alpha$ is the unique map which fits in the diagram
+where $\alpha$ is an auxilary name for the unique map which renders the diagram
 \begin{equation*}
 \begin{tikzcd}
 \pullback{\stesysff}{\stesysff}{\efamext}{\pullbackpr{1}{\ectxext}{\eft}}
@@ -110,63 +119,44 @@ where $\alpha$ is the unique map which fits in the diagram
 \stesysc
 \end{tikzcd}
 \end{equation*}
+commutative.
 \end{defn}
 
-\begin{defn}
-An extension homomorphism $f:CFT\to CFT'$ consists of
-\begin{align*}
-f_0 & : C\to C'\\
-f_1 & : F\to F'\\
-f_2 & : T\to T'\\
-\end{align*}
-for which the squares
+\begin{defn}[Change of base]
+Suppose $\stesys$ is an extension object in $\cat{C}$ and that $p:\stesysc\rightarrow X\leftarrow Y:g$.
+Then we define the extension object $\cobesys{Y}{\stesys}{g}{p}$ to consist of
 \begin{equation*}
 \begin{tikzcd}
-F \ar{d}[swap]{\eft} \ar{r}{f_1} & F' \ar{d}{c'}\\
-C \ar{r}[swap]{f_0} & C'
+\cobesys{Y}{\stesyst}{g}{p\circ\eft\circ\ebd}
+  \ar{r}
+  \ar{d}[swap]{g^\ast(\ebd)}
+  &
+\stesyst
+  \ar{d}{\ebd}
+  \\
+\cobesys{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{r}
+  \ar{d}[swap]{g^\ast(\eft)}
+  &
+\stesysf
+  \ar{d}{\eft}
+  \\
+\cobesys{Y}{\stesysc}{g}{p}
+  \ar{r}
+  \ar{d}[swap]{\pullbackpr{1}{g}{p}}
+  &
+\stesysc
+  \ar{d}{p}
+  \\
+Y \ar{r}[swap]{g}
+  &
+X
 \end{tikzcd}
-\end{equation*}
-\begin{equation*}
-\begin{tikzcd}
-F \ar{d}[swap]{e_0} \ar{r}{f_1} & F' \ar{d}{e_0'}\\
-C \ar{r}[swap]{f_0} & C'
-\end{tikzcd}
-\end{equation*}
-\begin{equation*}
-\begin{tikzcd}
-F\times_{e_0,c} F \ar{d}[swap]{e_1} \ar{r}{e_0^\ast(f_1)} & F'\times_{e_0',c'}F' \ar{d}{e_1'}\\
-F \ar{r}[swap]{f_1} & F'
-\end{tikzcd}
-\end{equation*}
-commute.
-\end{defn}
-
-\begin{defn}
-Suppose $CFT$ is an extension object of $\cat{C}$. Then we define the extension object
-$\mathbf{F}_{CFT}$ to consist of the objects $F$, $F\times_{e_0,c} F$, $F\times_{e_0,t\circ c} T$
-with the operations
+\end{equation*} 
+and the operations
 \begin{align*}
-\pi_2^{e_0,c} & : F\times_{e_0,c} F\to F\\
-e_0^\ast(t) & : F\times_{e_0,t\circ c} T\to F\times_{e_0,c} F\\
-e_1 & : F\times_{e_0,c} F\to F\\
-e_0^\ast(e_1) & : F\times_{e_1,\pi_2^{e_0,c}}(F\times_{e_0,c} F)\to F\times_{e_1,\pi_2^{e_0,c}} F
-\end{align*}
-\end{defn}
-
-It requires proof that this is indeed an extension object of $\cat{C}$. However, the above
-construction is a special case of the following construction of new extension objects out
-of old ones with $\catid{\eft}:C\rightarrow C\leftarrow F:e_0$. Thus we postpone the proof
-that we have an extension object to the more general case. 
-
-\begin{defn}
-Suppose $CFT$ is an extension object of $\cat{C}$ and that $f:C\rightarrow X\leftarrow D:g$.
-Then we define the extension object $D\times_{g,f} CFT$ to consist of the objects $D\times_{g,f} C$,
-$D\times_{g,f\circ c} F$, $D\times_{g,t\circ f\circ c} T$ and the operations
-\begin{align*}
-g^\ast(c) & : D\times_{g,f\circ c} F\to D\times_{g,f} C\\
-g^\ast(t) & : D\times_{g,f\circ c\circ t} T\to D\times_{g,f\circ c} F\\
-g^\ast(e_0) & : D\times_{g,f\circ c} F\to D\times_{g,f} C\\
-g^\ast(e_1) & : (D\times_{g,f\circ c} F) \times_{g^\ast(e_0),g^\ast(c)} (D\times_{g,f\circ c} F)\to D\times_{g,f\circ c} F.
+g^\ast(\ectxext) & : \pullback{Y}{\stesysf}{g}{p\circ\eft}\to \pullback{Y}{\stesysc}{g}{p}\\
+g^\ast(\efamext) & : (D\times_{g,f\circ c} F) \times_{g^\ast(e_0),g^\ast(c)} (D\times_{g,f\circ c} F)\to D\times_{g,f\circ c} F.
 \end{align*}
 The process of obtaining the extension object $D\times_{g,f} CFT$ out of $CFT$
 and $g:D\to X$ is also called the \emph{change of base}.
@@ -231,6 +221,23 @@ D\times_{g,f} C
 \end{equation*}
 commutes. But this is just a pullback along $g$ of a square which commutes by assumption.
 \end{proof}
+
+\begin{defn}
+Suppose $CFT$ is an extension object of $\cat{C}$. Then we define the extension object
+$\mathbf{F}_{CFT}$ to consist of the objects $F$, $F\times_{e_0,c} F$, $F\times_{e_0,t\circ c} T$
+with the operations
+\begin{align*}
+\pi_2^{e_0,c} & : F\times_{e_0,c} F\to F\\
+e_0^\ast(t) & : F\times_{e_0,t\circ c} T\to F\times_{e_0,c} F\\
+e_1 & : F\times_{e_0,c} F\to F\\
+e_0^\ast(e_1) & : F\times_{e_1,\pi_2^{e_0,c}}(F\times_{e_0,c} F)\to F\times_{e_1,\pi_2^{e_0,c}} F
+\end{align*}
+\end{defn}
+
+It requires proof that this is indeed an extension object of $\cat{C}$. However, the above
+construction is a special case of the following construction of new extension objects out
+of old ones with $\catid{\eft}:C\rightarrow C\leftarrow F:e_0$. Thus we postpone the proof
+that we have an extension object to the more general case. 
 
 \subsection{Homomorphisms of extension objects}
 \begin{defn}
