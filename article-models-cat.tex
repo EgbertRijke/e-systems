@@ -24,7 +24,65 @@ X \ar{r}[swap]{g}
 B
 \end{tikzcd}
 \end{equation*}
-
+Also, when we have a commutative diagram of the form
+\begin{equation*}
+\begin{tikzcd}
+A \ar{r}{f}
+  \ar{d}{a}
+  &
+X \ar{d}
+  & 
+B \ar{l}[swap]{g}
+  \ar{d}{b}
+  \\
+A'
+  \ar{r}[swap]{f'}
+  &
+X'
+  &
+B'
+  \ar{l}{g'}
+\end{tikzcd}
+\end{equation*}
+we will denote the unique map from $\pullback{A}{B}{f}{g}$ to $\pullback{A'}{B'}{f'}{g'}$
+such that the diagram
+\begin{equation*}
+\begin{tikzcd}
+  {}
+  & 
+\pullback{A'}{B'}{f'}{g'}
+  \ar{dd}
+  \ar{rr}
+  &
+  &
+B'
+  \ar{dd}{g'}
+  \\
+\pullback{A}{B}{f}{g}
+  \ar{dd}
+  \ar[crossing over]{rr}
+  \ar[dotted]{ur}{\pullback{a}{b}{f'}{g'}}
+  &
+  &
+B \ar{ur}{b}
+  \\
+  {}
+  &
+A'
+  \ar{rr}
+  &
+  &
+X'
+  \\
+A \ar{rr}[swap]{f}
+  \ar{ur}{a}
+  &
+  &
+X \ar[crossing over,leftarrow]{uu}[near end,swap]{g}
+  \ar{ur}
+\end{tikzcd}
+\end{equation*}
+commutes, by $\pullback{a}{b}{f'}{g'}$.
 \subsection{Extension objects}
 \begin{defn}
 A \emph{pre-extension object $\stesys$ in $\cat{C}$} consists of a \emph{fundamental structure}, which is a diagram of the form
@@ -99,7 +157,7 @@ where $\alpha$ is an auxilary name for the unique map which renders the diagram
 \begin{tikzcd}
 \pullback{\stesysff}{\stesysff}{\efamext}{\pullbackpr{1}{\ectxext}{\eft}}
   \ar[dotted]{dr}{\alpha}
-  \ar{rr}{\pullbackpr{2}{\efamext}{\pullbackpr{1}{\ectxext}{\eft}}}
+  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft}}{\pullbackpr{2}{\ectxext}{\eft}}{\ectxext}{\eft}}
   \ar{dd}[swap]{\pullbackpr{1}{\efamext}{\pullbackpr{1}{\ectxext}{\eft}}}
   & 
   &
@@ -127,8 +185,9 @@ commutative.
 \end{defn}
 
 \begin{defn}[Change of base]\label{cobesys}
-Suppose $\stesys$ is an extension object in $\cat{C}$ and that $p:\stesysc\rightarrow X\leftarrow Y:g$.
-Then we define the extension object $\cobesys{Y}{\stesys}{g}{p}$ to consist of
+Suppose $\stesys$ is a pre-extension object in $\cat{C}$ and that 
+$p:\stesysc\rightarrow X\leftarrow Y:g$.
+Then we define the pre-extension object $\cobesys{Y}{\stesys}{g}{p}$ to consist of
 \begin{equation*}
 \begin{tikzcd}
 \cobesys{Y}{\stesyst}{g}{p\circ\eft\circ\ebd}
@@ -159,7 +218,8 @@ X
 \end{equation*} 
 and the operations
 \begin{align*}
-g^\ast(\ectxext) & : \pullback{Y}{\stesysf}{g}{p\circ\eft}\to \pullback{Y}{\stesysc}{g}{p}\\
+\pullback{\catid{Y}}{\ectxext}{g}{p} 
+  & : \pullback{Y}{\stesysf}{g}{p\circ\eft}\to \pullback{Y}{\stesysc}{g}{p}\\
 g^\ast(\efamext) & : 
   \pullback{%
     \pullback{Y}{\stesysf}{g}{p\circ\eft}}{%
@@ -169,68 +229,105 @@ g^\ast(\efamext) & :
   \to 
   \pullback{Y}{\stesysf}{g}{p\circ\eft}.
 \end{align*}
-The process of obtaining the extension object $\cobesys{Y}{\stesys}{g}{p}$ out of $\stesys$
+The process of obtaining the pre-extension object $\cobesys{Y}{\stesys}{g}{p}$ out of $\stesys$
 and $g:Y\to X$ is also called the \emph{change of base}.
 \end{defn}
 
+\begin{lem}
+Any change of base of an extension algebra results in an extension algebra.
+\end{lem}
+
 \begin{proof}
-First we need to verify that the square
+Let $\stesys$ be an extension algebra and consider $p:\stesysc\rightarrow X\leftarrow Y:g$.
+Our first subgoal is to verify that the square
 \begin{equation*}
 \begin{tikzcd}
-(D\times_{g,f\circ c} F) \times_{g^\ast(e_0),g^\ast(c)} (D\times_{g,f\circ c} F)
-  \ar{r}{g^\ast(e_1)} 
-  \ar{d}[swap]{(g^\ast(e_0))^\ast(g^\ast(c))} 
+\pullback%
+  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}%
+  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}%
+  {g^\ast(\ectxext)}%
+  {g^\ast(\eft)}
+  \ar{r}{g^\ast(\efamext)} 
+  \ar{d}[swap]{(g^\ast(\ectxext))^\ast(g^\ast(\eft))} 
   & 
-D\times_{g,f\circ c} F
-  \ar{d}{g^\ast(c)}
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{d}{g^\ast(\eft)}
   \\
-D\times_{g,f\circ c} F
-  \ar{r}[swap]{g^\ast(c)} 
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{r}[swap]{g^\ast(\eft)} 
   & 
-D\times_{g,f} C
+\pullback{Y}{\stesysc}{g}{p}
 \end{tikzcd}
 \end{equation*}
 commutes. To see this, note that we have a commutative diagram
 \begin{equation*}
 \begin{tikzcd}
-D\times_{g,f\circ c\circ \pi_2^{e_0,c}}(F\times_{e_0,c} F)  
-  \ar[bend right=10]{ddr}[swap]{g^\ast(\pi_2^{e_0,c})}
-  \ar[bend left=10]{drr}{g^\ast(e_1)}
-  \ar{dr}{\simeq}
+{}&
+  \pullback%
+  {Y}
+  {\pullback{\stesysf}{\stesysf}{\ectxext}{\eft}}
+  {g}
+  {p\circ\eft\circ\pullbackpr{2}{\ectxext}{\eft}}
+  \ar{dl}[swap]{g^\ast(\pullbackpr{2}{\ectxext}{\eft})}
+  \ar{dr}{g^\ast(\efamext)}
+  \ar{d}{\simeq}
   \\
-  {}
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
   &
-(D\times_{g,f\circ c} F)\times_{g^\ast(e_0),g^\ast(c)}(D\times_{g,f\circ c} F)
-  \ar{r}[swap]{g^\ast(e_1)}
-  \ar{d}{(g^\ast(e_0))^\ast(g^\ast(c))}
+\pullback%
+  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}
+  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}
+  {g^\ast(\ectxext)}
+  {g^\ast(\eft)}
+  \ar{r}[swap]{g^\ast(\efamext)}
+  \ar{l}[yshift=-1ex]{(g^\ast(\ectxext))^\ast(g^\ast(\eft))}
   &
-  D\times_{g,f\circ c} F
-  \\
-  {}
-  &
-D\times_{g,f\circ c} F
-  &
-{}
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
 \end{tikzcd}
 \end{equation*}
 where the downwards arrow is an isomorphism. Using this observation, we see that
 it is equivalent to show that the square
 \begin{equation*}
 \begin{tikzcd}
-D\times_{g,f\circ c\circ \pi_2^{e_0,c}}(F\times_{e_0,c} F)
-  \ar{r}{g^\ast(e_1)} 
-  \ar{d}[swap]{g^\ast(\pi_2^{e_0,c})} 
+\pullback%
+  {Y}
+  {\pullback{\stesysf}{\stesysf}{\ectxext}{\eft}}
+  {g}
+  {p\circ\eft\circ\pullbackpr{2}{\ectxext}{\eft}}
+  \ar{r}{g^\ast(\efamext)} 
+  \ar{d}[swap]{g^\ast(\pullbackpr{2}{\ectxext}{\eft})} 
   & 
-D\times_{g,f\circ c} F
-  \ar{d}{g^\ast(c)}
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{d}{g^\ast(\eft)}
   \\
-D\times_{g,f\circ c} F
-  \ar{r}[swap]{g^\ast(c)} 
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{r}[swap]{g^\ast(\eft)} 
   & 
-D\times_{g,f} C
+\pullback{Y}{\stesysc}{g}{p}
 \end{tikzcd}
 \end{equation*}
 commutes. But this is just a pullback along $g$ of a square which commutes by assumption.
+
+Our next subgoal is to verify that the square
+\begin{equation*}
+\begin{tikzcd}
+\pullback%
+  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}%
+  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}%
+  {g^\ast(\ectxext)}%
+  {g^\ast(\eft)}
+  \ar{r}{g^\ast(\efamext)} 
+  \ar{d}[swap]{(g^\ast(\ectxext))^\ast(g^\ast(\ectxext))} 
+  & 
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{d}{g^\ast(\ectxext)}
+  \\
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{r}[swap]{g^\ast(\ectxext)} 
+  & 
+\pullback{Y}{\stesysc}{g}{p}
+\end{tikzcd}
+\end{equation*}
 \end{proof}
 
 \begin{defn}
@@ -346,6 +443,26 @@ pre-extension objects. If there is a pre-extension homomorphism $g:\stesys'\to
 \stesys$ such that $f\circ g=\catid{\stesys'}$ and $\stesys'$ is an extension
 algebra, then $\stesys$ is an extension algebra.
 \end{lem}
+
+\begin{proof}
+We first show that the square
+\begin{equation*}
+\begin{tikzcd}
+\stesysff 
+  \ar{r}{\efamext} 
+  \ar{d}[swap]{\pullbackpr{1}{\ectxext}{\eft}} 
+  & 
+\stesysf 
+  \ar{d}{\eft}
+  \\
+\stesysf
+  \ar{r}[swap]{\eft} 
+  & 
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{proof}
 
 \begin{lem}
 Suppose $f:CFT\to CFT'$ is an extension morphism and consider a morphism
