@@ -184,6 +184,160 @@ where $\alpha$ is an auxilary name for the unique map which renders the diagram
 commutative.
 \end{defn}
 
+\begin{defn}
+Let $\stesys$ and $\stesys'$ be (pre-)extension algebras. An \emph{(pre-)extension homomorphism $f$ from 
+$\stesys$ to $\stesys'$} is a triple $(f_0,f_1,f_2)$ consisting of morphisms
+\begin{equation*}
+\begin{tikzcd}
+\stesyst 
+  \ar{r}{f_2}
+  \ar{d}[swap]{\ebd}
+  &
+\stesyst'
+  \ar{d}{\ebd'}
+  \\
+\stesysf 
+  \ar{r}{f_1}
+  \ar{d}[swap]{\eft}
+  &
+\stesysf'
+  \ar{d}{\eft'}
+  \\
+\stesysc 
+  \ar{r}[swap]{f_0}
+  &
+\stesysc'
+\end{tikzcd}
+\end{equation*}
+such that the indicated squares commute, for which furthermore the squares
+\begin{equation*}
+\begin{tikzcd}
+\stesysf \ar{r}{f_1}
+  \ar{d}[swap]{\ectxext}
+  &
+\stesysf'
+  \ar{d}{\ectxext'}
+  \\
+\stesysc
+  \ar{r}[swap]{f_0}
+  &
+\stesysc'
+\end{tikzcd}
+\end{equation*}
+and
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesysf\times_{\ectxext,\eft} \stesysf
+  \ar{r}{f_1\times_{\ectxext',\eft'} f_1}
+  \ar{d}[swap]{\efamext}
+  &
+\stesysf'\times_{\ectxext',\eft'} \stesysf'
+  \ar{d}{\efamext'}
+  \\
+\stesysf
+  \ar{r}[swap]{f_1}
+  &
+\stesysf'
+\end{tikzcd}
+\end{equation*}
+Composition and the identity homomorphism are defined in the expected way.
+\end{defn}
+
+\begin{lem}[Stability under retracts]
+Suppose $f:\stesys\to\stesys'$ is a pre-extension homomorphism between
+pre-extension objects. If there is a pre-extension homomorphism $g:\stesys'\to
+\stesys$ such that $g\circ f=\catid{\stesys}$ and $\stesys'$ is an extension
+algebra, then $\stesys$ is an extension algebra.
+\end{lem}
+
+\begin{proof}
+We first show that the square
+\begin{equation*}
+\begin{tikzcd}
+\stesysff 
+  \ar{r}{\efamext} 
+  \ar{d}[swap]{\pullbackpr{1}{\ectxext}{\eft}} 
+  & 
+\stesysf 
+  \ar{d}{\eft}
+  \\
+\stesysf
+  \ar{r}[swap]{\eft} 
+  & 
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutes. Note that we have the diagram
+\begin{equation*}
+\begin{tikzcd}
+  {}
+  & 
+\stesysf
+  \ar{dd}[near start]{\eft}
+  \ar{rr}{f_1}
+  &
+  &
+\stesysf'
+  \ar{dd}[near start]{\eft'}
+  \ar{rr}{g_1}
+  &
+  &
+\stesysf
+  \ar{dd}{\eft}
+  \\
+\pullback{\stesysf}{\stesysf}{\ectxext}{\eft}
+  \ar{dd}[swap]{\pullbackpr{1}{\ectxext}{\eft}}
+  \ar[crossing over,dotted]{rr}[swap,fill=white]{\pullback{f_1}{f_1}{\ectxext'}{\eft'}}
+  \ar{ur}{\efamext}
+  &
+  &
+\pullback{\stesysf'}{\stesysf'}{\ectxext'}{\eft'} 
+  \ar{ur}[near start]{\efamext'}
+  \ar[crossing over,dotted]{rr}[swap,fill=white]{\pullback{g_1}{g_1}{\ectxext}{\eft}}
+  &
+  &
+\pullback{\stesysf}{\stesysf}{\ectxext}{\eft}
+  \ar{ur}%{\efamext}
+  \\
+  {}
+  &
+\stesysc
+  \ar{rr}[near start]{f_0}
+  &
+  &
+\stesysc'
+  \ar{rr}[near start]{g_0}
+  &
+  &
+\stesysc
+  \\
+\stesysf 
+  \ar{rr}[swap]{f_1}
+  \ar{ur}{\ectxext}
+  &
+  &
+\stesysf' 
+  \ar[crossing over,leftarrow]{uu}[near end,swap]{}
+  \ar{ur}[swap,near end]{\ectxext'}
+  \ar{rr}[swap]{g_1}
+  &
+  &
+\stesysf
+  \ar[crossing over,leftarrow]{uu}[near end,swap]{}
+  \ar{ur}{\ectxext}
+\end{tikzcd}
+\end{equation*}
+and we also have that
+\begin{equation*}
+(\pullback{g_1}{g_1}{\ectxext}{\eft})\circ(\pullback{f_1}{f_1}{\ectxext'}{\eft'})
+=\catid{},
+\end{equation*}
+so we can read off from the above diagram and the fact that the middle square
+commutes, that the square on the left commutes. Via a similar method it can
+be seen that the other two conditions are met as well.
+{\color{red} Do I need to give the full proof?}
+\end{proof}
+
 \begin{defn}[Change of base]\label{cobesys}
 Suppose $\stesys$ is a pre-extension object in $\cat{C}$ and that 
 $p:\stesysc\rightarrow X\leftarrow Y:g$.
@@ -221,11 +375,11 @@ and the operations
 \pullback{\catid{Y}}{\ectxext}{g}{p} 
   & : \pullback{Y}{\stesysf}{g}{p\circ\eft}\to \pullback{Y}{\stesysc}{g}{p}\\
 g^\ast(\efamext) & : 
-  \pullback{%
-    \pullback{Y}{\stesysf}{g}{p\circ\eft}}{%
-    \pullback{Y}{\stesysf}{g}{p\circ\eft}}{%
-    g^\ast(\ectxext)}{%
-    g^\ast(\eft)}
+  \pullback
+    {\pullback{Y}{\stesysf}{g}{p\circ\eft}}
+    {\pullback{Y}{\stesysf}{g}{p\circ\eft}}
+    {\pullback{\catid{Y}}{\ectxext}{g}{p}}
+    {g^\ast(\eft)}
   \to 
   \pullback{Y}{\stesysf}{g}{p\circ\eft}.
 \end{align*}
@@ -307,7 +461,7 @@ it is equivalent to show that the square
 \end{tikzcd}
 \end{equation*}
 commutes. But this is just a pullback along $g$ of a square which commutes by assumption.
-
+\begin{comment}
 Our next subgoal is to verify that the square
 \begin{equation*}
 \begin{tikzcd}
@@ -328,6 +482,7 @@ Our next subgoal is to verify that the square
 \pullback{Y}{\stesysc}{g}{p}
 \end{tikzcd}
 \end{equation*}
+\end{comment}
 \end{proof}
 
 \begin{defn}
@@ -378,91 +533,6 @@ It requires proof that this is indeed an extension object of $\cat{C}$. However,
 construction is a special case of the following construction of new extension objects out
 of old ones with $\catid{\eft}:C\rightarrow C\leftarrow F:e_0$. Thus we postpone the proof
 that we have an extension object to the more general case. 
-
-\subsection{Homomorphisms of extension objects}
-\begin{defn}
-Let $CFT$ and $CFT'$ be (pre-)extension algebras. An \emph{(pre-)extension homomorphism from 
-$CFT$ to $CFT'$} is a triple $(f_0,f_1,f_2)$ consisting of morphisms
-\begin{equation*}
-\begin{tikzcd}
-T 
-  \ar{r}{f_2}
-  \ar{d}{t}
-  &
-T'
-  \ar{d}{t'}
-  \\
-F 
-  \ar{r}{f_1}
-  \ar{d}{\eft}
-  &
-F'
-  \ar{d}{c'}
-  \\
-C 
-  \ar{r}{f_0}
-  &
-C'
-\end{tikzcd}
-\end{equation*}
-such that the indicated squares commute, for which furthermore the squares
-\begin{equation*}
-\begin{tikzcd}
-F \ar{r}{f_1}
-  \ar{d}[swap]{\epsilon_0}
-  &
-F'
-  \ar{d}{\epsilon_0'}
-  \\
-C \ar{r}[swap]{f_0}
-  &
-C'
-\end{tikzcd}
-\end{equation*}
-and
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-F\times_{\epsilon_0,c} F
-  \ar{r}{f_1\times_{\epsilon_0,c} f_1}
-  \ar{d}[swap]{\epsilon_1}
-  &
-F'\times_{\epsilon_0',c'} F'
-  \ar{d}{\epsilon_1'}
-  \\
-F \ar{r}[swap]{f_1}
-  &
-F'
-\end{tikzcd}
-\end{equation*}
-Composition and the identity homomorphism are defined in the expected way.
-\end{defn}
-
-\begin{lem}
-Suppose $f:\stesys\to\stesys'$ is a pre-extension homomorphism between
-pre-extension objects. If there is a pre-extension homomorphism $g:\stesys'\to
-\stesys$ such that $f\circ g=\catid{\stesys'}$ and $\stesys'$ is an extension
-algebra, then $\stesys$ is an extension algebra.
-\end{lem}
-
-\begin{proof}
-We first show that the square
-\begin{equation*}
-\begin{tikzcd}
-\stesysff 
-  \ar{r}{\efamext} 
-  \ar{d}[swap]{\pullbackpr{1}{\ectxext}{\eft}} 
-  & 
-\stesysf 
-  \ar{d}{\eft}
-  \\
-\stesysf
-  \ar{r}[swap]{\eft} 
-  & 
-\stesysc
-\end{tikzcd}
-\end{equation*}
-commutes.
-\end{proof}
 
 \begin{lem}
 Suppose $f:CFT\to CFT'$ is an extension morphism and consider a morphism
