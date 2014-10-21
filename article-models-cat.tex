@@ -243,7 +243,7 @@ and
 Composition and the identity homomorphism are defined in the expected way.
 \end{defn}
 
-\begin{lem}[Stability under retracts]
+\begin{lem}[Stability under retracts]\label{esys-retract}
 Suppose $f:\stesys\to\stesys'$ is a pre-extension homomorphism between
 pre-extension objects. If there is a pre-extension homomorphism $g:\stesys'\to
 \stesys$ such that $g\circ f=\catid{\stesys}$ and $\stesys'$ is an extension
@@ -486,58 +486,83 @@ Our next subgoal is to verify that the square
 \end{proof}
 
 \begin{defn}
-Suppose $CFT$ is an extension object of $\cat{C}$. Then we define the extension object
-$\mathbf{F}_{CFT}$ to consist of the objects $F$, $F\times_{e_0,c} F$, $F\times_{e_0,t\circ c} T$
-with the operations
+Suppose $\stesys$ is a pre-extension object of $\cat{C}$. Then we define the pre-extension object
+$\famesys{\stesys}$ to consist of the fundamental structure
+\begin{equation*}
+\begin{tikzcd}
+\pullback{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd}
+  \ar{d}{\ectxext^\ast(\ebd)}
+  \\
+\pullback{\stesysf}{\stesysf}{\ectxext}{\eft}
+  \ar{d}{\pullbackpr{1}{\ectxext}{\eft}}
+  \\
+\stesysf
+\end{tikzcd}
+\end{equation*}
+with the extension operations
 \begin{align*}
-\pi_2^{e_0,c} & : F\times_{e_0,c} F\to F\\
-e_0^\ast(t) & : F\times_{e_0,t\circ c} T\to F\times_{e_0,c} F\\
 e_1 & : F\times_{e_0,c} F\to F\\
 e_0^\ast(e_1) & : F\times_{e_1,\pi_2^{e_0,c}}(F\times_{e_0,c} F)\to F\times_{e_1,\pi_2^{e_0,c}} F
 \end{align*}
 \end{defn}
 
+\begin{lem}[Local extension structure]
+If $\stesys$ is an extension object, then so is $\famesys{\stesys}$.
+\end{lem}
+
 \begin{proof}
-By \autoref{cobesys} we can consider the change of base
+By \autoref{esys-retract}, it suffices to find a pre-extension homomorphism
+$\famesys{\stesys}\to\cobesys{\stesysf}{\stesys}{\ectxext}{\catid{\stesysc}}$
+which has a section, since we know that the codomain is an extension
+algebra. Note that we have
 \begin{equation*}
 \begin{tikzcd}
 \cobesys{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd}
-  \ar{r}
-  \ar{d}[swap]{\ectxext^\ast(\ebd)}
+  \ar[equals]{r}
+  \ar{d}
   &
-\stesyst
-  \ar{d}{\ebd}
+\cobesys{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd}
+  \ar{d}{\ectxext^\ast(\ebd)}
   \\
 \cobesys{\stesysf}{\stesysf}{\ectxext}{\eft}
-  \ar{r}
-  \ar{d}[swap]{\ectxext^\ast(\eft)}
+  \ar[equals]{r}
+  \ar{d}
   &
+\cobesys{\stesysf}{\stesysf}{\ectxext}{\eft}
+  \ar{d}{\ectxext^\ast(\eft)}
+  \\
 \stesysf
-  \ar{d}{\eft}
-  \\
+  \ar{r}[swap]{\pullbackpr{1}{\ectxext}{\catid{\stesysc}}^{-1}}
+  &
 \cobesys{\stesysf}{\stesysc}{\ectxext}{\catid{\stesysc}}
-  \ar{r}
-  \ar{d}[swap]{\pullbackpr{1}{\ectxext}{\catid{\stesysc}}}
-  &
-\stesysc
-  \ar[equals]{d}{\catid{\stesysc}}
-  \\
-\stesysf \ar{r}[swap]{\ectxext}
-  &
-\stesysc
 \end{tikzcd}
 \end{equation*}
+so it remains to show that this assebles a pre-extension homomorphism.
 \end{proof}
 
-It requires proof that this is indeed an extension object of $\cat{C}$. However, the above
-construction is a special case of the following construction of new extension objects out
-of old ones with $\catid{\eft}:C\rightarrow C\leftarrow F:e_0$. Thus we postpone the proof
-that we have an extension object to the more general case. 
+\begin{lem}
+Suppose $f:\stesys\to \stesys'$ is a pre-extension homomorphism and consider a morphism
+$p:\stesys'\to X$ and $g:Y\to X$. Then the change of base 
+$g^\ast(f):\cobesys{Y}{\stesys}{g}{p\circ f_0}\to
+\cobesys{Y}{\stesys'}{g}{p}$ is a pre-extension morphism.
+\end{lem}
 
 \begin{lem}
-Suppose $f:CFT\to CFT'$ is an extension morphism and consider a morphism
-$C'\to X$ and $g:D\to X$. Then the change of base $g^\ast(f):g^\ast(CFT)\to
-g^\ast(CFT')$ is an extension morphism.
+Suppose that $f:\stesys\to\stesys'$ is a pre-extension homomorphism. Then the
+triple
+\begin{align*}
+f_1 & : \stesysf\to\stesysf'
+  \\
+\pullback{f_1}{f_1}{\ectxext'}{\eft'}
+  & : \pullback{\stesysf}{\stesysf}{\ectxext}{\eft}
+  \to \pullback{\stesysf'}{\stesysf'}{\ectxext'}{\eft'}
+  \\
+\pullback{f_1}{f_2}{\ectxext'}{\eft'\circ\ebd'}
+  & : \pullback{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd}
+  \to \pullback{\stesysf'}{\stesyst'}{\ectxext'}{\eft'\circ\ebd'}
+\end{align*}
+assembles a pre-extension homomorphism $\famehom{f}$ from
+$\famesys{\stesys}$ to $\famesys{\stesys'}$.
 \end{lem}
 
 \subsection{Weakening objects}
