@@ -556,61 +556,59 @@ and
   =
 \eft[1]\circ\eft[2]\circ\eft[3].
 \end{equation*}
-hold. For the second subgoal (which is more tricky)
-\begin{comment}
- Note that we have isomorphisms $\alpha_2$ and $\alpha_3$, which
-are unique with the property that they render their respective diagram commutative:
+hold. For the second subgoal (which is more tricky). Notice first that the
+diagram
 \begin{equation*}
-\begin{tikzcd}[column sep=large]
-{}&
-  \pullback{\stesysf_2}{\stesysf}{\ectxext\circ\efamext}{\eft}
-  \ar[bend left=10]{drr}{\pullbackpr{2}{\ectxext\circ\efamext}{\eft}}
-  \ar[bend right=10]{dl}[swap]{\pullbackpr{1}{\ectxext\circ\efamext}{\eft}}
-  \ar[dotted]{d}{\alpha_2}
-  \\
-\stesysf_2
-  &
-\stesysf_3
-  \ar{l}{\eft[2]}
-  \ar{r}[swap]{\pullbackpr{2}{\efamext}{\eft[1]}}
-  &
-\stesysf_2
-  \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
-  &
-\stesysf
-\end{tikzcd}
-\end{equation*}
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-{}&
-  \pullback{\stesysf_3}{\stesysf}{\ectxext\circ\efamext\circ\eext{2}}{\eft}
-  \ar[bend left=10]{drrr}{\pullbackpr{2}{\ectxext\circ\efamext\circ\eext{2}}{\eft}}
-  \ar[bend right=10]{dl}[swap]{\pullbackpr{1}{\ectxext\circ\efamext\circ\eext{2}}{\eft}}
-  \ar[dotted]{d}{\alpha_3}
-  \\
-\stesysf_3
-  &
+\begin{tikzcd}
 \stesysf_4
-  \ar{l}{\eft[3]}
-  \ar{r}[swap]{\pullbackpr{2}{\eext{2}}{\eft[2]}}
+  \ar{r}{\eext{3}}
+  \ar{d}[swap]{\beta_3}
   &
 \stesysf_3
-  \ar{r}[swap]{\pullbackpr{2}{\efamext}{\eft[1]}}
+  \ar{r}{\eext{2}}
+  \ar{d}[swap]{\beta_2}
   &
 \stesysf_2
-  \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
+  \ar{d}{\pullbackpr{2}{\ectxext}{\eft}}
+  \\
+\stesysf_3
+  \ar{r}[swap]{\eext{2}}
+  &
+\stesysf_2
+  \ar{r}[swap]{\efamext}
   &
 \stesysf
 \end{tikzcd}
 \end{equation*}
-\begin{align*}
-\alpha_2 
-  & : \stesysf_3\to\pullback{\stesysf}{\stesysf_2}{\ectxext}{\eft\circ\eft[1]\circ\eft[2]}
+commutes. We also have the commutative diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesysf_4
+  \ar{r}{\pullbackpr{2}{\eext{2}}{\eft[2]}}
+  \ar{d}[swap]{\beta_3}
+  &
+\stesysf_3
+  \ar{r}{\eext{2}}
+  \ar{d}[swap]{\beta_2}
+  &
+\stesysf_2
+  \ar{d}{\pullbackpr{2}{\ectxext}{\eft}}
   \\
-\alpha_3 
-  & : \stesysf_4\to\pullback{\stesysf}{\stesysf_3}{\ectxext}{\eft\circ\eft[1]\circ\eft[2]\circ\eft[3]}
-\end{align*}
-\end{comment}
+\stesysf_3
+  \ar{r}{\pullbackpr{2}{\efamext}{\eft[1]}}
+  \ar{dr}[swap]{\eext{2}}
+  &
+\stesysf_2
+  \ar{r}{\efamext}
+  &
+\stesysf
+  \\
+  {} &
+\stesysf_2
+  \ar{ur}[swap]{\efamext}
+\end{tikzcd}
+\end{equation*}
+completing the proof.
 \end{proof}
 
 \begin{defn}
