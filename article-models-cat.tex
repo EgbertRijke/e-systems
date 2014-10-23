@@ -307,8 +307,8 @@ Suppose $\stesys$ is a pre-extension object of $\cat{C}$. Then we define the pre
 $\famesys{\stesys}$ to consist of the fundamental structure
 \begin{equation*}
 \begin{tikzcd}
-\pullback{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd}
-  \ar{d}{\ectxext^\ast(\ebd)}
+\stesyst_1
+  \ar{d}{\ebd[1]}
   \\
 \stesysf_2
   \ar{d}{\eft[1]}
@@ -316,6 +316,14 @@ $\famesys{\stesys}$ to consist of the fundamental structure
 \stesysf
 \end{tikzcd}
 \end{equation*}
+where
+\begin{align*}
+\stesyst_1 
+  & := \pullback{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd}
+  \\
+\ebd[1]
+  & := \ectxext^\ast(\ebd),
+\end{align*}
 with the extension operations
 \begin{align*}
 \efamext 
@@ -379,7 +387,7 @@ It is straightforward to verify the equalities
   (\pullback{\pullbackpr{2}{\efamext}{\eft[1]}}{\pullbackpr{2}{\efamext}{\eft[1]}}{\efamext}{\eft[1]})
   & =
 \pullbackpr{1}{\ectxext}{\eft}\circ\beta_2\circ\beta_3
-\intertext{and}
+  \\
 \pullbackpr{2}{\ectxext}{\eft}\circ\beta_2\circ
   (\pullback{\pullbackpr{2}{\efamext}{\eft[1]}}{\pullbackpr{2}{\efamext}{\eft[1]}}{\efamext}{\eft[1]})
   & =
@@ -427,11 +435,11 @@ commutes.
 \end{lem}
 
 \begin{proof}
-It is straightforward to verify that
+It is straightforward to verify the equalities
 \begin{align*}
 \pullbackpr{1}{\ectxext}{\eft}\circ\beta_2\circ\eext{3}
   & = \beta_1\circ\eft[2]\circ\eft[3]
-\intertext{and that}
+  \\
 \pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\beta_3
   & = \beta_1\circ\eft[2]\circ\eft[3].
 \end{align*}
@@ -612,12 +620,12 @@ completing the proof.
 \end{proof}
 
 \begin{defn}
-Let $\stesys$ and $\stesys'$ be (pre-)extension algebras. An \emph{(pre-)extension homomorphism $f$ from 
-$\stesys$ to $\stesys'$} is a triple $(f_0,f_1,f_2)$ consisting of morphisms
+Let $\stesys$ and $\stesys'$ be pre-extension algebras. An \emph{pre-extension homomorphism $f$ from 
+$\stesys$ to $\stesys'$} is a triple $(f_0,f_1,f^t)$ consisting of morphisms
 \begin{equation*}
 \begin{tikzcd}
 \stesyst 
-  \ar{r}{f_2}
+  \ar{r}{f^t}
   \ar{d}[swap]{\ebd}
   &
 \stesyst'
@@ -667,8 +675,172 @@ and
 \stesysf'
 \end{tikzcd}
 \end{equation*}
-Composition and the identity homomorphism are defined in the expected way.
+Composition and the identity homomorphism are defined in the expected way. We
+define furthermore
+\begin{align*}
+f_2 & := \pullback{f_1}{f_1}{\ectxext'}{\eft'}
+  \\
+f_3 & := \pullback{f_2}{f_2}{\efamext'}{\eft[1]'}.
+\end{align*}
 \end{defn}
+
+\begin{defn}
+A pre-extension homomorphism between extension objects is called an extension
+homomorphism.
+\end{defn}
+
+\begin{defn}
+Suppose that $f:\stesys\to\stesys'$ is a pre-extension homomorphism. Then we
+define $\famehom{f}:\famesys{\stesys}\to\famesys{\stesys'}$ to consist of
+\begin{equation*}
+\begin{tikzcd}
+\stesyst_1
+  \ar{r}{f^t_1}
+  \ar{d}[swap]{\ebd[1]}
+  &
+\stesyst_1'
+  \ar{d}{\ebd[1]'}
+  \\
+\stesysf_2
+  \ar{r}{f_2}
+  \ar{d}[swap]{\eft[1]}
+  &
+\stesysf_2'
+  \ar{d}{\eft[1]'}
+  \\
+\stesysf
+  \ar{r}[swap]{f_1}
+  &
+\stesysf'
+\end{tikzcd}
+\end{equation*}
+\end{defn}
+
+\begin{lem}
+The triple $\famehom{f}$ is a pre-extension homomorphism.
+\end{lem}
+
+\begin{proof}
+Note that the square
+\begin{equation*}
+\begin{tikzcd}
+\stesysf_2
+  \ar{r}{f_2}
+  \ar{d}[swap]{\efamext}
+  &
+\stesysf_2'
+  \ar{d}{\efamext'}
+  \\
+\stesysf
+  \ar{r}[swap]{f_1}
+  &
+\stesysf'
+\end{tikzcd}
+\end{equation*}
+commutes by assumption. Thus, it remains to show that the square
+\begin{equation*}
+\begin{tikzcd}
+\stesysf_3
+  \ar{r}{f_3}
+  \ar{d}[swap]{\eext{2}}
+  &
+\stesysf_3'
+  \ar{d}{\eext{2}'}
+  \\
+\stesysf_2
+  \ar{r}[swap]{f_2}
+  &
+\stesysf_2'
+\end{tikzcd}
+\end{equation*}
+commutes. It is equivalent to show that the equalities
+\begin{align*}
+\pullbackpr{1}{\ectxext'}{\eft'}\circ f_2\circ\eext{2}
+  & =
+\pullbackpr{1}{\ectxext'}{\eft'}\circ \eext{2}'\circ f_3
+  \\
+\pullbackpr{2}{\ectxext'}{\eft'}\circ f_2\circ\eext{2}
+  & =
+\pullbackpr{2}{\ectxext'}{\eft'}\circ \eext{2}'\circ f_3
+\end{align*}
+both hold. For the first, it is straightforward to verify that the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+{} &
+\stesysf_2
+  \ar{r}{f_2}
+  \ar{dr}[near end]{\pullbackpr{1}{\ectxext}{\eft}}
+  &
+\stesysf_2'
+  \ar{dr}{\pullbackpr{1}{\ectxext'}{\eft'}}
+  \\
+\stesysf_3
+  \ar{ur}{\eext{2}}
+  \ar{r}[swap]{\beta_2}
+  \ar{ddr}[swap]{f_3}
+  &
+\stesysf_2
+  \ar{r}{\efamext}
+  \ar{dr}[swap]{f_2}
+  &
+\stesysf
+  \ar{r}{f_1}
+  &
+\stesysf'
+  \\
+{} & {} &
+\stesysf_2'
+  \ar{ur}[near start]{\efamext'}
+  \\
+{} &
+\stesysf_3'
+  \ar{r}[swap]{\eext{2}'}
+  \ar{ur}{\beta_2'}
+  &
+\stesysf_2'
+  \ar{uur}[swap]{\pullbackpr{1}{\ectxext'}{\eft'}}
+\end{tikzcd}
+\end{equation*}
+commutes. For the second, note that the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+{} &
+\stesysf_2
+  \ar{r}{f_2}
+  \ar{dr}{\beta_1}
+  &
+\stesysf_2'
+  \ar{ddr}{\pullbackpr{2}{\ectxext'}{\eft'}}
+  \\
+{} & {} &
+\stesysf
+  \ar{dr}[swap,near start]{f_1}
+  \\
+\stesysf_3
+  \ar{uur}{\eext{2}}
+  \ar{r}{\beta_2}
+  \ar{dr}[swap]{f_3}
+  &
+\stesysf_2
+  \ar{r}{f_2}
+  \ar{ur}{\efamext}
+  &
+\stesysf_2'
+  \ar{r}[swap]{\efamext'}
+  &
+\stesysf'
+  \\
+{} &
+\stesysf_3'
+  \ar{r}[swap]{\eext{2}'}
+  \ar{ur}[near start]{\beta_2'}
+  &
+\stesysf_2'
+  \ar{ur}[swap]{\pullbackpr{2}{\ectxext'}{\eft'}}
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{proof}
 
 \begin{lem}[Stability under retracts]\label{esys-retract}
 Suppose $f:\stesys\to\stesys'$ is a pre-extension homomorphism between
@@ -677,54 +849,58 @@ pre-extension objects. If there is a pre-extension homomorphism $g:\stesys'\to
 algebra, then $\stesys$ is an extension algebra.
 \end{lem}
 
+Before we start with the proof, note that we have the equalities
+$g_2\circ f_2=\catid{\stesysf_2}$ and $g_3\circ f_3=\catid{\stesysf_3}$
+under the hypotheses of the lemma.
+
 \begin{proof}
-We first show that the square
+Our first subgoal is to show that the square
 \begin{equation*}
 \begin{tikzcd}
-\stesysff 
+\stesysf_2 
   \ar{r}{\efamext} 
-  \ar{d}[swap]{\pullbackpr{1}{\ectxext}{\eft}} 
+  \ar{d}[swap]{\pullbackpr{2}{\ectxext}{\eft}} 
   & 
 \stesysf 
-  \ar{d}{\eft}
+  \ar{d}{\ectxext}
   \\
 \stesysf
-  \ar{r}[swap]{\eft} 
+  \ar{r}[swap]{\ectxext} 
   & 
 \stesysc
 \end{tikzcd}
 \end{equation*}
-commutes. Note that we have the diagram
+commutes. Note that in the diagram
 \begin{equation*}
 \begin{tikzcd}
   {}
   & 
 \stesysf
-  \ar{dd}[near start]{\eft}
+  \ar{dd}[near start]{\ectxext}
   \ar{rr}{f_1}
   &
   &
 \stesysf'
-  \ar{dd}[near start]{\eft'}
+  \ar{dd}[near start]{\ectxext'}
   \ar{rr}{g_1}
   &
   &
 \stesysf
-  \ar{dd}{\eft}
+  \ar{dd}{\ectxext}
   \\
-\pullback{\stesysf}{\stesysf}{\ectxext}{\eft}
-  \ar{dd}[swap]{\pullbackpr{1}{\ectxext}{\eft}}
-  \ar[crossing over,dotted]{rr}[swap,fill=white]{\pullback{f_1}{f_1}{\ectxext'}{\eft'}}
+\stesysf_2
+  \ar{dd}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
+  \ar[crossing over]{rr}[swap,near start]{f_2}
   \ar{ur}{\efamext}
   &
   &
-\pullback{\stesysf'}{\stesysf'}{\ectxext'}{\eft'} 
+\stesysf_2'
   \ar{ur}[near start]{\efamext'}
-  \ar[crossing over,dotted]{rr}[swap,fill=white]{\pullback{g_1}{g_1}{\ectxext}{\eft}}
+  \ar[crossing over]{rr}[swap,near start]{g_2}
   &
   &
-\pullback{\stesysf}{\stesysf}{\ectxext}{\eft}
-  \ar{ur}%{\efamext}
+\stesysf_2
+  \ar{ur}[swap,near start]{\efamext}
   \\
   {}
   &
@@ -744,25 +920,39 @@ commutes. Note that we have the diagram
   &
   &
 \stesysf' 
-  \ar[crossing over,leftarrow]{uu}[near end,swap]{}
+  \ar[crossing over,leftarrow]{uu}[near end,swap]{\pullbackpr{2}{\ectxext'}{\eft'}}
   \ar{ur}[swap,near end]{\ectxext'}
   \ar{rr}[swap]{g_1}
   &
   &
 \stesysf
-  \ar[crossing over,leftarrow]{uu}[near end,swap]{}
-  \ar{ur}{\ectxext}
+  \ar[crossing over,leftarrow]{uu}[near end,swap]{\pullbackpr{2}{\ectxext}{\eft}}
+  \ar{ur}[swap]{\ectxext}
 \end{tikzcd}
 \end{equation*}
-and we also have that
+all the faces minus the far left and far right face commute. Using that $g$
+is a section of $f$, we can read off that also the far left face commutes,
+completing our first subgoal.
+ 
+For the second subgoal, note that also $\famehom{g}\circ\famehom{f}=
+\catid{\famesys{\stesys}}$ and that $\famesys{\stesys'}$ is an extension object.
+Thus we can apply what we have proven so far to conclude that the square
 \begin{equation*}
-(\pullback{g_1}{g_1}{\ectxext}{\eft})\circ(\pullback{f_1}{f_1}{\ectxext'}{\eft'})
-=\catid{},
+\begin{tikzcd}
+\stesysf_3 
+  \ar{r}{\eext{2}} 
+  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[1]}} 
+  & 
+\stesysf_2 
+  \ar{d}{\efamext}
+  \\
+\stesysf_2
+  \ar{r}[swap]{\efamext} 
+  & 
+\stesysf
+\end{tikzcd}
 \end{equation*}
-so we can read off from the above diagram and the fact that the middle square
-commutes, that the square on the left commutes. Via a similar method it can
-be seen that the other two conditions are met as well.
-{\color{red} Do I need to give the full proof?}
+commutes.
 \end{proof}
 
 \begin{defn}[Change of base]\label{cobesys}
@@ -929,7 +1119,7 @@ f_1 & : \stesysf\to\stesysf'
   & : \pullback{\stesysf}{\stesysf}{\ectxext}{\eft}
   \to \pullback{\stesysf'}{\stesysf'}{\ectxext'}{\eft'}
   \\
-\pullback{f_1}{f_2}{\ectxext'}{\eft'\circ\ebd'}
+\pullback{f_1}{f^t}{\ectxext'}{\eft'\circ\ebd'}
   & : \pullback{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd}
   \to \pullback{\stesysf'}{\stesyst'}{\ectxext'}{\eft'\circ\ebd'}
 \end{align*}
@@ -1097,7 +1287,7 @@ such that the square
 \begin{equation*}
 \begin{tikzcd}
 T\times\mathbf{F}_{\mathbf{F}_{CFT}}
-  \ar{r}{f_2\times\mathbf{F}_{\mathbf{F}_f}}
+  \ar{r}{f^t\times\mathbf{F}_{\mathbf{F}_f}}
   \ar{d}[swap]{\mathbf{s}}
   &
 T'\times\mathbf{F}_{\mathbf{F}_{CFT'}}
