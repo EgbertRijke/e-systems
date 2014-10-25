@@ -381,6 +381,11 @@ commutes.
 \end{lem}
 
 \begin{proof}
+Left to the reader.
+\end{proof}
+
+\begin{comment}
+\begin{proof}
 It is straightforward to verify the equalities
 \begin{align*}
 \pullbackpr{1}{\ectxext}{\eft}\circ\beta_2\circ
@@ -394,6 +399,7 @@ It is straightforward to verify the equalities
 \pullbackpr{2}{\ectxext}{\eft}\circ\beta_2\circ\beta_3.\qedhere
 \end{align*}
 \end{proof}
+\end{comment}
 
 Note that the square
 \begin{equation*}
@@ -434,6 +440,10 @@ Let $\stesys$ be a pre-extension object. Then the square
 commutes.
 \end{lem}
 
+\begin{proof}
+Left to the reader.
+\end{proof}
+\begin{comment}
 \begin{proof}
 It is straightforward to verify the equalities
 \begin{align*}
@@ -501,6 +511,7 @@ commutes. It is likewise straightforward to see that the diagram
 \end{equation*}
 commutes, completing our goal.
 \end{proof}
+\end{comment}
 
 \begin{thm}[Local extension structure]\label{famextobj}
 If $\stesys$ is an extension object, then so is $\famesys{\stesys}$.
@@ -989,117 +1000,155 @@ X
 \end{equation*} 
 and the operations
 \begin{align*}
-\pullback{\catid{Y}}{\ectxext}{g}{p} 
+\cobesys{Y}{\ectxext}{g}{p} 
   & : \pullback{Y}{\stesysf}{g}{p\circ\eft}\to \pullback{Y}{\stesysc}{g}{p}\\
-g^\ast(\efamext) & : 
-  \pullback
+\cobesys{Y}{\efamext}{g}{p} 
+  & : \pullback
     {\pullback{Y}{\stesysf}{g}{p\circ\eft}}
     {\pullback{Y}{\stesysf}{g}{p\circ\eft}}
-    {\pullback{\catid{Y}}{\ectxext}{g}{p}}
+    {\cobesys{Y}{\ectxext}{g}{p}}
     {g^\ast(\eft)}
   \to 
   \pullback{Y}{\stesysf}{g}{p\circ\eft}.
 \end{align*}
+defined by
+\begin{equation*}
+\cobesys{Y}{\ectxext}{g}{p} := \pullback{\catid{Y}}{\ectxext}{g}{p}
+\end{equation*}
+and where $\cobesys{Y}{\efamext}{g}{p}$ is defined by rendering the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+(\cobesys{Y}{\stesysf}{g}{p\circ\eft})_2
+  \ar{rr}{\pullback{\pullbackpr{2}{g}{p\circ\eft}}{\pullbackpr{2}{g}{p\circ\eft}}{\ectxext}{\eft}}
+  \ar{dd}[swap]{\pullbackpr{1}{\cobesys{Y}{\ectxext}{g}{p}}{g^\ast(\eft)}}
+  \ar[dotted]{dr}[swap]{\cobesys{Y}{\efamext}{g}{p}}
+  &
+  &
+\stesysf_2
+  \ar{d}{\efamext}
+  \\
+  {}&
+\cobesys{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{r}{\pullbackpr{2}{g}{p\circ\eft}}
+  \ar{d}[swap]{\pullbackpr{1}{g}{p\circ\eft}}
+  &
+\stesysf
+  \ar{d}{p\circ\eft}
+  \\
+\cobesys{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{r}[swap]{\pullbackpr{1}{g}{p\circ\eft}}
+  &
+Y \ar{r}[swap]{g}
+  &
+X
+\end{tikzcd}
+\end{equation*} 
 The process of obtaining the pre-extension object $\cobesys{Y}{\stesys}{g}{p}$ out of $\stesys$
 and $g:Y\to X$ is also called the \emph{change of base}.
 \end{defn}
 
 \begin{lem}
-Any change of base of an extension algebra results in an extension algebra.
+Any change of base of a pre-extension algebra is a pre-extension algebra.
 \end{lem}
 
 \begin{proof}
 Let $\stesys$ be an extension algebra and consider $p:\stesysc\rightarrow X\leftarrow Y:g$.
+We need to verify that the square
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+(\pullback{Y}{\stesysf}{g}{p\circ\eft})_2
+  \ar{r}{\cobesys{Y}{\efamext}{g}{p}} 
+  \ar{d}[swap]{\pullbackpr{1}{\cobesys{Y}{\ectxext}{g}{p}}{g^\ast(\eft)}} 
+  & 
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{d}{g^\ast(\eft)}
+  \\
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{r}[swap]{g^\ast(\eft)} 
+  & 
+\pullback{Y}{\stesysc}{g}{p}
+\end{tikzcd}
+\end{equation*}
+commutes. It is fairly obvious that
+\begin{equation*}
+\pullbackpr{1}{g}{p}\circ g^\ast(\eft)\circ (\cobesys{Y}{\efamext}{g}{p})
+  =
+\pullbackpr{1}{g}{p\circ\eft}\circ \pullbackpr{1}{\cobesys{Y}{\ectxext}{g}{p}}{g^\ast(\eft)}
+\end{equation*}
+and that the diagram
+\begin{equation*}
+\begin{tikzcd}
+  {}&
+  {}&
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{rr}{g^\ast(\eft)}
+  \ar{dr}[swap]{\pullbackpr{2}{g}{p\circ\eft}}
+  &
+  {}&
+\pullback{Y}{\stesysc}{g}{p}
+  \ar{ddr}{\pullbackpr{2}{g}{p}}
+  \\
+  {}&
+  {}&
+  {}&
+\stesysf
+  \ar{drr}[swap]{\eft}
+  \\
+(\pullback{y}{\stesysf}{g}{p\circ\eft})_2
+  \ar{uurr}{\cobesys{Y}{\efamext}{g}{p}}
+  \ar{rr}[swap,yshift=-.5ex]{\pullback{\pullbackpr{2}{g}{p\circ\eft}}{\pullbackpr{2}{g}{p\circ\eft}}{\ectxext}{\eft}}
+  \ar{ddrr}[swap]{\pullbackpr{1}{\cobesys{Y}{\ectxext}{g}{p}}{g^\ast(\eft)}}
+  &
+  {}&
+\stesysf_2
+  \ar{ur}{\efamext}
+  \ar{dr}[swap]{\eft[1]}
+  &
+  {}&
+  {}&
+\stesysc
+  \\
+  {}&
+  {}&
+  {}&
+\stesysf
+  \ar{urr}{\eft}
+  \\
+  {}&
+  {}&
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{rr}[swap]{g^\ast(\eft)}
+  \ar{ur}{\pullbackpr{2}{g}{p\circ\eft}}
+  &
+  {}&
+\pullback{Y}{\stesysc}{g}{p}
+  \ar{uur}[swap]{\pullbackpr{2}{g}{p}}
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{proof}
+
+\begin{thm}
+The change of base of an extension algebra is an extension algebra.
+\end{thm}
+
+\begin{proof}
 Our first subgoal is to verify that the square
 \begin{equation*}
-\begin{tikzcd}
-\pullback%
-  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}%
-  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}%
-  {g^\ast(\ectxext)}%
-  {g^\ast(\eft)}
-  \ar{r}{g^\ast(\efamext)} 
-  \ar{d}[swap]{(g^\ast(\ectxext))^\ast(g^\ast(\eft))} 
+\begin{tikzcd}[column sep=large]
+(\pullback{Y}{\stesysf}{g}{p\circ\eft})_2
+  \ar{r}{\cobesys{Y}{\efamext}{g}{p}} 
+  \ar{d}[swap]{\pullbackpr{2}{\cobesys{Y}{\ectxext}{g}{p}}{g^\ast(\eft)}} 
   & 
 \pullback{Y}{\stesysf}{g}{p\circ\eft}
-  \ar{d}{g^\ast(\eft)}
+  \ar{d}{\cobesys{Y}{\ectxext}{g}{p}}
   \\
 \pullback{Y}{\stesysf}{g}{p\circ\eft}
-  \ar{r}[swap]{g^\ast(\eft)} 
+  \ar{r}[swap]{\cobesys{Y}{\ectxext}{g}{p}} 
   & 
 \pullback{Y}{\stesysc}{g}{p}
 \end{tikzcd}
 \end{equation*}
-commutes. To see this, note that we have a commutative diagram
-\begin{equation*}
-\begin{tikzcd}
-{}&
-  \pullback%
-  {Y}
-  {\pullback{\stesysf}{\stesysf}{\ectxext}{\eft}}
-  {g}
-  {p\circ\eft\circ\pullbackpr{2}{\ectxext}{\eft}}
-  \ar{dl}[swap]{g^\ast(\pullbackpr{2}{\ectxext}{\eft})}
-  \ar{dr}{g^\ast(\efamext)}
-  \ar{d}{\simeq}
-  \\
-\pullback{Y}{\stesysf}{g}{p\circ\eft}
-  &
-\pullback%
-  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}
-  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}
-  {g^\ast(\ectxext)}
-  {g^\ast(\eft)}
-  \ar{r}[swap]{g^\ast(\efamext)}
-  \ar{l}[yshift=-1ex]{(g^\ast(\ectxext))^\ast(g^\ast(\eft))}
-  &
-\pullback{Y}{\stesysf}{g}{p\circ\eft}
-\end{tikzcd}
-\end{equation*}
-where the downwards arrow is an isomorphism. Using this observation, we see that
-it is equivalent to show that the square
-\begin{equation*}
-\begin{tikzcd}
-\pullback%
-  {Y}
-  {\pullback{\stesysf}{\stesysf}{\ectxext}{\eft}}
-  {g}
-  {p\circ\eft\circ\pullbackpr{2}{\ectxext}{\eft}}
-  \ar{r}{g^\ast(\efamext)} 
-  \ar{d}[swap]{g^\ast(\pullbackpr{2}{\ectxext}{\eft})} 
-  & 
-\pullback{Y}{\stesysf}{g}{p\circ\eft}
-  \ar{d}{g^\ast(\eft)}
-  \\
-\pullback{Y}{\stesysf}{g}{p\circ\eft}
-  \ar{r}[swap]{g^\ast(\eft)} 
-  & 
-\pullback{Y}{\stesysc}{g}{p}
-\end{tikzcd}
-\end{equation*}
-commutes. But this is just a pullback along $g$ of a square which commutes by assumption.
-\begin{comment}
-Our next subgoal is to verify that the square
-\begin{equation*}
-\begin{tikzcd}
-\pullback%
-  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}%
-  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}%
-  {g^\ast(\ectxext)}%
-  {g^\ast(\eft)}
-  \ar{r}{g^\ast(\efamext)} 
-  \ar{d}[swap]{(g^\ast(\ectxext))^\ast(g^\ast(\ectxext))} 
-  & 
-\pullback{Y}{\stesysf}{g}{p\circ\eft}
-  \ar{d}{g^\ast(\ectxext)}
-  \\
-\pullback{Y}{\stesysf}{g}{p\circ\eft}
-  \ar{r}[swap]{g^\ast(\ectxext)} 
-  & 
-\pullback{Y}{\stesysc}{g}{p}
-\end{tikzcd}
-\end{equation*}
-\end{comment}
 \end{proof}
 
 \begin{lem}
@@ -1110,93 +1159,150 @@ $g^\ast(f):\cobesys{Y}{\stesys}{g}{p\circ f_0}\to
 \end{lem}
 
 \begin{lem}
-Suppose that $f:\stesys\to\stesys'$ is a pre-extension homomorphism. Then the
-triple
-\begin{align*}
-f_1 & : \stesysf\to\stesysf'
-  \\
-\pullback{f_1}{f_1}{\ectxext'}{\eft'}
-  & : \pullback{\stesysf}{\stesysf}{\ectxext}{\eft}
-  \to \pullback{\stesysf'}{\stesysf'}{\ectxext'}{\eft'}
-  \\
-\pullback{f_1}{f^t}{\ectxext'}{\eft'\circ\ebd'}
-  & : \pullback{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd}
-  \to \pullback{\stesysf'}{\stesyst'}{\ectxext'}{\eft'\circ\ebd'}
-\end{align*}
-assembles a pre-extension homomorphism $\famehom{f}$ from
-$\famesys{\stesys}$ to $\famesys{\stesys'}$.
+Let $\stesys$ be a pre-extension algebra and consider $p:\stesysc\rightarrow X\leftarrow Y:g$.
+Then there is an isomorphism
+\begin{equation*}
+\famesys{\cobesys{Y}{\stesys}{g}{p}}
+  \simeq
+\cobesys{Y}{\famesys{\stesys}}{g}{p\circ\eft}.
+\end{equation*}
 \end{lem}
+
+\begin{proof}
+This follows from the pasting lemma for pullbacks.
+\end{proof}
 
 \subsection{Weakening objects}
 \begin{defn}
-A pre-weakening object $CFT$ in $\cat{C}$ is an extension object $CFT$ with 
-an extension homomorphism $\mathbf{w}:F\times\mathbf{F_{CFT}}\to \mathbf{F_{F_{CFT}}}$.
+A pre-weakening object $\stesys$ in $\cat{C}$ is an extension object $\stesys$ with 
+an extension homomorphism $\mathbf{w}(\stesys):\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}\to\famesys{\famesys{\stesys}}$ for which the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\pullback{\stesysf}{\stesysf}{\eft}{\eft}
+  \ar{r}{w(\stesys)_0}
+  \ar{dr}[swap]{\pullbackpr{1}{\eft}{\eft}}
+  &
+\stesysf_2
+  \ar{d}{\eft[1]}
+  \\
+& \stesysf
+\end{tikzcd}
+\end{equation*}
+commutes.
 \end{defn}
 
-\begin{comment}
-\begin{align*}
-w_0 & : F\times F\to F\times_{e_0,c} F\\
-w_1 & : F\times(F\times_{e_0,c} F) \to F\times_{e_0,c \circ \pi_2^{e_0,c}} (F\times_{e_0,c}F)\\
-w_2 & : F\times(F\times_{e_0,t\circ c} T) \to F\times_{e_0,c}(F\times_{e_0,t\circ c} T)
-\end{align*}
-for which the following diagrams commute:
+\begin{defn}
+A pre-weakening morphism between preweakening objects $\stesys$ and $\stesys'$ is an
+extension homomorphism $f:\stesys\to \stesys'$ such that additionally the diagram
 \begin{equation*}
-\begin{tikzcd}
-F\times F \ar{r}{w_0} \ar{dr}[swap]{\pi_1} & F\times_{e_0,c}F \ar{d}{\pi_2^{e_0,c}}\\
-& F
-\end{tikzcd}
-\end{equation*}
-\begin{equation*}
-\begin{tikzcd}
-F\times(F\times_{e_0,c} F) 
-  \ar{d}[swap]{\catid{F}\times \pi_2^{e_0,c}}
-  \ar{r}{w_1}
+\begin{tikzcd}[column sep=large]
+\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+  \ar{d}[swap]{\mathbf{w}(\stesys)}
+  \ar{r}{\pullback{f_1}{\famehom{f}}{\eft'}{\eft'}}
   &
-F\times_{e_0,c\circ \pi_2^{e_0,c}} (F\times_{e_0,c}F)
-  \ar{d}{e_0^\ast(\pi_2^{e_0,c})}
+\cobesys{\stesysf'}{\famesys{\stesys'}}{\eft'}{\eft'}
+  \ar{d}{\mathbf{w}(\stesys')}
   \\
-F\times F
-  \ar{r}[swap]{w_0}
+\famesys{\famesys{\stesys}}
+  \ar{r}[swap]{\famehom{\famehom{f}}}
   &
-F\times_{e_0,c} F
+\famesys{\famesys{\stesys'}}
 \end{tikzcd}
 \end{equation*}
-\begin{equation*}
-\begin{tikzcd}
-F\times(F\times_{e_0,t\circ c} T)
-  \ar{r}{w_2}
-  \ar{d}[swap]{\catid{F}\times e_0^\ast(t)}
-  &
-F\times_{e_0,c}(F\times_{e_0,t\circ c} T)
-  \ar{d}{e_0^\ast(e_0^\ast(t))}
-  \\
-F\times(F\times_{e_0,c} F)
-  \ar{r}[swap]{w_1}
-  &
-F\times_{e_0,c\circ \pi_2^{e_0,c}} (F\times_{e_0,c}F)
-\end{tikzcd}
-\end{equation*}
-\end{comment}
+commutes.
+\end{defn}
 
 \begin{defn}
-A pre-weakening morphism between preweakening objects $CFT$ and $CFT'$ is an
-extension homomorphism $f:CFT\to CFT'$ such that additionally the diagram
+Suppose $\stesys$ is a weakening object. We define
 \begin{equation*}
-\begin{tikzcd}
-F\times \mathbf{F}_{CFT}
-  \ar{d}[swap]{\mathbf{w}}
-  \ar{r}{f_1\times\mathbf{F}_f}
-  &
-F'\times\mathbf{F}_{CFT'}
-  \ar{d}{\mathbf{w'}}
+\mathbf{w}(\famesys{\stesys}):\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[1]}{\eft[1]}\to\famesys{\famesys{\famesys{\stesys}}}
+\end{equation*} 
+\begin{itemize}
+\item by letting $w(\famesys{\stesys})_0$ be the unique morphisms rendering the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\pullback{\stesysf_2}{\stesysf_2}{\eft[1]}{\eft[1]}
+  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft}}{\pullbackpr{2}{\ectxext}{\eft}}{\eft}{\eft}}
+  \ar[dotted]{dr}{w(\famesys{\stesys})_0}
+  \ar{dd}[swap]{\pullbackpr{1}{\eft[1]}{\eft[1]}}
+  & &
+\pullback{\stesysf}{\stesysf}{\eft}{\eft}
+  \ar{d}{w(\stesys)_0}
   \\
-\mathbf{F}_{\mathbf{F}_{CFT}}
-  \ar{r}[swap]{\mathbf{F}_{\mathbf{F}_f}}
+  {}&
+\stesysf_3
+  \ar{r}{\pullbackpr{2}{\efamext}{\eft[1]}}
+  \ar{d}[swap]{\pullbackpr{1}{\efamext}{\eft[1]}}
   &
-\mathbf{F}_{\mathbf{F}_{CFT'}}
+\stesysf_2
+  \ar{d}{\eft[1]}
+  \\
+\stesysf_2
+  \ar[equals]{r}
+  &
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  &
+\stesysf
 \end{tikzcd}
 \end{equation*}
-commutes
+\item by letting $w(\famesys{\stesys})_1$ be the unique morphisms rendering the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\pullback{\stesysf_2}{\stesysf_3}{\eft[1]}{\eft[1]\circ\eft[2]}
+  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft}}{\pullbackpr{2}{\efamext}{\eft[1]}}{\eft}{\eft\circ\eft[1]}}
+  \ar[dotted]{dr}{w(\famesys{\stesys})_1}
+  \ar{dd}[swap]{\eft[1]^\ast(\eft[2])}
+  & &
+\pullback{\stesysf}{\stesysf_2}{\eft}{\eft\circ\eft[1]}
+  \ar{d}{w(\stesys)_1}
+  \\
+  {}&
+\stesysf_4
+  \ar{r}{\pullbackpr{2}{\eext{2}}{\eft[2]}}
+  \ar{d}[swap]{\pullbackpr{1}{\eext{2}}{\eft[2]}}
+  &
+\stesysf_3
+  \ar{d}{\eft[2]}
+  \\
+\pullback{\stesysf_2}{\stesysf_2}{\eft[1]}{\eft[1]}
+  \ar{r}[swap]{w(\famesys{\stesys})_0}
+  &
+\stesysf_3
+  \ar{r}[swap]{\eext{2}}
+  &
+\stesysf_2
+\end{tikzcd}
+\end{equation*}
+\item by letting $w(\famesys{\stesys})_t$ be the unique morphisms rendering the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\pullback{\stesysf_2}{\stesyst_2}{\eft[1]}{\eft[1]\circ\eft[2]\circ\ebd[2]}
+  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft}}{\pullbackpr{2}{\efamext}{\eft[1]\circ\ebd[1]}}{\eft}{\eft\circ\eft[1]\circ\ebd[1]}}
+  \ar[dotted]{dr}{w(\famesys{\stesys})_t}
+  \ar{dd}[swap]{\eft[1]^\ast(\eft[2]\circ\ebd[2])}
+  & &
+\pullback{\stesysf}{\stesyst_1}{\eft}{\eft\circ\eft[1]\circ\ebd[1]}
+  \ar{d}{w(\stesys)_1}
+  \\
+  {}&
+\stesyst_3
+  \ar{r}{\pullbackpr{2}{\efamext}{\eft[1]\circ\ebd[1]}}
+  \ar{d}[swap]{\pullbackpr{1}{\efamext}{\eft[1]\circ\ebd[1]}}
+  &
+\stesyst_2
+  \ar{d}{\eft[1]\circ\ebd[1]}
+  \\
+\pullback{\stesysf_2}{\stesysf_2}{\eft[1]}{\eft[1]}
+  \ar{r}[swap]{w(\famesys{\stesys})_0}
+  &
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+\end{itemize}
 \end{defn}
 
 \subsection{Projection objects}
