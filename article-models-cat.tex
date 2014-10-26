@@ -307,7 +307,7 @@ Suppose $\stesys$ is a pre-extension object of $\cat{C}$. Then we define the pre
 $\famesys{\stesys}$ to consist of the fundamental structure
 \begin{equation*}
 \begin{tikzcd}
-\stesyst_1
+\stesyst_2
   \ar{d}{\ebd[1]}
   \\
 \stesysf_2
@@ -318,7 +318,7 @@ $\famesys{\stesys}$ to consist of the fundamental structure
 \end{equation*}
 where
 \begin{align*}
-\stesyst_1 
+\stesyst_2 
   & := \pullback{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd}
   \\
 \ebd[1]
@@ -705,11 +705,11 @@ Suppose that $f:\stesys\to\stesys'$ is a pre-extension homomorphism. Then we
 define $\famehom{f}:\famesys{\stesys}\to\famesys{\stesys'}$ to consist of
 \begin{equation*}
 \begin{tikzcd}
-\stesyst_1
+\stesyst_2
   \ar{r}{f^t_1}
   \ar{d}[swap]{\ebd[1]}
   &
-\stesyst_1'
+\stesyst_2'
   \ar{d}{\ebd[1]'}
   \\
 \stesysf_2
@@ -1043,6 +1043,7 @@ Y \ar{r}[swap]{g}
 X
 \end{tikzcd}
 \end{equation*} 
+commutative. 
 The process of obtaining the pre-extension object $\cobesys{Y}{\stesys}{g}{p}$ out of $\stesys$
 and $g:Y\to X$ is also called the \emph{change of base}.
 \end{defn}
@@ -1162,15 +1163,156 @@ $g^\ast(f):\cobesys{Y}{\stesys}{g}{p\circ f_0}\to
 Let $\stesys$ be a pre-extension algebra and consider $p:\stesysc\rightarrow X\leftarrow Y:g$.
 Then there is an isomorphism
 \begin{equation*}
-\famesys{\cobesys{Y}{\stesys}{g}{p}}
+\varphi:\famesys{\cobesys{Y}{\stesys}{g}{p}}
   \simeq
-\cobesys{Y}{\famesys{\stesys}}{g}{p\circ\eft}.
+\cobesys{Y}{\famesys{\stesys}}{g}{p\circ\eft}
 \end{equation*}
+uniquely determined by
 \end{lem}
 
 \begin{proof}
 This follows from the pasting lemma for pullbacks.
 \end{proof}
+
+The following construction is useful for defining extension homomorphisms into
+`higher' extension objects
+
+\begin{defn}
+Let $\stesys'$ and $\stesys$ be extension objects, let
+\begin{equation*}
+f : \stesys'\to\famesys{\stesys}
+\end{equation*}
+be an extension homomorphism and let $p:\stesysc'\to\stesysf$ be a morphism
+such that
+\begin{equation*}
+\begin{tikzcd}
+\stesysc'
+  \ar{r}{f_0}
+  \ar{d}[swap]{p}
+  &
+\stesysf
+  \ar{d}{\eft}
+  \\
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutes. Then we construct
+\begin{equation*}
+\tilde{f}:\stesys'\to\famesys{\famesys{\stesys}}
+\end{equation*}
+as follows:
+\begin{enumerate}
+\item let $\tilde{f}_0:\stesysc'\to\stesysf_2$ be the unique morphism rendering
+the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesysc' 
+  \ar[bend left=10]{rrd}{f_0}
+  \ar[swap,bend right=10]{ddr}{p}
+  \ar[dotted]{dr}[near end]{\tilde{f}_0}
+  \\
+  {}&
+\stesysf_2
+  \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
+  \ar{d}{\eft[1]}
+  &
+\stesysf
+  \ar{d}{\eft}
+  \\
+  {}&
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutative.
+\item Let $\tilde{f}_1:\stesysf'\to\stesysf_3$ be the unique morphism rendering
+the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesysf'
+  \ar[bend left=10]{drr}{f_1}
+  \ar[swap]{dd}{\eft'}
+  \ar[dotted]{dr}[near end]{\tilde{f}_1}
+  \\
+  {}&
+\stesysf_3
+  \ar{r}[swap]{\pullbackpr{2}{\efamext}{\eft[1]}}
+  \ar{d}{\eft[1]}
+  &
+\stesysf_2
+  \ar{d}{\eft[1]}
+  \\
+\stesysc'
+  \ar{r}[swap]{\tilde{f}_0}
+  &
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commutative.
+\item Let $\tilde{f}^t:\stesyst'\to\stesyst_3$ be the unique morphism rendering
+the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesyst'
+  \ar[bend left=10]{drr}{f^t}
+  \ar[swap]{dd}{\eft'\circ\ebd'}
+  \ar[dotted]{dr}[near end]{\tilde{f}^t}
+  \\
+  {}&
+\stesyst_3
+  \ar{r}[swap]{\pullbackpr{2}{\efamext}{\eft[1]\circ\ebd[1]}}
+  \ar{d}[swap]{\pullbackpr{1}{\efamext}{\eft[1]\circ\ebd[1]}}
+  &
+\stesyst_2
+  \ar{d}{\eft[1]\circ\ebd[1]}
+  \\
+\stesysc'
+  \ar{r}[swap]{\tilde{f}_0}
+  &
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commutative.
+\end{enumerate}
+\end{defn}
+
+\begin{lem}
+The above construction leads to the unique extension homomorphism for which
+the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesys' 
+  \ar[bend left=10]{rrd}{f}
+  \ar[swap,bend right=10]{ddr}{p}
+  \ar[dotted]{dr}[near end]{\tilde{f}}
+  \\
+  {}&
+\famesys{\famesys{\stesys}}
+  \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
+  \ar{d}{\eft[1]}
+  &
+\famesys{\stesys}
+  \ar{d}{\eft}
+  \\
+  {}&
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+\end{lem}
 
 \subsection{Weakening objects}
 \begin{defn}
@@ -1192,33 +1334,12 @@ commutes.
 \end{defn}
 
 \begin{defn}
-A pre-weakening morphism between preweakening objects $\stesys$ and $\stesys'$ is an
-extension homomorphism $f:\stesys\to \stesys'$ such that additionally the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
-  \ar{d}[swap]{\mathbf{w}(\stesys)}
-  \ar{r}{\pullback{f_1}{\famehom{f}}{\eft'}{\eft'}}
-  &
-\cobesys{\stesysf'}{\famesys{\stesys'}}{\eft'}{\eft'}
-  \ar{d}{\mathbf{w}(\stesys')}
-  \\
-\famesys{\famesys{\stesys}}
-  \ar{r}[swap]{\famehom{\famehom{f}}}
-  &
-\famesys{\famesys{\stesys'}}
-\end{tikzcd}
-\end{equation*}
-commutes.
-\end{defn}
-
-\begin{defn}
 Suppose $\stesys$ is a weakening object. We define
 \begin{equation*}
 \mathbf{w}(\famesys{\stesys}):\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[1]}{\eft[1]}\to\famesys{\famesys{\famesys{\stesys}}}
 \end{equation*} 
 \begin{itemize}
-\item by letting $w(\famesys{\stesys})_0$ be the unique morphisms rendering the diagram
+\item by letting $w(\famesys{\stesys})_0$ be the unique morphism rendering the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 \pullback{\stesysf_2}{\stesysf_2}{\eft[1]}{\eft[1]}
@@ -1246,7 +1367,8 @@ Suppose $\stesys$ is a weakening object. We define
 \stesysf
 \end{tikzcd}
 \end{equation*}
-\item by letting $w(\famesys{\stesys})_1$ be the unique morphisms rendering the diagram
+commutative
+\item by letting $w(\famesys{\stesys})_1$ be the unique morphism rendering the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 \pullback{\stesysf_2}{\stesysf_3}{\eft[1]}{\eft[1]\circ\eft[2]}
@@ -1274,67 +1396,184 @@ Suppose $\stesys$ is a weakening object. We define
 \stesysf_2
 \end{tikzcd}
 \end{equation*}
-\item by letting $w(\famesys{\stesys})_t$ be the unique morphisms rendering the diagram
+commutative
+\item by letting $w(\famesys{\stesys})_t$ be the unique morphism rendering the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
-\pullback{\stesysf_2}{\stesyst_2}{\eft[1]}{\eft[1]\circ\eft[2]\circ\ebd[2]}
+\pullback{\stesysf_2}{\stesyst_3}{\eft[1]}{\eft[1]\circ\eft[2]\circ\ebd[2]}
   \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft}}{\pullbackpr{2}{\efamext}{\eft[1]\circ\ebd[1]}}{\eft}{\eft\circ\eft[1]\circ\ebd[1]}}
-  \ar[dotted]{dr}{w(\famesys{\stesys})_t}
+  \ar[dotted]{dr}{w(\famesys{\stesys})^t}
   \ar{dd}[swap]{\eft[1]^\ast(\eft[2]\circ\ebd[2])}
   & &
-\pullback{\stesysf}{\stesyst_1}{\eft}{\eft\circ\eft[1]\circ\ebd[1]}
+\pullback{\stesysf}{\stesyst_2}{\eft}{\eft\circ\eft[1]\circ\ebd[1]}
   \ar{d}{w(\stesys)_1}
   \\
   {}&
-\stesyst_3
-  \ar{r}{\pullbackpr{2}{\efamext}{\eft[1]\circ\ebd[1]}}
-  \ar{d}[swap]{\pullbackpr{1}{\efamext}{\eft[1]\circ\ebd[1]}}
+\stesyst_4
+  \ar{r}{\pullbackpr{2}{\eext{2}}{\eft[2]\circ\ebd[2]}}
+  \ar{d}[swap]{\pullbackpr{1}{\eext{2}}{\eft[2]\circ\ebd[2]}}
   &
-\stesyst_2
-  \ar{d}{\eft[1]\circ\ebd[1]}
+\stesyst_3
+  \ar{d}{\eft[2]\circ\ebd[2]}
   \\
 \pullback{\stesysf_2}{\stesysf_2}{\eft[1]}{\eft[1]}
   \ar{r}[swap]{w(\famesys{\stesys})_0}
   &
-\stesysf_2
-  \ar{r}[swap]{\efamext}
+\stesysf_3
+  \ar{r}[swap]{\eext{2}}
   &
-\stesysf
+\stesysf_2
 \end{tikzcd}
 \end{equation*}
+commutative.
 \end{itemize}
+\end{defn}
+
+\begin{lem}
+If $\stesys$ is a pre-weakening algebra, then so is $\famesys{\stesys}$. 
+\end{lem}
+
+\begin{proof}
+We only have to verify that $\mathbf{w}(\famesys{\stesys})$ is a pre-extension
+homomorphism, the requirement on weakenings is satisfied by construction.
+The bottom square of the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\pullback{\stesysf_2}{\stesyst_3}{\eft[1]}{\eft[1]\circ\eft[2]\circ\ebd[2]}
+  \ar{r}{w(\famesys{\stesys})^t}
+  \ar{d}[swap]{\eft[1]^\ast(\ebd[2])}
+  &
+\stesyst_4
+  \ar{d}{\ebd[3]}
+  \\
+\pullback{\stesysf_2}{\stesysf_3}{\eft[1]}{\eft[1]\circ\eft[2]}
+  \ar{r}{w(\famesys{\stesys})_1}
+  \ar{d}[swap]{\eft[1]^\ast(\eft[2])}
+  &
+\stesysf_4
+  \ar{d}{\eft[3]}
+  \\
+\pullback{\stesysf_2}{\stesysf_2}{\eft[1]}{\eft[1]}
+  \ar{r}[swap]{w(\famesys{\stesys})_0}
+  &
+\stesysf_3
+\end{tikzcd}
+\end{equation*}
+commutes by construction. To show that the top square commtues, post-compose
+with the pullback projections.
+\end{proof}
+
+\begin{defn}
+Let $\stesys$ be a pre-weakening algebra and consider $p:\stesysc\rightarrow X\leftarrow Y:p$.
+Then we define
+\begin{equation*}
+\mathbf{w}(\cobesys{Y}{\stesys}{g}{p}):
+  \cobesys{(\pullback{Y}{\stesysf}{g}{p\circ\eft})}{\famesys{\cobesys{Y}{\stesys}{g}{p}}}{g^\ast(\eft)}{g^\ast(\eft)}\to\famesys{\famesys{\cobesys{Y}{\stesys}{g}{p}}}
+\end{equation*}
+\begin{itemize}
+\item by defining $w(\cobesys{Y}{\stesys}{g}{p})_0$ to be the unique morphism
+rendering the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\pullback
+  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}
+  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}
+  {g^\ast(\eft)}
+  {g^\ast(\eft)}
+  \ar{rr}
+  \ar{ddd}[swap]{\pullbackpr{1}{g^\ast(\eft)}{g^\ast(\eft)}}
+  &
+  {}&
+\pullback
+  {Y}
+  {\pullback{\stesysf}{\stesysf}{\eft}{\eft}}
+  {g}
+  {p\circ\eft\circ\pullbackpr{1}{\eft}{\eft}}
+  \ar{d}{\pullback{\catid{Y}}{w(\stesys)_0}{g}{p\circ\eft}}
+  \\
+  {}&
+  {}&
+\pullback{Y}{\stesysf_2}{g}{p\circ\eft\circ\eft[1]}
+  \ar{d}{\pullbackpr{2}{\ectxext}{\eft}}
+  \\
+  {}&
+(\pullback{Y}{\stesysf}{g}{p\circ\eft})_2
+  \ar{r}{\pullbackpr{2}{\cobesys{Y}{\ectxext}{g}{p}}{g^\ast(\eft)}}
+  \ar{d}[swap]{\pullbackpr{1}{\cobesys{Y}{\ectxext}{g}{p}}{g^\ast(\eft)}}
+  &
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{d}{g^\ast(\eft)}
+  \\
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar[equals]{r}
+  &
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{r}[swap]{\cobesys{Y}{\ectxext}{g}{p}}
+  &
+\pullback{Y}{\stesysc}{g}{p}
+\end{tikzcd}
+\end{equation*}
+commutative.
+\end{itemize}
+\end{defn}
+
+\begin{defn}
+A pre-weakening morphism between preweakening objects $\stesys$ and $\stesys'$ is an
+extension homomorphism $f:\stesys\to \stesys'$ such that additionally the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+  \ar{d}[swap]{\mathbf{w}(\stesys)}
+  \ar{r}{\pullback{f_1}{\famehom{f}}{\eft'}{\eft'}}
+  &
+\cobesys{\stesysf'}{\famesys{\stesys'}}{\eft'}{\eft'}
+  \ar{d}{\mathbf{w}(\stesys')}
+  \\
+\famesys{\famesys{\stesys}}
+  \ar{r}[swap]{\famehom{\famehom{f}}}
+  &
+\famesys{\famesys{\stesys'}}
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{defn}
+
+\begin{defn}
+A weakening object is a pre-weakening object $\stesys$ with the property that
+$\mathbf{w}(\stesys)$ is a pre-weakening morphism,
 \end{defn}
 
 \subsection{Projection objects}
 \begin{defn}
-A pre-projection object is a weakening object $CFT$ for which there is a term
-$\mathbf{i}:F\to F\times_{e_0,c}T$ such that the diagram
+A pre-projection object is a weakening object $\stesys$ for which there is a term
+$\mathbf{i}:\stesysf\to \stesyst_2$ such that the diagram
 \begin{equation*}
-\begin{tikzcd}
-{} & F\times_{e_0,c}T \ar{d}{F\times_{e_0,c}t}\\
-F \ar{ur}{\mathbf{i}} \ar{r}[swap]{w_0\circ\Delta} & F\times_{e_0,c}F
+\begin{tikzcd}[column sep=large]
+\stesysf \ar{r}{\mathbf{i}} \ar{d}[swap]{\Delta_{\eft}} & \stesyst_2 \ar{d}{\ebd[1]}\\
+\pullback{\stesysf}{\stesysf}{\eft}{\eft} \ar{r}[swap]{w(\stesys)_0} & \stesysf_2
 \end{tikzcd}
 \end{equation*}
-commutes. In this diagram $\Delta:F\to F\times F$ is the diagonal.
+commutes. In this diagram $\Delta_{\eft}:\stesysf\to \pullback{\stesysf}{\stesysf}{\eft}{\eft}$ is the diagonal.
 \end{defn}
 
 \begin{defn}
-A pre-projection homomorphism from $CFT$ to $CFT'$ is a weakening homomorphism
-$f:CFT\to CFT'$ such that the square
+A pre-projection homomorphism from $\stesys$ to $\stesys'$ is a weakening homomorphism
+$f:\stesys\to \stesys'$ such that the square
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-F\times_{e_0,c}T
-  \ar{r}{f_1\times_{e_0,c}f_2}
+\stesyst_2
+  \ar{r}{f^t_1}
   &
-F'\times_{e_0',c'}T'
+\stesyst_2'
   \\
-F \ar{r}[swap]{f_1}
+\stesysf \ar{r}[swap]{f_1}
   \ar{u}{\mathbf{i}}
   &
-F'
+\stesysf'
   \ar{u}[swap]{\mathbf{i}'}
 \end{tikzcd}
 \end{equation*}
+commutes
 \end{defn}
 
 \begin{lem}
@@ -1368,20 +1607,22 @@ a projection algebra.
 A pre-substitution object is an extension object for which the is an
 extension homomorphism
 \begin{equation*}
-\mathbf{s}:T\times\mathbf{F}_{\mathbf{F}_{CFT}}\to \mathbf{F}_{CFT}
+\mathbf{s}(\stesys):\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[1]}\to \famesys{\stesys}
 \end{equation*}
 such that the square
 \begin{equation*}
-\begin{tikzcd}
-T\times(F\times_{e_0,c}F)
-  \ar{r}{s_0}
-  \ar{d}[swap]{\pi_1(e_0,c)\circ\pi_2}
+\begin{tikzcd}[column sep=large]
+\pullback{\stesyst}{\stesysf_2}{\ebd}{\eft[1]}
+  \ar{r}{s(\stesys)_0}
+  \ar{d}[swap]{\ebd\circ\pullbackpr{1}{\ebd}{\eft[1]}}
   &
-F \ar{d}{\eft}
+\stesysf 
+  \ar{d}{\eft}
   \\
-F \ar{r}[swap]{\eft}
+\stesysf 
+  \ar{r}[swap]{\eft}
   &
-C
+\stesysc
 \end{tikzcd}
 \end{equation*}
 commutes.
