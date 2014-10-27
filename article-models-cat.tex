@@ -630,9 +630,22 @@ commutes. We also have the commutative diagram
 completing the proof.
 \end{proof}
 
+\subsection{(Pre-)extension homomorphisms}\label{subsection:e_extension_homomorphisms}
+In this subsection we start with the study of pre-extension homomorphisms, which
+will include the extension homomorphisms since they will be the pre-extension
+homomorphisms of which both the domain and codomain are extension objects.
+Our main examples of extension homomorphisms will be the operations of weakening
+and substitution. There are some basic examples of pre-extension homomorphisms
+that will be useful too, which get introduced in the this section and in
+\autoref{subsection:change_of_base}. In this section, we will mainly be
+interested in pre-extension homomorphisms between local pre-extension objects.
+We will end this section by proving that a retract of an extension object is
+always an extension object.
+
 \begin{defn}
-Let $\stesys$ and $\stesys'$ be pre-extension algebras. An \emph{pre-extension homomorphism $f$ from 
-$\stesys$ to $\stesys'$} is a triple $(f_0,f_1,f^t)$ consisting of morphisms
+Let $\stesys$ and $\stesys'$ be pre-extension algebras. A \emph{pre-extension 
+homomorphism $f$ from $\stesys$ to $\stesys'$} is a triple $(f_0,f_1,f^t)$ 
+consisting of morphisms
 \begin{equation*}
 \begin{tikzcd}
 \stesyst 
@@ -700,154 +713,258 @@ A pre-extension homomorphism between extension objects is called an extension
 homomorphism.
 \end{defn}
 
-\begin{defn}
-Suppose that $f:\stesys\to\stesys'$ is a pre-extension homomorphism. Then we
-define $\famehom{f}:\famesys{\stesys}\to\famesys{\stesys'}$ to consist of
+\begin{lem}
+Let $\stesys$ be an extension object. Then
 \begin{equation*}
-\begin{tikzcd}
+\begin{tikzcd}[column sep=large]
 \stesyst_2
-  \ar{r}{f^t_1}
+  \ar{r}{\pullbackpr{2}{\ectxext}{\eft\circ\ebd}}
   \ar{d}[swap]{\ebd[1]}
   &
-\stesyst_2'
-  \ar{d}{\ebd[1]'}
+\stesyst
+  \ar{d}{\ebd}
   \\
 \stesysf_2
-  \ar{r}{f_2}
+  \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
   \ar{d}[swap]{\eft[1]}
   &
-\stesysf_2'
-  \ar{d}{\eft[1]'}
+\stesysf
+  \ar{d}{\eft}
   \\
 \stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+assembles an extension homomorphism $\mathbf{e}_0:\famesys{\stesys}\to\stesys$.
+Likewise, we have an extension homomorphism
+$\mathbf{e}_1:\famesys{\famesys{\stesys}}\to\famesys{\stesys}$. Thus, a
+pre-extension object is an extension object if and only if $\mathbf{e}_0$
+and $\mathbf{e}_1$ are pre-extension homomorphisms.
+\end{lem}
+
+\begin{proof}
+Immediate from the conditions of being an extension object.
+\end{proof}
+
+\begin{defn}
+Let $\stesys$ be a pre-extension object. Then
+\begin{equation*}
+\begin{tikzcd}
+\stesyst_3
+  \ar{r}{\beta^t}
+  \ar{d}[swap]{\ebd[2]}
+  &
+\stesyst_2
+  \ar{d}{\ebd[1]}
+  \\
+\stesysf_3
+  \ar{r}{\beta_2}
+  \ar{d}[swap]{\eft[2]}
+  &
+\stesysf_2
+  \ar{d}{\eft[1]}
+  \\
+\stesysf_2
+  \ar{r}[swap]{\beta_1}
+  &
+\stesysf
+\end{tikzcd}
+\qquad
+\text{and}
+\qquad
+\begin{tikzcd}
+\stesyst_4
+  \ar{r}{\beta^t_2}
+  \ar{d}[swap]{\ebd[3]}
+  &
+\stesyst_3
+  \ar{d}{\ebd[2]}
+  \\
+\stesysf_4
+  \ar{r}{\beta_3}
+  \ar{d}[swap]{\eft[3]}
+  &
+\stesysf_3
+  \ar{d}{\eft[2]}
+  \\
+\stesysf_3
+  \ar{r}[swap]{\beta_2}
+  &
+\stesysf_2
+\end{tikzcd}
+\end{equation*}
+assemble pre-extension homomorphisms 
+\(
+\boldsymbol{\beta}
+  :
+\famesys{\famesys{\stesys}}
+  \to
+\famesys{\stesys}
+\) 
+and
+\(
+\boldsymbol{\beta}_\mathbf{2}
+  :
+\famesys{\famesys{\famesys{\stesys}}}
+  \to
+\famesys{\famesys{\stesys}}
+\).
+\end{defn}
+
+\begin{defn}\label{famehom}
+Suppose that $f:\stesys'\to\stesys$ is a pre-extension homomorphism. Then we
+define $\famehom{f}:\famesys{\stesys'}\to\famesys{\stesys}$ to consist of
+\begin{equation*}
+\begin{tikzcd}
+\stesyst_2'
+  \ar{r}{f^t_2}
+  \ar{d}[swap]{\ebd[1]'}
+  &
+\stesyst_2
+  \ar{d}{\ebd[1]}
+  \\
+\stesysf_2'
+  \ar{r}{f_2}
+  \ar{d}[swap]{\eft[1]'}
+  &
+\stesysf_2
+  \ar{d}{\eft[1]}
+  \\
+\stesysf'
   \ar{r}[swap]{f_1}
   &
-\stesysf'
+\stesysf
 \end{tikzcd}
+\end{equation*}
+where we define
+\begin{equation*}
+f^t_2 := \pullback{f_1}{f^t}{\ectxext}{\eft\circ\ebd}.
 \end{equation*}
 \end{defn}
 
 \begin{lem}
-The triple $\famehom{f}$ is a pre-extension homomorphism.
+The triple $\famehom{f}$ defined in \autoref{famehom} is a pre-extension homomorphism.
 \end{lem}
 
 \begin{proof}
 Note that the square
 \begin{equation*}
 \begin{tikzcd}
-\stesysf_2
-  \ar{r}{f_2}
-  \ar{d}[swap]{\efamext}
-  &
 \stesysf_2'
-  \ar{d}{\efamext'}
+  \ar{r}{f_2}
+  \ar{d}[swap]{\efamext'}
+  &
+\stesysf_2
+  \ar{d}{\efamext}
   \\
-\stesysf
+\stesysf'
   \ar{r}[swap]{f_1}
   &
-\stesysf'
+\stesysf
 \end{tikzcd}
 \end{equation*}
 commutes by assumption. Thus, it remains to show that the square
 \begin{equation*}
 \begin{tikzcd}
-\stesysf_3
-  \ar{r}{f_3}
-  \ar{d}[swap]{\eext{2}}
-  &
 \stesysf_3'
-  \ar{d}{\eext{2}'}
+  \ar{r}{f_3}
+  \ar{d}[swap]{\eext{2}'}
+  &
+\stesysf_3
+  \ar{d}{\eext{2}}
   \\
-\stesysf_2
+\stesysf_2'
   \ar{r}[swap]{f_2}
   &
-\stesysf_2'
+\stesysf_2
 \end{tikzcd}
 \end{equation*}
 commutes. It is equivalent to show that the equalities
 \begin{align*}
-\pullbackpr{1}{\ectxext'}{\eft'}\circ f_2\circ\eext{2}
+\pullbackpr{1}{\ectxext}{\eft}\circ f_2\circ\eext{2}'
   & =
-\pullbackpr{1}{\ectxext'}{\eft'}\circ \eext{2}'\circ f_3
+\pullbackpr{1}{\ectxext}{\eft}\circ \eext{2}\circ f_3
   \\
-\pullbackpr{2}{\ectxext'}{\eft'}\circ f_2\circ\eext{2}
+\pullbackpr{2}{\ectxext}{\eft}\circ f_2\circ\eext{2}'
   & =
-\pullbackpr{2}{\ectxext'}{\eft'}\circ \eext{2}'\circ f_3
+\pullbackpr{2}{\ectxext}{\eft}\circ \eext{2}\circ f_3
 \end{align*}
 both hold. For the first, it is straightforward to verify that the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 {} &
-\stesysf_2
-  \ar{r}{f_2}
-  \ar{dr}[near end]{\pullbackpr{1}{\ectxext}{\eft}}
-  &
 \stesysf_2'
-  \ar{dr}{\pullbackpr{1}{\ectxext'}{\eft'}}
+  \ar{r}{f_2}
+  \ar{dr}[near end]{\pullbackpr{1}{\ectxext'}{\eft'}}
+  &
+\stesysf_2
+  \ar{dr}{\pullbackpr{1}{\ectxext}{\eft}}
   \\
-\stesysf_3
-  \ar{ur}{\eext{2}}
-  \ar{r}[swap]{\beta_2}
+\stesysf_3'
+  \ar{ur}{\eext{2}'}
+  \ar{r}[swap]{\beta_2'}
   \ar{ddr}[swap]{f_3}
   &
-\stesysf_2
-  \ar{r}{\efamext}
+\stesysf_2'
+  \ar{r}{\efamext'}
   \ar{dr}[swap]{f_2}
   &
-\stesysf
+\stesysf'
   \ar{r}{f_1}
   &
-\stesysf'
+\stesysf
   \\
 {} & {} &
-\stesysf_2'
-  \ar{ur}[near start]{\efamext'}
+\stesysf_2
+  \ar{ur}[near start]{\efamext}
   \\
 {} &
-\stesysf_3'
-  \ar{r}[swap]{\eext{2}'}
-  \ar{ur}{\beta_2'}
+\stesysf_3
+  \ar{r}[swap]{\eext{2}}
+  \ar{ur}{\beta_2}
   &
-\stesysf_2'
-  \ar{uur}[swap]{\pullbackpr{1}{\ectxext'}{\eft'}}
+\stesysf_2
+  \ar{uur}[swap]{\pullbackpr{1}{\ectxext}{\eft}}
 \end{tikzcd}
 \end{equation*}
 commutes. For the second, note that the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 {} &
-\stesysf_2
-  \ar{r}{f_2}
-  \ar{dr}{\beta_1}
-  &
 \stesysf_2'
-  \ar{ddr}{\pullbackpr{2}{\ectxext'}{\eft'}}
+  \ar{r}{f_2}
+  \ar{dr}{\beta_1'}
+  &
+\stesysf_2
+  \ar{ddr}{\pullbackpr{2}{\ectxext}{\eft}}
   \\
 {} & {} &
-\stesysf
+\stesysf'
   \ar{dr}[swap,near start]{f_1}
   \\
-\stesysf_3
-  \ar{uur}{\eext{2}}
-  \ar{r}{\beta_2}
+\stesysf_3'
+  \ar{uur}{\eext{2}'}
+  \ar{r}{\beta_2'}
   \ar{dr}[swap]{f_3}
   &
-\stesysf_2
-  \ar{r}{f_2}
-  \ar{ur}{\efamext}
-  &
 \stesysf_2'
-  \ar{r}[swap]{\efamext'}
+  \ar{r}{f_2}
+  \ar{ur}{\efamext'}
   &
-\stesysf'
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  &
+\stesysf
   \\
 {} &
-\stesysf_3'
-  \ar{r}[swap]{\eext{2}'}
-  \ar{ur}[near start]{\beta_2'}
+\stesysf_3
+  \ar{r}[swap]{\eext{2}}
+  \ar{ur}[near start]{\beta_2}
   &
-\stesysf_2'
-  \ar{ur}[swap]{\pullbackpr{2}{\ectxext'}{\eft'}}
+\stesysf_2
+  \ar{ur}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
 \end{tikzcd}
 \end{equation*}
 commutes.
@@ -966,6 +1083,89 @@ Thus we can apply what we have proven so far to conclude that the square
 commutes.
 \end{proof}
 
+\subsection{The change of base of (pre-)extension objects}
+\label{subsection:change_of_base}
+An important construction of (pre-)extension objects is the change of base. It
+allows us to consider `parametrized homomorphisms', such as weakening and
+substitution.
+
+\begin{defn}
+Suppose $f:\stesys\to\stesys'$ is a pre-extension homomorphism. We say that
+a diagram
+\begin{equation*}
+\begin{tikzcd}
+\stesys
+  \ar{r}{f}
+  \ar{d}[swap]{p}
+  &
+\stesys'
+  \ar{d}{p'}
+  \\
+X \ar{r}[swap]{g}
+  &
+Y
+\end{tikzcd}
+\end{equation*}
+commutes if the diagram
+\begin{equation*}
+\begin{tikzcd}
+\stesysc
+  \ar{r}{f_0}
+  \ar{d}[swap]{p}
+  &
+\stesysc'
+  \ar{d}{p'}
+  \\
+X \ar{r}[swap]{g}
+  &
+Y
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{defn}
+
+The first goal in this subsection is to define for every (pre-)extension object 
+$\stesys$ and every $p:\stesysc\rightarrow X\leftarrow Y:g$, a (pre-)extension
+object $\cobesys{Y}{\stesys}{g}{p}$ with a homomorphism $\pullbackpr{2}{g}{p}:
+\cobesys{Y}{\stesys}{g}{p}\to\stesys$ and a morphism $\pullbackpr{1}{g}{p}:
+\pullback{Y}{\stesysc}{g}{p}\to Y$ such that for every diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesys'
+  \ar[bend right=10]{ddr}[swap]{p'}
+  \ar[bend left=10]{rrd}{f}
+  \ar[dotted]{dr}[near end]{[p',f]}
+  \\
+  {}&
+\cobesys{Y}{\stesys}{g}{p}
+  \ar{d}{\pullbackpr{1}{g}{p}}
+  \ar{r}[swap]{\pullbackpr{2}{g}{p}}
+  &
+\stesys
+  \ar{d}{p}
+  \\
+  {}&
+Y \ar{r}[swap]{g}
+  &
+X
+\end{tikzcd}
+\end{equation*}
+of which the outer square commutes, the (pre-)extension homomorphism $[p',f]$ exists
+and is unique with the property that it renders the diagram commutative. We will
+give the definition of $\cobesys{Y}{\stesys}{g}{p}$ in \autoref{cobesys}. After
+proving that the change of base of a pre-extension algebra is indeed a
+pre-extension algebra (\autoref{cobesys-preext}) and that the change of base
+of an extension algebra is an extension algebra (\autoref{cobesys-ext}), we
+will demonstrate the above unique existence in \autoref{cobesys-existence,%
+cobesys-pullback}.
+
+The second goal in this subsection is to follow the same procedure for
+$\famesys{\famesys{\stesys}}$ to show that it is equivalent to
+$\cobesys{\stesysf}{\famesys{\stesys}}{\ectxext}{\eft}$. We will do this by
+verifying directly that it has the universal property of the change of base
+described above, because we will use the ingredients in our definition of
+weakening and substitution objects.
+
 \begin{defn}[Change of base]\label{cobesys}
 Suppose $\stesys$ is a pre-extension object in $\cat{C}$ and that 
 $p:\stesysc\rightarrow X\leftarrow Y:g$.
@@ -1048,8 +1248,8 @@ The process of obtaining the pre-extension object $\cobesys{Y}{\stesys}{g}{p}$ o
 and $g:Y\to X$ is also called the \emph{change of base}.
 \end{defn}
 
-\begin{lem}
-Any change of base of a pre-extension algebra is a pre-extension algebra.
+\begin{lem}\label{cobesys-preext}
+Any change of base of a pre-extension object is a pre-extension object.
 \end{lem}
 
 \begin{proof}
@@ -1129,7 +1329,7 @@ and that the diagram
 commutes.
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{cobesys-ext}
 The change of base of an extension algebra is an extension algebra.
 \end{thm}
 
@@ -1151,6 +1351,262 @@ Our first subgoal is to verify that the square
 \end{tikzcd}
 \end{equation*}
 \end{proof}
+
+The following construction is useful for defining extension homomorphisms into
+`higher' extension objects
+
+\begin{defn}\label{cobesys-existence}
+Consider a commutative diagram
+\begin{equation*}
+\begin{tikzcd}
+\stesys'
+  \ar{r}{f}
+  \ar{d}[swap]{p'}
+  &
+\stesys
+  \ar{d}{p}
+  \\
+Y \ar{r}[swap]{g}
+  &
+X
+\end{tikzcd}
+\end{equation*}
+Then we construct $[p,f]:\stesys'\to\cobesys{Y}{\stesys}{g}{p}$
+\begin{itemize}
+\item by defining $[p,f]_0:\stesysc'\to\pullback{Y}{\stesysc}{g}{p}$ be the uniqe
+morphism rendering the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesysc'
+  \ar[bend right=10]{ddr}[swap]{p'}
+  \ar[bend left=10]{rrd}{f_0}
+  \ar{dr}[near end]{[p,f]_0}
+  \\
+  {}&
+\pullback{Y}{\stesysc}{g}{p}
+  \ar{r}[swap]{\pullbackpr{2}{g}{p}}
+  \ar{d}{\pullbackpr{1}{g}{p}}
+  &
+\stesysc
+  \ar{d}{p}
+  \\
+  {}&
+Y \ar{r}[swap]{g}
+  &
+X
+\end{tikzcd}
+\end{equation*}
+commutative.
+\item by defining $[p,f]_1:\stesysf'\to\pullback{Y}{\stesysf}{g}{p\circ\eft}$ be the uniqe
+morphism rendering the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesysf'
+  \ar[bend right=10]{ddr}[swap]{p'\circ\eft'}
+  \ar[bend left=10]{rrd}{f_1}
+  \ar{dr}[near end]{[p,f]_1}
+  \\
+  {}&
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{r}[swap]{\pullbackpr{2}{g}{p\circ\eft}}
+  \ar{d}{\pullbackpr{1}{g}{p\circ\eft}}
+  &
+\stesysc
+  \ar{d}{p\circ\eft}
+  \\
+  {}&
+Y \ar{r}[swap]{g}
+  &
+X
+\end{tikzcd}
+\end{equation*}
+commutative.
+\item by defining $[p,f]^t:\stesyst'\to\pullback{Y}{\stesyst}{g}{p\circ\eft\circ\ebd}$ be the uniqe
+morphism rendering the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesyst'
+  \ar[bend right=10]{ddr}[swap]{p'\circ\eft'\circ\ebd'}
+  \ar[bend left=10]{rrd}{f^t}
+  \ar{dr}[near end]{[p,f]^t}
+  \\
+  {}&
+\pullback{Y}{\stesysf}{g}{p\circ\eft\circ\ebd}
+  \ar{r}[swap]{\pullbackpr{2}{g}{p\circ\eft\circ\ebd}}
+  \ar{d}{\pullbackpr{1}{g}{p\circ\eft\circ\ebd}}
+  &
+\stesysc
+  \ar{d}{p\circ\eft\circ\ebd}
+  \\
+  {}&
+Y \ar{r}[swap]{g}
+  &
+X
+\end{tikzcd}
+\end{equation*}
+commutative.
+\end{itemize}
+\end{defn}
+
+\begin{thm}\label{cobesys-pullback}
+For every diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesys'
+  \ar[bend right=10]{ddr}[swap]{p'}
+  \ar[bend left=10]{rrd}{f}
+  \ar[dotted]{dr}[near end]{[p',f]}
+  \\
+  {}&
+\cobesys{Y}{\stesys}{g}{p}
+  \ar{d}{\pullbackpr{1}{g}{p}}
+  \ar{r}[swap]{\pullbackpr{2}{g}{p}}
+  &
+\stesys
+  \ar{d}{p}
+  \\
+  {}&
+Y \ar{r}[swap]{g}
+  &
+X
+\end{tikzcd}
+\end{equation*}
+of which the outer square commutes, the pre-extension homomorphism $[p',f]$
+is unique with the property that it renders the whole diagram commutative.
+\end{thm}
+
+\begin{defn}\label{famfamstesys_into}
+Consider a commutative square
+\begin{equation*}
+\begin{tikzcd}
+\stesys'
+  \ar{r}{f}
+  \ar{d}[swap]{p}
+  &
+\famesys\stesys
+  \ar{d}{\eft}
+  \\
+\stesysf \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+Then we construct
+\begin{equation*}
+|[p,f]|:\stesys'\to\famesys{\famesys{\stesys}}
+\end{equation*}
+as follows:
+\begin{itemize}
+\item let $|[p,f]|_0:\stesysc'\to\stesysf_2$ be the unique morphism rendering
+the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesysc' 
+  \ar[bend left=10]{rrd}{f_0}
+  \ar[swap,bend right=10]{ddr}{p}
+  \ar[dotted]{dr}[near end]{|[p,f]|_0}
+  \\
+  {}&
+\stesysf_2
+  \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
+  \ar{d}{\eft[1]}
+  &
+\stesysf
+  \ar{d}{\eft}
+  \\
+  {}&
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutative.
+\item Let $|[p,f]|_1:\stesysf'\to\stesysf_3$ be the unique morphism rendering
+the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesysf'
+  \ar[bend left=10]{drr}{f_1}
+  \ar[swap]{dd}{\eft'}
+  \ar[dotted]{dr}[near end]{|[p,f]|_1}
+  \\
+  {}&
+\stesysf_3
+  \ar{r}[swap]{\pullbackpr{2}{\efamext}{\eft[1]}}
+  \ar{d}{\eft[1]}
+  &
+\stesysf_2
+  \ar{d}{\eft[1]}
+  \\
+\stesysc'
+  \ar{r}[swap]{|[p,f]|_0}
+  &
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commutative.
+\item Let $|[p,f]|^t:\stesyst'\to\stesyst_3$ be the unique morphism rendering
+the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesyst'
+  \ar[bend left=10]{drr}{f^t}
+  \ar[swap]{dd}{\eft'\circ\ebd'}
+  \ar[dotted]{dr}[near end]{|[p,f]|^t}
+  \\
+  {}&
+\stesyst_3
+  \ar{r}[swap]{\pullbackpr{2}{\efamext}{\eft[1]\circ\ebd[1]}}
+  \ar{d}[swap]{\pullbackpr{1}{\efamext}{\eft[1]\circ\ebd[1]}}
+  &
+\stesyst_2
+  \ar{d}{\eft[1]\circ\ebd[1]}
+  \\
+\stesysc'
+  \ar{r}[swap]{|[p,f]|_0}
+  &
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commutative.
+\end{itemize}
+\end{defn}
+
+\begin{lem}
+Under the hypotheses of \autoref{famfamstesys_into}, $|[p,f]|$ is a pre-extension
+homomorphism. Moreover, it is the unique pre-extension homomorphism for which
+the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesys' 
+  \ar[bend left=10]{rrd}{f}
+  \ar[swap,bend right=10]{ddr}{p}
+  \ar[dotted]{dr}[near end]{|[p,f]|}
+  \\
+  {}&
+\famesys{\famesys{\stesys}}
+  \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
+  \ar{d}{\eft[1]}
+  &
+\famesys{\stesys}
+  \ar{d}{\eft}
+  \\
+  {}&
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{lem}
 
 \begin{lem}
 Suppose $f:\stesys\to \stesys'$ is a pre-extension homomorphism and consider a morphism
@@ -1174,157 +1630,23 @@ uniquely determined by
 This follows from the pasting lemma for pullbacks.
 \end{proof}
 
-The following construction is useful for defining extension homomorphisms into
-`higher' extension objects
-
-\begin{defn}
-Let $\stesys'$ and $\stesys$ be extension objects, let
-\begin{equation*}
-f : \stesys'\to\famesys{\stesys}
-\end{equation*}
-be an extension homomorphism and let $p:\stesysc'\to\stesysf$ be a morphism
-such that
-\begin{equation*}
-\begin{tikzcd}
-\stesysc'
-  \ar{r}{f_0}
-  \ar{d}[swap]{p}
-  &
-\stesysf
-  \ar{d}{\eft}
-  \\
-\stesysf
-  \ar{r}[swap]{\ectxext}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-commutes. Then we construct
-\begin{equation*}
-\tilde{f}:\stesys'\to\famesys{\famesys{\stesys}}
-\end{equation*}
-as follows:
-\begin{enumerate}
-\item let $\tilde{f}_0:\stesysc'\to\stesysf_2$ be the unique morphism rendering
-the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\stesysc' 
-  \ar[bend left=10]{rrd}{f_0}
-  \ar[swap,bend right=10]{ddr}{p}
-  \ar[dotted]{dr}[near end]{\tilde{f}_0}
-  \\
-  {}&
-\stesysf_2
-  \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
-  \ar{d}{\eft[1]}
-  &
-\stesysf
-  \ar{d}{\eft}
-  \\
-  {}&
-\stesysf
-  \ar{r}[swap]{\ectxext}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-commutative.
-\item Let $\tilde{f}_1:\stesysf'\to\stesysf_3$ be the unique morphism rendering
-the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\stesysf'
-  \ar[bend left=10]{drr}{f_1}
-  \ar[swap]{dd}{\eft'}
-  \ar[dotted]{dr}[near end]{\tilde{f}_1}
-  \\
-  {}&
-\stesysf_3
-  \ar{r}[swap]{\pullbackpr{2}{\efamext}{\eft[1]}}
-  \ar{d}{\eft[1]}
-  &
-\stesysf_2
-  \ar{d}{\eft[1]}
-  \\
-\stesysc'
-  \ar{r}[swap]{\tilde{f}_0}
-  &
-\stesysf_2
-  \ar{r}[swap]{\efamext}
-  &
-\stesysf
-\end{tikzcd}
-\end{equation*}
-commutative.
-\item Let $\tilde{f}^t:\stesyst'\to\stesyst_3$ be the unique morphism rendering
-the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\stesyst'
-  \ar[bend left=10]{drr}{f^t}
-  \ar[swap]{dd}{\eft'\circ\ebd'}
-  \ar[dotted]{dr}[near end]{\tilde{f}^t}
-  \\
-  {}&
-\stesyst_3
-  \ar{r}[swap]{\pullbackpr{2}{\efamext}{\eft[1]\circ\ebd[1]}}
-  \ar{d}[swap]{\pullbackpr{1}{\efamext}{\eft[1]\circ\ebd[1]}}
-  &
-\stesyst_2
-  \ar{d}{\eft[1]\circ\ebd[1]}
-  \\
-\stesysc'
-  \ar{r}[swap]{\tilde{f}_0}
-  &
-\stesysf_2
-  \ar{r}[swap]{\efamext}
-  &
-\stesysf
-\end{tikzcd}
-\end{equation*}
-commutative.
-\end{enumerate}
-\end{defn}
-
-\begin{lem}
-The above construction leads to the unique extension homomorphism for which
-the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\stesys' 
-  \ar[bend left=10]{rrd}{f}
-  \ar[swap,bend right=10]{ddr}{p}
-  \ar[dotted]{dr}[near end]{\tilde{f}}
-  \\
-  {}&
-\famesys{\famesys{\stesys}}
-  \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
-  \ar{d}{\eft[1]}
-  &
-\famesys{\stesys}
-  \ar{d}{\eft}
-  \\
-  {}&
-\stesysf
-  \ar{r}[swap]{\ectxext}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-\end{lem}
-
 \subsection{Weakening objects}
 \begin{defn}
-A pre-weakening object $\stesys$ in $\cat{C}$ is an extension object $\stesys$ with 
-an extension homomorphism $\mathbf{w}(\stesys):\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}\to\famesys{\famesys{\stesys}}$ for which the diagram
+Let $\stesys$ be an extension object in $\cat{C}$. A pre-weakening operation
+on $\stesys$ is an extension homomorphism 
+$ \mathbf{w}(\stesys)
+    :
+  \cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+    \to
+  \famesys{\famesys{\stesys}}$
+for which the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\pullback{\stesysf}{\stesysf}{\eft}{\eft}
-  \ar{r}{w(\stesys)_0}
+\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+  \ar{r}{\mathbf{w}(\stesys)}
   \ar{dr}[swap]{\pullbackpr{1}{\eft}{\eft}}
   &
-\stesysf_2
+\famesys{\famesys{\stesys}}
   \ar{d}{\eft[1]}
   \\
 & \stesysf
@@ -1334,99 +1656,85 @@ commutes.
 \end{defn}
 
 \begin{defn}
-Suppose $\stesys$ is a weakening object. We define
-\begin{equation*}
-\mathbf{w}(\famesys{\stesys}):\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[1]}{\eft[1]}\to\famesys{\famesys{\famesys{\stesys}}}
-\end{equation*} 
-\begin{itemize}
-\item by letting $w(\famesys{\stesys})_0$ be the unique morphism rendering the diagram
+Let $\stesys$ be an extension object with pre-weakening operation
+$\mathbf{w}(\stesys)$. Then $\famesys{\stesys}$ has the pre-weakening operation
+$\mathbf{w}(\famesys{\stesys})$ which is uniquely determined by rendering the
+diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\pullback{\stesysf_2}{\stesysf_2}{\eft[1]}{\eft[1]}
-  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft}}{\pullbackpr{2}{\ectxext}{\eft}}{\eft}{\eft}}
-  \ar[dotted]{dr}{w(\famesys{\stesys})_0}
-  \ar{dd}[swap]{\pullbackpr{1}{\eft[1]}{\eft[1]}}
-  & &
-\pullback{\stesysf}{\stesysf}{\eft}{\eft}
-  \ar{d}{w(\stesys)_0}
+\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[1]}{\eft[1]}
+  \ar{rr}{%
+      \pullback{\beta_1}{\boldsymbol{\beta}}{\eft}{\eft})
+    }
+  \ar[bend right]{ddr}[swap]{\pullbackpr{1}{\eft[1]}{\eft[1]}}
+  \ar[dotted]{dr}{\mathbf{w}(\famesys{\stesys})}
+  &
+  {}&
+\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+  \ar{r}{\mathbf{w}(\stesys)}
+  &
+\famesys{\famesys{\stesys}}
+  \ar{d}{\boldsymbol{\beta}}
   \\
   {}&
-\stesysf_3
-  \ar{r}{\pullbackpr{2}{\efamext}{\eft[1]}}
-  \ar{d}[swap]{\pullbackpr{1}{\efamext}{\eft[1]}}
+\famesys{\famesys{\famesys{\stesys}}}
+  \ar{r}{\boldsymbol{\beta}_\mathbf{2}}
+  \ar{d}[swap]{\eft[2]}
   &
-\stesysf_2
+\famesys{\famesys{\stesys}}
   \ar{d}{\eft[1]}
-  \\
-\stesysf_2
-  \ar[equals]{r}
+  \ar{r}{\boldsymbol{\beta}}
   &
+\famesys{\stesys}
+  \ar{d}{\eft}
+  \\
+  {}&
 \stesysf_2
   \ar{r}[swap]{\efamext}
   &
 \stesysf
-\end{tikzcd}
-\end{equation*}
-commutative
-\item by letting $w(\famesys{\stesys})_1$ be the unique morphism rendering the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\pullback{\stesysf_2}{\stesysf_3}{\eft[1]}{\eft[1]\circ\eft[2]}
-  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft}}{\pullbackpr{2}{\efamext}{\eft[1]}}{\eft}{\eft\circ\eft[1]}}
-  \ar[dotted]{dr}{w(\famesys{\stesys})_1}
-  \ar{dd}[swap]{\eft[1]^\ast(\eft[2])}
-  & &
-\pullback{\stesysf}{\stesysf_2}{\eft}{\eft\circ\eft[1]}
-  \ar{d}{w(\stesys)_1}
-  \\
-  {}&
-\stesysf_4
-  \ar{r}{\pullbackpr{2}{\eext{2}}{\eft[2]}}
-  \ar{d}[swap]{\pullbackpr{1}{\eext{2}}{\eft[2]}}
+  \ar{r}[swap]{\ectxext}
   &
-\stesysf_3
-  \ar{d}{\eft[2]}
-  \\
-\pullback{\stesysf_2}{\stesysf_2}{\eft[1]}{\eft[1]}
-  \ar{r}[swap]{w(\famesys{\stesys})_0}
-  &
-\stesysf_3
-  \ar{r}[swap]{\eext{2}}
-  &
-\stesysf_2
-\end{tikzcd}
-\end{equation*}
-commutative
-\item by letting $w(\famesys{\stesys})_t$ be the unique morphism rendering the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=huge]
-\pullback{\stesysf_2}{\stesyst_3}{\eft[1]}{\eft[1]\circ\eft[2]\circ\ebd[2]}
-  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft}}{\pullbackpr{2}{\efamext}{\eft[1]\circ\ebd[1]}}{\eft}{\eft\circ\eft[1]\circ\ebd[1]}}
-  \ar[dotted]{dr}{w(\famesys{\stesys})^t}
-  \ar{dd}[swap]{\eft[1]^\ast(\eft[2]\circ\ebd[2])}
-  & &
-\pullback{\stesysf}{\stesyst_2}{\eft}{\eft\circ\eft[1]\circ\ebd[1]}
-  \ar{d}{w(\stesys)_1}
-  \\
-  {}&
-\stesyst_4
-  \ar{r}{\pullbackpr{2}{\eext{2}}{\eft[2]\circ\ebd[2]}}
-  \ar{d}[swap]{\pullbackpr{1}{\eext{2}}{\eft[2]\circ\ebd[2]}}
-  &
-\stesyst_3
-  \ar{d}{\eft[2]\circ\ebd[2]}
-  \\
-\pullback{\stesysf_2}{\stesysf_2}{\eft[1]}{\eft[1]}
-  \ar{r}[swap]{w(\famesys{\stesys})_0}
-  &
-\stesysf_3
-  \ar{r}[swap]{\eext{2}}
-  &
-\stesysf_2
+\stesysc
 \end{tikzcd}
 \end{equation*}
 commutative.
-\end{itemize}
+\end{defn}
+
+\begin{defn}
+A pre-weakening object $\stesys$ in $\cat{C}$ is an extension object $\stesys$ 
+with a pre-weakening operation 
+$ \mathbf{w}(\stesys)
+    :
+  \cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+    \to
+  \famesys{\famesys{\stesys}}$
+for which the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=15em]
+\cobesys{\stesysf_2}{\famesys{\stesys}}{\eft\circ\eft[1]}{\eft}
+  \ar[bend right=10]{dr}[swap]%
+    { [ \pullbackpr{1}{\eft\circ\eft[1]}{\eft},%
+        \mathbf{w}(\stesys)%
+          \circ%
+        (\pullback{\efamext}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
+        ]%
+      }
+  \ar{r}{
+    [ \pullbackpr{1}{\eft\circ\eft[1]}{\eft},%
+      \mathbf{w}(\stesys)%
+        \circ%
+      (\pullback{\eft[1]}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
+      ]}%
+  &
+\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[1]}{\eft[1]}
+  \ar{d}{\mathbf{w}(\famesys{\stesys})}
+  \\
+  {}&
+\famesys{\famesys{\famesys{\stesys}}}
+\end{tikzcd}
+\end{equation*}
+commutes. This condition is called \emph{Currying for weakening}.
 \end{defn}
 
 \begin{lem}
