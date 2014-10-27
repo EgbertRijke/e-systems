@@ -1630,7 +1630,7 @@ uniquely determined by
 This follows from the pasting lemma for pullbacks.
 \end{proof}
 
-\subsection{Weakening objects}
+\subsection{Pre-weakening objects}
 \begin{defn}
 Let $\stesys$ be an extension object in $\cat{C}$. A pre-weakening operation
 on $\stesys$ is an extension homomorphism 
@@ -1664,7 +1664,7 @@ diagram
 \begin{tikzcd}[column sep=large]
 \cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[1]}{\eft[1]}
   \ar{rr}{%
-      \pullback{\beta_1}{\boldsymbol{\beta}}{\eft}{\eft})
+      \pullback{\beta_1}{\boldsymbol{\beta}}{\eft}{\eft}
     }
   \ar[bend right]{ddr}[swap]{\pullbackpr{1}{\eft[1]}{\eft[1]}}
   \ar[dotted]{dr}{\mathbf{w}(\famesys{\stesys})}
@@ -1742,88 +1742,7 @@ If $\stesys$ is a pre-weakening algebra, then so is $\famesys{\stesys}$.
 \end{lem}
 
 \begin{proof}
-We only have to verify that $\mathbf{w}(\famesys{\stesys})$ is a pre-extension
-homomorphism, the requirement on weakenings is satisfied by construction.
-The bottom square of the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\pullback{\stesysf_2}{\stesyst_3}{\eft[1]}{\eft[1]\circ\eft[2]\circ\ebd[2]}
-  \ar{r}{w(\famesys{\stesys})^t}
-  \ar{d}[swap]{\eft[1]^\ast(\ebd[2])}
-  &
-\stesyst_4
-  \ar{d}{\ebd[3]}
-  \\
-\pullback{\stesysf_2}{\stesysf_3}{\eft[1]}{\eft[1]\circ\eft[2]}
-  \ar{r}{w(\famesys{\stesys})_1}
-  \ar{d}[swap]{\eft[1]^\ast(\eft[2])}
-  &
-\stesysf_4
-  \ar{d}{\eft[3]}
-  \\
-\pullback{\stesysf_2}{\stesysf_2}{\eft[1]}{\eft[1]}
-  \ar{r}[swap]{w(\famesys{\stesys})_0}
-  &
-\stesysf_3
-\end{tikzcd}
-\end{equation*}
-commutes by construction. To show that the top square commtues, post-compose
-with the pullback projections.
 \end{proof}
-
-\begin{defn}
-Let $\stesys$ be a pre-weakening algebra and consider $p:\stesysc\rightarrow X\leftarrow Y:p$.
-Then we define
-\begin{equation*}
-\mathbf{w}(\cobesys{Y}{\stesys}{g}{p}):
-  \cobesys{(\pullback{Y}{\stesysf}{g}{p\circ\eft})}{\famesys{\cobesys{Y}{\stesys}{g}{p}}}{g^\ast(\eft)}{g^\ast(\eft)}\to\famesys{\famesys{\cobesys{Y}{\stesys}{g}{p}}}
-\end{equation*}
-\begin{itemize}
-\item by defining $w(\cobesys{Y}{\stesys}{g}{p})_0$ to be the unique morphism
-rendering the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\pullback
-  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}
-  {\pullback{Y}{\stesysf}{g}{p\circ\eft}}
-  {g^\ast(\eft)}
-  {g^\ast(\eft)}
-  \ar{rr}
-  \ar{ddd}[swap]{\pullbackpr{1}{g^\ast(\eft)}{g^\ast(\eft)}}
-  &
-  {}&
-\pullback
-  {Y}
-  {\pullback{\stesysf}{\stesysf}{\eft}{\eft}}
-  {g}
-  {p\circ\eft\circ\pullbackpr{1}{\eft}{\eft}}
-  \ar{d}{\pullback{\catid{Y}}{w(\stesys)_0}{g}{p\circ\eft}}
-  \\
-  {}&
-  {}&
-\pullback{Y}{\stesysf_2}{g}{p\circ\eft\circ\eft[1]}
-  \ar{d}{\pullbackpr{2}{\ectxext}{\eft}}
-  \\
-  {}&
-(\pullback{Y}{\stesysf}{g}{p\circ\eft})_2
-  \ar{r}{\pullbackpr{2}{\cobesys{Y}{\ectxext}{g}{p}}{g^\ast(\eft)}}
-  \ar{d}[swap]{\pullbackpr{1}{\cobesys{Y}{\ectxext}{g}{p}}{g^\ast(\eft)}}
-  &
-\pullback{Y}{\stesysf}{g}{p\circ\eft}
-  \ar{d}{g^\ast(\eft)}
-  \\
-\pullback{Y}{\stesysf}{g}{p\circ\eft}
-  \ar[equals]{r}
-  &
-\pullback{Y}{\stesysf}{g}{p\circ\eft}
-  \ar{r}[swap]{\cobesys{Y}{\ectxext}{g}{p}}
-  &
-\pullback{Y}{\stesysc}{g}{p}
-\end{tikzcd}
-\end{equation*}
-commutative.
-\end{itemize}
-\end{defn}
 
 \begin{defn}
 A pre-weakening morphism between preweakening objects $\stesys$ and $\stesys'$ is an
@@ -1847,9 +1766,90 @@ commutes.
 \end{defn}
 
 \begin{defn}
-A weakening object is a pre-weakening object $\stesys$ with the property that
-$\mathbf{w}(\stesys)$ is a pre-weakening morphism,
+Let $\stesys$ be a pre-weakening algebra and consider $p:\stesysc\rightarrow X\leftarrow Y:p$.
+Then we define
+\begin{equation*}
+\mathbf{w}(\cobesys{Y}{\stesys}{g}{p})
+  :
+\cobesys
+  { (\pullback{Y}{\stesysf}{g}{p\circ\eft})}
+  { \famesys{\cobesys{Y}{\stesys}{g}{p}}}
+  { g^\ast(\eft)}
+  { g^\ast(\eft)}
+  \to
+\famesys{\famesys{\cobesys{Y}{\stesys}{g}{p}}}
+\end{equation*}
+to be the unique extension homomorphism rendering the diagram
+\begin{equation*}
+\begin{tikzcd}
+\cobesys
+  { \pullback{Y}{\stesysf}{g}{p\circ\eft}}
+  { \famesys{\cobesys{Y}{\stesys}{g}{p}}}
+  { g^\ast(\eft)}
+  { g^\ast(\eft)}
+  \ar[bend right]{ddr}[swap]{\pullbackpr{1}{g^\ast(\eft)}{g^\ast(\eft)}}
+  \ar{rr}{%
+    \pullback
+      { \pullbackpr{2}{g}{p\circ\eft}}
+      { \boldsymbol{\pi}_\mathbf{2}(g,p\circ\eft)}
+      { \eft}
+      { \eft}
+    }
+  \ar[dotted]{dr}{\mathbf{w}(\cobesys{Y}{\stesys}{g}{p})}
+  &
+  {}&
+\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+  \ar{r}{\mathbf{w}(\stesys)}
+  &
+\famesys{\famesys{\stesys}}
+  \ar{d}{\boldsymbol{\beta}}
+  \\
+  {}&
+\famesys{\famesys{\cobesys{Y}{\stesys}{g}{p}}}
+  \ar{r}{\beta}
+  \ar{d}{g^\ast(\eft)_1}
+  &
+\famesys{\cobesys{Y}{\stesys}{g}{p}}
+  \ar{r}{\boldsymbol{\pi}_2(g,p\circ\eft)}
+  \ar{d}{g^\ast(\eft)}
+  &
+\famesys{\stesys}
+  \ar{d}{\eft}
+  \\
+  {}&
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{r}[swap]{\cobesys{Y}{\ectxext}{g}{p}}
+  &
+\pullback{Y}{\stesysc}{g}{p}
+  \ar{r}[swap]{\pullbackpr{2}{g}{p}}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutative.
 \end{defn}
+
+\subsection{Weakening objects}
+Since we have shown that the property of being a pre-weakening object is closed
+under the relevant operations, we can make the following definition:
+
+\begin{defn}
+A weakening object is a pre-weakening object $\stesys$ with the property that
+$\mathbf{w}(\stesys)$ is a pre-weakening morphism.
+\end{defn}
+
+\begin{defn}
+A weakening homomorphism is a pre-weakening homomorphism such that the domain
+and codomain are weakening objects.
+\end{defn}
+
+\begin{thm}
+Suppose $\stesys$ is a weakening object, then so is $\famesys{\stesys}$
+\end{thm}
+
+\begin{thm}
+The change of base of any weakening object is again a weakening object.
+\end{thm}
 
 \subsection{Projection objects}
 \begin{defn}
