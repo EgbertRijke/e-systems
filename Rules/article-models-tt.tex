@@ -442,24 +442,14 @@ are captured in the following convertibility rules:
 & \inference
   { \jctx{\Gamma}
     }
-  { \jfam{\emptyc}{\Gamma}
+  { \jfam{\emptyc}{i(\Gamma)}
     } 
-& & \inference
-    { \jfam{\emptyc}{\Gamma}
-      }
-    { \jctx{\Gamma}
-      }
-    \\
+  &
 & \inference
   { \jctxeq{\Gamma}{\Delta}
     }
-  { \jfameq{\emptyc}{\Gamma}{\Delta}
+  { \jfameq{\emptyc}{i(\Gamma)}{i(\Delta)}
     }
-& & \inference
-    { \jfameq{\emptyc}{\Gamma}{\Delta}
-      }
-    { \jctxeq{\Gamma}{\Delta}
-      }
 \end{align}
 
 The reader may wonder whether the empty family $\emptyf$ always has a
@@ -537,7 +527,7 @@ rules) and family extension (the last two rules).
 & \inference
   { \jctx{\Gamma}
     }
-  { \jctxeq{\ctxext{\emptyc}{\Gamma}}{\Gamma}
+  { \jctxeq{\ctxext{\emptyc}{i(\Gamma)}}{\Gamma}
     }
   \label{comp-0e-c}
   \\
@@ -560,6 +550,12 @@ rules) and family extension (the last two rules).
   { \jfameq{\Gamma}{{A}{\emptyf}}{A}
     }
   \label{comp-e0-f}
+  \\
+& \inference
+  { \jfam{\emptyc}{A}
+    }
+  { \jfameq{\emptyc}{i(\ctxext{\emptyc}{A})}{A}
+    }
 \end{align}
 
 \subsubsection{Family extension restricted to the empty context}
@@ -577,7 +573,7 @@ Therefore we will require the following rule:
 & \inference
   { \jfam{\Gamma}{A}
     }
-  { \jctxeq{(\ctxext{\Gamma}{A})^c}{(\ctxext{\Gamma}{A})^\famsym}
+  { \jctxeq{\ctxext{\Gamma}{A}}{\ctxext{i(\Gamma)}{A}}
     }
 \end{align}
 Note that this rule actually justifies that we have not utilized two different
