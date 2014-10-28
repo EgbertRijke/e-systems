@@ -1,0 +1,74 @@
+\subsection{Extension}
+\label{extension}
+
+The operations of extension enable one to consider families over
+families and higher level families alike. We will need both a context extension
+operation and a family extension operation.
+
+The inference rules introducing context and family extension are as follows:
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jctx{\ctxext{\Gamma}{A}}
+    }
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      \jfameq{\Gamma}{A}{B}
+      }
+    { \jctxeq{\ctxext{\Gamma}{A}}{\ctxext{\Delta}{B}}
+      }
+    \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfam{\Gamma}{\ctxext{A}{P}}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{B} 
+      \jfameq{{\Gamma}{A}}{P}{Q}
+      }
+    { \jfameq{\Gamma}{\ctxext{A}{P}}{\ctxext{B}{Q}}
+      }
+\end{align}
+The extension operation may also be defined to act on families over families
+and terms thereof. For instance, When $\jfam{{\Gamma}{A}}{P}$ is a family,
+we would get a family $\jfam{{\Gamma}{A}}{{\Gamma}{P}}$ and when
+$\jterm{{\Gamma}{A}}{P}{f}$ is a term, we would get a term
+$\jterm{{\Gamma}{A}}{{\Gamma}{P}}{\ctxext{\Gamma}{f}}$. Then there would be
+axioms stating the judgmental equalities $\ctxext{\Gamma}{P}\jdeq P$ and
+$\ctxext{\Gamma}{f}\jdeq f$. Thus, it is of no actual use to introduce the
+action of context extension on families and terms.
+
+In \autoref{extension-on-terms} we will also define an extension operation
+on terms, which defines a term $\jterm{\Gamma}{{A}{P}}{\tmext{x}{u}}$ for
+every $\jterm{\Gamma}{A}{x}$ and $\jterm{\Gamma}{\subst{x}{P}}{u}$. This
+operation is defined by using the substitution operation and identity terms.
+
+\subsubsection{Associativity of extension}
+\label{comp-ee}
+The inference rules asserting that extension is compatible with itself assert
+that contexts are unstructured lists of type declarations. This rule is
+unavoidable if we want that for a family $A$ in context $\Gamma$, a family over
+$A$ is the same thing as a family over $\ctxext{\Gamma}{A}$. 
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jctxeq{\ctxext{{\Gamma}{A}}{P}}{\ctxext{\Gamma}{{A}{P}}}
+    }
+  \\
+& \inference
+  { \jfam{{\Gamma}{A}}{P}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq{\Gamma}{\ctxext{A}{{P}{Q}}}{\ctxext{{A}{P}}{Q}}
+    }
+  \label{comp-ee-c}
+\end{align}
+Note that we may take the point of view that extension distributes over
+extensions. If we want to extend an extended family $\ctxext{P}{Q}$ over
+$\ctxext{\Gamma}{A}$ by the family $A$, the result is the extension of (1)
+the extension of $P$ by $A$ and (2) the extension of $Q$ by $A$. The latter is
+simply $Q$ since extension acts trivially at the level of families (and terms).

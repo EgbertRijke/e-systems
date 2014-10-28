@@ -1,0 +1,62 @@
+\subsection{The theory of projections}
+\label{identityterms}
+
+We formulate the theory of projections on top of the theory of weakening
+described in \autoref{weakening}. In the theory of projections we introduce
+the identity terms. The identity term at a family $A$ in context $\Gamma$ is
+a term $\jterm{{\Gamma}{A}}{\ctxwk{A}{A}}{\idtm{A}}$, so weakening is necessary.
+Together with weakening, the identity terms will provide for the projections.
+The projection from $\cftext{A}{P}$ to $A$ will be the term
+$\jterm{{\Gamma}{{A}{P}}}{\ctxwk{\ctxext{A}{P}}{A}}{\ctxwk{P}{\idtm{A}}}$ and
+will be studied extensively in \autoref{extension-on-terms}.
+
+The following inference rules are required to be valid:
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \unfoldall{\jhom{\Gamma}{A}{A}{\idtm{A}}}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{A'}
+      }
+    { \unfoldall{\jhomeq{\Gamma}{A}{A}{\idtm{A}}{\idtm{A'}}}
+      }
+\end{align}
+
+\subsubsection{The identity term of an extended family}
+The fact that identity terms are compatible with extensions is derived in
+\autoref{comp-ie}.
+
+\subsubsection{The identity term of a weakened family}
+\label{comp-wi}
+The identity term of a weakened family is the weakened identity term:
+\begin{equation}
+\inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \unfoldall{\jhomeq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{Q}}
+      {\ctxwk{A}{Q}}
+      {\ctxwk{A}{\idtm{Q}}}
+      {\idtm{\ctxwk{A}{Q}}}
+      }
+    }
+  \label{comp-wi-t}
+\end{equation}
+
+\begin{rmk}
+An important special case is the judgmental equality
+\begin{equation*}
+\unfoldall{\jhomeq
+      {{\Gamma}{A}}
+      {\ctxwk{A}{B}}
+      {\ctxwk{A}{B}}
+      {\ctxwk{A}{\idtm{B}}}
+      {\idtm{\ctxwk{A}{B}}}
+      }
+\end{equation*}
+for a family $\jfam{\Gamma}{B}$.
+\end{rmk}

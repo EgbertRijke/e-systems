@@ -1,0 +1,77 @@
+\subsection{%
+  The possiblity of types in the theory of contexts, families and terms}
+\label{types}
+
+We have deliberately not spoken of types so far because we have taken the point
+of view that a type in a context is nothing but a family in that context which
+belongs to the class of types. We think of types as \emph{irreducible} families,
+i.e.\ families which are neither empty nor the extension of two
+families which are both not empty (in algebraic terminology: which
+are both non-trivial). To allow ourselves to speak of types we introduce two
+new judgments: the judgment that something is a type and the judgment that two
+types are equal.
+\begin{align*}
+\jalign\jtype{\Gamma}{A} 
+& \jalign\jtypeeq{\Gamma}{A}{B}
+\end{align*}
+But only families of contexts are eligible to be types. If $A$ is a type
+in context $\Gamma$, then $A$ is also a family of contexts over $\Gamma$. 
+Moreover, two types in context $\Gamma$ are judgmentally equal precisely when they are equal
+as context families and if a family $B$ of contexts over $\Gamma$ is
+judgmentally equal to a type $A$ in context $\Gamma$, then $B$ is a type in
+context $\Gamma$. This is expressed by the following four inference rules:
+\begin{align*}
+& \inference
+  { \jtype{\Gamma}{A}
+    }
+  { \jfam{\Gamma}{A}
+    }
+& & \inference
+    { \jtypeeq{\Gamma}{A}{B}
+      }
+    { \jfameq{\Gamma}{A}{B}
+      }
+    \\
+& \inference
+  { \jtype{\Gamma}{A}
+    \jfameq{\Gamma}{A}{B}
+    }
+  { \jtype{\Gamma}{B}
+    }
+& & \inference
+    { \jtype{\Gamma}{A}
+      \jfameq{\Gamma}{A}{B}
+      }
+    { \jtypeeq{\Gamma}{A}{B}
+      }
+\end{align*}
+As pointed out at the beginning of this subsection, 
+we do not assume that the empty family is a type, that would be like
+assuming that the multiplicative unit of a ring is prime. 
+
+We add rules asserting that a weakened type is again a type that 
+substitution preserves the property of being a type:
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{B}
+    \jtype{\ctxext{\Gamma}{B}}{Q}
+    }
+  { \jtype{\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jtype{\ctxext{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jtype{\ctxext{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}
+    }
+\end{align}
+With only the current rules, the possibility of making the judgment that
+something is a type does not add much to the theory of contexts, families and
+terms. Nevertheless, when studying models, having an interpretation for the
+judgment that something is a type will allow for the possibility to study
+conditions such as the one asserting that every family `factorizes' uniquely
+as multiple applications of extension to types, analogous to the condition on
+unique factorization domains in ring theory. All the tradional models of type
+theory should translate to models with such a condition, simply because
+traditionally contexts are viewed as lists of variable (and type) declarations.

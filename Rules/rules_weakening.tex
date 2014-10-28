@@ -1,0 +1,245 @@
+\subsection{The theory of weakening}
+\label{weakening}
+
+When $A$ is a family in context $\Gamma$, the operation of weakening by $A$
+takes a family $B$ in context $\Gamma$ and provides a family $\ctxwk{A}{B}$
+in context $\ctxext{\Gamma}{A}$. The context family $\ctxwk{A}{B}$ can be seen
+as the constant family over $\ctxext{\Gamma}{A}$ with value $B$. This idea will
+be axiomatized in the cancellation property of weakening and substitution in
+\autoref{cancellation-ws}. In \autoref{morphisms} we will take the terms 
+$\unfold{\jhom{\Gamma}{A}{B}{f}}$ to be the morphisms of families from $A$ to 
+$B$. These will be at the heart of the categorical structure of the theory.
+
+The weakening operation acts on three levels: on contexts, on families and
+on terms. The `action on contexts' of weakening is the action we described
+above: it takes a family $B$ over $\Gamma$ to a family $\ctxwk{A}{B}$ over
+$\ctxext{\Gamma}{A}$; the `action on families' of weakening takes a family
+$Q$ over $\ctxext{\Gamma}{B}$ to a family $\ctxwk[\famsym]{A}{Q}$ over
+$\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}$; the `action on terms' of weakening takes
+a term $g$ of $Q$ to a term $\ctxwk[\tmsym]{A}{g}$ of $\ctxwk[\famsym]{A}{Q}$.
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    }
+  { \jfam{{\Gamma}{A}}{\ctxwk{A}{B}}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{A'}
+      \jfameq{\Gamma}{B}{B'}
+      }
+    { \jfameq{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}
+      }
+    \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfam{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk[\famsym]{A}{Q}}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{A'}
+      \jfameq{{\Gamma}{B}}{Q}{Q'}
+      }
+    { \jfameq
+        {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+        {\ctxwk[\famsym]{A}{Q}}
+        {\ctxwk[\famsym]{A'}{Q'}}
+      }
+    \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jterm{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk[\famsym]{A}{Q}}{\ctxwk[\tmsym]{A}{g}}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{A'}
+      \jtermeq{{\Gamma}{B}}{Q}{g}{g'}
+      }
+    { \jtermeq
+        {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+        {\ctxwk[\famsym]{A}{Q}}
+        {\ctxwk[\tmsym]{A}{g}}
+        {\ctxwk[\tmsym]{A'}{g'}}
+      }
+\end{align}
+
+\subsubsection{Weakenings of extensions}
+\label{comp-we}
+The following rules assert that when an extended family is weakened, the
+weakening distributes over the extension factors.
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq
+      {\ctxext{\Gamma}{A}}
+      {\ctxwk{A}{\ctxext{B}{Q}}}
+      {\ctxext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}}
+    }
+  \label{comp-we-c}
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{{\Gamma}{B}}{Q}}{R}
+    }
+  { \jfameq
+      {\ctxext{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{\ctxext{Q}{R}}}
+      {\ctxext{\ctxwk{A}{Q}}{\ctxwk{A}{R}}}
+    }
+  \label{comp-we-f}
+\end{align}
+When thinking of terms of $\ctxwk{A}{B}$ as morphisms of families from $A$ to
+$B$, this looks already like form of type theoretic choice. It is weaker in that
+it is not stated with function types, yet it is stronger in that it states a
+judgmental equality between two families.
+
+There is also a version of this property where an extended term is weakened.
+This variant is stated and proved in \autoref{comp-we-t}.
+
+\subsubsection{Weakening of weakenings}
+Weakening by a family $A$ in context $\Gamma$ brings things in context $\Gamma$
+to things in context $\ctxext{\Gamma}{A}$. Since we have all the ingredients of
+the theory of contexts, families and terms in the context $\Gamma$ as well it
+has in particular it's own weakening by families. Suppose we have a family
+$\jfam{{\Gamma}{B}}{Q}$ over $B$ in context $\Gamma$. Weakening by $Q$ brings
+things from context $\ctxext{\Gamma}{B}$ to $\ctxext{{\Gamma}{B}}{Q}$. Thus
+we can provide rules asserting what will happen when we first weaken by $Q$ and
+then (via the action on families) by $A$. We will require the following
+inference rules to be valid:
+\label{comp-ww}
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    \jfam{{\Gamma}{B}}{R}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
+      {\ctxwk{A}{{Q}{R}}}
+      {\ctxwk{{A}{Q}}{{A}{R}}}
+    }
+  \label{comp-ww-c}\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    \jfam{{{\Gamma}{B}}{R}}{S}
+    }
+  { \jfameq
+      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{{Q}{R}}}}
+      {\ctxwk{A}{{Q}{S}}}
+      {\ctxwk{{A}{Q}}{{A}{S}}}
+    }
+  \label{comp-ww-f}\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    \jterm{{{\Gamma}{B}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{{Q}{R}}}}
+      {\ctxwk{A}{{Q}{S}}}
+      {\ctxwk{A}{{Q}{k}}}
+      {\ctxwk{{A}{Q}}{{A}{k}}}
+    }
+  \label{comp-ww-t}
+\end{align}
+
+\begin{rmk}
+As an important special case of these inference rules we have the following
+valid inference rules:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jfam{\Gamma}{C}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{{B}{C}}}
+      {\ctxwk{{A}{B}}{{A}{C}}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jfam{{\Gamma}{C}}{R}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{{B}{C}}}}
+      {\ctxwk{A}{{B}{R}}}
+      {\ctxwk{{A}{B}}{{A}{R}}}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jterm{{\Gamma}{C}}{R}{h}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{{B}{C}}}}
+      {\ctxwk{A}{{B}{R}}}
+      {\ctxwk{A}{{B}{h}}}
+      {\ctxwk{{A}{B}}{{A}{h}}}
+    }
+\end{align*}
+Moreover, we have
+\begin{equation*}
+\inference
+  { \jfam{\Gamma}{A}
+    \jfam{\Gamma}{B}
+    \jterm{\Gamma}{C}{z}
+    }
+  { \jtermeq
+      {{{\Gamma}{A}}{\ctxwk{A}{B}}}
+      {\ctxwk{A}{{B}{C}}}
+      {\ctxwk{A}{{B}{z}}}
+      {\ctxwk{{A}{B}}{{A}{z}}}
+    }
+\end{equation*}
+\end{rmk}
+
+\subsubsection{Currying for weakening}
+\label{comp-ew}
+The rules expressing that extension is compatible with weakening assert that
+weakening by an extension is the same thing as weakening twice in the
+appropriate way.
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    \jfam{\Gamma}{B}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{P}}
+      {\ctxwk{\ctxext{A}{P}}{B}}
+      {\ctxwk{P}{{A}{B}}}
+    }
+  \label{comp-ew-c}\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
+      {\ctxwk{\ctxext{A}{P}}{Q}}
+      {\ctxwk{P}{{A}{Q}}}
+    }
+  \label{comp-ew-f}\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
+      {\ctxwk{P}{{A}{Q}}}
+      {\ctxwk{\ctxext{A}{P}}{g}}
+      {\ctxwk{P}{{A}{g}}}
+    } 
+  \label{comp-ew-t}
+\end{align}

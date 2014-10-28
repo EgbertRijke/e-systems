@@ -1,0 +1,136 @@
+\subsection{The empty context and the empty families}
+\label{empty}
+We introduce an empty context and an family over $\Gamma$ for every context $\Gamma$. 
+It has been suggested by some to only include empty families and not an
+empty context because an empty context is not necessary, but we do have several
+reasons to include them. Having an empty context requires also rules asserting 
+that a context is the same thing as a family over the empty context and this
+gives the categorical structure on contexts for free once one has it for 
+families. The main ingredients that will be missing from the theory once an
+empty context is avoided are weakening by a context and identity morphisms from
+a context to itself. Including these by hand also requires to formulate all the
+compatibility rules involving weakening once more for the cases of weakening by
+a context and identity terms at contexts. We prefer to state these rules once
+and only once and including an empty context helps in this respect.
+
+We also prefer to have our scheme of compatibility rules as symmetrical as
+possible. The structure of type dependency should look exactly the same in the
+default case as in any context. In that respect, having an empty family but not
+an empty context seems a bit odd. Also, some sets of compatibility rules 
+(like the rules stating that extension is compatible with the empty families)
+will become assymetrical as a result of not including an empty context. Moreover,
+we would eventually like to include a stratification of the theory by means of
+a type judgment (asserting that a family in a context $\Gamma$ is a type) and
+study closed types (i.e.~types in the empty context). It would be possible to
+provide a notion of closed types without having an empty context, but this would
+have to be formulated separately and we would have to restate all the rules for
+types (if any) for closed types all over again.
+
+One of the main uses of the empty context and the empty families is that we
+get the property that the `action on contexts' of an operation is compatible
+with its `action on families'.
+
+The empty family over a context $\Gamma$ is introduced by the following rule
+inference rule:
+\begin{align}
+& \inference
+  { }
+  { \jctx{\emptyc}
+    }
+  \\
+& \inference
+  { \jctx{\Gamma}
+    }
+  { \jfam{\Gamma}{\emptyf[\Gamma]}
+    }
+  \\
+& \inference
+  { \jctxeq{\Gamma}{\Gamma'}
+    }
+  { \jfameq{\Gamma}{\emptyf[\Gamma]}{\emptyf[\Gamma']}
+    }
+\end{align}
+
+By regarding contexts as families of contexts over the empty context, we
+enable ourselves also to speak of terms of contexts. A term of a context
+$\Gamma$ is a term of the family $\Gamma$ over the empty context. These ideas
+are captured in the following convertibility rules:
+\begin{align}
+& \inference
+  { \jctx{\Gamma}
+    }
+  { \jfam{\emptyc}{i(\Gamma)}
+    } 
+  &
+& \inference
+  { \jctxeq{\Gamma}{\Delta}
+    }
+  { \jfameq{\emptyc}{i(\Gamma)}{i(\Delta)}
+    }
+\end{align}
+
+The reader may wonder whether the empty family $\emptyf$ always has a
+term. This shall follow from the rules stating the compatibility of extension
+with the empty families in \autoref{comp-0e} below and from
+identity terms (\autoref{identityterms}).
+
+\subsubsection{Compatibility of extension with the empty context and families}
+In the following set of inference rules we state that the empty context and
+the empty family are neutral objects for both context extension (the first two
+rules) and family extension (the last two rules).
+\label{comp-e0}\label{comp-0e}
+\begin{align}
+& \inference
+  { \jctx{\Gamma}
+    }
+  { \jctxeq{\ctxext{\emptyc}{i(\Gamma)}}{\Gamma}
+    }
+  \label{comp-0e-c}
+  \\
+& \inference
+  { \jctx{\Gamma}
+    }
+  { \jctxeq{\ctxext{\Gamma}{\emptyf}}{\Gamma}
+    }
+  \label{comp-e0-c}\\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{\ctxext{\emptyf}{A}}{A}
+    }
+  \label{comp-0e-f}
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{{A}{\emptyf}}{A}
+    }
+  \label{comp-e0-f}
+  \\
+& \inference
+  { \jfam{\emptyc}{A}
+    }
+  { \jfameq{\emptyc}{i(\ctxext{\emptyc}{A})}{A}
+    }
+\end{align}
+
+\subsubsection{Family extension restricted to the empty context}
+Strictly speaking we should have used a different notation for context extension
+as for family extension, because the following rule asserting that family extension
+in the empty context is the same thing as context extension would look tautological
+without a difference. So let us denote, only for the moment, context extension
+of $\Gamma$ by $A$ by $(\ctxext{\Gamma}{A})^c$ and family extension of $A$ by
+$P$ in context $\Gamma$ by $(\ctxext{A}{P})^\famsym$. 
+
+Note that we may consider a context $\Gamma$ as a family over $\emptyc$ and
+a family $\jfam{\Gamma}{A}$ as a family $\jfam{{\emptyc}{\Gamma}}{A}$. 
+Therefore we will require the following rule:
+\begin{align}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jctxeq{\ctxext{\Gamma}{A}}{\ctxext{i(\Gamma)}{A}}
+    }
+\end{align}
+Note that this rule actually justifies that we have not utilized two different
+notations for context extension and family extension.

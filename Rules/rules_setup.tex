@@ -1,0 +1,170 @@
+\subsection{Judgments and valid inference rules}
+\label{judgments}
+
+The theory we describe here is a theory of contexts, families of
+contexts and terms thereof. The families of contexts are by some authors called
+dependent contexts, but they are handled a bit differently here because they
+become the primary object of study. Dependent contexts can be types; they could
+be seen as atomic or indecomposable dependent contexts.
+
+Thus we make eight kinds of judgments: ``$\Gamma$ is a context'',
+``$A$ is a family of contexts over $\Gamma$'', ``$A$ is a type in context $\Gamma$''
+and ``$x$ is a term of the family $A$ of contexts over $\Gamma$''. The other four
+judgments are for judgmental equality.
+\begin{align*}
+\jalign\jctx{\Gamma} 
+& \jalign\jctxeq{\Gamma}{\Gamma'}
+  \\
+\jalign\jfam{\Gamma}{A} 
+& \jalign\jfameq{\Gamma}{A}{B}
+  \\
+\jalign\jterm{\Gamma}{A}{x} 
+& \jalign\jtermeq{\Gamma}{A}{x}{y}.
+\end{align*}
+
+Strictly speaking, we have three different judgmental equalities in play and one
+could request for a notational difference to signify that fact. For instance,
+we could denote the judgmental equalities of contexts, families and terms by
+$\jdeq_c$, $\jdeq_f$ and $\jdeq_t$ respectively. It will, however, always be
+clear which of the three kinds of judgmental equality is meant when we assert
+a judgmental equality and therefore we shall not bother to make this notational
+distinction.
+
+We note that what we call families over contexts
+here could also have been named dependent contexts or telescopes, see
+\cite{deBruijn1991,hofmann1995extensional}. The term family is in agreement
+with the terminology scheme of \cite{TheBook}, though the reader should be
+warned that the notion of familie means something slightly different there than
+it does here.
+
+The theory of contexts, families and terms shall be described by means of a
+declaration of valid inference rules. An inference rule is an expression of the
+form
+\begin{equation*}
+\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{J}}
+\end{equation*}
+where each of $\mathcal{H}_1$, ..., $\mathcal{H}_n$ and $\mathcal{J}$ is 
+judgment. The judgments $\mathcal{H}_1$, ..., $\mathcal{H}_n$ are called the
+hypotheses and the judgment $\mathcal{J}$ is the conclusion of the inference
+rule. When a judgment is the conclusion of a valid inference rule, we also say
+that the judgment is valid or well-formed. In fact, the only way to construct
+new judgments is via the valid inference rules we describe in this section.
+
+The class of valid inference rules is closed under composition and under
+rearranging the hypotheses. That
+means that if
+\begin{equation*}
+\inference{\mathcal{I}_{1k}\quad\cdots\quad\mathcal{I}_{m_kk}}{\mathcal{H}_k}
+\end{equation*}
+and
+\begin{equation*}
+\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{J}}
+\end{equation*}
+are valid inference rules for $1\leq k\leq n$, then
+\begin{equation*}
+\inference{\mathcal{I}_{11}\quad\cdots\quad\mathcal{I}_{m_11}\quad\cdots\quad\mathcal{I}_{1n}\quad\cdots\quad\mathcal{I}_{m_nn}}{\mathcal{J}}
+\end{equation*}
+is also a valid inference rule. Also, in a valid inference rule 
+duplicated hypotheses may always be contracted and hypotheses may always be 
+reordered; the result is still considered a valid inference rule.
+
+The rules for judgmental equality establish that it is an equivalence relation
+in all three cases (contexts, families and terms). Thus, the following inference
+rules shall be required to be valid:
+\bgroup\small
+\begin{align*}
+& \inference
+  { \jctx{\Gamma}
+    }
+  { \jctxeq{\Gamma}{\Gamma}
+    } 
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      }
+    { \jctxeq{\Delta}{\Gamma}
+      } 
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      \jctxeq{\Delta}{\greek{E}}
+      }
+    { \jctxeq{\Gamma}{\greek{E}}
+      }
+    \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{A}{A}
+    } 
+& & \inference
+    { \jfameq{\Gamma}{A}{B}
+      }
+    { \jfameq{\Gamma}{B}{A}
+      }
+& & \inference
+    { \jfameq{\Gamma}{A}{B}
+      \jfameq{\Gamma}{B}{C}
+      }
+    { \jfameq{\Gamma}{A}{C}
+      }
+    \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq{\Gamma}{A}{x}{x}
+    }
+& & \inference
+    { \jtermeq{\Gamma}{A}{x}{y}
+      }
+    { \jtermeq{\Gamma}{A}{y}{x}
+      }
+& & \inference
+    { \jtermeq{\Gamma}{A}{x}{y}
+      \jtermeq{\Gamma}{A}{y}{z}
+      }
+    { \jtermeq{\Gamma}{A}{x}{z}
+      }
+\end{align*}
+\egroup
+
+The following convertibility rules are responsible for the strictness
+of judgmental equality, which sets it apart from equivalences or identifications:
+\begin{align*}
+& \inference
+  { \jctxeq{\Gamma}{\Delta}
+    \jfam{\Gamma}{A}
+    }
+  { \jfam{\Delta}{A}
+    }
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      \jfameq{\Gamma}{A}{B}
+      }
+    { \jfameq{\Delta}{A}{B}
+      }
+    \\
+& \inference
+  { \jctxeq{\Gamma}{\Delta}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jterm{\Delta}{A}{x}
+    }
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      \jtermeq{\Gamma}{A}{x}{y}
+      }
+    { \jtermeq{\Delta}{A}{x}{y}
+      }
+    \\
+& \inference
+  { \jfameq{\Gamma}{A}{B}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jterm{\Gamma}{B}{x}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{B}
+      \jtermeq{\Gamma}{A}{x}{y}
+      }
+    { \jtermeq{\Gamma}{B}{x}{y}
+      }
+\end{align*}

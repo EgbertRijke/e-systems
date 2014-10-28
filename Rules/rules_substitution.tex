@@ -1,0 +1,192 @@
+\subsection{The theory of substitution}
+\label{substitution}
+
+The theory of substitution can be formulated separately from the theory of
+weakening. Therefore, we will only require the theory of extension and the
+empty context and families. In \autoref{sec:esystem-equalities} we will
+provide the additional judgmental equality rules that will be required when
+combining the theories of substitution and of projections.
+
+Given a family $P$ over $A$ and a term $x$ of $A$, substitution gives a way to
+consider the \emph{fiber $\subst{x}{P}$ of $P$ at $x$}. As was the case with
+weakening, the substitution operation comes in three parts: the `action on
+contexts' of substitution is the operation just described; the `action on
+families' of substitution takes a family $Q$ over $\ctxext{{\Gamma}{A}}{P}$
+to a family $\subst[\famsym]{x}{Q}$ over $\ctxext{\Gamma}{\subst{x}{P}}$; the
+`action on terms' of substitution takes a term $g$ of $Q$ over
+$\ctxext{{\Gamma}{A}}{P}$ to a term $\subst[\tmsym]{x}{g}$ of 
+$\subst[\famsym]{x}{Q}$.
+\begin{align}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{\Gamma}{A}}{P}
+    }
+  { \jfam{\Gamma}{\subst{x}{P}}
+    }
+& & \inference
+    { \jtermeq{\Gamma}{A}{x}{x'}
+      \jfameq{{\Gamma}{A}}{P}{P'}
+      }
+    { \jfameq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}
+      }
+    \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfam{{\Gamma}{\subst{x}{P}}}{\subst[\famsym]{x}{Q}}
+    }
+& & \inference
+    { \jtermeq{\Gamma}{A}{x}{x'}
+      \jfameq{{{\Gamma}{A}}{P}}{Q}{Q'}
+      }
+    { \jfameq{{\Gamma}{\subst{x}{P}}}{\subst[\famsym]{x}{Q}}{\subst[\famsym]{x'}{Q'}}
+      }
+    \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    }
+  { \jterm{{\Gamma}{\subst{x}{P}}}{\subst[\famsym]{x}{Q}}{\subst[\tmsym]{x}{g}}
+    }
+& & \inference
+    { \jtermeq{\Gamma}{A}{x}{x'}
+      \jtermeq{{{\Gamma}{A}}{P}}{Q}{g}{g'}
+      }
+    { \jtermeq
+        {{\Gamma}{\subst{x}{P}}}
+        {\subst[\famsym]{x}{Q}}
+        {\subst[\tmsym]{x}{g}}
+        {\subst[\tmsym]{x'}{g'}}
+      }
+\end{align}
+
+\subsubsection{Fibers of extensions}
+\label{comp-se}
+The following inference rules assert that if we take the fiber of an extended
+family at a term $x$ of $A$ in context $\Gamma$, the substitution by $x$
+distributes over the factors of the extension.
+\begin{align}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq
+      {\Gamma}
+      {\subst{x}{\ctxext{P}{Q}}}
+      {\ctxext{\subst{x}{P}}{\subst{x}{Q}}}
+    }
+  \label{comp-se-c}
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{P}}}
+      {\subst{x}{\ctxext{Q}{R}}}
+      {\ctxext{\subst{x}{Q}}{\subst{x}{R}}}
+    }
+  \label{comp-se-f}
+\end{align}
+There is also a version of this statement in which extended terms are considered.
+This variant is stated and proved in \autoref{comp-se-t}.
+
+\subsubsection{Fibers of fibers}
+\label{comp-ss}
+
+The following rules explain what happens when we first substitute by a term
+$g$ of $Q$ over $P$ in context $\ctxext{\Gamma}{A}$ and then by a term $x$ of
+$A$:
+\begin{align}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
+      {\subst{x}{{g}{R}}}
+      {\subst{{x}{g}}{{x}{R}}}
+    }
+  \label{comp-ss-c}
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jfam{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}
+    }
+  { \jfameq
+      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{{g}{R}}}}
+      {\subst{x}{{g}{S}}}
+      {\subst{{x}{g}}{{x}{S}}}
+    }
+  \label{comp-ss-f}
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    \jterm{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{{g}{R}}}}
+      {\subst{x}{{g}{S}}}
+      {\subst{x}{{g}{k}}}
+      {\subst{{x}{g}}{{x}{k}}}
+    }
+  \label{comp-ss-t}
+\end{align}
+
+\begin{rmk}
+As an important special case of these inference rules we have the following
+valid inference rules:
+\begin{align*}
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{\Gamma}{A}}{P}{f}
+    \jfam{{{\Gamma}{A}}{P}}{Q}
+    }
+  { \jfameq
+      {\Gamma}
+      {\subst{x}{{f}{Q}}}
+      {\subst{{x}{f}}{{x}{Q}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{\Gamma}{A}}{P}{f}
+    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    }
+  { \jfameq
+      {{\Gamma}{\subst{x}{{f}{Q}}}}
+      {\subst{x}{{f}{R}}}
+      {\subst{{x}{f}}{{x}{R}}}
+    }
+  \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{\Gamma}{A}}{P}{f}
+    \jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{h}
+    }
+  { \jtermeq
+      {{\Gamma}{\subst{x}{{f}{Q}}}}
+      {\subst{x}{{f}{R}}}
+      {\subst{x}{{f}{h}}}
+      {\subst{{x}{f}}{{x}{h}}}
+    }
+\end{align*}
+Moreover, we get
+\begin{equation*}
+\inference
+  { \jterm{\Gamma}{A}{x}
+    \jterm{{\Gamma}{A}}{P}{f}
+    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
+    }
+  { \jtermeq
+      {\Gamma}
+      {\subst{x}{{f}{Q}}}
+      {\subst{x}{{f}{g}}}
+      {\subst{{x}{f}}{{x}{g}}}
+    }
+\end{equation*}
+\end{rmk}
