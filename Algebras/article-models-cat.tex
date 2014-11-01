@@ -1912,12 +1912,12 @@ a projection algebra.
 \subsection{Substitution objects}
 
 \begin{defn}
-A pre-substitution object is an extension object for which the is an
+A \emph{pre-substitution} for an extension object $\stesys$ is an
 extension homomorphism
 \begin{equation*}
 \mathbf{s}(\stesys):\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[1]}\to \famesys{\stesys}
 \end{equation*}
-such that the square
+for which the square
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 \pullback{\stesyst}{\stesysf_2}{\ebd}{\eft[1]}
@@ -1933,27 +1933,29 @@ such that the square
 \stesysc
 \end{tikzcd}
 \end{equation*}
-commutes.
+commutes. A \emph{pre-substitution object} is an extension object
+together with a pre-substitution.
 \end{defn}
 
 \begin{defn}
-A pre-substitution homomorphism is an extension homomorphism $f:CFT\to CFT'$
-such that the square
+A \emph{pre-substitution homomorphism} is an extension homomorphism $f:\stesys'\to \stesys$
+for which the square
 \begin{equation*}
-\begin{tikzcd}
-T\times\mathbf{F}_{\mathbf{F}_{CFT}}
-  \ar{r}{f^t\times\mathbf{F}_{\mathbf{F}_f}}
-  \ar{d}[swap]{\mathbf{s}}
+\begin{tikzcd}[column sep=huge]
+\cobesys{\stesyst'}{\famesys{\famesys{\stesys'}}}{\ebd'}{\eft[1]'}
+  \ar{r}{\pullback{f^t}{\famehom{\famehom{f}}}{\ebd}{\eft[1]}}
+  \ar{d}[swap]{\mathbf{s}'(\stesys')}
   &
-T'\times\mathbf{F}_{\mathbf{F}_{CFT'}}
-  \ar{d}{\mathbf{s}'}
+\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[1]}
+  \ar{d}{\mathbf{s}(\stesys)}
   \\
-\mathbf{F}_{CFT}
-  \ar{r}[swap]{\mathbf{F}_f}
+\famesys{\stesys'}
+  \ar{r}[swap]{\famehom{f}}
   &
-\mathbf{F}_{CFT'}
+\famesys{\stesys}
 \end{tikzcd}
 \end{equation*}
+commutes.
 \end{defn}
 
 \begin{lem}
@@ -1961,12 +1963,49 @@ The change of base of a pre-substitution object is again a pre-substitution obje
 \end{lem}
 
 \begin{lem}
-If $CFT$ is a pre-substitution object, then so is $\mathbf{F}_{CFT}$ with
-$\mathbf{F}_{\mathbf{s}}=...$.
+If $\stesys$ is a pre-substitution object, then so is $\famesys{\stesys}$ with
+$\mathbf{s}(\famesys{\stesys})$ defined to be the unique extension homomorphism
+rendering the diagram
+\begin{equation*}
+\begin{tikzcd}
+\cobesys{\stesyst_2}{\famesys{\famesys{\famesys{\stesys}}}}{\ebd[1]}{\eft[2]}
+  \ar[dotted]{dr}{\mathbf{s}(\famesys{\stesys})}
+  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft\circ\ebd}}{\boldsymbol{\beta}_\mathbf{2}}{\ebd}{\eft[1]}}
+  \ar{dd}[swap]{\ebd[1]\circ\pullbackpr{1}{\ebd[1]}{\eft[2]}}
+  &
+  {}&
+\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[1]}
+  \ar{d}{\mathbf{s}(\stesys)}
+  \\
+  {}&
+\famesys{\famesys{\stesys}}
+  \ar{r}{\boldsymbol{\beta}}
+  \ar{d}{\eft[1]}
+  &
+\famesys{\stesys}
+  \ar{d}{\eft}
+  \\
+\stesysf_2
+  \ar{r}[swap]{\eft[1]}
+  &
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutative.
 \end{lem}
 
+\begin{proof}
+The requirement on pre-substitutions holds by construction.
+\end{proof}
+
+It makes sense now to consider the possibility that the pre-substitution
+itself is a pre-substitution homomorphism.
+
 \begin{defn}
-A substitution object is a pre-substitution object for which substitution is
+A \emph{substitution object} is a pre-substitution object for which substitution is
 a pre-substitution homomorphism.
 \end{defn}
 
@@ -1975,12 +2014,108 @@ The change of base of a substitution object is again a substitution object.
 \end{cor}
 
 \begin{cor}
-If $CFT$ is a substitution object, then so is $\mathbf{F}_{CFT}$.
+If $\stesys$ is a substitution object, then so is $\famesys{\stesys}$.
 \end{cor}
+
+\subsection{Extension objects with empty context and families}
+
+\begin{defn}
+An extension object $\stesys$ is said to have \emph{empty families} if there
+is a section
+\begin{equation*}
+\phi_1(\stesys):\stesysc\to\stesysf
+\end{equation*}
+of $\eft$, satisfying the following additional properties:
+\begin{enumerate}
+\item $\phi_1(\stesys)$ is also a section of $\ectxext$.
+\item The unique morphism $\phi_2$ rendering the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesysf
+  \ar[bend left=20]{drr}{\phi_1(\stesys)\circ\ectxext}
+  \ar[equals,bend right=20]{ddr}
+  \ar[dotted]{dr}{\phi_2}
+  \\
+  {}&
+\stesysf_2
+  \ar{d}{\eft[1]}
+  \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
+  &
+\stesysf
+  \ar{d}{\eft}
+  \\
+  {}&
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutative, is a section of $\efamext$.
+\item The unique morphism $\iota_1$ rendering the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesysf
+  \ar[equals,bend left=20]{drr}
+  \ar[bend right=20]{ddr}[swap]{\phi_1(\stesys)\circ\eft}
+  \ar[dotted]{dr}{\iota_1}
+  \\
+  {}&
+\stesysf_2
+  \ar{d}{\eft[1]}
+  \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
+  &
+\stesysf
+  \ar{d}{\eft}
+  \\
+  {}&
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutative, is a section of $\efamext$.
+\end{enumerate}
+\end{defn}
+
+\begin{defn}
+A homomorphism of extension objects with empty families is an extension
+homomorphism $f:\stesys'\to\stesys$ for which the diagram
+\begin{equation*}
+\begin{tikzcd}
+\stesysf'
+  \ar{r}{f_1}
+  &
+\stesysf
+  \\
+\stesysc'
+  \ar{u}{\phi_1(\stesys')}
+  \ar{r}[swap]{f_0}
+  &
+\stesysc
+  \ar{u}[swap]{\phi_1(\stesys)}
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{defn}
+
+\begin{lem}
+Suppose $\stesys$ is an extension object with empty families. Then
+$\famesys{\stesys}$ is an extension object with empty families, with
+$\phi_1(\famesys{\stesys}):=\phi_2$. 
+\end{lem}
+
+\begin{lem}
+Suppose $\stesys$ is an extension object with empty families and consider
+$p:\stesysc\rightarrow X\leftarrow Y:p$. Then
+$\cobesys{Y}{\stesys}{g}{p}$ is an extension object with empty families
+with $\phi_1(\cobesys{Y}{\stesys}{g}{p}):=g^\ast(\phi_1)$.
+\end{lem}
 
 \subsection{E-objects}
 \begin{defn}
-An E-object is an extension object with the structure of a projection object,
+An \emph{E-object} is an extension object with the structure of a projection object,
 the structure of a substitution object and which has an empty context and families,
 such that additionally:
 \begin{enumerate}
