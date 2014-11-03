@@ -87,7 +87,6 @@ write $A\times B$ for the pullback of $A\rightarrow 1\leftarrow B$, and
 $\pi_1$ and $\pi_2$ for its projections (thus, no separate choice of
 cartesian products is made).
 
-
 \subsection{Extension objects}
 \begin{defn}
 A \emph{pre-extension object $\stesys$ in $\cat{C}$} consists of a \emph{fundamental structure}, which is a diagram of the form
@@ -112,7 +111,7 @@ respectively, such that the diagram
 \begin{tikzcd}
 \stesysf_2 
   \ar{r}{\efamext} 
-  \ar{d}[swap]{\eft[1]} 
+  \ar{d}[swap]{\eft[2]} 
   & 
 \stesysf 
   \ar{d}{\eft}
@@ -132,13 +131,13 @@ We introduce the following notation:
 \stesysf_2 
   & := \stesysff
   \\
-\eft[1] 
+\eft[2] 
   & := \pullbackpr{1}{\ectxext}{\eft} : \stesysf_2\to\stesysf
   \\
-\stesysf_3 & := \pullback{\stesysf_2}{\stesysf_2}{\efamext}{\eft[1]}
+\stesysf_3 & := \pullback{\stesysf_2}{\stesysf_2}{\efamext}{\eft[2]}
   \\
-\eft[2]
-  & := \pullbackpr{1}{\efamext}{\eft[1]} : \stesysf_3\to\stesysf_2.
+\eft[3]
+  & := \pullbackpr{1}{\efamext}{\eft[2]} : \stesysf_3\to\stesysf_2.
 \end{align*}
 Then it follows that the outer square in the diagram
 \begin{equation*}
@@ -146,7 +145,7 @@ Then it follows that the outer square in the diagram
 \stesysf_3
   \ar[dotted]{dr}{\eext{2}}
   \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft}}{\pullbackpr{2}{\ectxext}{\eft}}{\ectxext}{\eft}}
-  \ar{dd}[swap]{\eft[2]}
+  \ar{dd}[swap]{\eft[3]}
   & 
   &
 \stesysf_2
@@ -154,14 +153,14 @@ Then it follows that the outer square in the diagram
   \\
   &
 \stesysf_2
-  \ar{d}[swap]{\eft[1]}
+  \ar{d}[swap]{\eft[2]}
   \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
   &
 \stesysf
   \ar{d}{\eft}
   \\
 \stesysf_2
-  \ar{r}[swap]{\eft[1]}
+  \ar{r}[swap]{\eft[2]}
   &
 \stesysf
   \ar{r}[swap]{\ectxext}
@@ -174,19 +173,19 @@ commutative. Now we may continue to define
 \begin{align*}
 \stesysf_4 
   & := 
-\pullback{\stesysf_3}{\stesysf_3}{\eext{2}}{\eft[2]}
+\pullback{\stesysf_3}{\stesysf_3}{\eext{2}}{\eft[3]}
   \\
-\eft[3] 
+\eft[4] 
   & := 
-\pullbackpr{1}{\eext{2}}{\eft[2]}.
+\pullbackpr{1}{\eext{2}}{\eft[3]}.
 \end{align*}
 Then we see that the outer square of the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 \stesysf_4
   \ar[dotted]{dr}{\eext{3}}
-  \ar{rr}{\pullback{\pullbackpr{2}{\efamext}{\eft[1]}}{\pullbackpr{2}{\efamext}{\eft[1]}}{\efamext}{\eft[1]}}
-  \ar{dd}[swap]{\eft[3]}
+  \ar{rr}{\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]}}
+  \ar{dd}[swap]{\eft[4]}
   & 
   &
 \stesysf_3
@@ -194,14 +193,14 @@ Then we see that the outer square of the diagram
   \\
   &
 \stesysf_3
-  \ar{d}[swap]{\eft[2]}
-  \ar{r}{\pullbackpr{2}{\efamext}{\eft[1]}}
+  \ar{d}[swap]{\eft[3]}
+  \ar{r}{\pullbackpr{2}{\efamext}{\eft[2]}}
   &
 \stesysf_2
-  \ar{d}{\eft[1]}
+  \ar{d}{\eft[2]}
   \\
 \stesysf_3
-  \ar{r}[swap]{\eft[2]}
+  \ar{r}[swap]{\eft[3]}
   &
 \stesysf_2
   \ar{r}[swap]{\efamext}
@@ -210,12 +209,14 @@ Then we see that the outer square of the diagram
 \end{tikzcd}
 \end{equation*}
 commutes,
-so we may define $\eext{3}$ to be the unique map which renders the diagram. It
+so we may define $\eext{3}$ to be the unique map which renders the diagram
+commutative. It
 is straightforward to continue this process by induction, but we shall need not
 go any further in this article.
 \end{defn}
 
-\begin{defn} An extension object is a pre-extension object $\stesys$ for which 
+\begin{defn} 
+An extension object is a pre-extension object $\stesys$ for which 
 the diagrams
 \begin{equation*}
 \begin{tikzcd}
@@ -234,7 +235,7 @@ the diagrams
 \qquad
 \begin{tikzcd}
 \stesysf_3
-  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[1]}}
+  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}}
   \ar{r}{\eext{2}}
   & 
 \stesysf_2 
@@ -254,7 +255,7 @@ commute.
 There exists an isomorphism $\alpha$ such that the triangle
 \begin{equation*}
 \begin{tikzcd}[column sep=tiny]
-\pullback{\stesysf}{\stesysf_2}{\ectxext}{\eft\circ\eft[1]}
+\pullback{\stesysf}{\stesysf_2}{\ectxext}{\eft\circ\eft[2]}
   \ar[dotted]{rr}{\alpha}
   \ar{dr}[swap]{\pullback{\catid{\stesysf}}{\efamext}{\ectxext}{\eft}}
   &
@@ -270,21 +271,21 @@ commutes
 
 \begin{proof}
 There is a unique morphism $\alpha:
-\pullback{\stesysf}{\stesysf_2}{\ectxext}{\eft\circ\eft[1]}\to\stesysf_3$
+\pullback{\stesysf}{\stesysf_2}{\ectxext}{\eft\circ\eft[2]}\to\stesysf_3$
 rendering the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\pullback{\stesysf}{\stesysf_2}{\ectxext}{\eft\circ\eft[1]}
-  \ar[bend left=10,yshift=.5ex]{drrr}{\pullbackpr{2}{\ectxext}{\eft}\circ\pullbackpr{2}{\ectxext}{\eft\circ\eft[1]}}
-  \ar[bend right=10]{ddr}[swap]{\pullback{\catid{\stesysf}}{\eft[1]}{\ectxext}{\eft}}
+\pullback{\stesysf}{\stesysf_2}{\ectxext}{\eft\circ\eft[2]}
+  \ar[bend left=10,yshift=.5ex]{drrr}{\pullbackpr{2}{\ectxext}{\eft}\circ\pullbackpr{2}{\ectxext}{\eft\circ\eft[2]}}
+  \ar[bend right=10]{ddr}[swap]{\pullback{\catid{\stesysf}}{\eft[2]}{\ectxext}{\eft}}
   \ar[dotted]{dr}{\alpha}
   \\
 & \stesysf_3
-  \ar{r}{\pullbackpr{2}{\efamext}{\eft[1]}}
-  \ar{d}{\eft[2]}
+  \ar{r}{\pullbackpr{2}{\efamext}{\eft[2]}}
+  \ar{d}{\eft[3]}
   &
 \stesysf_2
-  \ar{d}[swap]{\eft[1]}
+  \ar{d}[swap]{\eft[2]}
   \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
   &
 \stesysf
@@ -308,10 +309,10 @@ $\famesys{\stesys}$ to consist of the fundamental structure
 \begin{equation*}
 \begin{tikzcd}
 \stesyst_2
-  \ar{d}{\ebd[1]}
+  \ar{d}{\ebd[2]}
   \\
 \stesysf_2
-  \ar{d}{\eft[1]}
+  \ar{d}{\eft[2]}
   \\
 \stesysf
 \end{tikzcd}
@@ -321,7 +322,7 @@ where
 \stesyst_2 
   & := \pullback{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd}
   \\
-\ebd[1]
+\ebd[2]
   & := \ectxext^\ast(\ebd),
 \end{align*}
 with the extension operations
@@ -354,7 +355,7 @@ We define
   \\
 \beta_3
   & :=
-\pullback{\beta_2}{\beta_2}{\efamext}{\eft[1]}
+\pullback{\beta_2}{\beta_2}{\efamext}{\eft[2]}
   & &
   : \stesysf_4\to\stesysf_3.
 \end{align*}
@@ -365,7 +366,7 @@ Let $\stesys$ be a pre-extension object. Then the square
 \begin{equation*}
 \begin{tikzcd}[column sep=10em]
 \stesysf_4
-  \ar{r}{\pullback{\pullbackpr{2}{\efamext}{\eft[1]}}{\pullbackpr{2}{\efamext}{\eft[1]}}{\efamext}{\eft[1]}}
+  \ar{r}{\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]}}
   \ar{d}[swap]{\beta_3}
   &
 \stesysf_3
@@ -389,12 +390,12 @@ Left to the reader.
 It is straightforward to verify the equalities
 \begin{align*}
 \pullbackpr{1}{\ectxext}{\eft}\circ\beta_2\circ
-  (\pullback{\pullbackpr{2}{\efamext}{\eft[1]}}{\pullbackpr{2}{\efamext}{\eft[1]}}{\efamext}{\eft[1]})
+  (\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]})
   & =
 \pullbackpr{1}{\ectxext}{\eft}\circ\beta_2\circ\beta_3
   \\
 \pullbackpr{2}{\ectxext}{\eft}\circ\beta_2\circ
-  (\pullback{\pullbackpr{2}{\efamext}{\eft[1]}}{\pullbackpr{2}{\efamext}{\eft[1]}}{\efamext}{\eft[1]})
+  (\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]})
   & =
 \pullbackpr{2}{\ectxext}{\eft}\circ\beta_2\circ\beta_3.\qedhere
 \end{align*}
@@ -448,10 +449,10 @@ Left to the reader.
 It is straightforward to verify the equalities
 \begin{align*}
 \pullbackpr{1}{\ectxext}{\eft}\circ\beta_2\circ\eext{3}
-  & = \beta_1\circ\eft[2]\circ\eft[3]
+  & = \beta_1\circ\eft[3]\circ\eft[4]
   \\
 \pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\beta_3
-  & = \beta_1\circ\eft[2]\circ\eft[3].
+  & = \beta_1\circ\eft[3]\circ\eft[4].
 \end{align*}
 Thus, it remains to verify that
 \begin{equation*}
@@ -462,12 +463,12 @@ It is straightforward to see that the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 \stesysf_4
-  \ar{dd}[swap]{\pullback{\pullbackpr{2}{\efamext}{\eft[1]}}{\pullbackpr{2}{\efamext}{\eft[1]}}{\efamext}{\eft[1]}}
+  \ar{dd}[swap]{\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]}}
   \ar{r}{\eext{3}}
   &
 \stesysf_3
   \ar{r}{\beta_2}
-  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[1]}}
+  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}}
   &
 \stesysf_2
   \ar{dd}{\pullbackpr{2}{\ectxext}{\eft}}
@@ -491,7 +492,7 @@ commutes. It is likewise straightforward to see that the diagram
 \begin{tikzcd}
 \stesysf_4
   \ar{r}{\beta_3}
-  \ar{d}[swap]{\pullback{\pullbackpr{2}{\efamext}{\eft[1]}}{\pullbackpr{2}{\efamext}{\eft[1]}}{\efamext}{\eft[1]}}
+  \ar{d}[swap]{\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]}}
   &
 \stesysf_3
   \ar{r}{\eext{2}}
@@ -522,7 +523,7 @@ Note that the diagram
 \begin{equation*}
 \begin{tikzcd}
 \stesysf_3
-  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[1]}}
+  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}}
   \ar{r}{\eext{2}}
   & 
 \stesysf_2 
@@ -539,7 +540,7 @@ diagram
 \begin{equation*}
 \begin{tikzcd}
 \stesysf_4
-  \ar{d}[swap]{\pullbackpr{2}{\eext{2}}{\eft[2]}}
+  \ar{d}[swap]{\pullbackpr{2}{\eext{2}}{\eft[3]}}
   \ar{r}{\eext{3}}
   & 
 \stesysf_3
@@ -556,24 +557,24 @@ that
 \begin{align*}
 \pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\eext{3}
   & =
-\pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[2]}
+\pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}
   \\
 \pullbackpr{2}{\ectxext}{\eft}\circ\eext{2}\circ\eext{3}
   & =
-\pullbackpr{2}{\ectxext}{\eft}\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[2]}.
+\pullbackpr{2}{\ectxext}{\eft}\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}.
 \end{align*}
 For the first equality, it is fairly straightforward to show that both the
 equalities
 \begin{equation*}
 \pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\eext{3}
   =
-\eft[1]\circ\eft[2]\circ\eft[3]
+\eft[2]\circ\eft[3]\circ\eft[4]
 \end{equation*}
 and
 \begin{equation*}
-\pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[2]}
+\pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}
   =
-\eft[1]\circ\eft[2]\circ\eft[3].
+\eft[2]\circ\eft[3]\circ\eft[4].
 \end{equation*}
 hold. For the second subgoal (which is more tricky). Notice first that the
 diagram
@@ -603,7 +604,7 @@ commutes. We also have the commutative diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 \stesysf_4
-  \ar{r}{\pullbackpr{2}{\eext{2}}{\eft[2]}}
+  \ar{r}{\pullbackpr{2}{\eext{2}}{\eft[3]}}
   \ar{d}[swap]{\beta_3}
   &
 \stesysf_3
@@ -614,7 +615,7 @@ commutes. We also have the commutative diagram
   \ar{d}{\pullbackpr{2}{\ectxext}{\eft}}
   \\
 \stesysf_3
-  \ar{r}{\pullbackpr{2}{\efamext}{\eft[1]}}
+  \ar{r}{\pullbackpr{2}{\efamext}{\eft[2]}}
   \ar{dr}[swap]{\eext{2}}
   &
 \stesysf_2
@@ -644,67 +645,68 @@ always an extension object.
 
 \begin{defn}
 Let $\stesys$ and $\stesys'$ be pre-extension algebras. A \emph{pre-extension 
-homomorphism $f$ from $\stesys$ to $\stesys'$} is a triple $(f_0,f_1,f^t)$ 
+homomorphism $f$ from $\stesys'$ to $\stesys$} is a triple $(f_0,f_1,f^t)$ 
 consisting of morphisms
 \begin{equation*}
 \begin{tikzcd}
-\stesyst 
+\stesyst' 
   \ar{r}{f^t}
-  \ar{d}[swap]{\ebd}
+  \ar{d}[swap]{\ebd'}
   &
-\stesyst'
-  \ar{d}{\ebd'}
+\stesyst
+  \ar{d}{\ebd}
   \\
-\stesysf 
-  \ar{r}{f_1}
-  \ar{d}[swap]{\eft}
-  &
 \stesysf'
-  \ar{d}{\eft'}
+  \ar{r}{f_1}
+  \ar{d}[swap]{\eft'}
+  &
+\stesysf
+  \ar{d}{\eft}
   \\
-\stesysc 
+\stesysc' 
   \ar{r}[swap]{f_0}
   &
-\stesysc'
+\stesysc
 \end{tikzcd}
 \end{equation*}
 such that the indicated squares commute, for which furthermore the squares
 \begin{equation*}
 \begin{tikzcd}
-\stesysf \ar{r}{f_1}
-  \ar{d}[swap]{\ectxext}
+\stesysf' 
+  \ar{r}{f_1}
+  \ar{d}[swap]{\ectxext'}
   &
-\stesysf'
-  \ar{d}{\ectxext'}
+\stesysf
+  \ar{d}{\ectxext}
   \\
-\stesysc
+\stesysc'
   \ar{r}[swap]{f_0}
   &
-\stesysc'
+\stesysc
 \end{tikzcd}
 \end{equation*}
 and
 \begin{equation*}
-\begin{tikzcd}[column sep=large]
-\stesysf\times_{\ectxext,\eft} \stesysf
-  \ar{r}{f_1\times_{\ectxext',\eft'} f_1}
-  \ar{d}[swap]{\efamext}
-  &
+\begin{tikzcd}[column sep=huge]
 \stesysf'\times_{\ectxext',\eft'} \stesysf'
-  \ar{d}{\efamext'}
+  \ar{r}{f_1\times_{\ectxext,\eft} f_1}
+  \ar{d}[swap]{\efamext'}
+  &
+\stesysf\times_{\ectxext,\eft} \stesysf
+  \ar{d}{\efamext}
   \\
-\stesysf
+\stesysf'
   \ar{r}[swap]{f_1}
   &
-\stesysf'
+\stesysf
 \end{tikzcd}
 \end{equation*}
 Composition and the identity homomorphism are defined in the expected way. We
 define furthermore
 \begin{align*}
-f_2 & := \pullback{f_1}{f_1}{\ectxext'}{\eft'}
+f_2 & := \pullback{f_1}{f_1}{\ectxext}{\eft}
   \\
-f_3 & := \pullback{f_2}{f_2}{\efamext'}{\eft[1]'}.
+f_3 & := \pullback{f_2}{f_2}{\efamext}{\eft[2]}.
 \end{align*}
 \end{defn}
 
@@ -716,17 +718,17 @@ homomorphism.
 \begin{lem}
 Let $\stesys$ be an extension object. Then
 \begin{equation*}
-\begin{tikzcd}[column sep=large]
+\begin{tikzcd}[column sep=huge]
 \stesyst_2
   \ar{r}{\pullbackpr{2}{\ectxext}{\eft\circ\ebd}}
-  \ar{d}[swap]{\ebd[1]}
+  \ar{d}[swap]{\ebd[2]}
   &
 \stesyst
   \ar{d}{\ebd}
   \\
 \stesysf_2
   \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
-  \ar{d}[swap]{\eft[1]}
+  \ar{d}[swap]{\eft[2]}
   &
 \stesysf
   \ar{d}{\eft}
@@ -754,17 +756,17 @@ Let $\stesys$ be a pre-extension object. Then
 \begin{tikzcd}
 \stesyst_3
   \ar{r}{\beta^t}
-  \ar{d}[swap]{\ebd[2]}
+  \ar{d}[swap]{\ebd[3]}
   &
 \stesyst_2
-  \ar{d}{\ebd[1]}
+  \ar{d}{\ebd[2]}
   \\
 \stesysf_3
   \ar{r}{\beta_2}
-  \ar{d}[swap]{\eft[2]}
+  \ar{d}[swap]{\eft[3]}
   &
 \stesysf_2
-  \ar{d}{\eft[1]}
+  \ar{d}{\eft[2]}
   \\
 \stesysf_2
   \ar{r}[swap]{\beta_1}
@@ -777,17 +779,17 @@ Let $\stesys$ be a pre-extension object. Then
 \begin{tikzcd}
 \stesyst_4
   \ar{r}{\beta^t_2}
-  \ar{d}[swap]{\ebd[3]}
+  \ar{d}[swap]{\ebd[4]}
   &
 \stesyst_3
-  \ar{d}{\ebd[2]}
+  \ar{d}{\ebd[3]}
   \\
 \stesysf_4
   \ar{r}{\beta_3}
-  \ar{d}[swap]{\eft[3]}
+  \ar{d}[swap]{\eft[4]}
   &
 \stesysf_3
-  \ar{d}{\eft[2]}
+  \ar{d}{\eft[3]}
   \\
 \stesysf_3
   \ar{r}[swap]{\beta_2}
@@ -820,17 +822,17 @@ define $\famehom{f}:\famesys{\stesys'}\to\famesys{\stesys}$ to consist of
 \begin{tikzcd}
 \stesyst_2'
   \ar{r}{f^t_2}
-  \ar{d}[swap]{\ebd[1]'}
+  \ar{d}[swap]{\ebd[2]'}
   &
 \stesyst_2
-  \ar{d}{\ebd[1]}
+  \ar{d}{\ebd[2]}
   \\
 \stesysf_2'
   \ar{r}{f_2}
-  \ar{d}[swap]{\eft[1]'}
+  \ar{d}[swap]{\eft[2]'}
   &
 \stesysf_2
-  \ar{d}{\eft[1]}
+  \ar{d}{\eft[2]}
   \\
 \stesysf'
   \ar{r}[swap]{f_1}
@@ -1069,7 +1071,7 @@ Thus we can apply what we have proven so far to conclude that the square
 \begin{tikzcd}
 \stesysf_3 
   \ar{r}{\eext{2}} 
-  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[1]}} 
+  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}} 
   & 
 \stesysf_2 
   \ar{d}{\efamext}
@@ -1303,7 +1305,7 @@ and that the diagram
   {}&
 \stesysf_2
   \ar{ur}{\efamext}
-  \ar{dr}[swap]{\eft[1]}
+  \ar{dr}[swap]{\eft[2]}
   &
   {}&
   {}&
@@ -1493,23 +1495,23 @@ Consider a commutative square
 \end{equation*}
 Then we construct
 \begin{equation*}
-|[p,f]|:\stesys'\to\famesys{\famesys{\stesys}}
+[p,f]:\stesys'\to\famesys{\famesys{\stesys}}
 \end{equation*}
 as follows:
 \begin{itemize}
-\item let $|[p,f]|_0:\stesysc'\to\stesysf_2$ be the unique morphism rendering
+\item let $[p,f]_0:\stesysc'\to\stesysf_2$ be the unique morphism rendering
 the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 \stesysc' 
   \ar[bend left=10]{rrd}{f_0}
   \ar[swap,bend right=10]{ddr}{p}
-  \ar[dotted]{dr}[near end]{|[p,f]|_0}
+  \ar[dotted]{dr}[near end]{[p,f]_0}
   \\
   {}&
 \stesysf_2
   \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
-  \ar{d}{\eft[1]}
+  \ar{d}{\eft[2]}
   &
 \stesysf
   \ar{d}{\eft}
@@ -1522,25 +1524,25 @@ the diagram
 \end{tikzcd}
 \end{equation*}
 commutative.
-\item Let $|[p,f]|_1:\stesysf'\to\stesysf_3$ be the unique morphism rendering
+\item Let $[p,f]_1:\stesysf'\to\stesysf_3$ be the unique morphism rendering
 the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 \stesysf'
   \ar[bend left=10]{drr}{f_1}
   \ar[swap]{dd}{\eft'}
-  \ar[dotted]{dr}[near end]{|[p,f]|_1}
+  \ar[dotted]{dr}[near end]{[p,f]_1}
   \\
   {}&
 \stesysf_3
-  \ar{r}[swap]{\pullbackpr{2}{\efamext}{\eft[1]}}
-  \ar{d}{\eft[1]}
+  \ar{r}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}}
+  \ar{d}{\eft[2]}
   &
 \stesysf_2
-  \ar{d}{\eft[1]}
+  \ar{d}{\eft[2]}
   \\
 \stesysc'
-  \ar{r}[swap]{|[p,f]|_0}
+  \ar{r}[swap]{[p,f]_0}
   &
 \stesysf_2
   \ar{r}[swap]{\efamext}
@@ -1549,25 +1551,25 @@ the diagram
 \end{tikzcd}
 \end{equation*}
 commutative.
-\item Let $|[p,f]|^t:\stesyst'\to\stesyst_3$ be the unique morphism rendering
+\item Let $[p,f]^t:\stesyst'\to\stesyst_3$ be the unique morphism rendering
 the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \stesyst'
   \ar[bend left=10]{drr}{f^t}
   \ar[swap]{dd}{\eft'\circ\ebd'}
-  \ar[dotted]{dr}[near end]{|[p,f]|^t}
+  \ar[dotted]{dr}[near end]{[p,f]^t}
   \\
   {}&
 \stesyst_3
-  \ar{r}[swap]{\pullbackpr{2}{\efamext}{\eft[1]\circ\ebd[1]}}
-  \ar{d}[swap]{\pullbackpr{1}{\efamext}{\eft[1]\circ\ebd[1]}}
+  \ar{r}[swap]{\pullbackpr{2}{\efamext}{\eft[2]\circ\ebd[2]}}
+  \ar{d}[swap]{\pullbackpr{1}{\efamext}{\eft[2]\circ\ebd[2]}}
   &
 \stesyst_2
-  \ar{d}{\eft[1]\circ\ebd[1]}
+  \ar{d}{\eft[2]\circ\ebd[2]}
   \\
 \stesysc'
-  \ar{r}[swap]{|[p,f]|_0}
+  \ar{r}[swap]{[p,f]_0}
   &
 \stesysf_2
   \ar{r}[swap]{\efamext}
@@ -1580,7 +1582,7 @@ commutative.
 \end{defn}
 
 \begin{lem}
-Under the hypotheses of \autoref{famfamstesys_into}, $|[p,f]|$ is a pre-extension
+Under the hypotheses of \autoref{famfamstesys_into}, $[p,f]$ is a pre-extension
 homomorphism. Moreover, it is the unique pre-extension homomorphism for which
 the diagram
 \begin{equation*}
@@ -1588,12 +1590,12 @@ the diagram
 \stesys' 
   \ar[bend left=10]{rrd}{f}
   \ar[swap,bend right=10]{ddr}{p}
-  \ar[dotted]{dr}[near end]{|[p,f]|}
+  \ar[dotted]{dr}[near end]{[p,f]}
   \\
   {}&
 \famesys{\famesys{\stesys}}
   \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
-  \ar{d}{\eft[1]}
+  \ar{d}{\eft[2]}
   &
 \famesys{\stesys}
   \ar{d}{\eft}
@@ -1647,7 +1649,7 @@ for which the diagram
   \ar{dr}[swap]{\pullbackpr{1}{\eft}{\eft}}
   &
 \famesys{\famesys{\stesys}}
-  \ar{d}{\eft[1]}
+  \ar{d}{\eft[2]}
   \\
 & \stesysf
 \end{tikzcd}
@@ -1662,11 +1664,11 @@ $\mathbf{w}(\famesys{\stesys})$ which is uniquely determined by rendering the
 diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[1]}{\eft[1]}
+\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[2]}{\eft[2]}
   \ar{rr}{%
       \pullback{\beta_1}{\boldsymbol{\beta}}{\eft}{\eft}
     }
-  \ar[bend right]{ddr}[swap]{\pullbackpr{1}{\eft[1]}{\eft[1]}}
+  \ar[bend right]{ddr}[swap]{\pullbackpr{1}{\eft[2]}{\eft[2]}}
   \ar[dotted]{dr}{\mathbf{w}(\famesys{\stesys})}
   &
   {}&
@@ -1679,10 +1681,10 @@ diagram
   {}&
 \famesys{\famesys{\famesys{\stesys}}}
   \ar{r}{\boldsymbol{\beta}_\mathbf{2}}
-  \ar{d}[swap]{\eft[2]}
+  \ar{d}[swap]{\eft[3]}
   &
 \famesys{\famesys{\stesys}}
-  \ar{d}{\eft[1]}
+  \ar{d}{\eft[2]}
   \ar{r}{\boldsymbol{\beta}}
   &
 \famesys{\stesys}
@@ -1712,22 +1714,22 @@ $ \mathbf{w}(\stesys)
 for which the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=15em]
-\cobesys{\stesysf_2}{\famesys{\stesys}}{\eft\circ\eft[1]}{\eft}
+\cobesys{\stesysf_2}{\famesys{\stesys}}{\eft\circ\eft[2]}{\eft}
   \ar[bend right=10]{dr}[swap]%
-    { [ \pullbackpr{1}{\eft\circ\eft[1]}{\eft},%
+    { [ \pullbackpr{1}{\eft\circ\eft[2]}{\eft},%
         \mathbf{w}(\stesys)%
           \circ%
         (\pullback{\efamext}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
         ]%
       }
   \ar{r}{
-    [ \pullbackpr{1}{\eft\circ\eft[1]}{\eft},%
+    [ \pullbackpr{1}{\eft\circ\eft[2]}{\eft},%
       \mathbf{w}(\stesys)%
         \circ%
-      (\pullback{\eft[1]}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
+      (\pullback{\eft[2]}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
       ]}%
   &
-\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[1]}{\eft[1]}
+\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[2]}{\eft[2]}
   \ar{d}{\mathbf{w}(\famesys{\stesys})}
   \\
   {}&
@@ -1857,7 +1859,7 @@ A pre-projection object is a weakening object $\stesys$ for which there is a ter
 $\mathbf{i}:\stesysf\to \stesyst_2$ such that the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\stesysf \ar{r}{\mathbf{i}} \ar{d}[swap]{\Delta_{\eft}} & \stesyst_2 \ar{d}{\ebd[1]}\\
+\stesysf \ar{r}{\mathbf{i}} \ar{d}[swap]{\Delta_{\eft}} & \stesyst_2 \ar{d}{\ebd[2]}\\
 \pullback{\stesysf}{\stesysf}{\eft}{\eft} \ar{r}[swap]{w(\stesys)_0} & \stesysf_2
 \end{tikzcd}
 \end{equation*}
@@ -1915,14 +1917,14 @@ a projection algebra.
 A \emph{pre-substitution} for an extension object $\stesys$ is an
 extension homomorphism
 \begin{equation*}
-\mathbf{s}(\stesys):\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[1]}\to \famesys{\stesys}
+\mathbf{s}(\stesys):\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[2]}\to \famesys{\stesys}
 \end{equation*}
 for which the square
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\pullback{\stesyst}{\stesysf_2}{\ebd}{\eft[1]}
+\pullback{\stesyst}{\stesysf_2}{\ebd}{\eft[2]}
   \ar{r}{s(\stesys)_0}
-  \ar{d}[swap]{\ebd\circ\pullbackpr{1}{\ebd}{\eft[1]}}
+  \ar{d}[swap]{\ebd\circ\pullbackpr{1}{\ebd}{\eft[2]}}
   &
 \stesysf 
   \ar{d}{\eft}
@@ -1942,11 +1944,11 @@ A \emph{pre-substitution homomorphism} is an extension homomorphism $f:\stesys'\
 for which the square
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
-\cobesys{\stesyst'}{\famesys{\famesys{\stesys'}}}{\ebd'}{\eft[1]'}
-  \ar{r}{\pullback{f^t}{\famehom{\famehom{f}}}{\ebd}{\eft[1]}}
+\cobesys{\stesyst'}{\famesys{\famesys{\stesys'}}}{\ebd'}{\eft[2]'}
+  \ar{r}{\pullback{f^t}{\famehom{\famehom{f}}}{\ebd}{\eft[2]}}
   \ar{d}[swap]{\mathbf{s}'(\stesys')}
   &
-\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[1]}
+\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[2]}
   \ar{d}{\mathbf{s}(\stesys)}
   \\
 \famesys{\stesys'}
@@ -1968,25 +1970,25 @@ $\mathbf{s}(\famesys{\stesys})$ defined to be the unique extension homomorphism
 rendering the diagram
 \begin{equation*}
 \begin{tikzcd}
-\cobesys{\stesyst_2}{\famesys{\famesys{\famesys{\stesys}}}}{\ebd[1]}{\eft[2]}
+\cobesys{\stesyst_2}{\famesys{\famesys{\famesys{\stesys}}}}{\ebd[2]}{\eft[3]}
   \ar[dotted]{dr}{\mathbf{s}(\famesys{\stesys})}
-  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft\circ\ebd}}{\boldsymbol{\beta}_\mathbf{2}}{\ebd}{\eft[1]}}
-  \ar{dd}[swap]{\ebd[1]\circ\pullbackpr{1}{\ebd[1]}{\eft[2]}}
+  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft\circ\ebd}}{\boldsymbol{\beta}_\mathbf{2}}{\ebd}{\eft[2]}}
+  \ar{dd}[swap]{\ebd[2]\circ\pullbackpr{1}{\ebd[2]}{\eft[3]}}
   &
   {}&
-\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[1]}
+\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[2]}
   \ar{d}{\mathbf{s}(\stesys)}
   \\
   {}&
 \famesys{\famesys{\stesys}}
   \ar{r}{\boldsymbol{\beta}}
-  \ar{d}{\eft[1]}
+  \ar{d}{\eft[2]}
   &
 \famesys{\stesys}
   \ar{d}{\eft}
   \\
 \stesysf_2
-  \ar{r}[swap]{\eft[1]}
+  \ar{r}[swap]{\eft[2]}
   &
 \stesysf
   \ar{r}[swap]{\ectxext}
@@ -2038,7 +2040,7 @@ of $\eft$, satisfying the following additional properties:
   \\
   {}&
 \stesysf_2
-  \ar{d}{\eft[1]}
+  \ar{d}{\eft[2]}
   \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
   &
 \stesysf
@@ -2062,7 +2064,7 @@ commutative, is a section of $\efamext$.
   \\
   {}&
 \stesysf_2
-  \ar{d}{\eft[1]}
+  \ar{d}{\eft[2]}
   \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
   &
 \stesysf

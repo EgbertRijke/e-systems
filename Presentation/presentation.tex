@@ -162,6 +162,25 @@ inferences. In particular, natural numbers should not be required.
 \end{frame}
 
 \begin{frame}
+\frametitle{The fundamental structure of E-systems}
+The fundamental structure of an E-system $\stesys$ in a category
+$\cat{C}$ with finite limits consists of
+\begin{equation*}
+\begin{tikzcd}
+\stesyst
+  \ar{d}{\ebd}
+  \\
+\stesysf
+  \ar{d}{\eft}
+  \\
+\stesysc
+\end{tikzcd}
+\end{equation*}
+The inferences of judgmental equality are automatically taken
+care of by the equality the ambient category
+\end{frame}
+
+\begin{frame}
 \frametitle{Extension}
 Introduction rules for extension:
 \begin{align*}
@@ -208,85 +227,437 @@ Extension is associative:
 \end{align*}
 \end{frame}
 
+
 \begin{frame}
-\frametitle{The empty context and family}
-\begin{small}
-Introduction rules for the empty context and family:
+\frametitle{Pre-extension algebras}
+A \emph{pre-extension object $\stesys$ in $\cat{C}$} consists of a \emph{fundamental structure}
+in $\cat{C}$ together with the \emph{context extension} and \emph{family extension} operations
 \begin{align*}
-& \inference
-  { }
-  { \jctx{\emptyc}
-    }
-& & \inference
-  { \jctx{\Gamma}
-    }
-  { \jfam{\Gamma}{\emptyf[\Gamma]}
-    }
-& & \inference
-  { \jctxeq{\Gamma}{\Gamma'}
-    }
-  { \jfameq{\Gamma}{\emptyf[\Gamma]}{\emptyf[\Gamma']}
-    }
-\end{align*}
-\pause
-Compatibility rules for families and contexts:
-\begin{align*}
-& \inference
-  { \jctx{\Gamma}
-    }
-  { \jfam{\emptyc}{\Gamma}
-    } 
-& & \inference
-    { \jfam{\emptyc}{\Gamma}
-      }
-    { \jctx{\Gamma}
-      }
-    \\
-& \inference
-  { \jctxeq{\Gamma}{\Delta}
-    }
-  { \jfameq{\emptyc}{\Gamma}{\Delta}
-    }
-& & \inference
-    { \jfameq{\emptyc}{\Gamma}{\Delta}
-      }
-    { \jctxeq{\Gamma}{\Delta}
-      }
-\end{align*}
-\pause
-Compatibility rules for extension and the empty families:
-\begin{align*}
-& \inference
-  { \jctx{\Gamma}
-    }
-  { \jctxeq{\ctxext{\emptyc}{\Gamma}}{\Gamma}
-    }
-& & \inference
-  { \jctx{\Gamma}
-    }
-  { \jctxeq{\ctxext{\Gamma}{\emptyf}}{\Gamma}
-    }
+\ectxext% 
+  &%
+: \stesysf \to \stesysc%
   \\
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jfameq{\Gamma}{\ctxext{\emptyf}{A}}{A}
-    }
-& & \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jfameq{\Gamma}{{A}{\emptyf}}{A}
-    }
+\efamext% 
+  &%
+: \stesysff \to \stesysf,%
 \end{align*}
-Compatibility of context extension and family extension:
+respectively, such that the diagram
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&]
+\stesysff 
+  \ar{r}{\efamext} 
+  \ar{d}[swap]{\pullbackpr{1}{\ectxext}{\eft}} 
+  \& 
+\stesysf 
+  \ar{d}{\eft}
+  \\
+\stesysf
+  \ar{r}[swap]{\eft} 
+  \& 
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{frame}
+
+\begin{frame}
+\frametitle{Notation for pre-extension algebras}
+We introduce the following notation:
 \begin{align*}
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jctxeq{(\ctxext{\Gamma}{A})^c}{(\ctxext{\Gamma}{A})^\famsym}
-    }
+\stesysf_2 
+  & := \stesysff
+  \\
+\eft[2] 
+  & := \pullbackpr{1}{\ectxext}{\eft} : \stesysf_2\to\stesysf
+  \\
+\stesysf_3 & := \pullback{\stesysf_2}{\stesysf_2}{\efamext}{\eft[2]}
+  \\
+\eft[3]
+  & := \pullbackpr{1}{\efamext}{\eft[2]} : \stesysf_3\to\stesysf_2.
 \end{align*}
-\end{small}
+Then it follows that the outer square in the diagram
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&,column sep=large]
+\stesysf_3
+  \ar[dotted]{dr}{\eext{2}}
+  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft}}{\pullbackpr{2}{\ectxext}{\eft}}{\ectxext}{\eft}}
+  \ar{dd}[swap]{\eft[3]}
+  \& 
+  \&
+\stesysf_2
+  \ar{d}{\efamext}
+  \\
+  \&
+\stesysf_2
+  \ar{d}[swap]{\eft[2]}
+  \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
+  \&
+\stesysf
+  \ar{d}{\eft}
+  \\
+\stesysf_2
+  \ar{r}[swap]{\eft[2]}
+  \&
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  \&
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutes. We define $\eext{2}$ to be the unique morphism rendering the above diagram
+commutative. 
+\end{frame}
+
+\begin{frame}
+\frametitle{Notation for extension algebras (continued)}
+Now we may continue to define
+\begin{align*}
+\stesysf_4 
+  & := 
+\pullback{\stesysf_3}{\stesysf_3}{\eext{2}}{\eft[3]}
+  \\
+\eft[4] 
+  & := 
+\pullbackpr{1}{\eext{2}}{\eft[3]}.
+\end{align*}
+Then we see that the outer square of the diagram
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&,column sep=large]
+\stesysf_4
+  \ar[dotted]{dr}{\eext{3}}
+  \ar{rr}{\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]}}
+  \ar{dd}[swap]{\eft[4]}
+  \& 
+  \&
+\stesysf_3
+  \ar{d}{\eext{2}}
+  \\
+  \&
+\stesysf_3
+  \ar{d}[swap]{\eft[3]}
+  \ar{r}{\pullbackpr{2}{\efamext}{\eft[2]}}
+  \&
+\stesysf_2
+  \ar{d}{\eft[2]}
+  \\
+\stesysf_3
+  \ar{r}[swap]{\eft[3]}
+  \&
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  \&
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commutes,
+so we may define $\eext{3}$ to be the unique map which renders the diagram commutative.
+\end{frame}
+
+\begin{frame}
+\frametitle{Extension algebras}
+An extension object is a pre-extension object $\stesys$ for which 
+the diagrams
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&]
+\stesysf_2 
+  \ar{d}[swap]{\pullbackpr{2}{\ectxext}{\eft}} 
+  \ar{r}{\efamext} 
+  \& 
+\stesysf 
+  \ar{d}{\ectxext}
+  \\
+\stesysf 
+  \ar{r}[swap]{\ectxext} 
+  \& 
+\stesysc
+\end{tikzcd}
+\qquad
+\begin{tikzcd}[ampersand replacement=\&]
+\stesysf_3
+  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}}
+  \ar{r}{\eext{2}}
+  \& 
+\stesysf_2 
+  \ar{d}{\efamext} 
+  \\
+\stesysf_2 
+  \ar{r}[swap]{\efamext} 
+  \&
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commute.
+\end{frame}
+
+\begin{frame}
+\frametitle{Local pre-extension algebras}
+Suppose that $\stesys$ is a pre-extension algebra. Then we define
+the pre-extension algebra $\famesys{\stesys}$ to consist of the
+fundamental structure
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&]
+\stesyst_2
+  \ar{d}{\ebd[2]}
+  \\
+\stesysf_2
+  \ar{d}{\eft[2]}
+  \\
+\stesysf
+\end{tikzcd}
+\end{equation*}
+where
+\begin{align*}
+\stesyst_2 
+  & := \pullback{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd},
+  &
+\ebd[2]
+  & := \ectxext^\ast(\ebd),
+\end{align*}
+with the extension operations
+\begin{align*}
+\efamext 
+  & 
+: \stesysf_2\to\stesysf,
+  &
+\eext{2} 
+  & 
+: \stesysf_3\to\stesysf_2.
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Local extension algebras}
+\begin{theorem}
+If $\stesys$ is an extension algebra, then so is $\famesys{\stesys}$.
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{Pre-extension homomorphisms}
+\begin{footnotesize}
+Let $\stesys$ and $\stesys'$ be pre-extension algebras. A \emph{pre-extension 
+homomorphism $f$ from $\stesys'$ to $\stesys$} is a triple $(f_0,f_1,f^t)$ 
+consisting of morphisms
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&]
+\stesyst' 
+  \ar{r}{f^t}
+  \ar{d}[swap]{\ebd'}
+  \&
+\stesyst
+  \ar{d}{\ebd}
+  \\
+\stesysf'
+  \ar{r}{f_1}
+  \ar{d}[swap]{\eft'}
+  \&
+\stesysf
+  \ar{d}{\eft}
+  \\
+\stesysc' 
+  \ar{r}[swap]{f_0}
+  \&
+\stesysc
+\end{tikzcd}
+\end{equation*}
+such that the indicated squares commute, for which furthermore the squares
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&]
+\stesysf' 
+  \ar{r}{f_1}
+  \ar{d}[swap]{\ectxext'}
+  \&
+\stesysf
+  \ar{d}{\ectxext}
+  \\
+\stesysc'
+  \ar{r}[swap]{f_0}
+  \&
+\stesysc
+\end{tikzcd}
+\quad
+\text{and}
+\quad
+\begin{tikzcd}[ampersand replacement=\&,column sep=huge]
+\stesysf_2'
+  \ar{r}{f_1\times_{\ectxext,\eft} f_1}
+  \ar{d}[swap]{\efamext'}
+  \&
+\stesysf_2
+  \ar{d}{\efamext}
+  \\
+\stesysf'
+  \ar{r}[swap]{f_1}
+  \&
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commute. Composition and the identity homomorphism are defined in the expected way.
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}
+\begin{definition}
+A pre-extension homomorphism between extension objects is called an extension
+homomorphism.
+\end{definition}
+
+\begin{lemma}
+Let $\stesys$ be a pre-extension algebra. Then $\stesys$ is an extension
+algebra if and only if we have the extension homomorphisms
+$\mathbf{e}_0:\famesys{\stesys}\to\stesys$
+and
+$\mathbf{e}_1:\famesys{\famesys{\stesys}}\to\famesys{\stesys}$
+given by
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&,column sep=huge]
+\stesyst_2
+  \ar{r}{\pullbackpr{2}{\ectxext}{\eft\circ\ebd}}
+  \ar{d}[swap]{\ebd[2]}
+  \&
+\stesyst
+  \ar{d}{\ebd}
+  \\
+\stesysf_2
+  \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
+  \ar{d}[swap]{\eft[2]}
+  \&
+\stesysf
+  \ar{d}{\eft}
+  \\
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  \&
+\stesysc
+\end{tikzcd}
+\qquad\text{and}\qquad
+\begin{tikzcd}[ampersand replacement=\&,column sep=huge]
+\stesyst_3
+  \ar{r}{\pullbackpr{2}{\efamext}{\eft[2]\circ\ebd[2]}}
+  \ar{d}[swap]{\ebd[3]}
+  \&
+\stesyst_2
+  \ar{d}{\ebd[2]}
+  \\
+\stesysf_3
+  \ar{r}{\pullbackpr{2}{\efamext}{\eft[2]}}
+  \ar{d}[swap]{\eft[3]}
+  \&
+\stesysf_2
+  \ar{d}{\eft[2]}
+  \\
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  \&
+\stesysf
+\end{tikzcd}
+\end{equation*}
+\end{lemma}
+\end{frame}
+
+\begin{frame}
+\frametitle{Mixed commutative diagrams}
+Suppose $f:\stesys\to\stesys'$ is a pre-extension homomorphism. We say that
+a diagram
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&]
+\stesys
+  \ar{r}{f}
+  \ar{d}[swap]{p}
+  \&
+\stesys'
+  \ar{d}{p'}
+  \\
+X \ar{r}[swap]{g}
+  \&
+Y
+\end{tikzcd}
+\end{equation*}
+commutes if the diagram
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&]
+\stesysc
+  \ar{r}{f_0}
+  \ar{d}[swap]{p}
+  \&
+\stesysc'
+  \ar{d}{p'}
+  \\
+X \ar{r}[swap]{g}
+  \&
+Y
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{frame}
+
+\begin{frame}
+\frametitle{Change of base of pre-extension algebras}
+Let $\stesys$ be a pre-extension algebra and consider $p:\stesysc\rightarrow X\leftarrow Y:g$.
+Then there is a pre-extension algebra $\cobesys{Y}{\stesys}{g}{p}$ with projections, such that for every diagram
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&,column sep=large]
+\stesys'
+  \ar[bend right=10]{ddr}[swap]{p'}
+  \ar[bend left=10]{rrd}{f}
+  \ar[dotted]{dr}[near end]{[p',f]}
+  \\
+  {}\&
+\cobesys{Y}{\stesys}{g}{p}
+  \ar{d}{\pullbackpr{1}{g}{p}}
+  \ar{r}[swap]{\pullbackpr{2}{g}{p}}
+  \&
+\stesys
+  \ar{d}{p}
+  \\
+  {}\&
+Y \ar{r}[swap]{g}
+  \&
+X
+\end{tikzcd}
+\end{equation*}
+of which the outer square commutes, the pre-extension homomorphism $[p',f]$ exists
+and is unique with the property that it renders the diagram commutative.
+\end{frame}
+
+\begin{frame}
+\frametitle{Change of base of extension algebras}
+\begin{theorem}
+The change of base of an extension algebra is again an extension algebra
+\end{theorem}
+
+\begin{theorem}
+Let $\stesys$ be a pre-extension algebra. Then
+\begin{equation*}
+\famesys{\famesys{\stesys}} \simeq \cobesys{\stesysf}{\famesys{\stesys}}{\ectxext}{\eft}.
+\end{equation*}
+\end{theorem}
+
+\begin{theorem}
+Let $\stesys$ be a pre-extension algebra and consider $p:\stesysc\rightarrow
+X\leftarrow Y:g$. Then
+\begin{equation*}
+\famesys{\cobesys{Y}{\stesys}{g}{p}}\simeq
+\cobesys{Y}{\famesys{\stesys}}{g}{p\circ\eft}.
+\end{equation*}
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{Introduction to the theory of weakening}
+\begin{itemize}
+\item We will introduce an operation for weakening which acts at the three
+levels of fundamental structures (contexts, families and terms).
+  \pause
+\item It will preserve extension, so it will be implemented as an extension
+homomorphism.
+  \pause
+\item It will preserve itself, so weakening will also be a weakening
+homomorphism.
+  \pause
+\item There will be a notion of `Currying for weakening', which explains
+what happens when something is weakened by an extended object.
+\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -367,46 +738,81 @@ Weakening preserves extension:
 \end{frame}
 
 \begin{frame}
-\frametitle{The theory of weakening (continued)}
+\frametitle{Pre-weakening}
+Let $\stesys$ be an extension algebra in $\cat{C}$. A pre-weakening operation
+on $\stesys$ is an extension homomorphism 
+$ \mathbf{w}(\stesys)
+    :
+  \cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+    \to
+  \famesys{\famesys{\stesys}}$
+for which the diagram
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&,column sep=large]
+\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+  \ar{r}{\mathbf{w}(\stesys)}
+  \ar{dr}[swap]{\pullbackpr{1}{\eft}{\eft}}
+  \&
+\famesys{\famesys{\stesys}}
+  \ar{d}{\eft[2]}
+  \\
+  {}\& 
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{frame}
+
+\begin{frame}
+Let $\stesys$ be an extension algebra with pre-weakening operation
+$\mathbf{w}(\stesys)$. Then $\famesys{\stesys}$ has the pre-weakening operation
+$\mathbf{w}(\famesys{\stesys})$ which is uniquely determined by rendering the
+diagram
 \begin{small}
-Weakening preserves itself:
-\begin{align*}
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{B}}{Q}
-    \jfam{{\Gamma}{B}}{R}
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&,column sep=large]
+\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[2]}{\eft[2]}
+  \ar{rr}{%
+      \pullback{\beta_1}{\boldsymbol{\beta}}{\eft}{\eft}
     }
-  { \jfameq
-      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
-      {\ctxwk{A}{{Q}{R}}}
-      {\ctxwk{{A}{Q}}{{A}{R}}}
-    }
-\\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{B}}{Q}
-    \jfam{{{\Gamma}{B}}{R}}{S}
-    }
-  { \jfameq
-      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{{Q}{R}}}}
-      {\ctxwk{A}{{Q}{S}}}
-      {\ctxwk{{A}{Q}}{{A}{S}}}
-    }
-\\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{B}}{Q}
-    \jterm{{{\Gamma}{B}}{R}}{S}{k}
-    }
-  { \jtermeq
-      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{{Q}{R}}}}
-      {\ctxwk{A}{{Q}{S}}}
-      {\ctxwk{A}{{Q}{k}}}
-      {\ctxwk{{A}{Q}}{{A}{k}}}
-    }
-\end{align*}
-\pause
-Currying for weakening:
+  \ar[bend right]{ddr}[swap]{\pullbackpr{1}{\eft[2]}{\eft[2]}}
+  \ar[dotted]{dr}{\mathbf{w}(\famesys{\stesys})}
+  \&
+  {}\&
+\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+  \ar{r}{\mathbf{w}(\stesys)}
+  \&
+\famesys{\famesys{\stesys}}
+  \ar{d}{\boldsymbol{\beta}}
+  \\
+  {}\&
+\famesys{\famesys{\famesys{\stesys}}}
+  \ar{r}{\boldsymbol{\beta}_\mathbf{2}}
+  \ar{d}[swap]{\eft[3]}
+  \&
+\famesys{\famesys{\stesys}}
+  \ar{d}{\eft[2]}
+  \ar{r}{\boldsymbol{\beta}}
+  \&
+\famesys{\stesys}
+  \ar{d}{\eft}
+  \\
+  {}\&
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  \&
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  \&
+\stesysc
+\end{tikzcd}
+\end{equation*}
+\end{small}
+commutative.
+\end{frame}
+
+\begin{frame}
+\frametitle{The theory of weakening (Currying)}
 \begin{align*}
 & \inference
   { \jfam{\Gamma}{A}
@@ -441,6 +847,83 @@ Currying for weakening:
       {\ctxwk{\ctxext{A}{P}}{g}}
       {\ctxwk{P}{{A}{g}}}
     } 
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Pre-weakening algebras}
+A pre-weakening algebra $\stesys$ in $\cat{C}$ is an extension algebra $\stesys$ 
+with a pre-weakening operation 
+$ \mathbf{w}(\stesys)
+    :
+  \cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+    \to
+  \famesys{\famesys{\stesys}}$
+for which the diagram
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&,column sep=15em]
+\cobesys{\stesysf_2}{\famesys{\stesys}}{\eft\circ\eft[2]}{\eft}
+  \ar[bend right=10]{dr}[swap]%
+    { [ \pullbackpr{1}{\eft\circ\eft[2]}{\eft},%
+        \mathbf{w}(\stesys)%
+          \circ%
+        (\pullback{\efamext}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
+        ]%
+      }
+  \ar{r}{
+    [ \pullbackpr{1}{\eft\circ\eft[2]}{\eft},%
+      \mathbf{w}(\stesys)%
+        \circ%
+      (\pullback{\eft[2]}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
+      ]}%
+  \&
+\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[2]}{\eft[2]}
+  \ar{d}{\mathbf{w}(\famesys{\stesys})}
+  \\
+  {}\&
+\famesys{\famesys{\famesys{\stesys}}}
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{frame}
+
+\begin{frame}
+\frametitle{The theory of weakening (Weakening preserves itself)}
+\begin{small}
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    \jfam{{\Gamma}{B}}{R}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
+      {\ctxwk{A}{{Q}{R}}}
+      {\ctxwk{{A}{Q}}{{A}{R}}}
+    }
+\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    \jfam{{{\Gamma}{B}}{R}}{S}
+    }
+  { \jfameq
+      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{{Q}{R}}}}
+      {\ctxwk{A}{{Q}{S}}}
+      {\ctxwk{{A}{Q}}{{A}{S}}}
+    }
+\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{B}}{Q}
+    \jterm{{{\Gamma}{B}}{R}}{S}{k}
+    }
+  { \jtermeq
+      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{{Q}{R}}}}
+      {\ctxwk{A}{{Q}{S}}}
+      {\ctxwk{A}{{Q}{k}}}
+      {\ctxwk{{A}{Q}}{{A}{k}}}
+    }
 \end{align*}
 \end{small}
 \end{frame}
@@ -589,6 +1072,87 @@ Substitution is compatible with itself:
       {\subst{{x}{g}}{{x}{k}}}
     }
 \end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{The empty context and family}
+\begin{small}
+Introduction rules for the empty context and family:
+\begin{align*}
+& \inference
+  { }
+  { \jctx{\emptyc}
+    }
+& & \inference
+  { \jctx{\Gamma}
+    }
+  { \jfam{\Gamma}{\emptyf[\Gamma]}
+    }
+& & \inference
+  { \jctxeq{\Gamma}{\Gamma'}
+    }
+  { \jfameq{\Gamma}{\emptyf[\Gamma]}{\emptyf[\Gamma']}
+    }
+\end{align*}
+\pause
+Compatibility rules for families and contexts:
+\begin{align*}
+& \inference
+  { \jctx{\Gamma}
+    }
+  { \jfam{\emptyc}{\Gamma}
+    } 
+& & \inference
+    { \jfam{\emptyc}{\Gamma}
+      }
+    { \jctx{\Gamma}
+      }
+    \\
+& \inference
+  { \jctxeq{\Gamma}{\Delta}
+    }
+  { \jfameq{\emptyc}{\Gamma}{\Delta}
+    }
+& & \inference
+    { \jfameq{\emptyc}{\Gamma}{\Delta}
+      }
+    { \jctxeq{\Gamma}{\Delta}
+      }
+\end{align*}
+\pause
+Compatibility rules for extension and the empty families:
+\begin{align*}
+& \inference
+  { \jctx{\Gamma}
+    }
+  { \jctxeq{\ctxext{\emptyc}{\Gamma}}{\Gamma}
+    }
+& & \inference
+  { \jctx{\Gamma}
+    }
+  { \jctxeq{\ctxext{\Gamma}{\emptyf}}{\Gamma}
+    }
+  \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{\ctxext{\emptyf}{A}}{A}
+    }
+& & \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{{A}{\emptyf}}{A}
+    }
+\end{align*}
+Compatibility of context extension and family extension:
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jctxeq{(\ctxext{\Gamma}{A})^c}{(\ctxext{\Gamma}{A})^\famsym}
+    }
+\end{align*}
+\end{small}
 \end{frame}
 
 \begin{frame}
