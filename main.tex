@@ -2,6 +2,8 @@
 
 \input{Preamble/preamble-articles}
 
+\includeonly{Algebras/article-models-cat}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{Internal models of type theory and internal higher categories for the
 Univalent Foundations}
@@ -12,32 +14,7 @@ Univalent Foundations}
 
 \maketitle
 
-\begin{comment}
-\begin{abstract}
-A project is proposed where we investigate notions of internal models of type
-theory and internal higher categories. We take the point of view that an
-internal model is an internal higher category with extra structure interpreting
-the type constructors. We propose to (1) explore possible definitions of both
-notions, (2) find a zoo of examples and (3) find extensions of the underlying
-theory and models thereof to include higher inductive types.
-\end{abstract}
-\end{comment}
-
 \tableofcontents
-
-\begin{comment}
-\part{Introduction}
-The project proposal is described in \autoref{stage1} and \autoref{stage2}. In
-the appendices we give elaborations on the topics discussed in the proposal itself.
-By including these we intend to clarify the proposal and present some of the 
-(unfinished) work that is already done.
-
-\input{article-models-stage1}
-
-\input{article-models-stage2}
-
-%\input{article-models-eg}
-\end{comment}
 
 \input{Introduction/article-models-intro}
 
@@ -78,47 +55,25 @@ that the theory gives rise to a rich categorical structure. The notions and
 properties we derive here will be essential for the further work on internal
 models for E-systems, presented in \autoref{part:models}.
 
-\input{Rules/rules}
+\include{Rules/rules}
 
-\input{Derivations/article-models-ttderived}
-
-%\input{article-models-ttpretty}
+\include{Derivations/article-models-ttderived}
 
 \part{Internal Models}\label{part:models}
 
-\input{Internal_models/article-models-ttinternal}
-
-%\input{article-models-ttmodels}
+\include{Internal_models/article-models-ttinternal}
 
 \part{Type constructors}
 
-\input{Dependent_function_types/article-models-ttdp}
+\include{Dependent_function_types/article-models-ttdp}
 
-\input{Universes/article-models-ttuniverses}
+\include{Universes/article-models-ttuniverses}
 
-% \part{Inductive constructions}
-
-\input{Junk/article-models-ttind}
-
-%\input{article-models-ttconstr}
-
-%\input{article-models-idtypes}
-
-%\input{article-models-constructors}
-
-%\input{article-models-defn}
+\include{Junk/article-models-ttind}
 
 \part{Categorical semantics}
 
-%\input{article-models-algth}
-
-\input{Algebras/article-models-cat}
-
-%\part{Examples of internal models}
-
-%\input{article-models-eg}
-
-%\input{article-models-fibsec}
+\include{Algebras/article-models-cat}
 
 \bibliographystyle{plain}
 %\phantomsection\addcontentsline{toc}{section}{References}
