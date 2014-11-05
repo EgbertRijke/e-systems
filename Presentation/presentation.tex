@@ -1,8 +1,8 @@
 \documentclass[handout]{beamer}
-\setbeamercolor{frametitle}{fg=teal!80!black}
+\setbeamercolor{frametitle}{fg=teal!90!black}
 \setbeamercolor{item}{fg=red!90!black}
-\setbeamercolor{title}{fg=teal!80!black}
-\setbeamercolor{block title}{fg=teal!80!black}
+\setbeamercolor{title}{fg=teal!90!black}
+\setbeamercolor{block title}{fg=teal!90!black}
 
 \input{preamble-articles}
 
@@ -11,7 +11,7 @@
 \institute{Carnegie Mellon University}
 \date{November 7th -- 10th, 2014}
 
-\newcommand\goal[1]{\begin{huge}\begin{center}\textbf{Goal: {\color{teal}#1}}\end{center}\end{huge}}
+\newcommand\subgoal[1]{\begin{huge}\begin{center}\textbf{Subgoal: {\color{teal!90!black}#1}}\end{center}\end{huge}}
 \newcommand\important[1]{\textbf{\color{red!90!black}#1}}
 
 \begin{document}
@@ -90,8 +90,8 @@ The theories of weakening (and projections), substitution and the empty context 
 \jalign\jfam{\Gamma}{A} 
 & \jalign\jfameq{\Gamma}{A}{B}
   \\
-\jalign\jterm{\Gamma}{A}{x} 
-& \jalign\jtermeq{\Gamma}{A}{x}{y}.
+\jalign\jterm{\Gamma}{A}{a} 
+& \jalign\jtermeq{\Gamma}{A}{a}{y}.
 \end{align*}
 \\[\baselineskip]
 There are rules expressing that all three kinds of judgmental equality are
@@ -155,20 +155,20 @@ An example of a conversion rule:
       }
     \\
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     }
-  { \jtermeq{\Gamma}{A}{x}{x}
+  { \jtermeq{\Gamma}{A}{a}{a}
     }
 & & \inference
-    { \jtermeq{\Gamma}{A}{x}{y}
+    { \jtermeq{\Gamma}{A}{a}{y}
       }
-    { \jtermeq{\Gamma}{A}{y}{x}
+    { \jtermeq{\Gamma}{A}{y}{a}
       }
 & & \inference
-    { \jtermeq{\Gamma}{A}{x}{y}
+    { \jtermeq{\Gamma}{A}{a}{y}
       \jtermeq{\Gamma}{A}{y}{z}
       }
-    { \jtermeq{\Gamma}{A}{x}{z}
+    { \jtermeq{\Gamma}{A}{a}{z}
       }
 \end{align*}
 \begin{align*}
@@ -187,28 +187,28 @@ An example of a conversion rule:
     \\
 & \inference
   { \jctxeq{\Gamma}{\Delta}
-    \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{A}{a}
     }
-  { \jterm{\Delta}{A}{x}
+  { \jterm{\Delta}{A}{a}
     }
 & & \inference
     { \jctxeq{\Gamma}{\Delta}
-      \jtermeq{\Gamma}{A}{x}{y}
+      \jtermeq{\Gamma}{A}{a}{y}
       }
-    { \jtermeq{\Delta}{A}{x}{y}
+    { \jtermeq{\Delta}{A}{a}{y}
       }
     \\
 & \inference
   { \jfameq{\Gamma}{A}{B}
-    \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{A}{a}
     }
-  { \jterm{\Gamma}{B}{x}
+  { \jterm{\Gamma}{B}{a}
     }
 & & \inference
     { \jfameq{\Gamma}{A}{B}
-      \jtermeq{\Gamma}{A}{x}{y}
+      \jtermeq{\Gamma}{A}{a}{y}
       }
-    { \jtermeq{\Gamma}{B}{x}{y}
+    { \jtermeq{\Gamma}{B}{a}{y}
       }
 \end{align*}
 \end{footnotesize}
@@ -294,11 +294,6 @@ Introduction rules for \important{family extension}:}
 \end{frame}
 
 \begin{frame}
-\frametitle{\bf Current goal}
-\goal{Define extension algebras}
-\end{frame}
-
-\begin{frame}
 \frametitle{\bf Pre-extension algebras}
 A \important{pre-extension algebra $\stesys$} in a category with finite limits consists
 \begin{itemize}
@@ -351,15 +346,19 @@ We introduce the following notation:
 \begin{align*}
 \stesysf_2 
   & := \stesysff
+  \pause
   \\
 \eft[2] 
   & := \pullbackpr{1}{\ectxext}{\eft} : \stesysf_2\to\stesysf
+  \pause
   \\
 \stesysf_3 & := \pullback{\stesysf_2}{\stesysf_2}{\efamext}{\eft[2]}
+  \pause
   \\
 \eft[3]
   & := \pullbackpr{1}{\efamext}{\eft[2]} : \stesysf_3\to\stesysf_2.
 \end{align*}
+\pause
 Then it follows that the outer square in the diagram
 \begin{equation*}
 \begin{tikzcd}[ampersand replacement=\&,column sep=large]
@@ -389,7 +388,8 @@ Then it follows that the outer square in the diagram
 \stesysc
 \end{tikzcd}
 \end{equation*}
-commutes. We define $\eext{2}$ to be the unique morphism rendering the above diagram
+commutes. \pause
+We define \important{$\eext{2}$} to be the unique morphism rendering the above diagram
 commutative. 
 \end{frame}
 
@@ -434,63 +434,23 @@ commute.
 \end{frame}
 
 \begin{frame}
-\frametitle{\bf Current goal}
-\goal{Develop properties of extension algebras}
-
+\frametitle{Subgoal: develop properties of extension algebras}
 We need to know:
 \begin{itemize}
-\item What homomorphisms of (pre-)extension algebras are
-\item That 
+\item What homomorphisms of (pre-)extension algebras are.
+\pause
+\item That each extension algebra gives locally an extension algebra (stable under slicing).
+\pause
+\item That the change of base of an extension is an extension algebra. Change of base allows
+for \important{`parametrized extension homomorphisms'} of which weakening and substitution
+are going to be examples.
 \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{\bf Slicing of pre-extension algebras}
-Suppose that $\stesys$ is a pre-extension algebra. Then we define
-the pre-extension algebra $\famesys{\stesys}$ to consist of the
-fundamental structure
-\begin{equation*}
-\begin{tikzcd}[ampersand replacement=\&]
-\stesyst_2
-  \ar{d}{\ebd[2]}
-  \\
-\stesysf_2
-  \ar{d}{\eft[2]}
-  \\
-\stesysf
-\end{tikzcd}
-\end{equation*}
-where
-\begin{align*}
-\stesyst_2 
-  & := \pullback{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd},
-  &
-\ebd[2]
-  & := \ectxext^\ast(\ebd),
-\end{align*}
-with the extension operations
-\begin{align*}
-\efamext 
-  & 
-: \stesysf_2\to\stesysf,
-  &
-\eext{2} 
-  & 
-: \stesysf_3\to\stesysf_2.
-\end{align*}
-\end{frame}
-
-\begin{frame}
-\frametitle{\bf Local extension algebras}
-\begin{theorem}
-If $\stesys$ is an extension algebra, then so is $\famesys{\stesys}$.
-\end{theorem}
 \end{frame}
 
 \begin{frame}
 \frametitle{\bf Pre-extension homomorphisms}
 \begin{footnotesize}
-Let $\stesys$ and $\stesys'$ be pre-extension algebras. A \emph{pre-extension 
+Let $\stesys$ and $\stesys'$ be pre-extension algebras. A \important{pre-extension 
 homomorphism $f$ from $\stesys'$ to $\stesys$} is a triple $(f_0,f_1,f^t)$ 
 consisting of morphisms
 \begin{equation*}
@@ -547,15 +507,59 @@ such that the indicated squares commute, for which furthermore the squares
 \stesysf
 \end{tikzcd}
 \end{equation*}
-commute. Composition and the identity homomorphism are defined in the expected way.
+commute.
 \end{footnotesize}
 \end{frame}
 
 \begin{frame}
+\frametitle{Extension homomorphisms}
 \begin{definition}
-A pre-extension homomorphism between extension algebras is called an extension
-homomorphism.
+A pre-extension homomorphism between extension algebras is called an \important{extension
+homomorphism}.
 \end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{\bf Slicing of pre-extension algebras}
+Suppose that $\stesys$ is a pre-extension algebra. Then we define
+the pre-extension algebra \important{$\famesys{\stesys}$} to consist of the
+fundamental structure
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&]
+\stesyst_2
+  \ar{d}{\ebd[2]}
+  \\
+\stesysf_2
+  \ar{d}{\eft[2]}
+  \\
+\stesysf
+\end{tikzcd}
+\end{equation*}
+where
+\begin{align*}
+\stesyst_2 
+  & := \pullback{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd},
+  &
+\ebd[2]
+  & := \ectxext^\ast(\ebd),
+\end{align*}
+with the extension operations
+\begin{align*}
+\efamext 
+  & 
+: \stesysf_2\to\stesysf,
+  &
+\eext{2} 
+  & 
+: \stesysf_3\to\stesysf_2.
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{\bf Local extension algebras}
+\begin{theorem}
+If $\stesys$ is an extension algebra, then so is $\famesys{\stesys}$.
+\end{theorem}
 
 \begin{lemma}
 Let $\stesys$ be a pre-extension algebra. Then $\stesys$ is an extension
@@ -649,7 +653,7 @@ commutes.
 \begin{frame}
 \frametitle{\bf Change of base of pre-extension algebras}
 Let $\stesys$ be a pre-extension algebra and consider $p:\stesysc\rightarrow X\leftarrow Y:g$.
-Then there is a pre-extension algebra $\cobesys{Y}{\stesys}{g}{p}$ with projections, such that for every diagram
+Then there is a pre-extension algebra \important{$\cobesys{Y}{\stesys}{g}{p}$} with projections, such that for every diagram
 \begin{equation*}
 \begin{tikzcd}[ampersand replacement=\&,column sep=large]
 \stesys'
@@ -671,14 +675,14 @@ Y \ar{r}[swap]{g}
 X
 \end{tikzcd}
 \end{equation*}
-of which the outer square commutes, the pre-extension homomorphism $[p',f]$ exists
+of which the outer square commutes, the pre-extension homomorphism \important{$[p',f]$} exists
 and is unique with the property that it renders the diagram commutative.
 \end{frame}
 
 \begin{frame}
 \frametitle{\bf Change of base of extension algebras}
 \begin{theorem}
-The change of base of an extension algebra is again an extension algebra
+The change of base of an extension algebra is again an extension algebra.
 \end{theorem}
 
 \begin{theorem}
@@ -699,19 +703,24 @@ X\leftarrow Y:g$. Then
 \end{frame}
 
 \begin{frame}
-\frametitle{\bf Introduction to the theory of weakening}
+\frametitle{\bf Overview of the theory of weakening}
 \begin{itemize}
-\item We will introduce an operation for weakening which acts at the three
-levels of fundamental structures (contexts, families and terms).
+\item In the syntax, we will introduce an operation for weakening which acts at the three
+levels of fundamental structures (contexts, families and terms). \pause
+\important{When $B$ is weakened by $A$, we denote this by $\ctxwk{A}{B}$.}
   \pause
-\item It will preserve extension, so it will be implemented as an extension
+\item Weakening will preserve extension, so it will be implemented as an extension
 homomorphism.
   \pause
-\item It will preserve itself, so weakening will also be a weakening
-homomorphism.
-  \pause
-\item There will be a notion of `Currying for weakening', which explains
+\item There will be a notion of \important{`Currying for weakening'}, which explains
 what happens when something is weakened by an extended object.
+  \pause
+\item Pre-weakening algebras will be extension algebras with a weakening operation
+satisfying an implementation of the currying condition. \pause Pre-weakening homomorphisms
+will preserve this structure.
+  \pause
+\item Weakening will preserve itself, so weakening we will require that weakening is
+a pre-weakening homomorphism.
 \end{itemize}
 \end{frame}
 
@@ -732,7 +741,8 @@ The introduction rules for weakening:
       }
     { \jfameq{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}
       }
-    \\
+  \pause
+  \\
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{B}}{Q}
@@ -793,9 +803,9 @@ Weakening preserves extension:
 \end{frame}
 
 \begin{frame}
-\frametitle{\bf Pre-weakening}
-Let $\stesys$ be an extension algebra. A pre-weakening operation
-on $\stesys$ is an extension homomorphism 
+\frametitle{\bf The weakening operation}
+Let $\stesys$ be an extension algebra. A \important{weakening operation
+on $\stesys$} is an extension homomorphism 
 \begin{equation*}
 \mathbf{w}(\stesys)
     :
@@ -821,9 +831,53 @@ commutes.
 \end{frame}
 
 \begin{frame}
+\frametitle{\bf Rules for weakening: Currying}
+\begin{align*}
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    \jfam{\Gamma}{B}
+    }
+  { \jfameq
+      {{{\Gamma}{A}}{P}}
+      {\ctxwk{\ctxext{A}{P}}{B}}
+      {\ctxwk{P}{{A}{B}}}
+    }
+  \pause
+\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    \jfam{{\Gamma}{B}}{Q}
+    }
+  { \jfameq
+      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
+      {\ctxwk{\ctxext{A}{P}}{Q}}
+      {\ctxwk{P}{{A}{Q}}}
+    }
+\\
+& \inference
+  { \jfam{\Gamma}{A}
+    \jfam{{\Gamma}{A}}{P}
+    \jterm{{\Gamma}{B}}{Q}{g}
+    }
+  { \jtermeq
+      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
+      {\ctxwk{P}{{A}{Q}}}
+      {\ctxwk{\ctxext{A}{P}}{g}}
+      {\ctxwk{P}{{A}{g}}}
+    } 
+\end{align*}
+\\[\baselineskip]
+\pause
+To express these rules algebraically, we need to define a weakening operation on
+$\famesys{\stesys}$, provided we have one on $\stesys$.
+\end{frame}
+
+\begin{frame}
 \frametitle{\bf Weakening for the families algebra}
-Let $\stesys$ be an extension algebra with pre-weakening operation
-$\mathbf{w}(\stesys)$. Then $\famesys{\stesys}$ has the pre-weakening operation
+Let $\stesys$ be an extension algebra with weakening operation
+$\mathbf{w}(\stesys)$. Then $\famesys{\stesys}$ has the weakening operation
 $\mathbf{w}(\famesys{\stesys})$ which is uniquely determined by rendering the
 diagram
 \begin{small}
@@ -834,11 +888,11 @@ diagram
       \pullback{\beta_1}{\boldsymbol{\beta}}{\eft}{\eft}
     }
   \ar[bend right]{ddr}[swap]{\pullbackpr{1}{\eft[2]}{\eft[2]}}
-  \ar[dotted]{dr}{\mathbf{w}(\famesys{\stesys})}
+  \ar[dotted]{dr}{\important{$\mathbf{w}(\famesys{\stesys})$}}
   \&
   {}\&
 \cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
-  \ar{r}{\mathbf{w}(\stesys)}
+  \ar{r}{\important{$\mathbf{w}(\stesys)$}}
   \&
 \famesys{\famesys{\stesys}}
   \ar{d}{\boldsymbol{\beta}}
@@ -870,48 +924,9 @@ commutative.
 \end{frame}
 
 \begin{frame}
-\frametitle{\bf Rules for weakening: Currying}
-\begin{align*}
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{A}}{P}
-    \jfam{\Gamma}{B}
-    }
-  { \jfameq
-      {{{\Gamma}{A}}{P}}
-      {\ctxwk{\ctxext{A}{P}}{B}}
-      {\ctxwk{P}{{A}{B}}}
-    }
-\\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{A}}{P}
-    \jfam{{\Gamma}{B}}{Q}
-    }
-  { \jfameq
-      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
-      {\ctxwk{\ctxext{A}{P}}{Q}}
-      {\ctxwk{P}{{A}{Q}}}
-    }
-\\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{A}}{P}
-    \jterm{{\Gamma}{B}}{Q}{g}
-    }
-  { \jtermeq
-      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
-      {\ctxwk{P}{{A}{Q}}}
-      {\ctxwk{\ctxext{A}{P}}{g}}
-      {\ctxwk{P}{{A}{g}}}
-    } 
-\end{align*}
-\end{frame}
-
-\begin{frame}
 \frametitle{\bf Pre-weakening algebras}
-A pre-weakening algebra $\stesys$ is an extension algebra $\stesys$ 
-with a pre-weakening operation 
+A \important{pre-weakening algebra} is an extension algebra $\stesys$ 
+with a weakening operation 
 $ \mathbf{w}(\stesys)
     :
   \cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
@@ -923,31 +938,32 @@ for which the diagram
 \cobesys{\stesysf_2}{\famesys{\stesys}}{\eft\circ\eft[2]}{\eft}
   \ar[bend right=10]{dr}[swap]%
     { [ \pullbackpr{1}{\eft\circ\eft[2]}{\eft},%
+        \important{$
         \mathbf{w}(\stesys)%
           \circ%
-        (\pullback{\efamext}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
+        (\pullback{\efamext}{\catid{\famesys{\stesys}}}{\eft}{\eft})$}%
         ]%
       }
   \ar{r}{
     [ \pullbackpr{1}{\eft\circ\eft[2]}{\eft},%
-      \mathbf{w}(\stesys)%
+      \important{$\mathbf{w}(\stesys)$}%
         \circ%
       (\pullback{\eft[2]}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
       ]}%
   \&
 \cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[2]}{\eft[2]}
-  \ar{d}{\mathbf{w}(\famesys{\stesys})}
+  \ar{d}{\important{$\mathbf{w}(\famesys{\stesys})$}}
   \\
   {}\&
 \famesys{\famesys{\famesys{\stesys}}}
 \end{tikzcd}
 \end{equation*}
-commutes.
+commutes (implementing currying for weakening).
 \end{frame}
 
 \begin{frame}
 \frametitle{\bf Pre-weakening homomorphisms}
-A pre-weakening homomorphism between pre-weakening algebras $\stesys'$ and $\stesys$ is an
+A \important{pre-weakening homomorphism} between pre-weakening algebras $\stesys'$ and $\stesys$ is an
 extension homomorphism $f:\stesys'\to \stesys$ such that additionally the diagram
 \begin{equation*}
 \begin{tikzcd}[ampersand replacement=\&,column sep=large]
@@ -1011,7 +1027,7 @@ to be the unique extension homomorphism rendering the diagram
   {}\&
 \famesys{\famesys{\cobesys{Y}{\stesys}{g}{p}}}
   \ar{r}{\beta}
-  \ar{d}{g^\ast(\eft)_1}
+  \ar{d}{g^\ast(\eft)_2}
   \&
 \famesys{\cobesys{Y}{\stesys}{g}{p}}
   \ar{r}{\boldsymbol{\pi}_2(g,p\circ\eft)}
@@ -1048,11 +1064,11 @@ If $\stesys$ is a pre-weakening algebra, then so is $\famesys{\stesys}$.
 
 \begin{frame}
 \frametitle{\bf Weakening algebras}
-Thus, it makes sense to require that the pre-weakening operation itself is a
+Thus, it makes sense to require that the weakening operation itself is a
 pre-weakening homomorphism.
 \begin{definition}
-A \emph{weakening algebra} is a pre-weakening algebra $\stesys$ with the property that
-$\mathbf{w}(\stesys)$ is a pre-weakening morphism.
+A \important{weakening algebra} is a pre-weakening algebra $\stesys$ with the property that
+$\mathbf{w}(\stesys)$ is a pre-weakening homomorphism.
 \end{definition}
 \pause
 \begin{theorem}
@@ -1112,6 +1128,21 @@ weakening:
 \end{frame}
 
 \begin{frame}
+\frametitle{\bf Overview of the theory of projections}
+\begin{itemize}
+\item In the theory of projections, we will introduce units, which will eventually behave
+like \important{fiberwise identity morphisms of families}.
+  \pause
+\item Together with weakening, units will induce all the \important{projections}.
+  \pause
+\item \important{Pre-projection algebras} will be weakening algebras with units.
+  \pause
+\item \important{Projection algebras} will be pre-projection algebras for which
+weakening is a pre-projection homomorphism.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
 \frametitle{\bf Rules for the theory of projections}
 Introduction rules for units:
 \begin{align*}
@@ -1145,7 +1176,7 @@ Weakening preserves the unit:
 
 \begin{frame}
 \frametitle{\bf Pre-projection algebras}
-A pre-projection algebra is a weakening algebra $\stesys$ for which there is a term
+A \important{pre-projection algebra} is a weakening algebra $\stesys$ for which there is a term
 $\mathbf{i}(\stesys):\stesysf\to \stesyst_2$ such that the diagram
 \begin{equation*}
 \begin{tikzcd}[ampersand replacement=\&,column sep=large]
@@ -1166,7 +1197,7 @@ commutes. In this diagram, $\Delta_{\eft}:\stesysf\to \pullback{\stesysf}{\stesy
 
 \begin{frame}
 \frametitle{\bf Pre-projection homomorphisms}
-A pre-projection homomorphism from $\stesys$ to $\stesys'$ is a weakening homomorphism
+A \important{pre-projection homomorphism from $\stesys$ to $\stesys'$} is a weakening homomorphism
 $f:\stesys'\to \stesys$ such that the square
 \begin{equation*}
 \begin{tikzcd}[ampersand replacement=\&,column sep=large]
@@ -1189,8 +1220,13 @@ commutes.
 \begin{frame}
 \frametitle{\bf Projection algebras}
 \begin{definition}
-A projection algebra is a pre-projection algebra for which the weakening operation
+A \important{projection algebra} is a pre-projection algebra for which the weakening operation
 is a pre-projection homomorphism.
+\end{definition}
+\pause
+\begin{definition}
+A \important{projection homomorphism} is a pre-projection homomorphism between projection
+algebras.
 \end{definition}
 \pause
 \begin{theorem}
@@ -1204,74 +1240,92 @@ If $\stesys$ is a projection algebra, then so is $\famesys{\stesys}$.
 \end{frame}
 
 \begin{frame}
+\frametitle{\bf Overview of the theory of substitution}
+\begin{itemize}
+\item We will introduce an operation for substitution by a term, this allows us
+to consider \important{fibers of families}. The substitution of $P$ by $a$ will
+be denoted by $\subst{a}{P}$.
+  \pause
+\item Substitution will be compatible with extension, thus it will be implemented
+as an extension homomorphism.
+  \pause
+\item \important{Pre-substitution algebras} will be extension algebras with a substitution
+operation. \important{Pre-substitution homomorphisms} will preserve this structure.
+  \pause
+\item \important{Substitution algebras} will be pre-substitution algebras for which
+the substitution operation itself is a pre-substitution homomorphism.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
 \frametitle{\bf Rules for the theory of substitution}
 \begin{footnotesize}
 Introduction rules for substitution:
 \begin{align*}
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jfam{{\Gamma}{A}}{P}
     }
-  { \jfam{\Gamma}{\subst{x}{P}}
+  { \jfam{\Gamma}{\subst{a}{P}}
     }
 & & \inference
-    { \jtermeq{\Gamma}{A}{x}{x'}
+    { \jtermeq{\Gamma}{A}{a}{a'}
       \jfameq{{\Gamma}{A}}{P}{P'}
       }
-    { \jfameq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}
+    { \jfameq{\Gamma}{\subst{a}{P}}{\subst{a'}{P'}}
       }
     \\
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jfam{{{\Gamma}{A}}{P}}{Q}
     }
-  { \jfam{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}
+  { \jfam{{\Gamma}{\subst{a}{P}}}{\subst{a}{Q}}
     }
 & & \inference
-    { \jtermeq{\Gamma}{A}{x}{x'}
+    { \jtermeq{\Gamma}{A}{a}{a'}
       \jfameq{{{\Gamma}{A}}{P}}{Q}{Q'}
       }
-    { \jfameq{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x'}{Q'}}
+    { \jfameq{{\Gamma}{\subst{a}{P}}}{\subst{a}{Q}}{\subst{a'}{Q'}}
       }
     \\
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jterm{{{\Gamma}{A}}{P}}{Q}{g}
     }
-  { \jterm{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}{\subst{x}{g}}
+  { \jterm{{\Gamma}{\subst{a}{P}}}{\subst{a}{Q}}{\subst{a}{g}}
     }
 & & \inference
-    { \jtermeq{\Gamma}{A}{x}{x'}
+    { \jtermeq{\Gamma}{A}{a}{a'}
       \jtermeq{{{\Gamma}{A}}{P}}{Q}{g}{g'}
       }
     { \jtermeq
-        {{\Gamma}{\subst{x}{P}}}
-        {\subst{x}{Q}}
-        {\subst{x}{g}}
-        {\subst{x'}{g'}}
+        {{\Gamma}{\subst{a}{P}}}
+        {\subst{a}{Q}}
+        {\subst{a}{g}}
+        {\subst{a'}{g'}}
       }
 \end{align*}
 \pause
 Substitution is compatible with extension:
 \begin{align*}
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jfam{{{\Gamma}{A}}{P}}{Q}
     }
   { \jfameq
       {\Gamma}
-      {\subst{x}{\ctxext{P}{Q}}}
-      {\ctxext{\subst{x}{P}}{\subst{x}{Q}}}
+      {\subst{a}{\ctxext{P}{Q}}}
+      {\ctxext{\subst{a}{P}}{\subst{a}{Q}}}
     }
   \\
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
     }
   { \jfameq
-      {{\Gamma}{\subst{x}{P}}}
-      {\subst{x}{\ctxext{Q}{R}}}
-      {\ctxext{\subst{x}{Q}}{\subst{x}{R}}}
+      {{\Gamma}{\subst{a}{P}}}
+      {\subst{a}{\ctxext{Q}{R}}}
+      {\ctxext{\subst{a}{Q}}{\subst{a}{R}}}
     }
 \end{align*}
 \end{footnotesize}
@@ -1279,7 +1333,7 @@ Substitution is compatible with extension:
 
 \begin{frame}
 \frametitle{\bf Pre-substitution algebras}
-A \emph{pre-substitution} for an extension algebra $\stesys$ is an
+A \important{pre-substitution} for an extension algebra $\stesys$ is an
 extension homomorphism
 \begin{equation*}
 \mathbf{s}(\stesys):\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[2]}\to \famesys{\stesys}
@@ -1302,13 +1356,13 @@ for which the square
 \end{equation*}
 commutes.\\
 \pause
-A \emph{pre-substitution algebra} is an extension algebra
+A \important{pre-substitution algebra} is an extension algebra
 together with a pre-substitution.
 \end{frame}
 
 \begin{frame}
 \frametitle{\bf Pre-substitution homomorphisms}
-A \emph{pre-substitution homomorphism} is an extension homomorphism $f:\stesys'\to \stesys$
+A \important{pre-substitution homomorphism} is an extension homomorphism $f:\stesys'\to \stesys$
 for which the square
 \begin{equation*}
 \begin{tikzcd}[ampersand replacement=\&,column sep=huge]
@@ -1418,8 +1472,13 @@ commutative.
 Thus, it makes sense to require that the pre-substitution operation itself is a
 pre-substitution homomorphism.
 \begin{definition}
-A \emph{substitution algebra} is a pre-substitution algebra $\stesys$ with the property that
+A \important{substitution algebra} is a pre-substitution algebra $\stesys$ with the property that
 $\mathbf{S}(\stesys)$ is a pre-substitution morphism.
+\end{definition}
+\pause
+\begin{definition}
+A \important{substitution homomorphism} is a pre-substitution homomorphism between substitution
+algebras.
 \end{definition}
 \pause
 \begin{theorem}
@@ -1436,37 +1495,37 @@ If $\stesys$ is a substitution algebra, then so is $\famesys{\stesys}$.
 \frametitle{\bf Rules for substitution: substitution is compatible with itself}
 \begin{align*}
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jterm{{{\Gamma}{A}}{P}}{Q}{g}
     \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
     }
   { \jfameq
-      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
-      {\subst{x}{{g}{R}}}
-      {\subst{{x}{g}}{{x}{R}}}
+      {{{\Gamma}{\subst{a}{P}}}{\subst{a}{Q}}}
+      {\subst{a}{{g}{R}}}
+      {\subst{{a}{g}}{{a}{R}}}
     }
   \\
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jterm{{{\Gamma}{A}}{P}}{Q}{g}
     \jfam{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}
     }
   { \jfameq
-      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{{g}{R}}}}
-      {\subst{x}{{g}{S}}}
-      {\subst{{x}{g}}{{x}{S}}}
+      {{{{\Gamma}{\subst{a}{P}}}{\subst{a}{Q}}}{\subst{a}{{g}{R}}}}
+      {\subst{a}{{g}{S}}}
+      {\subst{{a}{g}}{{a}{S}}}
     }
   \\
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jterm{{{\Gamma}{A}}{P}}{Q}{g}
     \jterm{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}{k}
     }
   { \jtermeq
-      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{{g}{R}}}}
-      {\subst{x}{{g}{S}}}
-      {\subst{x}{{g}{k}}}
-      {\subst{{x}{g}}{{x}{k}}}
+      {{{{\Gamma}{\subst{a}{P}}}{\subst{a}{Q}}}{\subst{a}{{g}{R}}}}
+      {\subst{a}{{g}{S}}}
+      {\subst{a}{{g}{k}}}
+      {\subst{{a}{g}}{{a}{k}}}
     }
 \end{align*}
 \end{frame}
@@ -1480,13 +1539,13 @@ we need to provide rules describing:
 \item that substitution preserves weakening (substitution is a weakening homomorphism);\pause
 \item that substitution preserves units (substitution is a projection homomorphism);\pause
 \item that weakenings are constant families;\pause
-\item that weakening by a family $A$ followed by substitution of the unit of $A$ has no effect; this is precomposing with the unit.
+\item everything is invariant with respect to precomposition with units.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{\bf Pre-E-systems}
-A \emph{pre-E-system} is an extension algebra $\stesys$ with a
+A \important{pre-E-system} is an extension algebra $\stesys$ with a
 weakening operation $\mathbf{w}(\stesys)$, units
 $\mathbf{i}(\stesys)$ and a substitution operation
 $\mathbf{s}(\stesys)$ giving it both the structure of
@@ -1496,7 +1555,7 @@ that in addition
 \item Weakening is a substitution homomorphism;
 \item Substitution is a projection homomorphism.
 \end{itemize}
-Pre-E-homomorphisms are extension homomorphisms which
+\important{Pre-E-homomorphisms} are extension homomorphisms which
 are both projection homomorphisms and substitution
 homomorphisms.
 \end{frame}
@@ -1507,34 +1566,34 @@ homomorphisms.
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{\Gamma}{B}
-    \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{A}{a}
     }
   { \jfameq
       {\Gamma}
-      {\subst{x}{\ctxwk{A}{B}}}
+      {\subst{a}{\ctxwk{A}{B}}}
       {B}
     }
   \\
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{B}}{Q}
-    \jterm{\Gamma}{A}{x}
+    \jterm{\Gamma}{A}{a}
     }
-  { \jfameq{{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}
+  { \jfameq{{\Gamma}{B}}{\subst{a}{\ctxwk{A}{Q}}}{Q}
     }
   \\
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jterm{{\Gamma}{B}}{Q}{g}
     }
-  { \jtermeq{{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}
+  { \jtermeq{{\Gamma}{B}}{Q}{\subst{a}{\ctxwk{A}{g}}}{g}
     }
 \end{align*}
 \end{frame}
 
 \begin{frame}
 \frametitle{\bf Weakened families are constant families}
-In a pre-E-system, we say that \emph{weakened families are 
+In a pre-E-system, we say that \important{weakened families are 
 constant families} if the diagram
 \begin{equation*}
 \begin{tikzcd}[ampersand replacement=\&,column sep=12em]
@@ -1591,7 +1650,7 @@ commutes.
 
 \begin{frame}
 \frametitle{\bf Invariance with respect to precomposition with units}
-In a pre-E-system $\stesys$ we say that \emph{everything is invariant
+In a pre-E-system $\stesys$ we say that \important{everything is invariant
 with respect to precomposition with units} if the diagram
 \begin{equation*}
 \begin{tikzcd}[ampersand replacement=\&,column sep=large]
@@ -1690,37 +1749,37 @@ Weakening preserves substitution:
 Substitution preserves weakening:
 \begin{align*}
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jfam{{{\Gamma}{A}}{P}}{Q}
     \jfam{{{\Gamma}{A}}{P}}{R}
     }
   { \jfameq
-      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
-      {\subst{x}{\ctxwk{Q}{R}}}
-      {\ctxwk{\subst{x}{Q}}{\subst{x}{R}}}
+      {{{\Gamma}{\subst{a}{P}}}{\subst{a}{Q}}}
+      {\subst{a}{\ctxwk{Q}{R}}}
+      {\ctxwk{\subst{a}{Q}}{\subst{a}{R}}}
     }
   \\
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jfam{{{\Gamma}{A}}{P}}{Q}
     \jfam{{{{\Gamma}{A}}{P}}{R}}{S}
     }
   { \jfameq
-      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{\ctxwk{Q}{R}}}}
-      {\subst{x}{\ctxwk{Q}{S}}}
-      {\ctxwk{\subst{x}{Q}}{\subst{x}{S}}}
+      {{{{\Gamma}{\subst{a}{P}}}{\subst{a}{Q}}}{\subst{a}{\ctxwk{Q}{R}}}}
+      {\subst{a}{\ctxwk{Q}{S}}}
+      {\ctxwk{\subst{a}{Q}}{\subst{a}{S}}}
     }
   \\
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jfam{{{\Gamma}{A}}{P}}{Q}
     \jterm{{{{\Gamma}{A}}{P}}{R}}{S}{k}
     }
   { \jtermeq
-      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{\ctxwk{Q}{R}}}}
-      {\subst{x}{\ctxwk{Q}{S}}}
-      {\subst{x}{\ctxwk{Q}{k}}}
-      {\ctxwk{\subst{x}{Q}}{\subst{x}{k}}}
+      {{{{\Gamma}{\subst{a}{P}}}{\subst{a}{Q}}}{\subst{a}{\ctxwk{Q}{R}}}}
+      {\subst{a}{\ctxwk{Q}{S}}}
+      {\subst{a}{\ctxwk{Q}{k}}}
+      {\ctxwk{\subst{a}{Q}}{\subst{a}{k}}}
     }
 \end{align*}
 \end{footnotesize}
@@ -1730,15 +1789,15 @@ Substitution preserves weakening:
 \frametitle{\bf Appendix: substitution preserves units}
 \begin{equation*}
 \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jfam{{{\Gamma}{A}}{P}}{Q}
     }
   { \unfoldall{\jhomeq
-      {{\Gamma}{\subst{x}{P}}}
-      {\subst{x}{Q}}
-      {\subst{x}{Q}}
-      {\subst{x}{\idtm{Q}}}
-      {\idtm{\subst{x}{Q}}}
+      {{\Gamma}{\subst{a}{P}}}
+      {\subst{a}{Q}}
+      {\subst{a}{Q}}
+      {\subst{a}{\idtm{Q}}}
+      {\idtm{\subst{a}{Q}}}
     }}
 \end{equation*}
 \end{frame}
@@ -1886,18 +1945,18 @@ Compatibility of weakening of a family with weakening of a context:
 \frametitle{\bf Appendix: substitution of an empty family}
 \begin{align*}
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     }
-  { \jfameq{\Gamma}{\subst{x}{\emptyf}}{\emptyf}
+  { \jfameq{\Gamma}{\subst{a}{\emptyf}}{\emptyf}
     }
   \\
 & \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     \jfam{{\Gamma}{A}}{P}
     }
   { \jfameq
-      {{\Gamma}{\subst{x}{P}}}
-      {\subst{x}{\emptyf}}
+      {{\Gamma}{\subst{a}{P}}}
+      {\subst{a}{\emptyf}}
       {\emptyf}
     }
 \end{align*}
@@ -1906,7 +1965,7 @@ Compatibility of substitution of a family with substitution of a context:
 \inference
 { \jfam{{\Gamma}{A}}{P}
   }
-{ \jfameq{\Gamma}{\subst{x}{P}}{\subst{x}{P}}
+{ \jfameq{\Gamma}{\subst{a}{P}}{\subst{a}{P}}
   }
 \end{equation*}
 \end{frame}
@@ -1915,9 +1974,9 @@ Compatibility of substitution of a family with substitution of a context:
 \frametitle{\bf Appendix: units act as identity functions}
 \begin{equation*}
 \inference
-  { \jterm{\Gamma}{A}{x}
+  { \jterm{\Gamma}{A}{a}
     }
-  { \jtermeq{\Gamma}{A}{\subst{x}{\idtm{A}}}{x}
+  { \jtermeq{\Gamma}{A}{\subst{a}{\idtm{A}}}{a}
     }
 \end{equation*}
 \\[\baselineskip]
