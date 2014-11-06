@@ -22,17 +22,13 @@
 
 \begin{frame}
 \frametitle{\bf Goal and acknowledgements}
-We will give an essentially algebraic theory of type dependency. Thus, we will
+In this presentation, an essentially algebraic theory of type dependency will be given. Thus, we will
 do two things:
 \begin{itemize}
 \item Give a syntactic description of the theory in the usual style of
 name-free type theory.
-\item Define the corresponding algebraic objects in a category with finite limits.
+\item Define the corresponding algebraic objects, called \important{E-systems}, in a category with finite limits.
 \end{itemize}
-\pause
-People unfamiliar with type theory should get out of this presentation 
-a sense of what dependent type theory is.
-\\[\baselineskip]
 \pause
 For many insights in the current presentation I am grateful to
 \begin{itemize}
@@ -55,11 +51,28 @@ require.
 \item Finite set of rules. The theory is invariant under slicing as a consequence, rather than by
 convention. There will be no rule schemes.
 \pause
-\item The theory is capable of interpreting itself. Investigations to internal
-models of type theory originally motivated me to write type theory this way.
-\pause
 \item The meta-theory should not require anything more than rules for handling
 inferences. In particular, natural numbers should not be required.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{\bf Consequences of being algebraic}
+The requirement that the theory is essentially algebraic gives immediate access to the standard tools of algebra, such as
+\begin{itemize}
+\item free algebras;
+\item quotients algebras.
+\end{itemize}
+\pause
+The major source of examples of E-systems are C-systems.
+\\[\baselineskip]
+\pause
+In a way similar to the definition of E-systems, it is possible to define
+\important{internal E-systems}. One of the aims of this research was to have
+a systematic treatment of internal models.
+\begin{itemize}
+\item Nothing more than plain dependent type theory is needed to express what
+an internal E-system is.
 \end{itemize}
 \end{frame}
 
@@ -69,9 +82,9 @@ inferences. In particular, natural numbers should not be required.
 \begin{tikzcd}[ampersand replacement=\&,column sep=0em]
 {} \& \textbf{Extension} \ar[very thick,-stealth]{dr} \ar[very thick,-stealth]{d} \ar[very thick,-stealth]{dl}
   \\
-\textbf{Weakening} \ar[very thick,-stealth]{d} \& \textbf{Substitution} \ar[very thick,-stealth]{dd} \& \makebox[3cm]{\textbf{Empty context and families}} \ar[very thick,-stealth]{ddl}
+\makebox[.7cm]{\textbf{Weakening}} \ar[very thick,-stealth]{d} \& \textbf{Substitution} \ar[very thick,-stealth]{dd} \& \makebox[3cm]{\textbf{Empty context and families}} \ar[very thick,-stealth]{ddl}
 \\
-\textbf{Projection} \ar[very thick,-stealth]{dr}
+\makebox[.7cm]{\textbf{Projection}} \ar[very thick,-stealth]{dr}
 \\
 {} \& \textbf{Dependent Type Theory}
 \end{tikzcd}
@@ -1714,10 +1727,53 @@ such that\pause
 \end{frame}
 
 \begin{frame}
-\frametitle{\bf The end}
-\begin{center}
-Thank you for your attention
-\end{center}
+\frametitle{\bf Towards algebraic Homotopy Type Theory}
+\begin{footnotesize}
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&,column sep=0em,row sep=1.3em]
+ {}\& 
+\textbf{Extension} 
+  \ar[very thick,-stealth]{dr} 
+  \ar[very thick,-stealth]{d} 
+  \ar[very thick,-stealth]{dl}
+  \\
+\makebox[2cm]{\textbf{Weakening}} 
+  \ar[very thick,-stealth]{d} 
+  \& 
+\textbf{Substitution} 
+  \ar[very thick,-stealth]{dd} 
+  \& 
+\makebox[3cm]{\textbf{Empty context and families}} 
+  \ar[very thick,-stealth]{ddl}
+  \\
+\makebox[2cm]{\textbf{Projection}} 
+  \ar[very thick,-stealth]{dr}
+  \\
+  {}\& 
+\textbf{Dependent Type Theory}
+  \ar[very thick,-stealth]{dr}
+  \ar[very thick,-stealth]{dl}
+  \\
+\makebox[2cm]{\bf Inductive types}
+  \ar[very thick,-stealth]{ddr}
+  \&\&
+\makebox[2cm]{\bf $\Pi$-types}
+  \ar[very thick,-stealth]{d}
+  \\
+  {}\&
+  {}\&
+\makebox[2cm]{\bf Universes}
+  \ar[very thick,-stealth]{dl}
+  \\
+  {}\&
+\mbox{\bf Univalent mathematics(?)}
+  \ar[very thick,-stealth]{d}
+  \\
+  {}\&
+\mbox{\bf Higher inductive types}
+\end{tikzcd}
+\end{equation*}
+\end{footnotesize}
 \end{frame}
 
 \begin{frame}
