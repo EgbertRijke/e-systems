@@ -1,4 +1,4 @@
-\documentclass[handout]{beamer}
+\documentclass{beamer}
 \setbeamercolor{frametitle}{fg=teal!90!black}
 \setbeamercolor{item}{fg=red!90!black}
 \setbeamercolor{title}{fg=teal!90!black}
@@ -8,8 +8,8 @@
 
 \title{\bf An algebraic formulation of dependent type theory}
 \author{Egbert Rijke}
-\institute{Carnegie Mellon University}
-\date{November 7th -- 10th, 2014}
+\institute{Carnegie Mellon University\\\texttt{erijke@andrew.cmu.edu}}
+\date{November 7th -- 10th 2014}
 
 \newcommand\subgoal[1]{\begin{huge}\begin{center}\textbf{Subgoal: {\color{teal!90!black}#1}}\end{center}\end{huge}}
 \newcommand\important[1]{\textbf{\color{red!90!black}#1}}
@@ -259,9 +259,10 @@ Introduction rules for \important{context extension}:
       }
     { \jctxeq{\ctxext{\Gamma}{A}}{\ctxext{\Delta}{B}}
       }
+\end{align*}
 \pause
-\intertext{%
-Introduction rules for \important{family extension}:}
+Introduction rules for \important{family extension}:
+\begin{align*}
 & \inference
   { \jfam{{\Gamma}{A}}{P}
     }
@@ -309,6 +310,7 @@ A \important{pre-extension algebra $\stesys$} in a category with finite limits c
   &%
 : \stesysff \to \stesysf,%
 \end{align*}
+\pause
 implementing the introduction rules
 \begin{align*}
 & \inference
@@ -322,6 +324,7 @@ implementing the introduction rules
   { \jfam{\Gamma}{\ctxext{A}{P}}
     }
 \end{align*}
+\pause
 Thus, we will additionally require that we have a commuting diagram
 \begin{equation*}
 \begin{tikzcd}[ampersand replacement=\&]
@@ -346,14 +349,11 @@ We introduce the following notation:
 \begin{align*}
 \stesysf_2 
   & := \stesysff
-  \pause
   \\
 \eft[2] 
   & := \pullbackpr{1}{\ectxext}{\eft} : \stesysf_2\to\stesysf
-  \pause
   \\
 \stesysf_3 & := \pullback{\stesysf_2}{\stesysf_2}{\efamext}{\eft[2]}
-  \pause
   \\
 \eft[3]
   & := \pullbackpr{1}{\efamext}{\eft[2]} : \stesysf_3\to\stesysf_2.
@@ -434,7 +434,7 @@ commute.
 \end{frame}
 
 \begin{frame}
-\frametitle{Subgoal: develop properties of extension algebras}
+\frametitle{\bf Subgoal: develop properties of extension algebras}
 We need to know:
 \begin{itemize}
 \item What homomorphisms of (pre-)extension algebras are.
@@ -475,6 +475,7 @@ consisting of morphisms
 \stesysc
 \end{tikzcd}
 \end{equation*}
+\pause
 such that the indicated squares commute, for which furthermore the squares
 \begin{equation*}
 \begin{tikzcd}[ampersand replacement=\&]
@@ -535,6 +536,7 @@ fundamental structure
 \stesysf
 \end{tikzcd}
 \end{equation*}
+\pause
 where
 \begin{align*}
 \stesyst_2 
@@ -560,7 +562,7 @@ with the extension operations
 \begin{theorem}
 If $\stesys$ is an extension algebra, then so is $\famesys{\stesys}$.
 \end{theorem}
-
+\pause
 \begin{lemma}
 Let $\stesys$ be a pre-extension algebra. Then $\stesys$ is an extension
 algebra if and only if we have the extension homomorphisms
@@ -684,14 +686,14 @@ and is unique with the property that it renders the diagram commutative.
 \begin{theorem}
 The change of base of an extension algebra is again an extension algebra.
 \end{theorem}
-
+\pause
 \begin{theorem}
 Let $\stesys$ be a pre-extension algebra. Then
 \begin{equation*}
 \famesys{\famesys{\stesys}} \simeq \cobesys{\stesysf}{\famesys{\stesys}}{\ectxext}{\eft}.
 \end{equation*}
 \end{theorem}
-
+\pause
 \begin{theorem}
 Let $\stesys$ be a pre-extension algebra and consider $p:\stesysc\rightarrow
 X\leftarrow Y:g$. Then
@@ -741,8 +743,9 @@ The introduction rules for weakening:
       }
     { \jfameq{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}
       }
+\end{align*}
   \pause
-  \\
+\begin{align*}
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{B}}{Q}
@@ -843,8 +846,9 @@ commutes.
       {\ctxwk{\ctxext{A}{P}}{B}}
       {\ctxwk{P}{{A}{B}}}
     }
-  \pause
-\\
+\end{align*}
+\pause
+\begin{align*}
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{A}}{P}
@@ -998,6 +1002,7 @@ Then we define
   \to
 \famesys{\famesys{\cobesys{Y}{\stesys}{g}{p}}}
 \end{equation*}
+\pause
 to be the unique extension homomorphism rendering the diagram
 \begin{scriptsize}
 \begin{equation*}
@@ -1098,8 +1103,9 @@ weakening:
       {\ctxwk{A}{{Q}{R}}}
       {\ctxwk{{A}{Q}}{{A}{R}}}
     }
-\\
+\end{align*}
 \pause
+\begin{align*}
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{B}}{Q}
@@ -1111,7 +1117,6 @@ weakening:
       {\ctxwk{{A}{Q}}{{A}{S}}}
     }
 \\
-\pause
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{B}}{Q}
@@ -1274,7 +1279,9 @@ Introduction rules for substitution:
       }
     { \jfameq{\Gamma}{\subst{a}{P}}{\subst{a'}{P'}}
       }
-    \\
+\end{align*}
+\pause
+\begin{align*}
 & \inference
   { \jterm{\Gamma}{A}{a}
     \jfam{{{\Gamma}{A}}{P}}{Q}
@@ -1341,11 +1348,11 @@ extension homomorphism
 for which the square
 \begin{equation*}
 \begin{tikzcd}[ampersand replacement=\&,column sep=large]
-\pullback{\stesyst}{\stesysf_2}{\ebd}{\eft[2]}
-  \ar{r}{s(\stesys)_0}
+\pullback{\stesyst}{\famesys{\famesys{\stesysf}}}{\ebd}{\eft[2]}
+  \ar{r}{\mathbf{s}(\stesys)}
   \ar{d}[swap]{\ebd\circ\pullbackpr{1}{\ebd}{\eft[2]}}
   \&
-\stesysf 
+\famesys{\stesys} 
   \ar{d}{\eft}
   \\
 \stesysf 
@@ -1504,7 +1511,9 @@ If $\stesys$ is a substitution algebra, then so is $\famesys{\stesys}$.
       {\subst{a}{{g}{R}}}
       {\subst{{a}{g}}{{a}{R}}}
     }
-  \\
+\end{align*}
+\pause
+\begin{align*}
 & \inference
   { \jterm{\Gamma}{A}{a}
     \jterm{{{\Gamma}{A}}{P}}{Q}{g}
@@ -1555,6 +1564,7 @@ that in addition
 \item Weakening is a substitution homomorphism;
 \item Substitution is a projection homomorphism.
 \end{itemize}
+\pause
 \important{Pre-E-homomorphisms} are extension homomorphisms which
 are both projection homomorphisms and substitution
 homomorphisms.
@@ -1573,7 +1583,9 @@ homomorphisms.
       {\subst{a}{\ctxwk{A}{B}}}
       {B}
     }
-  \\
+\end{align*}
+\pause
+\begin{align*}
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{B}}{Q}
@@ -1629,7 +1641,9 @@ commutes.
     }
   { \jfameq{{\Gamma}{A}}{\subst{\idtm{A}}{\ctxwk{A}{P}}}{P}
     }
-  \\
+\end{align*}
+\pause
+\begin{align*}
 & \inference
   { \jfam{{{\Gamma}{A}}{P}}{Q}
     }
@@ -1683,18 +1697,18 @@ commutes.
 
 \begin{frame}
 \frametitle{\bf E-systems}
-An \emph{E-system} is an extension algebra with
+An \important{E-system} is an extension algebra with\pause
 \begin{itemize}
-\item a weakening operation and units, giving it the structure of a projection algebra;
-\item a substitution operation, giving it the structure of a substitution algebra
+\item a weakening operation and units, giving it the structure of a projection algebra;\pause
+\item a substitution operation, giving it the structure of a substitution algebra;\pause
 \item (an empty context and empty families);
 \end{itemize}
-such that
+such that\pause
 \begin{itemize}
-\item Weakening is a substitution homomorphism;
-\item Substitution is a projection homomorphism;
-\item Weakened families are constant families;
-\item Precomposition with identity functions leaves everything invariant.
+\item Weakening is a substitution homomorphism;\pause
+\item Substitution is a projection homomorphism;\pause
+\item Weakened families are constant families;\pause
+\item Precomposition with identity functions leaves everything invariant.\pause
 \item (The requirements regarding the empty context and families according to their rules)
 \end{itemize}
 \end{frame}
