@@ -13,6 +13,7 @@
 
 \newcommand\subgoal[1]{\begin{huge}\begin{center}\textbf{Subgoal: {\color{teal!90!black}#1}}\end{center}\end{huge}}
 \newcommand\important[1]{\textbf{\color{red!90!black}#1}}
+\newcommand{\Btilde}{\skew{4}{\tilde}{B}}
 
 \begin{document}
 
@@ -22,10 +23,9 @@
 
 \begin{frame}
 \frametitle{\bf Goal and acknowledgements}
-In this presentation, an essentially algebraic theory of type dependency will be given. Thus, we will
-do two things:
+We will do two things:
 \begin{itemize}
-\item Give a syntactic description of the theory in the usual style of
+\item Give a syntactic reformulation of type theory in the usual style of
 name-free type theory.
 \item Define the corresponding algebraic objects, called \important{E-systems}, in a category with finite limits.
 \end{itemize}
@@ -57,15 +57,18 @@ inferences. In particular, natural numbers should not be required.
 \end{frame}
 
 \begin{frame}
-\frametitle{\bf Consequences of being algebraic}
+\frametitle{\bf The scope of the theory}
 The requirement that the theory is essentially algebraic gives immediate access to the standard tools of algebra, such as
 \begin{itemize}
 \item free algebras;
 \item quotients algebras.
 \end{itemize}
 \pause
-The major source of examples of E-systems are C-systems.
-\\[\baselineskip]
+The major source of examples of E-systems are \important{B-systems}.
+\begin{itemize}
+\item B-systems are stratified E-systems.
+\item There is a full and faithful functor from C-systems to pre-B-systems with the B-systems as its image.
+\end{itemize}
 \pause
 In a way similar to the definition of E-systems, it is possible to define
 \important{internal E-systems}. One of the aims of this research was to have
@@ -98,13 +101,13 @@ The theories of weakening (and projections), substitution and the empty context 
 \frametitle{\bf The basic judgments}
 \begin{align*}
 \jalign\jctx{\Gamma} 
-& \jalign\jctxeq{\Gamma}{\Gamma'}
+& \jalign\jctxeq{\Gamma}{\Delta}
   \\
 \jalign\jfam{\Gamma}{A} 
 & \jalign\jfameq{\Gamma}{A}{B}
   \\
 \jalign\jterm{\Gamma}{A}{a} 
-& \jalign\jtermeq{\Gamma}{A}{a}{y}.
+& \jalign\jtermeq{\Gamma}{A}{a}{b}.
 \end{align*}
 \\[\baselineskip]
 There are rules expressing that all three kinds of judgmental equality are
@@ -127,106 +130,6 @@ An example of a conversion rule:
       }
 \end{align*}
 \end{frame}
-
-\begin{comment}
-\begin{frame}
-\frametitle{\bf Rules: judgmental equality is an equivalence relation}
-\begin{footnotesize}
-\begin{align*}
-& \inference
-  { \jctx{\Gamma}
-    }
-  { \jctxeq{\Gamma}{\Gamma}
-    } 
-& & \inference
-    { \jctxeq{\Gamma}{\Delta}
-      }
-    { \jctxeq{\Delta}{\Gamma}
-      } 
-& & \inference
-    { \jctxeq{\Gamma}{\Delta}
-      \jctxeq{\Delta}{\greek{E}}
-      }
-    { \jctxeq{\Gamma}{\greek{E}}
-      }
-    \\
-& \inference
-  { \jfam{\Gamma}{A}
-    }
-  { \jfameq{\Gamma}{A}{A}
-    } 
-& & \inference
-    { \jfameq{\Gamma}{A}{B}
-      }
-    { \jfameq{\Gamma}{B}{A}
-      }
-& & \inference
-    { \jfameq{\Gamma}{A}{B}
-      \jfameq{\Gamma}{B}{C}
-      }
-    { \jfameq{\Gamma}{A}{C}
-      }
-    \\
-& \inference
-  { \jterm{\Gamma}{A}{a}
-    }
-  { \jtermeq{\Gamma}{A}{a}{a}
-    }
-& & \inference
-    { \jtermeq{\Gamma}{A}{a}{y}
-      }
-    { \jtermeq{\Gamma}{A}{y}{a}
-      }
-& & \inference
-    { \jtermeq{\Gamma}{A}{a}{y}
-      \jtermeq{\Gamma}{A}{y}{z}
-      }
-    { \jtermeq{\Gamma}{A}{a}{z}
-      }
-\end{align*}
-\begin{align*}
-& \inference
-  { \jctxeq{\Gamma}{\Delta}
-    \jfam{\Gamma}{A}
-    }
-  { \jfam{\Delta}{A}
-    }
-& & \inference
-    { \jctxeq{\Gamma}{\Delta}
-      \jfameq{\Gamma}{A}{B}
-      }
-    { \jfameq{\Delta}{A}{B}
-      }
-    \\
-& \inference
-  { \jctxeq{\Gamma}{\Delta}
-    \jterm{\Gamma}{A}{a}
-    }
-  { \jterm{\Delta}{A}{a}
-    }
-& & \inference
-    { \jctxeq{\Gamma}{\Delta}
-      \jtermeq{\Gamma}{A}{a}{y}
-      }
-    { \jtermeq{\Delta}{A}{a}{y}
-      }
-    \\
-& \inference
-  { \jfameq{\Gamma}{A}{B}
-    \jterm{\Gamma}{A}{a}
-    }
-  { \jterm{\Gamma}{B}{a}
-    }
-& & \inference
-    { \jfameq{\Gamma}{A}{B}
-      \jtermeq{\Gamma}{A}{a}{y}
-      }
-    { \jtermeq{\Gamma}{B}{a}{y}
-      }
-\end{align*}
-\end{footnotesize}
-\end{frame}
-\end{comment}
 
 \begin{frame}
 \frametitle{\bf The fundamental structure of E-systems}
@@ -253,8 +156,58 @@ The \important{fundamental structure of an E-system $\stesys$} in a category wit
 \item The object $\stesyst$ represents the sort of terms.
 \pause
 \item Every term has a family associated to it, this is represented by
-$\partial:\stesyst\to\stesysf$.
+$\ebd:\stesyst\to\stesysf$.
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{\bf Comparison with B-systems}
+\begin{minipage}[t]{.42\textwidth}
+The fundamental structure of E-systems:
+\\[1.8cm]
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&]
+\stesyst
+  \ar{dr}[swap]{\ebd}
+  \\
+  {}\&
+\stesysf
+  \ar{d}{\eft}
+  \\
+  {}\&
+\stesysc
+\end{tikzcd}
+\end{equation*}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.42\textwidth}
+The underlying structure of B-systems:
+\vfill
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&]
+\Btilde_2
+  \ar{dr}[swap]{\ebd}
+  \&
+\vdots
+  \ar{d}{\eft}
+  \\
+\Btilde_1
+  \ar{dr}[swap]{\ebd}
+  \&
+B_2
+  \ar{d}{\eft}
+  \\
+\Btilde_0
+  \ar{dr}[swap]{\ebd}
+  \&
+B_1
+  \ar{d}{\eft}
+  \\
+  {}\&
+B_0
+\end{tikzcd}
+\end{equation*}
+\end{minipage}
 \end{frame}
 
 \begin{frame}
@@ -630,7 +583,7 @@ given by
 \end{frame}
 
 \begin{frame}
-\frametitle{\bf Mixed commutative diagrams}
+\frametitle{\bf Condensed commutative diagrams}
 Suppose $f:\stesys\to\stesys'$ is a pre-extension homomorphism. We say that
 a diagram
 \begin{equation*}
@@ -1175,6 +1128,7 @@ Introduction rules for units:
     { \unfoldall{\jhomeq{\Gamma}{A}{A}{\idtm{A}}{\idtm{A'}}}
       }
 \end{align*}
+\pause
 Weakening preserves the unit:
 \begin{equation*}
 \inference
