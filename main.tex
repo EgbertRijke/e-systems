@@ -5,8 +5,7 @@
 %\includeonly{Algebras/article-models-cat}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{Internal models of type theory and internal higher categories for the
-Univalent Foundations}
+\title{An essentially algebraic formulation of dependent type theory}
 \author{Egbert Rijke}
 \date{\today}
 
@@ -14,12 +13,13 @@ Univalent Foundations}
 
 \maketitle
 
-\tableofcontents
+%\tableofcontents
 
-\input{Introduction/article-models-intro}
+%\input{Introduction/article-models-intro}
 
-\part{Type theory}
+%\part{Type theory}
 
+\begin{comment}
 In this part we develop type theory from the ground up. We start with a type
 theory without any of the basic constructors. This is the theory of contexts
 families and terms which has the basic operations of extension, weakening,
@@ -54,26 +54,27 @@ type constructors presented in \autoref{tt}, we will demonstrate in \autoref{ttd
 that the theory gives rise to a rich categorical structure. The notions and
 properties we derive here will be essential for the further work on internal
 models for E-systems, presented in \autoref{part:models}.
+\end{comment}
 
-\include{Rules/rules}
+\input{Rules/rules}
 
-\include{Derivations/article-models-ttderived}
+%\include{Derivations/article-models-ttderived}
 
-\part{Internal Models}\label{part:models}
+%\part{Internal Models}\label{part:models}
 
-\include{Internal_models/article-models-ttinternal}
+%\include{Internal_models/article-models-ttinternal}
 
-\part{Type constructors}
+%\part{Type constructors}
 
-\include{Dependent_function_types/article-models-ttdp}
+%\include{Dependent_function_types/article-models-ttdp}
 
-\include{Universes/article-models-ttuniverses}
+%\include{Universes/article-models-ttuniverses}
 
-\include{Junk/article-models-ttind}
+%\include{Junk/article-models-ttind}
 
-\part{Categorical semantics}
+%\part{Categorical semantics}
 
-\include{Algebras/article-models-cat}
+\input{Algebras/article-models-cat}
 
 \bibliographystyle{plain}
 %\phantomsection\addcontentsline{toc}{section}{References}
