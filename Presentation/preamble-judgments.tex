@@ -48,7 +48,8 @@
   \@ifnextchar\jhomeq{\quad}{%
   \@ifnextchar\jfhom{\quad}{%
   \@ifnextchar\jfhomeq{\quad}{%
-  }}}}}}}}}}}}}}}}}}}}}
+  \@ifnextchar\jany{\quad}{%
+  }}}}}}}}}}}}}}}}}}}}}}
 
 %%%% Judgments about contexts
 \newcommand{\jctx@sym}{%
@@ -97,4 +98,9 @@
   \judgment{#1}{#4}{\jdeq}{#5}{}{}{\jhomsym{#2}{#3}}}
 \newcommand{\jhomdefn}[5]{%
   \judgment{#1}{#4}{\defeq}{#5}{}{}{\jhomsym{#2}{#3}}}
+  
+%%%% The judgment that e is anything
+\newcommand{\janysym}{\anything}
+\newcommand{\jany}[2]{\judgment{#1}{}{}{#2}{}{}{\janysym}}
+\newcommand{\janyeq}[3]{\judgment{#1}{#2}{\defeq}{#3}{}{}{\janysym}
 \makeatother

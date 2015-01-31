@@ -19,46 +19,10 @@ $\subst[\famsym]{x}{Q}$.
 \begin{align}
 & \inference
   { \jterm{\Gamma}{A}{x}
-    \jfam{{\Gamma}{A}}{P}
+    \jany{{\Gamma}{A}}{e}
     }
-  { \jfam{\Gamma}{\subst{x}{P}}
+  { \jany{\Gamma}{\subst{x}{e}}
     }
-& & \inference
-    { \jtermeq{\Gamma}{A}{x}{x'}
-      \jfameq{{\Gamma}{A}}{P}{P'}
-      }
-    { \jfameq{\Gamma}{\subst{x}{P}}{\subst{x'}{P'}}
-      }
-    \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jfam{{{\Gamma}{A}}{P}}{Q}
-    }
-  { \jfam{{\Gamma}{\subst{x}{P}}}{\subst[\famsym]{x}{Q}}
-    }
-& & \inference
-    { \jtermeq{\Gamma}{A}{x}{x'}
-      \jfameq{{{\Gamma}{A}}{P}}{Q}{Q'}
-      }
-    { \jfameq{{\Gamma}{\subst{x}{P}}}{\subst[\famsym]{x}{Q}}{\subst[\famsym]{x'}{Q'}}
-      }
-    \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
-    }
-  { \jterm{{\Gamma}{\subst{x}{P}}}{\subst[\famsym]{x}{Q}}{\subst[\tmsym]{x}{g}}
-    }
-& & \inference
-    { \jtermeq{\Gamma}{A}{x}{x'}
-      \jtermeq{{{\Gamma}{A}}{P}}{Q}{g}{g'}
-      }
-    { \jtermeq
-        {{\Gamma}{\subst{x}{P}}}
-        {\subst[\famsym]{x}{Q}}
-        {\subst[\tmsym]{x}{g}}
-        {\subst[\tmsym]{x'}{g'}}
-      }
 \end{align}
 
 \subsubsection{Fibers of extensions}
@@ -102,39 +66,14 @@ $A$:
 & \inference
   { \jterm{\Gamma}{A}{x}
     \jterm{{{\Gamma}{A}}{P}}{Q}{g}
-    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
+    \jany{{{{\Gamma}{A}}{P}}{Q}}{e}
     }
-  { \jfameq
+  { \janyeq
       {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
-      {\subst{x}{{g}{R}}}
-      {\subst{{x}{g}}{{x}{R}}}
+      {\subst{x}{{g}{e}}}
+      {\subst{{x}{g}}{{x}{e}}}
     }
-  \label{comp-ss-c}
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
-    \jfam{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}
-    }
-  { \jfameq
-      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{{g}{R}}}}
-      {\subst{x}{{g}{S}}}
-      {\subst{{x}{g}}{{x}{S}}}
-    }
-  \label{comp-ss-f}
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jterm{{{\Gamma}{A}}{P}}{Q}{g}
-    \jterm{{{{{\Gamma}{A}}{P}}{Q}}{R}}{S}{k}
-    }
-  { \jtermeq
-      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{{g}{R}}}}
-      {\subst{x}{{g}{S}}}
-      {\subst{x}{{g}{k}}}
-      {\subst{{x}{g}}{{x}{k}}}
-    }
-  \label{comp-ss-t}
+  \label{comp-ss-any}
 \end{align}
 
 \begin{rmk}
@@ -144,38 +83,15 @@ valid inference rules:
 & \inference
   { \jterm{\Gamma}{A}{x}
     \jterm{{\Gamma}{A}}{P}{f}
-    \jfam{{{\Gamma}{A}}{P}}{Q}
+    \jany{{{\Gamma}{A}}{P}}{e}
     }
-  { \jfameq
+  { \janyeq
       {\Gamma}
-      {\subst{x}{{f}{Q}}}
-      {\subst{{x}{f}}{{x}{Q}}}
-    }
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jterm{{\Gamma}{A}}{P}{f}
-    \jfam{{{{\Gamma}{A}}{P}}{Q}}{R}
-    }
-  { \jfameq
-      {{\Gamma}{\subst{x}{{f}{Q}}}}
-      {\subst{x}{{f}{R}}}
-      {\subst{{x}{f}}{{x}{R}}}
-    }
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jterm{{\Gamma}{A}}{P}{f}
-    \jterm{{{{\Gamma}{A}}{P}}{Q}}{R}{h}
-    }
-  { \jtermeq
-      {{\Gamma}{\subst{x}{{f}{Q}}}}
-      {\subst{x}{{f}{R}}}
-      {\subst{x}{{f}{h}}}
-      {\subst{{x}{f}}{{x}{h}}}
+      {\subst{x}{{f}{e}}}
+      {\subst{{x}{f}}{{x}{e}}}
     }
 \end{align*}
-Moreover, we get
+Moreover, in the presence of empty families we get
 \begin{equation*}
 \inference
   { \jterm{\Gamma}{A}{x}

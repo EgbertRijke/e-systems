@@ -60,25 +60,11 @@ their terms, families over those families and terms of those unchanged:
 \label{comp-0w}
 \begin{align}
 & \inference
-  { \jfam{\Gamma}{B}
+  { \jany{\Gamma}{e}
     }
-  { \jfameq{\Gamma}{\ctxwk{\emptyf}{B}}{B}
+  { \janyeq{\Gamma}{\ctxwk{\emptyf}{e}}{e}
     }
-  \label{comp-0w-c}
-  \\
-& \inference
-  { \jfam{{\Gamma}{B}}{Q}
-    }
-  { \jfameq{{\Gamma}{B}}{\ctxwk{\emptyf}{Q}}{Q}
-    }
-  \label{comp-0w-f}
-  \\
-& \inference
-  { \jterm{{\Gamma}{B}}{Q}{g}
-    }
-  { \jtermeq{{\Gamma}{B}}{Q}{\ctxwk{\emptyf}{g}}{g}
-    }
-  \label{comp-0w-t}
+  \label{comp-0w-any}
 \end{align}
 
 \subsubsection{Fibers of an empty family}
@@ -140,39 +126,14 @@ $x$ of $A$:
 & \inference
   { \jterm{\Gamma}{A}{x}
     \jfam{{{\Gamma}{A}}{P}}{Q}
-    \jfam{{{\Gamma}{A}}{P}}{R}
+    \jany{{{\Gamma}{A}}{P}}{e}
     }
-  { \jfameq
+  { \janyeq
       {{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}
-      {\subst{x}{\ctxwk{Q}{R}}}
-      {\ctxwk{\subst{x}{Q}}{\subst{x}{R}}}
+      {\subst{x}{\ctxwk{Q}{e}}}
+      {\ctxwk{\subst{x}{Q}}{\subst{x}{e}}}
     }
-  \label{comp-sw-c}
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jfam{{{\Gamma}{A}}{P}}{Q}
-    \jfam{{{{\Gamma}{A}}{P}}{R}}{S}
-    }
-  { \jfameq
-      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{\ctxwk{Q}{R}}}}
-      {\subst{x}{\ctxwk{Q}{S}}}
-      {\ctxwk{\subst{x}{Q}}{\subst{x}{S}}}
-    }
-  \label{comp-sw-f}
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jfam{{{\Gamma}{A}}{P}}{Q}
-    \jterm{{{{\Gamma}{A}}{P}}{R}}{S}{k}
-    }
-  { \jtermeq
-      {{{{\Gamma}{\subst{x}{P}}}{\subst{x}{Q}}}{\subst{x}{\ctxwk{Q}{R}}}}
-      {\subst{x}{\ctxwk{Q}{S}}}
-      {\subst{x}{\ctxwk{Q}{k}}}
-      {\ctxwk{\subst{x}{Q}}{\subst{x}{k}}}
-    }
-  \label{comp-sw-t}
+  \label{comp-sw-any}
 \end{align}
 
 \begin{rmk}
@@ -182,35 +143,12 @@ valid inference rules:
 & \inference
   { \jterm{\Gamma}{A}{x}
     \jfam{{\Gamma}{A}}{P}
-    \jfam{{\Gamma}{A}}{Q}
+    \jany{{\Gamma}{A}}{e}
     }
-  { \jfameq
+  { \janyeq
       {{\Gamma}{\subst{x}{P}}}
-      {\subst{x}{\ctxwk{P}{Q}}}
-      {\ctxwk{\subst{x}{P}}{\subst{x}{Q}}}
-    }
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jfam{{\Gamma}{A}}{P}
-    \jfam{{{\Gamma}{A}}{Q}}{R}
-    }
-  { \jfameq
-      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}
-      {\subst{x}{\ctxwk{P}{R}}}
-      {\ctxwk{\subst{x}{P}}{\subst{x}{R}}}
-    }
-  \\
-& \inference
-  { \jterm{\Gamma}{A}{x}
-    \jfam{{\Gamma}{A}}{P}
-    \jterm{{{\Gamma}{A}}{Q}}{R}{h}
-    }
-  { \jtermeq
-      {{{\Gamma}{\subst{x}{P}}}{\subst{x}{\ctxwk{P}{Q}}}}
-      {\subst{x}{\ctxwk{P}{R}}}
-      {\subst{x}{\ctxwk{P}{h}}}
-      {\ctxwk{\subst{x}{P}}{\subst{x}{h}}}
+      {\subst{x}{\ctxwk{P}{e}}}
+      {\ctxwk{\subst{x}{P}}{\subst{x}{e}}}
     }
 \end{align*}
 Moreover, we get
@@ -238,39 +176,14 @@ $A$ over $\Gamma$.
 & \inference
   { \jfam{\Gamma}{A}
     \jterm{{\Gamma}{B}}{Q}{g}
-    \jfam{{{\Gamma}{B}}{Q}}{R}
+    \jany{{{\Gamma}{B}}{Q}}{e}
     }
-  { \jfameq
+  { \janyeq
       {{{\Gamma}{A}}{\ctxwk{A}{B}}}
-      {\ctxwk{A}{\subst{g}{R}}}
-      {\subst{\ctxwk{A}{g}}{\ctxwk{A}{R}}}
+      {\ctxwk{A}{\subst{g}{e}}}
+      {\subst{\ctxwk{A}{g}}{\ctxwk{A}{e}}}
     }
-  \label{comp-ws-c}
-  \\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jterm{{\Gamma}{B}}{Q}{g}
-    \jfam{{{{\Gamma}{B}}{Q}}{R}}{S}
-    }
-  { \jfameq
-      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{\subst{g}{R}}}}
-      {\ctxwk{A}{\subst{g}{S}}}
-      {\subst{\ctxwk{A}{g}}{\ctxwk{A}{S}}}
-    }
-  \label{comp-ws-f}
-  \\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jterm{{\Gamma}{B}}{Q}{g}
-    \jterm{{{{\Gamma}{B}}{Q}}{R}}{S}{k}
-    }
-  { \jtermeq
-      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{\subst{g}{R}}}}
-      {\ctxwk{A}{\subst{g}{S}}}
-      {\ctxwk{A}{\subst{g}{k}}}
-      {\subst{\ctxwk{A}{g}}{\ctxwk{A}{k}}}
-    }
-  \label{comp-ws-t}
+  \label{comp-ws-any}
 \end{align}
 
 \begin{rmk}
@@ -280,35 +193,12 @@ valid inference rules:
 & \inference
   { \jfam{\Gamma}{A}
     \jterm{\Gamma}{B}{y}
-    \jfam{{\Gamma}{B}}{Q}
+    \jany{{\Gamma}{B}}{e}
     }
-  { \jfameq
+  { \janyeq
       {{\Gamma}{A}}
-      {\ctxwk{A}{\subst{y}{Q}}}
-      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{Q}}}
-    }
-  \\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jterm{\Gamma}{B}{y}
-    \jfam{{{\Gamma}{B}}{Q}}{R}
-    }
-  { \jfameq
-      {{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}
-      {\ctxwk{A}{\subst{y}{R}}}
-      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{R}}}
-    }
-  \\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jterm{\Gamma}{B}{y}
-    \jterm{{{\Gamma}{B}}{Q}}{R}{h}
-    }
-  { \jtermeq
-      {{{\Gamma}{A}}{\ctxwk{A}{\subst{y}{Q}}}}
-      {\ctxwk{A}{\subst{y}{R}}}
-      {\ctxwk{A}{\subst{y}{h}}}
-      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{h}}}
+      {\ctxwk{A}{\subst{y}{e}}}
+      {\subst{\ctxwk{A}{y}}{\ctxwk{A}{e}}}
     }
 \end{align*}
 Moreover, we get
@@ -338,31 +228,15 @@ as the weakening. After stating the rules we will describe what it means to
 compose context morphisms (terms of weakened contexts).
 \begin{align}
 & \inference
-  { \jfam{\Gamma}{A}
-    \jfam{\Gamma}{B}
-    \jterm{\Gamma}{A}{x}
-    }
-  { \jfameq
-      {\Gamma}
-      {\subst{x}{\ctxwk{A}{B}}}
-      {B}
-    }
-  \label{cancellation-ws-c}\\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{B}}{Q}
-    \jterm{\Gamma}{A}{x}
-    }
-  { \jfameq{{\Gamma}{B}}{\subst{x}{\ctxwk{A}{Q}}}{Q}
-    }
-  \label{cancellation-ws-f}\\
-& \inference
   { \jterm{\Gamma}{A}{x}
-    \jterm{{\Gamma}{B}}{Q}{g}
+    \jany{\Gamma}{e}
     }
-  { \jtermeq{{\Gamma}{B}}{Q}{\subst{x}{\ctxwk{A}{g}}}{g}
+  { \janyeq
+      {\Gamma}
+      {\subst{x}{\ctxwk{A}{e}}}
+      {e}
     }
-  \label{cancellation-ws-t}
+  \label{cancellation-ws-e}
 \end{align}
 
 \subsubsection{The identity term of a substituted family}
@@ -409,27 +283,9 @@ weakening. The identity terms will also be subject to compatibility rules.
     }
   \label{cancellation-si}\\
 & \inference
-  { \jfam{{\Gamma}{A}}{P}
+  { \jany{{\Gamma}{A}}{e}
     }
-  { \jfameq{{\Gamma}{A}}{\subst{\idtm{A}}{\ctxwk{A}{P}}}{P}
+  { \janyeq{{\Gamma}{A}}{\subst{\idtm{A}}{\ctxwk{A}{e}}}{e}
     }
-  \label{precomp-idtm-c}
-  \\
-& \inference
-  { \jfam{{{\Gamma}{A}}{P}}{Q}
-    }
-  { \jfameq{{{\Gamma}{A}}{P}}{\subst{\idtm{A}}{\ctxwk{A}{Q}}}{Q}
-    }
-  \label{precomp-idtm-f}
-  \\
-& \inference
-  { \jterm{{{\Gamma}{A}}{P}}{Q}{g}
-    }
-  { \jtermeq
-      {{{\Gamma}{A}}{P}}
-      {Q}
-      {\subst{\idtm{A}}{\ctxwk{A}{g}}}
-      {g}
-    }
-  \label{precomp-idtm-t}
+  \label{precomp-idtm-any}
 \end{align}

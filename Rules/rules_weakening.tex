@@ -20,49 +20,10 @@ a term $g$ of $Q$ to a term $\ctxwk[\tmsym]{A}{g}$ of $\ctxwk[\famsym]{A}{Q}$.
 \begin{align}
 & \inference
   { \jfam{\Gamma}{A}
-    \jfam{\Gamma}{B}
+    \jany{\Gamma}{e}
     }
-  { \jfam{{\Gamma}{A}}{\ctxwk{A}{B}}
+  { \jany{{\Gamma}{A}}{\ctxwk{A}{e}}
     }
-& & \inference
-    { \jfameq{\Gamma}{A}{A'}
-      \jfameq{\Gamma}{B}{B'}
-      }
-    { \jfameq{{\Gamma}{A}}{\ctxwk{A}{B}}{\ctxwk{A'}{B'}}
-      }
-    \\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{B}}{Q}
-    }
-  { \jfam{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk[\famsym]{A}{Q}}
-    }
-& & \inference
-    { \jfameq{\Gamma}{A}{A'}
-      \jfameq{{\Gamma}{B}}{Q}{Q'}
-      }
-    { \jfameq
-        {{{\Gamma}{A}}{\ctxwk{A}{B}}}
-        {\ctxwk[\famsym]{A}{Q}}
-        {\ctxwk[\famsym]{A'}{Q'}}
-      }
-    \\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jterm{{\Gamma}{B}}{Q}{g}
-    }
-  { \jterm{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk[\famsym]{A}{Q}}{\ctxwk[\tmsym]{A}{g}}
-    }
-& & \inference
-    { \jfameq{\Gamma}{A}{A'}
-      \jtermeq{{\Gamma}{B}}{Q}{g}{g'}
-      }
-    { \jtermeq
-        {{{\Gamma}{A}}{\ctxwk{A}{B}}}
-        {\ctxwk[\famsym]{A}{Q}}
-        {\ctxwk[\tmsym]{A}{g}}
-        {\ctxwk[\tmsym]{A'}{g'}}
-      }
 \end{align}
 
 \subsubsection{Weakenings of extensions}
@@ -115,37 +76,14 @@ inference rules to be valid:
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{B}}{Q}
-    \jfam{{\Gamma}{B}}{R}
+    \jany{{\Gamma}{B}}{e}
     }
-  { \jfameq
+  { \janyeq
       {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}
-      {\ctxwk{A}{{Q}{R}}}
-      {\ctxwk{{A}{Q}}{{A}{R}}}
+      {\ctxwk{A}{{Q}{e}}}
+      {\ctxwk{{A}{Q}}{{A}{e}}}
     }
-  \label{comp-ww-c}\\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{B}}{Q}
-    \jfam{{{\Gamma}{B}}{R}}{S}
-    }
-  { \jfameq
-      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{{Q}{R}}}}
-      {\ctxwk{A}{{Q}{S}}}
-      {\ctxwk{{A}{Q}}{{A}{S}}}
-    }
-  \label{comp-ww-f}\\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{B}}{Q}
-    \jterm{{{\Gamma}{B}}{R}}{S}{k}
-    }
-  { \jtermeq
-      {{{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{Q}}}{\ctxwk{A}{{Q}{R}}}}
-      {\ctxwk{A}{{Q}{S}}}
-      {\ctxwk{A}{{Q}{k}}}
-      {\ctxwk{{A}{Q}}{{A}{k}}}
-    }
-  \label{comp-ww-t}
+  \label{comp-ww-any}
 \end{align}
 
 \begin{rmk}
@@ -155,38 +93,15 @@ valid inference rules:
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{\Gamma}{B}
-    \jfam{\Gamma}{C}
+    \jany{\Gamma}{e}
     }
-  { \jfameq
+  { \janyeq
       {{{\Gamma}{A}}{\ctxwk{A}{B}}}
-      {\ctxwk{A}{{B}{C}}}
-      {\ctxwk{{A}{B}}{{A}{C}}}
-    }
-  \\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{\Gamma}{B}
-    \jfam{{\Gamma}{C}}{R}
-    }
-  { \jfameq
-      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{{B}{C}}}}
-      {\ctxwk{A}{{B}{R}}}
-      {\ctxwk{{A}{B}}{{A}{R}}}
-    }
-  \\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{\Gamma}{B}
-    \jterm{{\Gamma}{C}}{R}{h}
-    }
-  { \jtermeq
-      {{{{\Gamma}{A}}{\ctxwk{A}{B}}}{\ctxwk{A}{{B}{C}}}}
-      {\ctxwk{A}{{B}{R}}}
-      {\ctxwk{A}{{B}{h}}}
-      {\ctxwk{{A}{B}}{{A}{h}}}
+      {\ctxwk{A}{{B}{e}}}
+      {\ctxwk{{A}{B}}{{A}{e}}}
     }
 \end{align*}
-Moreover, we have
+Moreover, in the presence of an empty family $\jfam{\Gamma}{\emptyf}$ we have
 \begin{equation*}
 \inference
   { \jfam{\Gamma}{A}
@@ -211,35 +126,12 @@ appropriate way.
 & \inference
   { \jfam{\Gamma}{A}
     \jfam{{\Gamma}{A}}{P}
-    \jfam{\Gamma}{B}
+    \jany{\Gamma}{e}
     }
-  { \jfameq
+  { \janyeq
       {{{\Gamma}{A}}{P}}
-      {\ctxwk{\ctxext{A}{P}}{B}}
-      {\ctxwk{P}{{A}{B}}}
+      {\ctxwk{\ctxext{A}{P}}{e}}
+      {\ctxwk{P}{{A}{e}}}
     }
-  \label{comp-ew-c}\\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{A}}{P}
-    \jfam{{\Gamma}{B}}{Q}
-    }
-  { \jfameq
-      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
-      {\ctxwk{\ctxext{A}{P}}{Q}}
-      {\ctxwk{P}{{A}{Q}}}
-    }
-  \label{comp-ew-f}\\
-& \inference
-  { \jfam{\Gamma}{A}
-    \jfam{{\Gamma}{A}}{P}
-    \jterm{{\Gamma}{B}}{Q}{g}
-    }
-  { \jtermeq
-      {{{{\Gamma}{A}}{P}}{\ctxwk{P}{{A}{B}}}}
-      {\ctxwk{P}{{A}{Q}}}
-      {\ctxwk{\ctxext{A}{P}}{g}}
-      {\ctxwk{P}{{A}{g}}}
-    } 
-  \label{comp-ew-t}
+  \label{comp-ew-any}
 \end{align}

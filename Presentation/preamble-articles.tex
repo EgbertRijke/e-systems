@@ -81,7 +81,7 @@
 %%%% - comment all lines containing "[chapter]" because this is not a book.
 %%%% - comment the definition of pbcorner because the xypic package is not used.
 %%%%
-\input{macros}
+\input{../Preamble/macros}
 
 \newcommand{\idsymbin}{=}
 
@@ -402,6 +402,7 @@
 \newcommand{\trwk}{\typefont{trwk}}
 \newcommand{\trext}{\typefont{trext}}
 \newcommand{\tfindf}[2][]{\typefont{ind}_{#2}^{#1}}
+\newcommand{\anything}{\mathcal{E}}
 
 \makeatletter
 \newcommand{\tfind}[3][]{\tfindf[#1]{#2}(\default@ctxext #3)}
