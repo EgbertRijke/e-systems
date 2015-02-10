@@ -1,0 +1,106 @@
+\subsection{Semantics of the fundamental structure of dependent type theory}
+For the semantics of the theory of E-systems, we will assume that $\cat{C}$ is a 
+category with finite limits and
+whenever we write a pullback, we assume that it is chosen. Recall that for
+any morphism $f:A\to B$ in a category $\cat{C}$ with chosen pullbacks, there
+is a functor
+\begin{equation*}
+f^\ast : \cat{C}/B\to\cat{C}/A.
+\end{equation*}
+As usual, when $g:X\to B$ is a morphism, we will write $f^\ast(X)$ for the
+domain of $f^\ast(g)$. When there is more than one morphism $X\to B$ involved,
+as will be the case below, we will write $\pullback{A}{X}{f}{g}$. The projections
+will be written as $\pullbackpr{1}{f}{g}$ and $\pullbackpr{2}{f}{g}$. So in this notation, a
+typical pullback diagram has the following form:
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\pullback{A}{X}{f}{g}
+  \ar{r}{\pullbackpr{1}{f}{g}}
+  \ar{d}[swap]{\pullbackpr{2}{f}{g}}
+  &
+A \ar{d}{f}
+  \\
+X \ar{r}[swap]{g}
+  &
+B
+\end{tikzcd}
+\end{equation*}
+Also, when we have a commutative diagram of the form
+\begin{equation*}
+\begin{tikzcd}
+A \ar{r}{f}
+  \ar{d}{a}
+  &
+X \ar{d}
+  & 
+B \ar{l}[swap]{g}
+  \ar{d}{b}
+  \\
+A'
+  \ar{r}[swap]{f'}
+  &
+X'
+  &
+B'
+  \ar{l}{g'}
+\end{tikzcd}
+\end{equation*}
+we will denote the unique map from $\pullback{A}{B}{f}{g}$ to $\pullback{A'}{B'}{f'}{g'}$
+such that the diagram
+\begin{equation*}
+\begin{tikzcd}
+  {}
+  & 
+\pullback{A'}{B'}{f'}{g'}
+  \ar{dd}
+  \ar{rr}
+  &
+  &
+B'
+  \ar{dd}{g'}
+  \\
+\pullback{A}{B}{f}{g}
+  \ar{dd}
+  \ar[crossing over]{rr}
+  \ar[dotted]{ur}{\pullback{a}{b}{f'}{g'}}
+  &
+  &
+B \ar{ur}{b}
+  \\
+  {}
+  &
+A'
+  \ar{rr}
+  &
+  &
+X'
+  \\
+A \ar{rr}[swap]{f}
+  \ar{ur}{a}
+  &
+  &
+X \ar[crossing over,leftarrow]{uu}[near end,swap]{g}
+  \ar{ur}
+\end{tikzcd}
+\end{equation*}
+commutes, by $\pullback{a}{b}{f'}{g'}$. In the current work, we shall
+write $A\times B$ for the pullback of $A\rightarrow 1\leftarrow B$, and
+$\pi_1$ and $\pi_2$ for its projections (thus, no separate choice of
+cartesian products is made).
+
+\begin{defn}
+A \emph{fundamental structure} $\stesys$ in $\cat{C}$ consists of a diagram of the form
+\begin{equation*}
+\begin{tikzcd}
+\stesyst
+  \ar{d}[swap]{\ebd}
+  \\
+\stesysf
+  \ar{d}[swap]{\eft}
+  \\
+\stesysc
+\end{tikzcd}
+\end{equation*}
+in $\cat{C}$. In this diagram, $C$ is the object of \emph{contexts}, $F$ is
+the object of \emph{families}, and $T$ is the object of \emph{terms}.
+\end{defn}

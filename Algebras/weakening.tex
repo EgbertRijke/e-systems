@@ -1,0 +1,220 @@
+\subsection{Pre-weakening algebras}
+\begin{defn}
+Let $\stesys$ be an extension algebra in $\cat{C}$. A pre-weakening operation
+on $\stesys$ is an extension homomorphism 
+$ \mathbf{w}(\stesys)
+    :
+  \cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+    \to
+  \famesys{\famesys{\stesys}}$
+for which the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+  \ar{r}{\mathbf{w}(\stesys)}
+  \ar{dr}[swap]{\pullbackpr{1}{\eft}{\eft}}
+  &
+\famesys{\famesys{\stesys}}
+  \ar{d}{\eft[2]}
+  \\
+& \stesysf
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{defn}
+
+\begin{defn}
+Let $\stesys$ be an extension algebra with pre-weakening operation
+$\mathbf{w}(\stesys)$. Then $\famesys{\stesys}$ has the pre-weakening operation
+$\mathbf{w}(\famesys{\stesys})$ which is uniquely determined by rendering the
+diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[2]}{\eft[2]}
+  \ar{rr}{%
+      \pullback{\beta_1}{\boldsymbol{\beta}}{\eft}{\eft}
+    }
+  \ar[bend right]{ddr}[swap]{\pullbackpr{1}{\eft[2]}{\eft[2]}}
+  \ar[dotted]{dr}{\mathbf{w}(\famesys{\stesys})}
+  &
+  {}&
+\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+  \ar{r}{\mathbf{w}(\stesys)}
+  &
+\famesys{\famesys{\stesys}}
+  \ar{d}{\boldsymbol{\beta}}
+  \\
+  {}&
+\famesys{\famesys{\famesys{\stesys}}}
+  \ar{r}{\boldsymbol{\beta}_\mathbf{2}}
+  \ar{d}[swap]{\eft[3]}
+  &
+\famesys{\famesys{\stesys}}
+  \ar{d}{\eft[2]}
+  \ar{r}{\boldsymbol{\beta}}
+  &
+\famesys{\stesys}
+  \ar{d}{\eft}
+  \\
+  {}&
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  &
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutative.
+\end{defn}
+
+\begin{defn}
+A pre-weakening algebra $\stesys$ in $\cat{C}$ is an extension algebra $\stesys$ 
+with a pre-weakening operation 
+$ \mathbf{w}(\stesys)
+    :
+  \cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+    \to
+  \famesys{\famesys{\stesys}}$
+for which the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=15em]
+\cobesys{\stesysf_2}{\famesys{\stesys}}{\eft\circ\eft[2]}{\eft}
+  \ar[bend right=10]{dr}[swap]%
+    { [ \pullbackpr{1}{\eft\circ\eft[2]}{\eft},%
+        \mathbf{w}(\stesys)%
+          \circ%
+        (\pullback{\efamext}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
+        ]%
+      }
+  \ar{r}{
+    [ \pullbackpr{1}{\eft\circ\eft[2]}{\eft},%
+      \mathbf{w}(\stesys)%
+        \circ%
+      (\pullback{\eft[2]}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
+      ]}%
+  &
+\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[2]}{\eft[2]}
+  \ar{d}{\mathbf{w}(\famesys{\stesys})}
+  \\
+  {}&
+\famesys{\famesys{\famesys{\stesys}}}
+\end{tikzcd}
+\end{equation*}
+commutes. This condition is called \emph{Currying for weakening}.
+\end{defn}
+
+\begin{lem}
+If $\stesys$ is a pre-weakening algebra, then so is $\famesys{\stesys}$. 
+\end{lem}
+
+\begin{proof}
+\end{proof}
+
+\begin{defn}
+A pre-weakening morphism between preweakening algebras $\stesys$ and $\stesys'$ is an
+extension homomorphism $f:\stesys\to \stesys'$ such that additionally the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+  \ar{d}[swap]{\mathbf{w}(\stesys)}
+  \ar{r}{\pullback{f_1}{\famehom{f}}{\eft'}{\eft'}}
+  &
+\cobesys{\stesysf'}{\famesys{\stesys'}}{\eft'}{\eft'}
+  \ar{d}{\mathbf{w}(\stesys')}
+  \\
+\famesys{\famesys{\stesys}}
+  \ar{r}[swap]{\famehom{\famehom{f}}}
+  &
+\famesys{\famesys{\stesys'}}
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{defn}
+
+\begin{defn}
+Let $\stesys$ be a pre-weakening algebra and consider $p:\stesysc\rightarrow X\leftarrow Y:p$.
+Then we define
+\begin{equation*}
+\mathbf{w}(\cobesys{Y}{\stesys}{g}{p})
+  :
+\cobesys
+  { (\pullback{Y}{\stesysf}{g}{p\circ\eft})}
+  { \famesys{\cobesys{Y}{\stesys}{g}{p}}}
+  { g^\ast(\eft)}
+  { g^\ast(\eft)}
+  \to
+\famesys{\famesys{\cobesys{Y}{\stesys}{g}{p}}}
+\end{equation*}
+to be the unique extension homomorphism rendering the diagram
+\begin{equation*}
+\begin{tikzcd}
+\cobesys
+  { \pullback{Y}{\stesysf}{g}{p\circ\eft}}
+  { \famesys{\cobesys{Y}{\stesys}{g}{p}}}
+  { g^\ast(\eft)}
+  { g^\ast(\eft)}
+  \ar[bend right]{ddr}[swap]{\pullbackpr{1}{g^\ast(\eft)}{g^\ast(\eft)}}
+  \ar{rr}{%
+    \pullback
+      { \pullbackpr{2}{g}{p\circ\eft}}
+      { \boldsymbol{\pi}_\mathbf{2}(g,p\circ\eft)}
+      { \eft}
+      { \eft}
+    }
+  \ar[dotted]{dr}{\mathbf{w}(\cobesys{Y}{\stesys}{g}{p})}
+  &
+  {}&
+\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
+  \ar{r}{\mathbf{w}(\stesys)}
+  &
+\famesys{\famesys{\stesys}}
+  \ar{d}{\boldsymbol{\beta}}
+  \\
+  {}&
+\famesys{\famesys{\cobesys{Y}{\stesys}{g}{p}}}
+  \ar{r}{\beta}
+  \ar{d}{g^\ast(\eft)_1}
+  &
+\famesys{\cobesys{Y}{\stesys}{g}{p}}
+  \ar{r}{\boldsymbol{\pi}_2(g,p\circ\eft)}
+  \ar{d}{g^\ast(\eft)}
+  &
+\famesys{\stesys}
+  \ar{d}{\eft}
+  \\
+  {}&
+\pullback{Y}{\stesysf}{g}{p\circ\eft}
+  \ar{r}[swap]{\cobesys{Y}{\ectxext}{g}{p}}
+  &
+\pullback{Y}{\stesysc}{g}{p}
+  \ar{r}[swap]{\pullbackpr{2}{g}{p}}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutative.
+\end{defn}
+
+\subsection{Weakening algebras}
+Since we have shown that the property of being a pre-weakening algebra is closed
+under the relevant operations, we can make the following definition:
+
+\begin{defn}
+A weakening algebra is a pre-weakening algebra $\stesys$ with the property that
+$\mathbf{w}(\stesys)$ is a pre-weakening morphism.
+\end{defn}
+
+\begin{defn}
+A weakening homomorphism is a pre-weakening homomorphism such that the domain
+and codomain are weakening algebras.
+\end{defn}
+
+\begin{thm}
+Suppose $\stesys$ is a weakening algebra, then so is $\famesys{\stesys}$
+\end{thm}
+
+\begin{thm}
+The change of base of any weakening algebra is again a weakening algebra.
+\end{thm}

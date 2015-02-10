@@ -1,0 +1,107 @@
+\subsection{Substitution algebras}
+
+\begin{defn}
+A \emph{pre-substitution} for an extension algebra $\stesys$ is an
+extension homomorphism
+\begin{equation*}
+\mathbf{s}(\stesys):\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[2]}\to \famesys{\stesys}
+\end{equation*}
+for which the square
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\pullback{\stesyst}{\stesysf_2}{\ebd}{\eft[2]}
+  \ar{r}{s(\stesys)_0}
+  \ar{d}[swap]{\ebd\circ\pullbackpr{1}{\ebd}{\eft[2]}}
+  &
+\stesysf 
+  \ar{d}{\eft}
+  \\
+\stesysf 
+  \ar{r}[swap]{\eft}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutes. A \emph{pre-substitution algebra} is an extension algebra
+together with a pre-substitution.
+\end{defn}
+
+\begin{defn}
+A \emph{pre-substitution homomorphism} is an extension homomorphism $f:\stesys'\to \stesys$
+for which the square
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\cobesys{\stesyst'}{\famesys{\famesys{\stesys'}}}{\ebd'}{\eft[2]'}
+  \ar{r}{\pullback{f^t}{\famehom{\famehom{f}}}{\ebd}{\eft[2]}}
+  \ar{d}[swap]{\mathbf{s}'(\stesys')}
+  &
+\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[2]}
+  \ar{d}{\mathbf{s}(\stesys)}
+  \\
+\famesys{\stesys'}
+  \ar{r}[swap]{\famehom{f}}
+  &
+\famesys{\stesys}
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{defn}
+
+\begin{lem}
+The change of base of a pre-substitution algebra is again a pre-substitution algebra.
+\end{lem}
+
+\begin{lem}
+If $\stesys$ is a pre-substitution algebra, then so is $\famesys{\stesys}$ with
+$\mathbf{s}(\famesys{\stesys})$ defined to be the unique extension homomorphism
+rendering the diagram
+\begin{equation*}
+\begin{tikzcd}
+\cobesys{\stesyst_2}{\famesys{\famesys{\famesys{\stesys}}}}{\ebd[2]}{\eft[3]}
+  \ar[dotted]{dr}{\mathbf{s}(\famesys{\stesys})}
+  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft\circ\ebd}}{\boldsymbol{\beta}_\mathbf{2}}{\ebd}{\eft[2]}}
+  \ar{dd}[swap]{\ebd[2]\circ\pullbackpr{1}{\ebd[2]}{\eft[3]}}
+  &
+  {}&
+\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[2]}
+  \ar{d}{\mathbf{s}(\stesys)}
+  \\
+  {}&
+\famesys{\famesys{\stesys}}
+  \ar{r}{\boldsymbol{\beta}}
+  \ar{d}{\eft[2]}
+  &
+\famesys{\stesys}
+  \ar{d}{\eft}
+  \\
+\stesysf_2
+  \ar{r}[swap]{\eft[2]}
+  &
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutative.
+\end{lem}
+
+\begin{proof}
+The requirement on pre-substitutions holds by construction.
+\end{proof}
+
+It makes sense now to consider the possibility that the pre-substitution
+itself is a pre-substitution homomorphism.
+
+\begin{defn}
+A \emph{substitution algebra} is a pre-substitution algebra for which substitution is
+a pre-substitution homomorphism.
+\end{defn}
+
+\begin{cor}
+The change of base of a substitution algebra is again a substitution algebra.
+\end{cor}
+
+\begin{cor}
+If $\stesys$ is a substitution algebra, then so is $\famesys{\stesys}$.
+\end{cor}

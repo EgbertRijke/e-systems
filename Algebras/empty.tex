@@ -1,0 +1,95 @@
+\subsection{Extension algebras with empty context and families}
+
+\begin{defn}
+An extension algebra $\stesys$ is said to have \emph{empty families} if there
+is a section
+\begin{equation*}
+\phi_1(\stesys):\stesysc\to\stesysf
+\end{equation*}
+of $\eft$, satisfying the following additional properties:
+\begin{enumerate}
+\item $\phi_1(\stesys)$ is also a section of $\ectxext$.
+\item The unique morphism $\phi_2$ rendering the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesysf
+  \ar[bend left=20]{drr}{\phi_1(\stesys)\circ\ectxext}
+  \ar[equals,bend right=20]{ddr}
+  \ar[dotted]{dr}{\phi_2}
+  \\
+  {}&
+\stesysf_2
+  \ar{d}{\eft[2]}
+  \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
+  &
+\stesysf
+  \ar{d}{\eft}
+  \\
+  {}&
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutative, is a section of $\efamext$.
+\item The unique morphism $\iota_1$ rendering the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesysf
+  \ar[equals,bend left=20]{drr}
+  \ar[bend right=20]{ddr}[swap]{\phi_1(\stesys)\circ\eft}
+  \ar[dotted]{dr}{\iota_1}
+  \\
+  {}&
+\stesysf_2
+  \ar{d}{\eft[2]}
+  \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
+  &
+\stesysf
+  \ar{d}{\eft}
+  \\
+  {}&
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commutative, is a section of $\efamext$.
+\end{enumerate}
+\end{defn}
+
+\begin{defn}
+A homomorphism of extension algebras with empty families is an extension
+homomorphism $f:\stesys'\to\stesys$ for which the diagram
+\begin{equation*}
+\begin{tikzcd}
+\stesysf'
+  \ar{r}{f_1}
+  &
+\stesysf
+  \\
+\stesysc'
+  \ar{u}{\phi_1(\stesys')}
+  \ar{r}[swap]{f_0}
+  &
+\stesysc
+  \ar{u}[swap]{\phi_1(\stesys)}
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{defn}
+
+\begin{lem}
+Suppose $\stesys$ is an extension algebra with empty families. Then
+$\famesys{\stesys}$ is an extension algebra with empty families, with
+$\phi_1(\famesys{\stesys}):=\phi_2$. 
+\end{lem}
+
+\begin{lem}
+Suppose $\stesys$ is an extension algebra with empty families and consider
+$p:\stesysc\rightarrow X\leftarrow Y:p$. Then
+$\cobesys{Y}{\stesys}{g}{p}$ is an extension algebra with empty families
+with $\phi_1(\cobesys{Y}{\stesys}{g}{p}):=g^\ast(\phi_1)$.
+\end{lem}

@@ -1,0 +1,57 @@
+\subsection{Projection algebras}
+\begin{defn}
+A pre-projection algebra is a weakening algebra $\stesys$ for which there is a term
+$\mathbf{i}:\stesysf\to \stesyst_2$ such that the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesysf \ar{r}{\mathbf{i}} \ar{d}[swap]{\Delta_{\eft}} & \stesyst_2 \ar{d}{\ebd[2]}\\
+\pullback{\stesysf}{\stesysf}{\eft}{\eft} \ar{r}[swap]{w(\stesys)_0} & \stesysf_2
+\end{tikzcd}
+\end{equation*}
+commutes. In this diagram $\Delta_{\eft}:\stesysf\to \pullback{\stesysf}{\stesysf}{\eft}{\eft}$ is the diagonal.
+\end{defn}
+
+\begin{defn}
+A pre-projection homomorphism from $\stesys$ to $\stesys'$ is a weakening homomorphism
+$f:\stesys\to \stesys'$ such that the square
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesyst_2
+  \ar{r}{f^t_1}
+  &
+\stesyst_2'
+  \\
+\stesysf \ar{r}[swap]{f_1}
+  \ar{u}{\mathbf{i}}
+  &
+\stesysf'
+  \ar{u}[swap]{\mathbf{i}'}
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{defn}
+
+\begin{lem}
+The change of base of a pre-projection algebra is again a pre-projection algebra.
+\end{lem}
+
+\begin{lem}
+If $CFT$ is a pre-projection algebra, then so is $\mathbf{F}_{CFT}$, where
+$\mathbf{F}_{\mathbf{i}}$ is defined to be $F\times_{e_0,c}\mathbf{i}$ is
+a pre-projection algebra.
+\end{lem}
+
+\begin{defn}
+A projection algebra is a pre-projection algebra for which weakening is a
+pre-projection homomorphism.
+\end{defn}
+
+\begin{cor}
+The change of base of a projection algebra is again a projection algebra.
+\end{cor}
+
+\begin{cor}
+If $CFT$ is a projection algebra, then so is $\mathbf{F}_{CFT}$, where
+$\mathbf{F}_{\mathbf{i}}$ is defined to be $F\times_{e_0,c}\mathbf{i}$ is
+a projection algebra.
+\end{cor}

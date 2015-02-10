@@ -1,106 +1,7 @@
-\section{E-objects in categories with finite limits}
-In this section we assume that $\cat{C}$ is a finitely complete category and
-whenever we write a pullback, we assume that it is chosen. Recall that for
-any morphism $f:A\to B$ in a category $\cat{C}$ with chosen pullbacks, there
-is a functor
-\begin{equation*}
-f^\ast : \cat{C}/B\to\cat{C}/A.
-\end{equation*}
-As usual, when $g:X\to B$ is a morphism, we will write $f^\ast(X)$ for the
-domain of $f^\ast(g)$. When there is more than one morphism $X\to B$ involved,
-as will be the case below, we will write $\pullback{A}{X}{f}{g}$. The projections
-will be written as $\pullbackpr{1}{f}{g}$ and $\pullbackpr{2}{f}{g}$. So in this notation, a
-typical pullback diagram has the following form:
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\pullback{A}{X}{f}{g}
-  \ar{r}{\pullbackpr{1}{f}{g}}
-  \ar{d}[swap]{\pullbackpr{2}{f}{g}}
-  &
-A \ar{d}{f}
-  \\
-X \ar{r}[swap]{g}
-  &
-B
-\end{tikzcd}
-\end{equation*}
-Also, when we have a commutative diagram of the form
-\begin{equation*}
-\begin{tikzcd}
-A \ar{r}{f}
-  \ar{d}{a}
-  &
-X \ar{d}
-  & 
-B \ar{l}[swap]{g}
-  \ar{d}{b}
-  \\
-A'
-  \ar{r}[swap]{f'}
-  &
-X'
-  &
-B'
-  \ar{l}{g'}
-\end{tikzcd}
-\end{equation*}
-we will denote the unique map from $\pullback{A}{B}{f}{g}$ to $\pullback{A'}{B'}{f'}{g'}$
-such that the diagram
-\begin{equation*}
-\begin{tikzcd}
-  {}
-  & 
-\pullback{A'}{B'}{f'}{g'}
-  \ar{dd}
-  \ar{rr}
-  &
-  &
-B'
-  \ar{dd}{g'}
-  \\
-\pullback{A}{B}{f}{g}
-  \ar{dd}
-  \ar[crossing over]{rr}
-  \ar[dotted]{ur}{\pullback{a}{b}{f'}{g'}}
-  &
-  &
-B \ar{ur}{b}
-  \\
-  {}
-  &
-A'
-  \ar{rr}
-  &
-  &
-X'
-  \\
-A \ar{rr}[swap]{f}
-  \ar{ur}{a}
-  &
-  &
-X \ar[crossing over,leftarrow]{uu}[near end,swap]{g}
-  \ar{ur}
-\end{tikzcd}
-\end{equation*}
-commutes, by $\pullback{a}{b}{f'}{g'}$. In the current work, we shall
-write $A\times B$ for the pullback of $A\rightarrow 1\leftarrow B$, and
-$\pi_1$ and $\pi_2$ for its projections (thus, no separate choice of
-cartesian products is made).
-
-\subsection{Extension objects}
+\subsection{The semantics of extension}
 \begin{defn}
-A \emph{pre-extension object $\stesys$ in $\cat{C}$} consists of a \emph{fundamental structure}, which is a diagram of the form
-\begin{equation*}
-\begin{tikzcd}
-\stesyst
-  \ar{d}[swap]{\ebd}
-  \\
-\stesysf
-  \ar{d}[swap]{\eft}
-  \\
-\stesysc
-\end{tikzcd}
-\end{equation*}
+A \emph{pre-extension algebra $\stesys$ in $\cat{C}$} consists of a fundamental structure
+$\stesys$
 in $\cat{C}$ together with the \emph{context extension} and \emph{family extension} operations
 \begin{align*}
 \ectxext &:\stesysf\to \stesysc\\
@@ -216,7 +117,7 @@ go any further in this article.
 \end{defn}
 
 \begin{defn} 
-An extension object is a pre-extension object $\stesys$ for which 
+An extension algebra is a pre-extension algebra $\stesys$ for which 
 the diagrams
 \begin{equation*}
 \begin{tikzcd}
@@ -304,7 +205,7 @@ rendering the diagram
 \end{comment}
 
 \begin{defn}
-Suppose $\stesys$ is a pre-extension object of $\cat{C}$. Then we define the pre-extension object
+Suppose $\stesys$ is a pre-extension algebra of $\cat{C}$. Then we define the pre-extension algebra
 $\famesys{\stesys}$ to consist of the fundamental structure
 \begin{equation*}
 \begin{tikzcd}
@@ -362,7 +263,7 @@ We define
 \end{defn}
 
 \begin{lem}
-Let $\stesys$ be a pre-extension object. Then the square
+Let $\stesys$ be a pre-extension algebra. Then the square
 \begin{equation*}
 \begin{tikzcd}[column sep=10em]
 \stesysf_4
@@ -422,7 +323,7 @@ commutes by definition. We have a similar result relating $\eext{3}$ and
 $\eext{2}$.
 
 \begin{lem}
-Let $\stesys$ be a pre-extension object. Then the square
+Let $\stesys$ be a pre-extension algebra. Then the square
 \begin{equation*}
 \begin{tikzcd}
 \stesysf_4
@@ -515,7 +416,7 @@ commutes, completing our goal.
 \end{comment}
 
 \begin{thm}[Local extension structure]\label{famextobj}
-If $\stesys$ is an extension object, then so is $\famesys{\stesys}$.
+If $\stesys$ is an extension algebra, then so is $\famesys{\stesys}$.
 \end{thm}
 
 \begin{proof}
@@ -634,14 +535,14 @@ completing the proof.
 \subsection{(Pre-)extension homomorphisms}\label{subsection:e_extension_homomorphisms}
 In this subsection we start with the study of pre-extension homomorphisms, which
 will include the extension homomorphisms since they will be the pre-extension
-homomorphisms of which both the domain and codomain are extension objects.
+homomorphisms of which both the domain and codomain are extension algebras.
 Our main examples of extension homomorphisms will be the operations of weakening
 and substitution. There are some basic examples of pre-extension homomorphisms
 that will be useful too, which get introduced in the this section and in
 \autoref{subsection:change_of_base}. In this section, we will mainly be
-interested in pre-extension homomorphisms between local pre-extension objects.
-We will end this section by proving that a retract of an extension object is
-always an extension object.
+interested in pre-extension homomorphisms between local pre-extension algebras.
+We will end this section by proving that a retract of an extension algebra is
+always an extension algebra.
 
 \begin{defn}
 Let $\stesys$ and $\stesys'$ be pre-extension algebras. A \emph{pre-extension 
@@ -711,12 +612,12 @@ f_3 & := \pullback{f_2}{f_2}{\efamext}{\eft[2]}.
 \end{defn}
 
 \begin{defn}
-A pre-extension homomorphism between extension objects is called an extension
+A pre-extension homomorphism between extension algebras is called an extension
 homomorphism.
 \end{defn}
 
 \begin{lem}
-Let $\stesys$ be an extension object. Then
+Let $\stesys$ be an extension algebra. Then
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \stesyst_2
@@ -742,16 +643,16 @@ Let $\stesys$ be an extension object. Then
 assembles an extension homomorphism $\mathbf{e}_0:\famesys{\stesys}\to\stesys$.
 Likewise, we have an extension homomorphism
 $\mathbf{e}_1:\famesys{\famesys{\stesys}}\to\famesys{\stesys}$. Thus, a
-pre-extension object is an extension object if and only if $\mathbf{e}_0$
+pre-extension algebra is an extension algebra if and only if $\mathbf{e}_0$
 and $\mathbf{e}_1$ are pre-extension homomorphisms.
 \end{lem}
 
 \begin{proof}
-Immediate from the conditions of being an extension object.
+Immediate from the conditions of being an extension algebra.
 \end{proof}
 
 \begin{defn}
-Let $\stesys$ be a pre-extension object. Then
+Let $\stesys$ be a pre-extension algebra. Then
 \begin{equation*}
 \begin{tikzcd}
 \stesyst_3
@@ -974,7 +875,7 @@ commutes.
 
 \begin{lem}[Stability under retracts]\label{esys-retract}
 Suppose $f:\stesys\to\stesys'$ is a pre-extension homomorphism between
-pre-extension objects. If there is a pre-extension homomorphism $g:\stesys'\to
+pre-extension algebras. If there is a pre-extension homomorphism $g:\stesys'\to
 \stesys$ such that $g\circ f=\catid{\stesys}$ and $\stesys'$ is an extension
 algebra, then $\stesys$ is an extension algebra.
 \end{lem}
@@ -1065,7 +966,7 @@ is a section of $f$, we can read off that also the far left face commutes,
 completing our first subgoal.
  
 For the second subgoal, note that also $\famehom{g}\circ\famehom{f}=
-\catid{\famesys{\stesys}}$ and that $\famesys{\stesys'}$ is an extension object.
+\catid{\famesys{\stesys}}$ and that $\famesys{\stesys'}$ is an extension algebra.
 Thus we can apply what we have proven so far to conclude that the square
 \begin{equation*}
 \begin{tikzcd}
@@ -1085,9 +986,9 @@ Thus we can apply what we have proven so far to conclude that the square
 commutes.
 \end{proof}
 
-\subsection{The change of base of (pre-)extension objects}
+\subsection{The change of base of (pre-)extension algebras}
 \label{subsection:change_of_base}
-An important construction of (pre-)extension objects is the change of base. It
+An important construction of (pre-)extension algebras is the change of base. It
 allows us to consider `parametrized homomorphisms', such as weakening and
 substitution.
 
@@ -1126,9 +1027,9 @@ Y
 commutes.
 \end{defn}
 
-The first goal in this subsection is to define for every (pre-)extension object 
+The first goal in this subsection is to define for every (pre-)extension algebra 
 $\stesys$ and every $p:\stesysc\rightarrow X\leftarrow Y:g$, a (pre-)extension
-object $\cobesys{Y}{\stesys}{g}{p}$ with a homomorphism $\pullbackpr{2}{g}{p}:
+algebra $\cobesys{Y}{\stesys}{g}{p}$ with a homomorphism $\pullbackpr{2}{g}{p}:
 \cobesys{Y}{\stesys}{g}{p}\to\stesys$ and a morphism $\pullbackpr{1}{g}{p}:
 \pullback{Y}{\stesysc}{g}{p}\to Y$ such that for every diagram
 \begin{equation*}
@@ -1166,12 +1067,12 @@ $\famesys{\famesys{\stesys}}$ to show that it is equivalent to
 $\cobesys{\stesysf}{\famesys{\stesys}}{\ectxext}{\eft}$. We will do this by
 verifying directly that it has the universal property of the change of base
 described above, because we will use the ingredients in our definition of
-weakening and substitution objects.
+weakening and substitution algebras.
 
 \begin{defn}[Change of base]\label{cobesys}
-Suppose $\stesys$ is a pre-extension object in $\cat{C}$ and that 
+Suppose $\stesys$ is a pre-extension algebra in $\cat{C}$ and that 
 $p:\stesysc\rightarrow X\leftarrow Y:g$.
-Then we define the pre-extension object $\cobesys{Y}{\stesys}{g}{p}$ to consist of
+Then we define the pre-extension algebra $\cobesys{Y}{\stesys}{g}{p}$ to consist of
 \begin{equation*}
 \begin{tikzcd}
 \cobesys{Y}{\stesyst}{g}{p\circ\eft\circ\ebd}
@@ -1246,12 +1147,12 @@ X
 \end{tikzcd}
 \end{equation*} 
 commutative. 
-The process of obtaining the pre-extension object $\cobesys{Y}{\stesys}{g}{p}$ out of $\stesys$
+The process of obtaining the pre-extension algebra $\cobesys{Y}{\stesys}{g}{p}$ out of $\stesys$
 and $g:Y\to X$ is also called the \emph{change of base}.
 \end{defn}
 
 \begin{lem}\label{cobesys-preext}
-Any change of base of a pre-extension object is a pre-extension object.
+Any change of base of a pre-extension algebra is a pre-extension algebra.
 \end{lem}
 
 \begin{proof}
@@ -1355,7 +1256,7 @@ Our first subgoal is to verify that the square
 \end{proof}
 
 The following construction is useful for defining extension homomorphisms into
-`higher' extension objects
+`higher' extension algebras
 
 \begin{defn}\label{cobesys-existence}
 Consider a commutative diagram
@@ -1631,499 +1532,3 @@ uniquely determined by
 \begin{proof}
 This follows from the pasting lemma for pullbacks.
 \end{proof}
-
-\subsection{Pre-weakening objects}
-\begin{defn}
-Let $\stesys$ be an extension object in $\cat{C}$. A pre-weakening operation
-on $\stesys$ is an extension homomorphism 
-$ \mathbf{w}(\stesys)
-    :
-  \cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
-    \to
-  \famesys{\famesys{\stesys}}$
-for which the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
-  \ar{r}{\mathbf{w}(\stesys)}
-  \ar{dr}[swap]{\pullbackpr{1}{\eft}{\eft}}
-  &
-\famesys{\famesys{\stesys}}
-  \ar{d}{\eft[2]}
-  \\
-& \stesysf
-\end{tikzcd}
-\end{equation*}
-commutes.
-\end{defn}
-
-\begin{defn}
-Let $\stesys$ be an extension object with pre-weakening operation
-$\mathbf{w}(\stesys)$. Then $\famesys{\stesys}$ has the pre-weakening operation
-$\mathbf{w}(\famesys{\stesys})$ which is uniquely determined by rendering the
-diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[2]}{\eft[2]}
-  \ar{rr}{%
-      \pullback{\beta_1}{\boldsymbol{\beta}}{\eft}{\eft}
-    }
-  \ar[bend right]{ddr}[swap]{\pullbackpr{1}{\eft[2]}{\eft[2]}}
-  \ar[dotted]{dr}{\mathbf{w}(\famesys{\stesys})}
-  &
-  {}&
-\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
-  \ar{r}{\mathbf{w}(\stesys)}
-  &
-\famesys{\famesys{\stesys}}
-  \ar{d}{\boldsymbol{\beta}}
-  \\
-  {}&
-\famesys{\famesys{\famesys{\stesys}}}
-  \ar{r}{\boldsymbol{\beta}_\mathbf{2}}
-  \ar{d}[swap]{\eft[3]}
-  &
-\famesys{\famesys{\stesys}}
-  \ar{d}{\eft[2]}
-  \ar{r}{\boldsymbol{\beta}}
-  &
-\famesys{\stesys}
-  \ar{d}{\eft}
-  \\
-  {}&
-\stesysf_2
-  \ar{r}[swap]{\efamext}
-  &
-\stesysf
-  \ar{r}[swap]{\ectxext}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-commutative.
-\end{defn}
-
-\begin{defn}
-A pre-weakening object $\stesys$ in $\cat{C}$ is an extension object $\stesys$ 
-with a pre-weakening operation 
-$ \mathbf{w}(\stesys)
-    :
-  \cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
-    \to
-  \famesys{\famesys{\stesys}}$
-for which the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=15em]
-\cobesys{\stesysf_2}{\famesys{\stesys}}{\eft\circ\eft[2]}{\eft}
-  \ar[bend right=10]{dr}[swap]%
-    { [ \pullbackpr{1}{\eft\circ\eft[2]}{\eft},%
-        \mathbf{w}(\stesys)%
-          \circ%
-        (\pullback{\efamext}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
-        ]%
-      }
-  \ar{r}{
-    [ \pullbackpr{1}{\eft\circ\eft[2]}{\eft},%
-      \mathbf{w}(\stesys)%
-        \circ%
-      (\pullback{\eft[2]}{\catid{\famesys{\stesys}}}{\eft}{\eft})%
-      ]}%
-  &
-\cobesys{\stesysf_2}{\famesys{\famesys{\stesys}}}{\eft[2]}{\eft[2]}
-  \ar{d}{\mathbf{w}(\famesys{\stesys})}
-  \\
-  {}&
-\famesys{\famesys{\famesys{\stesys}}}
-\end{tikzcd}
-\end{equation*}
-commutes. This condition is called \emph{Currying for weakening}.
-\end{defn}
-
-\begin{lem}
-If $\stesys$ is a pre-weakening algebra, then so is $\famesys{\stesys}$. 
-\end{lem}
-
-\begin{proof}
-\end{proof}
-
-\begin{defn}
-A pre-weakening morphism between preweakening objects $\stesys$ and $\stesys'$ is an
-extension homomorphism $f:\stesys\to \stesys'$ such that additionally the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
-  \ar{d}[swap]{\mathbf{w}(\stesys)}
-  \ar{r}{\pullback{f_1}{\famehom{f}}{\eft'}{\eft'}}
-  &
-\cobesys{\stesysf'}{\famesys{\stesys'}}{\eft'}{\eft'}
-  \ar{d}{\mathbf{w}(\stesys')}
-  \\
-\famesys{\famesys{\stesys}}
-  \ar{r}[swap]{\famehom{\famehom{f}}}
-  &
-\famesys{\famesys{\stesys'}}
-\end{tikzcd}
-\end{equation*}
-commutes.
-\end{defn}
-
-\begin{defn}
-Let $\stesys$ be a pre-weakening algebra and consider $p:\stesysc\rightarrow X\leftarrow Y:p$.
-Then we define
-\begin{equation*}
-\mathbf{w}(\cobesys{Y}{\stesys}{g}{p})
-  :
-\cobesys
-  { (\pullback{Y}{\stesysf}{g}{p\circ\eft})}
-  { \famesys{\cobesys{Y}{\stesys}{g}{p}}}
-  { g^\ast(\eft)}
-  { g^\ast(\eft)}
-  \to
-\famesys{\famesys{\cobesys{Y}{\stesys}{g}{p}}}
-\end{equation*}
-to be the unique extension homomorphism rendering the diagram
-\begin{equation*}
-\begin{tikzcd}
-\cobesys
-  { \pullback{Y}{\stesysf}{g}{p\circ\eft}}
-  { \famesys{\cobesys{Y}{\stesys}{g}{p}}}
-  { g^\ast(\eft)}
-  { g^\ast(\eft)}
-  \ar[bend right]{ddr}[swap]{\pullbackpr{1}{g^\ast(\eft)}{g^\ast(\eft)}}
-  \ar{rr}{%
-    \pullback
-      { \pullbackpr{2}{g}{p\circ\eft}}
-      { \boldsymbol{\pi}_\mathbf{2}(g,p\circ\eft)}
-      { \eft}
-      { \eft}
-    }
-  \ar[dotted]{dr}{\mathbf{w}(\cobesys{Y}{\stesys}{g}{p})}
-  &
-  {}&
-\cobesys{\stesysf}{\famesys{\stesys}}{\eft}{\eft}
-  \ar{r}{\mathbf{w}(\stesys)}
-  &
-\famesys{\famesys{\stesys}}
-  \ar{d}{\boldsymbol{\beta}}
-  \\
-  {}&
-\famesys{\famesys{\cobesys{Y}{\stesys}{g}{p}}}
-  \ar{r}{\beta}
-  \ar{d}{g^\ast(\eft)_1}
-  &
-\famesys{\cobesys{Y}{\stesys}{g}{p}}
-  \ar{r}{\boldsymbol{\pi}_2(g,p\circ\eft)}
-  \ar{d}{g^\ast(\eft)}
-  &
-\famesys{\stesys}
-  \ar{d}{\eft}
-  \\
-  {}&
-\pullback{Y}{\stesysf}{g}{p\circ\eft}
-  \ar{r}[swap]{\cobesys{Y}{\ectxext}{g}{p}}
-  &
-\pullback{Y}{\stesysc}{g}{p}
-  \ar{r}[swap]{\pullbackpr{2}{g}{p}}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-commutative.
-\end{defn}
-
-\subsection{Weakening objects}
-Since we have shown that the property of being a pre-weakening object is closed
-under the relevant operations, we can make the following definition:
-
-\begin{defn}
-A weakening object is a pre-weakening object $\stesys$ with the property that
-$\mathbf{w}(\stesys)$ is a pre-weakening morphism.
-\end{defn}
-
-\begin{defn}
-A weakening homomorphism is a pre-weakening homomorphism such that the domain
-and codomain are weakening objects.
-\end{defn}
-
-\begin{thm}
-Suppose $\stesys$ is a weakening object, then so is $\famesys{\stesys}$
-\end{thm}
-
-\begin{thm}
-The change of base of any weakening object is again a weakening object.
-\end{thm}
-
-\subsection{Projection objects}
-\begin{defn}
-A pre-projection object is a weakening object $\stesys$ for which there is a term
-$\mathbf{i}:\stesysf\to \stesyst_2$ such that the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\stesysf \ar{r}{\mathbf{i}} \ar{d}[swap]{\Delta_{\eft}} & \stesyst_2 \ar{d}{\ebd[2]}\\
-\pullback{\stesysf}{\stesysf}{\eft}{\eft} \ar{r}[swap]{w(\stesys)_0} & \stesysf_2
-\end{tikzcd}
-\end{equation*}
-commutes. In this diagram $\Delta_{\eft}:\stesysf\to \pullback{\stesysf}{\stesysf}{\eft}{\eft}$ is the diagonal.
-\end{defn}
-
-\begin{defn}
-A pre-projection homomorphism from $\stesys$ to $\stesys'$ is a weakening homomorphism
-$f:\stesys\to \stesys'$ such that the square
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\stesyst_2
-  \ar{r}{f^t_1}
-  &
-\stesyst_2'
-  \\
-\stesysf \ar{r}[swap]{f_1}
-  \ar{u}{\mathbf{i}}
-  &
-\stesysf'
-  \ar{u}[swap]{\mathbf{i}'}
-\end{tikzcd}
-\end{equation*}
-commutes.
-\end{defn}
-
-\begin{lem}
-The change of base of a pre-projection object is again a pre-projection object.
-\end{lem}
-
-\begin{lem}
-If $CFT$ is a pre-projection object, then so is $\mathbf{F}_{CFT}$, where
-$\mathbf{F}_{\mathbf{i}}$ is defined to be $F\times_{e_0,c}\mathbf{i}$ is
-a pre-projection algebra.
-\end{lem}
-
-\begin{defn}
-A projection algebra is a pre-projection algebra for which weakening is a
-pre-projection homomorphism.
-\end{defn}
-
-\begin{cor}
-The change of base of a projection object is again a projection object.
-\end{cor}
-
-\begin{cor}
-If $CFT$ is a projection object, then so is $\mathbf{F}_{CFT}$, where
-$\mathbf{F}_{\mathbf{i}}$ is defined to be $F\times_{e_0,c}\mathbf{i}$ is
-a projection algebra.
-\end{cor}
-
-\subsection{Substitution objects}
-
-\begin{defn}
-A \emph{pre-substitution} for an extension object $\stesys$ is an
-extension homomorphism
-\begin{equation*}
-\mathbf{s}(\stesys):\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[2]}\to \famesys{\stesys}
-\end{equation*}
-for which the square
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\pullback{\stesyst}{\stesysf_2}{\ebd}{\eft[2]}
-  \ar{r}{s(\stesys)_0}
-  \ar{d}[swap]{\ebd\circ\pullbackpr{1}{\ebd}{\eft[2]}}
-  &
-\stesysf 
-  \ar{d}{\eft}
-  \\
-\stesysf 
-  \ar{r}[swap]{\eft}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-commutes. A \emph{pre-substitution object} is an extension object
-together with a pre-substitution.
-\end{defn}
-
-\begin{defn}
-A \emph{pre-substitution homomorphism} is an extension homomorphism $f:\stesys'\to \stesys$
-for which the square
-\begin{equation*}
-\begin{tikzcd}[column sep=huge]
-\cobesys{\stesyst'}{\famesys{\famesys{\stesys'}}}{\ebd'}{\eft[2]'}
-  \ar{r}{\pullback{f^t}{\famehom{\famehom{f}}}{\ebd}{\eft[2]}}
-  \ar{d}[swap]{\mathbf{s}'(\stesys')}
-  &
-\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[2]}
-  \ar{d}{\mathbf{s}(\stesys)}
-  \\
-\famesys{\stesys'}
-  \ar{r}[swap]{\famehom{f}}
-  &
-\famesys{\stesys}
-\end{tikzcd}
-\end{equation*}
-commutes.
-\end{defn}
-
-\begin{lem}
-The change of base of a pre-substitution object is again a pre-substitution object.
-\end{lem}
-
-\begin{lem}
-If $\stesys$ is a pre-substitution object, then so is $\famesys{\stesys}$ with
-$\mathbf{s}(\famesys{\stesys})$ defined to be the unique extension homomorphism
-rendering the diagram
-\begin{equation*}
-\begin{tikzcd}
-\cobesys{\stesyst_2}{\famesys{\famesys{\famesys{\stesys}}}}{\ebd[2]}{\eft[3]}
-  \ar[dotted]{dr}{\mathbf{s}(\famesys{\stesys})}
-  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft\circ\ebd}}{\boldsymbol{\beta}_\mathbf{2}}{\ebd}{\eft[2]}}
-  \ar{dd}[swap]{\ebd[2]\circ\pullbackpr{1}{\ebd[2]}{\eft[3]}}
-  &
-  {}&
-\cobesys{\stesyst}{\famesys{\famesys{\stesys}}}{\ebd}{\eft[2]}
-  \ar{d}{\mathbf{s}(\stesys)}
-  \\
-  {}&
-\famesys{\famesys{\stesys}}
-  \ar{r}{\boldsymbol{\beta}}
-  \ar{d}{\eft[2]}
-  &
-\famesys{\stesys}
-  \ar{d}{\eft}
-  \\
-\stesysf_2
-  \ar{r}[swap]{\eft[2]}
-  &
-\stesysf
-  \ar{r}[swap]{\ectxext}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-commutative.
-\end{lem}
-
-\begin{proof}
-The requirement on pre-substitutions holds by construction.
-\end{proof}
-
-It makes sense now to consider the possibility that the pre-substitution
-itself is a pre-substitution homomorphism.
-
-\begin{defn}
-A \emph{substitution object} is a pre-substitution object for which substitution is
-a pre-substitution homomorphism.
-\end{defn}
-
-\begin{cor}
-The change of base of a substitution object is again a substitution object.
-\end{cor}
-
-\begin{cor}
-If $\stesys$ is a substitution object, then so is $\famesys{\stesys}$.
-\end{cor}
-
-\subsection{Extension objects with empty context and families}
-
-\begin{defn}
-An extension object $\stesys$ is said to have \emph{empty families} if there
-is a section
-\begin{equation*}
-\phi_1(\stesys):\stesysc\to\stesysf
-\end{equation*}
-of $\eft$, satisfying the following additional properties:
-\begin{enumerate}
-\item $\phi_1(\stesys)$ is also a section of $\ectxext$.
-\item The unique morphism $\phi_2$ rendering the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=huge]
-\stesysf
-  \ar[bend left=20]{drr}{\phi_1(\stesys)\circ\ectxext}
-  \ar[equals,bend right=20]{ddr}
-  \ar[dotted]{dr}{\phi_2}
-  \\
-  {}&
-\stesysf_2
-  \ar{d}{\eft[2]}
-  \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
-  &
-\stesysf
-  \ar{d}{\eft}
-  \\
-  {}&
-\stesysf
-  \ar{r}[swap]{\ectxext}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-commutative, is a section of $\efamext$.
-\item The unique morphism $\iota_1$ rendering the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=huge]
-\stesysf
-  \ar[equals,bend left=20]{drr}
-  \ar[bend right=20]{ddr}[swap]{\phi_1(\stesys)\circ\eft}
-  \ar[dotted]{dr}{\iota_1}
-  \\
-  {}&
-\stesysf_2
-  \ar{d}{\eft[2]}
-  \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
-  &
-\stesysf
-  \ar{d}{\eft}
-  \\
-  {}&
-\stesysf
-  \ar{r}[swap]{\ectxext}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-commutative, is a section of $\efamext$.
-\end{enumerate}
-\end{defn}
-
-\begin{defn}
-A homomorphism of extension objects with empty families is an extension
-homomorphism $f:\stesys'\to\stesys$ for which the diagram
-\begin{equation*}
-\begin{tikzcd}
-\stesysf'
-  \ar{r}{f_1}
-  &
-\stesysf
-  \\
-\stesysc'
-  \ar{u}{\phi_1(\stesys')}
-  \ar{r}[swap]{f_0}
-  &
-\stesysc
-  \ar{u}[swap]{\phi_1(\stesys)}
-\end{tikzcd}
-\end{equation*}
-commutes.
-\end{defn}
-
-\begin{lem}
-Suppose $\stesys$ is an extension object with empty families. Then
-$\famesys{\stesys}$ is an extension object with empty families, with
-$\phi_1(\famesys{\stesys}):=\phi_2$. 
-\end{lem}
-
-\begin{lem}
-Suppose $\stesys$ is an extension object with empty families and consider
-$p:\stesysc\rightarrow X\leftarrow Y:p$. Then
-$\cobesys{Y}{\stesys}{g}{p}$ is an extension object with empty families
-with $\phi_1(\cobesys{Y}{\stesys}{g}{p}):=g^\ast(\phi_1)$.
-\end{lem}
-
-\subsection{E-objects}
-\begin{defn}
-An \emph{E-object} is an extension object with the structure of a projection object,
-the structure of a substitution object and which has an empty context and families,
-such that additionally:
-\begin{enumerate}
-\item substitution is a projection homomorphism
-\item weakening is a substitution homomorphism
-\item both weakening and substitution are empty-CF homomorphisms.
-\item 
-\end{enumerate}
-\end{defn}
