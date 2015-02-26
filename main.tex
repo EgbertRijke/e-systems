@@ -56,6 +56,188 @@ properties we derive here will be essential for the further work on internal
 models for E-systems, presented in \autoref{part:models}.
 \end{comment}
 
+\section{Introduction}
+In this article we define the essentially algebraic objects which correspond to dependent
+type theories, which are closely related to Voevodsky's B-systems. This provides
+a new axiomatization of dependent type theory, with the following properties:
+\begin{itemize}
+\item The meta-theory should not require anything more than rules for handling
+inferences. In particular, natural numbers, or an infinite set of variables 
+should not be required.
+\item Finitely many sorts. The basic ingredients are contexts, families and
+terms. Thus there will be 3 sorts.
+\item The theory is algebraic and the operations on it are homomorphisms. From
+the requirement that type theoretic operations must be homomorphisms, we can
+read off which judgmental equalities to require require.
+\item Finite set of rules.
+\item The theory is invariant under slicing in a canonical way.
+\end{itemize}
+
+We build
+dependent type theory by imposing several structures of increasing complexities
+on top of each other. We begin by the theory of extension, which incorporates
+a context extension and a family extension operation to the theory which merely
+has three sorts. On top of the theory of extension we can formulate the theories
+of weakening, substitution and extension-units (i.e.~the empty context and families).
+The theory of weakening can be enriched with units playing the role of identity
+morphisms, which gives a theory of projections. The three resulting theories
+can then be combined into dependent type theory. Thus, the theory of dependent
+types is outlined in the following diagram.
+
+\begin{equation*}
+\begin{tikzcd}[ampersand replacement=\&,column sep=0em]
+{} \& \textbf{Extension} \ar[very thick,-stealth]{dr} \ar[very thick,-stealth]{d} \ar[very thick,-stealth]{dl}
+  \\
+\makebox[.7cm]{\textbf{Weakening}} \ar[very thick,-stealth]{d} \& \textbf{Substitution} \ar[very thick,-stealth]{dd} \& \makebox[3cm]{\textbf{Empty context and families}} \ar[very thick,-stealth]{ddl}
+\\
+\makebox[.7cm]{\textbf{Projection}} \ar[very thick,-stealth]{dr}
+\\
+{} \& \textbf{Dependent Type Theory}
+\end{tikzcd}
+\end{equation*}
+
+We give two presentations of the theory simultaneously. First, we directly
+define the algebras for the corresponding theories in an arbitrary category
+with finite limits and second, we describe the theory in terms of inference
+rules.
+
+For the semantics of the theory of E-systems, we will assume that $\cat{C}$ is a 
+category with finite limits and
+whenever we write a pullback, we assume that it is chosen. Recall that for
+any morphism $f:A\to B$ in a category $\cat{C}$ with chosen pullbacks, there
+is a functor
+\begin{equation*}
+f^\ast : \cat{C}/B\to\cat{C}/A.
+\end{equation*}
+As usual, when $g:X\to B$ is a morphism, we will write $f^\ast(X)$ for the
+domain of $f^\ast(g)$. When there is more than one morphism $X\to B$ involved,
+as will be the case below, we will write $\pullback{A}{X}{f}{g}$. The projections
+will be written as $\pullbackpr{1}{f}{g}$ and $\pullbackpr{2}{f}{g}$. So in this notation, a
+typical pullback diagram has the following form:
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\pullback{A}{X}{f}{g}
+  \ar{r}{\pullbackpr{1}{f}{g}}
+  \ar{d}[swap]{\pullbackpr{2}{f}{g}}
+  &
+A \ar{d}{f}
+  \\
+X \ar{r}[swap]{g}
+  &
+B
+\end{tikzcd}
+\end{equation*}
+Also, when we have a commutative diagram of the form
+\begin{equation*}
+\begin{tikzcd}
+A \ar{r}{f}
+  \ar{d}{a}
+  &
+X \ar{d}
+  & 
+B \ar{l}[swap]{g}
+  \ar{d}{b}
+  \\
+A'
+  \ar{r}[swap]{f'}
+  &
+X'
+  &
+B'
+  \ar{l}{g'}
+\end{tikzcd}
+\end{equation*}
+we will denote the unique map from $\pullback{A}{B}{f}{g}$ to $\pullback{A'}{B'}{f'}{g'}$
+such that the diagram
+\begin{equation*}
+\begin{tikzcd}
+  {}
+  & 
+\pullback{A'}{B'}{f'}{g'}
+  \ar{dd}
+  \ar{rr}
+  &
+  &
+B'
+  \ar{dd}{g'}
+  \\
+\pullback{A}{B}{f}{g}
+  \ar{dd}
+  \ar[crossing over]{rr}
+  \ar[dotted]{ur}{\pullback{a}{b}{f'}{g'}}
+  &
+  &
+B \ar{ur}{b}
+  \\
+  {}
+  &
+A'
+  \ar{rr}
+  &
+  &
+X'
+  \\
+A \ar{rr}[swap]{f}
+  \ar{ur}{a}
+  &
+  &
+X \ar[crossing over,leftarrow]{uu}[near end,swap]{g}
+  \ar{ur}
+\end{tikzcd}
+\end{equation*}
+commutes, by $\pullback{a}{b}{f'}{g'}$. In the current work, we shall
+write $A\times B$ for the pullback of $A\rightarrow 1\leftarrow B$, and
+$\pi_1$ and $\pi_2$ for its projections (thus, no separate choice of
+cartesian products is made).
+
+The formal theory of contexts, families and terms shall be described by means of a
+declaration of valid inference rules. Informally, an inference rule is a finite list
+$\mathcal{H}_1,\ldots,\mathcal{H}_n;\mathcal{J}$ of expressions called
+judgments. Usually we represent an inference rule in the following
+form
+\begin{equation*}
+\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{J}}
+\end{equation*}
+The judgments $\mathcal{H}_1$, \ldots, $\mathcal{H}_n$ are called the
+hypotheses and the judgment $\mathcal{J}$ is the conclusion of the inference
+rule.
+
+An inference rule is called \emph{valid} in either of the following cases:
+\begin{description}
+\item[(Axiom)] It is declared valid as an axiom;
+\item[(Projection)] The inference rule
+\begin{equation*}
+\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{H}_i}
+\end{equation*}
+is a valid inference rule for any $1\leq i\leq n$;
+\item[(Composition)] If
+\begin{equation*}
+\inference{\mathcal{I}_{1k}\quad\cdots\quad\mathcal{I}_{m_kk}}{\mathcal{H}_k}
+\qquad\text{and}\qquad
+\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{J}}
+\end{equation*}
+are valid inference rules for $1\leq k\leq n$, then
+\begin{equation*}
+\inference{\mathcal{I}_{11}\quad\cdots\quad\mathcal{I}_{m_11}\quad\cdots\quad\mathcal{I}_{1n}\quad\cdots\quad\mathcal{I}_{m_nn}}{\mathcal{J}}
+\end{equation*}
+is also a valid inference rule;
+\item[(Cut elimination)] If
+\begin{equation*}
+\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{H}_{n+1}}
+\qquad
+\text{and}
+\qquad
+\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_{n+m+1}}{\mathcal{J}}
+\end{equation*}
+are valid inference rules, then
+\begin{equation*}
+\inference{\mathcal{H}_1\quad\cdots\quad\hat{\mathcal{H}}_{n+1}\quad\cdots\quad\mathcal{H}_{n+m+1}}{\mathcal{J}}
+\end{equation*}
+where the hypothesis $\mathcal{H}_{n+1}$ is omitted, is a valid inference rule.
+\end{description}
+In this article, we shall restrict ourselves to formulating the axioms for
+dependent type theory. Derivations shall be made in a follow-up.
+
 \input{fundamental_structure}
 
 \input{extension}
@@ -69,6 +251,30 @@ models for E-systems, presented in \autoref{part:models}.
 \input{empty}
 
 \input{dependent_type_theory}
+
+\section{The relation between E-systems and B-systems}
+
+In this section we answer the following questions posed by Voevodsky in private
+correspondence.
+\begin{itemize}
+\item Is the construction that takes a (unital) B-system to an E-system a functor?
+\item Is this functor fully faithful?
+\item Is there a simple way to characterize the E-systems that arise from B-systems (the image of this functor on objects)?
+\item Construct an example of an E-system that does not arise from a B-system.
+\end{itemize}
+
+\subsection{The functor from B-systems to E-systems}
+Consider a B-system $\mathbb{B}$. We will construct an E-system $E(\mathbb{B})$
+in the category of sets. This E-systems consists of sets $C(\mathbb{B})$,
+$F(\mathbb{B})$ and $T(\mathbb{B})$ for the sorts of contexts, families and
+terms respectively, with functions $\eft:F(\mathbb{B})\to C(\mathbb{B})$ and
+$\ebd:T(\mathbb{B})\to T(\mathbb{B})$ and the operations of extension,
+weakening, units, substitution and empty contexts and families.
+
+The set $C(\mathbb{B})$ consists of pairs $(n,X)$, where $n\in\mathbb{N}$ and
+$X\in B_n$. The set $F(\mathbb{B})$ consists of quadruples $(n,X,m,Y)$, where
+$n,m\in\mathbb{N}$ such that $n<m$, $X\in B_n$ and $Y\in B_{m}$ such that
+$ft^{m-n}:=ft^{n-1}\circ\cdots\circ ft^m(Y)=X$.
 
 %\include{Derivations/article-models-ttderived}
 

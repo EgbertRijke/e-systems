@@ -1,55 +1,5 @@
-\subsection{Judgments and valid inference rules}
+\subsection{The judgments of dependent type theory}
 \label{judgments}
-
-The theory of contexts, families and terms shall be described by means of a
-declaration of valid inference rules. An inference rule is a finite list
-$\mathcal{H}_1,\ldots,\mathcal{H}_n;\mathcal{J}$ of expressions called
-judgments. Usually we represent an inference rule in the following
-form
-\begin{equation*}
-\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{J}}
-\end{equation*}
-The judgments $\mathcal{H}_1$, \ldots, $\mathcal{H}_n$ are called the
-hypotheses and the judgment $\mathcal{J}$ is the conclusion of the inference
-rule.
-
-\begin{defn}
-An inference rule is called \emph{valid} in either of the following cases:
-\begin{itemize}
-\item It is declared valid as an axiom;
-\item The inference rule
-\begin{equation*}
-\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{H}_n}
-\end{equation*}
-is a valid inference rule;
-\item If
-\begin{equation*}
-\inference{\mathcal{I}_{1k}\quad\cdots\quad\mathcal{I}_{m_kk}}{\mathcal{H}_k}
-\end{equation*}
-and
-\begin{equation*}
-\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{J}}
-\end{equation*}
-are valid inference rules for $1\leq k\leq n$, then
-\begin{equation*}
-\inference{\mathcal{I}_{11}\quad\cdots\quad\mathcal{I}_{m_11}\quad\cdots\quad\mathcal{I}_{1n}\quad\cdots\quad\mathcal{I}_{m_nn}}{\mathcal{J}}
-\end{equation*}
-is also a valid inference rule.
-\item If
-\begin{equation*}
-\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{H}_{n+1}}
-\qquad
-\text{and}
-\qquad
-\inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_{n+m+1}}{\mathcal{J}}
-\end{equation*}
-are valid inference rules, then
-\begin{equation*}
-\inference{\mathcal{H}_1\quad\cdots\quad\hat{\mathcal{H}}_{n+1}\quad\cdots\quad\mathcal{H}_{n+m+1}}{\mathcal{J}}
-\end{equation*}
-where the hypothesis $\mathcal{H}_{n+1}$ is omitted, is a valid inference rule.
-\end{itemize}
-\end{defn}
 
 The theory we describe here is a theory of contexts, families of
 contexts and terms thereof. The families of contexts are by some authors called

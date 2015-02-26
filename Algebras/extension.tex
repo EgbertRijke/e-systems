@@ -26,94 +26,65 @@ respectively, such that the diagram
 commutes.
 \end{defn}
 
+In the following we give an inductive definition of $\stesysf_n$ $\eft[n]$, $\eext{n}$,
+$\stesyst_n$ and $\ebd[n]$. This is more than we need in this article, because
+we will only make use of the first few instances.
 \begin{defn}
-We introduce the following notation:
-\begin{align*}
-\stesysf_2 
-  & := \stesysff
-  \\
-\eft[2] 
-  & := \pullbackpr{1}{\ectxext}{\eft} : \stesysf_2\to\stesysf
-  \\
-\stesysf_3 & := \pullback{\stesysf_2}{\stesysf_2}{\efamext}{\eft[2]}
-  \\
-\eft[3]
-  & := \pullbackpr{1}{\efamext}{\eft[2]} : \stesysf_3\to\stesysf_2.
-\end{align*}
-Then it follows that the outer square in the diagram
+Set $\stesysf_0:=\stesysc$, $\stesysf_1:=\stesys$ and $\eft[1]:=\eft$. We define
 \begin{equation*}
-\begin{tikzcd}[column sep=large]
-\stesysf_3
-  \ar[dotted]{dr}{\eext{2}}
-  \ar{rr}{\pullback{\pullbackpr{2}{\ectxext}{\eft}}{\pullbackpr{2}{\ectxext}{\eft}}{\ectxext}{\eft}}
-  \ar{dd}[swap]{\eft[3]}
+\stesysf_{2} 
+  := \pullback{\stesysf}{\stesysf}{\ectxext}{\eft}
+\end{equation*}
+By induction on the natural numbers $n\geq 1$, we define $\stesysf_{n+2}$, $\eft[n+1]$ and
+$\eext{n+1}$ simultaneously, by
+\begin{align*}
+\stesysf_{n+2} 
+  & := \pullback{\stesysf_{n+1}}{\stesysf_{n+1}}{\eext{n}}{\eft[n+1]}
+  \\
+\eft[n+1] 
+  & := \pullbackpr{1}{\eext{n}}{\eft[n+1]} : \stesysf_{n+2}\to\stesysf_{n+1}
+\end{align*}
+As inductive hypothesis we require that the outer square in the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesysf_{n+2}
+  \ar[dotted]{dr}{\eext{n+1}}
+  \ar{rr}{\pullback{\pullbackpr{2}{\eext{n-1}}{\eft[n]}}{\pullbackpr{2}{\eext{n-1}}{\eft[n]}}{\eext{n-1}}{\eft[n]}}
+  \ar{dd}[swap]{\eft[n+2]}
   & 
   &
-\stesysf_2
-  \ar{d}{\efamext}
+\stesysf_{n+1}
+  \ar{d}{\eext{n}}
   \\
   &
-\stesysf_2
-  \ar{d}[swap]{\eft[2]}
-  \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
+\stesysf_{n+1}
+  \ar{d}[swap]{\eft[n+1]}
+  \ar{r}{\pullbackpr{2}{\eext{n-1}}{\eft[n]}}
   &
-\stesysf
-  \ar{d}{\eft}
+\stesysf_{n}
+  \ar{d}{\eft[n]}
   \\
-\stesysf_2
-  \ar{r}[swap]{\eft[2]}
+\stesysf_{n+1}
+  \ar{r}[swap]{\eft[n+1]}
   &
-\stesysf
-  \ar{r}[swap]{\ectxext}
+\stesysf_{n}
+  \ar{r}[swap]{\eext{n-1}}
   &
-\stesysc
+\stesysf_{n-1}
 \end{tikzcd}
 \end{equation*}
-commutes. We define $\eext{2}$ to be the unique morphism rendering the above diagram
-commutative. Now we may continue to define
+commutes, which is clear in the base case $n=1$. Now we define $\eext{n+1}$ to be the
+unique morphism rendering the above diagram commutative.
+
+Similarly, we define
 \begin{align*}
-\stesysf_4 
-  & := 
-\pullback{\stesysf_3}{\stesysf_3}{\eext{2}}{\eft[3]}
+\stesyst_{n+1} 
+  & := \pullback{\stesysf_n}{\stesyst_n}{\eext{n-1}}{\eft[n]\circ\ebd[n]}
   \\
-\eft[4] 
-  & := 
-\pullbackpr{1}{\eext{2}}{\eft[3]}.
+\ebd[n+1]
+  & := \eext{n-1}^\ast(\ebd[n])
 \end{align*}
-Then we see that the outer square of the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\stesysf_4
-  \ar[dotted]{dr}{\eext{3}}
-  \ar{rr}{\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]}}
-  \ar{dd}[swap]{\eft[4]}
-  & 
-  &
-\stesysf_3
-  \ar{d}{\eext{2}}
-  \\
-  &
-\stesysf_3
-  \ar{d}[swap]{\eft[3]}
-  \ar{r}{\pullbackpr{2}{\efamext}{\eft[2]}}
-  &
-\stesysf_2
-  \ar{d}{\eft[2]}
-  \\
-\stesysf_3
-  \ar{r}[swap]{\eft[3]}
-  &
-\stesysf_2
-  \ar{r}[swap]{\efamext}
-  &
-\stesysf
-\end{tikzcd}
-\end{equation*}
-commutes,
-so we may define $\eext{3}$ to be the unique map which renders the diagram
-commutative. It
-is straightforward to continue this process by induction, but we shall need not
-go any further in this article.
+for $n\geq 1$, where we take $\stesyst_1:=\stesyst$ and $\ebd[1]:=\ebd$.
 \end{defn}
 
 \begin{defn} 
@@ -218,14 +189,6 @@ $\famesys{\stesys}$ to consist of the fundamental structure
 \stesysf
 \end{tikzcd}
 \end{equation*}
-where
-\begin{align*}
-\stesyst_2 
-  & := \pullback{\stesysf}{\stesyst}{\ectxext}{\eft\circ\ebd}
-  \\
-\ebd[2]
-  & := \ectxext^\ast(\ebd),
-\end{align*}
 with the extension operations
 \begin{align*}
 \efamext 
@@ -240,7 +203,7 @@ extension algebra whenever $\stesys$ is an extension algebra. We shall need
 a handful of lemmas to give the proof.
 
 \begin{defn}
-We define
+We define $\beta_n:\stesysf_{n+1}\to\stesysf_n$ for $n\geq 1$ by
 \begin{align*}
 \beta_1 
   & := 
@@ -248,17 +211,11 @@ We define
   & &
   : \stesysf_2\to\stesysf
   \\
-\beta_2
+\beta_{n+1}
   & :=
-\pullback{\beta_1}{\beta_1}{\ectxext}{\eft}
+\pullback{\beta_n}{\beta_n}{\eext{n-1}}{\eft[n]}
   & &
-  : \stesysf_3\to\stesysf_2
-  \\
-\beta_3
-  & :=
-\pullback{\beta_2}{\beta_2}{\efamext}{\eft[2]}
-  & &
-  : \stesysf_4\to\stesysf_3.
+  : \stesysf_{n+2}\to\stesysf_{n+1}
 \end{align*}
 \end{defn}
 
@@ -503,30 +460,30 @@ diagram
 \end{equation*}
 commutes. We also have the commutative diagram
 \begin{equation*}
-\begin{tikzcd}[column sep=large]
+\begin{tikzcd}[column sep=huge]
 \stesysf_4
   \ar{r}{\pullbackpr{2}{\eext{2}}{\eft[3]}}
   \ar{d}[swap]{\beta_3}
   &
 \stesysf_3
-  \ar{r}{\eext{2}}
+  \ar{dr}{\eext{2}}
   \ar{d}[swap]{\beta_2}
-  &
-\stesysf_2
-  \ar{d}{\pullbackpr{2}{\ectxext}{\eft}}
   \\
 \stesysf_3
   \ar{r}{\pullbackpr{2}{\efamext}{\eft[2]}}
   \ar{dr}[swap]{\eext{2}}
   &
 \stesysf_2
-  \ar{r}{\efamext}
+  \ar{dr}{\efamext}
   &
-\stesysf
+\stesysf_2
+  \ar{d}{\pullbackpr{2}{\ectxext}{\eft}}
   \\
   {} &
 \stesysf_2
-  \ar{ur}[swap]{\efamext}
+  \ar{r}[swap]{\efamext}
+  &
+\stesysf
 \end{tikzcd}
 \end{equation*}
 completing the proof.
