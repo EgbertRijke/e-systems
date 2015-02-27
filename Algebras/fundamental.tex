@@ -29,8 +29,9 @@ are called \emph{contexts, families and terms of $\stesys$}, respectively.
 \end{defn}
 
 \begin{lem}
-For any object $X$ of $\stesys$, contexts, families and terms of $\stesys$ under
-$X$ satisfy all the judgmental equality rules stated in \autoref{judgments}.
+For any object $X$ of $\cat{C}$ and any $\stesys$ in $\cat{C}$, contexts,
+families and terms of $\stesys$ under $X$ satisfy all the judgmental equality 
+rules stated in \autoref{judgments}.
 \end{lem}
 
 \begin{proof}
@@ -40,12 +41,12 @@ equivalence relations.
 
 \begin{defn}
 Let $\stesys'$ and $\stesys$ be fundamental structures in $\cat{C}$. A
-homomorphism $f:\stesys'\to\stesys$ is a triple $(f_0,f_1,f^t)$ 
-consisting of morphisms
+\emph{fundamental homomorphism} $f:\stesys'\to\stesys$ is a triple 
+$(f_0,f_1,f_t)$ consisting of morphisms
 \begin{equation*}
 \begin{tikzcd}
 \stesyst' 
-  \ar{r}{f^t}
+  \ar{r}{f_t}
   \ar{d}[swap]{\ebd'}
   &
 \stesyst
@@ -67,11 +68,21 @@ consisting of morphisms
 such that the indicated squares commute.
 \end{defn}
 
+In other words, the category $\mathbf{Fund}(\cat{C})$ of fundamental structures
+is the functor category $(0\leftarrow 1\leftarrow t)\to\cat{C}$.
+
+The definitions of weakening algebra, projection algebra and substitution
+algebra (and ultimately the definition of e-systems) will require the
+change of base construction. Proving that the definitions are stable under
+change of base is therefore a crucial aspect of the development of the theory.
+The change of base of fundamental structures is the simplest case.
+
 \begin{defn}
 Suppose $\stesys$ is a fundamental structure in $\cat{C}$ and that 
 $p:\stesysc\rightarrow X\leftarrow Y:g$.
-Then we define the fundamental structure $\cobesys{Y}{\stesys}{g}{p}$ to consist
-of the part of the left column above $Y$ in the diagram
+Then we define the \emph{change of base $\cobesys{Y}{\stesys}{g}{p}$ of 
+$\stesys$ along $g:Y\to X$} to be the fundamental structure above $Y$ in the 
+diagram
 \begin{equation*}
 \begin{tikzcd}
 \cobesys{Y}{\stesyst}{g}{p\circ\eft\circ\ebd}

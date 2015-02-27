@@ -29,8 +29,9 @@ commutes.
 In the following we give an inductive definition of $\stesysf_n$ $\eft[n]$, $\eext{n}$,
 $\stesyst_n$ and $\ebd[n]$. This is more than we need in this article, because
 we will only make use of the first few instances.
+
 \begin{defn}
-Set $\stesysf_0:=\stesysc$, $\stesysf_1:=\stesys$ and $\eft[1]:=\eft$. We define
+Set $\stesysf_0:=\stesysc$, $\stesysf_1:=\stesysf$ and $\eft[1]:=\eft$. We define
 \begin{equation*}
 \stesysf_{2} 
   := \pullback{\stesysf}{\stesysf}{\ectxext}{\eft}
@@ -38,11 +39,11 @@ Set $\stesysf_0:=\stesysc$, $\stesysf_1:=\stesys$ and $\eft[1]:=\eft$. We define
 By induction on the natural numbers $n\geq 1$, we define $\stesysf_{n+2}$, $\eft[n+1]$ and
 $\eext{n+1}$ simultaneously, by
 \begin{align*}
+\eft[n+1] 
+  & := \pullbackpr{1}{\eext{n-1}}{\eft[n]} : \stesysf_{n+2}\to\stesysf_{n+1}
+  \\
 \stesysf_{n+2} 
   & := \pullback{\stesysf_{n+1}}{\stesysf_{n+1}}{\eext{n}}{\eft[n+1]}
-  \\
-\eft[n+1] 
-  & := \pullbackpr{1}{\eext{n}}{\eft[n+1]} : \stesysf_{n+2}\to\stesysf_{n+1}
 \end{align*}
 As inductive hypothesis we require that the outer square in the diagram
 \begin{equation*}
@@ -219,7 +220,7 @@ We define $\beta_n:\stesysf_{n+1}\to\stesysf_n$ for $n\geq 1$ by
 \end{align*}
 \end{defn}
 
-\begin{lem}
+\begin{lem}\label{lem:beta_beta}
 Let $\stesys$ be a pre-extension algebra. Then the square
 \begin{equation*}
 \begin{tikzcd}[column sep=10em]
@@ -279,7 +280,7 @@ Note that the square
 commutes by definition. We have a similar result relating $\eext{3}$ and
 $\eext{2}$.
 
-\begin{lem}
+\begin{lem}\label{lem:beta_ext}
 Let $\stesys$ be a pre-extension algebra. Then the square
 \begin{equation*}
 \begin{tikzcd}
@@ -302,75 +303,6 @@ commutes.
 \begin{proof}
 Left to the reader.
 \end{proof}
-\begin{comment}
-\begin{proof}
-It is straightforward to verify the equalities
-\begin{align*}
-\pullbackpr{1}{\ectxext}{\eft}\circ\beta_2\circ\eext{3}
-  & = \beta_1\circ\eft[3]\circ\eft[4]
-  \\
-\pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\beta_3
-  & = \beta_1\circ\eft[3]\circ\eft[4].
-\end{align*}
-Thus, it remains to verify that
-\begin{equation*}
-\pullbackpr{2}{\ectxext}{\eft}\circ\beta_2\circ\eext{3}
-  = \pullbackpr{2}{\ectxext}{\eft}\circ\eext{2}\circ\beta_3.
-\end{equation*}
-It is straightforward to see that the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\stesysf_4
-  \ar{dd}[swap]{\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]}}
-  \ar{r}{\eext{3}}
-  &
-\stesysf_3
-  \ar{r}{\beta_2}
-  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}}
-  &
-\stesysf_2
-  \ar{dd}{\pullbackpr{2}{\ectxext}{\eft}}
-  \\
-  {} &
-\stesysf_2
-  \ar{dr}{\beta_1}
-  \\
-\stesysf_3
-  \ar{ur}{\eext{2}}
-  \ar{r}[swap]{\beta_2}
-  &
-\stesysf_2
-  \ar{r}[swap]{\efamext}
-  &
-\stesysf
-\end{tikzcd}
-\end{equation*}
-commutes. It is likewise straightforward to see that the diagram
-\begin{equation*}
-\begin{tikzcd}
-\stesysf_4
-  \ar{r}{\beta_3}
-  \ar{d}[swap]{\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]}}
-  &
-\stesysf_3
-  \ar{r}{\eext{2}}
-  \ar{d}[swap]{\beta_2}
-  &
-\stesysf_2
-  \ar{d}{\pullbackpr{2}{\ectxext}{\eft}}
-  \\
-\stesysf_3
-  \ar{r}[swap]{\beta_2}
-  &
-\stesysf_2
-  \ar{r}[swap]{\efamext}
-  &
-\stesysf
-\end{tikzcd}
-\end{equation*}
-commutes, completing our goal.
-\end{proof}
-\end{comment}
 
 \begin{thm}[Local extension structure]\label{famextobj}
 If $\stesys$ is an extension algebra, then so is $\famesys{\stesys}$.
@@ -410,8 +342,8 @@ diagram
 \stesysf_2
 \end{tikzcd}
 \end{equation*}
-Since this is a question about two maps into a pullback, it suffices to verify
-that
+commutes. Since this is a question about two maps into the pullback
+$\stesysf_2$, it suffices to verify that
 \begin{align*}
 \pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\eext{3}
   & =
@@ -434,8 +366,9 @@ and
   =
 \eft[2]\circ\eft[3]\circ\eft[4].
 \end{equation*}
-hold. For the second subgoal (which is more tricky). Notice first that the
-diagram
+hold. For the second subgoal we will show that both sides are equal to 
+composite $\eext{1}\circ\eext{2}\circ\beta_3$. For the left-hand side, notice that 
+the diagram
 \begin{equation*}
 \begin{tikzcd}
 \stesysf_4
@@ -458,7 +391,8 @@ diagram
 \stesysf
 \end{tikzcd}
 \end{equation*}
-commutes. We also have the commutative diagram
+commutes by \autoref{lem:beta_ext}. For the right-hand side, notice that the
+diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \stesysf_4
@@ -486,7 +420,8 @@ commutes. We also have the commutative diagram
 \stesysf
 \end{tikzcd}
 \end{equation*}
-completing the proof.
+commutes (by definition, in case of the upper two squares; and by associativity,
+in case of the lower square).
 \end{proof}
 
 \subsection{(Pre-)extension homomorphisms}\label{subsection:e_extension_homomorphisms}
@@ -503,31 +438,8 @@ always an extension algebra.
 
 \begin{defn}
 Let $\stesys$ and $\stesys'$ be pre-extension algebras. A \emph{pre-extension 
-homomorphism $f$ from $\stesys'$ to $\stesys$} is a triple $(f_0,f_1,f^t)$ 
-consisting of morphisms
-\begin{equation*}
-\begin{tikzcd}
-\stesyst' 
-  \ar{r}{f^t}
-  \ar{d}[swap]{\ebd'}
-  &
-\stesyst
-  \ar{d}{\ebd}
-  \\
-\stesysf'
-  \ar{r}{f_1}
-  \ar{d}[swap]{\eft'}
-  &
-\stesysf
-  \ar{d}{\eft}
-  \\
-\stesysc' 
-  \ar{r}[swap]{f_0}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-such that the indicated squares commute, for which furthermore the squares
+homomorphism $f$ from $\stesys'$ to $\stesys$} is a homomorphism of fundamental
+structures for which the squares
 \begin{equation*}
 \begin{tikzcd}
 \stesysf' 
@@ -613,7 +525,7 @@ Let $\stesys$ be a pre-extension algebra. Then
 \begin{equation*}
 \begin{tikzcd}
 \stesyst_3
-  \ar{r}{\beta^t}
+  \ar{r}{\beta_t}
   \ar{d}[swap]{\ebd[3]}
   &
 \stesyst_2
@@ -636,7 +548,7 @@ Let $\stesys$ be a pre-extension algebra. Then
 \qquad
 \begin{tikzcd}
 \stesyst_4
-  \ar{r}{\beta^t_2}
+  \ar{r}{{\beta_t}_2}
   \ar{d}[swap]{\ebd[4]}
   &
 \stesyst_3
@@ -679,7 +591,7 @@ define $\famehom{f}:\famesys{\stesys'}\to\famesys{\stesys}$ to consist of
 \begin{equation*}
 \begin{tikzcd}
 \stesyst_2'
-  \ar{r}{f^t_2}
+  \ar{r}{{f_t}_2}
   \ar{d}[swap]{\ebd[2]'}
   &
 \stesyst_2
@@ -700,7 +612,7 @@ define $\famehom{f}:\famesys{\stesys'}\to\famesys{\stesys}$ to consist of
 \end{equation*}
 where we define
 \begin{equation*}
-f^t_2 := \pullback{f_1}{f^t}{\ectxext}{\eft\circ\ebd}.
+{f_t}_2 := \pullback{f_1}{f_t}{\ectxext}{\eft\circ\ebd}.
 \end{equation*}
 \end{defn}
 
@@ -751,7 +663,61 @@ commutes. It is equivalent to show that the equalities
   & =
 \pullbackpr{2}{\ectxext}{\eft}\circ \eext{2}\circ f_3
 \end{align*}
-both hold. For the first, it is straightforward to verify that the diagram
+both hold. For the first subgoal, we will verify that both the left and the
+right hand side are equal to the composite $\eft[3]'\circ \eft[2]'\circ f_1$.
+To this end, it is straightforward to verify that the diagrams
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesysf_3'
+  \arrow[r,"{\eext{2}'}"]
+  \arrow[d,swap,"{\eft[3]'}"]
+  &
+\stesysf_2'
+  \arrow[r,"f_2"]
+  \arrow[d,swap,"{\eft[2]'}"]
+  &
+\stesysf_2
+  \arrow[d,"\pullbackpr{1}{\ectxext}{\eft}"]
+  \\
+\stesysf_2'
+  \arrow[r,swap,"{\eft[2]'}"]
+  &
+\stesysf'
+  \arrow[r,swap,"f_1"]
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+and
+\begin{equation*}
+\begin{tikzcd}
+\stesysf_3'
+  \arrow[r,"f_3"]
+  \arrow[d,swap,"{\eft[3]'}"]
+  &
+\stesysf_3
+  \arrow[dr,"\eext{2}"]
+  \arrow[d,swap,"{\eft[3]}"]
+  \\
+\stesysf_2'
+  \arrow[r,"f_2"]
+  \arrow[dr,swap,"{\eft[2]'}"]
+  &
+\stesysf_2
+  \arrow[dr,"{\eft[2]}"]
+  &
+\stesysf_2
+  \arrow[d,"\pullbackpr{1}{\ectxext}{\eft}"]
+  \\
+{}&
+\stesysf'
+  \arrow[r,swap,"f_1"]
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commute.
+\begin{comment}
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 {} &
@@ -789,7 +755,63 @@ both hold. For the first, it is straightforward to verify that the diagram
   \ar{uur}[swap]{\pullbackpr{1}{\ectxext}{\eft}}
 \end{tikzcd}
 \end{equation*}
-commutes. For the second, note that the diagram
+commutes.
+\end{comment}
+For the second subgoal, we will show that the left hand side and the right hand
+side are both equal to $\efamext\circ f_2\circ\beta_2'$. To this end, note that
+the diagrams
+\begin{equation*}
+\begin{tikzcd}
+\stesysf_3'
+  \arrow[r,"{\eext{2}'}"]
+  \arrow[d,swap,"{\beta_2'}"]
+  &
+\stesysf_2'
+  \arrow[dr,"f_2"]
+  \arrow[d,swap,"{\beta_1'}"]
+  \\
+\stesysf_2'
+  \arrow[r,"{\eext{1}'}"]
+  \arrow[dr,swap,"{f_2}"]
+  &
+\stesysf'
+  \arrow[dr,"{f_1}"]
+  &
+\stesysf_2
+  \arrow[d,"\pullbackpr{2}{\ectxext}{\eft}"]
+  \\
+{}&
+\stesysf_2
+  \arrow[r,swap,"\efamext"]
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+and
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesysf_3'
+  \arrow[r,"f_3"]
+  \arrow[d,swap,"{\beta_2'}"]
+  &
+\stesysf_3
+  \arrow[r,"\eext{2}"]
+  \arrow[d,swap,"{\beta_2}"]
+  &
+\stesysf_2
+  \arrow[d,"\pullbackpr{2}{\ectxext}{\eft}"]
+  \\
+\stesysf_2'
+  \arrow[r,swap,"f_2"]
+  &
+\stesysf_2
+  \arrow[r,swap,"\efamext"]
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commute.
+\begin{comment}
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 {} &
@@ -828,6 +850,7 @@ commutes. For the second, note that the diagram
 \end{tikzcd}
 \end{equation*}
 commutes.
+\end{comment}
 \end{proof}
 
 \begin{lem}[Stability under retracts]\label{esys-retract}
@@ -1281,14 +1304,14 @@ X
 \end{tikzcd}
 \end{equation*}
 commutative.
-\item by defining $[p,f]^t:\stesyst'\to\pullback{Y}{\stesyst}{g}{p\circ\eft\circ\ebd}$ be the uniqe
+\item by defining $[p,f]_t:\stesyst'\to\pullback{Y}{\stesyst}{g}{p\circ\eft\circ\ebd}$ be the uniqe
 morphism rendering the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \stesyst'
   \ar[bend right=10]{ddr}[swap]{p'\circ\eft'\circ\ebd'}
-  \ar[bend left=10]{rrd}{f^t}
-  \ar{dr}[near end]{[p,f]^t}
+  \ar[bend left=10]{rrd}{f_t}
+  \ar{dr}[near end]{[p,f]_t}
   \\
   {}&
 \pullback{Y}{\stesysf}{g}{p\circ\eft\circ\ebd}
@@ -1409,14 +1432,14 @@ the diagram
 \end{tikzcd}
 \end{equation*}
 commutative.
-\item Let $[p,f]^t:\stesyst'\to\stesyst_3$ be the unique morphism rendering
+\item Let $[p,f]_t:\stesyst'\to\stesyst_3$ be the unique morphism rendering
 the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \stesyst'
-  \ar[bend left=10]{drr}{f^t}
+  \ar[bend left=10]{drr}{f_t}
   \ar[swap]{dd}{\eft'\circ\ebd'}
-  \ar[dotted]{dr}[near end]{[p,f]^t}
+  \ar[dotted]{dr}[near end]{[p,f]_t}
   \\
   {}&
 \stesyst_3

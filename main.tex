@@ -101,6 +101,7 @@ define the algebras for the corresponding theories in an arbitrary category
 with finite limits and second, we describe the theory in terms of inference
 rules.
 
+\subsection{Categories with finite limits}
 For the semantics of the theory of E-systems, we will assume that $\cat{C}$ is a 
 category with finite limits and
 whenever we write a pullback, we assume that it is chosen. Recall that for
@@ -190,11 +191,22 @@ write $A\times B$ for the pullback of $A\rightarrow 1\leftarrow B$, and
 $\pi_1$ and $\pi_2$ for its projections (thus, no separate choice of
 cartesian products is made).
 
-The formal theory of contexts, families and terms shall be described by means of a
-declaration of valid inference rules. Informally, an inference rule is a finite list
-$\mathcal{H}_1,\ldots,\mathcal{H}_n;\mathcal{J}$ of expressions called
-judgments. Usually we represent an inference rule in the following
-form
+\subsection{Inference rules}
+The syntactic theory of contexts, families and terms shall be described by means
+of a declaration of valid inference rules. Although their appearance suggests 
+otherwise, the notion of inference rule is ultimately informal, in the sense
+that we state the explanations and possibilities with inference rules in
+natural language. One may attempt to study systems of inference rules within
+other systems to study the applications of the various concepts involved, but
+this study will not make the basic notion of inference rules more formal. We do
+not see this as a problem, as systems of inference rules have been implemented
+in proof assistant software in which one essentially only manipulates
+judgments. In this paper we use inference rules as an alternative presentation
+of the theory, which some readers may prefer. 
+
+An inference rule is a finite list $\mathcal{H}_1,\ldots,\mathcal{H}_n;
+\mathcal{J}$ of expressions called judgments. Usually we represent an inference
+rule in the following form
 \begin{equation*}
 \inference{\mathcal{H}_1\quad\cdots\quad\mathcal{H}_n}{\mathcal{J}}
 \end{equation*}
@@ -235,8 +247,8 @@ are valid inference rules, then
 \end{equation*}
 where the hypothesis $\mathcal{H}_{n+1}$ is omitted, is a valid inference rule.
 \end{description}
-In this article, we shall restrict ourselves to formulating the axioms for
-dependent type theory. Derivations shall be made in a follow-up.
+In categories with finite limits, valid inference rules will always be 
+interpreted by  arrows.
 
 \input{fundamental_structure}
 
