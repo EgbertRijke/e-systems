@@ -69,13 +69,83 @@ such that the indicated squares commute.
 \end{defn}
 
 In other words, the category $\mathbf{Fund}(\cat{C})$ of fundamental structures
-is the functor category $(0\leftarrow 1\leftarrow t)\to\cat{C}$.
+is the functor category $(0\leftarrow 1\leftarrow t)\to\cat{C}$. 
 
 The definitions of weakening algebra, projection algebra and substitution
 algebra (and ultimately the definition of e-systems) will require the
 change of base construction. Proving that the definitions are stable under
 change of base is therefore a crucial aspect of the development of the theory.
 The change of base of fundamental structures is the simplest case.
+
+The following definition provides us with a useful abbreviation to display
+diagrams in which both fundamental structures and arbitrary objects are 
+involved.
+
+\begin{defn}
+Suppose $f:\stesys\to\stesys'$ is a fundamental homomorphism. We say that
+a diagram
+\begin{equation*}
+\begin{tikzcd}
+\stesys
+  \ar{r}{f}
+  \ar{d}[swap]{p}
+  &
+\stesys'
+  \ar{d}{p'}
+  \\
+X \ar{r}[swap]{g}
+  &
+Y
+\end{tikzcd}
+\end{equation*}
+commutes if the diagram
+\begin{equation*}
+\begin{tikzcd}
+\stesysc
+  \ar{r}{f_0}
+  \ar{d}[swap]{p}
+  &
+\stesysc'
+  \ar{d}{p'}
+  \\
+X \ar{r}[swap]{g}
+  &
+Y
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{defn}
+
+Thus, our goal of defining the change of base for a fundamental structure
+can be restated in the following way: given a fundamental structure 
+$\stesys$ and arrows $p:\stesysc\rightarrow X\leftarrow Y:g$, we want to
+define a fundamental structure $\cobesys{Y}{\stesys}{g}{p}$ with a 
+homomorphism $\pullbackpr{2}{g}{p}: \cobesys{Y}{\stesys}{g}{p}\to\stesys$ and a 
+morphism $\pullbackpr{1}{g}{p}: \pullback{Y}{\stesysc}{g}{p}\to Y$ such that for
+every diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\stesys'
+  \ar[bend right=10]{ddr}[swap]{p'}
+  \ar[bend left=10]{rrd}{f}
+  \ar[dotted]{dr}[near end]{[p',f]}
+  \\
+  {}&
+\cobesys{Y}{\stesys}{g}{p}
+  \ar{d}{\pullbackpr{1}{g}{p}}
+  \ar{r}[swap]{\pullbackpr{2}{g}{p}}
+  &
+\stesys
+  \ar{d}{p}
+  \\
+  {}&
+Y \ar{r}[swap]{g}
+  &
+X
+\end{tikzcd}
+\end{equation*}
+of which the outer square commutes, the fundamental homomorphism $[p',f]$ 
+exists and is unique with the property that it renders the diagram commutative.
 
 \begin{defn}
 Suppose $\stesys$ is a fundamental structure in $\cat{C}$ and that 
@@ -84,23 +154,23 @@ Then we define the \emph{change of base $\cobesys{Y}{\stesys}{g}{p}$ of
 $\stesys$ along $g:Y\to X$} to be the fundamental structure above $Y$ in the 
 diagram
 \begin{equation*}
-\begin{tikzcd}
+\begin{tikzcd}[column sep=7em]
 \cobesys{Y}{\stesyst}{g}{p\circ\eft\circ\ebd}
-  \ar{r}
+  \ar{r}{\pullbackpr{2}{g}{p\circ\eft\circ\ebd}}
   \ar{d}[swap]{g^\ast(\ebd)}
   &
 \stesyst
   \ar{d}{\ebd}
   \\
 \cobesys{Y}{\stesysf}{g}{p\circ\eft}
-  \ar{r}
+  \ar{r}{\pullbackpr{2}{g}{p\circ\eft}}
   \ar{d}[swap]{g^\ast(\eft)}
   &
 \stesysf
   \ar{d}{\eft}
   \\
 \cobesys{Y}{\stesysc}{g}{p}
-  \ar{r}
+  \ar{r}{\pullbackpr{2}{g}{p}}
   \ar{d}[swap]{\pullbackpr{1}{g}{p}}
   &
 \stesysc
@@ -111,6 +181,6 @@ Y \ar{r}[swap]{g}
 X
 \end{tikzcd}
 \end{equation*}
-The horizontal arrows form a homomorphism
-of fundamental structures.
+The horizontal arrows form a homomorphism of fundamental structures, we will
+denote it by $\pullbackpr{2}{g}{p}:\cobesys{Y}{\stesys}{g}{p}\to\stesys$.
 \end{defn}

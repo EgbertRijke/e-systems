@@ -1,4 +1,4 @@
-\subsection{The semantics of extension}
+\subsection{Pre-extension algebras}
 \begin{defn}
 A \emph{pre-extension algebra $\stesys$ in $\cat{C}$} consists of a fundamental structure
 $\stesys$
@@ -88,97 +88,13 @@ Similarly, we define
 for $n\geq 1$, where we take $\stesyst_1:=\stesyst$ and $\ebd[1]:=\ebd$.
 \end{defn}
 
-\begin{defn} 
-An extension algebra is a pre-extension algebra $\stesys$ for which 
-the diagrams
-\begin{equation*}
-\begin{tikzcd}
-\stesysf_2 
-  \ar{d}[swap]{\pullbackpr{2}{\ectxext}{\eft}} 
-  \ar{r}{\efamext} 
-  & 
-\stesysf 
-  \ar{d}{\ectxext}
-  \\
-\stesysf 
-  \ar{r}[swap]{\ectxext} 
-  & 
-\stesysc
-\end{tikzcd}
-\qquad
-\begin{tikzcd}
-\stesysf_3
-  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}}
-  \ar{r}{\eext{2}}
-  & 
-\stesysf_2 
-  \ar{d}{\efamext} 
-  \\
-\stesysf_2 
-  \ar{r}[swap]{\efamext} 
-  &
-\stesysf
-\end{tikzcd}
-\end{equation*}
-commute.
-\end{defn}
-
-\begin{comment}
-\begin{lem}
-There exists an isomorphism $\alpha$ such that the triangle
-\begin{equation*}
-\begin{tikzcd}[column sep=tiny]
-\pullback{\stesysf}{\stesysf_2}{\ectxext}{\eft\circ\eft[2]}
-  \ar[dotted]{rr}{\alpha}
-  \ar{dr}[swap]{\pullback{\catid{\stesysf}}{\efamext}{\ectxext}{\eft}}
-  &
-  &
-\stesysf_3
-  \ar{dl}{\eext{2}}
-  \\
-& \stesysf_2
-\end{tikzcd}
-\end{equation*}
-commutes
-\end{lem}
-
-\begin{proof}
-There is a unique morphism $\alpha:
-\pullback{\stesysf}{\stesysf_2}{\ectxext}{\eft\circ\eft[2]}\to\stesysf_3$
-rendering the diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\pullback{\stesysf}{\stesysf_2}{\ectxext}{\eft\circ\eft[2]}
-  \ar[bend left=10,yshift=.5ex]{drrr}{\pullbackpr{2}{\ectxext}{\eft}\circ\pullbackpr{2}{\ectxext}{\eft\circ\eft[2]}}
-  \ar[bend right=10]{ddr}[swap]{\pullback{\catid{\stesysf}}{\eft[2]}{\ectxext}{\eft}}
-  \ar[dotted]{dr}{\alpha}
-  \\
-& \stesysf_3
-  \ar{r}{\pullbackpr{2}{\efamext}{\eft[2]}}
-  \ar{d}{\eft[3]}
-  &
-\stesysf_2
-  \ar{d}[swap]{\eft[2]}
-  \ar{r}[swap]{\pullbackpr{2}{\ectxext}{\eft}}
-  &
-\stesysf
-  \ar{d}{\eft}
-  \\
-{} & \stesysf_2
-  \ar{r}[swap]{\efamext}
-  &
-\stesysf
-  \ar{r}[swap]{\ectxext}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-\end{proof}
-\end{comment}
+The above definition allows for the construction of a formal slice construction
+for each pre-extension algebra.
 
 \begin{defn}
-Suppose $\stesys$ is a pre-extension algebra of $\cat{C}$. Then we define the pre-extension algebra
-$\famesys{\stesys}$ to consist of the fundamental structure
+Suppose $\stesys$ is a pre-extension algebra of $\cat{C}$. Then we define the 
+pre-extension algebra $\famesys{\stesys}$ to consist of the fundamental 
+structure
 \begin{equation*}
 \begin{tikzcd}
 \stesyst_2
@@ -199,33 +115,61 @@ with the extension operations
 \end{align*}
 \end{defn}
 
-In \autoref{famextobj} below we shall show that $\famesys{\stesys}$ is an
-extension algebra whenever $\stesys$ is an extension algebra. We shall need
-a handful of lemmas to give the proof.
+Observe that a morphism $A_{n+1}:X\to\stesysf_{n+1}$ is a family over
+$A_n:=\eft[n+1]\circ A_{n+1}:X\to\stesysf_n$. So $A_{n+1}:X\to\stesysf_{n+1}$
+determines all the families $A_i:X\to\stesysf_i$ for $0\leq i\leq n+1$.
+However, we could also consider the sequence of families given by
+$B_0:= \ectxext\circ A_1$, $B_1:=A_2$,\ldots, $B_n:=A_{n+1}$, basically by
+forgetting that there was a further underlying context $A_0$.
+It is useful to capture this idea by defining the morphisms which realise it,
+which is what we do in slightly more generality in the following definition.
+
+An analogy might provide some intuition with the simple combinatorics at
+work here. Consider the sequence $A_0,\ldots,A_{n+1}$ as a series of
+matryoshka dolls fit inside each other. $A_0$ is the outer doll, $A_{n+1}$ is
+the inner doll. Then there are two other fitting sequences of matryoshka dolls
+we can construct: we can either take the outer $n$ dolls, leaving out the inner
+doll $A_{n+1}$; or we can pick the inner $n$ dolls, leaving out the outer doll.
+Both result in fitting configurations of matryoshka dolls. The first is in
+analogy with $\eft[n+1]\circ A_{n+1}$, the second is in analogy with
+$\beta^0_{n+1}\circ A_{n+1}$, of which $\beta^0_{n+1}$ will be defined now.
 
 \begin{defn}
-We define $\beta_n:\stesysf_{n+1}\to\stesysf_n$ for $n\geq 1$ by
+We define $\beta^m_n:\stesysf_{n+m+1}\to\stesysf_{n+m}$ for 
+$m\geq 0$ and $n\geq 1$
+by
 \begin{align*}
-\beta_1 
+\beta^m_1 
   & := 
-\pullbackpr{2}{\ectxext}{\eft}
+\pullbackpr{2}{\eext{m}}{\eft[m+1]}
   & &
-  : \stesysf_2\to\stesysf
+  : \stesysf_{1+m+1}\to\stesysf_{1+m}
   \\
-\beta_{n+1}
+\beta^m_{n+1}
   & :=
-\pullback{\beta_n}{\beta_n}{\eext{n-1}}{\eft[n]}
+\pullback{\beta^m_n}{\beta^m_n}{\eext{n+m-1}}{\eft[n+m]}
   & &
-  : \stesysf_{n+2}\to\stesysf_{n+1}
+  : \stesysf_{n+m+2}\to\stesysf_{n+m+1}
 \end{align*}
+We shall denote $\beta^0_n$ by $\beta_n$.
 \end{defn}
 
+\begin{rmk}
+By definition, we have the equality
+\begin{equation}
+\eext{n+1}=[\eft[n+1]\circ\eft[n+2],\eext{n}\circ\beta^{n-1}_2]
+\end{equation}
+for each $n\geq 1$.
+\end{rmk}
+
+We end this subsection by stating some properties of $\beta$, which we will
+use later. The easy proofs 
 \begin{lem}\label{lem:beta_beta}
 Let $\stesys$ be a pre-extension algebra. Then the square
 \begin{equation*}
-\begin{tikzcd}[column sep=10em]
+\begin{tikzcd}
 \stesysf_4
-  \ar{r}{\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]}}
+  \ar{r}{\beta^1_2}
   \ar{d}[swap]{\beta_3}
   &
 \stesysf_3
@@ -233,33 +177,12 @@ Let $\stesys$ be a pre-extension algebra. Then the square
   \\
 \stesysf_3
   \ar{r}[swap]{\beta_2}
-  &
+  & 
 \stesysf_2
 \end{tikzcd}
 \end{equation*}
 commutes.
 \end{lem}
-
-\begin{proof}
-Left to the reader.
-\end{proof}
-
-\begin{comment}
-\begin{proof}
-It is straightforward to verify the equalities
-\begin{align*}
-\pullbackpr{1}{\ectxext}{\eft}\circ\beta_2\circ
-  (\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]})
-  & =
-\pullbackpr{1}{\ectxext}{\eft}\circ\beta_2\circ\beta_3
-  \\
-\pullbackpr{2}{\ectxext}{\eft}\circ\beta_2\circ
-  (\pullback{\pullbackpr{2}{\efamext}{\eft[2]}}{\pullbackpr{2}{\efamext}{\eft[2]}}{\efamext}{\eft[2]})
-  & =
-\pullbackpr{2}{\ectxext}{\eft}\circ\beta_2\circ\beta_3.\qedhere
-\end{align*}
-\end{proof}
-\end{comment}
 
 Note that the square
 \begin{equation*}
@@ -300,9 +223,41 @@ Let $\stesys$ be a pre-extension algebra. Then the square
 commutes.
 \end{lem}
 
-\begin{proof}
-Left to the reader.
-\end{proof}
+\subsection{Extension algebras}
+\begin{defn} 
+An extension algebra is a pre-extension algebra $\stesys$ for which 
+the diagrams
+\begin{equation*}
+\begin{tikzcd}
+\stesysf_2 
+  \ar{d}[swap]{\pullbackpr{2}{\ectxext}{\eft}} 
+  \ar{r}{\efamext} 
+  & 
+\stesysf 
+  \ar{d}{\ectxext}
+  \\
+\stesysf 
+  \ar{r}[swap]{\ectxext} 
+  & 
+\stesysc
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+\stesysf_3
+  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}}
+  \ar{r}{\eext{2}}
+  & 
+\stesysf_2 
+  \ar{d}{\efamext} 
+  \\
+\stesysf_2 
+  \ar{r}[swap]{\efamext} 
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commute.
+\end{defn}
 
 \begin{thm}[Local extension structure]\label{famextobj}
 If $\stesys$ is an extension algebra, then so is $\famesys{\stesys}$.
@@ -343,7 +298,41 @@ diagram
 \end{tikzcd}
 \end{equation*}
 commutes. Since this is a question about two maps into the pullback
-$\stesysf_2$, it suffices to verify that
+$\stesysf_2$, it suffices to verify that the two triangles in the pullback
+diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesysf_4
+  \arrow[drr,"\eext{1}\circ\eext{2}\circ\beta_3",bend left=15]
+  \arrow[ddr,swap,"{\eft[2]\circ\eft[3]\circ\eft[4]}",bend right=15]
+  \arrow[dr,"\alpha",densely dotted]
+  \\
+{}&
+\stesysf_2
+  \arrow[r,swap,"\pullbackpr{2}{\ectxext}{\eft}"]
+  \arrow[d,swap,"{\eft[2]}"]
+  &
+\stesysf
+  \arrow[d,"\eft"]
+  \\
+{}&
+\stesysf
+  \arrow[r,swap,"\ectxext"]
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commute for both $\alpha:=\eext{2}\circ\eext{3}$ and 
+$\alpha:=\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}$. In other words, we
+will establish the equalities
+\begin{equation}
+\eext{2}\circ\eext{3}
+  =
+[\eft[2]\circ\eft[3]\circ\eft[4],\eext{1}\circ\eext{2}\circ\beta_3]
+  =
+\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}.
+\end{equation}
+\begin{comment}
 \begin{align*}
 \pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\eext{3}
   & =
@@ -353,16 +342,16 @@ $\stesysf_2$, it suffices to verify that
   & =
 \pullbackpr{2}{\ectxext}{\eft}\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}.
 \end{align*}
-For the first equality, it is fairly straightforward to show that both the
-equalities
+\end{comment}
+It is fairly straightforward to show that both the equalities
 \begin{equation*}
-\pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\eext{3}
+\eft[2]\circ\eext{2}\circ\eext{3}
   =
 \eft[2]\circ\eft[3]\circ\eft[4]
 \end{equation*}
 and
 \begin{equation*}
-\pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}
+\eft[2]\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}
   =
 \eft[2]\circ\eft[3]\circ\eft[4].
 \end{equation*}
@@ -972,69 +961,7 @@ An important construction of (pre-)extension algebras is the change of base. It
 allows us to consider `parametrized homomorphisms', such as weakening and
 substitution.
 
-\begin{defn}
-Suppose $f:\stesys\to\stesys'$ is a pre-extension homomorphism. We say that
-a diagram
-\begin{equation*}
-\begin{tikzcd}
-\stesys
-  \ar{r}{f}
-  \ar{d}[swap]{p}
-  &
-\stesys'
-  \ar{d}{p'}
-  \\
-X \ar{r}[swap]{g}
-  &
-Y
-\end{tikzcd}
-\end{equation*}
-commutes if the diagram
-\begin{equation*}
-\begin{tikzcd}
-\stesysc
-  \ar{r}{f_0}
-  \ar{d}[swap]{p}
-  &
-\stesysc'
-  \ar{d}{p'}
-  \\
-X \ar{r}[swap]{g}
-  &
-Y
-\end{tikzcd}
-\end{equation*}
-commutes.
-\end{defn}
-
-The first goal in this subsection is to define for every (pre-)extension algebra 
-$\stesys$ and every $p:\stesysc\rightarrow X\leftarrow Y:g$, a (pre-)extension
-algebra $\cobesys{Y}{\stesys}{g}{p}$ with a homomorphism $\pullbackpr{2}{g}{p}:
-\cobesys{Y}{\stesys}{g}{p}\to\stesys$ and a morphism $\pullbackpr{1}{g}{p}:
-\pullback{Y}{\stesysc}{g}{p}\to Y$ such that for every diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\stesys'
-  \ar[bend right=10]{ddr}[swap]{p'}
-  \ar[bend left=10]{rrd}{f}
-  \ar[dotted]{dr}[near end]{[p',f]}
-  \\
-  {}&
-\cobesys{Y}{\stesys}{g}{p}
-  \ar{d}{\pullbackpr{1}{g}{p}}
-  \ar{r}[swap]{\pullbackpr{2}{g}{p}}
-  &
-\stesys
-  \ar{d}{p}
-  \\
-  {}&
-Y \ar{r}[swap]{g}
-  &
-X
-\end{tikzcd}
-\end{equation*}
-of which the outer square commutes, the (pre-)extension homomorphism $[p',f]$ exists
-and is unique with the property that it renders the diagram commutative. We will
+We will
 give the definition of $\cobesys{Y}{\stesys}{g}{p}$ in \autoref{cobesys}. After
 proving that the change of base of a pre-extension algebra is indeed a
 pre-extension algebra (\autoref{cobesys-preext}) and that the change of base
