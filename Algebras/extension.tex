@@ -115,6 +115,50 @@ with the extension operations
 \end{align*}
 \end{defn}
 
+\begin{defn}
+Let $\stesys$ and $\stesys'$ be pre-extension algebras. A \emph{pre-extension 
+homomorphism $f$ from $\stesys'$ to $\stesys$} is a homomorphism of fundamental
+structures for which the squares
+\begin{equation*}
+\begin{tikzcd}
+\stesysf' 
+  \ar{r}{f_1}
+  \ar{d}[swap]{\ectxext'}
+  &
+\stesysf
+  \ar{d}{\ectxext}
+  \\
+\stesysc'
+  \ar{r}[swap]{f_0}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+and
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesysf'\times_{\ectxext',\eft'} \stesysf'
+  \ar{r}{f_1\times_{\ectxext,\eft} f_1}
+  \ar{d}[swap]{\efamext'}
+  &
+\stesysf\times_{\ectxext,\eft} \stesysf
+  \ar{d}{\efamext}
+  \\
+\stesysf'
+  \ar{r}[swap]{f_1}
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+Composition and the identity homomorphism are defined in the expected way. We
+define furthermore
+\begin{align*}
+f_2 & := \pullback{f_1}{f_1}{\ectxext}{\eft}
+  \\
+f_3 & := \pullback{f_2}{f_2}{\efamext}{\eft[2]}.
+\end{align*}
+\end{defn}
+
 Observe that a morphism $A_{n+1}:X\to\stesysf_{n+1}$ is a family over
 $A_n:=\eft[n+1]\circ A_{n+1}:X\to\stesysf_n$. So $A_{n+1}:X\to\stesysf_{n+1}$
 determines all the families $A_i:X\to\stesysf_i$ for $0\leq i\leq n+1$.
@@ -222,292 +266,6 @@ Let $\stesys$ be a pre-extension algebra. Then the square
 \end{equation*}
 commutes.
 \end{lem}
-
-\subsection{Extension algebras}
-\begin{defn} 
-An extension algebra is a pre-extension algebra $\stesys$ for which 
-the diagrams
-\begin{equation*}
-\begin{tikzcd}
-\stesysf_2 
-  \ar{d}[swap]{\pullbackpr{2}{\ectxext}{\eft}} 
-  \ar{r}{\efamext} 
-  & 
-\stesysf 
-  \ar{d}{\ectxext}
-  \\
-\stesysf 
-  \ar{r}[swap]{\ectxext} 
-  & 
-\stesysc
-\end{tikzcd}
-\qquad
-\begin{tikzcd}
-\stesysf_3
-  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}}
-  \ar{r}{\eext{2}}
-  & 
-\stesysf_2 
-  \ar{d}{\efamext} 
-  \\
-\stesysf_2 
-  \ar{r}[swap]{\efamext} 
-  &
-\stesysf
-\end{tikzcd}
-\end{equation*}
-commute.
-\end{defn}
-
-\begin{thm}[Local extension structure]\label{famextobj}
-If $\stesys$ is an extension algebra, then so is $\famesys{\stesys}$.
-\end{thm}
-
-\begin{proof}
-Note that the diagram
-\begin{equation*}
-\begin{tikzcd}
-\stesysf_3
-  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}}
-  \ar{r}{\eext{2}}
-  & 
-\stesysf_2 
-  \ar{d}{\efamext} 
-  \\
-\stesysf_2 
-  \ar{r}[swap]{\efamext} 
-  &
-\stesysf
-\end{tikzcd}
-\end{equation*}
-commutes by assumption. For the second condition, we have to show that the
-diagram
-\begin{equation*}
-\begin{tikzcd}
-\stesysf_4
-  \ar{d}[swap]{\pullbackpr{2}{\eext{2}}{\eft[3]}}
-  \ar{r}{\eext{3}}
-  & 
-\stesysf_3
-  \ar{d}{\eext{2}} 
-  \\
-\stesysf_3
-  \ar{r}[swap]{\eext{2}} 
-  &
-\stesysf_2
-\end{tikzcd}
-\end{equation*}
-commutes. Since this is a question about two maps into the pullback
-$\stesysf_2$, it suffices to verify that the two triangles in the pullback
-diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=huge]
-\stesysf_4
-  \arrow[drr,"\eext{1}\circ\eext{2}\circ\beta_3",bend left=15]
-  \arrow[ddr,swap,"{\eft[2]\circ\eft[3]\circ\eft[4]}",bend right=15]
-  \arrow[dr,"\alpha",densely dotted]
-  \\
-{}&
-\stesysf_2
-  \arrow[r,swap,"\pullbackpr{2}{\ectxext}{\eft}"]
-  \arrow[d,swap,"{\eft[2]}"]
-  &
-\stesysf
-  \arrow[d,"\eft"]
-  \\
-{}&
-\stesysf
-  \arrow[r,swap,"\ectxext"]
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-commute for both $\alpha:=\eext{2}\circ\eext{3}$ and 
-$\alpha:=\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}$. In other words, we
-will establish the equalities
-\begin{equation}
-\eext{2}\circ\eext{3}
-  =
-[\eft[2]\circ\eft[3]\circ\eft[4],\eext{1}\circ\eext{2}\circ\beta_3]
-  =
-\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}.
-\end{equation}
-\begin{comment}
-\begin{align*}
-\pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\eext{3}
-  & =
-\pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}
-  \\
-\pullbackpr{2}{\ectxext}{\eft}\circ\eext{2}\circ\eext{3}
-  & =
-\pullbackpr{2}{\ectxext}{\eft}\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}.
-\end{align*}
-\end{comment}
-It is fairly straightforward to show that both the equalities
-\begin{equation*}
-\eft[2]\circ\eext{2}\circ\eext{3}
-  =
-\eft[2]\circ\eft[3]\circ\eft[4]
-\end{equation*}
-and
-\begin{equation*}
-\eft[2]\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}
-  =
-\eft[2]\circ\eft[3]\circ\eft[4].
-\end{equation*}
-hold. For the second subgoal we will show that both sides are equal to 
-composite $\eext{1}\circ\eext{2}\circ\beta_3$. For the left-hand side, notice that 
-the diagram
-\begin{equation*}
-\begin{tikzcd}
-\stesysf_4
-  \ar{r}{\eext{3}}
-  \ar{d}[swap]{\beta_3}
-  &
-\stesysf_3
-  \ar{r}{\eext{2}}
-  \ar{d}[swap]{\beta_2}
-  &
-\stesysf_2
-  \ar{d}{\pullbackpr{2}{\ectxext}{\eft}}
-  \\
-\stesysf_3
-  \ar{r}[swap]{\eext{2}}
-  &
-\stesysf_2
-  \ar{r}[swap]{\efamext}
-  &
-\stesysf
-\end{tikzcd}
-\end{equation*}
-commutes by \autoref{lem:beta_ext}. For the right-hand side, notice that the
-diagram
-\begin{equation*}
-\begin{tikzcd}[column sep=huge]
-\stesysf_4
-  \ar{r}{\pullbackpr{2}{\eext{2}}{\eft[3]}}
-  \ar{d}[swap]{\beta_3}
-  &
-\stesysf_3
-  \ar{dr}{\eext{2}}
-  \ar{d}[swap]{\beta_2}
-  \\
-\stesysf_3
-  \ar{r}{\pullbackpr{2}{\efamext}{\eft[2]}}
-  \ar{dr}[swap]{\eext{2}}
-  &
-\stesysf_2
-  \ar{dr}{\efamext}
-  &
-\stesysf_2
-  \ar{d}{\pullbackpr{2}{\ectxext}{\eft}}
-  \\
-  {} &
-\stesysf_2
-  \ar{r}[swap]{\efamext}
-  &
-\stesysf
-\end{tikzcd}
-\end{equation*}
-commutes (by definition, in case of the upper two squares; and by associativity,
-in case of the lower square).
-\end{proof}
-
-\subsection{(Pre-)extension homomorphisms}\label{subsection:e_extension_homomorphisms}
-In this subsection we start with the study of pre-extension homomorphisms, which
-will include the extension homomorphisms since they will be the pre-extension
-homomorphisms of which both the domain and codomain are extension algebras.
-Our main examples of extension homomorphisms will be the operations of weakening
-and substitution. There are some basic examples of pre-extension homomorphisms
-that will be useful too, which get introduced in the this section and in
-\autoref{subsection:change_of_base}. In this section, we will mainly be
-interested in pre-extension homomorphisms between local pre-extension algebras.
-We will end this section by proving that a retract of an extension algebra is
-always an extension algebra.
-
-\begin{defn}
-Let $\stesys$ and $\stesys'$ be pre-extension algebras. A \emph{pre-extension 
-homomorphism $f$ from $\stesys'$ to $\stesys$} is a homomorphism of fundamental
-structures for which the squares
-\begin{equation*}
-\begin{tikzcd}
-\stesysf' 
-  \ar{r}{f_1}
-  \ar{d}[swap]{\ectxext'}
-  &
-\stesysf
-  \ar{d}{\ectxext}
-  \\
-\stesysc'
-  \ar{r}[swap]{f_0}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-and
-\begin{equation*}
-\begin{tikzcd}[column sep=huge]
-\stesysf'\times_{\ectxext',\eft'} \stesysf'
-  \ar{r}{f_1\times_{\ectxext,\eft} f_1}
-  \ar{d}[swap]{\efamext'}
-  &
-\stesysf\times_{\ectxext,\eft} \stesysf
-  \ar{d}{\efamext}
-  \\
-\stesysf'
-  \ar{r}[swap]{f_1}
-  &
-\stesysf
-\end{tikzcd}
-\end{equation*}
-Composition and the identity homomorphism are defined in the expected way. We
-define furthermore
-\begin{align*}
-f_2 & := \pullback{f_1}{f_1}{\ectxext}{\eft}
-  \\
-f_3 & := \pullback{f_2}{f_2}{\efamext}{\eft[2]}.
-\end{align*}
-\end{defn}
-
-\begin{defn}
-A pre-extension homomorphism between extension algebras is called an extension
-homomorphism.
-\end{defn}
-
-\begin{lem}
-Let $\stesys$ be an extension algebra. Then
-\begin{equation*}
-\begin{tikzcd}[column sep=huge]
-\stesyst_2
-  \ar{r}{\pullbackpr{2}{\ectxext}{\eft\circ\ebd}}
-  \ar{d}[swap]{\ebd[2]}
-  &
-\stesyst
-  \ar{d}{\ebd}
-  \\
-\stesysf_2
-  \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
-  \ar{d}[swap]{\eft[2]}
-  &
-\stesysf
-  \ar{d}{\eft}
-  \\
-\stesysf
-  \ar{r}[swap]{\ectxext}
-  &
-\stesysc
-\end{tikzcd}
-\end{equation*}
-assembles an extension homomorphism $\mathbf{e}_0:\famesys{\stesys}\to\stesys$.
-Likewise, we have an extension homomorphism
-$\mathbf{e}_1:\famesys{\famesys{\stesys}}\to\famesys{\stesys}$. Thus, a
-pre-extension algebra is an extension algebra if and only if $\mathbf{e}_0$
-and $\mathbf{e}_1$ are pre-extension homomorphisms.
-\end{lem}
-
-\begin{proof}
-Immediate from the conditions of being an extension algebra.
-\end{proof}
 
 \begin{defn}
 Let $\stesys$ be a pre-extension algebra. Then
@@ -840,6 +598,248 @@ commute.
 \end{equation*}
 commutes.
 \end{comment}
+\end{proof}
+
+\subsection{Extension algebras}
+\begin{defn} 
+An extension algebra is a pre-extension algebra $\stesys$ for which 
+the diagrams
+\begin{equation*}
+\begin{tikzcd}
+\stesysf_2 
+  \ar{d}[swap]{\pullbackpr{2}{\ectxext}{\eft}} 
+  \ar{r}{\efamext} 
+  & 
+\stesysf 
+  \ar{d}{\ectxext}
+  \\
+\stesysf 
+  \ar{r}[swap]{\ectxext} 
+  & 
+\stesysc
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+\stesysf_3
+  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}}
+  \ar{r}{\eext{2}}
+  & 
+\stesysf_2 
+  \ar{d}{\efamext} 
+  \\
+\stesysf_2 
+  \ar{r}[swap]{\efamext} 
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commute.
+\end{defn}
+
+\begin{thm}[Local extension structure]\label{famextobj}
+If $\stesys$ is an extension algebra, then so is $\famesys{\stesys}$.
+\end{thm}
+
+\begin{proof}
+Note that the diagram
+\begin{equation*}
+\begin{tikzcd}
+\stesysf_3
+  \ar{d}[swap]{\pullbackpr{2}{\efamext}{\eft[2]}}
+  \ar{r}{\eext{2}}
+  & 
+\stesysf_2 
+  \ar{d}{\efamext} 
+  \\
+\stesysf_2 
+  \ar{r}[swap]{\efamext} 
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commutes by assumption. For the second condition, we have to show that the
+diagram
+\begin{equation*}
+\begin{tikzcd}
+\stesysf_4
+  \ar{d}[swap]{\pullbackpr{2}{\eext{2}}{\eft[3]}}
+  \ar{r}{\eext{3}}
+  & 
+\stesysf_3
+  \ar{d}{\eext{2}} 
+  \\
+\stesysf_3
+  \ar{r}[swap]{\eext{2}} 
+  &
+\stesysf_2
+\end{tikzcd}
+\end{equation*}
+commutes. Since this is a question about two maps into the pullback
+$\stesysf_2$, it suffices to verify that the two triangles in the pullback
+diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesysf_4
+  \arrow[drr,"\eext{1}\circ\eext{2}\circ\beta_3",bend left=15]
+  \arrow[ddr,swap,"{\eft[2]\circ\eft[3]\circ\eft[4]}",bend right=15]
+  \arrow[dr,"\alpha",densely dotted]
+  \\
+{}&
+\stesysf_2
+  \arrow[r,swap,"\pullbackpr{2}{\ectxext}{\eft}"]
+  \arrow[d,swap,"{\eft[2]}"]
+  &
+\stesysf
+  \arrow[d,"\eft"]
+  \\
+{}&
+\stesysf
+  \arrow[r,swap,"\ectxext"]
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+commute for both $\alpha:=\eext{2}\circ\eext{3}$ and 
+$\alpha:=\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}$. In other words, we
+will establish the equalities
+\begin{equation}
+\eext{2}\circ\eext{3}
+  =
+[\eft[2]\circ\eft[3]\circ\eft[4],\eext{1}\circ\eext{2}\circ\beta_3]
+  =
+\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}.
+\end{equation}
+\begin{comment}
+\begin{align*}
+\pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\eext{3}
+  & =
+\pullbackpr{1}{\ectxext}{\eft}\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}
+  \\
+\pullbackpr{2}{\ectxext}{\eft}\circ\eext{2}\circ\eext{3}
+  & =
+\pullbackpr{2}{\ectxext}{\eft}\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}.
+\end{align*}
+\end{comment}
+It is fairly straightforward to show that both the equalities
+\begin{equation*}
+\eft[2]\circ\eext{2}\circ\eext{3}
+  =
+\eft[2]\circ\eft[3]\circ\eft[4]
+\end{equation*}
+and
+\begin{equation*}
+\eft[2]\circ\eext{2}\circ\pullbackpr{2}{\eext{2}}{\eft[3]}
+  =
+\eft[2]\circ\eft[3]\circ\eft[4].
+\end{equation*}
+hold. For the second subgoal we will show that both sides are equal to 
+composite $\eext{1}\circ\eext{2}\circ\beta_3$. For the left-hand side, notice that 
+the diagram
+\begin{equation*}
+\begin{tikzcd}
+\stesysf_4
+  \ar{r}{\eext{3}}
+  \ar{d}[swap]{\beta_3}
+  &
+\stesysf_3
+  \ar{r}{\eext{2}}
+  \ar{d}[swap]{\beta_2}
+  &
+\stesysf_2
+  \ar{d}{\pullbackpr{2}{\ectxext}{\eft}}
+  \\
+\stesysf_3
+  \ar{r}[swap]{\eext{2}}
+  &
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commutes by \autoref{lem:beta_ext}. For the right-hand side, notice that the
+diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesysf_4
+  \ar{r}{\pullbackpr{2}{\eext{2}}{\eft[3]}}
+  \ar{d}[swap]{\beta_3}
+  &
+\stesysf_3
+  \ar{dr}{\eext{2}}
+  \ar{d}[swap]{\beta_2}
+  \\
+\stesysf_3
+  \ar{r}{\pullbackpr{2}{\efamext}{\eft[2]}}
+  \ar{dr}[swap]{\eext{2}}
+  &
+\stesysf_2
+  \ar{dr}{\efamext}
+  &
+\stesysf_2
+  \ar{d}{\pullbackpr{2}{\ectxext}{\eft}}
+  \\
+  {} &
+\stesysf_2
+  \ar{r}[swap]{\efamext}
+  &
+\stesysf
+\end{tikzcd}
+\end{equation*}
+commutes (by definition, in case of the upper two squares; and by associativity,
+in case of the lower square).
+\end{proof}
+
+\subsection{(Pre-)extension homomorphisms}\label{subsection:e_extension_homomorphisms}
+In this subsection we start with the study of pre-extension homomorphisms, which
+will include the extension homomorphisms since they will be the pre-extension
+homomorphisms of which both the domain and codomain are extension algebras.
+Our main examples of extension homomorphisms will be the operations of weakening
+and substitution. There are some basic examples of pre-extension homomorphisms
+that will be useful too, which get introduced in the this section and in
+\autoref{subsection:change_of_base}. In this section, we will mainly be
+interested in pre-extension homomorphisms between local pre-extension algebras.
+We will end this section by proving that a retract of an extension algebra is
+always an extension algebra.
+
+\begin{defn}
+A pre-extension homomorphism between extension algebras is called an extension
+homomorphism.
+\end{defn}
+
+\begin{lem}
+Let $\stesys$ be an extension algebra. Then
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\stesyst_2
+  \ar{r}{\pullbackpr{2}{\ectxext}{\eft\circ\ebd}}
+  \ar{d}[swap]{\ebd[2]}
+  &
+\stesyst
+  \ar{d}{\ebd}
+  \\
+\stesysf_2
+  \ar{r}{\pullbackpr{2}{\ectxext}{\eft}}
+  \ar{d}[swap]{\eft[2]}
+  &
+\stesysf
+  \ar{d}{\eft}
+  \\
+\stesysf
+  \ar{r}[swap]{\ectxext}
+  &
+\stesysc
+\end{tikzcd}
+\end{equation*}
+assembles an extension homomorphism $\mathbf{e}_0:\famesys{\stesys}\to\stesys$.
+Likewise, we have an extension homomorphism
+$\mathbf{e}_1:\famesys{\famesys{\stesys}}\to\famesys{\stesys}$. Thus, a
+pre-extension algebra is an extension algebra if and only if $\mathbf{e}_0$
+and $\mathbf{e}_1$ are pre-extension homomorphisms.
+\end{lem}
+
+\begin{proof}
+Immediate from the conditions of being an extension algebra.
 \end{proof}
 
 \begin{lem}[Stability under retracts]\label{esys-retract}
