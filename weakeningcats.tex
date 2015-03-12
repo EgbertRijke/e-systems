@@ -1,0 +1,282 @@
+\section{Weakening systems}
+
+\begin{defn}
+A \emph{pre-weakening structure on a category $\cat{C}$} consists of a functor
+$W_f:\cat{C}/Y\to \cat{C}/X$ for every $f:X\to Y$ in $\cat{C}$ such 
+that
+\begin{enumerate}
+\item $W_{\catid{X}}=\catid{\cat{C}/X}$ for every object $X\in\cat{C}$.
+\item $W_{f\circ f'}=W_{f'}\circ W_f$ for every $f':X'\to X$ and $f:X\to Y$ in
+$\cat{C}$.
+\item $W_f$ preserves the final object, i.e.~$W_f(\catid{Y})=\catid{X}$.
+%\item $W^1_f\circ W^0_g= W^0_{W^1_f(g)}\circ W^1_f$.
+\end{enumerate}
+A \emph{pre-weakening system} is a category together with a pre-weakening structure.
+\end{defn}
+
+\begin{defn}
+A \emph{pre-weakening homomorphism} $F:\cat{C}\to\cat{D}$ between pre-weakening systems
+is a functor $F:\cat{C}\to\cat{D}$ such that the square
+\begin{equation*}
+\begin{tikzcd}
+\cat{C}/X
+  \arrow[r,"F/X"]
+  &
+\cat{D}/F(X)
+  \\
+\cat{C}/Y
+  \arrow[u,"W_f"]
+  \arrow[r,swap,"F/Y"]
+  &
+\cat{D}/F(Y)
+  \arrow[u,swap,"W_{F(f)}"]
+\end{tikzcd}
+\end{equation*}
+commutes for any $f:X\to Y$ in $\cat{C}$.
+\end{defn}
+
+\begin{lem}
+Let $\cat{C}$ be a pre-weakening system. Then for any object $X$ of $\cat{C}$,
+the slice category $\cat{C}/X$ is also a pre-weakening system.
+\end{lem}
+
+\begin{defn}
+A \emph{weakening system} is a pre-weakening system for which every $W_f$ is a
+pre-weakening homomorphism. A \emph{weakening homomorphism} is a pre-weakening 
+homomorphism between weakening systems.
+\end{defn}
+
+\begin{cor}
+For any object $X$ of a weakening system $\cat{C}$, the slice category
+$\cat{C}/X$ is a weakening system.
+\end{cor}
+
+\begin{rmk}
+If the underlying category is a group, the axioms of a weakening system
+obtain the following form: There is a group homomorphism $W_x:G\to G$ for
+every $x\in G$, in such a way that $W_e=\catid{G}$ and $W_{xy}=W_y\circ W_x$
+for every $x,y\in G$, and for any $x,y\in G$ the diagram
+\begin{equation*}
+\begin{tikzcd}
+G \arrow[r,"W_y"]
+  &
+G 
+  \\
+G \arrow[u,"W_x"]
+  \arrow[r,swap,"W_y"]
+  &
+G \arrow[u,swap,"W_{W_y(x)}"]
+\end{tikzcd}
+\end{equation*}
+is required to commute.
+\end{rmk}
+
+\begin{lem}
+For any group, conjugation is a weakening structure. Thus, any group is
+canonically a weakening system.
+\end{lem}
+
+\begin{proof}
+Note that $e^{-1}xe=x$ and $(xy)^{-1}z(xy)=y^{-1}(x^{-1}zx)y$ for any $x,y,z\in G$.
+Also, the diagram
+\begin{equation*}
+\begin{tikzcd}
+G \arrow[r,"\mathrm{conj}_y"]
+  &
+G 
+  \\
+G \arrow[u,"\mathrm{conj}_x"]
+  \arrow[r,swap,"\mathrm{conj}_y"]
+  &
+G \arrow[u,swap,"\mathrm{conj}_{y^{-1}xy}"]
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{proof}
+
+\begin{rmk}
+Similarly, every groupoid has a canonical weakening structure given by
+conjugation.
+\end{rmk}
+
+\section{Weakening systems with term structure}
+\begin{defn}
+A \emph{category with a term structure} is a category $\cat{C}$ with a set $T(f)$ for every
+morphism $f$ of $\cat{C}$. A \emph{functor with term structure} from $\cat{C}$ to $\cat{D}$
+is a functor $F:\cat{C}\to\cat{D}$ with a function $T(f)\to T(F(f))$ for
+every $f:X\to Y$ in $\cat{C}$.
+\end{defn}
+
+\begin{defn}
+Suppose $\cat{C}$ is a category with term structure, and $X$ is an object of $\cat{C}$. 
+Then $\cat{C}/X$ is a category with term structure, where $T_{\cat{C}/X}(g)=T_\cat{C}(g)$.
+\end{defn}
+
+\begin{defn}
+A \emph{weakening system with term term structure} is the same thing as a weakening system,
+except that the underlying category and the functors $W_f$ are required to
+be functors with term term structure. The equalities are also required to hold on the term structure.
+\end{defn}
+
+\begin{cor}
+For any object $X$ of a weakening system with term structure, the slice category
+$\cat{C}/X$ is a weakening system with term structure.
+\end{cor}
+
+\section{Projection systems}
+\begin{defn}
+A \emph{pre-projection system} is a weakening system with term structure with an element
+$\tfid{f}\in T(W_f(f))$ for every $f:X\to Y$ in $\cat{C}$. 
+\end{defn}
+
+\begin{defn}
+A \emph{pre-projection homomorphism} $F:\cat{C}\to\cat{D}$ is a weakening homomorphism for which
+\begin{equation*}
+F(\tfid{f})=\tfid{F(f)}
+\end{equation*}
+for every $f:X\to Y$ in $\cat{C}$.
+\end{defn}
+
+\begin{lem}
+For any object $X$ in a pre-projection system $\cat{C}$, the slice category
+$\cat{C}/X$ is a pre-projection system.
+\end{lem}
+
+\begin{defn}
+A \emph{projection system} is a pre-projection system for which every $W_f$ is
+a pre-projection homomorphism. A \emph{projection homomorphism} is a pre-projection homomorphism
+between projection systems.
+\end{defn}
+
+\begin{cor}
+For any object $X$ of a projection system $\cat{C}$, the slice category $\cat{C}/X$
+is a projection system.
+\end{cor}
+
+\section{Substitution systems}
+
+\begin{defn}
+A \emph{pre-substitution structure} on a category with term structure $\cat{C}$ consists
+of a functor with term structure $S_t:\cat{C}/X\to\cat{C}/Y$ for every $t\in T(f)$ and
+$f:X\to Y$, such that $S_t(\catid{X})=\catid{Y}$.
+
+A \emph{pre-substitution system} is a category with term structure together with a
+pre-substitution structure. 
+\end{defn}
+
+\begin{defn}
+A \emph{pre-substitution homomorphism} $F:\cat{C}\to\cat{D}$ is a functor with term structure for
+which the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\cat{C}/X
+  \arrow[r,"F/X"]
+  \arrow[d,swap,"S_t"]
+  &
+\cat{D}/F(X)
+  \arrow[d,"S_{F(t)}"]
+  \\
+\cat{C}/Y
+  \arrow[r,swap,"F/Y"]
+  &
+\cat{D}/F(Y)
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{defn}
+
+\begin{lem}
+For any object $X$ of a pre-substitution system $\cat{C}$, the slice category
+$\cat{C}/X$ is a pre-substitution system.
+\end{lem}
+
+\begin{defn}
+A \emph{substitution system} is a pre-substitution system for which each
+$S_t$ is a pre-substitution homomorphism. A \emph{substitution homomorphism} is a
+pre-substitution homomorphism between substitution systems.
+\end{defn}
+
+\begin{cor}
+For any object $X$ of a substitution system, the slice category $\cat{C}/X$
+is a substitution system.
+\end{cor}
+
+\section{E-systems}
+\begin{defn}
+An \emph{E-system} is a category with term structure with
+\begin{itemize}
+\item a weakening structure $W$,
+\item the structure $\tfid{}$ of a projection system,
+\item a substitution structure $S$,
+\end{itemize}
+such that
+\begin{enumerate}
+\item each $W_f$ is a substitution homomorphism;
+\item each $S_t$ is a projection homomorphism;
+\item $S_t(\tfid{f})=t$ for any $t\in T(f)$ and $f:X\to Y$;
+\item $S_t\circ W_f=\catid{\cat{C}/Y}$ for any $t\in T(f)$ and $f:X\to Y$;
+\item $S_{\tfid{f}}\circ W_{W_f(f)}=\catid{\cat{C}/X}$ for any $f:X\to Y$.
+\end{enumerate}
+\end{defn}
+
+\begin{cor}
+For any object $X$ of an E-system $\cat{C}$, the slice category $\cat{C}/X$
+is an E-system.
+\end{cor}
+
+\begin{defn}
+An \emph{E-homomorphism} $F:\cat{C}\to\cat{D}$ is a functor which is both a projection
+homomorphism and a substitution homomorphism.
+\end{defn}
+
+\begin{comment}
+\begin{lem}
+Suppose $\cat{D}$ is a retract of a category $\cat{C}$, i.e. there are functors
+$S:\cat{D}\to\cat{C}$ and $R:\cat{C}\to\cat{D}$ with a natural isomorphism
+$\tau:R\circ S \simeq \catid{\cat{D}}$, and suppose that $\cat{C}$ is a weakening
+category. Then $\cat{D}$ is a weakening system too.
+\end{lem}
+
+\begin{proof}
+Let $f:X\to Y$ be a morphism in $\cat{D}$. Then we define $W_f$ to be the
+composition
+\begin{equation*}
+\begin{tikzcd}[column sep=3.2em]
+\cat{D}/Y
+  \arrow[r,"S/Y"]
+  &
+\cat{C}/S(Y)
+  \arrow[r,"W_{S(f)}"]
+  &
+\cat{C}/S(X)
+  \arrow[r,"R/S(X)"]
+  &
+\cat{D}/R(S(X))
+  \arrow[r,"\tau_X\circ{-}"]
+  &
+\cat{D}/X
+\end{tikzcd}
+\end{equation*}
+We first verify whether this assembles a pre-weakening structure on $\cat{D}$.
+\begin{enumerate}
+\item Let $X$ be an object of $\cat{D}$. Then $W_{\catid{X}}$ is the composition
+\begin{equation*}
+\begin{tikzcd}[column sep=3.2em]
+\cat{D}/X
+  \arrow[r,"S/X"]
+  &
+\cat{C}/S(X)
+  \arrow[r,"R/S(X)"]
+  &
+\cat{D}/R(S(X))
+  \arrow[r,"{-}\circ\tau_X"]
+  &
+\cat{D}/X
+\end{tikzcd}
+\end{equation*}
+This functor maps $g:X'\to X$ consecutively to $S(g)$, to $R(S(g))$, to
+$\tau_X\circ R(S(g))$. Note that $\tau_X\circ R(S(g))=g\circ \tau_{X'}$ by
+naturality.
+\end{enumerate}
+\end{proof}
+\end{comment}
