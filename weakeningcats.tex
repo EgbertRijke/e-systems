@@ -490,6 +490,8 @@ and for $i\in T(\Gamma)$ we get substitutions $S_i:\cat{C}/\Gamma\to\cat{C}$.
 
 \section{Properties of E-systems}
 
+\subsection{The category of internal functions}
+
 \begin{defn}
 For every $A,B\in\cat{C}/\Gamma$ we define the set 
 \begin{equation*}
@@ -599,6 +601,13 @@ a functor $\mathbb{T}_F:\mathbb{T}_\mathcal{E}\to \mathbb{T}_\mathcal{D}$.
 
 \subsection{Pairing and the projections}
 
+The composition $\ctxext{A}{P}$ of $A\in\cat{C}/\Gamma$ and $P\in\cat{C}/\ctxext{\Gamma}{A}$
+behaves like a strict $\Sigma$-type. We may define the pairing term
+$\typefont{pair}^{A,P}\defeq\tfid{\ctxext{A}{P}}\in T(W_P(W_A(\ctxext{A}{P})))$
+and the projections and prove several useful properties about them. The strictness
+is found, among other things, in the fact that we can prove judgmental $\eta$-equality,
+and that pairing is strictly associative.
+
 \begin{defn}
 Let $x\in T(A)$ and $u\in T(S_x(P))$ for $A\in\cat{C}/\Gamma$ and $P\in\cat{C}/\ctxext{\Gamma}{A}$. 
 We define
@@ -622,6 +631,19 @@ Let $A\in\cat{C}/\Gamma$ and $P\in\cat{C}/\ctxext{\Gamma}{A}$. We define
 \cprojsndf{A}{P} & \defeq \tfid{P}\in\thomd{\cprojfstf{A}{P}}{\ctxext{A}{P}}{P}
 \end{align*}
 \end{defn}
+
+\begin{cor}
+Let $F:\mathcal{E}\to\mathcal{D}$ be an E-homomorphism and let $x\in T(A)$ and
+$u\in T(S_x(P))$. Then we have
+\begin{equation*}
+F(\tmext{x}{u})\jdeq \tmext{F(x)}{F(u)}.
+\end{equation*}
+Also, we have
+\begin{align*}
+F(\cprojfstf{A}{P}) & \jdeq \cprojfstf{F(A)}{F(P)} \\
+F(\cprojsndf{A}{P}) & \jdeq \cprojsndf{F(A)}{F(P)}.
+\end{align*}
+\end{cor}
 
 \begin{lem}
 Let $x\in T(A)$ and $u\in T(S_x(P))$. then we have
@@ -647,19 +669,6 @@ Also, we have
 \cprojsndf{\ctxext{A}{P}}{Q} & \jdeq \cprojsndf{P}{Q}\circ\cprojsndf{A}{\ctxext{P}{Q}}.
 \end{align*}
 \end{lem}
-
-\begin{thm}
-Let $F:\mathcal{E}\to\mathcal{D}$ be an E-homomorphism and let $x\in T(A)$ and
-$u\in T(S_x(P))$. Then we have
-\begin{equation*}
-F(\tmext{x}{u})\jdeq \tmext{F(x)}{F(u)}.
-\end{equation*}
-Also, we have
-\begin{align*}
-F(\cprojfstf{A}{P}) & \jdeq \cprojfstf{F(A)}{F(P)} \\
-F(\cprojsndf{A}{P}) & \jdeq \cprojsndf{F(A)}{F(P)}.
-\end{align*}
-\end{thm}
 
 \begin{lem}
 Let $f\in\thom{A}{\ctxext{B}{Q}}$ Then we have
