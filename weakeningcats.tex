@@ -1,43 +1,63 @@
+\begin{rmk}
+Recall that the slice pre-category $\cat{C}/\Gamma/(\Delta,f)$ is isomorphic to the slice pre-category
+$\cat{C}/\Delta$, in the essentially algebraic theory of pre-categories. In the following,
+we shall usually identify these two categories. Recall also that for every functor
+$F:\cat{C}\to\cat{D}$ and every object $\Delta$ of $\cat{C}$, there is a functor
+$F/\Delta:\cat{C}/\Delta\to \cat{D}/F(\Delta)$ given by the action on morphisms of $F$. 
+\end{rmk}
+
+\begin{rmk}
+It will be convenient to denote the objects of the category $\cat{C}$ with capital
+greek letters $\Gamma$, $\Delta$, \ldots, and the morphisms by capital latin letters
+$A$, $B$, $P$, $Q$, etcetera. When $A$ is a morphism into $\Gamma$, we will denote
+its codomain by $\ctxext{\Gamma}{A}$. When $A$ is a morphism into $\Gamma$ and
+$P$ is a morphism into $\ctxext{\Gamma}{A}$, it will be convenient to denote the
+composition of $P$ with $A$ by $\ctxext{A}{P}$ as well. Note that $\ctxext{A}{P}$
+is indeed the domain of $P$ in the slice category $\cat{C}/\Gamma$. Also, objects
+of $\cat{C}$ will always have a capital greek letter in their notation, e.g.~as
+in $\ctxext{{\Gamma}{A}}{P}$. 
+\end{rmk}
+
 \section{Weakening systems}
 
 \begin{defn}
-A \emph{pre-weakening structure on a category $\cat{C}$} consists of a functor
-$W_f:\cat{C}/Y\to \cat{C}/X$ for every $f:X\to Y$ in $\cat{C}$ such 
+A \emph{pre-weakening structure on a pre-category $\cat{C}$} consists of a functor
+$W_A:\cat{C}/\Gamma\to \cat{C}/\ctxext{\Gamma}{A}$ for every $A:\ctxext{\Gamma}{A}\to \Gamma$ in $\cat{C}$ such 
 that
 \begin{enumerate}
-\item $W_{\catid{X}}=\catid{\cat{C}/X}$ for every object $X\in\cat{C}$.
-\item $W_{f\circ f'}=W_{f'}\circ W_f$ for every $f':X'\to X$ and $f:X\to Y$ in
-$\cat{C}$.
-\item $W_f$ preserves the final object, i.e.~$W_f(\catid{Y})=\catid{X}$.
-%\item $W^1_f\circ W^0_g= W^0_{W^1_f(g)}\circ W^1_f$.
+\item $W_{\catid{\Gamma}}=\catid{\cat{C}/\Gamma}$ for every object $\Gamma\in\cat{C}$.
+\item $W_{\ctxext{A}{P}}=W_P\circ W_A$ for every $P\in\cat{C}/\ctxext{\Gamma}{A}$ and $A\in\cat{C}/\Gamma$.
+\item $W_A$ preserves the final object, i.e.~$W_A(\catid{\Gamma})=\catid{\ctxext{\Gamma}{A}}$.
 \end{enumerate}
-A \emph{pre-weakening system} is a category together with a pre-weakening structure.
+A \emph{pre-weakening system} is a pre-category together with a pre-weakening structure.
 \end{defn}
 
 \begin{defn}
 A \emph{pre-weakening homomorphism} $F:\cat{C}\to\cat{D}$ between pre-weakening systems
 is a functor $F:\cat{C}\to\cat{D}$ such that the square
 \begin{equation*}
-\begin{tikzcd}
-\cat{C}/X
-  \arrow[r,"F/X"]
+\begin{tikzcd}[column sep=large]
+\cat{C}/\ctxext{\Gamma}{A}
+  \arrow[r,"F/\ctxext{\Gamma}{A}"]
   &
-\cat{D}/F(X)
+\cat{D}/F(\ctxext{\Gamma}{A})
   \\
-\cat{C}/Y
-  \arrow[u,"W_f"]
-  \arrow[r,swap,"F/Y"]
+\cat{C}/\Gamma
+  \arrow[u,"W_A"]
+  \arrow[r,swap,"F/\Gamma"]
   &
-\cat{D}/F(Y)
-  \arrow[u,swap,"W_{F(f)}"]
+\cat{D}/F(\Gamma)
+  \arrow[u,swap,"W_{F(A)}"]
 \end{tikzcd}
 \end{equation*}
-commutes for any $f:X\to Y$ in $\cat{C}$.
+commutes for any $A\in\cat{C}/\Gamma$.
 \end{defn}
 
 \begin{lem}
-Let $\cat{C}$ be a pre-weakening system. Then for any object $X$ of $\cat{C}$,
-the slice category $\cat{C}/X$ is also a pre-weakening system.
+Let $\cat{C}$ be a pre-weakening system. Then for any object $\Gamma$ of $\cat{C}$,
+the slice pre-category $\cat{C}/\Gamma$ is also a pre-weakening system, with the weakening
+structure given by $W(\cat{C}/\Gamma)_P=W(\cat{C})_P$ for each $P\in\cat{C}/\ctxext{\Gamma}{A}$
+and each $A\in\cat{C}/\Gamma$.
 \end{lem}
 
 \begin{defn}
@@ -46,13 +66,63 @@ pre-weakening homomorphism. A \emph{weakening homomorphism} is a pre-weakening
 homomorphism between weakening systems.
 \end{defn}
 
+\begin{rmk}
+In other words, a weakening system is a pre-weakening system with a weakening
+structure $W$ for which the square
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\cat{C}/\ctxext{{\Gamma}{B}}{Q}
+  \arrow[r,"W_A/\ctxext{B}{Q}"]
+  &
+\cat{C}/\ctxext{{\Gamma}{A}}{W_A(\ctxext{B}{Q})}
+  \\
+\cat{C}/\ctxext{\Gamma}{B}
+  \arrow[u,"W_Q"]
+  \arrow[r,swap,"W_A/B"]
+  &
+\cat{C}/\ctxext{{\Gamma}{A}}{W_A(B)}
+  \arrow[u,swap,"W_{W_A(Q)}"]
+\end{tikzcd}
+\end{equation*}
+for each $A,B\in\cat{C}/\Gamma$ and $Q:\cat{C}/\ctxext{\Gamma}{B}$. The objects part of this 
+property asserts that for any $k\in \cat{C}/\greek{E}$, the dotted arrows in the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=tiny]
+\bullet \arrow[dr,densely dotted,swap,near start,"(W_A/\ctxext{B}{Q})(W_Q(R))"] & & \bullet \arrow[dl,densely dotted,near start,"W_{(W_A/B)(Q)}((W_A/B)(R))"] & & & & & & & & & & \bullet \arrow[dl,"W_Q(R)"] \\
+& \bullet \arrow[dr,swap,"(W_A/B)(Q)"] & & \bullet \arrow[dl,"(W_A/B)(R)"] & & & & & & & & \bullet \arrow[dr,swap,"Q"] & & \bullet \arrow[dl,"R"] \\
+& & \bullet \arrow[d,swap,"W_A(B)"] & & & & & & & & & & \ctxext{\Gamma}{B} \arrow[d,"B"] \\
+& & \ctxext{\Gamma}{A} \arrow[rrrrrrrrrr,swap,"A"] & & & & & & & & & & \Gamma
+\end{tikzcd}
+\end{equation*}
+are equal.
+
+A useful special case of this property is where $B=\catid{\Gamma}$. Thus, if $W$ is
+a weakening system, then the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\cat{C}/\ctxext{\Gamma}{Q}
+  \arrow[r,"W_A/Q"]
+  &
+\cat{C}/\ctxext{{\Gamma}{A}}{W_A(Q)}
+  \\
+\cat{C}/\Gamma
+  \arrow[u,"W_Q"]
+  \arrow[r,swap,"W_A"]
+  &
+\cat{C}/\ctxext{\Gamma}{A}
+  \arrow[u,swap,"W_{W_A(Q)}"]
+\end{tikzcd}
+\end{equation*}
+commutes for every $A\in\cat{C}/\Gamma$ and $Q\in\cat{C}/\Gamma$. 
+\end{rmk}
+
 \begin{cor}
-For any object $X$ of a weakening system $\cat{C}$, the slice category
-$\cat{C}/X$ is a weakening system.
+For any object $\Gamma$ of a weakening system $\cat{C}$, the slice pre-category
+$\cat{C}/\Gamma$ is a weakening system.
 \end{cor}
 
-\begin{rmk}
-If the underlying category is a group, the axioms of a weakening system
+\begin{eg}
+If the underlying pre-category is a group, the axioms of a weakening system
 obtain the following form: There is a group homomorphism $W_x:G\to G$ for
 every $x\in G$, in such a way that $W_e=\catid{G}$ and $W_{xy}=W_y\circ W_x$
 for every $x,y\in G$, and for any $x,y\in G$ the diagram
@@ -68,8 +138,11 @@ G \arrow[u,"W_x"]
 G \arrow[u,swap,"W_{W_y(x)}"]
 \end{tikzcd}
 \end{equation*}
-is required to commute.
-\end{rmk}
+is required to commute. Thus, a weakening system on a group $G$ consists of
+a group homomorphism $W:\op G\to\mathrm{Aut}(G)$ such that $W_a\circ W_b=
+W_{W_a(b)}\circ W_a$. The latter requirement is satisfied if $b\cdot a=a\cdot W_a(b)$
+for every $a,b\in G$, or equivalently if $[b,a]=b^{-1}\cdot W_a(b)$.
+\end{eg}
 
 \begin{lem}
 For any group, conjugation is a weakening structure. Thus, any group is
@@ -94,73 +167,147 @@ G \arrow[u,swap,"\mathrm{conj}_{y^{-1}xy}"]
 commutes.
 \end{proof}
 
+\begin{comment}
 \begin{rmk}
 Similarly, every groupoid has a canonical weakening structure given by
 conjugation.
 \end{rmk}
+\end{comment}
+
+\begin{lem}
+Let $G$ be a graph, and let $\cat{C}_G$ be the free pre-category generated by
+$G$. A pre-weakening structure on $\cat{C}_G$ is determined by functors
+$W_e:\cat{C}_G/\Gamma\to\cat{C}_G/\Delta$ for every edge $e:\Delta\to \Gamma$ in $G$, with the
+property that $W_e(\catid{\Gamma})=\catid{\Delta}$. 
+
+A weakening structure on $\cat{C}_G$ is
+a pre-weakening structure on $\cat{C}_G$ such that the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\cat{C}_G/\greek{Z} \arrow[r,"W_e/(g\circ h)"] & \cat{C}_G/\mathrm{dom}(W_e(g\circ h)) \\
+\cat{C}_G/\greek{E} \arrow[u,"W_h"] \arrow[r,swap,"W_e/g"] & \cat{C}_G/\mathrm{dom}(W_e(g)) \arrow[u,swap,"W_{W_e(h)}"]
+\end{tikzcd}
+\end{equation*}
+commutes for every arrow $g:\greek{E}\to \Gamma$ in $\cat{C}_G$ and every two edges $e:\Delta\to \Gamma$ and
+$h:\greek{Z}\to \greek{E}$ in $G$.
+\end{lem}
+
+\begin{eg}
+Let $G$ be the graph consisting of one vertex $\ast$ and one edge $e:\ast\to\ast$.
+Then $\cat{C}_G/\ast=\N$. Then the only weakening structure on $\cat{C}/G$ is
+given by $W_e=\catid{\N}$. The reason is that 
+\end{eg}
+
+\begin{lem}
+Let $P$ be a pre-order. A pre-weakening structure on $P$ is determined by order
+preserving maps $W_{a,b}:{\downarrow}(b)\to{\downarrow}(a)$ satisfying
+$W_{a,b}(b)=a$, for every $a\leq b$, where
+${\downarrow}(x)$ is the set $\{y\in P\mid y\leq x\}$.
+
+A weakening structure on $P$ is a pre-weakening structure on $P$ such that the
+diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+{\downarrow}(c') \arrow[r,"W_{a,b}|_{{\downarrow}(c')}"] & {\downarrow}(W_{a,b}(c')) \\
+{\downarrow}(c) \arrow[u,"W_{c',c}"] \arrow[r,swap,"W_{a,b}|_{{\downarrow}(c)}"] & {\downarrow}(W_{a,b}(c)) \arrow[u,swap,"W_{W_{a,b}(c'),W_{a,b}(c)}"]
+\end{tikzcd}
+\end{equation*}
+for any $a\leq b$ and $c'\leq c\leq b$.
+\end{lem}
+
+\begin{eg}
+In a poset with meets, the functions $W_{a,b}:{\downarrow}(b)\to{\downarrow}(a)$
+given by $W_{a,b}(x):= a\land x$ assemble a weakening structure, because for
+any $a\leq b$ and $x,c'\leq c\leq b$ we have $a\land(c'\land x)=(a\land c')\land
+(a\land x)$.  
+\end{eg}
+
+\begin{eg}
+Consider the poset $(\N,\geq)$, which has a morphism from $a$ to $b$ if $a\geq b$.
+On this poset, we may consider the weakening structure defined by $W_{a,b}(x)=
+a+(x-b)$.
+\end{eg}
 
 \section{Weakening systems with term structure}
 \begin{defn}
-A \emph{category with a term structure} is a category $\cat{C}$ with a set $T(f)$ for every
-morphism $f$ of $\cat{C}$. A \emph{functor with term structure} from $\cat{C}$ to $\cat{D}$
-is a functor $F:\cat{C}\to\cat{D}$ with a function $T(f)\to T(F(f))$ for
-every $f:X\to Y$ in $\cat{C}$.
+A \emph{category with a term structure} is a pre-category $\cat{C}$ with a set $T(A)$ for every
+$A\in\cat{C}/\Gamma$ for every $\Gamma\in\cat{C}$. A \emph{functor with term structure} from $\cat{C}$ to $\cat{D}$
+is a functor $F:\cat{C}\to\cat{D}$ with a function $T(A)\to T(F(A))$ for
+every $A\in\cat{C}/\Gamma$, for every $\Gamma\in\cat{C}$.
 \end{defn}
 
 \begin{defn}
-Suppose $\cat{C}$ is a category with term structure, and $X$ is an object of $\cat{C}$. 
-Then $\cat{C}/X$ is a category with term structure, where $T_{\cat{C}/X}(g)=T_\cat{C}(g)$.
+Suppose $\cat{C}$ is a pre-category with term structure, and $\Gamma$ is an object of $\cat{C}$. 
+Then $\cat{C}/\Gamma$ is a pre-category with term structure, where $T_{\cat{C}/\Gamma}(A)=T_\cat{C}(A)$.
 \end{defn}
 
 \begin{defn}
 A \emph{weakening system with term term structure} is the same thing as a weakening system,
-except that the underlying category and the functors $W_f$ are required to
+except that the underlying pre-category and the functors $W_A$ are required to
 be functors with term term structure. The equalities are also required to hold on the term structure.
 \end{defn}
 
 \begin{cor}
-For any object $X$ of a weakening system with term structure, the slice category
-$\cat{C}/X$ is a weakening system with term structure.
+For any object $\Gamma$ of a weakening system with term structure, the slice pre-category
+$\cat{C}/\Gamma$ is a weakening system with term structure.
 \end{cor}
+
+\begin{eg}
+%For any group $G$ with weakening structure $W:\op{G}\to\mathrm{Aut}(G)$, a term 
+%structure is determined by a presheaf on $G/\ker(W)$.
+
+Let $G$ be a group, with the weakening structure given by conjugation. A term
+structure on $G$ is given by a set $X$ with a right $G$-action $\mu:\op G\times X\to X$.
+We take $T(a):= X$ for every $a\in G$.
+\end{eg}
 
 \section{Projection systems}
 \begin{defn}
 A \emph{pre-projection system} is a weakening system with term structure with an element
-$\tfid{f}\in T(W_f(f))$ for every $f:X\to Y$ in $\cat{C}$. 
+$\tfid{A}\in T(W_A(A))$ for every $A\in\cat{C}/\Gamma$ and $\Gamma\in\cat{C}$. 
 \end{defn}
 
 \begin{defn}
 A \emph{pre-projection homomorphism} $F:\cat{C}\to\cat{D}$ is a weakening homomorphism for which
 \begin{equation*}
-F(\tfid{f})=\tfid{F(f)}
+F(\tfid{A})=\tfid{F(A)}
 \end{equation*}
-for every $f:X\to Y$ in $\cat{C}$.
+for every $A\in\cat{C}/\Gamma$ and $\Gamma\in\cat{C}$.
 \end{defn}
 
 \begin{lem}
-For any object $X$ in a pre-projection system $\cat{C}$, the slice category
-$\cat{C}/X$ is a pre-projection system.
+For any object $\Gamma$ in a pre-projection system $\cat{C}$, the slice pre-category
+$\cat{C}/\Gamma$ is a pre-projection system.
 \end{lem}
 
 \begin{defn}
-A \emph{projection system} is a pre-projection system for which every $W_f$ is
+A \emph{projection system} is a pre-projection system for which every $W_A$ is
 a pre-projection homomorphism. A \emph{projection homomorphism} is a pre-projection homomorphism
 between projection systems.
 \end{defn}
 
 \begin{cor}
-For any object $X$ of a projection system $\cat{C}$, the slice category $\cat{C}/X$
+For any object $\Gamma$ of a projection system $\cat{C}$, the slice pre-category $\cat{C}/\Gamma$
 is a projection system.
 \end{cor}
+
+\begin{eg}
+Consider a group $G$ with a right $G$-set $X$. A projection structure on $(G,X)$
+consists of an element $\tfid{a}\in X$ for every $a\in G$, so that $\tfid{a}\cdot b=
+\tfid{b^{-1}ab}$ for every $a,b\in G$. 
+
+%For instance, this is the case if we take $X$ to be a pointed set with $\ast\in X$,
+%and take $\tfid{a}:=\ast$ for all $a\in G$.
+\end{eg}
 
 \section{Substitution systems}
 
 \begin{defn}
-A \emph{pre-substitution structure} on a category with term structure $\cat{C}$ consists
-of a functor with term structure $S_t:\cat{C}/X\to\cat{C}/Y$ for every $t\in T(f)$ and
-$f:X\to Y$, such that $S_t(\catid{X})=\catid{Y}$.
+A \emph{pre-substitution structure} on a pre-category with term structure $\cat{C}$ consists
+of a functor with term structure $S_x:\cat{C}/\ctxext{\Gamma}{A}\to\cat{C}/\Gamma$ for every $x\in T(A)$ and
+$A\in\cat{C}/\Gamma$, such that $S_x(\catid{\ctxext{\Gamma}{A}})=\catid{\Gamma}$.
 
-A \emph{pre-substitution system} is a category with term structure together with a
+A \emph{pre-substitution system} is a pre-category with term structure together with a
 pre-substitution structure. 
 \end{defn}
 
@@ -169,25 +316,25 @@ A \emph{pre-substitution homomorphism} $F:\cat{C}\to\cat{D}$ is a functor with t
 which the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\cat{C}/X
-  \arrow[r,"F/X"]
-  \arrow[d,swap,"S_t"]
+\cat{C}/\ctxext{\Gamma}{A}
+  \arrow[r,"F/\ctxext{\Gamma}{A}"]
+  \arrow[d,swap,"S_x"]
   &
-\cat{D}/F(X)
-  \arrow[d,"S_{F(t)}"]
+\cat{D}/F(\ctxext{\Gamma}{A})
+  \arrow[d,"S_{F(x)}"]
   \\
-\cat{C}/Y
-  \arrow[r,swap,"F/Y"]
+\cat{C}/\Gamma
+  \arrow[r,swap,"F/\Gamma"]
   &
-\cat{D}/F(Y)
+\cat{D}/F(\Gamma)
 \end{tikzcd}
 \end{equation*}
-commutes.
+commutes for every $x\in T(A)$ and $A\in\cat{C}/\Gamma$.
 \end{defn}
 
 \begin{lem}
-For any object $X$ of a pre-substitution system $\cat{C}$, the slice category
-$\cat{C}/X$ is a pre-substitution system.
+For any object $\Delta$ of a pre-substitution system $\cat{C}$, the slice pre-category
+$\cat{C}/\Delta$ is a pre-substitution system.
 \end{lem}
 
 \begin{defn}
@@ -197,13 +344,67 @@ pre-substitution homomorphism between substitution systems.
 \end{defn}
 
 \begin{cor}
-For any object $X$ of a substitution system, the slice category $\cat{C}/X$
+For any object $\Delta$ of a substitution system, the slice pre-category $\cat{C}/\Delta$
 is a substitution system.
 \end{cor}
 
+\begin{rmk}
+The condition that every $S_x$ is a substitution homomorphism, asserts that
+the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\cat{C}/\ctxext{{{\Gamma}{A}}{P}}{Q}
+  \arrow[r,"S_x/\ctxext{P}{Q}"]
+  \arrow[d,swap,"S_y"]
+  &
+\cat{C}/\ctxext{{\Gamma}{S_x(P)}}{S_x(Q)}
+  \arrow[d,"S_{S_x(y)}"]
+  \\
+\cat{C}/\ctxext{{\Gamma}{A}}{P}
+  \arrow[r,swap,"S_x/P"]
+  &
+\cat{C}/\ctxext{\Gamma}{S_x(P)}
+\end{tikzcd}
+\end{equation*}
+commutes for every $y\in T(Q)$.
+\end{rmk}
+
+\begin{eg}
+Let $G$ be a group and let $H$ be a set, forming a category with term 
+structure of which $T(a)=H$ for every $a\in G$. A substitution
+system on $(G,H)$ consists of a function $\sigma_G : H\times G\to G$ and
+a function $\sigma_H:H\times H\to H$, for which the diagrams
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+G \arrow[r,"\sigma_G(h)"]
+  \arrow[d,swap,"\sigma_G(k)"]
+  &
+G \arrow[d,"{\sigma_G(\sigma_H(h,k))}"]
+  \\
+G \arrow[r,swap,"\sigma_G(h)"] 
+& G
+\end{tikzcd}
+\end{equation*}
+and
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+H \arrow[r,"\sigma_H(h)"]
+  \arrow[d,swap,"\sigma_H(k)"]
+  &
+H \arrow[d,"{\sigma_H(\sigma_H(h,k))}"]
+  \\
+H \arrow[r,swap,"\sigma_H(h)"]
+  &
+H
+\end{tikzcd}
+\end{equation*}
+commute for every $h,k\in H$. 
+\end{eg}
+
 \section{E-systems}
 \begin{defn}
-An \emph{E-system} is a category with term structure with
+\label{defn:esystems}
+An \emph{E-system} is a pre-category $\cat{C}$ with term structure with
 \begin{itemize}
 \item a weakening structure $W$,
 \item the structure $\tfid{}$ of a projection system,
@@ -211,71 +412,390 @@ An \emph{E-system} is a category with term structure with
 \end{itemize}
 such that
 \begin{enumerate}
-\item each $W_f$ is a substitution homomorphism;
-\item each $S_t$ is a projection homomorphism;
-\item $S_t(\tfid{f})=t$ for any $t\in T(f)$ and $f:X\to Y$;
-\item $S_t\circ W_f=\catid{\cat{C}/Y}$ for any $t\in T(f)$ and $f:X\to Y$;
-\item $S_{\tfid{f}}\circ W_{W_f(f)}=\catid{\cat{C}/X}$ for any $f:X\to Y$.
+\item each $W_A$ is a substitution homomorphism, i.e.~the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\cat{C}/\ctxext{{\Gamma}{B}}{Q}
+  \arrow[r,"W_A/\ctxext{B}{Q}"]
+  \arrow[d,swap,"S_y"]
+  &
+\cat{C}/\ctxext{{{\Gamma}{A}}{W_A(B)}}{W_A(Q)}
+  \arrow[d,"S_{W_A(y)}"]
+  \\
+\cat{C}/\ctxext{\Gamma}{B}
+  \arrow[r,swap,"W_A/B"]
+  &
+\cat{C}/\ctxext{{\Gamma}{A}}{W_A(B)}
+\end{tikzcd}
+\end{equation*}
+commutes for every $Q\in\cat{C}/\ctxext{\Gamma}{B}$, $B\in\cat{C}/\Gamma$ and each 
+$y\in T(Q)$; 
+\item each $S_x$ is a projection homomorphism, i.e.~the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\cat{C}/\ctxext{{\Gamma}{A}}{P}
+  \arrow[r,"S_x/P"]
+  \arrow[d,swap,"W_Q"]
+  &
+\cat{C}/\ctxext{\Gamma}{S_x(P)}
+  \arrow[d,"W_{S_x(Q)}"]
+  \\
+\cat{C}/\ctxext{{{\Gamma}{A}}{P}}{Q}
+  \arrow[r,swap,"S_x/\ctxext{P}{Q}"]
+  &
+\cat{C}/\ctxext{{\Gamma}{S_x(P)}}{S_x(Q)}
+\end{tikzcd}
+\end{equation*}
+commutes for every $Q\in\cat{C}/\ctxext{{\Gamma}{A}}{P}$, and we have
+\begin{equation*}
+S_x(\tfid{Q})=\tfid{S_x(Q)}
+\end{equation*}
+for every $Q\in\cat{C}/\ctxext{{\Gamma}{A}}{P}$;
+\item $S_x(\tfid{A})=x$ for any $x\in T(A)$ and $A\in\cat{C}/\Gamma$;
+\item \label{tTf:StWf_id} $S_x\circ W_A=\catid{\cat{C}/\Gamma}$ for any $x\in T(A)$ and $A\in\cat{C}/\Gamma$;
+\item \label{f:SidfWff_id} $S_{\tfid{A}}\circ W_A/A=\catid{\cat{C}/\ctxext{\Gamma}{A}}$ for any $A\in\cat{C}/\Gamma$.
 \end{enumerate}
-\end{defn}
-
-\begin{cor}
-For any object $X$ of an E-system $\cat{C}$, the slice category $\cat{C}/X$
-is an E-system.
-\end{cor}
-
-\begin{defn}
 An \emph{E-homomorphism} $F:\cat{C}\to\cat{D}$ is a functor which is both a projection
 homomorphism and a substitution homomorphism.
 \end{defn}
 
+\begin{cor}
+For any object $\Delta$ of an E-system $\cat{C}$, the slice pre-category $\cat{C}/\Delta$
+is an E-system.
+\end{cor}
+
+\begin{rmk}[Needs more precision]
+Consider the category $E$ generated by the graph consisting of the objects of 
+the underlying category of an $E$-system $\mathcal{E}$ as edges, and the morphisms
+$S_t:X\to Y$ and $W_A:Y\to X$ as edges, subject to the axioms of an $E$-systems.
+ 
+Any morphism of $E$ can be rewritten in a unique way
+as a composition $\tilde S\circ \tilde W$, where $\tilde S$ is a morphism in
+substitution-normal form, $\tilde W$ is in weakening normal form, every term
+expression is in normal form, and where
+each occurence of $S_x\circ W_A$ and $S_{\tfid{A}}\circ W_A/A$ is eliminated.
+\end{rmk}
+
+\begin{defn}
+An E-system of which the underlying category has a terminal object $\emptyc$, is said to
+be \emph{E-system with empty context}. An E-homomorphism is said to preserve the
+empty context when it preserves the terminal object $\emptyc$ on the nose.
+\end{defn}
+
+\begin{rmk}
+When there is a terminal object, we get a weakening functor $W_\Gamma:\cat{C}\to
+\cat{C}/\Gamma$ for every object $\Gamma$ of $\cat{C}$; we get a set $T(\Gamma)$;
+and for $i\in T(\Gamma)$ we get substitutions $S_i:\cat{C}/\Gamma\to\cat{C}$. 
+\end{rmk}
+
+\section{Properties of E-systems}
+
+\begin{defn}
+For every $A,B\in\cat{C}/\Gamma$ we define the set 
+\begin{equation*}
+\thom{A}{B}:=T(W_A(B)).
+\end{equation*} 
+\end{defn}
+
+\begin{rmk}
+Note that $\thom{\catid{\Gamma}}{A}=T(A)$ for any $A\in\cat{C}/\Gamma$, 
+because we have $W_{\catid{\ctxext{\Gamma}{A}}}=\catid{\cat{C}/\ctxext{\Gamma}{A}}$.
+
+Note also that $\thom{\ctxext{A}{P}}{B}=\thom{P}{W_A(B)}$ for any $P\in\cat{C}/\ctxext{\Gamma}{A}$
+and $B\in\cat{C}/\Gamma$, because $W_{\ctxext{A}{P}}=
+W_P\circ W_A$.
+\end{rmk}
+
+\begin{defn}
+Let $A,B\in\cat{C}/\Gamma$.
+For any $f\in\thom{A}{B}$ we define the pre-composition E-homomorphism
+\begin{equation*}
+f_\ast := S_f\circ W_A/B : \cat{C}/\ctxext{\Gamma}{B}\to\cat{C}/\ctxext{\Gamma}{A}.
+\end{equation*}
+Furthermore, for $g\in\thom{B}{C}$ we may consider $W_B(C)\in\cat{C}/\ctxext{\Gamma}{B}$ as a morphism from $W_B(C)$ to $\catid{\ctxext{\Gamma}{B}}$. Therefore, $f_\ast$ acts on the terms of
+$W_B(C)$, so it makes sense to define $g\circ f:=f_\ast(g)$. 
+\end{defn}
+
+Note that $g\circ f\in T(S_f(W_A/B(W_B(C))))$, whereas we would like that
+$g\circ f\in\thom{A}{C}$. The following lemma confirms this:
+
+\begin{lem}
+Suppose $A$ and $B$ are morphisms of the underlying pre-category of $\mathcal{E}$
+with the same codomain, and let $f\in\thom{A}{B}$. Then we have 
+\begin{equation*}
+S_f\circ (W_A/B)\circ W_B=W_A.
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+Since weakening is a weakening homomorphism, we have
+\begin{equation*}
+S_f\circ (W_A/B)\circ W_B=S_f\circ W_{W_A(B)}\circ W_A
+\end{equation*}
+By \autoref{tTf:StWf_id} of \autoref{defn:esystems} it we get that
+\begin{equation*}
+S_f\circ W_{W_A(B)}\circ W_A=W_A.\qedhere
+\end{equation*}
+\end{proof}
+
+\begin{rmk}
+Note that \autoref{f:SidfWff_id} of \autoref{defn:esystems} asserts precisely
+that ${(\tfid{A})}_\ast=\catid{\cat{C}/\Delta}$ for any $A:\Delta\to \Gamma$ in $\cat{C}$. In
+particular, it follows that $g\circ\tfid{A}=g$ for any $g\in\thom{A}{B}$
+\end{rmk}
+
+\begin{lem}
+For any $f\in\thom{A}{B}$ we have $\tfid{B}\circ f=f$.
+\end{lem}
+
+\begin{proof}
+We have
+\begin{equation*}
+\tfid{B}\circ f=S_f(W_A(\tfid{B}))=S_f(\tfid{W_A(B)})=f.\qedhere
+\end{equation*}
+\end{proof}
+
+\begin{lem}
+For any $f\in\thom{A}{B}$ and $g\in\thom{B}{C}$ we have $f_\ast\circ g_\ast=(g\circ f)_\ast$. 
+\end{lem}
+
+\begin{proof}
+\begin{align*}
+f_\ast\circ g_\ast & = S_f\circ (W_A/B) \circ S_g \circ (W_B/C)\\
+& = S_f\circ S_{W_A(g)}\circ(W_A/\ctxext{B}{W_B(C)})\circ (W_B/C) \\
+& = S_{S_f(W_A(g))}\circ (S_f/W_A(W_B(C)))\circ (W_A/\ctxext{B}{W_B(C)}) \circ W_B/C \\
+& = S_{S_f(W_A(g))}\circ ((S_f\circ (W_A/B) \circ W_B)/C) \\
+& = S_{S_f(W_A(g))}\circ ((S_f\circ W_{W_A(B)}\circ W_A)/C) \\
+& = S_{S_f(W_A(g))}\circ W_A/C \\
+& = (g\circ f)_\ast.\qedhere
+\end{align*}
+\end{proof}
+
+\begin{cor}
+Composition is associative. Thus, we have constructed a pre-category for each
+object $\Gamma$, with the same objects as $\cat{C}/\Gamma$, of which the hom-sets
+are the sets $\thom{A}{B}$. 
+\end{cor}
+
+\begin{rmk}
+Since any E-homomorphism is both a substitution homomorphism and a weakening
+homomorphism, it follows immediately that any E-homomorphism preserves any
+$f_\ast$, i.e.~for any $f\in\thom{A}{B}$ in $\mathcal{E}$ and any E-homomorphism
+$F:\mathcal{E}\to\mathcal{D}$, the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\mathcal{E}/\ctxext{\Gamma}{A} \arrow[r,"F/\ctxext{\Gamma}{A}"] & \mathcal{D}/F(\ctxext{\Gamma}{A})
+  \\
+\mathcal{E}/\ctxext{\Gamma}{B} \arrow[u,"f_\ast"] \arrow[r,swap,"F/\ctxext{\Gamma}{B}"] & \mathcal{D}/F(\ctxext{\Gamma}{B}) \arrow[u,swap,"F(f)_\ast"]
+\end{tikzcd}
+\end{equation*}
+commutes. This applies to weakening, substitution and pre-composition.
+\end{rmk}
+
+\begin{cor}
+Suppose $F:\mathcal{E}\to\mathcal{D}$ is an E-homomorphism. Then $F$ induces
+a functor $\mathbb{T}_F:\mathbb{T}_\mathcal{E}\to \mathbb{T}_\mathcal{D}$. 
+\end{cor}
+
+\subsection{Pairing and the projections}
+
+\begin{defn}
+Let $x\in T(A)$ and $u\in T(S_x(P))$ for $A\in\cat{C}/\Gamma$ and $P\in\cat{C}/\ctxext{\Gamma}{A}$. 
+We define
+\begin{equation*}
+\tmext{x}{u}\defeq S_u(S_x(\tfid{\ctxext{A}{P}}))\in T(\ctxext{A}{P}).
+\end{equation*}
+\end{defn}
+
+\begin{thm}
+Let $x\in T(A)$ and $u\in T(S_x(P))$ for $A\in\cat{C}/\Gamma$ and $P\in\cat{C}/\ctxext{\Gamma}{A}$.
+Then we have
+\begin{equation*}
+S_{\tmext{x}{u}}=S_u\circ (S_x/P):\cat{C}/\ctxext{\Gamma}{{A}{P}}\to\cat{C}/\Gamma
+\end{equation*}
+\end{thm}
+
+\begin{defn}
+Let $A\in\cat{C}/\Gamma$ and $P\in\cat{C}/\ctxext{\Gamma}{A}$. We define
+\begin{align*}
+\cprojfstf{A}{P} & \defeq W_P(\tfid{A})\in\thom{\ctxext{A}{P}}{A}\\
+\cprojsndf{A}{P} & \defeq \tfid{P}\in\thomd{\cprojfstf{A}{P}}{\ctxext{A}{P}}{P}
+\end{align*}
+\end{defn}
+
+\begin{lem}
+Let $x\in T(A)$ and $u\in T(S_x(P))$. then we have
+\begin{align*}
+S_{\tmext{x}{u}}(\cprojfstf{A}{P}) & \jdeq x\\
+S_{\tmext{x}{u}}(\cprojsndf{A}{P}) & \jdeq u.
+\end{align*}
+Also, for $w\in T(\ctxext{A}{P})$ we have
+\begin{equation*}
+\tmext{S_w(\cprojfstf{A}{P})}{S_w(\cprojsndf{A}{P})} \jdeq w.
+\end{equation*}
+\end{lem}
+
+\begin{lem}
+For any $x\in T(A)$, $u\in T(S_x(P))$ and $v\in T(S_{\tmext{x}{u}}(Q))$ we have
+\begin{equation*}
+\tmext{{x}{u}}{v}\jdeq \tmext{x}{{u}{v}}\in T(\ctxext{{A}{P}}{Q}).
+\end{equation*}
+Also, we have
+\begin{align*}
+\cprojfstf{A}{P}\circ\cprojfstf{\ctxext{A}{P}}{Q} & \jdeq\cprojfstf{A}{\ctxext{P}{Q}} \\
+\cprojsndf{A}{P}\circ\cprojfstf{\ctxext{A}{P}}{Q} & \jdeq \cprojfstf{P}{Q}\circ\cprojsndf{A}{\ctxext{P}{Q}} \\
+\cprojsndf{\ctxext{A}{P}}{Q} & \jdeq \cprojsndf{P}{Q}\circ\cprojsndf{A}{\ctxext{P}{Q}}.
+\end{align*}
+\end{lem}
+
+\begin{thm}
+Let $F:\mathcal{E}\to\mathcal{D}$ be an E-homomorphism and let $x\in T(A)$ and
+$u\in T(S_x(P))$. Then we have
+\begin{equation*}
+F(\tmext{x}{u})\jdeq \tmext{F(x)}{F(u)}.
+\end{equation*}
+Also, we have
+\begin{align*}
+F(\cprojfstf{A}{P}) & \jdeq \cprojfstf{F(A)}{F(P)} \\
+F(\cprojsndf{A}{P}) & \jdeq \cprojsndf{F(A)}{F(P)}.
+\end{align*}
+\end{thm}
+
+\begin{lem}
+Let $f\in\thom{A}{\ctxext{B}{Q}}$ Then we have
+\begin{equation*}
+f \jdeq \tmext{\jcomp{A}{f}{\cprojfstf{B}{Q}}}{\jcomp{A}{f}{\cprojsndf{B}{Q}}}.
+\end{equation*}
+Alternatively, when $f_0\in\thom{A}{B}$ and $f_1\in\thom{A}{\jcomp{A}{f}{Q}}$,
+then we have $\tmext{f_0}{f_1}\in\thom{A}{\ctxext{B}{Q}}$ and
+\begin{align*}
+\jcomp{A}{\tmext{f_0}{f_1}}{\cprojfstf{B}{Q}} & \jdeq f_0 \\
+\jcomp{A}{\tmext{f_0}{f_1}}{\cprojsndf{B}{Q}} & \jdeq f_1.
+\end{align*}
+\end{lem}
+
+\begin{thm}
+Precomposition with $\cprojfstf{A}{P}$ is weakening by $P$, i.e.
+\begin{equation*}
+S_{\cprojfstf{A}{P}}\circ W_{\ctxext{A}{P}}\jdeq W_P.
+\end{equation*}
+\end{thm}
+
+\section{Natural transformations of E-homomorphisms}
+\begin{rmk}
+When $\mathcal{E}$ is an E-system with empty context, then we have the category
+structure on the contexts given by $\thom{\Gamma}{\Delta}= T(W_\Gamma(\Delta))$.
+\end{rmk}
+
+\begin{defn}
+A \emph{natural transformation} of E-homomorphisms from $F:\mathcal{E}\to\mathcal{D}$
+to $G:\mathcal{E}\to\mathcal{D}$ preserving the empty context consists of
+\begin{enumerate}
+\item A t-morphism $\tau0_A\in\thom{F(\Gamma)}{G(\Gamma)}$ for every $\Gamma\in\mathcal{E}$.
+\item A commuting square square
+\begin{equation*}
+\begin{tikzcd}
+F(A) \arrow[r,"\tau1_A"] \arrow[d,twoheadrightarrow] & G(A) \arrow[d,twoheadrightarrow] \\
+F(\Gamma) \arrow[r,swap,"\tau0_\Gamma"] & G(\Gamma)
+\end{tikzcd}
+\end{equation*}
+for every family $P$ over $A$ of solid arrows, such that the diagram
+\begin{equation*}
+\begin{tikzcd}
+F(A) \arrow[r,"\tau1_A"] & G(A) \\
+F(\Gamma) \arrow[r,swap,"\tau0_\Gamma"] \arrow[densely dotted,u,"F(x)"] & G(\Gamma) \arrow[densely dotted,u,swap,"G(x)"]
+\end{tikzcd}
+\end{equation*}
+commutes for every $x\in T(A)$.
+\end{enumerate}
+such that
+\begin{enumerate}
+\item the square
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+W_{F(A)}(F(B)) \arrow[r,"W_{F(A)}(\tau1_B)"] \arrow[d,->>] & W_{G(A)}(G(B)) \arrow[d,->>] \\
+F(A) \arrow[r,"\tau1_A"] & G(A)
+\end{tikzcd}
+\end{equation*}
+commutes for every $A,B\in\mathcal{E}/\Gamma$. Note that 
+\begin{align*}
+W_{F(A)}(\tau1_B)
+  & \in 
+T(W_{F(A)}(W_{F(B)}(G(B))))
+  \\
+  & =
+T(W_{W_{F(A)}(F(B))}(W_{F(A)}(G(B))))
+\end{align*}
+\end{enumerate}
+\end{defn}
+
+\section{Indexed E-systems}
+\begin{defn}
+Let $\cat{A}$ be a category. An $\cat{A}$-indexed E-system is an internal
+E-system in the category $Psh(\cat{A})$.
+\end{defn}
+
+\section{Examples of adjunctions}
+
+\begin{lem}
+For each $A\in\mathcal{E}/\Gamma$, $W_A$ is left adjoint to $\Pi_A$. 
+\end{lem}
+
+\begin{proof}
+The unit $\eta:1_{\cat{C}/\ctxext{\Gamma}{A}}\Rightarrow W_A\circ\Pi_A$ is given by
+\begin{equation*}
+\eta_P:\lam{f}{x} ev(\lambda(f),x)
+\end{equation*}
+$\eta_P\in\thom{P}{W_A(\Pi_A(P))}$
+\end{proof}
+
 \begin{comment}
 \begin{lem}
-Suppose $\cat{D}$ is a retract of a category $\cat{C}$, i.e. there are functors
+Suppose $\cat{D}$ is a retract of a pre-category $\cat{C}$, i.e. there are functors
 $S:\cat{D}\to\cat{C}$ and $R:\cat{C}\to\cat{D}$ with a natural isomorphism
 $\tau:R\circ S \simeq \catid{\cat{D}}$, and suppose that $\cat{C}$ is a weakening
 category. Then $\cat{D}$ is a weakening system too.
 \end{lem}
 
 \begin{proof}
-Let $f:X\to Y$ be a morphism in $\cat{D}$. Then we define $W_f$ to be the
+Let $f:\Delta\to \Gamma$ be a morphism in $\cat{D}$. Then we define $W_f$ to be the
 composition
 \begin{equation*}
 \begin{tikzcd}[column sep=3.2em]
-\cat{D}/Y
-  \arrow[r,"S/Y"]
+\cat{D}/\Gamma
+  \arrow[r,"S/\Gamma"]
   &
-\cat{C}/S(Y)
+\cat{C}/S(\Gamma)
   \arrow[r,"W_{S(f)}"]
   &
-\cat{C}/S(X)
-  \arrow[r,"R/S(X)"]
+\cat{C}/S(\Delta)
+  \arrow[r,"R/S(\Delta)"]
   &
-\cat{D}/R(S(X))
-  \arrow[r,"\tau_X\circ{-}"]
+\cat{D}/R(S(\Delta))
+  \arrow[r,"\tau_\Delta\circ{-}"]
   &
-\cat{D}/X
+\cat{D}/\Delta
 \end{tikzcd}
 \end{equation*}
 We first verify whether this assembles a pre-weakening structure on $\cat{D}$.
 \begin{enumerate}
-\item Let $X$ be an object of $\cat{D}$. Then $W_{\catid{X}}$ is the composition
+\item Let $\Delta$ be an object of $\cat{D}$. Then $W_{\catid{\Delta}}$ is the composition
 \begin{equation*}
 \begin{tikzcd}[column sep=3.2em]
-\cat{D}/X
-  \arrow[r,"S/X"]
+\cat{D}/\Delta
+  \arrow[r,"S/\Delta"]
   &
-\cat{C}/S(X)
-  \arrow[r,"R/S(X)"]
+\cat{C}/S(\Delta)
+  \arrow[r,"R/S(\Delta)"]
   &
-\cat{D}/R(S(X))
-  \arrow[r,"{-}\circ\tau_X"]
+\cat{D}/R(S(\Delta))
+  \arrow[r,"{-}\circ\tau_\Delta"]
   &
-\cat{D}/X
+\cat{D}/\Delta
 \end{tikzcd}
 \end{equation*}
-This functor maps $g:X'\to X$ consecutively to $S(g)$, to $R(S(g))$, to
-$\tau_X\circ R(S(g))$. Note that $\tau_X\circ R(S(g))=g\circ \tau_{X'}$ by
+This functor maps $g:\Delta'\to \Delta$ consecutively to $S(g)$, to $R(S(g))$, to
+$\tau_\Delta\circ R(S(g))$. Note that $\tau_\Delta\circ R(S(g))=g\circ \tau_{\Delta'}$ by
 naturality.
 \end{enumerate}
 \end{proof}
