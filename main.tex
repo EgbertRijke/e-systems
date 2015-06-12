@@ -6,12 +6,162 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{An essentially algebraic formulation of dependent type theory}
-\author{Egbert Rijke}
+\author{Egbert Rijke\\ {\sc Carnegie Mellon University}}
 \date{\today}
 
 \begin{document}
 
 \maketitle
+
+\begin{abstract}
+We present an algebraic formulation of dependent type theory with
+three sorts for contexts, families and terms, with finitely many operations
+between them and finitely many equality axioms. Algebras for this theory are
+called E-systems. We then show that there is a full and faithful functor
+from Voevodsky's B-systems into E-systems, of which the image is the category
+of stratified E-systems. 
+\end{abstract}
+
+\section{Introduction}
+
+
+When type theory is regarded as a foundational system for doing mathematics,
+we would first of all like it to have finitely many axioms which do not depend
+on any presumed mathematical structures. In particular, natural numbers should
+not be needed to state what type dependency is. Nevertheless, many modern
+accounts on what type theory is, do rely on the existence of the natural
+numbers in the meta-theory. The type theory of \cite{TheBook} uses an infinte
+hierarchy $\UU_0$, $\UU_1$, $\UU_2$, \ldots of universes, as do the type
+type theories of \Coq and \Agda. Likewise, models of type theory considered
+by Cartmell, Voevodsky and Garner do rely on the natural numbers. 
+
+That leaves Dybjer's categories with families as 
+
+\subsection*{Existing models of type theory}
+
+\subsection*{Essentially algebraic theories}
+An essentially algebraic theory is an equational theory of partial operations
+which may be ordered, and of which the domain of each operation is declared by 
+equations on the preceeding operations. The concept of essentially algebraic
+theories is due to Freyd, who writes that a critical feature of essentially
+algebraic theories is that their models are closed under 
+colimits \cite{Aspects_of_topoi}. 
+
+In \cite{Adamek_Locally}, Ad\'amek and Rosicky
+define an essentially algebraic theory to be a list 
+\begin{equation*}
+(S,\Sigma,a,d,c,E,\Sigma_t,\mathrm{Def})
+\end{equation*} 
+consisting of a set $S$ of sorts, a set $\Sigma$ of operation symbols,
+an arity function $a:\Sigma\to\mathbf{Set}$ specifying the arity of each operation
+symbol, a map $d_\sigma:a(\sigma)\to S$
+for each $\sigma\in\Sigma$ specifying the sort of the domain of $\sigma$,
+a map $c:\Sigma\to S$ specifying the sort of the codomain of each operation
+symbol,
+a set $E$ of $\Sigma$-equations, a set $\Sigma_t\subseteq\Sigma$ of total
+operation symbols, and a function $\mathrm{Def}$ assigning to each operation
+symbol $\sigma:\Pi_{i\in a(\sigma)} s_i\to s$ in $\Sigma-\Sigma_t$ a set
+$\mathrm{Def}(\sigma)$ of $\Sigma_t$-equations in the standard variables
+$x_i\in V_s$, $i\in a(\sigma)$. Subsequently, they show that a category of models of an
+essentially algebraic theory is the same thing as a locally presentable 
+category.
+
+Every essentially algebraic theory $\mathbb{T}$ in the sense of Ad\'amek and Rosicky
+determines a syntactic category $\mathcal{C}_\mathbb{T}$, which has all finite
+limits, and $\mathbb{T}$ can be seen as a presentation of the category
+$\mathcal{C}_\mathbb{T}$. Then there is a natural equivalence between the
+category of models of $\mathbb{T}$ in a category $\cat{C}$ with finite limits,
+and the category of finite limit preserving functors $\mathcal{C}_\mathbb{T}\to
+\cat{C}$. Thus, in this sense an essentially algebraic theory \emph{is} just
+a category with finite limits. 
+
+Because essentially algebraic theories have a pleasant theory of models, 
+phrasing a theory as an essentially algebraic one gives immediate access to
+a well-developed toolbox which can be used in its study. Therefore, recognizing
+that the theory of type dependency is essentially algebraic is a critical step
+in the development of its theory of models.
+
+\subsection*{Logical frameworks}
+
+\subsection*{The essentially algebraic theory of E-systems}
+
+\subsection*{Overview and conventions}
+In \autoref{sec:esys_defn}, we give the categorical definition of E-system in 
+several stages. First we define weakening systems, then projection systems and
+substitution systems, and finally we bundle them together into the definition
+of E-systems. The structure of the definition of weakening systems is 
+prototypcial: we first define the notion of pre-weakening systems, which are
+categories that come with a pre-weakening structure; then we define the notion
+of pre-weakening homomorphism, which is a functor preserving the weakening
+structure and we note that it makes sense to ask for the property that the
+functors of which the weakening system consists, are also pre-weakening
+homomorphisms; and finally, adding this requirement will be give the definition
+of weakening systems. We go through this process for each of the definitions
+of weakening systems, projection systems, substitution systems and E-systems.
+
+Throughout this section, our focus is on (set-valued) models of the essentially algebraic
+theory of type dependency, and in fact we shall not give the syntactic
+presentation of the theory. A syntactic presentation of type theory in the
+usual type theoretic style and models in arbitrary categories with finite limits
+have been presented by the author during the Homotopy Type Theory workshop in
+Oxford, November 2014%
+\footnote{See \url{http://www.qmac.ox.ac.uk/events/Talk\%20slides/Egbert\%20Rijke.pdf}}.
+
+In \autoref{sec:esys_props}, we derive several properties from the axioms of
+E-systems. This section is meant to give some insight in what can generally be
+done with E-systems, and provide some of the intuition behind the constructions
+in \autoref{sec:esys_compared}.
+
+Although we have introduced a notion of E-homomorphism, a better behaved category
+of E-systems is the one where E-homomorphisms lift factorizations. The condition
+that a functor lifts factorizations is also algebraic, so we still have an
+essentially algebraic theory of E-systems if we require this.
+In \autoref{sec:esys_compared}, where we introduce the category of E-systems
+with E-homomorphisms lifting factorizations, we construct an embedding from Voevodsky's
+B-systems into E-systems and prove that its image is the (full) subcategory
+of stratified E-systems. 
+
+\begin{rmk}
+In the present article we use $\jdeq$ for equality, because the equality we
+consider here will interpret the judgmental equality of type theory, 
+and we wish to reserve
+the more convenient symbol $=$ for the internal equality of E-systems, i.e.~for
+the identification types, as in \cite{TheBook}. 
+\end{rmk}
+
+\begin{rmk}
+Recall that the slice pre-category $\cat{C}/\Gamma/(\Delta,f)$ is isomorphic to the slice pre-category
+$\cat{C}/\Delta$, in the essentially algebraic theory of pre-categories. In the following,
+we shall usually identify these two categories. Recall also that for every functor
+$F:\cat{C}\to\cat{D}$ and every object $\Delta$ of $\cat{C}$, there is a functor
+$F/\Delta:\cat{C}/\Delta\to \cat{D}/F(\Delta)$ given by the action on morphisms of $F$. 
+\end{rmk}
+
+\begin{rmk}
+It will be convenient to denote the objects of the category $\cat{C}$ with capital
+greek letters $\Gamma$, $\Delta$, \ldots, and the morphisms by capital latin letters
+$A$, $B$, $P$, $Q$, etcetera. When $A$ is a morphism into $\Gamma$, we will denote
+its codomain by $\ctxext{\Gamma}{A}$. When $A$ is a morphism into $\Gamma$ and
+$P$ is a morphism into $\ctxext{\Gamma}{A}$, it will be convenient to denote the
+composition of $P$ with $A$ by $\ctxext{A}{P}$ as well. Note that $\ctxext{A}{P}$
+is indeed the domain of $P$ in the slice category $\cat{C}/\Gamma$. Also, objects
+of $\cat{C}$ will always have a capital greek letter in their notation, e.g.~as
+in $\ctxext{{\Gamma}{A}}{P}$. 
+\end{rmk}
+
+\subsection*{Acknowledgements}
+Several people have been indispensible throughout the research process.
+I would like to thank 
+Richard Garner for the early discussions on the inference rules of type 
+dependency we had in Barcelona and in Paris; 
+Joachim Kock for the many fruitful discussions and for hosting me at the Universitat
+Aut\`onoma de Barcelona during the year 2013-2014;
+Steve Awodey for sharing many insights and useful advice which lead to the
+definition of an E-system in arbitrary categories with finite limits;
+and Vladimir Voevodsky for inviting me to present E-systems at the Homotopy Type
+Theory workshop in Oxford (November 2014) and to visit the Institute for Advanced 
+Study in Princeton (March 2015), where the definition presented here was
+discovered.
 
 %\tableofcontents
 
@@ -314,10 +464,8 @@ $ft^{m-n}:=ft^{n-1}\circ\cdots\circ ft^m(Y)=X$.
 
 \input{weakeningcats}
 
-\begin{comment}
 \bibliographystyle{plain}
 %\phantomsection\addcontentsline{toc}{section}{References}
 \bibliography{References/refs}
-\end{comment}
 
 \end{document}

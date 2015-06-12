@@ -1,6 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% PACKAGES
 
+%\usepackage[a4paper,margin=1cm,footskip=.5cm]{geometry}
+\usepackage{fullpage}
+
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
@@ -467,6 +470,15 @@
 
 %% Used for extra wide diagrams, e.g. when the label is too large otherwise.
 \tikzset{commutative diagrams/column sep/Huge/.initial=18ex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% New environment for constructions.
+
+%\expandafter\let\expandafter\oldproof\csname\string\proof\endcsname
+%\let\oldendproof\endproof
+\newenvironment{constr}{%
+  \begin{proof}[Construction]%
+}{\end{proof}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% New theorem environment for conjectures.

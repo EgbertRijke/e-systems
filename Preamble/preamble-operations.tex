@@ -124,7 +124,7 @@
 %%%% IDENTITY TERMS
 
 \makeatletter
-\newcommand{\idtm}[1]{\typefont{id}_{\default@ctxext #1}}
+\newcommand{\idtm}[1]{\typefont{idtm}_{\default@ctxext #1}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -220,7 +220,7 @@
 
 %%%% Vertical composition of morphisms.
 \newcommand{\jvcomp}[3]{%
-  \jvcomp@testleft #2 * \jvcomp@testright #3}
+  \jvcomp@testleft #2 \triangleright \jvcomp@testright #3}
 \newcommand{\jvcomp@testleft}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
   \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%

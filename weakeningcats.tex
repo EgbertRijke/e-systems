@@ -1,33 +1,14 @@
-\begin{rmk}
-Recall that the slice pre-category $\cat{C}/\Gamma/(\Delta,f)$ is isomorphic to the slice pre-category
-$\cat{C}/\Delta$, in the essentially algebraic theory of pre-categories. In the following,
-we shall usually identify these two categories. Recall also that for every functor
-$F:\cat{C}\to\cat{D}$ and every object $\Delta$ of $\cat{C}$, there is a functor
-$F/\Delta:\cat{C}/\Delta\to \cat{D}/F(\Delta)$ given by the action on morphisms of $F$. 
-\end{rmk}
-
-\begin{rmk}
-It will be convenient to denote the objects of the category $\cat{C}$ with capital
-greek letters $\Gamma$, $\Delta$, \ldots, and the morphisms by capital latin letters
-$A$, $B$, $P$, $Q$, etcetera. When $A$ is a morphism into $\Gamma$, we will denote
-its codomain by $\ctxext{\Gamma}{A}$. When $A$ is a morphism into $\Gamma$ and
-$P$ is a morphism into $\ctxext{\Gamma}{A}$, it will be convenient to denote the
-composition of $P$ with $A$ by $\ctxext{A}{P}$ as well. Note that $\ctxext{A}{P}$
-is indeed the domain of $P$ in the slice category $\cat{C}/\Gamma$. Also, objects
-of $\cat{C}$ will always have a capital greek letter in their notation, e.g.~as
-in $\ctxext{{\Gamma}{A}}{P}$. 
-\end{rmk}
-
-\section{Weakening systems}
+\section{The definition of E-systems}\label{sec:esys_defn}
+\subsection{Weakening systems}
 
 \begin{defn}
 A \emph{pre-weakening structure on a pre-category $\cat{C}$} consists of a functor
 $W_A:\cat{C}/\Gamma\to \cat{C}/\ctxext{\Gamma}{A}$ for every $A:\ctxext{\Gamma}{A}\to \Gamma$ in $\cat{C}$ such 
 that
 \begin{enumerate}
-\item $W_{\catid{\Gamma}}=\catid{\cat{C}/\Gamma}$ for every object $\Gamma\in\cat{C}$.
-\item $W_{\ctxext{A}{P}}=W_P\circ W_A$ for every $P\in\cat{C}/\ctxext{\Gamma}{A}$ and $A\in\cat{C}/\Gamma$.
-\item $W_A$ preserves the final object, i.e.~$W_A(\catid{\Gamma})=\catid{\ctxext{\Gamma}{A}}$.
+\item $W_{\catid{\Gamma}}\jdeq \catid{\cat{C}/\Gamma}$ for every object $\Gamma\in\cat{C}$.
+\item $W_{\ctxext{A}{P}}\jdeq W_P\circ W_A$ for every $P\in\cat{C}/\ctxext{\Gamma}{A}$ and $A\in\cat{C}/\Gamma$.
+\item $W_A$ preserves the final object, i.e.~$W_A(\catid{\Gamma})\jdeq \catid{\ctxext{\Gamma}{A}}$.
 \end{enumerate}
 A \emph{pre-weakening system} is a pre-category together with a pre-weakening structure.
 \end{defn}
@@ -56,7 +37,7 @@ commutes for any $A\in\cat{C}/\Gamma$.
 \begin{lem}
 Let $\cat{C}$ be a pre-weakening system. Then for any object $\Gamma$ of $\cat{C}$,
 the slice pre-category $\cat{C}/\Gamma$ is also a pre-weakening system, with the weakening
-structure given by $W(\cat{C}/\Gamma)_P=W(\cat{C})_P$ for each $P\in\cat{C}/\ctxext{\Gamma}{A}$
+structure given by $W(\cat{C}/\Gamma)_P\jdeq W(\cat{C})_P$ for each $P\in\cat{C}/\ctxext{\Gamma}{A}$
 and each $A\in\cat{C}/\Gamma$.
 \end{lem}
 
@@ -96,24 +77,26 @@ property asserts that for any $k\in \cat{C}/\greek{E}$, the dotted arrows in the
 \end{equation*}
 are equal.
 
-A useful special case of this property is where $B=\catid{\Gamma}$. Thus, if $W$ is
+A useful special case of this property is where $B\jdeq \catid{\Gamma}$. Thus, if $W$ is
 a weakening system, then the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
-\cat{C}/\ctxext{\Gamma}{Q}
-  \arrow[r,"W_A/Q"]
+\cat{C}/\ctxext{\Gamma}{C}
+  \arrow[r,"W_A/C"]
   &
-\cat{C}/\ctxext{{\Gamma}{A}}{W_A(Q)}
+\cat{C}/\ctxext{{\Gamma}{A}}{W_A(C)}
   \\
 \cat{C}/\Gamma
-  \arrow[u,"W_Q"]
+  \arrow[u,"W_C"]
   \arrow[r,swap,"W_A"]
   &
 \cat{C}/\ctxext{\Gamma}{A}
-  \arrow[u,swap,"W_{W_A(Q)}"]
+  \arrow[u,swap,"W_{W_A(C)}"]
 \end{tikzcd}
 \end{equation*}
-commutes for every $A\in\cat{C}/\Gamma$ and $Q\in\cat{C}/\Gamma$. 
+commutes for every $A,C\in\cat{C}/\Gamma$. In particular, we see
+that $W_A(W_C(D))\jdeq W_{W_A(C)}(W_A(D))$ for any $D\in\cat{C}/\Gamma$,
+i.e.~that weakening is a self-distributive operation. 
 \end{rmk}
 
 \begin{cor}
@@ -124,7 +107,7 @@ $\cat{C}/\Gamma$ is a weakening system.
 \begin{eg}
 If the underlying pre-category is a group, the axioms of a weakening system
 obtain the following form: There is a group homomorphism $W_x:G\to G$ for
-every $x\in G$, in such a way that $W_e=\catid{G}$ and $W_{xy}=W_y\circ W_x$
+every $x\in G$, in such a way that $W_e\jdeq \catid{G}$ and $W_{xy}\jdeq W_y\circ W_x$
 for every $x,y\in G$, and for any $x,y\in G$ the diagram
 \begin{equation*}
 \begin{tikzcd}
@@ -139,9 +122,9 @@ G \arrow[u,swap,"W_{W_y(x)}"]
 \end{tikzcd}
 \end{equation*}
 is required to commute. Thus, a weakening system on a group $G$ consists of
-a group homomorphism $W:\op G\to\mathrm{Aut}(G)$ such that $W_a\circ W_b=
-W_{W_a(b)}\circ W_a$. The latter requirement is satisfied if $b\cdot a=a\cdot W_a(b)$
-for every $a,b\in G$, or equivalently if $[b,a]=b^{-1}\cdot W_a(b)$.
+a group homomorphism $W:\op G\to\mathrm{Aut}(G)$ such that $W_a\circ W_b\jdeq 
+W_{W_a(b)}\circ W_a$. The latter requirement is satisfied if $b\cdot a\jdeq a\cdot W_a(b)$
+for every $a,b\in G$, or equivalently if $[b,a]\jdeq b^{-1}\cdot W_a(b)$.
 \end{eg}
 
 \begin{lem}
@@ -150,7 +133,7 @@ canonically a weakening system.
 \end{lem}
 
 \begin{proof}
-Note that $e^{-1}xe=x$ and $(xy)^{-1}z(xy)=y^{-1}(x^{-1}zx)y$ for any $x,y,z\in G$.
+Note that $e^{-1}xe\jdeq x$ and $(xy)^{-1}z(xy)\jdeq y^{-1}(x^{-1}zx)y$ for any $x,y,z\in G$.
 Also, the diagram
 \begin{equation*}
 \begin{tikzcd}
@@ -174,11 +157,12 @@ conjugation.
 \end{rmk}
 \end{comment}
 
+\begin{comment}
 \begin{lem}
 Let $G$ be a graph, and let $\cat{C}_G$ be the free pre-category generated by
 $G$. A pre-weakening structure on $\cat{C}_G$ is determined by functors
 $W_e:\cat{C}_G/\Gamma\to\cat{C}_G/\Delta$ for every edge $e:\Delta\to \Gamma$ in $G$, with the
-property that $W_e(\catid{\Gamma})=\catid{\Delta}$. 
+property that $W_e(\catid{\Gamma})\jdeq \catid{\Delta}$. 
 
 A weakening structure on $\cat{C}_G$ is
 a pre-weakening structure on $\cat{C}_G$ such that the diagram
@@ -194,14 +178,15 @@ $h:\greek{Z}\to \greek{E}$ in $G$.
 
 \begin{eg}
 Let $G$ be the graph consisting of one vertex $\ast$ and one edge $e:\ast\to\ast$.
-Then $\cat{C}_G/\ast=\N$. Then the only weakening structure on $\cat{C}/G$ is
-given by $W_e=\catid{\N}$. The reason is that 
+Then $\cat{C}_G/\ast\jdeq \N$. Then the only weakening structure on $\cat{C}/G$ is
+given by $W_e\jdeq \catid{\N}$. The reason is that 
 \end{eg}
+\end{comment}
 
 \begin{lem}
 Let $P$ be a pre-order. A pre-weakening structure on $P$ is determined by order
 preserving maps $W_{a,b}:{\downarrow}(b)\to{\downarrow}(a)$ satisfying
-$W_{a,b}(b)=a$, for every $a\leq b$, where
+$W_{a,b}(b)\jdeq a$, for every $a\leq b$, where
 ${\downarrow}(x)$ is the set $\{y\in P\mid y\leq x\}$.
 
 A weakening structure on $P$ is a pre-weakening structure on $P$ such that the
@@ -217,18 +202,18 @@ for any $a\leq b$ and $c'\leq c\leq b$.
 
 \begin{eg}
 In a poset with meets, the functions $W_{a,b}:{\downarrow}(b)\to{\downarrow}(a)$
-given by $W_{a,b}(x):= a\land x$ assemble a weakening structure, because for
-any $a\leq b$ and $x,c'\leq c\leq b$ we have $a\land(c'\land x)=(a\land c')\land
+given by $W_{a,b}(x)\defeq a\land x$ assemble a weakening structure, because for
+any $a\leq b$ and $x,c'\leq c\leq b$ we have $a\land(c'\land x)\jdeq (a\land c')\land
 (a\land x)$.  
 \end{eg}
 
 \begin{eg}
 Consider the poset $(\N,\geq)$, which has a morphism from $a$ to $b$ if $a\geq b$.
-On this poset, we may consider the weakening structure defined by $W_{a,b}(x)=
+On this poset, we may consider the weakening structure defined by $W_{a,b}(x)\jdeq
 a+(x-b)$.
 \end{eg}
 
-\section{Weakening systems with term structure}
+\subsection{Weakening systems with term structure}
 \begin{defn}
 A \emph{category with a term structure} is a pre-category $\cat{C}$ with a set $T(A)$ for every
 $A\in\cat{C}/\Gamma$ for every $\Gamma\in\cat{C}$. A \emph{functor with term structure} from $\cat{C}$ to $\cat{D}$
@@ -238,7 +223,7 @@ every $A\in\cat{C}/\Gamma$, for every $\Gamma\in\cat{C}$.
 
 \begin{defn}
 Suppose $\cat{C}$ is a pre-category with term structure, and $\Gamma$ is an object of $\cat{C}$. 
-Then $\cat{C}/\Gamma$ is a pre-category with term structure, where $T_{\cat{C}/\Gamma}(A)=T_\cat{C}(A)$.
+Then $\cat{C}/\Gamma$ is a pre-category with term structure, where $T_{\cat{C}/\Gamma}(A)\jdeq T_\cat{C}(A)$.
 \end{defn}
 
 \begin{defn}
@@ -258,19 +243,19 @@ $\cat{C}/\Gamma$ is a weakening system with term structure.
 
 Let $G$ be a group, with the weakening structure given by conjugation. A term
 structure on $G$ is given by a set $X$ with a right $G$-action $\mu:\op G\times X\to X$.
-We take $T(a):= X$ for every $a\in G$.
+We take $T(a)\defeq X$ for every $a\in G$.
 \end{eg}
 
-\section{Projection systems}
+\subsection{Projection systems}
 \begin{defn}
-A \emph{pre-projection system} is a weakening system with term structure with an element
+A \emph{pre-projection system} is a pre-weakening system with term structure with an element
 $\tfid{A}\in T(W_A(A))$ for every $A\in\cat{C}/\Gamma$ and $\Gamma\in\cat{C}$. 
 \end{defn}
 
 \begin{defn}
-A \emph{pre-projection homomorphism} $F:\cat{C}\to\cat{D}$ is a weakening homomorphism for which
+A \emph{pre-projection homomorphism} $F:\cat{C}\to\cat{D}$ is a pre-weakening homomorphism for which
 \begin{equation*}
-F(\tfid{A})=\tfid{F(A)}
+F(\tfid{A})\jdeq \tfid{F(A)}
 \end{equation*}
 for every $A\in\cat{C}/\Gamma$ and $\Gamma\in\cat{C}$.
 \end{defn}
@@ -279,6 +264,10 @@ for every $A\in\cat{C}/\Gamma$ and $\Gamma\in\cat{C}$.
 For any object $\Gamma$ in a pre-projection system $\cat{C}$, the slice pre-category
 $\cat{C}/\Gamma$ is a pre-projection system.
 \end{lem}
+
+\begin{proof}
+Straightforward.
+\end{proof}
 
 \begin{defn}
 A \emph{projection system} is a pre-projection system for which every $W_A$ is
@@ -291,21 +280,20 @@ For any object $\Gamma$ of a projection system $\cat{C}$, the slice pre-category
 is a projection system.
 \end{cor}
 
-\begin{eg}
-Consider a group $G$ with a right $G$-set $X$. A projection structure on $(G,X)$
-consists of an element $\tfid{a}\in X$ for every $a\in G$, so that $\tfid{a}\cdot b=
-\tfid{b^{-1}ab}$ for every $a,b\in G$. 
-
+%\begin{eg}
+%Consider a group $G$ with a right $G$-set $X$. A projection structure on $(G,X)$
+%consists of an element $\tfid{a}\in X$ for every $a\in G$, so that $\tfid{a}\cdot b=
+%\tfid{b^{-1}ab}$ for every $a,b\in G$. 
 %For instance, this is the case if we take $X$ to be a pointed set with $\ast\in X$,
 %and take $\tfid{a}:=\ast$ for all $a\in G$.
-\end{eg}
+%\end{eg}
 
-\section{Substitution systems}
+\subsection{Substitution systems}
 
 \begin{defn}
 A \emph{pre-substitution structure} on a pre-category with term structure $\cat{C}$ consists
 of a functor with term structure $S_x:\cat{C}/\ctxext{\Gamma}{A}\to\cat{C}/\Gamma$ for every $x\in T(A)$ and
-$A\in\cat{C}/\Gamma$, such that $S_x(\catid{\ctxext{\Gamma}{A}})=\catid{\Gamma}$.
+$A\in\cat{C}/\Gamma$, such that $S_x(\catid{\ctxext{\Gamma}{A}})\jdeq\catid{\Gamma}$.
 
 A \emph{pre-substitution system} is a pre-category with term structure together with a
 pre-substitution structure. 
@@ -333,8 +321,8 @@ commutes for every $x\in T(A)$ and $A\in\cat{C}/\Gamma$.
 \end{defn}
 
 \begin{lem}
-For any object $\Delta$ of a pre-substitution system $\cat{C}$, the slice pre-category
-$\cat{C}/\Delta$ is a pre-substitution system.
+For any object $\Gamma$ of a pre-substitution system $\cat{C}$, the slice pre-category
+$\cat{C}/\Gamma	$ is a pre-substitution system.
 \end{lem}
 
 \begin{defn}
@@ -344,7 +332,7 @@ pre-substitution homomorphism between substitution systems.
 \end{defn}
 
 \begin{cor}
-For any object $\Delta$ of a substitution system, the slice pre-category $\cat{C}/\Delta$
+For any object $\Gamma$ of a substitution system, the slice pre-category $\cat{C}/\Gamma$
 is a substitution system.
 \end{cor}
 
@@ -371,7 +359,7 @@ commutes for every $y\in T(Q)$.
 
 \begin{eg}
 Let $G$ be a group and let $H$ be a set, forming a category with term 
-structure of which $T(a)=H$ for every $a\in G$. A substitution
+structure of which $T(a)\jdeq H$ for every $a\in G$. A substitution
 system on $(G,H)$ consists of a function $\sigma_G : H\times G\to G$ and
 a function $\sigma_H:H\times H\to H$, for which the diagrams
 \begin{equation*}
@@ -401,18 +389,50 @@ H
 commute for every $h,k\in H$. 
 \end{eg}
 
-\section{E-systems}
+\subsection{E-systems}
+
+Although it is now possible to state the definition of an E-system without
+any difficulty, it shall be convenient later to also have a category of
+pre-E-systems at our disposal. Pre-E-systems shall by default be non-unital,
+i.e.~they do not come with a pre-projection system, while E-systems shall
+always be assumed to be unital. In the present context, we shall not need
+unital pre-E-systems or non-unital E-systems.
+
+\begin{defn}
+A \emph{pre-E-system} is a pre-category $\cat{C}$ with term structure
+with a pre-weakening structure $W$, a pre-substitution structure $S$ and a terminal
+object. A \emph{unital pre-E-system}, or simply \emph{pre-E-system}, is a non-unital pre-E-system
+which also has the structure of a pre-projection system. 
+\end{defn}
+
+\begin{defn}
+A \emph{pre-E-homomorphism} from $\mathbb{E}\to\mathbb{D}$ is a functor
+$H:\mathbb{C}_\mathbb{E}\to\mathbb{C}_\mathbb{D}$ between the underlying categories
+with term structure, which is a pre-weakening homomorphism, a pre-substitution
+homomorphism, and which preserves the terminal object. 
+
+A \emph{unital} pre-E-homomorphism is a non-unital pre-E-homomorphism which is 
+also a pre-projection homomorphism. 
+\end{defn}
+
 \begin{defn}
 \label{defn:esystems}
-An \emph{E-system} is a pre-category $\cat{C}$ with term structure with
-\begin{itemize}
-\item a weakening structure $W$,
-\item the structure $\tfid{}$ of a projection system,
-\item a substitution structure $S$,
-\end{itemize}
-such that
+An \emph{E-system} is a unital pre-E-system in which 
 \begin{enumerate}
-\item each $W_A$ is a substitution homomorphism, i.e.~the diagram
+\item each $W_A$ is a unital pre-E-homomorphism,
+\item each $S_x$ is a unital pre-E-homomorphism,
+\item \label{tTf:StWf_id} weakened families are constant, i.e.~$S_x\circ W_A\jdeq \catid{\cat{C}/\Gamma}$ for any $x\in T(A)$ and $A\in\cat{C}/\Gamma$,
+\item $S_x(\tfid{A})\jdeq x$ for any $x\in T(A)$ and $A\in\cat{C}/\Gamma$, and
+\item \label{f:SidfWff_id} $S_{\tfid{A}}\circ W_A/A\jdeq \catid{\cat{C}/\ctxext{\Gamma}{A}}$ for any $A\in\cat{C}/\Gamma$.
+\end{enumerate}
+An \emph{E-homomorphism} $H:\mathbb{E}\to\mathbb{D}$ is a functor from
+$\cat{C}_{\mathbb{E}}$ to $\cat{C}_{\mathbb{D}}$ which is both a projection
+homomorphism and a substitution homomorphism.
+\end{defn}
+
+\begin{rmk}
+The condition that each $W_A$ is a substitution homomorphism asserts that
+the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \cat{C}/\ctxext{{\Gamma}{B}}{Q}
@@ -428,9 +448,11 @@ such that
 \cat{C}/\ctxext{{\Gamma}{A}}{W_A(B)}
 \end{tikzcd}
 \end{equation*}
-commutes for every $Q\in\cat{C}/\ctxext{\Gamma}{B}$, $B\in\cat{C}/\Gamma$ and each 
-$y\in T(Q)$; 
-\item each $S_x$ is a projection homomorphism, i.e.~the diagram
+of functors with term structure commutes for every 
+$Q\in\cat{C}/\ctxext{\Gamma}{B}$, $B\in\cat{C}/\Gamma$ and each $y\in T(Q)$.
+
+Likewise, the condition that each $S_x$ is a weakening homomorphism
+asserts that the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
 \cat{C}/\ctxext{{\Gamma}{A}}{P}
@@ -446,24 +468,16 @@ $y\in T(Q)$;
 \cat{C}/\ctxext{{\Gamma}{S_x(P)}}{S_x(Q)}
 \end{tikzcd}
 \end{equation*}
-commutes for every $Q\in\cat{C}/\ctxext{{\Gamma}{A}}{P}$, and we have
-\begin{equation*}
-S_x(\tfid{Q})=\tfid{S_x(Q)}
-\end{equation*}
-for every $Q\in\cat{C}/\ctxext{{\Gamma}{A}}{P}$;
-\item $S_x(\tfid{A})=x$ for any $x\in T(A)$ and $A\in\cat{C}/\Gamma$;
-\item \label{tTf:StWf_id} $S_x\circ W_A=\catid{\cat{C}/\Gamma}$ for any $x\in T(A)$ and $A\in\cat{C}/\Gamma$;
-\item \label{f:SidfWff_id} $S_{\tfid{A}}\circ W_A/A=\catid{\cat{C}/\ctxext{\Gamma}{A}}$ for any $A\in\cat{C}/\Gamma$.
-\end{enumerate}
-An \emph{E-homomorphism} $F:\cat{C}\to\cat{D}$ is a functor which is both a projection
-homomorphism and a substitution homomorphism.
-\end{defn}
+of functors with term structure commutes for every 
+$Q\in\cat{C}/\ctxext{{\Gamma}{A}}{P}$.
+\end{rmk}
 
 \begin{cor}
-For any object $\Delta$ of an E-system $\cat{C}$, the slice pre-category $\cat{C}/\Delta$
+For any object $\Gamma$ of an E-system $\cat{C}$, the slice pre-category $\cat{C}/\Gamma$
 is an E-system.
 \end{cor}
 
+\begin{comment}
 \begin{rmk}[Needs more precision]
 Consider the category $E$ generated by the graph consisting of the objects of 
 the underlying category of an $E$-system $\mathcal{E}$ as edges, and the morphisms
@@ -475,109 +489,205 @@ substitution-normal form, $\tilde W$ is in weakening normal form, every term
 expression is in normal form, and where
 each occurence of $S_x\circ W_A$ and $S_{\tfid{A}}\circ W_A/A$ is eliminated.
 \end{rmk}
+\end{comment}
+
+\section{Properties of E-systems}\label{sec:esys_props}
+
+The theory of E-systems could be seen as a sort of category theory with only
+projections and their sections. We elaborate on this point of view by defining
+the category of internal homomorphisms, which Lawvere might have called the
+category of terms. 
+In the category of internal morphisms over a context $\Gamma$,
+a morphism $f:A\to B$ is a term of the constant family $W_A(B)$ over 
+$\ctxext{\Gamma}{A}$. Rather than directly defining composition, we will define
+for every $f:A\to B$ in context $\Gamma$, a pre-composition operation
+$f_\ast$, which is going to be an E-homomorphism from 
+$\cat{C}/\ctxext{\Gamma}{B}$ to $\cat{C}/\ctxext{\Gamma}{A}$. This allows us
+to consider diagrams of the following form:
+\begin{equation*}
+\begin{tikzcd}
+P \arrow[d,->>] \arrow[r,"g"] & Q \arrow[d,->>] \\
+A \arrow[r,swap,"f"] & B
+\end{tikzcd}
+\end{equation*}
+where we consider the morphism $g$ over $f$ to be an internal morphism from 
+$P$ to $f_\ast(Q)$ in context $\ctxext{\Gamma}{A}$, capturing the
+essence of being a morphism from the family $P$ over $A$ to the family
+$Q$ over $B$, reindexed by $f$. 
+Whenever we draw such diagrams, a double headed arrow will always
+refer to a family, and an ordinary arrow will refer to an internal morphism,
+possibly over another internal morphism 
+
+A morphism $g$ over $f$ can be vertically composed with $f$ so
+that we obtain a morphism $\jvcomp{P}{f}{g}:\ctxext{A}{P}\to\ctxext{B}{Q}$ in 
+context $\Gamma$, and it can be horizontally composed with a morphism $k:Q\to R$
+over $h:B\to C$ so that we obtain a morphism $\jfcomp{A}{f}{P}{g}{k}:P\to R$ 
+over $\jcomp{A}{f}{h}:A\to C$. We will show interchange laws between these
+sorts of composition. The interchange laws have as a consequence that if we
+assert the commutativity of a large composed diagram.
+
+We then demonstrate how to define a category internal to an E-system. The main
+point of this lies mainly in demonstrating how the operations of E-systems can
+be used to define a category, because it is no surprise that a category can be
+defined in type theory. Nevertheless, it is noteworthy that we need no further 
+conditions on E-systems.
+This is unlike the situation in category theory, where we need
+to assume that the ambient category has finite limits in order to say what an
+internal category is. In fact, it is possible to define an E-system internal
+to an E-system, just using the algebraic structure of an E-system, and actually
+defining an internal category was the hardest part of that definition.
+
+Before we begin this section, we introduce some handy shorthands.
 
 \begin{defn}
-An E-system of which the underlying category has a terminal object $\emptyc$, is said to
-be \emph{E-system with empty context}. An E-homomorphism is said to preserve the
-empty context when it preserves the terminal object $\emptyc$ on the nose.
+Let $A\in\cat{C}/\Gamma$. Recall that $W_A:\cat{C}/\Gamma\to\cat{C}/\ctxext{\Gamma}{A}$ acts on objects,
+morphisms and terms. We introduce the infix form of weakening by $A\in\cat{C}/\Gamma$ to be
+$\ctxwk{A}{\blank}$. Thus, we will write
+\begin{align*}
+\ctxwk{A}{B} & \defeq W_A(B) & & \text{for $B\in\cat{C}/\Gamma$} \\
+\ctxwk{A}{Q} & \defeq W_A(Q) & & \text{for $B\in\cat{C}/\Gamma$ and $Q\in\cat{C}/\ctxext{\Gamma}{B}$}\\
+\ctxwk{A}{g} & \defeq W_A(g) & & \text{for $B\in\cat{C}/\Gamma$, $Q\in\cat{C}/\ctxext{\Gamma}{B}$ and $g\in T(Q)$}
+\end{align*}
 \end{defn}
 
-\begin{rmk}
-When there is a terminal object, we get a weakening functor $W_\Gamma:\cat{C}\to
-\cat{C}/\Gamma$ for every object $\Gamma$ of $\cat{C}$; we get a set $T(\Gamma)$;
-and for $i\in T(\Gamma)$ we get substitutions $S_i:\cat{C}/\Gamma\to\cat{C}$. 
-\end{rmk}
+\begin{defn}
+Let $x\in T(A)$ for a family $A\in\cat{C}/\Gamma$. The infix form of substitution
+by $x$ is taken to be $\subst{x}{\blank}$. Thus, we will write
+\begin{align*}
+\subst{x}{P} & \defeq S_x(P) & & \text{for $P\in\cat{C}/\ctxext{\Gamma}{A}$} \\
+\subst{x}{Q} & \defeq S_x(Q) & & \text{for $P\in\cat{C}/\ctxext{\Gamma}{A}$ and $Q\in\cat{C}/\ctxext{{\Gamma}{A}}{P}$} \\
+\subst{x}{g} & \defeq S_x(g) & & \text{for $P\in\cat{C}/\ctxext{\Gamma}{A}$, $Q\in\cat{C}/\ctxext{{\Gamma}{A}}{P}$ and $g\in T(Q)$}
+\end{align*}
+\end{defn}
 
-\section{Properties of E-systems}
-
-\subsection{The category of internal functions}
+\subsection{The category of internal morphisms}\label{subsec:im_cat}
 
 \begin{defn}
 For every $A,B\in\cat{C}/\Gamma$ we define the set 
 \begin{equation*}
-\thom{A}{B}:=T(W_A(B)).
-\end{equation*} 
+\thom{A}{B}\defeq T(\ctxwk{A}{B}).
+\end{equation*}
+An element $f\in \thom{A}{B}$ is called an \emph{internal morphism in context
+$\Gamma$}. We sometimes write $\jhom{\Gamma}{A}{B}{f}$ to indicate that $f$ is
+an internal morphism over $\Gamma$, or we may draw a diagram of the form
+\begin{equation*}
+\begin{tikzcd}[column sep=tiny]
+A \arrow[rr,"f"] \arrow[dr,fib] & & B \arrow[dl,fib] \\
+& \Gamma
+\end{tikzcd}
+\end{equation*}
+but we shall generally omit the arrows down to $\Gamma$ and say instead that we have
+a diagram in context $\Gamma$. 
 \end{defn}
 
 \begin{rmk}
-Note that $\thom{\catid{\Gamma}}{A}=T(A)$ for any $A\in\cat{C}/\Gamma$, 
-because we have $W_{\catid{\ctxext{\Gamma}{A}}}=\catid{\cat{C}/\ctxext{\Gamma}{A}}$.
+Note that $\thom{\catid{\Gamma}}{A}\jdeq T(A)$ for any $A\in\cat{C}/\Gamma$, 
+because we have 
+$W_{\catid{\ctxext{\Gamma}{A}}}\jdeq \catid{\cat{C}/\ctxext{\Gamma}{A}}$.
 
-Note also that $\thom{\ctxext{A}{P}}{B}=\thom{P}{W_A(B)}$ for any $P\in\cat{C}/\ctxext{\Gamma}{A}$
-and $B\in\cat{C}/\Gamma$, because $W_{\ctxext{A}{P}}=
-W_P\circ W_A$.
+Note also that $\thom{\ctxext{A}{P}}{B}\jdeq \thom{P}{\ctxwk{A}{B}}$ 
+for any $P\in\cat{C}/\ctxext{\Gamma}{A}$ and $B\in\cat{C}/\Gamma$,
+because $W_{\ctxext{A}{P}}\jdeq W_P\circ W_A$.
+Once we have established a category of which the morphisms are given by 
+$\thom{\blank}{\blank}$, we therefore get that 
+\begin{equation*}
+\ctxext{A}{(\blank)}\dashv W_A.
+\end{equation*}
+The right adjoint to weakening by $A$, if it exists, will be the dependent
+product $\Pi_A$. 
 \end{rmk}
 
 \begin{defn}
 Let $A,B\in\cat{C}/\Gamma$.
 For any $f\in\thom{A}{B}$ we define the pre-composition E-homomorphism
 \begin{equation*}
-f_\ast := S_f\circ W_A/B : \cat{C}/\ctxext{\Gamma}{B}\to\cat{C}/\ctxext{\Gamma}{A}.
+f_\ast \defeq S_f\circ W_A/B : \cat{C}/\ctxext{\Gamma}{B}\to\cat{C}/\ctxext{\Gamma}{A}.
 \end{equation*}
 Furthermore, for $g\in\thom{B}{C}$ we may consider $W_B(C)\in\cat{C}/\ctxext{\Gamma}{B}$ as a morphism from $W_B(C)$ to $\catid{\ctxext{\Gamma}{B}}$. Therefore, $f_\ast$ acts on the terms of
-$W_B(C)$, so it makes sense to define $g\circ f:=f_\ast(g)$. 
+$W_B(C)$, so it makes sense to define $g\circ f\defeq f_\ast(g)$. In fact, it makes
+sense to let $(\blank)\circ f$ be the infix notation for $f_\ast$. 
 \end{defn}
 
-Note that $g\circ f\in T(S_f(W_A/B(W_B(C))))$, whereas we would like that
-$g\circ f\in\thom{A}{C}$. The following lemma confirms this:
-
-\begin{lem}
-Suppose $A$ and $B$ are morphisms of the underlying pre-category of $\mathcal{E}$
-with the same codomain, and let $f\in\thom{A}{B}$. Then we have 
+\begin{rmk}
+Note that for $\jhom{\Gamma}{B}{C}{g}$, 
+we have $g\circ f\in T(S_f(W_A/B(W_B(C))))$, whereas we would like that
+$g\circ f\in\thom{A}{C}$. More generally, we can show that
 \begin{equation*}
-S_f\circ (W_A/B)\circ W_B=W_A.
+S_f\circ (W_A/B)\circ W_B\jdeq W_A.
 \end{equation*}
-\end{lem}
-
-\begin{proof}
 Since weakening is a weakening homomorphism, we have
 \begin{equation*}
-S_f\circ (W_A/B)\circ W_B=S_f\circ W_{W_A(B)}\circ W_A
+S_f\circ (W_A/B)\circ W_B\jdeq S_f\circ W_{W_A(B)}\circ W_A
 \end{equation*}
 By \autoref{tTf:StWf_id} of \autoref{defn:esystems} it we get that
 \begin{equation*}
-S_f\circ W_{W_A(B)}\circ W_A=W_A.\qedhere
+S_f\circ W_{W_A(B)}\circ W_A\jdeq W_A.
 \end{equation*}
-\end{proof}
+\end{rmk}
+
+\begin{rmk}
+To see how this extended notion of precomposition works, suppose we have a diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=tiny]
+Q \arrow[rr,"g"] \arrow[dr,fib] & & R \arrow[dl,fib] \\
+& B
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$, i.e.~$\jhom{\ctxext{\Gamma}{B}}{Q}{R}{g}$, and let $\jhom{\Gamma}{A}{B}{f}$. Precomposing by $f$ gives
+us a diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=tiny]
+\jcomp{A}{f}{Q} \arrow[rr,"\jcomp{A}{f}{g}"] \arrow[dr,fib] & & \jcomp{A}{f}{R} \arrow[dl,fib] \\
+& A
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$.
+\end{rmk}
 
 \begin{rmk}
 Note that \autoref{f:SidfWff_id} of \autoref{defn:esystems} asserts precisely
-that ${(\tfid{A})}_\ast=\catid{\cat{C}/\Delta}$ for any $A:\Delta\to \Gamma$ in $\cat{C}$. In
-particular, it follows that $g\circ\tfid{A}=g$ for any $g\in\thom{A}{B}$
+that ${(\tfid{A})}_\ast\jdeq \catid{\cat{C}/\ctxext{\Gamma}{A}}$ for any $A\in\cat{C}/\Gamma$. In
+particular, it follows that $g\circ\tfid{A}\jdeq g$ for any $g\in\thom{A}{B}$
 \end{rmk}
 
-\begin{lem}
-For any $f\in\thom{A}{B}$ we have $\tfid{B}\circ f=f$.
-\end{lem}
-
-\begin{proof}
-We have
-\begin{equation*}
-\tfid{B}\circ f=S_f(W_A(\tfid{B}))=S_f(\tfid{W_A(B)})=f.\qedhere
-\end{equation*}
-\end{proof}
-
-\begin{lem}
-For any $f\in\thom{A}{B}$ and $g\in\thom{B}{C}$ we have $f_\ast\circ g_\ast=(g\circ f)_\ast$. 
+\begin{lem}\label{lem:compcomp}
+For any $f\in\thom{A}{B}$ and $g\in\thom{B}{C}$ we have $f_\ast\circ g_\ast\jdeq (g\circ f)_\ast$. 
 \end{lem}
 
 \begin{proof}
 \begin{align*}
-f_\ast\circ g_\ast & = S_f\circ (W_A/B) \circ S_g \circ (W_B/C)\\
-& = S_f\circ S_{W_A(g)}\circ(W_A/\ctxext{B}{W_B(C)})\circ (W_B/C) \\
-& = S_{S_f(W_A(g))}\circ (S_f/W_A(W_B(C)))\circ (W_A/\ctxext{B}{W_B(C)}) \circ W_B/C \\
-& = S_{S_f(W_A(g))}\circ ((S_f\circ (W_A/B) \circ W_B)/C) \\
-& = S_{S_f(W_A(g))}\circ ((S_f\circ W_{W_A(B)}\circ W_A)/C) \\
-& = S_{S_f(W_A(g))}\circ W_A/C \\
-& = (g\circ f)_\ast.\qedhere
+f_\ast\circ g_\ast & \jdeq S_f\circ (W_A/B) \circ S_g \circ (W_B/C)\\
+& \jdeq S_f\circ S_{W_A(g)}\circ(W_A/\ctxext{B}{W_B(C)})\circ (W_B/C) \\
+& \jdeq S_{S_f(W_A(g))}\circ (S_f/W_A(W_B(C)))\circ (W_A/\ctxext{B}{W_B(C)}) \circ W_B/C \\
+& \jdeq S_{S_f(W_A(g))}\circ ((S_f\circ (W_A/B) \circ W_B)/C) \\
+& \jdeq S_{S_f(W_A(g))}\circ ((S_f\circ W_{W_A(B)}\circ W_A)/C) \\
+& \jdeq S_{S_f(W_A(g))}\circ W_A/C \\
+& \jdeq (g\circ f)_\ast.\qedhere
 \end{align*}
 \end{proof}
 
-\begin{cor}
-Composition is associative. Thus, we have constructed a pre-category for each
-object $\Gamma$, with the same objects as $\cat{C}/\Gamma$, of which the hom-sets
-are the sets $\thom{A}{B}$. 
-\end{cor}
+\begin{thm}
+For each object $\Gamma$ of an E-system $\mathbb{E}$, we have a category
+$\mathbb{C}_I(\mathbb{E},\Gamma)$ of internal morphisms of $\mathbb{E}$,
+consisting of the same objects as $\cat{C}/\Gamma$ and the hom-sets 
+$\thom{A}{B}$. 
+\end{thm}
+
+\begin{proof}
+The fact that composition is associative is a direct corollary of
+\autoref{lem:compcomp}. The axiom $(\tfid{A})_\ast\jdeq\catid{\ctxext{\Gamma}{A}}$
+implies that the identity morphisms satisfy the right identity law. It remains
+to show that $\tfid{B}\circ f\jdeq f$. This is a simple calculation:
+\begin{equation*}
+\tfid{B}\circ f 
+  \jdeq
+\subst{f}{\ctxwk{A}{\tfid{B}}}
+  \jdeq
+\subst{f}{\tfid{\ctxwk{A}{B}}}
+  \jdeq
+f.\qedhere
+\end{equation*}
+\end{proof}
 
 \begin{rmk}
 Since any E-homomorphism is both a substitution homomorphism and a weakening
@@ -591,13 +701,28 @@ $F:\mathcal{E}\to\mathcal{D}$, the diagram
 \mathcal{E}/\ctxext{\Gamma}{B} \arrow[u,"f_\ast"] \arrow[r,swap,"F/\ctxext{\Gamma}{B}"] & \mathcal{D}/F(\ctxext{\Gamma}{B}) \arrow[u,swap,"F(f)_\ast"]
 \end{tikzcd}
 \end{equation*}
-commutes. This applies to weakening, substitution and pre-composition.
+commutes. This applies to weakening, substitution and pre-composition, and it
+follows that for any E-homomorphism $F:\mathcal{E}\to\mathcal{D}$ and any
+$\Gamma\in\mathcal{E}$, we have a functor $\mathbb{C}_I(F,\Gamma):
+\mathbb{C}_I(\mathcal{E},\Gamma)\to\mathbb{C}_I(\mathcal{D},F(\Gamma))$.
 \end{rmk}
 
-\begin{cor}
-Suppose $F:\mathcal{E}\to\mathcal{D}$ is an E-homomorphism. Then $F$ induces
-a functor $\mathbb{T}_F:\mathbb{T}_\mathcal{E}\to \mathbb{T}_\mathcal{D}$. 
-\end{cor}
+The following fact will be useful:
+
+\begin{lem}\label{lem:compW_W}
+Let $f\in\thom{A}{B}$ be an internal morphism in context $\Gamma$. Then one has
+\begin{equation*}
+f_\ast\circ W_B\jdeq W_A.
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+The proof is a simple calculation:
+\begin{equation*}
+f_\ast\circ W_B\jdeq S_f\circ W_A/B\circ W_B\jdeq S_f\circ W_{W_A(B)}\circ W_A
+\jdeq W_A.\qedhere
+\end{equation*}
+\end{proof}
 
 \subsection{Pairing and the projections}
 
@@ -608,31 +733,47 @@ and the projections and prove several useful properties about them. The strictne
 is found, among other things, in the fact that we can prove judgmental $\eta$-equality,
 and that pairing is strictly associative.
 
+In this section we will make more extensive use of the infix form of the
+weakening and substitution operations.
+
 \begin{defn}
 Let $x\in T(A)$ and $u\in T(S_x(P))$ for $A\in\cat{C}/\Gamma$ and $P\in\cat{C}/\ctxext{\Gamma}{A}$. 
-We define
+We define the \emph{term extension of $x$ and $u$} to be
 \begin{equation*}
-\tmext{x}{u}\defeq S_u(S_x(\tfid{\ctxext{A}{P}}))\in T(\ctxext{A}{P}).
+\tmext{x}{u}\defeq \subst{u}{{x}{\tfid{\ctxext{A}{P}}}}\in T(\ctxext{A}{P}).
 \end{equation*}
 \end{defn}
 
-\begin{thm}
+To prove anything about the term $\tmext{x}{u}$, we need the following property.
+
+\begin{thm}\label{subst_by_tmext}
 Let $x\in T(A)$ and $u\in T(S_x(P))$ for $A\in\cat{C}/\Gamma$ and $P\in\cat{C}/\ctxext{\Gamma}{A}$.
 Then we have
 \begin{equation*}
-S_{\tmext{x}{u}}=S_u\circ (S_x/P):\cat{C}/\ctxext{\Gamma}{{A}{P}}\to\cat{C}/\Gamma
+S_{\tmext{x}{u}}\jdeq S_u\circ (S_x/P):\cat{C}/\ctxext{\Gamma}{{A}{P}}\to\cat{C}/\Gamma
 \end{equation*}
 \end{thm}
+
+\begin{proof}
+\begin{align*}
+S_{\tmext{x}{u}} & \jdeq S_{S_u(S_x(\tfid{\ctxext{A}{P}}))} \\
+& \jdeq S_{S_u(S_x(\tfid{\ctxext{A}{P}}))}\circ (S_u\circ W_{S_x(P)})\circ (S_x\circ W_{A}) \\
+& \jdeq S_u \circ S_{S_x(\tfid{\ctxext{A}{P}})} \circ W_{S_x(P)}\circ S_x\circ W_A \\
+& \jdeq S_u \circ (S_x/P) \circ S_{\tfid{\ctxext{A}{P}}} \circ W_P\circ W_A \\
+& \jdeq S_u \circ (S_x/P) \circ S_{\tfid{\ctxext{A}{P}}} \circ W_{\ctxext{A}{P}}\\
+& \jdeq S_u \circ (S_x/P).\qedhere
+\end{align*}
+\end{proof}
 
 \begin{defn}
 Let $A\in\cat{C}/\Gamma$ and $P\in\cat{C}/\ctxext{\Gamma}{A}$. We define
 \begin{align*}
-\cprojfstf{A}{P} & \defeq W_P(\tfid{A})\in\thom{\ctxext{A}{P}}{A}\\
+\cprojfstf{A}{P} & \defeq \ctxwk{P}{\tfid{A}}\in\thom{\ctxext{A}{P}}{A}\\
 \cprojsndf{A}{P} & \defeq \tfid{P}\in\thomd{\cprojfstf{A}{P}}{\ctxext{A}{P}}{P}
 \end{align*}
 \end{defn}
 
-\begin{cor}
+\begin{cor}\label{cor:pairing_ehom}
 Let $F:\mathcal{E}\to\mathcal{D}$ be an E-homomorphism and let $x\in T(A)$ and
 $u\in T(S_x(P))$. Then we have
 \begin{equation*}
@@ -645,31 +786,84 @@ F(\cprojsndf{A}{P}) & \jdeq \cprojsndf{F(A)}{F(P)}.
 \end{align*}
 \end{cor}
 
-\begin{lem}
-Let $x\in T(A)$ and $u\in T(S_x(P))$. then we have
-\begin{align*}
-S_{\tmext{x}{u}}(\cprojfstf{A}{P}) & \jdeq x\\
-S_{\tmext{x}{u}}(\cprojsndf{A}{P}) & \jdeq u.
-\end{align*}
-Also, for $w\in T(\ctxext{A}{P})$ we have
+\begin{thm}\label{thm:famext_up}
+For any $A\in\cat{C}/\Gamma$ and $P\in\cat{C}/\ctxext{\Gamma}{A}$,
+the map
 \begin{equation*}
-\tmext{S_w(\cprojfstf{A}{P})}{S_w(\cprojsndf{A}{P})} \jdeq w.
+(x,u)\mapsto \tmext{x}{u}:\big(\bigsqcup\nolimits_{x\in T(A)} T(\subst{x}{P})\big)\to T(\ctxext{A}{P}).
 \end{equation*}
-\end{lem}
+is an isomorphism.  
+\end{thm}
 
-\begin{lem}
+\begin{proof}
+Lets write $\varphi$ for the indicated map. The inverse $\psi$ of $\varphi$ is defined
+by $w\mapsto (\subst{w}{\cprojfstf{A}{P}},\subst{w}{\cprojsndf{A}{P}})$. We have
+to show that for any $x\in T(A)$ and $u\in T(\subst{x}{P})$, one has
+\begin{align*}
+\subst{\tmext{x}{u}}{\cprojfstf{A}{P}} & \jdeq x\\
+\subst{\tmext{x}{u}}{\cprojsndf{A}{P}} & \jdeq u,
+\end{align*}
+and that for any $w\in T(\ctxext{A}{P})$, one has
+\begin{equation*}
+\tmext{\subst{w}{\cprojfstf{A}{P}}}{\subst{w}{\cprojsndf{A}{P}}} \jdeq w.
+\end{equation*}
+To show that $\subst{\tmext{x}{u}}{\cprojfstf{A}{P}} \jdeq x$, we use that
+$S_{\tmext{x}{u}}\jdeq S_u\circ S_x/P$ to show that
+\begin{align*}
+\subst{\tmext{x}{u}}{\cprojfstf{A}{P}}
+  & \jdeq 
+\subst{\tmext{x}{u}}{\ctxwk{P}{\tfid{A}}} \\
+  & \jdeq
+\subst{u}{{x}{\ctxwk{P}{\tfid{A}}}} \tag{By \autoref{subst_by_tmext}}\\
+  & \jdeq
+\subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\tfid{A}}}} \\
+  & \jdeq
+\subst{x}{\tfid{A}} \\
+  & \jdeq
+x
+\end{align*}
+To show that $\subst{\tmext{x}{u}}{\cprojsndf{A}{P}}\jdeq u$, note that
+\begin{equation*}
+\subst{\tmext{x}{u}}{\cprojsndf{A}{P}}
+  \jdeq
+\subst{u}{{x}{\tfid{P}}}
+  \jdeq
+\subst{u}{\tfid{\subst{x}{P}}}
+  \jdeq
+u
+\end{equation*}
+Therefore, $\psi$ is a left-inverse of $\varphi$. To show that it is also a
+right inverse, note that \autoref{cor:pairing_ehom} gives us that
+\begin{equation*}
+\tmext{\cprojfst{A}{P}{w}}{\cprojsnd{A}{P}{w}}
+  \jdeq
+\subst{w}{(\tmext{\cprojfstf{A}{P}}{\cprojsndf{A}{P}})}.
+\end{equation*}
+Thus, it suffices to show that $\tmext{\cprojfstf{A}{P}}{\cprojsndf{A}{P}}\jdeq
+\tfid{\ctxext{A}{P}}$, which is straightforward.
+\end{proof}
+
+\begin{lem}\label{lem:tmext_assoc}
 For any $x\in T(A)$, $u\in T(S_x(P))$ and $v\in T(S_{\tmext{x}{u}}(Q))$ we have
 \begin{equation*}
 \tmext{{x}{u}}{v}\jdeq \tmext{x}{{u}{v}}\in T(\ctxext{{A}{P}}{Q}).
 \end{equation*}
+\begin{comment}
 Also, we have
 \begin{align*}
 \cprojfstf{A}{P}\circ\cprojfstf{\ctxext{A}{P}}{Q} & \jdeq\cprojfstf{A}{\ctxext{P}{Q}} \\
 \cprojsndf{A}{P}\circ\cprojfstf{\ctxext{A}{P}}{Q} & \jdeq \cprojfstf{P}{Q}\circ\cprojsndf{A}{\ctxext{P}{Q}} \\
 \cprojsndf{\ctxext{A}{P}}{Q} & \jdeq \cprojsndf{P}{Q}\circ\cprojsndf{A}{\ctxext{P}{Q}}.
 \end{align*}
+\end{comment}
 \end{lem}
 
+\begin{proof}
+By \autoref{subst_by_tmext}, we have $S_v\circ S_{\tmext{x}{u}}\jdeq S_v\circ S_u\circ S_x \jdeq S_{\tmext{u}{v}}\circ S_x$,
+so associativity of term extension follows.
+\end{proof}
+
+\begin{comment}
 \begin{lem}
 Let $f\in\thom{A}{\ctxext{B}{Q}}$ Then we have
 \begin{equation*}
@@ -683,12 +877,541 @@ then we have $\tmext{f_0}{f_1}\in\thom{A}{\ctxext{B}{Q}}$ and
 \end{align*}
 \end{lem}
 
-\begin{thm}
+\begin{proof}
+Straightforward
+\end{proof}
+\end{comment}
+
+We end this section by showing that weakening is the same operation as pre-composition
+with a first projection.
+
+\begin{thm}\label{precomp_by_proj}
 Precomposition with $\cprojfstf{A}{P}$ is weakening by $P$, i.e.
 \begin{equation*}
-S_{\cprojfstf{A}{P}}\circ W_{\ctxext{A}{P}}\jdeq W_P.
+(\cprojfstf{A}{P})_\ast \jdeq W_P.
 \end{equation*}
 \end{thm}
+
+\begin{proof}
+\begin{align*}
+(\cprojfstf{A}{P})_\ast & \jdeq S_{\cprojfstf{A}{P}}\circ W_{\ctxext{A}{P}} \\
+& \jdeq S_{W_P(\tfid{A})}\circ W_P\circ W_A \\
+& \jdeq W_P\circ S_{\tfid{A}}\circ W_A \\
+& \jdeq W_P.\qedhere 
+\end{align*}
+\end{proof}
+
+\subsection{The interchange laws}
+
+We are now in the position to define vertical and horizontal composition, and
+prove properties of them.
+
+\begin{defn}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then we
+define 
+\begin{equation*}
+\jhomdefn{\Gamma}{{A}{P}}{{B}{Q}}{\jvcomp{P}{f}{F}}{\unfold{\jvcomp{P}{f}{F}}}.
+\end{equation*}
+Whenever we say that we have a diagram of the form
+\begin{equation*}
+\begin{tikzcd}
+R \arrow[r,"f_2"] \arrow[d,fib] &
+S \arrow[d,fib] \\
+P \arrow[r,"f_1"] \arrow[d,fib] &
+Q \arrow[d,fib] \\
+A \arrow[r,"f_0"] &
+B
+\end{tikzcd}
+\end{equation*}
+we mean that we have
+$f_0\in\thom{A}{B}$, $f_1\in\thomd{f_0}{P}{Q}$ and 
+$f_2\in\thomd{\jvcomp{P}{f_0}{f_1}}{R}{S}$.
+\end{defn}
+
+\begin{cor}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then we
+have
+\begin{equation*}
+H(\jvcomp{P}{f}{F})\jdeq \jvcomp{H(P)}{H(f)}{H(F)}
+\end{equation*}
+for any E-homomorphism $H:\mathbb{E}\to\mathbb{D}$.
+\end{cor}
+
+\begin{lem}
+Vertical composition is associative.
+\end{lem}
+
+\begin{proof}
+Consider the diagram
+\begin{equation*}
+\begin{tikzcd}
+R \arrow[r,"f_2"] \arrow[d,fib] &
+S \arrow[d,fib] \\
+P \arrow[r,"f_1"] \arrow[d,fib] &
+Q \arrow[d,fib] \\
+A \arrow[r,"f_0"] &
+B
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$.
+Because weakening distributes over term extension, and term extension is
+associative, we have
+\begin{align*}
+\jvcomp{R}{\jvcomp{P}{f_0}{f_1}}{f_2}
+  & \jdeq
+\tmext{\ctxwk{R}{\tmext{\ctxwk{P}{f_0}}{f_1}}}{f_2}
+  \\
+  & \jdeq
+\tmext{\tmext{\ctxwk{R}{{P}{f_0}}}{\ctxwk{R}{f_1}}}{f_2}
+  \\
+  & \jdeq
+\tmext{\ctxwk{\ctxext{P}{R}}{f_0}}{\tmext{\ctxwk{R}{f_1}}{f_2}}
+  \tag{By \autoref{lem:tmext_assoc}}
+  \\
+  & \jdeq
+\jvcomp{{P}{R}}{f_0}{\jvcomp{R}{f_1}{f_2}}.\qedhere
+\end{align*}
+\end{proof}
+
+\begin{defn}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then we
+define the E-homomorphism 
+\begin{equation*}
+F_\circledast\defeq F_\ast\circ (f_\ast/Q):
+\mathbb{E}/\ctxext{{\Gamma}{B}}{Q}\to\mathbb{E}/\ctxext{{\Gamma}{A}}{P}.
+\end{equation*}
+The infix notation of $F_\circledast$ is taken to be $\jfcomp{\blank}{\blank}{\blank}{F}{\blank}$.
+\end{defn}
+
+\begin{lem}\label{lem:three-composition}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then we
+have the equality
+\begin{equation*}
+F_\circledast\jdeq (\jvcomp{P}{f}{F})_\ast.
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+\begin{align*}
+F_\ast\circ (f_\ast/Q)
+  & \jdeq
+S_F\circ W_P\circ S_f/(W_A(Q))\circ W_A/\ctxext{B}{Q}
+  \\
+  & \jdeq
+S_F\circ S_{W_P(f)}/W_P(W_A(Q))\circ W_P/W_A(\ctxext{B}{Q})\circ W_A/\ctxext{B}{Q}
+  \\
+  & \jdeq
+S_F\circ S_{W_P(f)}/W_P(W_A(Q))\circ W_{\ctxext{A}{P}}/\ctxext{B}{Q}
+  \\
+  & \jdeq
+S_{\tmext{W_P(f)}{F}}\circ W_{\ctxext{A}{P}}/\ctxext{B}{Q}
+  \tag{By \autoref{subst_by_tmext}}
+  \\
+  & \jdeq
+(\jvcomp{P}{f}{F})_\ast.\qedhere
+\end{align*}
+\end{proof}
+
+We are now in position to state and prove the interchange law of horizontal
+and vertical composition.
+
+\begin{thm}\label{thm:interchange}
+Consider the diagram
+\begin{equation*}
+\begin{tikzcd}
+P \arrow[r,"F"] \arrow[d,fib] &
+Q \arrow[r,"G"] \arrow[d,fib] &
+R \arrow[d,fib] \\
+A \arrow[r,"f"] &
+B \arrow[r,"g"] &
+C
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$. Then the equality
+\begin{equation*}
+{\jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{\jvcomp{Q}{g}{G}}}
+  \jdeq
+{\jvcomp{P}{\jcomp{A}{f}{g}}{\jfcomp{A}{f}{P}{F}{G}}}
+\end{equation*}
+of morphisms from $\ctxext{A}{P}$ to $\ctxext{C}{R}$ in context $\Gamma$ holds.
+\end{thm}
+
+\begin{proof}
+By \autoref{lem:three-composition}, we have
+\begin{align*}
+\jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{\jvcomp{Q}{g}{G}}
+  & \jdeq
+\jcomp{P}{F}{\jcomp{A}{f}{\tmext{\ctxwk{Q}{g}}{G}}}
+  \tag{By \autoref{lem:three-composition}}
+  \\
+  & \jdeq
+\jcomp{P}{F}{\tmext{\ctxwk{\jcomp{A}{f}{Q}}{\jcomp{A}{f}{g}}}{\jcomp{A}{f}{G}}}
+  \\
+  & \jdeq
+\tmext{\jcomp{P}{F}{\ctxwk{\jcomp{A}{f}{Q}}{\jcomp{A}{f}{g}}}}{\jcomp{P}{F}{{A}{f}{G}}}
+  \\
+  & \jdeq
+\tmext{\jcomp{P}{F}{\ctxwk{\jcomp{A}{f}{Q}}{\jcomp{A}{f}{g}}}}{\jfcomp{A}{f}{P}{F}{G}}
+  \\
+  & \jdeq
+\tmext{\ctxwk{P}{\jcomp{A}{f}{g}}}{\jfcomp{A}{f}{P}{F}{G}}
+  \tag{By \autoref{lem:compW_W}}
+  \\
+  & \jdeq
+\jvcomp{P}{\jcomp{A}{f}{g}}{\jfcomp{A}{f}{P}{F}{G}}.\qedhere
+\end{align*}
+\end{proof}
+
+\begin{thm}
+Consider the diagram
+\begin{equation*}
+\begin{tikzcd}
+P \arrow[r,"F"] \arrow[d,fib] &
+Q \arrow[r,"G"] \arrow[d,fib] &
+R \arrow[d,fib] \\
+A \arrow[r,"f"] &
+B \arrow[r,"g"] &
+C
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$. 
+Then $F_\circledast\circ G_\circledast\jdeq (\jfcomp{A}{f}{P}{F}{G})_\circledast$.
+In other words the composition $\jfcomp{}{}{}{\blank}{\blank}$ is associative.
+\end{thm}
+
+\begin{proof}
+\begin{align*}
+F_\circledast\circ G_\circledast
+  & \jdeq
+(\jvcomp{P}{f}{F})_\ast\circ(\jvcomp{Q}{g}{G})_\ast 
+  \tag{By \autoref{lem:three-composition}}\\
+  & \jdeq
+(\jcomp{\ctxext{A}{P}}{\jvcomp{P}{f}{F}}{\jvcomp{Q}{g}{G}})_\ast 
+  \tag{By \autoref{lem:compcomp}}\\
+  & \jdeq
+(\jvcomp{}{\jcomp{A}{f}{g}}{\jfcomp{A}{f}{P}{F}{G}})_\ast 
+  \tag{By \autoref{thm:interchange}} \\
+  & \jdeq
+(\jfcomp{A}{f}{P}{F}{G})_\circledast.
+  \tag{By \autoref{lem:three-composition}}
+\end{align*}
+\end{proof}
+
+\begin{lem}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then
+$\jvcomp{P}{f}{F}$ is the unique morphism from $\ctxext{A}{P}$ to $\ctxext{B}{Q}$
+with the property that both the diagram
+\begin{equation*}
+\begin{tikzcd}
+\ctxext{A}{P}
+  \ar{r}{\jvcomp{P}{f}{F}}
+  \ar{d}[swap]{\cprojfstf{A}{P}}
+& \ctxext{B}{Q}
+  \ar{d}{\cprojfstf{B}{Q}}
+  \\
+A \ar{r}[swap]{f}
+& B
+\end{tikzcd}
+\end{equation*}
+commutes, and $\jcomp{}{\jvcomp{P}{f}{F}}{\cprojsndf{B}{Q}}\jdeq F$.
+\end{lem}
+
+\begin{proof}
+We first note that
+\begin{align*}
+\jcomp{}{\jvcomp{P}{f}{F}}{\cprojfstf{B}{Q}}
+  & \jdeq
+\jcomp{P}{F}{\jcomp{A}{f}{\cprojfstf{B}{Q}}} 
+  \tag{By \autoref{lem:three-composition}} \\
+  & \jdeq
+\jcomp{P}{F}{\ctxwk{\jcomp{A}{f}{Q}}{\jcomp{A}{f}{\idtm{B}}}} \\
+  & \jdeq
+\jcomp{P}{F}{\ctxwk{\jcomp{A}{f}{Q}}{f}} \\
+  & \jdeq
+\ctxwk{P} f \tag{By \autoref{lem:compW_W}} \\
+  & \jdeq
+\jcomp{\ctxext{A}{P}}{\cprojfstf{A}{P}}{f}.
+  \tag{By \autoref{precomp_by_proj}}
+\end{align*}
+Also, we have
+\begin{align*}
+\jcomp{}{\jvcomp{P}{f}{F}}{\cprojsndf{B}{Q}}
+  & \jdeq
+\jcomp{P}{F}{\jcomp{A}{f}{\idtm{Q}}}
+  \tag{By \autoref{lem:three-composition}}
+  \\
+  & \jdeq
+\jcomp{P}{F}{\idtm{\jcomp{A}{f}{Q}}}
+  \\
+  & \jdeq
+F.
+\end{align*}
+Thus, we conclude that $\jvcomp{P}{f}{F}$ has indeed the stated property. For
+the uniqueness, let $G:\ctxext{A}{P}\to\ctxext{B}{Q}$ be a morphism such that
+$\jcomp{}{G}{\cprojfstf{B}{Q}}\jdeq\jcomp{}{\cprojfstf{A}{P}}{f}$ and
+$\jcomp{}{G}{\cprojsndf{B}{Q}}\jdeq F$. Then it follows that
+\begin{equation*}
+G \jdeq \tmext{\jcomp{}{\cprojfstf{A}{P}}{f}}{F}
+  \jdeq \tmext{\ctxwk{P}{f}}{F}
+  \jdeq \jvcomp{P}{f}{F}.\qedhere
+\end{equation*}
+\end{proof}
+
+\subsection{Categories internal to E-systems}
+The definition of internal category we're about to give, has a type of objects
+and a type of morphisms, such that the codomain function is a projection. It might
+be more appropriate to call such structures `right categories', and the corresponding
+structures where the domain function is a projection might be called `left
+categories'. In particular, the opposite of a right category will be a left
+category. There is also a symmetric notion of a category.
+
+\begin{defn}
+A category-framework $\cftalg{A}$ in context $\Gamma$ in an E-system $\mathbb{E}$ consists of
+\begin{enumerate}
+\item A family $\cftalgc{\cftalg{A}}\in\cat{C}/\Gamma$, representing the type of
+objects of the category framework;
+\item A family $\cftalgf{\cftalg{A}}\in\cat{C}/\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$,
+representing the type of morphisms of the category framework, where a term of
+$\subst{X}{\cftalgf{\cftalg{A}}}$ is considered to be a morphism into $X\in T(\cftalgc{\cftalg{A}})$;
+\item A morphism $\jhom{\Gamma}{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{\cftalgc{\cftalg{A}}}{\cftctxext}$, representing the domain function;
+\item A morphism $\jhom{{\Gamma}{\cftalgc{\cftalg{A}}}}{{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}}{\cftalgf{\cftalg{A}}}{\cftfamext}$, representing composition;
+\item A term $\jterm{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}{\cftempf{\cftalg{A}}}$,
+representing the identity morphisms.
+\end{enumerate}
+\end{defn}
+
+\begin{rmk}
+Instead of looking at $\cftfamext$ as a morphism from 
+$\ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}$
+to $\cftalgf{\cftalg{A}}$ in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$, 
+one could also look at $\cftfamext$ as a 
+morphism \emph{over $\cprojfstf{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}$} 
+in context $\Gamma$, as indicated in the following diagram:
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\cftalgf{\cftalg{A}}
+  \ar[fib]{d}
+& \jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}
+  \ar[fib]{d}
+  \ar{l}[swap]{\cftfamext}
+  \ar{r}
+& \cftalgf{\cftalg{A}}
+  \ar[fib]{d}
+  \\
+\cftalgc{\cftalg{A}}
+& \ctxext{A}{\cftalgf{\cftalg{A}}}
+  \ar{l}{\cprojfstf{A}{\cftalgf{\cftalg{A}}}}
+  \ar{r}[swap]{\cftctxext}
+& \cftalgc{\cftalg{A}}
+\end{tikzcd}
+\end{equation*}
+From this point of view, we see that $\cftfamext$ has an object $X$ and a 
+morphism $f$ into $X$ as parameters, 
+then takes a morphism into the domain of $f$ as an argument, 
+and outputs a morphism into $X$. The projection maps $(X,f)$ to $X$, so we see
+that composition is indeed an operation of this kind.
+\end{rmk}
+
+A category-framework is not a category unless several axioms of the theory of
+categories are satisfied. The domain of a composed arrow $g\circ f$ must be the
+domain of $f$, composition must be associative, the domains of the identity
+morphisms must be the same as their codomains, and identities must satisfy
+the left and right identity laws. However, the axioms expressing these 
+conditions are not very insightful when they're written down directly. Thus, we
+take the usual way and define the notion of functor before we describe the
+actual conditions of being a category.
+
+\begin{defn}
+Let $\cftalg{A}$ and $\cftalg{B}$ be category-frameworks in context $\Gamma$,
+in an E-system $\mathbb{E}$.
+An \emph{internal functor $\cfthom{F}$ from $\extalg{A}$ to
+$\extalg{B}$ in context $\Gamma$} is a pair 
+$(\cfthomc{\cfthom{F}},\cfthomf{\cfthom{F}})$ consisting of
+\begin{align*}
+\jalign\jhom
+  {\Gamma}
+  {\cftalgc{\cftalg{A}}}
+  {\cftalgc{\cftalg{B}}}
+  {\cfthomc{\cfthom{F}}}
+  \\
+\jalign\jfhom
+  {\Gamma}
+  {\cftalgc{\cftalg{A}}}
+  {\cftalgc{\cftalg{B}}}
+  {\cfthomc{\cfthom{F}}}
+  {\cftalgf{\cftalg{A}}}
+  {\cftalgf{\cftalg{B}}}
+  {\cfthomf{\cfthom{F}}}
+\end{align*}
+for which the diagrams
+\begin{equation}\label{eq:exthom1}
+\begin{tikzcd}
+\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}
+  \ar{r}{\jvcomp{}{\cfthomc{\cfthom{F}}}{\cfthomf{\cfthom{F}}}}
+  \ar{d}[swap]{\cftctxext[\cftalg{A}]}
+& \ctxext{\cftalgc{\cftalg{B}}}{\cftalgf{\cftalg{B}}}
+  \ar{d}{\cftctxext[\cftalg{B}]}
+  \\
+\cftalgc{\cftalg{A}}
+  \ar{r}[swap]{\cfthomc{\cfthom{F}}}
+& \cftalgc{\cftalg{B}}
+\end{tikzcd}
+\end{equation}
+and
+\begin{equation}\label{eq:exthom2}
+\begin{tikzcd}[column sep=huge]
+\ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}
+  \ar{r}{\jvcomp{}{\cfthomf{\cfthom{F}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomf{\cfthom{F}}}}}
+  \ar{d}[swap]{\cftfamext[\cftalg{A}]}
+& \jcomp{}{\cfthomc{\cfthom{F}}}{\ctxext{\cftalgf{\cftalg{B}}}{\jcomp{}{\cftctxext[\cftalg{B}]}{\cftalgf{\cftalg{B}}}}}
+  \ar{d}{\jcomp{}{\cfthomc{\cfthom{F}}}{\cftfamext[\cftalg{B}]}}
+  \\
+\cftalgf{\cftalg{A}}
+  \ar{r}[swap]{\cfthomf{\cfthom{F}}}
+& \jcomp{}{\cfthomc{\cfthom{F}}}{\cftalgf{\cftalg{B}}}
+\end{tikzcd}
+\end{equation}
+commute, and for which $\subst{\cftempf{\cftalg{A}}}{\cfthomf{\cfthom{F}}}
+\jdeq\jcomp{}{\cfthomc{\cfthom{F}}}{\cftempf{\cftalg{B}}}$.
+\end{defn}
+
+\begin{defn}
+Let $\cftalg{A}$ be a category-framework. We define the category-framework
+\begin{equation*}
+\cftfamalg{\cftalg{A}}\defeq(\cftalgf{\cftalg{A}},\jcomp{}{\cftctxext}%
+{\cftalgf{\cftalg{A}}},\cftfamext,\jcomp{}{\cftctxext}{\cftfamext},
+\jcomp{}{\cftctxext}{\cftempf{\cftalg{A}}}),
+\end{equation*}
+When $\cftalg{P}$ is a category-framework in context $\ctxext{\Gamma}{A}$, then
+and we define the category-framework
+\begin{equation*}
+\ctxext{\cftalgc{\cftalg{A}}}{\cftalg{P}}
+  \defeq
+( \ctxext{A}{\cftalgc{\cftalg{P}}},
+  \cftalgf{\cftalg{P}},
+  \jvcomp{}{\idtm{A}}{\cftctxext[\cftalg{P}]},
+  \cftfamext[\cftalg{P}],
+  \cftempf{\cftalg{P}}).
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+An internal category $\cftalg{A}$ in an E-system $\mathbb{E}$ consists of a
+category-framework $\cftalg{A}$ satisfying the following conditions:
+\begin{enumerate}
+\item \emph{The domain condition.} The pair 
+$(\cftctxext,\idtm{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}})$ is a
+functor from $\ctxext{\cftalgc{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}$ to
+$\cftalg{A}$.
+\item \emph{The associativity law.} The pair
+$(\cftfamext,\idtm{\jcomp{}{\cftfamext}{\cftalgf{\cftfamalg{\cftalg{A}}}}})$
+is a functor from $\ctxext{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftfamalg{\cftalg{A}}}}$ to
+$\cftfamalg{\cftalg{A}}$.
+\item \emph{The identity domain condition.} The domain of the identity morphism
+is the same as its codomain:
+\begin{equation*}
+\jtermeq
+  {{\Gamma}{\cftalgc{\cftalg{A}}}}
+  {\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}
+  {\subst{\cftempf{\cftalg{A}}}{\cftctxext[\cftalg{A}]}}
+  {\idtm{\cftalgc{\cftalg{A}}}}.
+\end{equation*}
+\item \emph{The left identity law.} A morphism precomposed by the identity morphism
+is equal to the original morphism:
+\begin{equation*}
+\jtermeq
+  {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
+  {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+  {\subst{\cftempf{\cftalg{A}}}{\cftfamext}}
+  {\idtm{\cftalgf{\cftalg{A}}}}.
+\end{equation*}
+\item \emph{The right identity law.} A morphism postcomposed by the identity morphism
+is equal to the original morphism:
+\begin{equation*}
+\jtermeq
+  {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
+  {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+  {\subst{\jcomp{}{\cftctxext}{\cftempf{\cftalg{A}}}}{\cftfamext}}
+  {\idtm{\cftalgf{\cftalg{A}}}}.
+\end{equation*}
+\end{enumerate}
+\end{defn}
+
+\begin{rmk}
+Since we have only used operations of E-systems to define internal categories,
+it immediately follows that if $\cftalg{A}$ is an internal category in
+$\mathbb{E}$ and if $F:\mathbb{E}\to\mathbb{D}$ is an E-homomorphism, then
+$F(\cftalg{A})$ is an internal category in $\mathbb{D}$. In particular, if
+$\cftalg{Q}$ is an internal category in context $\ctxext{\Gamma}{B}$ and
+$f:A\to B$, then the change of base $f_\ast(\cftalg{Q})$ is an internal category
+in context $\ctxext{\Gamma}{A}$. Thus, it is immediate that the notion of
+internal category is stable under change of base.
+\end{rmk}
+
+\subsection{Internal E-systems}
+
+\subsubsection{Internal weakening systems}
+
+\subsubsection{Internal projection systems}
+
+\subsubsection{Internal substitution systems}
+
+\subsubsection{Internal E-systems}
+
+\begin{comment}
+\section{Dependent morphisms}
+
+\begin{defn}
+Let $f_0\in\thom{A}{B}$ be an internal morphism and let $P\in\cat{C}/\ctxext{\Gamma}{A}$ and
+$Q\in\cat{C}/\ctxext{\Gamma}{B}$. We define
+\begin{equation*}
+\thomd{f_0}{P}{Q} \defeq \thom{P}{{f_0}_\ast(Q)}
+\end{equation*}
+We indicate that $f_1\in\thomd{f_0}{P}{Q}$ by drawing the diagram
+\begin{equation*}
+\begin{tikzcd}
+P \arrow[r,"f_1"] \arrow[d,->>] & Q \arrow[d,->>] \\
+A \arrow[r,swap,"f_0"] & B.
+\end{tikzcd}
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+Consider the diagram
+\begin{equation*}
+\begin{tikzcd}
+P \arrow[r,"f_1"] \arrow[d,->>] & Q \arrow[d,->>] \arrow[r,"g_1"] & R \arrow[d,->>] \\
+A \arrow[r,swap,"f_0"] & B \arrow[r,"g_0"] & C.
+\end{tikzcd}
+\end{equation*}
+We define
+\begin{align*}
+\jvcomp{P}{f_0}{f_1} & \defeq\unfold\jvcomp{P}{f_0}{f_1} & & \in \thom{\ctxext{A}{P}}{\ctxext{B}{Q}} \\
+\jfcomp{A}{f_0}{P}{f_1}{g_1} & \defeq \unfold\jfcomp{A}{f_0}{P}{f_1}{g_1} & & \in \thomd{\jcomp{A}{f_0}{g_0}}{P}{R}.
+\end{align*}
+\end{defn}
+
+\begin{rmk}
+Consider
+\begin{equation*}
+\begin{tikzcd}
+P \arrow[r,"f_1"] \arrow[d,->>] & Q \arrow[d,->>] \\
+A \arrow[r,swap,"f_0"] & B.
+\end{tikzcd}
+\end{equation*}
+Then the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\ctxext{A}{P} \arrow[r,"\jvcomp{P}{f_0}{f_1}"] \arrow[d,swap,"\cprojfstf{A}{P}"] & \ctxext{B}{Q} \arrow[d,"\cprojfstf{B}{Q}"] \\
+A \arrow[r,swap,"f_0"] & B
+\end{tikzcd}
+\end{equation*}
+commutes. Also, we have
+\begin{equation*}
+S_{\tmext{x}{u}}(\jvcomp{P}{f_0}{f_1}) \jdeq \tmext{S_x(f_0)}{S_{\tmext{x}{u}}(f_1)}
+\end{equation*}
+for each $x\in T(A)$ and $u\in T(S_x(P))$.
+\end{rmk}
 
 \section{Natural transformations of E-homomorphisms}
 \begin{rmk}
@@ -758,7 +1481,6 @@ The unit $\eta:1_{\cat{C}/\ctxext{\Gamma}{A}}\Rightarrow W_A\circ\Pi_A$ is given
 $\eta_P\in\thom{P}{W_A(\Pi_A(P))}$
 \end{proof}
 
-\begin{comment}
 \begin{lem}
 Suppose $\cat{D}$ is a retract of a pre-category $\cat{C}$, i.e. there are functors
 $S:\cat{D}\to\cat{C}$ and $R:\cat{C}\to\cat{D}$ with a natural isomorphism
@@ -808,4 +1530,981 @@ $\tau_\Delta\circ R(S(g))$. Note that $\tau_\Delta\circ R(S(g))=g\circ \tau_{\De
 naturality.
 \end{enumerate}
 \end{proof}
+
+\section{Weak E-systems}
+
+\begin{rmk}
+Note that $W$ is a strict $2$-functor frm $\cat{C}$ to $\mathbb{Cat}$ of which
+the value at an object $\Gamma$ is specified to be $\cat{C}/\Gamma$, and which
+is required to preserve the final object. We could have considered $W$ to be a 
+pseudo-functor from $\cat{C}$ to $\mathbb{Cat}$ instead. A coherence theorem
+by Power \cite{Power89} then allows for the strictification of this pseudo-functor
+into a (strict) weakening structure. (Does this map $\Gamma$ to $\cat{C}/\Gamma$
+and final to final?). Thus, we know what a weak pre-weakening system has to be.
+The following questions need to be answered:
+\begin{itemize}
+\item What is a weak weakening/projection/substitution system.
+\item What is a weak E-system? I.e.~what are the coherence rules for something
+to be a weakening/projection/substitution homomorphism?
+\item Can they all be strictified? Are there more examples of weak E-systems?
+\end{itemize}
+\end{rmk}
 \end{comment}
+
+\section{E-systems compared to other systems of type dependency}\label{sec:esys_compared}
+In an effort to formalize the simplicial set model of Martin-L\"of type theory
+with the univalence axiom, Voevodsky has studied various notions of models of
+type theory, taking Cartmell's \emph{contextual categories} as a starting
+point. Voevodsky's definition of a \emph{C-system} is equivalent to that of Cartmell
+\cite{VV_C-systems_quotients}. There are several techniques of defining 
+C-systems: in \cite{VV_Csys_univ}, C-systems are constructed out of a universe
+in a category; in \cite{VV_C-systems_quotients}, sub-C-systems and regular
+quotients of C-systems are defined; in \cite{VV_C-systems_monad}, a C-system
+is constructed out of a monad $R$ on the category of sets and a left $R$-module
+with values in $\mathbf{Set}$. 
+
+In \cite{VV_B-systems}, Voevodsky introduced his notion of \emph{B-systems}, which is
+an essentially algebraic theory of type dependency with infinitely many sorts 
+and operations, and subsequently he showed that there is a full and faithful
+functor from the category of C-systems to the category of B0-systems, of which
+the image is contained in the subcategory of B-systems. This fact is important at least
+for a theoretical reason: it tells us that the conditions of being a B-system
+are necessary to axiomatize type dependency. In other words,
+this is a theorem that tells us that we need no further axioms. It is
+unknown whether the categories of C-systems and B-systems are actually equivalent.
+This question would settle the sufficiency of the conditions of being a B-system.
+
+The category of B-systems will be shown to be equivalent to the category of
+stratified E-systems. However, we do not arrive at the fact that the functor
+$\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys}$ is full without imposing an additional
+condition on the E-homomorphisms. 
+To ensure that the category of stratified E-systems with stratified 
+E-homomorphisms between them is a full subcategory of the category 
+$\mathbf{Esys}$, we will require that the underlying functor of each E-homomorphism
+lifts factorizations. It is
+important to note that this condition is also algebraic, so that the category
+of E-systems remains algebraic.
+
+\subsection{Lifting factorizations}
+Recall
+that for any morphism $f:X\to Y$ in a category $\cat{C}$ there is a category
+$\mathbf{fact}(f)$ of factorizations of $f$. Also, any functor $F:\cat{C}\to\cat{D}$
+determines a functor $F_{\mathbf{fact}(f)}:\mathbf{fact}(f)\to\mathbf{fact}(H(f))$
+for any morphism $f$ of $\cat{C}$.
+
+\begin{defn}
+A functor $F:\cat{C}\to\cat{D}$ is said to
+\emph{lift factorizations} if for any $f\in\cat{C}/X$, the functor
+$F_{\mathbf{fact}(f)}:\mathbf{fact}(f)\to\mathbf{fact}(F(f))$ is an isomorphism
+of categories. 
+\end{defn}
+
+\begin{comment}
+\begin{rmk}
+We may choose the property of lifting factorizations
+to involve either an equivalence or an isomorphism of categories. The
+isomorphism-version, would say that for every factorization $h'\circ g'$
+of $F(f)$ there is a unique factorization $f\jdeq h\circ g$ in $\cat{C}$ such
+that $F(g)\jdeq g'$ and $F(h)\jdeq h'$. In the version with equivalences,
+the uniqueness is replaced by uniqueness up to isomorphism, and the equalites
+are replaced by an isomorphism in $\mathbf{fact}(F(f))$. 
+
+It is easier to state the isomorphism version of lifting factorizations with
+inference rules and it might be easier to explain this condition on type theoretical
+grounds, although the equivalence version has the advantage of being
+categorical (i.e.~invariant under equivalence of categories).
+
+In the present
+context, it doesn't matter very much which one we pick: the categories in which
+we're interested are all posets.
+\end{rmk}
+\end{comment}
+
+\begin{eg}
+For any slice category $\cat{C}/X$, the forgetful functor $\cat{C}/X\to\cat{C}$
+lifts factorizations.
+\end{eg}
+
+\begin{defn}
+We write $\mathbf{Esys}$ for the category of E-systems where the underlying
+functor of each E-homomorphism lifts factorizations.
+\end{defn}
+
+\subsection{Stratified E-systems}
+
+In this subsection we define the notion of stratified E-system. Then we show
+that the category $\mathbf{Esys_s}$ of stratified E-systems with homomorphisms preserving the
+stratification, is a full subcategory of $\mathbf{Esys}$. 
+
+\begin{defn}
+A category $\cat{C}$ with terminal object is said to be \emph{stratified} if there exists a 
+\emph{stratification functor}
+\begin{equation*}
+L : \cat{C}\to (\mathbb{N},\geq)
+\end{equation*}
+such that
+\begin{enumerate}
+\item $L(X)\jdeq 0$ if and only if $X$ is terminal, and for any $f:X\to Y$ we have
+$L(X)\jdeq L(Y)$ if and only if $X\jdeq Y$ and $f\jdeq\catid{X}$. 
+\item every morphism $f:X\to Y$ in $\cat{C}_\mathbb{E}$, where $L(X)\jdeq
+n+m+1$ and $L(Y)\jdeq n$, has a unique factorization 
+\begin{equation*}
+\begin{tikzcd}
+X \arrow[r,"f_m"] & X_m \arrow[r,"f_{m-1}"] & \cdots \arrow[r,"f_1"] & X_1 \arrow[r,"f_0"] & Y
+\end{tikzcd}
+\end{equation*}
+where $L(X_i)\jdeq n+i$.
+\end{enumerate}
+A functor $F:\cat{C}\to\cat{D}$ between stratified categories is said to be stratified 
+if $L_{\cat{C}}\jdeq L_{\cat{D}}\circ F$. 
+\end{defn}
+
+%\begin{rmk}
+%The categorical version of being stratified, is that there exists a factofibration
+%$L:\cat{C}\to (N,\geq)$ which preserves the terminal object.
+%\end{rmk}
+
+\begin{lem}
+Any stratified category is a rooted tree.
+\end{lem}
+
+\begin{proof}
+Let $\cat{C}$ be a stratified category. The root of the tree is going to be the terminal
+object of $\cat{C}$. Note that objects of $\cat{C}$ have no automorphisms other
+than the identity morphisms. Therefore, to show that $\cat{C}$ is a tree,
+it suffices to show that for every object $X$ with $L(X)>0$ there is
+a unique object $\eft(X)$ with $L(\eft(X))\jdeq L(X)-1$, with a morphism $X\to \eft(X)$.
+The existence follows from the existence of the factorization of $X\to 1$. The 
+uniqueness follows from the observation that for any arrow
+$X\to Y$ with $L(Y)\jdeq L(X)-1$, we can factorize $X\to 1$ through $Y$. Since
+factorizations are unique, we will have $Y\jdeq \eft(X)$. 
+\end{proof}
+
+\begin{lem}
+The category of small stratified categories is a full subcategory of the category
+of small categories with terminal objects and between them functors which lift 
+factorizations and preserve the terminal object.
+\end{lem}
+
+\begin{proof}
+Let $F:\cat{C}\to\cat{D}$ be a functor between stratified categories which lifts
+factorizations and 
+which preserves terminal objects. We show by induction that $F$ is stratified.
+Since $F$ preserves the terminal object, $L(Y)\jdeq 0$ implies $L(F(Y))\jdeq 0$.
+Now suppose that for $n\in\mathbb{N}$, we have that $L(\Gamma)\jdeq n$ implies
+$L(F(Y))\jdeq n$, and let $X$ be such that $L(X)\jdeq n+1$ with
+$p_X:X\to\eft(X)$. Then the poset $\mathbf{fact}(p_X)$ is isomorphic to the
+poset $\mathbf{2}$ with two objects, one of which is smaller than the other. By the
+assumption that $F$ lifts factorizations, the poset $\mathbf{fact}(F(p_X))$
+is also isomorphic to $\mathbf{2}$. Thus, the only factorization
+of $F(X)\to\unit$ starts with $F(p_X):H(X)\to F(\eft(X))$, which implies that
+$L(F(X))\jdeq n+1$. 
+\end{proof}
+
+\begin{rmk}
+It is easy to show that a category can only be stratified in at most one way,
+and that if a category is stratified, then so are any of its slices. Therefore,
+it makes sense to ask for the property that the weakening and substitution
+functors in a pre-weakening or pre-substitution system are stratified.
+\end{rmk}
+
+\begin{defn}
+A pre-E-system is said to be \emph{stratified} if its underlying category is
+stratified and if each $W_A$ and $S_x$ is a stratified functor. The category of
+stratified pre-E-systems with stratified E-homomorphisms between them is denoted by
+$\mathbf{Esys_s}$.
+\end{defn}
+
+\begin{cor}\label{lem:strat_full}
+The category of stratified pre-E-systems is a full subcategory of the category of
+pre-E-systems.
+\end{cor}
+
+\subsection{The embedding of B0-systems into pre-E-systems}
+
+Voevodsky distinguishes between pre-B-systems, which is an essentially algebraic theory with
+only operations and no equalities; B0-systems, which is an extension of the
+essentially algebraic theory of pre-B-systems which ensures that all the operations behave
+well with two sets of the operations ($\eft$ and $\ebd$); and B-systems, which extends the 
+theory of B0-systems with equalities ensuring that the rest of the operations 
+are compatible with each other. Voevodsky, furthermore distinguishes
+non-unital and unital versions of these, and noted that not all B-homomorphisms
+between unital B-systems are unital. The same distinguishment could be made for 
+E-systems by forgetting the projection structure, but we have not been able to construct a
+functor from unital B0-systems to unital pre-E-systems. Therefore, we shall only
+consider non-unital B0-systems and unital B-systems. In this section we will
+recall the definition of non-unital B0-systems and construct a full and faithful
+functor from them to the category of pre-E-systems. 
+
+One reason for introducing B-systems by first introducing pre-B-systems is that
+it is clear in the definition of pre-B-systems that there are only countably
+many operations. Since we are interested in embedding the B-systems into E-systems,
+we shall organize the definition of B-systems a bit differently, but of course
+the resulting definition of B0-systems and B-systems will be (trivially) 
+equivalent.
+
+\begin{defn}
+A \emph{B-framework} is a collection of data of the following form:
+\begin{enumerate}
+\item for all $n\in\mathbb{N}$ two sets $B_n$ and $\tilde{B}_n$. 
+\item for all $n\in\mathbb{N}$ maps of the form
+\begin{align*}
+\eft[n] & : B_{n+1}\to B_n \\
+\ebd[n] & : \tilde{B}_n\to B_n.
+\end{align*}
+For $m,n\in\mathbb{N}$, we denote the composition $\eft[n]\circ\cdots\circ\eft[n+m]:B_{n+m+1}\to B_n$ by $\eft[n]^m$. 
+\item $B_0$ is a singleton $\{\pt\}$.
+\end{enumerate} 
+\end{defn}
+
+\begin{rmk}
+Since the indices $n,m\in\mathbb{N}$ can be infered, we will usually omit them
+in the infix form of the operators.
+\end{rmk}
+
+\begin{defn}
+A homomorphism $H:\mathbb{B}\to\mathbb{A}$ of B-frameworks consists of maps
+$H_n:B_n\to A_n$ and $\tilde{H}_n:\tilde{B}_n\to\tilde{A}_n$ such that
+\begin{align*}
+\eft(H(X)) & \jdeq H(\eft(X)) \\
+\ebd(\tilde{H}(x)) & \jdeq H(\ebd(x))
+\end{align*}
+for any $X\in B_n$ and $x\in\tilde{B}_n$. The category of B-frameworks is
+denoted by $\mathbf{Bfr}$. 
+\end{defn}
+
+\begin{defn}
+For every B-framework $\mathbb{B}$ and any $X\in B_n$, there is a B-framework
+$\mathbb{B}/X$ given by
+\begin{align*}
+(B/X)_{m} & \jdeq \{Y\in B_{n+m}\mid\eft^{m}(Y)\jdeq X\}\\
+(\tilde{B}/X)_m & \jdeq \{y\in \tilde{B}_{n+m}\mid\eft^m(\ebd(y))\jdeq X\}.
+\end{align*}
+Also, for any homomorphism $H:\mathbb{B}\to\mathbb{A}$ of B-frameworks and any
+$X\in B_n$, there is a homomorphism $H/X:\mathbb{B}/X\to\mathbb{A}/H(X)$
+defined in the obvious way.
+\end{defn}
+
+\begin{rmk}
+Note that for $X\in B_n$ and $Y\in B_{n+m}$ such that $\eft^m(Y)\jdeq X$, 
+we have $(\mathbb{B}/X)/Y\cong B/Y$.
+\end{rmk}
+
+\begin{defn}
+A B0-system $\mathbb{B}$ consists of a B-framework $\mathbb{B}$ and homomorphisms
+\begin{align*}
+W_{X} & : \mathbb{B}/\eft(X)\to\mathbb{B}/X\\
+S_{x} & : \mathbb{B}/\ebd(x)\to\mathbb{B}/\eft(\ebd(x))
+\end{align*}
+of B-frameworks, for any $X\in B_{n+1}$ and any $x\in\tilde{B}_{n+1}$. 
+\end{defn}
+
+\begin{lem}
+When $\mathbb{B}$ is a B0-system, then so is each $\mathbb{B}/X$.
+\end{lem}
+
+\begin{proof}
+Straightforward.
+\end{proof}
+
+\begin{defn}
+A B0-homomorphism $H:\mathbb{B}\to\mathbb{A}$ is a homomorphism of B-frameworks
+for which the diagrams
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\mathbb{B}/X \arrow[r,"H/X"] & \mathbb{A}/H(X) \\
+\mathbb{B}/\eft(X) \arrow[u,"W_X"] \arrow[r,swap,"H/\eft(X)"] & \mathbb{A}/\eft(H(X)) \arrow[u,swap,"W_{H(X)}"]
+\end{tikzcd}
+\end{equation*}
+and
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\mathbb{B}/\ebd(x) \arrow[r,"H/\ebd(x)"] \arrow[d,swap,"S_x"] & \mathbb{A}/\ebd(H(X)) \arrow[d,"S_{\tilde{H}(x)}"] \\
+\mathbb{B}/\eft(\ebd(x)) \arrow[r,swap,"H/\eft(\ebd(x))"] & \mathbb{A}/\eft(\ebd(H(X)))
+\end{tikzcd}
+\end{equation*}
+of homomorphisms of B-frameworks commute for every 
+$X\in B_n$ and $x\in\tilde{B}_n$. The category of B0-systems is denoted
+by $\mathbf{B0sys}$.
+\end{defn}
+
+Now that we have defined the category of B0systems, we can start defining the
+embedding into pre-E-systems.
+
+\begin{defn}
+Let $\mathbb{B}$ be a B-framework. Then $\mathbb{B}$ determines
+a stratified category $U(\mathbb{B})$. Also, any homomorphism of B-frameworks
+determines a stratified functor.
+\end{defn}
+
+\begin{constr}
+The set of objects of $U(\mathbb{B})$ is taken to be the set
+$\bigsqcup_{(n\in\mathbb{N})}B_n$. Now we define
+$(k,X)\leq (n,Y)$ if and only if $n\leq k$ and $\eft[n]^{k-n}(X)\jdeq Y$.
+In other words, we only have $(n+m,X)\leq (n,\eft^m(X))$. It is immediate from
+this definition that for any $X\in B_{n+1}$ there is a unique $\Gamma\in
+B_n$ such that $(n+1,X)\leq (n,\Gamma)$, so $U(\mathbb{B})$ is stratified.
+
+To show that the functor $U(H):U(\mathbb{B})\to U(\mathbb{A})$ is stratified for
+any homomorphism $H:\mathbb{B}\to\mathbb{A}$ of B-frameworks, note that
+by \autoref{lem:strat_full} it suffices to show that each $U(H)$ 
+lifts factorizations.
+Let $H:\mathbb{B}\to\mathbb{A}$ be a homomorphism of B-frameworks, and let
+$(m,X):(n+m,X)\leq (n,\Gamma)$. Then the category $\mathbf{fact}_{(m,X)}$ of
+factorizations of $(m,X)$ is a finite linear order with
+$m+1$ elements, and so is the category $\mathbf{fact}_{(m,H(X))}$. 
+\end{constr}
+
+\begin{rmk} 
+It is in fact the case that $U(\mathbb{B})$ is the free category generated by the
+graph with $\bigsqcup_{(n\in\mathbb{N})}B_n$ as the set of vertices, and
+for each object of the form $(n+1,X)$ an edge to $(n,\eft[n](X))$. 
+Essentially all $U$ does, is forgetting about the term structure 
+$\tilde{B}$ of $\mathbb{B}$.
+
+Furthermore, it is useful to note that for any $X\in B_n$, we get an 
+isomorphism $U(\mathbb{B}/X)\cong  U(\mathbb{B})/(n,X)$ of rooted trees,
+natural in $X$. Therefore we will usually not distinguish between $U(\mathbb{B})/X$
+and $U(\mathbb{B})/(n,X)$. 
+\end{rmk}
+
+\begin{defn}
+Let $\mathbb{B}$ be a B0-system. Then $U(\mathbb{B})$ can be given the structure
+of a pre-E-system. We write $\mathcal{E}(\mathbb{B})$ for the resulting
+pre-E-system. Thus we get a functor $\mathcal{E}:\mathbf{B0sys}\to\mathbf{Esys_s}$.
+\end{defn}
+
+\begin{constr}
+We begin by simultaneously defining the term structure and the pre-substitution
+structure on $U(\mathbb{B})$ by induction on the natural numbers. More precisely,
+for any $m\in\mathbb{N}$ we will define, for any $(n+m,X)\leq (n,\Gamma)$ a set
+$T(m,X)$ and for any $x\in T(m,X)$ a homomorphism 
+$S_x:\mathbb{B}/X\to\mathbb{B}/\Gamma$ of B-frameworks. Then it follows
+immediately that we get stratified functors $U(S_x):U(\mathbb{B})/X\to U(\mathbb{B})/\Gamma$
+defining the pre-substitution structure of $\mathcal{E}(\mathbb{B})$.
+
+For $(n,X)\in U(\mathbb{B})$, we define $T(0,X)\defeq
+\{\pt[X]\}$ and $S_{\pt[X]}\defeq \catid{\mathbb{B}/X}$. We also define for
+$(n+1,X)\leq (n,\Gamma)$ the set $T(1,X)\jdeq\{x\in B_{n+1}\mid \ebd(x)\jdeq X\}$.
+Note that for $x\in T(1,X)$, the homomorphism $S_x:\mathbb{B}/X \to\mathbb{B}/\Gamma$
+is already assumed to exist, because $\mathbb{B}$ is a B0-system.
+
+For the inductive step, suppose that for $m\in\mathbb{N}$ we have sets $T(m,X)$
+for any $(n+m,X)\leq (n,\Gamma)$ and homomorphisms $S_x:\mathbb{B}/X \to \mathbb{B}/\Gamma$
+of B-frameworks, for any $x\in T(m,X)$. Then we define
+\begin{equation*}
+T(m+1,X)\defeq\bigsqcup_{x\in T(m,\eft(X))} T(1,S_x(X)).
+\end{equation*}
+For $(x,u)\in T(m+1,X)$ we define the homomorphism $S_{(x,u)}:\mathbb{B}/X\to
+\mathbb{B}/\Gamma$ as
+\begin{equation*}
+S_{(x,u)}\defeq S_u\circ S_x/X.
+\end{equation*}
+It remains to define a pre-weakening structure on $U(\mathbb{B})$. To do this,
+it suffices to define homomorphisms $W_{(m,X)}:\mathbb{B}/\Gamma \to\mathbb{B}/X$
+of B-frameworks, for any $(n+m,X)\leq (n,\Gamma)$. We define
+\begin{equation*}
+W_{(m,X)}\defeq W_X\circ\cdots\circ W_{\eft^{m-1}(X)}.\qedhere
+\end{equation*}
+\end{constr}
+
+\begin{thm}
+The functor $\mathcal{E}$ is full and faithful.
+\end{thm}
+
+\begin{proof}
+We have to show that the map $\mathrm{hom}(\mathbb{B},\mathbb{A})\to
+\mathrm{hom}(\mathcal{E}(\mathbb{B}),\mathcal{E}(\mathbb{A}))$ is a bijection
+for any two B0-systems $\mathbb{B}$ and $\mathbb{A}$.
+
+To show that this map is injective, suppose $F,G:\mathbb{B}\to\mathbb{A}$ are 
+B0-homomorphisms such that $\mathcal{E}(F)\jdeq\mathcal{E}(G)$. Then we have
+$F_n(X)\jdeq\mathcal{E}(F)(n,X)\jdeq \mathcal{E}(G)(n,X)\jdeq G_n(X)$ for each
+object $x\in B_n$. Also, we have $\tilde{F}_n(x)\jdeq T_{\mathcal{E}(F)}(n,x)
+\jdeq T_{\mathcal{E}(G)}(n,x)\jdeq \tilde{G}_n(x)$ for each
+$x\in\tilde{B}_n$. This shows that $F\jdeq G$, so we conclude that $\mathcal{E}$
+is faithful.  
+
+To show that the map $\mathrm{hom}(\mathbb{B},\mathbb{A})\to
+\mathrm{hom}(\mathcal{E}(\mathbb{B}),\mathcal{E}(\mathbb{A}))$ 
+is surjective, let $H:\mathcal{E}(\mathbb{B})\to
+\mathcal{E}(\mathbb{A})$. Since both $\mathcal{E}(\mathbb{B})$ and
+$\mathcal{E}(\mathbb{A})$ are stratified, we get from
+\autoref{lem:strat_full} that $H$ is a stratified pre-E-homomorphism. 
+Because $H$ is stratified, we get maps $H_n:B_n\to A_n$ for any $n\in\mathbb{N}$.
+The term structure of $H$ gives maps $\tilde{H}_n:
+\tilde{B}_n\to\tilde{A}_n$. This defines a B0-homomorphism since $H$ 
+preserves the pre-weakening and pre-substitution structures of $\mathcal{E}(\mathbb{B})$.
+It is immediate from the definition of $H_n$ and
+$\tilde{H}_n$ that this B0-homomorphism is mapped back to $H$, so we conclude
+that $\mathcal{E}$ is full.
+\end{proof}
+
+\subsection{B-systems are stratified E-systems}
+There are two properties which hold for pre-E-systems of the form $\mathcal{E}
+(\mathbb{B})$ for some B0-system $\mathbb{B}$, 
+which stand in the way of proving that the category of stratified
+pre-E-systems is equivalent to the category of B0-systems. The first is that
+for any $A\in U(\mathbb{B})/\Gamma$ and $P\in U(\mathbb{B})/\ctxext{\Gamma}{A}$,
+we have an isomorphism $T(\ctxext{A}{P})\cong\bigsqcup_{x\in T(A)}T(S_x(P))$.
+The second, which depends on the first, is that for any $(x,u)\in T(\ctxext{A}{P})$
+we have $S(x,u)\jdeq S_u\circ S_x/P$. In other words, both the term structure
+and the pre-substitution structure of $\mathcal{E}(\mathbb{B})$ are compatible
+with the categorical structure of the underlying category $U(\mathbb{B})$.
+However, to prove the corresponding facts for E-systems, we needed the full
+set of conditions on unital E-systems: to prove that the term structure of
+$U(\mathbb{B})$ is compatible with composition we needed units, and to prove 
+that the operations $S_x$ are compatible with the pairing function we needed
+that they are E-homomorphisms. 
+
+Presumably, we can assume these compatibility conditions on pre-E-systems in order
+to prove the desired equivalence of B0-systems and stratified pre-E-systems. However,
+that seems somewhat unnatural, especially given that they automatically hold
+for E-systems. Thus, for the remainder of this section we set out to show that
+the category of unital B-systems is equivalent to the category of stratified 
+unital E-systems.
+
+\begin{defn}
+A unital B0-system is a B0-system with maps
+\begin{equation*}
+\delta_n : B_{n+1}\to \tilde{B}_{n+2}.
+\end{equation*}
+such that $\ebd(\delta_n(X))\jdeq W_{X}(X)$ for any $X\in B_n$. 
+A B0-homomorphism $H$ is said to be unital if one has
+\begin{equation*}
+H(\delta(X))\jdeq\delta(H(X))
+\end{equation*}
+for any $X\in B_n$.  
+\end{defn}
+
+\begin{rmk}
+Voevodsky showed in \cite{VV_B-systems} that the category of unital B0-systems
+with unital B0-homomorphisms between them is not a full
+subcategory of $\mathbf{B0sys}$. 
+\end{rmk}
+
+\begin{defn}
+A \emph{(unital) B-system} is a B0-system for which the following conditions
+hold:
+\begin{enumerate}
+\item Every $W_X$ and $S_x$ is a unital B0-homomorphism.
+\item For every $x\in \tilde{B}_{n+1}$ one has $S_x\circ W_{\ebd(x)}\jdeq
+\catid{\mathbb{B}/\eft(\ebd(x))}$. 
+\item For every $x\in\tilde{B}_{n+1}$ one has $S_x(\delta(\ebd(x)))\jdeq x$.
+\item For every $X\in B_{n+1}$ one has $S_{\delta(X)}\circ W_X/X\jdeq
+\catid{\mathbb{B}/X}$. 
+\end{enumerate}
+\emph{B-homomorphisms} are unital B0-homomorphisms between B-systems.
+We denote the category of B-systems by $\mathbf{Bsys}$. 
+\end{defn}
+
+\begin{lem}
+For any non-unital B-system $\mathbb{B}$, $\mathcal{E}(\mathbb{B})$ is a 
+stratified non-unital E-system. 
+\end{lem}
+
+\begin{proof}
+Straightforward.
+\end{proof}
+
+\begin{defn}
+For any unital B-system $\mathbb{B}$, $\mathcal{E}(\mathbb{B})$ has a
+projection structure. We thus obtain a functor 
+$\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys}$ from unital B-systems to E-systems.
+\end{defn}
+
+\begin{constr}
+We first need to extend the functor $\mathcal{E}:\mathbf{B0sys}\to\mathbf{Esys_p}$
+from non-unital B0-systems to non-unital pre-E-systems, to a functor from
+unital B-systems to E-systems.
+
+We need to give $\mathcal{E}(\mathbb{B})$ the structure of a unital
+pre-E-system. We construct by induction on $m\in \mathbb{N}$, a term of type 
+$T(m,W_{(m,X)}(X))$ with the property that that 
+\begin{equation*}
+S_{\tfid{(m,X)}}\circ W_{(m,X)}/X\jdeq\catid{U(\mathbb{B})/X},
+\end{equation*} 
+for every $(n+m,X)\leq (n,\Gamma)$ by induction on $m$. The extra
+condition is part of the inductive construction, because we need it on the way.
+
+For $m\jdeq 0$ we have but one
+choice, and for $m\jdeq 1$ we can directly use the unital structure of
+$\mathbb{B}$. For the inductive step, recall that
+\begin{equation*}
+T(m+1,W_{(m+1,X)}(X))\jdeq\bigsqcup_{x\in T(m,W_{(m+1,X)}(\eft(X)))}T(1,S_x(W_{(m+1,X)}(X))).
+\end{equation*}
+We have the term $x\defeq \tilde{W}_X(\tfid{(m,\eft(X))})\in T(m,W_{(m+1,X)}(\eft(X)))$.
+Now we may observe that 
+\begin{align*}
+S_x(W_{(m+1,X)}(X))
+  & \jdeq 
+S_{\tilde{W}_X(\tfid{(m,\eft(X))})}(W_{(m+1,X)}(X))\\
+  & \jdeq 
+S_{\tilde{W}_X(\tfid{(m,\eft(X))})}(W_X(W_{(m,\eft(X))}(X))) \\
+  & \jdeq
+W_{X}(S_{\tfid{(m,\eft(X))}}(W_{(m,\eft(X))}(X))) \\
+  & \jdeq 
+W_{X}(X).
+\end{align*}
+Therefore, we see that $T(1,S_x(W_{(m+1,X)}(X)))\jdeq T(1,W_X(X))$, where we can
+choose the term $\delta(X)$. Thus, we define
+\begin{equation*}
+\tfid{(m+1,X)}\defeq (\tilde{W}_X(\tfid{(m,\eft(X))}),\delta(X))
+\end{equation*} 
+for $m\geq 1$. Now we need to check that $S_{\tfid{(m+1,X)}}\circ 
+W_{(m+1,X)}/X\jdeq \catid{U(\mathbb{B})/X}$. This is indeed the case:
+\begin{align*}
+S_{\tfid{(m+1,X)}}\circ W_{(m+1,X)}/X
+  & \jdeq
+S_{\delta(X)}\circ S_{\tilde{W}_X(\tfid{(m,\eft(X))})}\circ W_{(m+1,X)}/X \\
+  & \jdeq
+S_{\delta(X)}\circ W_X/X \\
+  & \jdeq
+\catid{U(\mathbb{B})/X}.
+\end{align*}
+This finishes the definition of the pre-projection structure on $\mathcal{E}(\mathbb{B})$.
+Straightforward proves by induction give that each $W_{(m,X)}$ and $S_x$ is a 
+pre-projection homomorphism and that $S_x(\tfid{(m,X)})\jdeq x$, for any 
+$x\in T(m,X)$.
+\end{constr}
+
+\begin{thm}
+The functor $\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys}$ lifts to an equivalence
+to the subcategory $\mathbf{Esys_s}$ of stratified E-systems: i.e.~we have a
+commuting diagram
+\begin{equation*}
+\begin{tikzcd}
+& \mathbf{Esys_s} \arrow[dr,"\subseteq"]\\
+\mathbf{Bsys} \arrow[ur,"\simeq"] \arrow[rr,swap,"\mathcal{E}"] & & \mathbf{Esys}
+\end{tikzcd}
+\end{equation*}
+\end{thm}
+
+\begin{proof}
+We already have shown that $\mathcal{E}$ factors through the stratified
+E-systems and that it is full and faithful, so it remains
+to show that every stratified E-system is in the image of $\mathcal{E}$. In
+other words, for every stratified E-system $\mathbb{E}$ we need to construct
+a B0-system $\mathbb{B}$ such that $\mathcal{E}(\mathbb{B})\cong\mathbb{E}$. 
+
+Let $\mathbb{E}$ be a stratified E-system. From the stratification functor
+$L:\mathbb{C}_{\mathbb{E}}\to (\mathbb{N},\geq)$ we obtain the pre-image
+presheaf $B(\mathbb{E}):\op{(\mathbb{N},\leq)}\to\mathbf{Set}$ given by
+\begin{align*}
+B(\mathbb{E})_n & \defeq \{X\in\mathrm{Ob}(\mathbb{C}_{\mathbb{E}})\mid L(X)\jdeq n\}
+\end{align*}
+and $\eft(X)\defeq\mathrm{cod}(p_X)$. We define the term structure of $B(\mathbb{E})_n$
+to be given by
+\begin{equation*}
+\tilde{B}(\mathbb{E})_n \defeq \bigsqcup_{X\in B(\mathbb{E})_n} T(p_X)
+\end{equation*}
+with the projection map $\ebd[n]\defeq\pi_1:\tilde{B}(\mathbb{E})_n\to B(\mathbb{E})_n$.
+This defines the B-framework $B(\mathbb{E})$, and we obtain a functor
+$B:\mathbf{Esys_s}\to\mathbf{B0sys}$. It is immediate that we get isomorphisms
+$U(B(\mathbb{E}))\cong\cat{C}_{\mathbb{E}}$, natural in $\mathbb{E}$. Also, we
+get natural isomorphisms $B(\mathbb{E}/\Gamma)\cong B(\mathbb{E})/\Gamma$. 
+
+The weakening and substitution structures on
+$B(\mathbb{E})$ are given by $W_X\defeq B(W_{p_X})$ and $S_{(X,x)}\defeq B(S_x)$,
+respectively. Since these functors are assumed to be stratified, they define
+homomorphisms of B-frameworks. Because a weakening system of an E-system is
+required to be functorial, i.e.~$W_{\ctxext{A}{P}}\jdeq W_P\circ W_A$ and
+$W_{\catid{\Gamma}}\jdeq\catid{\cat{C}_{\mathbb{E}}/\Gamma}$, it follows
+immediately that the weakening structure on $U(B(\mathbb{E}))$ is isomorphic to
+that of $\mathbb{E}$. 
+\end{proof}
+
+\begin{comment}
+In the following definition $\Delta(X)$ denotes the discrete category on the set
+$X$ and $\mathbf{2}$ is the category $s\to t$.
+\begin{defn}
+Define $\mathbb{S}$ to be the pushout
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\Delta(\mathbb{N}) \arrow[r,"{n\mapsto(n,s)}"] \arrow[d,swap,"i"] & \Delta(\mathbb{N})\times\mathbf{2} \arrow[d] \\
+(\mathbb{N},\leq) \arrow[r] & \mathbb{S}
+\end{tikzcd}
+\end{equation*}
+in $\mathbf{Cat}$.
+\end{defn}
+
+Note that for any $n\in\mathbb{N}$, we have the map $S^n := (m\mapsto m+n)$ which
+is monotone. By the universal property of pushouts, we obtain a functor $\sigma^n:\mathbb{S}\to\mathbb{S}$
+given by
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\Delta(\mathbb{N}) 
+  \arrow[r,"{n\mapsto(n,s)}"] 
+  \arrow[d,swap,"i"] 
+  & 
+\Delta(\mathbb{N})\times\mathbf{2} 
+  \arrow[d]
+  \arrow[r,"{\Delta(S^n)\times\catid{\mathbf{2}}}"]
+  &
+\Delta(\mathbb{N})\times\mathbf{2}
+  \arrow[dd]
+  \\
+(\mathbb{N},\leq) 
+  \arrow[r] 
+  \arrow[d,swap,"{(S^n,\leq)}"]
+  & 
+\mathbb{S}
+  \arrow[dr,densely dotted,yshift=.5ex,"\sigma^n"]
+  \\
+(\mathbb{N},\leq)
+  \arrow[rr] & &
+\mathbb{S}
+\end{tikzcd}
+\end{equation*}
+
+\begin{defn}
+A non-unital pre-B0-system is a presheaf $B$ on $\mathbb{S}$ such that $B(0)$ is
+a singleton, and the following additional structure:
+\begin{enumerate}
+\item For any $n\in\mathbb{N}$ and $X\in B(n)$, write $B/X$ for the sub-presheaf
+of $B\circ\sigma^n$ given by $B/X(0)=\{X\}$ and $B/X(n+1)=B_{n\leq n+1}^{-1}(B/X(n))$. 
+We require that for any $n\in\mathbb{N}$ and any $A\in B(n+1)$, there is a 
+natural transformation $W_A:B/(B_{n\leq n+1}(A))\Rightarrow B/A$.
+\end{enumerate}
+\end{defn}
+\end{comment}
+
+\subsection{From D-systems to E-systems}
+
+We use `D-system' to refer to Dybjer's categories with families. We recall
+Dybjer's definition. Note that $\mathbf{Fam}$ is the category of families of
+sets, of which the objects consist of a set $A$ and a family $\{B(x)\}_{x\in A}$
+over $A$. Although a terminal object is assumed to exist, not every object 
+of a D-system is `fibrant', i.e.~it is
+not the case that every $X\to 1$ is a composition of projections.
+We could only hope that there is a functor from D-sytems to E-systems without
+terminal objects. We write $\mathbf{Esys}_{\circ}$ for the category of E-systems
+without terminal objects.
+
+\begin{defn}
+A category is said to be locally stratified if each of its slice categories
+are stratified.
+\end{defn}
+
+\begin{defn}
+A \emph{setup for categories with families} consists of
+\begin{enumerate}
+\item A category $\cat{C}$ with a terminal object $1$.
+\item A presheaf $\mathrm{Ty}:\op{\cat{C}}\to\mathbf{Set}$. We will write
+$A[\gamma]$ for $\mathrm{Ty}(\gamma,A)$. 
+\item A commuting triangle
+\begin{equation*}
+\begin{tikzcd}
+\int_\cat{C}\mathrm{Ty} \arrow[dr,swap,"\pi"] \arrow[rr,"p"] & & \cat{C}^{\to} \arrow[dl,"\mathrm{cod}"] \\
+& \cat{C}
+\end{tikzcd}
+\end{equation*} 
+We will write $p_A:\ctxext{\Gamma}{A}\to\Gamma$
+for the morphism $U(\Gamma,A)$ into $\Gamma$, for each object $\Gamma\in\cat{C}$ and
+$A\in\mathrm{Ty}(\Gamma)$.
+\end{enumerate}
+\end{defn}
+
+\begin{defn}
+A \emph{category with families} consists of a setup with
+\begin{enumerate}
+\item[(iv)] a preasheaf $\mathrm{Tm}:\op{(\int_\cat{C}\mathrm{Ty})}\to\mathbf{Set}$,
+\item[(v)] a term $q_A\in\mathrm{Tm}(\ctxext{\Gamma}{A},A[p_A])$ for every
+$A\in\mathrm{Ty}(\Gamma)$, 
+\end{enumerate}
+such that for every $\gamma:\Delta\to\Gamma$ in $\cat{C}$ and 
+$a\in \mathrm{Tm}(\Delta,A[\gamma])$ there is a unique morphism 
+$\theta:\Delta\to \ctxext{\Gamma}{A}$ such that $p_A\circ\theta\jdeq\gamma$ and 
+$q_A[\theta]\jdeq a$.
+\end{defn}
+
+\begin{lem}
+Let $\mathbb{D}$ be a category with families. Then there are bijections
+\begin{equation*}
+\mathrm{Tm}(\Delta,A[\gamma])\cong\{\theta:\Delta\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq \gamma\}
+\end{equation*}
+natural in $\gamma$ and $A$.
+\end{lem}
+
+\begin{proof}
+Let $\theta:\Delta\to\ctxext{\Gamma}{A}$ be such that $p_A\circ\theta\jdeq\gamma$. 
+Then $\subst{\theta}{q_A}$ is a term
+of $\subst{\theta}{{p_A}{A}}$. By the functoriality of $\mathrm{Ty}$, we have
+$\subst{\theta}{{p_A}{A}}\jdeq \subst{p_A\circ\theta}{A}\jdeq\subst{\gamma}{A}$. 
+So we obtain $\subst{\theta}{q_A}\in\mathrm{Tm}(\Delta,\subst{\gamma}{A})$. Now
+the uniqueness of $\theta$ implies that the map $\theta\mapsto\subst{\theta}{q_A}$
+is a bijection. 
+\end{proof}
+
+The previous lemma renders the presheaf $\mathrm{Tm}$ superfluous. Therefore,
+we define D-systems as follows.
+
+\begin{defn}
+A \emph{D-system} consists of a setup for categories with families
+such that for every $\gamma:\Delta\to\Gamma$ and $A\in\mathrm{Ty}(\Gamma)$, there
+is a bijection
+\begin{equation*}
+\{\eta:\Delta\to\ctxext{\Delta}{\subst{\gamma}{A}}\mid p_{\subst{\gamma}{A}}\circ\eta\jdeq\catid{\Delta}\}
+  \cong
+\{\theta:\Delta\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq\gamma\}
+\end{equation*}
+natural in $\gamma$ and $A$.
+\end{defn}
+
+\begin{thm}
+A category with families is the same thing as a D-system.
+\end{thm}
+
+\begin{defn}
+There is a functor $U$ from D-systems to locally stratified categories.
+\end{defn}
+
+\begin{constr}
+Let $\mathbb{D}$ be a D-system with underlying category $\cat{C}$. We define
+$U(\mathbb{D})$ to be the category with the same objects as $\cat{C}$, where the
+morphisms are generated by the projections $p_A:\ctxext{\Gamma}{A}\to\Gamma$. 
+
+We have to prove that this category is locally stratified. Let $\Gamma\in\cat{C}$. 
+\end{constr}
+
+\begin{defn}
+For any D-system $\mathbb{D}$, $U(\mathbb{D})$ can be given the structure of
+an E-system without terminal object. Thus, we get a functor
+$\mathbf{Dsys}\to\mathbf{Esys}_{\circ}$
+\end{defn}
+
+\begin{constr}
+We first need to define a term structure on $U(\mathbb{D})$. 
+Next, we define a weakening structure on $\cat{C}_p$. Since the morphisms of
+$\cat{C}_p$ are composites of projections, we will define
+\begin{equation*}
+W_{p_{A_n}\circ\cdots\circ p_{A_1}}\defeq W_{p_{A_n}}\circ\cdots W_{p_{A_1}}.
+\end{equation*}
+Therefore, we only have to define functors 
+$W_A:\cat{C}_p/\Gamma\to\cat{C}_p/\ctxext{\Gamma}{A}$ with term structure for every 
+$A\in\mathrm{Ty}(\Gamma)$. Since morphisms are composites of projections, we
+can define this functor by induction. Let $W_A(\catid{\Gamma})\defeq
+\catid{\ctxext{\Gamma}{A}}$ and $W_A(p_Q\circ f)\defeq$
+\end{constr}
+
+\begin{thm}
+There is a full and faithful functor from the category of D-systems to the
+category of E-systems.
+\end{thm}
+
+\section{An alternative characterization of E-systems}
+
+\begin{defn}
+An E'-system consists of a category $\cat{C}$ with a subcategory $\cat{F}$ with the
+same objects as $\cat{C}$, with
+the following structure
+\begin{enumerate}
+\item $\cat{F}$ has a terminal object.
+\item For any $f:\Delta\to\Gamma$ in $\cat{C}$, a functor $f_\ast:\cat{F}/\Gamma\to
+\cat{F}/\Delta$ %and
+%for any $Q\in\cat{F}/\ctxext{\Gamma}{B}$ and any section $g$ of $Q$ a section
+%$f_\ast(g)$ of $f_\ast(Q)$, 
+so that $f_\ast$ is contravariant in $f$ and preserves the terminal object. 
+\item For any $A\in\cat{F}/\Gamma$ and $f:\Delta\to\Gamma$, factorizations of
+$f$ through $A$ are naturally the same thing as sections of
+$f_\ast(A)$, i.e. there is an isomorphism
+\begin{equation*}
+\zeta_{A,f}%\defeq\theta\mapsto f_\ast(\theta)
+:\{\theta:\Delta\to\ctxext{\Gamma}{A}\mid A\circ\theta\jdeq f\}
+  \cong
+\{\eta:\Delta\to\ctxext{\Delta}{(f_\ast(A))}\mid f_\ast(A)\circ\eta\jdeq\catid{\Delta}\}
+\end{equation*}
+in the presheaf category 
+$\mathrm{Psh}(\op{(\cat{F}/\Gamma)}\times(\cat{C}/\Gamma))$. 
+\end{enumerate}
+\end{defn}
+
+\begin{rmk}
+Explicitly, the
+naturality condition states that for any $P\in\cat{F}/\ctxext{\Gamma}{A}$,
+$g:\greek{E}\to\Delta$ and $\theta:\Delta\to\ctxext{{\Gamma}{A}}{P}$ such that
+$P\circ\theta\jdeq f$, we have the equality
+\begin{equation*}
+\zeta_{A,f\circ g}(P\circ\theta\circ g)\jdeq f^\ast(P)\circ\zeta_{P,f}(\theta)\circ g.
+\end{equation*}
+\end{rmk}
+
+We can give the category $\cat{F}$ a term structure as follows:
+
+\begin{defn}
+For any E'-system $\mathbb{E}$, the category $\cat{F}$ has a term structure
+where the terms of $A$ are sections of $A$, i.e.
+\begin{equation*}
+T(A)\defeq\{\theta:\Gamma\to\ctxext{\Gamma}{A}\mid A\circ\theta\jdeq\catid{\Gamma}\}.
+\end{equation*}
+\end{defn}
+
+\begin{lem}
+Let $\mathbb{E}$ be an E'-system. Then there is a function $T(A)\to T(f_\ast(A))$
+for any $f:\Delta\to\Gamma$ in $\cat{C}$ and $A\in\cat{F}/\Gamma$, contravariant
+in $f$. 
+\end{lem}
+
+\begin{proof}
+Using the natural isomorphism $\zeta_{A,f}$, we see that
+\begin{align*}
+T(f_\ast(A)) & \jdeq \{\eta : \Delta\to\ctxext{\Delta}{f_\ast(A)}\mid f_\ast(A)\circ\eta\jdeq\catid{\Delta}\}
+  \\
+  & \cong
+\{\theta : \Delta\to \ctxext{\Gamma}{A}\mid A\circ\theta\jdeq f\}.
+\end{align*}
+Therefore, we have the function $x\mapsto \zeta_{A,f}(x\circ f)$ from $T(A)$ to
+$T(f_\ast(A))$. 
+\end{proof}
+
+\begin{defn}
+Consider $P\in\cat{F}/\ctxext{\Gamma}{A}$ and $f:\Delta\to\Gamma$,
+$\theta_1:\Delta\to\ctxext{\Gamma}{A}$ such that $A\circ\theta_1\jdeq f$, 
+and $\theta_2:\Delta\to\ctxext{{\Gamma}{A}}{P}$ such that $P\circ\theta_2\jdeq\theta_1$.  
+\end{defn}
+
+\begin{defn}
+For any $P\in\cat{F}/\ctxext{\Gamma}{A}$ and $f:\Delta\to\Gamma$ 
+there is a morphism $\tilde{f}:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{\Gamma}{A}$
+with the property that $A\circ\tilde{f}\jdeq f\circ f_\ast(A)$, and
+we have isomorphisms
+\begin{align*}
+\{\theta:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Gamma}{A}}{P}\mid P\circ\theta\jdeq \tilde{f}\}
+&  \cong
+\{\eta:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{(f_\ast(A))}}{f_\ast(P)}\mid f_\ast(P)\circ\eta\jdeq\catid{\ctxext{\Delta}{f_\ast(A)}}\}
+\end{align*}
+\end{defn}
+
+\begin{constr}
+\begin{align*}
+& \{ \theta : \ctxext{\Delta}{f_\ast(A)}\to\ctxext{\Gamma}{A}\mid A\circ\theta\jdeq f\circ f_\ast(A) \} \\
+  & \cong
+\{ \eta : \ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{f_\ast(A)}}{(f\circ f_\ast(A))_\ast(A)}
+  \mid (f\circ f_\ast(A))_\ast(A)\circ\eta\jdeq\catid{\ctxext{\Delta}{f_\ast(A)}}\} \\
+  & \jdeq
+\{ \eta : \ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{f_\ast(A)}}{(f_\ast(A))_\ast(f_\ast(A))}
+  \mid (f\circ f_\ast(A))_\ast(A)\circ\eta\jdeq\catid{\ctxext{\Delta}{f_\ast(A)}}\} \\
+  & \jdeq
+T(W_{f_\ast(A)}(f_\ast(A))).
+\end{align*}
+Since we have $\tfid{f_\ast(A)}\in T(W_{f_\ast(A)}(f_\ast(A)))$, we obtain 
+\begin{equation*}
+\tilde{f}\defeq \zeta_{A,f\circ f_\ast(A)}^{-1}(\tfid{f_\ast(A)}):\ctxext{\Delta}{f_\ast(A)}\to\ctxext{\Gamma}{A}.
+\end{equation*}
+It remains to prove the asserted isomorphism. 
+\begin{align*}
+\{\theta:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Gamma}{A}}{P}\mid P\circ\theta\jdeq \tilde{f}\}
+&  \cong
+\{\eta : \ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{f_\ast(A)}}{\tilde{f}_\ast(P)} \mid
+  \tilde{f}_\ast(P)\circ\eta\jdeq\catid{}\}
+  \\
+  & \cong
+\{\eta:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{(f_\ast(A))}}{f_\ast(P)}\mid f_\ast(P)\circ\eta\jdeq\catid{\ctxext{\Delta}{f_\ast(A)}}\}
+\end{align*}
+\end{constr}
+
+\begin{lem}
+Let $\mathbb{E}$ be an E'-system. Then there is a function $T(P)\to T(f_\ast(P))$
+for any $f:\Delta\to\Gamma$ in $\cat{C}$ and $P\in\cat{F}/\ctxext{\Gamma}{A}$, contravariant
+in $f$. 
+\end{lem}
+
+\begin{proof}
+Using the natural isomorphism $\zeta_{A,f}$, we see that
+\begin{align*}
+T(f_\ast(P)) & \jdeq \{\eta : \ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{f_\ast(A)}}{f_\ast(P)}\mid f_\ast(P)\circ\eta\jdeq\catid{\ctxext{\Delta}{f_\ast(A)}}\}.
+\intertext{By all means, this should be isomorphic to}
+  & \cong
+\{\theta : \ctxext{\Delta}{f_\ast(A)}\to \ctxext{{\Gamma}{A}}{P}\mid P\circ\theta\jdeq \tilde{f}\}.
+\end{align*}
+Therefore, we have the function $x\mapsto \zeta_{A,f}(x\circ f)$ from $T(A)$ to
+$T(f_\ast(A))$. 
+\end{proof}
+
+\begin{thm}
+E-systems are the same things as E'-systems.
+\end{thm}
+
+\begin{proof}
+Given an E-system $\mathbb{E}$, we have the category $\cat{C}$ of internal
+morphisms in the empty context, with the subcategory $\cat{F}$ of projections $\cprojfstf{A}{P}$. 
+The functors $f_\ast:\cat{F}/\Gamma\to\cat{F}/\Delta$ are contravariant in
+$f$, so we have to verify whether we have the stated isomorphisms.
+
+Note first that for any $A\in\cat{F}/\Gamma$, we have
+$W_A\defeq A_\ast:\cat{F}/\Gamma\to\cat{F}/\ctxext{\Gamma}{A}$. Then $W_A$ is
+contravariant in $A$ and that it preserves the terminal object. We give $W_A$
+an action on terms by defining
+\begin{equation*}
+W_A(\theta)\defeq
+\end{equation*}
+for any $\theta\in T(Q)$ and $Q\in\cat{F}/\ctxext{\Gamma}{B}$. 
+
+Thus, the $W_A$
+assemble a pre-weakening structure.   
+
+Note that for any $A\in\cat{F}/\Gamma$, we have
+\begin{align*}
+T(W_A(A)) & \jdeq \{\eta:\ctxext{\Gamma}{A}\to\ctxext{{\Gamma}{A}}{W_A(A)}\mid W_A(A)\circ\eta\jdeq\catid{\ctxext{\Gamma}{A}}\} \\
+  & \cong
+\{\theta:\ctxext{\Gamma}{A}\to\ctxext{\Gamma}{A}\mid A\circ\theta\jdeq A\},
+\end{align*}
+so we find $\idtm{A}\defeq\zeta_{A,A}(\catid{\ctxext{\Gamma}{A}})\in T(W_A(A))$.
+Now let $\theta:\Delta\to\ctxext{\Gamma}{A}$ so that $A\circ\theta\jdeq f$
+for some $f:\Delta\to\Gamma$. Then we have $\zeta_{A,f}(\theta)\in T(f_\ast(A))$.  
+We wish to define $\theta_\ast(\idtm{A}):\Delta\to\ctxext{\Delta}{f_\ast(A)}$
+
+for any $A\in\cat{F}/\Gamma$ and $Q\in\cat{F}/\ctxext{\Gamma}{B}$, we have
+\begin{align*}
+T(B) 
+  & \jdeq 
+\{ \eta : \Gamma \to\ctxext{\Gamma}{B}
+        \mid B\circ\eta\jdeq\catid{\Gamma}\}
+  \\
+T(W_A(B))
+  & \jdeq
+\{ \eta : \ctxext{\Gamma}{A}\to\ctxext{{\Gamma}{A}}{W_A(B)}
+        \mid W_A(B)\circ\eta\jdeq\catid{\ctxext{\Gamma}{A}}\}
+  \\
+  & \cong
+\{ \theta : \ctxext{\Gamma}{A}\to\ctxext{\Gamma}{B}\mid B\circ\theta\jdeq A\}
+\end{align*}
+Therefore, $\eta\mapsto \zeta_{B,A}(\eta\circ A)$ defines a function from
+$T(B)$ to $T(W_A(B))$. 
+\end{proof}
+
+
+\begin{comment}
+\section{Acknowledgments}
+The research that eventually became the study of E-systems began while analyzing
+the internel models I encountered during investigations of the type theoretical
+descent theorem, in the summer of 2013. In a private conversation during the Conference on Type Theory, 
+Homotopy Theory and Univalent Foundations at the Universitat Aut\`onoma de 
+Barcelona, I presented the first version of the axioms to Richard Garner, who
+told me he found a similar structure  while analyzing the combinatorics of type
+dependency, see \cite{Garner2014}. After that conference, Joachim
+Kock generously offered me to stay for a few months at the UAB. He was intrigued
+by the idea of doing category theory using only sections, and during the sessions
+we had in this period I finalized the inference rules that correspond to the
+axioms of E-systems. 
+
+In Paris, in the spring of 2014, Richard Garner introduced me to Vladimir 
+Voevodsky, who had been working on similar problems and wanted to know exactly
+what axioms should hold on B0-systems so that it is in the image of the functor
+from C-systems to B0-systems. In other words, he wanted to know what the axioms
+of B-systems were, and be confident that we had them all.  
+
+In August 2015, I started a grad student of Steve Awodey at the Carnegie 
+Mellon University. With Steve we elaborated much more on the fact that the theory
+of E-systems is essentially algebraic, and I wrote down what an E-system is in
+an arbitrary category with finite limits.
+
+The discussions that followed both with Awodey and with Voevodsky, 
+at the CMU, at the Homotopy Type Theory workshop in Oxford (November 2014), and
+while visiting Voevodsky at the Institute for Advanced Study in Princeton (March 2015), 
+essentially shaped E-systems into their current presentation. 
+
+I am grateful to all the people mentioned for sharing many valuable insights 
+with me. 
+\end{comment}
+
