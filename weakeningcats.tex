@@ -1,4 +1,5 @@
-\section{The definition of E-systems}\label{sec:esys_defn}
+\section{E-systems}\label{sec:esys_defn}
+
 \subsection{Weakening systems}
 
 \begin{defn}
@@ -389,7 +390,7 @@ H
 commute for every $h,k\in H$. 
 \end{eg}
 
-\subsection{E-systems}
+\subsection{The definition of E-systems}
 
 Although it is now possible to state the definition of an E-system without
 any difficulty, it shall be convenient later to also have a category of
@@ -1348,16 +1349,6 @@ in context $\ctxext{\Gamma}{A}$. Thus, it is immediate that the notion of
 internal category is stable under change of base.
 \end{rmk}
 
-\subsection{Internal E-systems}
-
-\subsubsection{Internal weakening systems}
-
-\subsubsection{Internal projection systems}
-
-\subsubsection{Internal substitution systems}
-
-\subsubsection{Internal E-systems}
-
 \begin{comment}
 \section{Dependent morphisms}
 
@@ -2169,7 +2160,7 @@ natural transformation $W_A:B/(B_{n\leq n+1}(A))\Rightarrow B/A$.
 \end{defn}
 \end{comment}
 
-\subsection{From D-systems to E-systems}
+\subsection{From D-systems to locally stratified E'-systems}
 
 We use `D-system' to refer to Dybjer's categories with families. We recall
 Dybjer's definition. Note that $\mathbf{Fam}$ is the category of families of
@@ -2191,7 +2182,7 @@ A \emph{setup for categories with families} consists of
 \begin{enumerate}
 \item A category $\cat{C}$ with a terminal object $1$.
 \item A presheaf $\mathrm{Ty}:\op{\cat{C}}\to\mathbf{Set}$. We will write
-$A[\gamma]$ for $\mathrm{Ty}(\gamma,A)$. 
+$f_\ast(A)$ for $\mathrm{Ty}(f,A)$. 
 \item A commuting triangle
 \begin{equation*}
 \begin{tikzcd}
@@ -2208,32 +2199,49 @@ $A\in\mathrm{Ty}(\Gamma)$.
 \begin{defn}
 A \emph{category with families} consists of a setup with
 \begin{enumerate}
-\item[(iv)] a preasheaf $\mathrm{Tm}:\op{(\int_\cat{C}\mathrm{Ty})}\to\mathbf{Set}$,
-\item[(v)] a term $q_A\in\mathrm{Tm}(\ctxext{\Gamma}{A},A[p_A])$ for every
+\item[(iv)] a preasheaf $\mathrm{Tm}:\op{(\int_\cat{C}\mathrm{Ty})}\to\mathbf{Set}$.
+The action of a morphism $f:(\Delta,f_\ast(A))\to(\Gamma,A)$ of $\int_\cat{C}\mathrm{Ty}$
+on a term $x\in \mathrm{Tm}(A)$ is also written by $f_\ast(x)$.
+\item[(v)] a term $q_A\in\mathrm{Tm}(\ctxext{\Gamma}{A},(p_A)_\ast(A))$ for every
 $A\in\mathrm{Ty}(\Gamma)$, 
 \end{enumerate}
-such that for every $\gamma:\Delta\to\Gamma$ in $\cat{C}$ and 
-$a\in \mathrm{Tm}(\Delta,A[\gamma])$ there is a unique morphism 
-$\theta:\Delta\to \ctxext{\Gamma}{A}$ such that $p_A\circ\theta\jdeq\gamma$ and 
-$q_A[\theta]\jdeq a$.
+such that for every $f:\Delta\to\Gamma$ in $\cat{C}$ and 
+$x\in \mathrm{Tm}(\Delta,f_\ast(A))$ there is a unique morphism 
+$\tilde{x}:\Delta\to \ctxext{\Gamma}{A}$ such that $p_A\circ\tilde{x}\jdeq f$ and 
+$\tilde{x}_\ast(q_A)\jdeq x$.
 \end{defn}
 
-\begin{lem}
+\begin{lem}\label{lem:cwf_to_dsys}
 Let $\mathbb{D}$ be a category with families. Then there are bijections
 \begin{equation*}
-\mathrm{Tm}(\Delta,A[\gamma])\cong\{\theta:\Delta\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq \gamma\}
+\zeta_{A,f}:\{\theta:\Delta\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq f\}\cong \mathrm{Tm}(\Delta,f_\ast(A))
 \end{equation*}
-natural in $\gamma$ and $A$.
+coherent in $f$ in the sense that
+\begin{align*}
+\zeta_{A,\catid{\Gamma}}(\theta) & \jdeq \theta \\
+\zeta_{A,f\circ g}(\theta) & \jdeq \zeta_{f_\ast(A),g}(\zeta_{A,f}(\theta)\circ g)
+\end{align*}
+for any $g:X\to\Delta$. 
 \end{lem}
 
 \begin{proof}
-Let $\theta:\Delta\to\ctxext{\Gamma}{A}$ be such that $p_A\circ\theta\jdeq\gamma$. 
-Then $\subst{\theta}{q_A}$ is a term
-of $\subst{\theta}{{p_A}{A}}$. By the functoriality of $\mathrm{Ty}$, we have
-$\subst{\theta}{{p_A}{A}}\jdeq \subst{p_A\circ\theta}{A}\jdeq\subst{\gamma}{A}$. 
-So we obtain $\subst{\theta}{q_A}\in\mathrm{Tm}(\Delta,\subst{\gamma}{A})$. Now
-the uniqueness of $\theta$ implies that the map $\theta\mapsto\subst{\theta}{q_A}$
-is a bijection. 
+Let $\theta:\Delta\to\ctxext{\Gamma}{A}$ be such that $p_A\circ\theta\jdeq f$. 
+Then $\theta_\ast(q_A)$ is an element
+of $\mathrm{Tm}(\theta_\ast((p_A)_\ast(A)))$. By the functoriality of $\mathrm{Ty}$, we have
+$\theta_\ast((p_A)_\ast(A))\jdeq (p_A\circ\theta)_\ast(A)\jdeq f_\ast(A)$. 
+So we obtain $\theta_\ast(q_A)\in\mathrm{Tm}(\Delta,f_\ast(A))$. Now
+the uniqueness of $\theta$ implies that the map $\theta\mapsto \theta_\ast(q_A)$
+is a bijection.
+
+It remains to verify the coherence identities. Let $\theta : \Gamma\to\ctxext{\Gamma}{A}$
+be such that $p_A\circ\theta\jdeq\catid{\Gamma}$. We wish to show that
+$\theta_\ast(q_A)\jdeq\theta$.  
+\begin{align*}
+\theta_\ast(q_A)
+& \jdeq \theta_\ast(\zeta_{A,p_A}(\catid{\ctxext{\Gamma}{A}})) \\
+& \jdeq \cdots \\
+& \jdeq \theta
+\end{align*}
 \end{proof}
 
 The previous lemma renders the presheaf $\mathrm{Tm}$ superfluous. Therefore,
@@ -2241,40 +2249,163 @@ we define D-systems as follows.
 
 \begin{defn}
 A \emph{D-system} consists of a setup for categories with families
-such that for every $\gamma:\Delta\to\Gamma$ and $A\in\mathrm{Ty}(\Gamma)$, there
+such that for every $f:\Delta\to\Gamma$ and $A\in\mathrm{Ty}(\Gamma)$, there
 is a bijection
 \begin{equation*}
-\{\eta:\Delta\to\ctxext{\Delta}{\subst{\gamma}{A}}\mid p_{\subst{\gamma}{A}}\circ\eta\jdeq\catid{\Delta}\}
+\zeta_{A,f}:\{\theta:\Delta\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq f\}
   \cong
-\{\theta:\Delta\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq\gamma\}
+\{\eta:\Delta\to\ctxext{\Delta}{f_\ast(A)}\mid p_{f_\ast(A)}\circ\eta\jdeq\catid{\Delta}\}
 \end{equation*}
-natural in $\gamma$ and $A$.
+natural in $f$ in the sense that the equalities
+\begin{align*}
+\zeta_{A,\catid{\Gamma}}(\theta) & \jdeq \theta \\
+\zeta_{A,f\circ g}(\theta\circ g) & \jdeq \zeta_{f_\ast(A),g}(\zeta_{A,f}(\theta)\circ g)
+\end{align*}
+hold for any $f:\Delta\to\Gamma$ and $g:X\to\Delta$, and any $\theta:\Delta\to\ctxext{\Gamma}{A}$
+such that $p_A\circ\theta\jdeq f$. 
 \end{defn}
 
 \begin{thm}
 A category with families is the same thing as a D-system.
 \end{thm}
 
+\begin{proof}
+In \autoref{lem:cwf_to_dsys} we have shown that every category with families is
+a D-system. Thus, it suffices to show the converse.
+
+Let $\mathbb{D}$ be a D-system. For any object $\Gamma$ of $\mathbb{D}$ and any
+type $A\in\mathrm{Ty}(\Gamma)$, we define 
+\begin{equation*}
+\mathrm{Tm}(A)\defeq \{ x :\Gamma\to\ctxext{\Gamma}{A}\mid p_A\circ x\jdeq\catid{\Gamma}\}.
+\end{equation*}
+For any morphism $f:\Delta\to\Gamma$ and $A\in\mathrm{Ty}(\Gamma)$, we define
+the function $\mathrm{Tm}(f):\mathrm{Tm}(A)\to\mathrm{Tm}(f_\ast(A))$ by
+\begin{equation*}
+\mathrm{Tm}(f,x)\defeq \zeta_{A,f}(x\circ f).
+\end{equation*}
+We have to verify that this satisfies the functorial identities. For $f:\Delta\to\Gamma$
+and $g:X\to\Delta$ and any $x\in\mathrm{Tm}(A)$, we have
+\begin{align*}
+\mathrm{Tm}(f\circ g,x) & \jdeq \zeta_{A,f\circ g}(x\circ f\circ g) \\
+& \jdeq \zeta_{f_\ast(A),g}(\zeta_{A,f}(x\circ f)\circ g) \\
+& \jdeq \mathrm{Tm}(g,\mathrm{Tm}(f,x)).
+\end{align*}
+and
+\begin{equation*}
+\mathrm{Tm}(\catid{\Gamma},x) \jdeq \zeta_{A,\catid{\Gamma}}(x) \jdeq x.
+\end{equation*}
+This finishes the construction of the presheaf $\mathrm{Tm}$ on $\int_{\cat{C}}\mathrm{Ty}$.
+
+Next, we have to find $q_A\in\mathrm{Tm}((p_A)_\ast(A))$. Note that we have the
+isomorphism
+\begin{align*}
+\mathrm{Tm}((p_A)_\ast(A))
+& \jdeq \{\eta :\ctxext{\Gamma}{A}\to\ctxext{{\Gamma}{A}}{(p_A)_\ast(A)}\mid p_{(p_A)_\ast(A)}\circ\theta\jdeq\catid{\ctxext{\Gamma}{A}}\} \\
+& \cong \{\theta : \ctxext{\Gamma}{A}\to\ctxext{\Gamma}{A} \mid p_A\circ \theta\jdeq p_A\}
+\end{align*}
+The latter set contains the identity morphism $\catid{\ctxext{\Gamma}{A}}$. Therefore,
+we find
+\begin{equation*}
+q_A \defeq \zeta_{A,p_A}(\catid{\ctxext{\Gamma}{A}})\in\mathrm{Tm}((p_A)_\ast(A)).
+\end{equation*}
+To verify that we have constructed a category with families, let $f:\Delta\to\Gamma$
+and $x\in T(f_\ast(A))$. Note that we have the morphism 
+$\tilde{x}\defeq \zeta_{A,f}^{-1}(x):\Delta\to\ctxext{\Gamma}{A}$. 
+We need to check that $\tilde{x}$ is unique with the property that 
+$\mathrm{Tm}(\tilde{x},q_A)\jdeq x$. The coherence identities can be used to see
+that this is indeed the case:
+\begin{align*}
+\mathrm{Tm}(\tilde{x},q_A)
+& \jdeq \zeta_{(p_A)_\ast(A),\tilde{x}}(q_A\circ\tilde{x}) \\
+& \jdeq \zeta_{(p_A)_\ast(A),\tilde{x}}(\zeta_{A,p_A}(\catid{\ctxext{\Gamma}{A}})\circ\tilde{x}) \\
+& \jdeq \zeta_{A,p_A\circ\tilde{x}}(\tilde{x}) \\
+& \jdeq \zeta_{A,f}(\tilde{x}) \\
+& \jdeq x.
+\end{align*}
+For the uniqueness, let $\theta:\Delta\to\ctxext{\Gamma}{A}$ be any morphism such that
+$p_A\circ\theta\jdeq f$ and $\mathrm{Tm}(\theta,q_A)\jdeq x$. Then we have
+\begin{align*}
+x & \jdeq \mathrm{Tm}(\theta,q_A) \\
+& \jdeq \zeta_{(p_A)_\ast(A),\theta}(q_A\circ\theta) \\
+& \jdeq \zeta_{(p_A)_\ast(A),\theta}(\zeta_{A,p_A}(\catid{\ctxext{\Gamma}{A}})\circ\theta \\
+& \jdeq \zeta_{A,p_A\circ\theta}(\theta) \\
+& \jdeq \zeta_{A,f}(\theta).
+\end{align*}
+Therefore we see that $\tilde{x}\jdeq\zeta_{A,f}^{-1}(x)\jdeq\theta$.
+\end{proof}
+
 \begin{defn}
-There is a functor $U$ from D-systems to locally stratified categories.
+An E'-system is said to be locally stratified, if the category $\cat{F}$ is
+locally stratified.
+\end{defn}
+
+\begin{comment}
+\begin{rmk}
+In the following definition, one could take the underlying category of the
+E-system $\mathcal{E}(\mathbb{D})$ associated to a D-system $\mathbb{D}$ to
+be the subcategory generated by the projections $p_A$, and construct the
+rest of the structure of E-systems on top of that. However, it is not so easy
+to characterize the image of the functor $\mathcal{E}$ in that case. Intuitively,
+D-systems should correspond to locally stratified E-systems. To be able to prove
+such a theorem, we've gone with a slightly modified definition of the underlying
+category.
+\end{rmk}
+\end{comment}
+
+\begin{defn}
+For any D-system $\mathbb{D}$ there is 
+a locally stratified E'-system $U(\mathbb{D})$ without terminal object in 
+$\cat{F}$. Thus, we get a functor $\mathbf{Dsys}\to\mathbf{E'sys}_{\circ}$
 \end{defn}
 
 \begin{constr}
 Let $\mathbb{D}$ be a D-system with underlying category $\cat{C}$. We define
-$U(\mathbb{D})$ to be the category with the same objects as $\cat{C}$, where the
-morphisms are generated by the projections $p_A:\ctxext{\Gamma}{A}\to\Gamma$. 
+$\cat{F}\subseteq\cat{C}$ to be the
+\begin{comment}
+category consisting of 
+\begin{enumerate}
+\item equivalence classes of finite lists of the form $(\Gamma,A_1,\ldots A_n)$, where $\Gamma$ is
+an object of $\cat{C}$ and $A_{i+1}\in\mathrm{Ty}(\ctxext{{{\Gamma}{A_1}}{\cdots}}{A_i})$, where
+the equivalence relation is generated by
+\begin{equation*}
+(\ctxext{{{\Gamma}{A_1}}{\cdots}}{A_n},A_{n+1},\ldots,A_{n+m})\sim (\Gamma,A_1,\ldots,A_{n+m}).
+\end{equation*}
+\item
+\end{enumerate}
+\end{comment}
+subcategory with the same objects as
+$\cat{C}$, where the morphisms are generated by the projections $p_A$.
 
-We have to prove that this category is locally stratified. Let $\Gamma\in\cat{C}$. 
-\end{constr}
+Let $f:\Delta\to\Gamma$. We define $f_\ast:\cat{F}/\Gamma\to\cat{F}/\Delta$ by
+induction on the length of the arrow $A$ into $\Gamma$, simultaneously with a
+morphism $\pi_2(f,A)$ from $\ctxext{\Delta}{f_\ast(A)}$ into $\ctxext{\Gamma}{A}$
+for which the square
+\begin{equation*}
+\begin{tikzcd}
+\ctxext{\Delta}{f_\ast(A)} \arrow[r,"{\pi_2(f,A)}"] \arrow[d,fib] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+\Delta \arrow[r,swap,"f"] & \Gamma
+\end{tikzcd}
+\end{equation*}
+is a pullback square. We define
+$f_\ast(\catid{\Gamma})\defeq\catid{\Delta}$, and $\pi_2(f,\catid{\Gamma})\defeq f:\ctxext{\Delta}{f_\ast(\catid{\Gamma})}\to\ctxext{\Gamma}{\catid{\Gamma}}$. The resulting square is trivially
+a pullback square. Now suppose we have a pullback square as above.
+and let $B\in\mathrm{Ty}(\ctxext{\Gamma}{A})$. Then we define
+\begin{equation*}
+f_\ast(A\circ p_B)\defeq \pi_2(f,A)_\ast(B).
+\end{equation*}
+By \autoref{lem:EE_pb}, we get the top pullback square in the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=6em]
+\ctxext{{\Delta}{f_\ast(A)}}{f_\ast(B)} \arrow[d,fib] \arrow[r,"{\pi_2(\pi_2(f,A),B)}"] & \ctxext{{\Gamma}{A}}{B} \arrow[d,fib] \\
+\ctxext{\Delta}{f_\ast(A)} \arrow[d,fib] \arrow[r,"{\pi_2(f,A)}"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+\Delta \arrow[r,"f"] & \Gamma
+\end{tikzcd}
+\end{equation*}
+Since the bottom square is assumed to be a pullback, we get that the outer rectangle
+is a pullback, as desired.
 
-\begin{defn}
-For any D-system $\mathbb{D}$, $U(\mathbb{D})$ can be given the structure of
-an E-system without terminal object. Thus, we get a functor
-$\mathbf{Dsys}\to\mathbf{Esys}_{\circ}$
-\end{defn}
 
-\begin{constr}
-We first need to define a term structure on $U(\mathbb{D})$. 
+
 Next, we define a weakening structure on $\cat{C}_p$. Since the morphisms of
 $\cat{C}_p$ are composites of projections, we will define
 \begin{equation*}
@@ -2292,10 +2423,12 @@ There is a full and faithful functor from the category of D-systems to the
 category of E-systems.
 \end{thm}
 
-\section{An alternative characterization of E-systems}
+\subsection{The equivalence of E-systems and E'-systems}
+
+The definition of D-system suggests a more general structure related to E-systems. 
 
 \begin{defn}
-An E'-system consists of a category $\cat{C}$ with a subcategory $\cat{F}$ with the
+An \emph{E'-system} consists of a category $\cat{C}$ with a subcategory $\cat{F}$ with the
 same objects as $\cat{C}$, with
 the following structure
 \begin{enumerate}
@@ -2305,8 +2438,8 @@ the following structure
 %for any $Q\in\cat{F}/\ctxext{\Gamma}{B}$ and any section $g$ of $Q$ a section
 %$f_\ast(g)$ of $f_\ast(Q)$, 
 so that $f_\ast$ is contravariant in $f$ and preserves the terminal object. 
-\item For any $A\in\cat{F}/\Gamma$ and $f:\Delta\to\Gamma$, factorizations of
-$f$ through $A$ are naturally the same thing as sections of
+\item For any $A\in\cat{F}/\Gamma$ and $f:\Delta\to\Gamma$, lifts of
+$f$ to $A$ are naturally the same thing as sections of
 $f_\ast(A)$, i.e. there is an isomorphism
 \begin{equation*}
 \zeta_{A,f}%\defeq\theta\mapsto f_\ast(\theta)
@@ -2314,20 +2447,24 @@ $f_\ast(A)$, i.e. there is an isomorphism
   \cong
 \{\eta:\Delta\to\ctxext{\Delta}{(f_\ast(A))}\mid f_\ast(A)\circ\eta\jdeq\catid{\Delta}\}
 \end{equation*}
-in the presheaf category 
-$\mathrm{Psh}(\op{(\cat{F}/\Gamma)}\times(\cat{C}/\Gamma))$. 
+which are natural in $A$ and $f$, in the sense that
+\begin{enumerate}
+\item For any $P\in\cat{F}/\ctxext{\Gamma}{A}$, $f:\Delta\to\Gamma$ and
+$\theta:\Delta\to\ctxext{{\Gamma}{A}}{P}$ such that $(\ctxext{A}{P})\circ\theta\jdeq f$,
+one hase
+\begin{equation*}
+\zeta_{A,f}(P\circ\theta)\jdeq f_\ast(P)\circ \zeta_{\ctxext{A}{P},f}(\theta).
+\end{equation*}
+\item For any $A\in\cat{F}/\Gamma$, $f:\Delta\to\Gamma$, $g:X\to\Delta$
+and $\theta:\Delta\to\ctxext{\Gamma}{A}$ such that $A\circ\theta\jdeq f$, one
+has
+\begin{align*}
+\zeta_{A,\catid{\Gamma}}(\theta) & \jdeq \theta \\
+\zeta_{A,f\circ g}(\theta\circ g) & \jdeq\zeta_{f_\ast(A),g}(\zeta_{A,f}(\theta)\circ g).
+\end{align*}
+\end{enumerate}
 \end{enumerate}
 \end{defn}
-
-\begin{rmk}
-Explicitly, the
-naturality condition states that for any $P\in\cat{F}/\ctxext{\Gamma}{A}$,
-$g:\greek{E}\to\Delta$ and $\theta:\Delta\to\ctxext{{\Gamma}{A}}{P}$ such that
-$P\circ\theta\jdeq f$, we have the equality
-\begin{equation*}
-\zeta_{A,f\circ g}(P\circ\theta\circ g)\jdeq f^\ast(P)\circ\zeta_{P,f}(\theta)\circ g.
-\end{equation*}
-\end{rmk}
 
 We can give the category $\cat{F}$ a term structure as follows:
 
@@ -2339,7 +2476,7 @@ T(A)\defeq\{\theta:\Gamma\to\ctxext{\Gamma}{A}\mid A\circ\theta\jdeq\catid{\Gamm
 \end{equation*}
 \end{defn}
 
-\begin{lem}
+\begin{lem}\label{lem:ptm}
 Let $\mathbb{E}$ be an E'-system. Then there is a function $T(A)\to T(f_\ast(A))$
 for any $f:\Delta\to\Gamma$ in $\cat{C}$ and $A\in\cat{F}/\Gamma$, contravariant
 in $f$. 
@@ -2358,21 +2495,31 @@ $T(f_\ast(A))$.
 \end{proof}
 
 \begin{defn}
-Consider $P\in\cat{F}/\ctxext{\Gamma}{A}$ and $f:\Delta\to\Gamma$,
-$\theta_1:\Delta\to\ctxext{\Gamma}{A}$ such that $A\circ\theta_1\jdeq f$, 
-and $\theta_2:\Delta\to\ctxext{{\Gamma}{A}}{P}$ such that $P\circ\theta_2\jdeq\theta_1$.  
+For any $A\in\cat{F}/\Gamma$, we define
+$W_A\defeq A_\ast:\cat{F}/\Gamma\to\cat{F}/\ctxext{\Gamma}{A}$. Then we get
+for any $A,B\in\cat{F}/\Gamma$ an isomorphism
+\begin{equation*}
+\mathrm{hom}_{\cat{C}/\Gamma}(A,B)
+  \cong
+T(W_A(B)).
+\end{equation*}
+In particular, we get a term $\idtm{A}\in T(W_A(A))$. 
 \end{defn}
+
+\begin{constr}
+Let $A,B\in\cat{F}/\Gamma$. Then we have the isomorphism
+\begin{align*}
+T(W_A(B)) & \jdeq \{\eta:\ctxext{\Gamma}{A}\to\ctxext{{\Gamma}{A}}{W_A(B)}\mid W_A(B)\circ\eta\jdeq\catid{\ctxext{\Gamma}{A}}\} \\
+  & \cong
+\{\theta:\ctxext{\Gamma}{A}\to\ctxext{\Gamma}{B}\mid B\circ\theta\jdeq A\},
+\end{align*}
+so we find $\idtm{A}\defeq\zeta_{A,A}(\catid{\ctxext{\Gamma}{A}})\in T(W_A(A))$.
+\end{constr}
 
 \begin{defn}
 For any $P\in\cat{F}/\ctxext{\Gamma}{A}$ and $f:\Delta\to\Gamma$ 
-there is a morphism $\tilde{f}:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{\Gamma}{A}$
-with the property that $A\circ\tilde{f}\jdeq f\circ f_\ast(A)$, and
-we have isomorphisms
-\begin{align*}
-\{\theta:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Gamma}{A}}{P}\mid P\circ\theta\jdeq \tilde{f}\}
-&  \cong
-\{\eta:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{(f_\ast(A))}}{f_\ast(P)}\mid f_\ast(P)\circ\eta\jdeq\catid{\ctxext{\Delta}{f_\ast(A)}}\}
-\end{align*}
+there is a morphism $\pi_2(f,A):\ctxext{\Delta}{f_\ast(A)}\to\ctxext{\Gamma}{A}$
+such that $A\circ \pi_2(f,A)\jdeq f\circ f_\ast(A)$.
 \end{defn}
 
 \begin{constr}
@@ -2389,19 +2536,175 @@ T(W_{f_\ast(A)}(f_\ast(A))).
 \end{align*}
 Since we have $\tfid{f_\ast(A)}\in T(W_{f_\ast(A)}(f_\ast(A)))$, we obtain 
 \begin{equation*}
-\tilde{f}\defeq \zeta_{A,f\circ f_\ast(A)}^{-1}(\tfid{f_\ast(A)}):\ctxext{\Delta}{f_\ast(A)}\to\ctxext{\Gamma}{A}.
+\pi_2(f,A)\defeq \zeta_{A,f\circ f_\ast(A)}^{-1}(\tfid{f_\ast(A)}):\ctxext{\Delta}{f_\ast(A)}\to\ctxext{\Gamma}{A}
 \end{equation*}
+satisfying $A\circ\pi_2(f,A)\jdeq f\circ f_\ast(A)$.
+\end{constr}
+
+\begin{lem}
+For any $f:\Delta\to\Gamma$, $g:X\to\Delta$ and $A\in\cat{F}/\Gamma$, one has
+\begin{equation*}
+\pi_2(f,A)\circ\pi_2(g,f_\ast(A))\jdeq\pi_2(f\circ g,A).
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+It suffices to show that
+\begin{equation*}
+\zeta_{A,f\circ g\circ g_\ast(f_\ast(A))}(\pi_2(f,A)\circ\pi_2(g,f_\ast(A)))\jdeq\tfid{g_\ast(f_\ast(A))}.
+\end{equation*}
+Because $g\circ g_\ast(f_\ast(A))\jdeq f_\ast(A)\circ\pi_2(g,f_\ast(A))$, we get
+to use the naturality of $\zeta$:
+\begin{align*}
+& \zeta_{A,f\circ g\circ g_\ast(f_\ast(A))}(\pi_2(f,A)\circ\pi_2(g,f_\ast(A))) \\
+& \jdeq
+\zeta_{A,f\circ f_\ast(A)\circ\pi_2(g,f_\ast(A))}(\pi_2(f,A)\circ\pi_2(g,f_\ast(A))) \\
+& \jdeq
+\zeta_{f_\ast(A)_\ast(f_\ast(A)),\pi_2(g,f_\ast(A))}(\zeta_{A,f\circ f_\ast(A)}(\pi_2(f,a))\circ\pi_2(g,f_\ast(A))) \\
+& \jdeq
+\zeta_{f_\ast(A)_\ast(f_\ast(A)),\pi_2(g,f_\ast(A))}(\tfid{f_\ast(A)}\circ\pi_2(g,f_\ast(A))) \\
+& \jdeq
+\zeta_{f_\ast(A)_\ast(f_\ast(A)),\pi_2(g,f_\ast(A))}(\zeta_{f_\ast(A),f_\ast(A)}(\catid{\ctxext{\Delta}{f_\ast(A)}})\circ\pi_2(g,f_\ast(A))) \\
+& \jdeq
+\zeta_{f_\ast(A),f_\ast(A)\circ\pi_2(g,f_\ast(A))}(\catid{\ctxext{\Delta}{f_\ast(A)}}\circ\pi_2(g,f_\ast(A))) \\
+& \jdeq
+\zeta_{f_\ast(A),f_\ast(A)\circ\pi_2(g,f_\ast(A))}(\pi_2(g,f_\ast(A))) \\
+& \jdeq
+\zeta_{f_\ast(A),g\circ g_\ast(f_\ast(A))}(\pi_2(g,f_\ast(A)))\\
+& \jdeq
+\tfid{g_\ast(f_\ast(A))}.\qedhere
+\end{align*}
+\end{proof}
+
+\begin{lem}
+Let $f:\Delta\to\Gamma$ and $A\in\cat{F}/\Gamma$. Then one has 
+\begin{equation*}
+\pi_2(f,A)\circ\zeta_{A,f}(\theta)\jdeq\theta
+\end{equation*}
+for any $\theta:\Delta\to\ctxext{\Gamma}{A}$ satisfying $A\circ\theta\jdeq f$.
+\end{lem}
+
+\begin{proof}
+We will write $\tilde\theta\defeq\zeta_{A,f}(\theta)$. Note that
+\begin{equation*}
+A\circ\pi_2(f,A)\circ\tilde\theta\jdeq f\circ f_\ast(A)\circ\tilde\theta\jdeq f.
+\end{equation*} 
+Therefore, we can prove that $\pi_2(f,A)\circ\tilde\theta\jdeq\theta$ by showing
+that $\zeta_{A,f}(\pi_2(f,A)\circ\tilde\theta)\jdeq\tilde\theta$. This is
+shown using the naturality of $\zeta$:
+\begin{align*}
+\zeta_{A,f}(\pi_2(f,A)\circ\tilde\theta)
+  & \jdeq
+\zeta_{A,f\circ f_\ast(A)\circ\tilde\theta}(\pi_2(f,A)\circ\tilde\theta)
+  \\
+  & \jdeq
+\zeta_{(f_\ast(A))_\ast(f_\ast(A)),\tilde{\theta}}(\zeta_{A,f\circ f_\ast(A)}(\pi_2(f,A))\circ\tilde\theta)
+  \\
+  & \jdeq
+\zeta_{(f_\ast(A))_\ast(f_\ast(A)),\tilde{\theta}}(\idtm{f_\ast(A)}\circ\tilde\theta)
+  \\
+  & \jdeq
+\zeta_{(f_\ast(A))_\ast(f_\ast(A)),\tilde{\theta}}(\zeta_{f_\ast(A),f_\ast(A)}(\catid{\ctxext{\Delta}{f_\ast(A)}})\circ\tilde\theta)
+  \\
+  & \jdeq
+\zeta_{f_\ast(A),f_\ast(A)\circ\tilde\theta}(\catid{\ctxext{\Delta}{f_\ast(A)}}\circ\tilde\theta) \\
+  & \jdeq
+\zeta_{f_\ast(A),\catid{\Delta}}(\tilde\theta) \\
+  & \jdeq
+\theta.\qedhere
+\end{align*}
+\end{proof}
+
+\begin{lem}\label{lem:EE_pb}
+The diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\ctxext{\Delta}{f_\ast(A)} \arrow[d,fib] \arrow[r,"{\pi_2(f,A)}"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+\Delta \arrow[r,"f"] & \Gamma
+\end{tikzcd}
+\end{equation*}
+is a pullback square.
+\end{lem}
+
+
+\begin{proof}
+To verify the universal mapping property of the pullback square, consider a
+commuting diagram
+\begin{equation*}
+\begin{tikzcd}
+X \arrow[d,swap,"g"] \arrow[r,"h"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+\Delta \arrow[r,"f"] & \Gamma
+\end{tikzcd}
+\end{equation*}
+Then $h$ corresponds uniquely to a section $k$ of $(f\circ g)_\ast(A)$. Since
+$(f\circ g)_\ast(A)\jdeq g_\ast(f_\ast(A))$, the section $k$ fits in the
+commuting diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\ctxext{X}{g_\ast(f_\ast(A))} \arrow[d,xshift=.7ex,fib] \arrow[r,"{\pi_2(g,f_\ast(A))}"]
+& \ctxext{\Delta}{f_\ast(A)} \arrow[d,fib] \arrow[r,"{\pi_2(f,A)}"]
+& \ctxext{\Gamma}{A} \arrow[d,fib] \\
+X \arrow[r,swap,"g"] \arrow[u,xshift=-.7ex,"k"] & \Delta \arrow[r,swap,"f"] & \Gamma
+\end{tikzcd}
+\end{equation*}
+so we obtain $u\defeq\pi_2(g,f_\ast(A))\circ k:X\to\ctxext{\Delta}{f_\ast(A)}$. 
+Then we have $f_\ast(A)\circ u\jdeq g\circ g_\ast(f_\ast(A))\circ k\jdeq g$ and
+$\pi_2(f,A)\circ u\jdeq \pi_2(f\circ g,A)\circ k\jdeq h$. Note that
+$u$ corresponds uniquely to $k$, which corresponds uniquely to $h$, so the
+uniqueness of $u$ is automatic.
+\end{proof}
+
+\begin{lem}
+For any $f:\Delta\to\Gamma$ and $P\in\cat{F}/\ctxext{\Gamma}{A}$, there is a unique isomorphism
+$\varphi_{f,P}:\pi_2(f,A)_\ast(P)\cong (f_\ast/A)(P)$ in 
+$\mathbb{C}/\ctxext{\Delta}{f_\ast(A)}$ such that
+\begin{equation*}
+\pi_2(f,\ctxext{A}{P})\jdeq \pi_2(\pi_2(f,A),P)\circ\varphi_{f,P}.
+\end{equation*}
+Consequently, we get isomorphisms
+\begin{align*}
+\{\theta:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Gamma}{A}}{P}\mid P\circ\theta\jdeq \pi_2(f,A)\}
+&  \cong
+\{\eta:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{(f_\ast(A))}}{f_\ast(P)}\mid f_\ast(P)\circ\eta\jdeq\catid{\ctxext{\Delta}{f_\ast(A)}}\}
+\end{align*}
+natural in $P$ and $f$.
+\end{lem}
+
+\begin{proof}
+Note that both the lower square and the outer rectangle in the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\ctxext{{\Delta}{f_\ast(A)}}{f_\ast(P)} \arrow[d,fib] \arrow[r,"{\pi_2(f,\ctxext{A}{P})}"]
+& \ctxext{{\Gamma}{A}}{P} \arrow[d,fib] \\
+\ctxext{\Delta}{f_\ast(A)} \arrow[d,fib] \arrow[r,"{\pi_2(f,A)}"] 
+& \ctxext{\Gamma}{A} \arrow[d,fib] \\
+\Delta \arrow[r,swap,"f"] & \Gamma
+\end{tikzcd}
+\end{equation*}
+are pullback squares. By the pasting lemma for pullbacks, it follows that the
+top square must also be a pullback. On the other hand, we have the pullback
+square
+\begin{equation*}
+\begin{tikzcd}
+\ctxext{{\Delta}{f_\ast(A)}}{\pi_2(f,A)_\ast(P)} \arrow[d,fib] \arrow[r]
+& \ctxext{{\Gamma}{A}}{P} \arrow[d,fib] \\
+\ctxext{\Delta}{f_\ast(A)} \arrow[r,swap,"{\pi_2(f,A)}"]
+& \ctxext{\Gamma}{A}
+\end{tikzcd}
+\end{equation*}
+Since pullbacks are uniquely unique, we get the desired isomorphism $\varphi_{f,P}$.
+
 It remains to prove the asserted isomorphism. 
 \begin{align*}
-\{\theta:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Gamma}{A}}{P}\mid P\circ\theta\jdeq \tilde{f}\}
+& \{\theta:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Gamma}{A}}{P}\mid P\circ\theta\jdeq \pi_2(f,A)\} \\
 &  \cong
-\{\eta : \ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{f_\ast(A)}}{\tilde{f}_\ast(P)} \mid
-  \tilde{f}_\ast(P)\circ\eta\jdeq\catid{}\}
+\{\eta : \ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{f_\ast(A)}}{\pi_2(f,A)_\ast(P)} \mid
+  \pi_2(f,A)_\ast(P)\circ\eta\jdeq\catid{}\}
   \\
   & \cong
 \{\eta:\ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{(f_\ast(A))}}{f_\ast(P)}\mid f_\ast(P)\circ\eta\jdeq\catid{\ctxext{\Delta}{f_\ast(A)}}\}
 \end{align*}
-\end{constr}
+\end{proof}
 
 \begin{lem}
 Let $\mathbb{E}$ be an E'-system. Then there is a function $T(P)\to T(f_\ast(P))$
@@ -2410,15 +2713,45 @@ in $f$.
 \end{lem}
 
 \begin{proof}
-Using the natural isomorphism $\zeta_{A,f}$, we see that
+Since $f_\ast(P)$ is isomorphic to $\pi_2(f,A)_\ast(P)$ in $\cat{C}/\ctxext{\Gamma}{A}$,
+it follows that the sets $T(f_\ast(P))$ and $T(\pi_2(f,A)_\ast(P))$ are isomorphic
+via composition with $\varphi_{f,P}$. By \autoref{lem:ptm}, we have a function
+from $T(P)$ to $T(\pi_2(f,A)_\ast(P))$.
+\end{proof}
+
+\begin{defn}
+For any $\Gamma\in\cat{C}$, define $\cat{C}_\cat{F}/\Gamma$ to be the full
+subcategory of $\cat{C}/\Gamma$ with the same objects as $\cat{F}/\Gamma$. 
+\end{defn}
+
+\begin{thm}
+Let $\mathbb{E}$ be an E'-system. Then $f_\ast$ can be extended to a functor
+$\cat{C}_\cat{F}/\Gamma\to\cat{C}_\cat{F}/\Delta$, for each $f:\Delta\to\Gamma$, and moreover the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\cat{C}_\cat{F}/\ctxext{\Gamma}{B} \arrow[r,"{f_\ast/B}"] \arrow[d,swap,"{g_\ast}"]
+& \cat{C}_\cat{F}/\ctxext{\Delta}{f_\ast(B)} \arrow[d,"{(f_\ast(g))_\ast}"] \\
+\cat{C}_\cat{F}/\ctxext{\Gamma}{A} \arrow[r,swap,"{f_\ast/A}"]
+& \cat{C}_\cat{F}/\ctxext{\Delta}{f_\ast(A)}
+\end{tikzcd}
+\end{equation*}
+commutes for every $g:A\to B$ in $\cat{C}_\cat{F}/\Gamma$.
+\end{thm}
+
+\begin{proof}
+For any $A,B\in\cat{F}/\Gamma$, we have an isomorphism
+$\mathrm{hom}_{\cat{C}/\Gamma}(A,B)\cong T(W_A(B))$. We also get a function
+$T(W_A(B))\to T(f_\ast(W_A(B)))$. Therefore, it suffices to show that
+$f_\ast(W_A(B))\cong W_{f_\ast(A)}(f_\ast(B))$. 
 \begin{align*}
-T(f_\ast(P)) & \jdeq \{\eta : \ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{f_\ast(A)}}{f_\ast(P)}\mid f_\ast(P)\circ\eta\jdeq\catid{\ctxext{\Delta}{f_\ast(A)}}\}.
-\intertext{By all means, this should be isomorphic to}
-  & \cong
-\{\theta : \ctxext{\Delta}{f_\ast(A)}\to \ctxext{{\Gamma}{A}}{P}\mid P\circ\theta\jdeq \tilde{f}\}.
+f_\ast(W_A(B))
+& \jdeq f_\ast(A_\ast(B)) \\
+& \cong \pi_2(f,A)_\ast(A_\ast(B)) \\
+& \jdeq (A\circ\pi_2(f,A))_\ast(B) \\
+& \jdeq (f\circ f_\ast(A))_\ast(B) \\
+& \jdeq f_\ast(A)_\ast(f_\ast(B)) \\
+& \jdeq W_{f_\ast(A)}(f_\ast(B)). \qedhere
 \end{align*}
-Therefore, we have the function $x\mapsto \zeta_{A,f}(x\circ f)$ from $T(A)$ to
-$T(f_\ast(A))$. 
 \end{proof}
 
 \begin{thm}
@@ -2431,25 +2764,9 @@ morphisms in the empty context, with the subcategory $\cat{F}$ of projections $\
 The functors $f_\ast:\cat{F}/\Gamma\to\cat{F}/\Delta$ are contravariant in
 $f$, so we have to verify whether we have the stated isomorphisms.
 
-Note first that for any $A\in\cat{F}/\Gamma$, we have
-$W_A\defeq A_\ast:\cat{F}/\Gamma\to\cat{F}/\ctxext{\Gamma}{A}$. Then $W_A$ is
-contravariant in $A$ and that it preserves the terminal object. We give $W_A$
-an action on terms by defining
-\begin{equation*}
-W_A(\theta)\defeq
-\end{equation*}
-for any $\theta\in T(Q)$ and $Q\in\cat{F}/\ctxext{\Gamma}{B}$. 
+Note first that for any $A\in\cat{F}/\Gamma$, $W_A$ is
+contravariant in $A$ and that it preserves the terminal object. 
 
-Thus, the $W_A$
-assemble a pre-weakening structure.   
-
-Note that for any $A\in\cat{F}/\Gamma$, we have
-\begin{align*}
-T(W_A(A)) & \jdeq \{\eta:\ctxext{\Gamma}{A}\to\ctxext{{\Gamma}{A}}{W_A(A)}\mid W_A(A)\circ\eta\jdeq\catid{\ctxext{\Gamma}{A}}\} \\
-  & \cong
-\{\theta:\ctxext{\Gamma}{A}\to\ctxext{\Gamma}{A}\mid A\circ\theta\jdeq A\},
-\end{align*}
-so we find $\idtm{A}\defeq\zeta_{A,A}(\catid{\ctxext{\Gamma}{A}})\in T(W_A(A))$.
 Now let $\theta:\Delta\to\ctxext{\Gamma}{A}$ so that $A\circ\theta\jdeq f$
 for some $f:\Delta\to\Gamma$. Then we have $\zeta_{A,f}(\theta)\in T(f_\ast(A))$.  
 We wish to define $\theta_\ast(\idtm{A}):\Delta\to\ctxext{\Delta}{f_\ast(A)}$
