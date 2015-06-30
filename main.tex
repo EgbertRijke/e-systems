@@ -22,24 +22,9 @@ from Voevodsky's B-systems into E-systems, of which the image is the category
 of stratified E-systems. 
 \end{abstract}
 
-\tableofcontents
+%\tableofcontents
 
 \section{Introduction}
-
-
-When type theory is regarded as a foundational system for doing mathematics,
-we would first of all like it to have finitely many axioms which do not depend
-on any presumed mathematical structures. In particular, natural numbers should
-not be needed to state what type dependency is. Nevertheless, many modern
-accounts on what type theory is, do rely on the existence of the natural
-numbers in the meta-theory. The type theory of \cite{TheBook} uses an infinte
-hierarchy $\UU_0$, $\UU_1$, $\UU_2$, \ldots of universes, as do the type
-type theories of \Coq and \Agda. Likewise, models of type theory considered
-by Cartmell, Voevodsky and Garner do rely on the natural numbers. 
-
-That leaves Dybjer's categories with families as 
-
-\subsection*{Existing models of type theory}
 
 \subsection*{Essentially algebraic theories}
 An essentially algebraic theory is an equational theory of partial operations
@@ -85,7 +70,126 @@ in the development of its theory of models.
 
 \subsection*{Logical frameworks}
 
-\subsection*{The essentially algebraic theory of E-systems}
+\subsection*{Setting up the essentially algebraic theory of E-systems}
+The theory of type dependency as we present it here, consists of three sorts
+$C$, $F$ and $T$ for contexts, families and terms. There is a map 
+$\eft:F\to C$ which determines for each family, in which context it is a
+family; and there is a map $\ebd:T\to F$ which determines for each term, of
+which family it is a term. Thus, the backbones of an E-system can be represented
+as
+\begin{equation*}
+\begin{tikzcd}
+T \arrow[d,"\ebd"] \\ F \arrow[d,"\eft"] \\ C
+\end{tikzcd}
+\end{equation*}
+When $A$ is a family in context $\Gamma$, there is also a context $\ctxext{\Gamma}{A}$,
+called the \emph{context extension of $A$}. Context extension allows us to consider
+`families over families', where a family $P$ over $A$ in context $\Gamma$, would
+simply be a family $P$ over $\ctxext{\Gamma}{A}$. Context extension is represented
+by another function $\cftctxext : F\to C$.
+
+Since we want the rules of
+type theory to be valid in any context $\Gamma$, there is also a notion of family
+extension. Thus, for any family $P$ over $A$ in context $\Gamma$, there is a
+family $\ctxext{A}{P}$ in context $\Gamma$. In other words, we have a function
+$\cftfamext : F\times_{\cftctxext,\eft} F\to F$. 
+
+Two associativity laws will require
+that context and family extension are compatible with each other: we have
+the equality $\ctxext{{\Gamma}{A}}{P}\jdeq\ctxext{\Gamma}{{A}{P}}$ of contexts,
+and the equality $\ctxext{{A}{P}}{Q}\jdeq\ctxext{A}{{P}{Q}}$ of families.
+
+Finally, there is an empty context $\emptyc\in C$, and an empty family $\emptyf[\Gamma]$
+in context $\Gamma$, for every $\Gamma\in C$. The empty context is such that context extension
+restricted to families over the empty context is an isomorphism, and the empty
+families are neutral with respect to context and family extension in the sense
+that $\ctxext{\Gamma}{\emptyf[\Gamma]}\jdeq\Gamma$, $\ctxext{\emptyf[\Gamma]}{A}
+\jdeq A$ and $\ctxext{A}{\emptyf[\ctxext{\Gamma}{A}]}\jdeq A$. 
+
+One may recognize in these ingredients of E-systems a category with a
+terminal object, and a set $T(f)$ of terms for every morphism $f$ (satisfying
+no further axioms, so far). Ignoring the set of terms for the moment, $C$ is
+the set of objects and $F$ is the set of morphisms; $\eft$ assigns the codomain
+to each morphism and $\cftctxext$ assigns the domain to each  morphism. The
+operation $\cftfamext$ composes two morphisms. The first associativity rule
+asserts that the domain of the composition $\ctxext{A}{P}$ is the domain of
+$P$, and the second associativity rule asserts that composition is associative
+in the usual sense. The empty context satisfies exactly the properties of the
+terminal object, and the empty family $\emptyf[\Gamma]$ satisfies the properties
+of the identity morphisms. 
+
+Thus, an E-system $\mathbf{E}$ will have an underlying category, which may be called the
+category of families of $\mathbf{E}$. The structure of type dependency will by
+built on top of this category. This structure will consist of an E-homomorphism
+$W_A$ called \emph{weakening by $A$}, for every family $A$ in context $\Gamma$,
+an E-homomorphism $S_x$ called \emph{substitution by $x$}, for every term
+$x$ of $A$ in context $\Gamma$, and units $\idtm{A}\in T(W_A(A))$ for every
+family $A$ in context $\Gamma$, satisfying a handful of further axioms. 
+The weakening and substitution homomorphisms
+will preserve the extension structure we have discussed above; in other words,
+they will be functors preserving the terminal object. 
+
+\subsection*{The pre-categorical nature of E-systems}
+Although we start our definition of E-systems with a category with term structure,
+we do not set out to have a categorical notion of E-systems, in the sense that the structure of
+being an E-system can be transported along equivalences of categories. The goal
+in this paper is to describe the algebraic structures belonging to an essentially
+algebraic theory of type dependency, and this structure turns out to be pre-categorical
+rather than categorical. The fact that we've encountered a category at the outset
+of our definition of E-systems is in a sense coincidence, rather than born out
+of a desire to do type theory categorically and we would consider E-systems to
+be pre-categorical models of type theory rather than categorical models of type
+theory. The difference between pre-categories and categories is that equality
+of objects in a pre-category is considered to be (strict) equality, whereas
+equality of objects in a category is considered to be isomorphism of objects,
+and we have chosen to use the former notion of equality.
+
+\subsection*{Existing notions of categorical models of dependent type theory}
+
+When introducing a new notion of model of dependent type theory, one necessarily
+faces the task of comparing the new notion with existing notions, and there are
+quite a few. 
+
+\begin{itemize}
+\item Contextual categories were introduced by Cartmell \cite{Cartmell1986} and were studied
+extensively by Voevodsky in \cite{VV_Csys_univ,VV_C-systems_monad,VV_C-systems_quotients}
+under the name C-systems.
+\item Categories with families, introduced by Dybjer in \cite{Dybjer1996}, model a
+theory of type dependency with sorts for contexts, context morphisms, types
+and terms. Among the virtues of categories with families are that its theory
+is essentially algebraic, and they are relatively simple to work with.
+
+Categories with families are models of a dependent type theory with a
+category of contexts, for each context $\Gamma$ a sort $\mathrm{Ty}(\Gamma)$ of
+types in context $\Gamma$, and for each type $A\in\mathrm{Ty}(\Gamma)$ a sort
+$\mathrm{Tm}(A)$ of terms of type $A$ in context $\Gamma$. We will see that
+the sorts $\mathrm{Tm}(A)$ are superfluous, because it will always be 
+naturally isomorphic to the set of sections of the projection morphism
+$p_A:\ctxext{\Gamma}{A}\to\Gamma$ in the category of contexts. The evident
+functor from categories with families to E-systems will forget that the contexts
+form a category, and therefore it will not be faithful.
+\item Comprehension categories were introduced by Jacobs in \cite{Jacobs1993}, as
+a minimal notion of categorical model in type theory, without really making
+precise what that means. 
+Comprehension categories are models of a dependent type theory with a
+category of context, and for each context $\Gamma$ a category of types. 
+\end{itemize}
+
+There is a simple test to quickly figure out some basic differences between different
+dependent type theories, asking what kind of structure remains if there are no
+types at all. In a contextual category, only the terminal object remains.
+However, when the presheaf $\mathrm{Ty}$ of a category with families is assumed
+to be empty, or when a category $\cat{E}$ fibered over some category is assumed
+to be empty, the underlying category of context remains. We shall see that
+E-systems are like contextual categories in this respect: only a singleton can
+be an E-system with no types. This complicates a thorough comparison between
+categories with families and comprehension categories on one side, and E-systems
+on the other. We shall construct functors from the categories of categories with
+families and comprehension categories directly preserving type dependency, but
+these functors will not be faithful. 
+
+Thus, it seems that both categories with families and comprehension categories
+have more structure than needed to model dependent type theory.
 
 \subsection*{Overview and conventions}
 In \autoref{sec:esys_defn}, we give the categorical definition of E-system in 
@@ -109,10 +213,15 @@ have been presented by the author during the Homotopy Type Theory workshop in
 Oxford, November 2014%
 \footnote{See \url{http://www.qmac.ox.ac.uk/events/Talk\%20slides/Egbert\%20Rijke.pdf}}.
 
-In \autoref{sec:esys_props}, we derive several properties from the axioms of
-E-systems. This section is meant to give some insight in what can generally be
-done with E-systems, and provide some of the intuition behind the constructions
-in \autoref{sec:esys_compared}.
+In \autoref{sec:esys_props}, we introduce the auxiliary notion of E'-system.
+An E'-system consists of a pre-category $\cat{C}$ with a sub-pre-category
+$\cat{F}$ with the same objects as $\cat{C}$, and a functorial choice of
+pullbacks for any morphism $f:\Delta\to\Gamma$ in $\cat{C}$ and any
+$A\in\cat{F}/\Gamma$. The goal of this section is to show that 
+E'-systems and E-systems are different axiomatizations of the same structures,
+and apart from that the goal is to show some equational reasoning in E-systems.
+The properties proven in this section also serve to provide some of the 
+intuition behind the constructions in \autoref{sec:esys_compared}.
 
 Although we have introduced a notion of E-homomorphism, a better behaved category
 of E-systems is the one where E-homomorphisms lift factorizations. The condition
@@ -140,15 +249,31 @@ $F/\Delta:\cat{C}/\Delta\to \cat{D}/F(\Delta)$ given by the action on morphisms 
 \end{rmk}
 
 \begin{rmk}
-It will be convenient to denote the objects of the category $\cat{C}$ with capital
+When we think of a category $\cat{F}$ as a category of fibrations or families
+over a context -- which will be the outset of the definition of E-systems --
+it will be convenient to denote the objects of the $\cat{F}$ with capital
 greek letters $\Gamma$, $\Delta$, \ldots, and the morphisms by capital latin letters
-$A$, $B$, $P$, $Q$, etcetera. When $A$ is a morphism into $\Gamma$, we will denote
-its codomain by $\ctxext{\Gamma}{A}$. When $A$ is a morphism into $\Gamma$ and
-$P$ is a morphism into $\ctxext{\Gamma}{A}$, it will be convenient to denote the
-composition of $P$ with $A$ by $\ctxext{A}{P}$ as well. Note that $\ctxext{A}{P}$
-is indeed the domain of $P$ in the slice category $\cat{C}/\Gamma$. Also, objects
-of $\cat{C}$ will always have a capital greek letter in their notation, e.g.~as
-in $\ctxext{{\Gamma}{A}}{P}$. 
+$A$, $B$, $P$, $Q$, \ldots. When $A$ is a morphism into $\Gamma$, we will denote
+its domain by $\ctxext{\Gamma}{A}$, so we don't always have to introduce a name
+for the domain. When $A$ is a morphism into $\Gamma$ and
+$P$ is a morphism into $\ctxext{\Gamma}{A}$, it will also be convenient to denote the
+composition of $P$ with $A$ by $\ctxext{A}{P}$. Note that $\ctxext{A}{P}$
+is indeed the domain of $P$ in the slice category $\cat{F}/\Gamma$.
+\end{rmk}
+
+\begin{rmk}
+We have chosen not to use common type theoretical notation involving special
+expressions for judgments and for inference rules. One reason is that it has been
+proven to be hard for the uninitiated to read and comprehend such expressions.
+Another is that set theoretic
+notation serves very well for getting the algebraic structure accross, which
+is what we want to focus on.
+
+We would also like to remark that although it appears that we introduce possibly
+large families of operations (a weakening operation $W_A$ for each morphism $A$,
+for instance), E-systems can actually be defined with finitely many
+operations. This becomes clearer when one defines an E-system in an arbitrary
+category with finite limits.
 \end{rmk}
 
 \subsection*{Acknowledgements}
