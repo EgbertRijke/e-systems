@@ -17,14 +17,45 @@
 We present an algebraic formulation of dependent type theory with
 three sorts for contexts, families and terms, with finitely many operations
 between them and finitely many equality axioms. Algebras for this theory are
-called E-systems. We then show that there is a full and faithful functor
-from Voevodsky's B-systems into E-systems, of which the image is the category
-of stratified E-systems. 
+called E-systems. A distinctive feature of the dependent type theory of
+E-systems is that it takes `telescopic families' as the primitive notion of
+families.
+
+We then compare Voevodsky's B-systems, Dybjer's categories
+with families and Jacob's comprehension categories with E-systems. There is
+a full and faithful functor from B-systems to E-systems, of which the image is
+the category of stratified E-systems. To have a functor from categories with
+families to E-systems, we need to impose an additonal coherence condition, which
+makes sure that the substitution operation of a category with families extends 
+to telescopic families. 
 \end{abstract}
 
 %\tableofcontents
 
 \section{Introduction}
+
+\subsection*{Principles of mathematical fuseki}
+Mathematics is the study of abstract concepts such as space or quantity, and
+when we design a language for such a study, we want to be able to efficiently
+express things about the objects under investigation. The subject matter of
+this paper is a logical framework of dependent type theory. 
+
+Pfenning \cite{PfenningLFintro} defines logical frameworks
+to be meta-languages for the formalization of deductive system. Examples of
+logical framework therefore include propositional logic, first-order predicate 
+logic, Russell's ramified type theory, the lambda-calculus, dependent type 
+theory, and so on. By considering models of a logical framework, it becomes
+itself the subject of mathematical study. 
+
+It may actually be useful to see logical frameworks themselves
+as objects subject to mathematical investigation. 
+
+Logical frameworks for mathematics are not set in stone. 
+
+ and neither to they
+remain the same once they are declared.
+
+When designing and maintaining a logical framework 
 
 \subsection*{Essentially algebraic theories}
 An essentially algebraic theory is an equational theory of partial operations
@@ -263,11 +294,8 @@ is indeed the domain of $P$ in the slice category $\cat{F}/\Gamma$.
 
 \begin{rmk}
 We have chosen not to use common type theoretical notation involving special
-expressions for judgments and for inference rules. One reason is that it has been
-proven to be hard for the uninitiated to read and comprehend such expressions.
-Another is that set theoretic
-notation serves very well for getting the algebraic structure accross, which
-is what we want to focus on.
+expressions for judgments and for inference rules, because we want to focus
+on the algebraic structure of type dependency rather than on its syntax.
 
 We would also like to remark that although it appears that we introduce possibly
 large families of operations (a weakening operation $W_A$ for each morphism $A$,
@@ -589,7 +617,97 @@ $ft^{m-n}:=ft^{n-1}\circ\cdots\circ ft^m(Y)=X$.
 \part{The new E-systems}
 \end{comment}
 
-\input{weakeningcats}
+\input{e-systems}
+
+\input{internal_homs}
+
+\input{compared}
+
+\section{Type constructors in E-systems}
+
+\begin{defn}
+An E-system $\mathbb{E}$ is said to have $\Pi$-types, if 
+\begin{enumerate}
+\item for any 
+$A\in\cat{F}/\Gamma$, there is an E-homomorphism
+\begin{equation*}
+\Pi_A : \mathbb{E}/\ctxext{\Gamma}{A}\to\mathbb{E}/\Gamma
+\end{equation*}
+For terms $g:Q$ in context $\ctxext{{\Gamma}{A}}{P}$, we will usually write
+$\lambda_{A}(g)$ for the term $\Pi_A(g)$ of $\Pi_A(Q)$ in context
+$\ctxext{\Gamma}{\Pi_A(P)}$. Note that when $P$ is empty, then we retrieve the
+usual lambda-abstraction.
+\item for any $A\in\cat{F}/\Gamma$ and $Q\in\cat{F}/\ctxext{{\Gamma}{A}}{P}$, 
+there is a term 
+\begin{equation*}
+\tfev^{A,Q} : \ctxwk{\Pi_A(Q)}{{\Pi_A(P)}{Q}}
+\end{equation*}
+in context $\ctxext{{{{\Gamma}{\Pi_A(P)}}{\Pi_A(Q)}}{\ctxwk{\Pi_A(\ctxext{P}{Q})}{A}}}{\ctxwk{\Pi_A(\ctxext{P}{Q})}{P}}$.
+Note that for each $g:\Pi_A(Q)$, we obtain a term $\subst{g}{\tfev^{A,Q}}: \ctxwk{\Pi_A(P)}{Q}$ in
+context $\ctxext{{\Gamma}{\Pi_A(P)}}{\ctxwk{\Pi_A(P)}{A}}$.
+\item for any $A\in\cat{F}/\Gamma$ there is a term
+\begin{equation*}
+{\tfev^{A,P}} : {\ctxwk{\Pi_A(P)}{P}}
+\end{equation*}
+in context ${\ctxext{{\Gamma}{\Pi_A(P)}}{\ctxwk{\Pi_A(P)}{A}}}$
+\end{enumerate}
+satisfying
+\begin{enumerate}
+\item 
+\begin{enumerate}
+\item For any $P\in\cat{F}/\ctxext{\Gamma}{A}$ one has
+\begin{equation*}
+\Pi_{\ctxext{A}{P}} \jdeq \Pi_A\circ \Pi_P
+\end{equation*}
+\item For any $Q\in\cat{F}/\ctxext{{\Gamma}{A}}{P}$, one has
+\begin{equation*}
+{\evtm{\ctxext{A}{P}}{Q}}
+  \jdeq
+{\subst{\evtm{A}{\mprd{P}{Q}}}{\ctxwk{\mprd{A}{\mprd{P}{Q}}}{\evtm{P}{Q}}}}
+\end{equation*}
+\end{enumerate}
+\item 
+\begin{enumerate}
+\item For any $\Gamma\in\mathbb{E}$, one has
+\begin{equation*}
+\Pi_{\catid{\Gamma}}\jdeq \catid{\mathbb{E}/\Gamma}.
+\end{equation*}
+\item For any $A\in\mathbb{F}/\Gamma$, one has
+\begin{equation*}
+\tfev^{\catid{\Gamma},A} \jdeq \tfid{A}
+\end{equation*}
+\end{enumerate}
+\item for any term $f:P$ in context $\ctxext{\Gamma}{A}$, one has
+\begin{equation*}
+\subst{\lambda_A(f)}{\tfev^{A,P}}\jdeq f.
+\end{equation*}
+\end{enumerate}
+\end{defn}
+
+\begin{rmk}
+The evaluation term determines a term
+\begin{equation*}
+\tilde\tfev^{A,P} : \thom{\ctxwk{A}{\Pi_A(P)}}{P}
+\end{equation*}
+\end{rmk}
+
+\begin{defn}
+A $\Pi$E-homomorphism from $\mathbb{E}$ to $\mathbb{E}'$ is an E-homomorphism
+$H:\mathbb{E}\to\mathbb{E}'$ such that
+\begin{enumerate}
+\item for any $A\in\cat{F}/\Gamma$, one has
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\cat{F}/\ctxext{\Gamma}{A} \arrow[d,swap,"\Pi_A"] \arrow[r,"H/\ctxext{\Gamma}{A}"] & \cat{F}'/\ctxext{H(\Gamma)}{H(A)} \arrow[d,"\Pi_{H(A)}"] \\
+\cat{F}/\Gamma \arrow[r,swap,"H/\Gamma"] & \cat{F}'/F(\Gamma)
+\end{tikzcd}
+\end{equation*}
+\item For any $P\in\cat{F}/\ctxext{\Gamma}{A}$, one has
+\begin{equation*}
+H(\tfev^{A,P})\jdeq \tfev^{H(A),H(P)}
+\end{equation*}
+\end{enumerate}
+\end{defn}
 
 \bibliographystyle{plain}
 %\phantomsection\addcontentsline{toc}{section}{References}

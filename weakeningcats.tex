@@ -106,28 +106,29 @@ $\cat{F}/\Gamma$ is a weakening system.
 \end{cor}
 
 \begin{eg}
-If the underlying pre-category is a group, the axioms of a weakening system
-obtain the following form: There is a group homomorphism $W_x:G\to G$ for
-every $x\in G$, in such a way that $W_e\jdeq \catid{G}$ and $W_{xy}\jdeq W_y\circ W_x$
-for every $x,y\in G$, and for any $x,y\in G$ the diagram
+If the underlying pre-category is a monoid $M$, the axioms of a weakening system
+obtain the following form: There is a group homomorphism $W_x:M\to M$ for
+every $x\in M$, in such a way that $W_e\jdeq \catid{M}$ and $W_{xy}\jdeq W_y\circ W_x$
+for every $x,y\in M$, and for any $x,y\in M$ the diagram
 \begin{equation*}
 \begin{tikzcd}
-G \arrow[r,"W_y"]
+M \arrow[r,"W_y"]
   &
-G 
+M 
   \\
-G \arrow[u,"W_x"]
+M \arrow[u,"W_x"]
   \arrow[r,swap,"W_y"]
   &
-G \arrow[u,swap,"W_{W_y(x)}"]
+M \arrow[u,swap,"W_{W_y(x)}"]
 \end{tikzcd}
 \end{equation*}
-is required to commute. Thus, a weakening system on a group $G$ consists of
-a group homomorphism $W:\op G\to\mathrm{Aut}(G)$ such that $W_a\circ W_b\jdeq 
-W_{W_a(b)}\circ W_a$. The latter requirement is satisfied if $b\cdot a\jdeq a\cdot W_a(b)$
-for every $a,b\in G$, or equivalently if $[b,a]\jdeq b^{-1}\cdot W_a(b)$.
+is required to commute. Thus, a weakening system on a monoid $M$ consists of
+a homomorphism $W:\op M\to\mathrm{Aut}(M)$ such that $W_x\circ W_y\jdeq 
+W_{W_x(y)}\circ W_x$. The latter requirement is satisfied if $y\cdot x\jdeq x\cdot W_x(y)$
+for every $x,y\in M$. Group conjugation forms a weakening structure on any group.
 \end{eg}
 
+\begin{comment}
 \begin{lem}
 For any group, conjugation is a weakening structure. Thus, any group is
 canonically a weakening system.
@@ -150,6 +151,7 @@ G \arrow[u,swap,"\mathrm{conj}_{y^{-1}xy}"]
 \end{equation*}
 commutes.
 \end{proof}
+\end{comment}
 
 \begin{comment}
 \begin{rmk}
@@ -182,7 +184,6 @@ Let $G$ be the graph consisting of one vertex $\ast$ and one edge $e:\ast\to\ast
 Then $\cat{F}_G/\ast\jdeq \N$. Then the only weakening structure on $\cat{F}/G$ is
 given by $W_e\jdeq \catid{\N}$. The reason is that 
 \end{eg}
-\end{comment}
 
 \begin{lem}
 Let $P$ be a pre-order. A pre-weakening structure on $P$ is determined by order
@@ -213,6 +214,7 @@ Consider the poset $(\N,\geq)$, which has a morphism from $a$ to $b$ if $a\geq b
 On this poset, we may consider the weakening structure defined by $W_{a,b}(x)\jdeq
 a+(x-b)$.
 \end{eg}
+\end{comment}
 
 \subsection{Weakening systems with term structure}
 \begin{defn}
@@ -2405,12 +2407,31 @@ natural transformation $W_A:B/(B_{n\leq n+1}(A))\Rightarrow B/A$.
 
 In this section we recall Dybjer's notion of categories with families and we
 introduce the equivalent notion of D-systems. After having proved that categories with families
-are the same things as D-systems, we will focus on constructing a functor from
-D-systems to E-systems without empty context. However, due to the existence of pathological examples
-of categories with families, this functor is not going to be faithful. We then
-introduce the notion of well-founded D-systems, and show that the
-functor from D-systems to E'-systems without empty context restricts to an
-embedding from the well-founded D-systems to E'-systems. 
+are the same things as D-systems, we will focus on constructing a canonical functor from
+D-systems to E'-systems, in which the category $\cat{F}$ of families has contexts
+as objects and compositions of projections as morphisms. There is no reason why
+this category should possess a terminal object, so we naturally have to retreat
+to E'-systems without empty contex. However, the construction of a
+canonical functor in which families are represented by compositions of projections
+is still not possible without a further coherence condition. To make sure that
+the pullback operations of a D-system extend to the category
+$\cat{F}$, we introduce \emph{coherent} D-systems. So we only have a functor $U$
+from the category $\mathbf{Dsys}$ of coherent D-systems to the category
+$\mathbf{E'sys_{\circ}}$ of E'-systems without empty context.
+We see that it is not evident at all to turn categories with families into
+E-systems, even if we ignore the issue that categories with families map
+naturally into E'-systems without empty context.
+Thus it seems that the type theories of categories with families and of E-systems
+are not directly comparable.
+
+We end this section by showing that the functor 
+$U:\mathbf{Dsys}\to\mathbf{E'sys_{\circ}}$ restricts to a full and faithful 
+functor on the coherent D-systems which satisfy the condition that every 
+composition of projections is a composition of projections in precisely one way.
+We call coherent D-systems with this property
+locally well-founded. Among the locally well-founded D-systems are the B-systems.
+As a by-product, we get that the full and faithful functor from B-systems to
+E-systems factors through D-systems. 
 
 \begin{defn}
 A \emph{category with families} consists of
@@ -2803,7 +2824,10 @@ is a pullback square.
 \begin{constr}
 We construct the asserted structure by
 induction on the length of the arrow $A$ into $\Gamma$. We define
-$\Lambda(f,\emptyf[\Gamma])\defeq \emptyf[\Delta]$, and $\pi_2(f,\emptyf[\Gamma])\defeq f:\ctxext{\Delta}{\catid{\Delta}}\to\ctxext{\Gamma}{\catid{\Gamma}}$. The resulting square is trivially
+$\Lambda(f)$ on the empty sequence as
+$\Lambda(f,\emptyf[\Gamma])\defeq \emptyf[\Delta]$, and we define
+$\pi_2(f,\emptyf[\Gamma])\defeq f:\ctxext{\Delta}{\catid{\Delta}}\to
+\ctxext{\Gamma}{\catid{\Gamma}}$. The resulting square is trivially
 a pullback square. Now suppose we have a pullback square as above.
 and let $B\in\mathrm{Ty}(\ctxext{\Gamma}{A})$. Then we define
 \begin{equation*}
@@ -2823,29 +2847,112 @@ is a pullback, as desired.
 \end{constr}
 
 \begin{rmk}
-The construction above does not help us define a functor $f_\ast:\cat{F}/\Gamma
-\to\cat{F}/\Delta$ without further assumptions on the D-system $\mathbb{D}$.
-The functor $f_\ast$ would have the property that the square
+We can't directly use the functors $\Lambda(f)$ to give a D-system the structure
+of an E'-system, because there is a coherence condition missing.
+\end{rmk}
+
+\begin{thm}\label{thm:Dsys_coh}
+The following are equivalent:
+\begin{enumerate}
+\item The functors $\Lambda(f):\Lambda(\Gamma)\to\Lambda(\Delta)$ extend to 
+the structure of an E'-system without empty context.
+\item For any $f:\Delta\to\Gamma$ and all $A,A'\in\Lambda(\Gamma)$ satisfying 
+$p_A\jdeq p_{A'}$, one has
+\begin{equation*}
+p_{\Lambda(f,A)}\jdeq p_{\Lambda(f,A')}\qquad\text{and}\qquad\pi_2(f,A)\jdeq \pi_2(f,A').
+\end{equation*}
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+Suppose we can extend $\Lambda(f)$ for all $f:\Delta\to\Gamma$, to form commuting
+diagrams
 \begin{equation*}
 \begin{tikzcd}
 \Lambda(\Gamma) \arrow[d,swap,"p"] \arrow[r,"\Lambda(f)"] & \Lambda(\Delta) \arrow[d,"p"] \\
 \cat{F}/\Gamma \arrow[r,densely dotted,"{f_\ast}"] & \cat{F}/\Delta
 \end{tikzcd}
 \end{equation*}
-commutes. The above square can only commute, if one has
+of functors, forming an E'-system without empty context. Let 
+$f:\Delta\to\Gamma$, and let $A,A':\Lambda(\Gamma)$ be such that 
+$p_A\jdeq p_{A'}$. Then it follows
+that $\pi_2(f,A)_\ast\jdeq f_\ast/A\jdeq f_\ast/A'\jdeq\pi_2(f,A')_\ast$, so
+we get the desired equality $\pi_2(f,A)\jdeq\pi_2(f,A')$.
+
+For the converse, suppose that for all $f:\Delta\to\Gamma$ and $A,A'\in
+\Lambda(\Gamma)$ such that $p_A\jdeq p_{A'}$, one has 
+$p_{\Lambda(f,A)}\jdeq p_{\Lambda(f,A')}$ and $\pi_2(f,A)\jdeq\pi_2(f,A')$.
+Let $f:\Delta\to\Gamma$. By the assumption that $p_{\Lambda(f,A)}\jdeq p_{\Lambda(f,A')}$,
+it follows that the objects part of $p^\Delta\circ\Lambda(f):\Lambda(\Gamma)\to\cat{F}/\Delta$ 
+factors through $p^\Gamma:\Lambda(\Gamma)\to\cat{F}/\Gamma$. Moreover, by the
+assumption that $\pi_2(f,A)\jdeq \pi_2(f,A')$ it follows that the pullback
+squares
 \begin{equation*}
-\Lambda(f)/A\jdeq\Lambda(f)/A'
-\end{equation*} 
-for any $A,A'\in\Lambda(\Gamma)$ with $p_A\jdeq p_{A'}$. This would entail that
-$\pi_2(f,A)\jdeq\pi_2(f,A')$, a property that seems to not hold generally.
-\end{rmk}
+\begin{tikzcd}[column sep=large]
+\ctxext{\Delta}{f_\ast(A)} \arrow[d,fib] \arrow[r,"{\pi_2(f,A)}"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+\Delta \arrow[r,"f"] & \Gamma
+\end{tikzcd}
+\qquad\text{and}\qquad
+\begin{tikzcd}[column sep=large]
+\ctxext{\Delta}{f_\ast(A')} \arrow[d,fib] \arrow[r,"{\pi_2(f,A')}"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+\Delta \arrow[r,"f"] & \Gamma
+\end{tikzcd}
+\end{equation*}
+are the same. Since we have this property
+for any object $\Gamma$, it also follows that the morphisms part of
+$p^\Delta\circ\Lambda(f)$ factors through $p^\Gamma$. This defines the functor
+$f_\ast$ in the commuting square
+\begin{equation*}
+\begin{tikzcd}
+\Lambda(\Gamma) \arrow[d,swap,"p"] \arrow[r,"\Lambda(f)"] & \Lambda(\Delta) \arrow[d,"p"] \\
+\cat{F}/\Gamma \arrow[r,densely dotted,"{f_\ast}"] & \cat{F}/\Delta
+\end{tikzcd}
+\end{equation*}
+We need to verify that $f_\ast$ is a functorial choice of pullbacks, as in the
+definition of \autoref{defn:E'sys}. Since $f_\ast$ is defined as an extension
+of $\Lambda(f)$, it is enough to verify the analoguous functoriality properties
+for $\Lambda(f)$. We do this by induction on the objects of $\Lambda(\Gamma)$,
+in the same order as in \autoref{defn:E'sys}.
+\begin{enumerate}[label=(\alph*)]
+\item This property holds by definition.
+\item Let $\Gamma\in\cat{C}$. We will prove by induction on $A\in\Lambda(\Gamma)$
+that $(\catid{\Gamma})_\ast(A)\jdeq A$ and that $\pi_2(\catid{\Gamma},A)\jdeq \catid{\ctxext{\Gamma}{A}}$.
+Note that these properties hold by definition for $A\jdeq\catid{\Gamma}$. For the
+inductive step, assume that $A\in\Lambda(\Gamma)$ is such that
+$(\catid{\Gamma})_\ast(A)\jdeq A$ and $\pi_2(\catid{\Gamma},A)\jdeq
+\catid{\ctxext{\Gamma}{A}}$ and let $B\in\mathrm{Ty}(\ctxext{\Gamma}{A})$. Then
+we have
+\begin{align*}
+(\catid{\Gamma})_\ast(A\circ p_B) & \jdeq (\catid{\Gamma})_\ast(A)\circ \pi_2(\catid{\Gamma},A)_\ast(p_B) \\
+& \jdeq A\circ p_B
+\end{align*}
+Also, we have
+\begin{align*}
+\pi_2(\catid{\Gamma},A\circ p_B) & \jdeq \pi_2(\pi_2(\catid{\Gamma},A),p_B) \\
+& \jdeq \pi_2(\catid{\ctxext{\Gamma}{A}},p_B) \\
+& \jdeq \catid{\ctxext{{\Gamma}{A}}{B}}
+\end{align*}
+\item Let $f:\Delta\to \Gamma$ and $g:X\to \Delta$. We will prove by induction
+on $A\in\Lambda(\Gamma)$ that $(f\circ g)_\ast(A)\jdeq g_\ast(f_\ast(A))$ and
+that $\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ \pi_2(g,f_\ast(A))$. Note that
+these properties hold by definition for $A\jdeq\catid{\Gamma}$. For the inductive
+step, assume that $A\in\Lambda(\Gamma)$ is such that $(f\circ g)_\ast(A)\jdeq g_\ast(f_\ast(A))$ and
+$\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ \pi_2(g,f_\ast(A))$, and let
+$B\in\mathrm{Ty}(\ctxext{\Gamma}{A})$. Then we have
+\begin{align*}
+(f\circ g)_\ast(A\circ p_B) & \jdeq \pi_2(f\circ g,A)_\ast(p_B) \\
+& \jdeq (\pi_2(f,A)\circ\pi_2(g,f_\ast(A)))_\ast(p_B) \\
+& \jdeq \pi_2(g,f_\ast)_\ast(\pi_2(f,A)_\ast(p_B)) \\
+& \jdeq g_\ast(f_\ast(A\circ p_B))
+\end{align*}
+\item This property holds by definition.\qedhere
+\end{enumerate}
+\end{proof}
 
 \begin{defn}
-A D-system is said to be coherent if for any $f:\Delta\to\Gamma$ and any
-$A,A'\in\Lambda(\Gamma)$ satisfying $p_A\jdeq p_{A'}$, one has
-\begin{equation*}
-\pi_2(f,A)\jdeq \pi_2(f,A').
-\end{equation*}
+If either of the equivalent conditions of \autoref{thm:Dsys_coh} hold, we say 
+that the D-system is \emph{coherent}. Thus, we have a functor
+$U:\mathbf{Dsys}\to\mathbf{E'sys_{\circ}}$ from coherent D-systems to E'-systems
 \end{defn}
 
 \begin{defn}
@@ -2862,80 +2969,19 @@ $A\jdeq p_{A_1}\circ\cdots\circ p_{A_n}$. Locally well-founded D-systems
 are examples of coherent D-systems.
 \end{rmk}
 
-\begin{defn}
-For any locally well-founded D-system $\mathbb{D}$ there is 
-an E'-system $U(\mathbb{D})$ without terminal object in 
-$\cat{F}$. Thus, we get a functor $\mathbf{Dsys}\to\mathbf{E'sys}_{\circ}$
-\end{defn}
-
-\begin{constr}
-Let $f:\Delta\to\Gamma$. By the assumption that $\mathbb{D}$ is locally well-founded,
-
-
-To verify that this gives indeed a functor from $\cat{F}/\Gamma$ to
-$\cat{F}/\Delta$, we need to show that for any two objects or $A,A'\in\Lambda(\Gamma)$
-which get mapped to the same object of $\cat{F}/\Gamma$, get mapped to the
-same object of $\cat{F}/\Delta$. Let $A,A'\in\Lambda(\Gamma)$ be such that
-$p_A\jdeq p_{A'}$. It suffices to show that $\pi_2(f,A)\jdeq\pi_2(f,A')$
-
-The inductive proofs to verify properties
-\autoref{defn:E'sys:b} and \autoref{defn:E'sys:c} of \autoref{defn:E'sys} are
-completely straightforward, so $U(\mathbb{D})$ is an E'-system without terminal
-object in $\cat{F}$.
-\begin{comment}
-Finally, we need to verify that the structure we've defined satisfies the properties
-of being an E'-system without terminal object. We go through them systematically,
-following the same order as in \autoref{defn:E'sys}:
-\begin{enumerate}[label=(\alph*)]
-\item This property holds by definition.
-\item Let $\Gamma\in\cat{C}$. We will prove by induction on $A\in\cat{F}/\Gamma$
-that $(\catid{\Gamma})_\ast(A)\jdeq A$ and that $\pi_2(\catid{\Gamma},A)\jdeq \catid{\ctxext{\Gamma}{A}}$.
-Note that these properties hold by definition for $A\jdeq\catid{\Gamma}$. For the
-inductive step, assume that $A\in\cat{F}/\Gamma$ is such that
-$(\catid{\Gamma})_\ast(A)\jdeq A$ and $\pi_2(\catid{\Gamma},A)\jdeq
-\catid{\ctxext{\Gamma}{A}}$ and let $B\in\mathrm{Ty}(\ctxext{\Gamma}{A})$. Then
-we have
-\begin{align*}
-(\catid{\Gamma})_\ast(A\circ p_B) & \jdeq (\catid{\Gamma})_\ast(A)\circ \pi_2(\catid{\Gamma},A)_\ast(p_B) \\
-& \jdeq A\circ p_B
-\end{align*}
-Also, we have
-\begin{align*}
-\pi_2(\catid{\Gamma},A\circ p_B) & \jdeq \pi_2(\pi_2(\catid{\Gamma},A),p_B) \\
-& \jdeq \pi_2(\catid{\ctxext{\Gamma}{A}},p_B) \\
-& \jdeq \catid{\ctxext{{\Gamma}{A}}{B}}
-\end{align*}
-\item Let $f:\Delta\to \Gamma$ and $g:X\to \Delta$. We will prove by induction
-on $A\in\cat{F}/\Gamma$ that $(f\circ g)_\ast(A)\jdeq g_\ast(f_\ast(A))$ and
-that $\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ \pi_2(g,f_\ast(A))$. Note that
-these properties hold by definition for $A\jdeq\catid{\Gamma}$. For the inductive
-step, assume that $A\in\cat{F}/\Gamma$ is such that $(f\circ g)_\ast(A)\jdeq g_\ast(f_\ast(A))$ and
-$\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ \pi_2(g,f_\ast(A))$, and let
-$B\in\mathrm{Ty}(\ctxext{\Gamma}{A})$. Then we have
-\begin{align*}
-(f\circ g)_\ast(A\circ p_B) & \jdeq \pi_2(f\circ g,A)_\ast(p_B) \\
-& \jdeq (\pi_2(f,A)\circ\pi_2(g,f_\ast(A)))_\ast(p_B) \\
-& \jdeq \pi_2(g,f_\ast)_\ast(\pi_2(f,A)_\ast(p_B)) \\
-& \jdeq g_\ast(f_\ast(A\circ p_B))
-\end{align*}
-
-\item This property holds by definition.
-\end{enumerate}
-\end{comment}
-\end{constr}
-
 \begin{thm}
-The functor $U:\mathbf{Dsys}\to\mathbf{E'sys_{\circ}}$ is full and faithful.
+The restriction of the functor $U:\mathbf{Dsys}\to\mathbf{E'sys_{\circ}}$ to the
+locally well-founded D-systems is full and faithful.
 \end{thm}
 
 \begin{proof}
-The functor $U$ is faithful, because for any morphism 
+The functor $U$ is faithful on the locally well-founded D-systems, because for any morphism 
 $\mathcal{F}:\mathbb{D}\to\mathbb{D}'$ of locally well-founded D-systems, 
 $U(\mathcal{F})$ and $\mathcal{F}$ have the same underlying functor
 from $\cat{C}$ to $\cat{C}'$. 
 
-It remains to show that $U$ is full. Let
-$\mathbb{D}$ and $\mathbb{D}$ be D-systems and let $\mathcal{G}:U(\mathbb{D})
+It remains to show that $U$ is full on the locally well-founded D-systems. Let
+$\mathbb{D}$ and $\mathbb{D}$ be locally well-founded D-systems and let $\mathcal{G}:U(\mathbb{D})
 \to U(\mathbb{D}')$. Then $\mathcal{G}$ restricted to $\cat{F}$ lifts factorizations.
 We  first have to define a natural transformation
 $\mathrm{Ty}\Rightarrow \mathrm{Ty}'\circ\mathcal{G}$. Let

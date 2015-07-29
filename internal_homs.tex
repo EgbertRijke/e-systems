@@ -1,0 +1,1290 @@
+\section{The category of internal morphisms of an E-system}\label{sec:esys_props}
+
+The theory of E-systems could be seen as a sort of category theory with only
+projections and their sections. We elaborate on this point of view by defining
+the category of internal morphisms, which Lawvere might have called the
+category of terms. 
+In the category of internal morphisms over a context $\Gamma$,
+which we define in \autoref{subsec:im_cat},
+a morphism $f:A\to B$ is a term of the constant family $W_A(B)$ over 
+$\ctxext{\Gamma}{A}$. Rather than directly defining composition, we will define
+for every $f:A\to B$ in context $\Gamma$, a pre-composition operation
+$f_\ast$, which is going to be an E-homomorphism from 
+$\cat{F}/\ctxext{\Gamma}{B}$ to $\cat{F}/\ctxext{\Gamma}{A}$. This allows us
+to consider diagrams of the following form:
+\begin{equation*}
+\begin{tikzcd}
+P \arrow[d,->>] \arrow[r,"g"] & Q \arrow[d,->>] \\
+A \arrow[r,swap,"f"] & B
+\end{tikzcd}
+\end{equation*}
+where we consider the morphism $g$ over $f$ to be an internal morphism from 
+$P$ to $f_\ast(Q)$ in context $\ctxext{\Gamma}{A}$, capturing the
+essence of being a morphism from the family $P$ over $A$ to the family
+$Q$ over $B$, reindexed by $f$. 
+Whenever we draw such diagrams, a double headed arrow will always
+refer to a family, and an ordinary arrow will refer to an internal morphism,
+possibly over another internal morphism.
+
+A morphism $g$ over $f$ can be vertically composed with $f$ so
+that we obtain a morphism $\jvcomp{P}{f}{g}:\ctxext{A}{P}\to\ctxext{B}{Q}$ in 
+context $\Gamma$, and it can be horizontally composed with a morphism $k:Q\to R$
+over $h:B\to C$ so that we obtain a morphism $\jfcomp{A}{f}{P}{g}{k}:P\to R$ 
+over $\jcomp{A}{f}{h}:A\to C$. 
+In \autoref{sec:interchange}, we will show interchange laws between these
+sorts of composition. The interchange laws have as a consequence that if we
+assert the commutativity of a large composed diagram.
+
+The category of internal morphisms forms a category of which the families form
+a subcategory. This, together with the pre-composition operation described
+earlier, gives rise to the auxiliary notion of E'-systems, which we define
+in \autoref{sec:E'}. The thread running through this whole section is proving
+that the notions of E-system and E'-system are the same. In \autoref{sec:E'}
+we show directly that any E'-system is an E-system. We end this section by
+showing that the converse also holds.
+
+Before we begin this section, we introduce some more convenient notation.
+
+\begin{defn}
+Let $A\in\cat{F}/\Gamma$. Recall that $W_A:\cat{F}/\Gamma\to\cat{F}/\ctxext{\Gamma}{A}$ acts on objects,
+morphisms and terms. We introduce the infix form of weakening by $A\in\cat{F}/\Gamma$ to be
+$\ctxwk{A}{\blank}$. Thus, we will write
+\begin{align*}
+\ctxwk{A}{B} & \defeq W_A(B) & & \text{for $B\in\cat{F}/\Gamma$} \\
+\ctxwk{A}{Q} & \defeq W_A(Q) & & \text{for $B\in\cat{F}/\Gamma$ and $Q\in\cat{F}/\ctxext{\Gamma}{B}$}\\
+\ctxwk{A}{g} & \defeq W_A(g) & & \text{for $B\in\cat{F}/\Gamma$, $Q\in\cat{F}/\ctxext{\Gamma}{B}$ and $g\in T(Q)$}
+\end{align*}
+\end{defn}
+
+\begin{defn}
+Let $x\in T(A)$ for a family $A\in\cat{F}/\Gamma$. The infix form of substitution
+by $x$ is taken to be $\subst{x}{\blank}$. Thus, we will write
+\begin{align*}
+\subst{x}{P} & \defeq S_x(P) & & \text{for $P\in\cat{F}/\ctxext{\Gamma}{A}$} \\
+\subst{x}{Q} & \defeq S_x(Q) & & \text{for $P\in\cat{F}/\ctxext{\Gamma}{A}$ and $Q\in\cat{F}/\ctxext{{\Gamma}{A}}{P}$} \\
+\subst{x}{g} & \defeq S_x(g) & & \text{for $P\in\cat{F}/\ctxext{\Gamma}{A}$, $Q\in\cat{F}/\ctxext{{\Gamma}{A}}{P}$ and $g\in T(Q)$}
+\end{align*}
+\end{defn}
+
+\subsection{E'-systems}\label{sec:E'}
+
+E'-systems can be thought of as strict versions of tribes%
+\footnote{Tribes are an invention of Joyal, see \url{http://ncatlab.org/homotopytypetheory/files/Joyal.pdf}}.
+
+\begin{defn}\label{defn:E'sys}
+An \emph{E'-system} consists of a category $\cat{C}$ and a subcategory $\cat{F}$ with
+the same objects as $\cat{C}$, such that
+\begin{enumerate}
+\item $\cat{F}$ has a terminal object.
+\item For any $f:\Delta\to\Gamma$ in $\cat{C}$ and any $A\in\cat{F}/\Gamma$, a
+functorial choice of a pullback square 
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\ctxext{\Delta}{f_\ast(A)} \arrow[r,"{\pi_2(f,A)}"] \arrow[d,fib,swap,"{f_\ast(A)}"] & \ctxext{\Gamma}{A} \arrow[d,fib,"A"] \\
+\Delta \arrow[r,"f"] & \Gamma
+\end{tikzcd}
+\end{equation*}
+such that $f_\ast(A)\in\cat{F}/\Delta$. Explicitly, the functoriality
+requirement is that
+\begin{enumerate}
+\item For any $f:\Delta\to\Gamma$, one has 
+$f_\ast(\catid{\Gamma})\jdeq\catid{\Delta}$ and
+\begin{equation*}
+\pi_2(f,\catid{\Gamma})\jdeq f.
+\end{equation*}
+\item \label{defn:E'sys:b} For any $A\in\cat{F}/\Gamma$, one has $(\catid{\Gamma})_\ast(A)\jdeq A$ and
+\begin{equation*}
+\pi_2(\catid{\Gamma},A)\jdeq\catid{\ctxext{\Gamma}{A}}
+\end{equation*}
+\item \label{defn:E'sys:c} For any $f:\Delta\to\Gamma$, $g:X\to\Delta$ and $A\in\cat{F}/\Gamma$, one
+has $(f\circ g)_\ast(A)\jdeq g_\ast(f_\ast(A))$ and 
+\begin{equation*}
+\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ\pi_2(g,f_\ast(A))
+\end{equation*}
+\item For any $P\in\cat{F}/\ctxext{\Gamma}{A}$ and $f:\Delta\to\Gamma$, one has
+$f_\ast(P)\jdeq\pi_2(f,A)_\ast(P)$ and 
+\begin{equation*}
+\pi_2(f,\ctxext{A}{P}) \jdeq \pi_2(\pi_2(f,a),P)
+\end{equation*}
+\end{enumerate}
+\end{enumerate}
+For any $f:\Delta\to\Gamma$ we shall write $f_\ast$ for the induced functor
+$\cat{F}/\Gamma\to\cat{F}/\Delta$. 
+\end{defn}
+
+\begin{rmk}
+Without a terminal object in $\cat{F}$, the category $\cat{C}$ does not correspond
+directly to anything in an E-system.
+\end{rmk}
+
+\begin{rmk}
+For E'-systems, we do not require that every pullback of $A\in\cat{F}/\Gamma$ along $f:\Delta\to\Gamma$
+is in $\cat{F}/\Delta$, just that there is a choice of such a pullback which is
+in $\cat{F}/\Delta$. Thus, the definition of E'-system is slightly different from
+Taylor's notion of display map category. Furthermore, the class of display maps in
+a display map category is not required to be closed under composition, and neither
+is there assumed to exist an object $T$ such that for every object $X$ there is a 
+unique display map $X\to T$.
+\end{rmk}
+
+\begin{rmk}
+Also, we do not require that $\cat{C}$ has a terminal object, and neither do
+we require that $\cat{F}$ contains all the isomorphisms of $\cat{C}$. These are
+essential differences with Joyal's notion of tribes.   
+\end{rmk}
+
+\begin{defn}
+For any $\Gamma\in\cat{C}$, define $\cat{C}_\cat{F}/\Gamma$ to be the full
+subcategory of $\cat{C}/\Gamma$ with the same objects as $\cat{F}/\Gamma$. 
+\end{defn}
+
+\begin{lem}\label{lem:pb_selfdistributive}
+Let $\mathbb{E}$ be an E'-system. Then $f_\ast$ can be extended to a functor from
+$\cat{C}_\cat{F}/\Gamma$ to $\cat{C}_\cat{F}/\Delta$, for each $f:\Delta\to\Gamma$, and moreover the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\cat{C}_\cat{F}/\ctxext{\Gamma}{B} \arrow[r,"{f_\ast/B}"] \arrow[d,swap,"{g_\ast}"]
+& \cat{C}_\cat{F}/\ctxext{\Delta}{f_\ast(B)} \arrow[d,"{(f_\ast(g))_\ast}"] \\
+\cat{C}_\cat{F}/\ctxext{\Gamma}{A} \arrow[r,swap,"{f_\ast/A}"]
+& \cat{C}_\cat{F}/\ctxext{\Delta}{f_\ast(A)}
+\end{tikzcd}
+\end{equation*}
+commutes for every $g:A\to B$ in $\cat{C}_\cat{F}/\Gamma$.
+\end{lem}
+
+\begin{proof}
+It is straightforward to use the universal property of the pullback to extend
+$f_\ast$ to a functor from $\cat{C}_\cat{F}/\Gamma$ to $\cat{C}_\cat{F}/\Delta$.
+To see that the diagram commutes, we calculate
+\begin{align*}
+f_\ast/A\circ g_\ast
+& \jdeq
+\pi_2(f,A)_\ast\circ g_\ast \\
+& \jdeq
+(g\circ\pi_2(f,A))_\ast \\
+& \jdeq
+(\pi_2(f,B)\circ f_\ast(g))_\ast \\
+& \jdeq
+(f_\ast(g))_\ast\circ\pi_2(f,B)_\ast \\
+& \jdeq
+(f_\ast(g))_\ast\circ f_\ast/B.\qedhere
+\end{align*}
+\end{proof}
+
+\begin{thm}
+An E-system is the same thing as an E'-system.
+\end{thm}
+
+\begin{proof}
+We define for any $A\in\cat{F}/\Gamma$ the set
+\begin{equation*}
+T(A)\defeq\{x:\Gamma\to\ctxext{\Gamma}{A}\mid A\circ x\jdeq\catid{\Gamma}\}.
+\end{equation*}
+Since each functor $f_\ast$ is extended to all of $\cat{C}_{\cat{F}}/\Gamma$,
+it follows immediately that those are functors with term structure.
+
+We define for any $A\in\cat{F}/\Gamma$, the functor $W_A\defeq A_\ast:\cat{F}/\Gamma\to\cat{F}/\ctxext{\Gamma}{A}$.
+Likewise, we define for any $x\in T(A)$, the functor $S_x\defeq x_\ast:\cat{F}/\ctxext{\Gamma}{A}\to\cat{F}/\Gamma$.
+We also define $\tfid{A}:T(W_A(A))$ by the universal property of pullbacks:
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\ctxext{\Gamma}{A} \arrow[drr,bend left=15,equals] \arrow[ddr,bend right=15,equals] \arrow[dr,densely dotted,near end,"{\tfid{A}}"] \\
+& \ctxext{{\Gamma}{A}}{W_A(A)} \arrow[r,swap,"{\pi_2(A,A)}"] \arrow[d,fib] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+& \ctxext{\Gamma}{A} \arrow[r,swap,"A"] & \Gamma
+\end{tikzcd}
+\end{equation*}
+As an immediate consequence of \autoref{lem:pb_selfdistributive}, we get that
+each functor $W_A$ and $S_x$ is both a weakening functor and a substitution functor.
+Since each $W_A$ and $S_x$ preserves identity morphisms, it also preserves the
+terms $\tfid{A}$. 
+
+It remains to verify the rest of the conditions of E-systems.
+\begin{itemize}
+\item To show that weakened families are constant, note that
+\begin{equation*}
+S_x\circ W_A\jdeq x_\ast\circ A_\ast\jdeq (A\circ x)_\ast\jdeq (\catid{\Gamma})_\ast\jdeq \catid{\cat{C}_{\cat{F}}/\Gamma}.
+\end{equation*}
+\item The identity terms are neutral for pre-composition:
+\begin{equation*}
+S_{\tfid{A}}\circ W_A/A \jdeq S_{\tfid{A}}\circ \pi_2(A,A)_\ast \jdeq (\pi_2(A,A)\circ\tfid{A})_\ast \jdeq
+(\catid{\ctxext{\Gamma}{A}})_\ast \jdeq \catid{\cat{C}_{\cat{F}}/\ctxext{\Gamma}{A}} 
+\end{equation*}
+\item The identity terms behave like identity functions: by the universal property,
+$S_x(\tfid{A})$ is the unique section of $A$ such that the square
+\begin{equation*}
+\begin{tikzcd}[column sep=6em]
+\Gamma \arrow[d,swap,"{S_x(\tfid{A})}"] \arrow[r,"{\pi_2(x,\catid{\ctxext{\Gamma}{A}})}"] & \ctxext{\Gamma}{A} \arrow[d,"{\tfid{A}}"] \\
+\ctxext{\Gamma}{A} \arrow[r,swap,"{\pi_2(x,W_A(A))}"] & \ctxext{{\Gamma}{A}}{W_A(A)}
+\end{tikzcd}
+\end{equation*}
+commutes. Thus, it suffices to show that this square also commutes with $x$ in the place of
+$S_x(\tfid{A})$. Note that $\pi_2(x,\catid{\ctxext{\Gamma}{A}})\jdeq x$. 
+Since $\ctxext{{\Gamma}{A}}{W_A(A)}$ is itself a pullback, it suffices
+and it is straightforward to verify the equalities
+\begin{align*}
+W_A(A)\circ\pi_2(x,W_A(A))\circ x & \jdeq W_A(A)\circ\idtm{A}\circ x \\
+\pi_2(A,A)\circ\pi_2(x,W_A(A))\circ x & \jdeq \pi_2(A,A)\circ\idtm{A}\circ x.\qedhere
+\end{align*}
+\end{itemize}
+\end{proof}
+
+
+
+\begin{comment}
+We then demonstrate how to define a category internal to an E-system. The main
+point of this lies mainly in demonstrating how the operations of E-systems can
+be used to define a category, because it is no surprise that a category can be
+defined in type theory. Nevertheless, it is noteworthy that we need no further 
+conditions on E-systems.
+This is unlike the situation in category theory, where we need
+to assume that the ambient category has finite limits in order to say what an
+internal category is. In fact, it is possible to define an E-system internal
+to an E-system, just using the algebraic structure of an E-system, and actually
+defining an internal category was the hardest part of that definition.
+\end{comment}
+
+\subsection{The category of internal morphisms}\label{subsec:im_cat}
+
+\begin{defn}
+For every $A,B\in\cat{F}/\Gamma$ we define the set 
+\begin{equation*}
+\thom{A}{B}\defeq T(\ctxwk{A}{B}).
+\end{equation*}
+An element $f\in \thom{A}{B}$ is called an \emph{internal morphism in context
+$\Gamma$}. We sometimes write $\jhom{\Gamma}{A}{B}{f}$ to indicate that $f$ is
+an internal morphism over $\Gamma$, or we may draw a diagram of the form
+\begin{equation*}
+\begin{tikzcd}[column sep=tiny]
+A \arrow[rr,"f"] \arrow[dr,fib] & & B \arrow[dl,fib] \\
+& \Gamma
+\end{tikzcd}
+\end{equation*}
+but we shall generally omit the arrows down to $\Gamma$ and say instead that we have
+a diagram in context $\Gamma$. 
+\end{defn}
+
+\begin{rmk}
+Note that $\thom{\catid{\Gamma}}{A}\jdeq T(A)$ for any $A\in\cat{F}/\Gamma$, 
+because we have 
+$W_{\catid{\ctxext{\Gamma}{A}}}\jdeq \catid{\cat{F}/\ctxext{\Gamma}{A}}$.
+
+Note also that $\thom{\ctxext{A}{P}}{B}\jdeq \thom{P}{\ctxwk{A}{B}}$ 
+for any $P\in\cat{F}/\ctxext{\Gamma}{A}$ and $B\in\cat{F}/\Gamma$,
+because $W_{\ctxext{A}{P}}\jdeq W_P\circ W_A$.
+Once we have established a category of which the morphisms are given by 
+$\thom{\blank}{\blank}$, we therefore get that 
+\begin{equation*}
+\ctxext{A}{(\blank)}\dashv W_A.
+\end{equation*}
+The right adjoint to weakening by $A$, if it exists, will be the dependent
+product $\Pi_A$. 
+\end{rmk}
+
+\begin{defn}
+Let $A,B\in\cat{F}/\Gamma$.
+For any $f\in\thom{A}{B}$ we define the pre-composition E-homomorphism
+\begin{equation*}
+f_\ast \defeq S_f\circ W_A/B : \cat{F}/\ctxext{\Gamma}{B}\to\cat{F}/\ctxext{\Gamma}{A}.
+\end{equation*}
+Furthermore, for $g\in\thom{B}{C}$ we may consider $W_B(C)\in\cat{F}/\ctxext{\Gamma}{B}$ as a morphism from $W_B(C)$ to $\catid{\ctxext{\Gamma}{B}}$. Therefore, $f_\ast$ acts on the terms of
+$W_B(C)$, so it makes sense to define $g\circ f\defeq f_\ast(g)$. In fact, it makes
+sense to let $(\blank)\circ f$ be the infix notation for $f_\ast$. 
+\end{defn}
+
+\begin{rmk}
+Note that for $\jhom{\Gamma}{B}{C}{g}$, 
+we have $g\circ f\in T(S_f(W_A/B(W_B(C))))$, whereas we would like that
+$g\circ f\in\thom{A}{C}$. More generally, we can show that
+\begin{equation*}
+S_f\circ (W_A/B)\circ W_B\jdeq W_A.
+\end{equation*}
+Since weakening is a weakening homomorphism, we have
+\begin{equation*}
+S_f\circ (W_A/B)\circ W_B\jdeq S_f\circ W_{W_A(B)}\circ W_A
+\end{equation*}
+By \autoref{tTf:StWf_id} of \autoref{defn:esystems} it we get that
+\begin{equation*}
+S_f\circ W_{W_A(B)}\circ W_A\jdeq W_A.
+\end{equation*}
+\end{rmk}
+
+\begin{rmk}
+To see how this extended notion of precomposition works, suppose we have a diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=tiny]
+Q \arrow[rr,"g"] \arrow[dr,fib] & & R \arrow[dl,fib] \\
+& B
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$, i.e.~$\jhom{\ctxext{\Gamma}{B}}{Q}{R}{g}$, and let $\jhom{\Gamma}{A}{B}{f}$. Precomposing by $f$ gives
+us a diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=tiny]
+\jcomp{A}{f}{Q} \arrow[rr,"\jcomp{A}{f}{g}"] \arrow[dr,fib] & & \jcomp{A}{f}{R} \arrow[dl,fib] \\
+& A
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$.
+\end{rmk}
+
+\begin{rmk}
+Note that \autoref{f:SidfWff_id} of \autoref{defn:esystems} asserts precisely
+that ${(\tfid{A})}_\ast\jdeq \catid{\cat{F}/\ctxext{\Gamma}{A}}$ for any $A\in\cat{F}/\Gamma$. In
+particular, it follows that $g\circ\tfid{A}\jdeq g$ for any $g\in\thom{A}{B}$
+\end{rmk}
+
+\begin{lem}\label{lem:compcomp}
+For any $f\in\thom{A}{B}$ and $g\in\thom{B}{C}$ we have $f_\ast\circ g_\ast\jdeq (g\circ f)_\ast$. 
+\end{lem}
+
+\begin{proof}
+\begin{align*}
+f_\ast\circ g_\ast & \jdeq S_f\circ (W_A/B) \circ S_g \circ (W_B/C)\\
+& \jdeq S_f\circ S_{W_A(g)}\circ(W_A/\ctxext{B}{W_B(C)})\circ (W_B/C) \\
+& \jdeq S_{S_f(W_A(g))}\circ (S_f/W_A(W_B(C)))\circ (W_A/\ctxext{B}{W_B(C)}) \circ W_B/C \\
+& \jdeq S_{S_f(W_A(g))}\circ ((S_f\circ (W_A/B) \circ W_B)/C) \\
+& \jdeq S_{S_f(W_A(g))}\circ ((S_f\circ W_{W_A(B)}\circ W_A)/C) \\
+& \jdeq S_{S_f(W_A(g))}\circ W_A/C \\
+& \jdeq (g\circ f)_\ast.\qedhere
+\end{align*}
+\end{proof}
+
+\begin{thm}
+For each object $\Gamma$ of an E-system $\mathbb{E}$, we have a category
+$\mathbb{C}_I(\mathbb{E},\Gamma)$ of internal morphisms of $\mathbb{E}$,
+consisting of the same objects as $\cat{F}/\Gamma$ and the hom-sets 
+$\thom{A}{B}$. 
+\end{thm}
+
+\begin{proof}
+The fact that composition is associative is a direct corollary of
+\autoref{lem:compcomp}. The axiom $(\tfid{A})_\ast\jdeq\catid{\ctxext{\Gamma}{A}}$
+implies that the identity morphisms satisfy the right identity law. It remains
+to show that $\tfid{B}\circ f\jdeq f$. This is a simple calculation:
+\begin{equation*}
+\tfid{B}\circ f 
+  \jdeq
+\subst{f}{\ctxwk{A}{\tfid{B}}}
+  \jdeq
+\subst{f}{\tfid{\ctxwk{A}{B}}}
+  \jdeq
+f.\qedhere
+\end{equation*}
+\end{proof}
+
+\begin{rmk}
+Since any E-homomorphism is both a substitution homomorphism and a weakening
+homomorphism, it follows immediately that any E-homomorphism preserves any
+$f_\ast$, i.e.~for any $f\in\thom{A}{B}$ in $\mathcal{E}$ and any E-homomorphism
+$F:\mathcal{E}\to\mathcal{D}$, the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\mathcal{E}/\ctxext{\Gamma}{A} \arrow[r,"F/\ctxext{\Gamma}{A}"] & \mathcal{D}/F(\ctxext{\Gamma}{A})
+  \\
+\mathcal{E}/\ctxext{\Gamma}{B} \arrow[u,"f_\ast"] \arrow[r,swap,"F/\ctxext{\Gamma}{B}"] & \mathcal{D}/F(\ctxext{\Gamma}{B}) \arrow[u,swap,"F(f)_\ast"]
+\end{tikzcd}
+\end{equation*}
+commutes. This applies to weakening, substitution and pre-composition, and it
+follows that for any E-homomorphism $F:\mathcal{E}\to\mathcal{D}$ and any
+$\Gamma\in\mathcal{E}$, we have a functor $\mathbb{C}_I(F,\Gamma):
+\mathbb{C}_I(\mathcal{E},\Gamma)\to\mathbb{C}_I(\mathcal{D},F(\Gamma))$.
+\end{rmk}
+
+The following fact will be useful:
+
+\begin{lem}\label{lem:compW_W}
+Let $f\in\thom{A}{B}$ be an internal morphism in context $\Gamma$. Then one has
+\begin{equation*}
+f_\ast\circ W_B\jdeq W_A.
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+The proof is a simple calculation:
+\begin{equation*}
+f_\ast\circ W_B\jdeq S_f\circ W_A/B\circ W_B\jdeq S_f\circ W_{W_A(B)}\circ W_A
+\jdeq W_A.\qedhere
+\end{equation*}
+\end{proof}
+
+\subsection{Pairing and the projections}
+
+The composition $\ctxext{A}{P}$ of $A\in\cat{F}/\Gamma$ and $P\in\cat{F}/\ctxext{\Gamma}{A}$
+behaves like a strict $\Sigma$-type. We may define the pairing term
+$\typefont{pair}^{A,P}\defeq\tfid{\ctxext{A}{P}}\in T(W_P(W_A(\ctxext{A}{P})))$
+and the projections and prove several useful properties about them. The strictness
+is found, among other things, in the fact that we can prove judgmental $\eta$-equality,
+and that pairing is strictly associative.
+
+In this section we will make more extensive use of the infix form of the
+weakening and substitution operations.
+
+\begin{defn}
+Let $x\in T(A)$ and $u\in T(S_x(P))$ for $A\in\cat{F}/\Gamma$ and $P\in\cat{F}/\ctxext{\Gamma}{A}$. 
+We define the \emph{term extension of $x$ and $u$} to be
+\begin{equation*}
+\tmext{x}{u}\defeq \subst{u}{{x}{\tfid{\ctxext{A}{P}}}}\in T(\ctxext{A}{P}).
+\end{equation*}
+\end{defn}
+
+To prove anything about the term $\tmext{x}{u}$, we need the following property.
+
+\begin{thm}\label{subst_by_tmext}
+Let $x\in T(A)$ and $u\in T(S_x(P))$ for $A\in\cat{F}/\Gamma$ and $P\in\cat{F}/\ctxext{\Gamma}{A}$.
+Then we have
+\begin{equation*}
+S_{\tmext{x}{u}}\jdeq S_u\circ (S_x/P):\cat{F}/\ctxext{\Gamma}{{A}{P}}\to\cat{F}/\Gamma
+\end{equation*}
+\end{thm}
+
+\begin{proof}
+\begin{align*}
+S_{\tmext{x}{u}} & \jdeq S_{S_u(S_x(\tfid{\ctxext{A}{P}}))} \\
+& \jdeq S_{S_u(S_x(\tfid{\ctxext{A}{P}}))}\circ (S_u\circ W_{S_x(P)})\circ (S_x\circ W_{A}) \\
+& \jdeq S_u \circ S_{S_x(\tfid{\ctxext{A}{P}})} \circ W_{S_x(P)}\circ S_x\circ W_A \\
+& \jdeq S_u \circ (S_x/P) \circ S_{\tfid{\ctxext{A}{P}}} \circ W_P\circ W_A \\
+& \jdeq S_u \circ (S_x/P) \circ S_{\tfid{\ctxext{A}{P}}} \circ W_{\ctxext{A}{P}}\\
+& \jdeq S_u \circ (S_x/P).\qedhere
+\end{align*}
+\end{proof}
+
+\begin{defn}
+Let $A\in\cat{F}/\Gamma$ and $P\in\cat{F}/\ctxext{\Gamma}{A}$. We define
+\begin{align*}
+\cprojfstf{A}{P} & \defeq \ctxwk{P}{\tfid{A}}\in\thom{\ctxext{A}{P}}{A}\\
+\cprojsndf{A}{P} & \defeq \tfid{P}\in\thomd{\cprojfstf{A}{P}}{\ctxext{A}{P}}{P}
+\end{align*}
+\end{defn}
+
+\begin{cor}\label{cor:pairing_ehom}
+Let $F:\mathcal{E}\to\mathcal{D}$ be an E-homomorphism and let $x\in T(A)$ and
+$u\in T(S_x(P))$. Then we have
+\begin{equation*}
+F(\tmext{x}{u})\jdeq \tmext{F(x)}{F(u)}.
+\end{equation*}
+Also, we have
+\begin{align*}
+F(\cprojfstf{A}{P}) & \jdeq \cprojfstf{F(A)}{F(P)} \\
+F(\cprojsndf{A}{P}) & \jdeq \cprojsndf{F(A)}{F(P)}.
+\end{align*}
+\end{cor}
+
+\begin{thm}\label{thm:famext_up}
+For any $A\in\cat{F}/\Gamma$ and $P\in\cat{F}/\ctxext{\Gamma}{A}$,
+the map
+\begin{equation*}
+(x,u)\mapsto \tmext{x}{u}:\big(\bigsqcup\nolimits_{x\in T(A)} T(\subst{x}{P})\big)\to T(\ctxext{A}{P}).
+\end{equation*}
+is an isomorphism.  
+\end{thm}
+
+\begin{proof}
+Lets write $\varphi$ for the indicated map. The inverse $\psi$ of $\varphi$ is defined
+by $w\mapsto (\subst{w}{\cprojfstf{A}{P}},\subst{w}{\cprojsndf{A}{P}})$. We have
+to show that for any $x\in T(A)$ and $u\in T(\subst{x}{P})$, one has
+\begin{align*}
+\subst{\tmext{x}{u}}{\cprojfstf{A}{P}} & \jdeq x\\
+\subst{\tmext{x}{u}}{\cprojsndf{A}{P}} & \jdeq u,
+\end{align*}
+and that for any $w\in T(\ctxext{A}{P})$, one has
+\begin{equation*}
+\tmext{\subst{w}{\cprojfstf{A}{P}}}{\subst{w}{\cprojsndf{A}{P}}} \jdeq w.
+\end{equation*}
+To show that $\subst{\tmext{x}{u}}{\cprojfstf{A}{P}} \jdeq x$, we use that
+$S_{\tmext{x}{u}}\jdeq S_u\circ S_x/P$ to show that
+\begin{align*}
+\subst{\tmext{x}{u}}{\cprojfstf{A}{P}}
+  & \jdeq 
+\subst{\tmext{x}{u}}{\ctxwk{P}{\tfid{A}}} \\
+  & \jdeq
+\subst{u}{{x}{\ctxwk{P}{\tfid{A}}}} \tag{By \autoref{subst_by_tmext}}\\
+  & \jdeq
+\subst{u}{\ctxwk{\subst{x}{P}}{\subst{x}{\tfid{A}}}} \\
+  & \jdeq
+\subst{x}{\tfid{A}} \\
+  & \jdeq
+x
+\end{align*}
+To show that $\subst{\tmext{x}{u}}{\cprojsndf{A}{P}}\jdeq u$, note that
+\begin{equation*}
+\subst{\tmext{x}{u}}{\cprojsndf{A}{P}}
+  \jdeq
+\subst{u}{{x}{\tfid{P}}}
+  \jdeq
+\subst{u}{\tfid{\subst{x}{P}}}
+  \jdeq
+u
+\end{equation*}
+Therefore, $\psi$ is a left-inverse of $\varphi$. To show that it is also a
+right inverse, note that \autoref{cor:pairing_ehom} gives us that
+\begin{equation*}
+\tmext{\cprojfst{A}{P}{w}}{\cprojsnd{A}{P}{w}}
+  \jdeq
+\subst{w}{(\tmext{\cprojfstf{A}{P}}{\cprojsndf{A}{P}})}.
+\end{equation*}
+Thus, it suffices to show that $\tmext{\cprojfstf{A}{P}}{\cprojsndf{A}{P}}\jdeq
+\tfid{\ctxext{A}{P}}$, which is straightforward.
+\end{proof}
+
+\begin{lem}\label{lem:tmext_assoc}
+For any $x\in T(A)$, $u\in T(S_x(P))$ and $v\in T(S_{\tmext{x}{u}}(Q))$ we have
+\begin{equation*}
+\tmext{{x}{u}}{v}\jdeq \tmext{x}{{u}{v}}\in T(\ctxext{{A}{P}}{Q}).
+\end{equation*}
+\begin{comment}
+Also, we have
+\begin{align*}
+\cprojfstf{A}{P}\circ\cprojfstf{\ctxext{A}{P}}{Q} & \jdeq\cprojfstf{A}{\ctxext{P}{Q}} \\
+\cprojsndf{A}{P}\circ\cprojfstf{\ctxext{A}{P}}{Q} & \jdeq \cprojfstf{P}{Q}\circ\cprojsndf{A}{\ctxext{P}{Q}} \\
+\cprojsndf{\ctxext{A}{P}}{Q} & \jdeq \cprojsndf{P}{Q}\circ\cprojsndf{A}{\ctxext{P}{Q}}.
+\end{align*}
+\end{comment}
+\end{lem}
+
+\begin{proof}
+By \autoref{subst_by_tmext}, we have $S_v\circ S_{\tmext{x}{u}}\jdeq S_v\circ S_u\circ S_x \jdeq S_{\tmext{u}{v}}\circ S_x$,
+so associativity of term extension follows.
+\end{proof}
+
+\begin{comment}
+\begin{lem}
+Let $f\in\thom{A}{\ctxext{B}{Q}}$ Then we have
+\begin{equation*}
+f \jdeq \tmext{\jcomp{A}{f}{\cprojfstf{B}{Q}}}{\jcomp{A}{f}{\cprojsndf{B}{Q}}}.
+\end{equation*}
+Alternatively, when $f_0\in\thom{A}{B}$ and $f_1\in\thom{A}{\jcomp{A}{f}{Q}}$,
+then we have $\tmext{f_0}{f_1}\in\thom{A}{\ctxext{B}{Q}}$ and
+\begin{align*}
+\jcomp{A}{\tmext{f_0}{f_1}}{\cprojfstf{B}{Q}} & \jdeq f_0 \\
+\jcomp{A}{\tmext{f_0}{f_1}}{\cprojsndf{B}{Q}} & \jdeq f_1.
+\end{align*}
+\end{lem}
+
+\begin{proof}
+Straightforward
+\end{proof}
+\end{comment}
+
+We end this section by showing that weakening is the same operation as pre-composition
+with a first projection.
+
+\begin{thm}\label{precomp_by_proj}
+Precomposition with $\cprojfstf{A}{P}$ is weakening by $P$, i.e.
+\begin{equation*}
+(\cprojfstf{A}{P})_\ast \jdeq W_P.
+\end{equation*}
+\end{thm}
+
+\begin{proof}
+\begin{align*}
+(\cprojfstf{A}{P})_\ast & \jdeq S_{\cprojfstf{A}{P}}\circ W_{\ctxext{A}{P}} \\
+& \jdeq S_{W_P(\tfid{A})}\circ W_P\circ W_A \\
+& \jdeq W_P\circ S_{\tfid{A}}\circ W_A \\
+& \jdeq W_P.\qedhere 
+\end{align*}
+\end{proof}
+
+\subsection{The interchange laws}\label{sec:interchange}
+
+We are now in the position to define vertical and horizontal composition, and
+prove properties of them.
+
+\begin{defn}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then we
+define 
+\begin{equation*}
+\jhomdefn{\Gamma}{{A}{P}}{{B}{Q}}{\jvcomp{P}{f}{F}}{\unfold{\jvcomp{P}{f}{F}}}.
+\end{equation*}
+Whenever we say that we have a diagram of the form
+\begin{equation*}
+\begin{tikzcd}
+R \arrow[r,"f_2"] \arrow[d,fib] &
+S \arrow[d,fib] \\
+P \arrow[r,"f_1"] \arrow[d,fib] &
+Q \arrow[d,fib] \\
+A \arrow[r,"f_0"] &
+B
+\end{tikzcd}
+\end{equation*}
+we mean that we have
+$f_0\in\thom{A}{B}$, $f_1\in\thomd{f_0}{P}{Q}$ and 
+$f_2\in\thomd{\jvcomp{P}{f_0}{f_1}}{R}{S}$.
+\end{defn}
+
+\begin{cor}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then we
+have
+\begin{equation*}
+H(\jvcomp{P}{f}{F})\jdeq \jvcomp{H(P)}{H(f)}{H(F)}
+\end{equation*}
+for any E-homomorphism $H:\mathbb{E}\to\mathbb{D}$.
+\end{cor}
+
+\begin{lem}
+Vertical composition is associative.
+\end{lem}
+
+\begin{proof}
+Consider the diagram
+\begin{equation*}
+\begin{tikzcd}
+R \arrow[r,"f_2"] \arrow[d,fib] &
+S \arrow[d,fib] \\
+P \arrow[r,"f_1"] \arrow[d,fib] &
+Q \arrow[d,fib] \\
+A \arrow[r,"f_0"] &
+B
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$.
+Because weakening distributes over term extension, and term extension is
+associative, we have
+\begin{align*}
+\jvcomp{R}{\jvcomp{P}{f_0}{f_1}}{f_2}
+  & \jdeq
+\tmext{\ctxwk{R}{\tmext{\ctxwk{P}{f_0}}{f_1}}}{f_2}
+  \\
+  & \jdeq
+\tmext{\tmext{\ctxwk{R}{{P}{f_0}}}{\ctxwk{R}{f_1}}}{f_2}
+  \\
+  & \jdeq
+\tmext{\ctxwk{\ctxext{P}{R}}{f_0}}{\tmext{\ctxwk{R}{f_1}}{f_2}}
+  \tag{By \autoref{lem:tmext_assoc}}
+  \\
+  & \jdeq
+\jvcomp{{P}{R}}{f_0}{\jvcomp{R}{f_1}{f_2}}.\qedhere
+\end{align*}
+\end{proof}
+
+\begin{defn}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then we
+define the E-homomorphism 
+\begin{equation*}
+F_\circledast\defeq F_\ast\circ (f_\ast/Q):
+\mathbb{E}/\ctxext{{\Gamma}{B}}{Q}\to\mathbb{E}/\ctxext{{\Gamma}{A}}{P}.
+\end{equation*}
+The infix notation of $F_\circledast$ is taken to be $\jfcomp{\blank}{\blank}{\blank}{F}{\blank}$.
+\end{defn}
+
+\begin{lem}\label{lem:three-composition}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then we
+have the equality
+\begin{equation*}
+F_\circledast\jdeq (\jvcomp{P}{f}{F})_\ast.
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+\begin{align*}
+F_\ast\circ (f_\ast/Q)
+  & \jdeq
+S_F\circ W_P\circ S_f/(W_A(Q))\circ W_A/\ctxext{B}{Q}
+  \\
+  & \jdeq
+S_F\circ S_{W_P(f)}/W_P(W_A(Q))\circ W_P/W_A(\ctxext{B}{Q})\circ W_A/\ctxext{B}{Q}
+  \\
+  & \jdeq
+S_F\circ S_{W_P(f)}/W_P(W_A(Q))\circ W_{\ctxext{A}{P}}/\ctxext{B}{Q}
+  \\
+  & \jdeq
+S_{\tmext{W_P(f)}{F}}\circ W_{\ctxext{A}{P}}/\ctxext{B}{Q}
+  \tag{By \autoref{subst_by_tmext}}
+  \\
+  & \jdeq
+(\jvcomp{P}{f}{F})_\ast.\qedhere
+\end{align*}
+\end{proof}
+
+We are now in position to state and prove the interchange law of horizontal
+and vertical composition.
+
+\begin{thm}\label{thm:interchange}
+Consider the diagram
+\begin{equation*}
+\begin{tikzcd}
+P \arrow[r,"F"] \arrow[d,fib] &
+Q \arrow[r,"G"] \arrow[d,fib] &
+R \arrow[d,fib] \\
+A \arrow[r,"f"] &
+B \arrow[r,"g"] &
+C
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$. Then the equality
+\begin{equation*}
+{\jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{\jvcomp{Q}{g}{G}}}
+  \jdeq
+{\jvcomp{P}{\jcomp{A}{f}{g}}{\jfcomp{A}{f}{P}{F}{G}}}
+\end{equation*}
+of morphisms from $\ctxext{A}{P}$ to $\ctxext{C}{R}$ in context $\Gamma$ holds.
+\end{thm}
+
+\begin{proof}
+By \autoref{lem:three-composition}, we have
+\begin{align*}
+\jcomp{{A}{P}}{\jvcomp{P}{f}{F}}{\jvcomp{Q}{g}{G}}
+  & \jdeq
+\jcomp{P}{F}{\jcomp{A}{f}{\tmext{\ctxwk{Q}{g}}{G}}}
+  \tag{By \autoref{lem:three-composition}}
+  \\
+  & \jdeq
+\jcomp{P}{F}{\tmext{\ctxwk{\jcomp{A}{f}{Q}}{\jcomp{A}{f}{g}}}{\jcomp{A}{f}{G}}}
+  \\
+  & \jdeq
+\tmext{\jcomp{P}{F}{\ctxwk{\jcomp{A}{f}{Q}}{\jcomp{A}{f}{g}}}}{\jcomp{P}{F}{{A}{f}{G}}}
+  \\
+  & \jdeq
+\tmext{\jcomp{P}{F}{\ctxwk{\jcomp{A}{f}{Q}}{\jcomp{A}{f}{g}}}}{\jfcomp{A}{f}{P}{F}{G}}
+  \\
+  & \jdeq
+\tmext{\ctxwk{P}{\jcomp{A}{f}{g}}}{\jfcomp{A}{f}{P}{F}{G}}
+  \tag{By \autoref{lem:compW_W}}
+  \\
+  & \jdeq
+\jvcomp{P}{\jcomp{A}{f}{g}}{\jfcomp{A}{f}{P}{F}{G}}.\qedhere
+\end{align*}
+\end{proof}
+
+\begin{thm}
+Consider the diagram
+\begin{equation*}
+\begin{tikzcd}
+P \arrow[r,"F"] \arrow[d,fib] &
+Q \arrow[r,"G"] \arrow[d,fib] &
+R \arrow[d,fib] \\
+A \arrow[r,"f"] &
+B \arrow[r,"g"] &
+C
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$. 
+Then $F_\circledast\circ G_\circledast\jdeq (\jfcomp{A}{f}{P}{F}{G})_\circledast$.
+In other words the composition $\jfcomp{}{}{}{\blank}{\blank}$ is associative.
+\end{thm}
+
+\begin{proof}
+\begin{align*}
+F_\circledast\circ G_\circledast
+  & \jdeq
+(\jvcomp{P}{f}{F})_\ast\circ(\jvcomp{Q}{g}{G})_\ast 
+  \tag{By \autoref{lem:three-composition}}\\
+  & \jdeq
+(\jcomp{\ctxext{A}{P}}{\jvcomp{P}{f}{F}}{\jvcomp{Q}{g}{G}})_\ast 
+  \tag{By \autoref{lem:compcomp}}\\
+  & \jdeq
+(\jvcomp{}{\jcomp{A}{f}{g}}{\jfcomp{A}{f}{P}{F}{G}})_\ast 
+  \tag{By \autoref{thm:interchange}} \\
+  & \jdeq
+(\jfcomp{A}{f}{P}{F}{G})_\circledast.
+  \tag{By \autoref{lem:three-composition}}
+\end{align*}
+\end{proof}
+
+\begin{lem}
+Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then
+$\jvcomp{P}{f}{F}$ is the unique morphism from $\ctxext{A}{P}$ to $\ctxext{B}{Q}$
+with the property that both the diagram
+\begin{equation*}
+\begin{tikzcd}
+\ctxext{A}{P}
+  \ar{r}{\jvcomp{P}{f}{F}}
+  \ar{d}[swap]{\cprojfstf{A}{P}}
+& \ctxext{B}{Q}
+  \ar{d}{\cprojfstf{B}{Q}}
+  \\
+A \ar{r}[swap]{f}
+& B
+\end{tikzcd}
+\end{equation*}
+commutes, and $\jcomp{}{\jvcomp{P}{f}{F}}{\cprojsndf{B}{Q}}\jdeq F$.
+\end{lem}
+
+\begin{proof}
+We first note that
+\begin{align*}
+\jcomp{}{\jvcomp{P}{f}{F}}{\cprojfstf{B}{Q}}
+  & \jdeq
+\jcomp{P}{F}{\jcomp{A}{f}{\cprojfstf{B}{Q}}} 
+  \tag{By \autoref{lem:three-composition}} \\
+  & \jdeq
+\jcomp{P}{F}{\ctxwk{\jcomp{A}{f}{Q}}{\jcomp{A}{f}{\idtm{B}}}} \\
+  & \jdeq
+\jcomp{P}{F}{\ctxwk{\jcomp{A}{f}{Q}}{f}} \\
+  & \jdeq
+\ctxwk{P} f \tag{By \autoref{lem:compW_W}} \\
+  & \jdeq
+\jcomp{\ctxext{A}{P}}{\cprojfstf{A}{P}}{f}.
+  \tag{By \autoref{precomp_by_proj}}
+\end{align*}
+Also, we have
+\begin{align*}
+\jcomp{}{\jvcomp{P}{f}{F}}{\cprojsndf{B}{Q}}
+  & \jdeq
+\jcomp{P}{F}{\jcomp{A}{f}{\idtm{Q}}}
+  \tag{By \autoref{lem:three-composition}}
+  \\
+  & \jdeq
+\jcomp{P}{F}{\idtm{\jcomp{A}{f}{Q}}}
+  \\
+  & \jdeq
+F.
+\end{align*}
+Thus, we conclude that $\jvcomp{P}{f}{F}$ has indeed the stated property. For
+the uniqueness, let $G:\ctxext{A}{P}\to\ctxext{B}{Q}$ be a morphism such that
+$\jcomp{}{G}{\cprojfstf{B}{Q}}\jdeq\jcomp{}{\cprojfstf{A}{P}}{f}$ and
+$\jcomp{}{G}{\cprojsndf{B}{Q}}\jdeq F$. Then it follows that
+\begin{equation*}
+G \jdeq \tmext{\jcomp{}{\cprojfstf{A}{P}}{f}}{F}
+  \jdeq \tmext{\ctxwk{P}{f}}{F}
+  \jdeq \jvcomp{P}{f}{F}.\qedhere
+\end{equation*}
+\end{proof}
+
+\subsection{E-systems are E'-systems}
+
+\begin{lem}
+Consider $A\in\cat{F}/\Gamma$ and $Q\in\cat{F}/\ctxext{\Gamma}{B}$. Then there
+is an isomorphism
+\begin{equation*}
+\{h\in\thom{A}{\ctxext{B}{Q}}\mid \jcomp{A}{h}{\cprojfstf{B}{Q}}\jdeq f\}\cong T(\jcomp{A}{f}{Q}).
+\end{equation*}
+for any $f\in\thom{A}{B}$.
+\end{lem}
+
+\begin{proof}
+We have the isomorphism
+\begin{align*}
+\thom{A}{\ctxext{B}{Q}} 
+& \jdeq T(\ctxwk{A}{\ctxext{B}{Q}}) \\
+& \jdeq T(\ctxext{\ctxwk{A}{B}}{\ctxwk{A}{Q}}) \\
+& \cong \bigsqcup\nolimits_{(f\in T(\ctxwk{A}{B}))}T(\subst{f}{\ctxwk{A}{Q}})
+\tag{By \autoref{thm:famext_up}} \\
+& \jdeq \bigsqcup\nolimits_{(f\in\thom{A}{B})}T(\jcomp{A}{f}{Q}).
+\end{align*}
+Also, we find $\cprojfst{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{h}\jdeq\subst{h}{\ctxwk{A}{\cprojfstf{B}{Q}}}\jdeq
+\jcomp{A}{h}{\cprojfstf{B}{Q}}$.
+\end{proof}
+
+\begin{thm}
+E-systems are the same things as E'-systems.
+\end{thm}
+
+\begin{proof}
+For any $f:A\to B$ in context $\Gamma$ and any $Q\in\cat{F}/B$, we define
+\begin{equation*}
+\pi_2(f,Q)\defeq \jvcomp{\jcomp{A}{f}{Q}}{f}{\tfid{\jcomp{A}{f}{Q}}}
+  : \ctxext{A}{\jcomp{A}{f}{Q}}\to\ctxext{B}{Q}.
+\end{equation*}
+Then we have the commuting diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\ctxext{A}{\jcomp{A}{f}{Q}} \arrow[r,"{\pi_2(f,Q)}"] \arrow[d,swap,"{\cprojfstf{A}{\jcomp{A}{f}{Q}}}"] & \ctxext{B}{Q} \arrow[d,"{\cprojfstf{B}{Q}}"] \\
+A \arrow[r,"f"] & B
+\end{tikzcd}
+\end{equation*}
+in context $\Gamma$. To show that this is a pullback diagram, consider a
+morphism $g:X\to A$ in context $\Gamma$. Then we have the isomorphisms
+\begin{equation*}
+\{h\in\thom{X}{\ctxext{B}{Q}}\mid \jcomp{X}{h}{\cprojfstf{B}{Q}}\jdeq\jcomp{X}{g}{f}\}
+  \cong
+T((\jcomp{X}{g}{f})_\ast(Q))
+  \cong
+\{u\in\thom{X}{\ctxext{A}{\jcomp{A}{f}{Q}}}\mid\jcomp{X}{u}{\cprojfstf{A}{\jcomp{A}{f}{Q}}}\jdeq g\}
+\end{equation*}
+Thus, we find for every $h:X\to\ctxext{B}{Q}$ satisfying
+$\jcomp{X}{h}{\cprojfstf{B}{Q}}\jdeq\jcomp{X}{g}{f}$, a unique morphism
+$u:X\to\ctxext{A}{\jcomp{A}{f}{Q}}$ satisfying
+$\jcomp{X}{u}{\cprojfstf{A}{\jcomp{A}{f}{Q}}}\jdeq g$. It is easy to verify
+that $\jcomp{X}{u}{\pi_2(f,Q)}\jdeq h$, so the universal property of pullbacks
+holds. The functoriality conditions follow immediately from the interchange
+laws proven in \autoref{sec:interchange}.
+
+We have described functors from E'-systems to E-systems and vice versa. It is
+a straightforward check that these are mutual inverses.
+\end{proof}
+
+\begin{comment}
+\subsection{Categories internal to E-systems}
+The definition of internal category we're about to give, has a type of objects
+and a type of morphisms, such that the codomain function is a projection. It might
+be more appropriate to call such structures `right categories', and the corresponding
+structures where the domain function is a projection might be called `left
+categories'. In particular, the opposite of a right category will be a left
+category. There is also a symmetric notion of a category.
+
+\begin{defn}
+A category-framework $\cftalg{A}$ in context $\Gamma$ in an E-system $\mathbb{E}$ consists of
+\begin{enumerate}
+\item A family $\cftalgc{\cftalg{A}}\in\cat{F}/\Gamma$, representing the type of
+objects of the category framework;
+\item A family $\cftalgf{\cftalg{A}}\in\cat{F}/\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$,
+representing the type of morphisms of the category framework, where a term of
+$\subst{X}{\cftalgf{\cftalg{A}}}$ is considered to be a morphism into $X\in T(\cftalgc{\cftalg{A}})$;
+\item A morphism $\jhom{\Gamma}{\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}{\cftalgc{\cftalg{A}}}{\cftctxext}$, representing the domain function;
+\item A morphism $\jhom{{\Gamma}{\cftalgc{\cftalg{A}}}}{{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}}{\cftalgf{\cftalg{A}}}{\cftfamext}$, representing composition;
+\item A term $\jterm{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}{\cftempf{\cftalg{A}}}$,
+representing the identity morphisms.
+\end{enumerate}
+\end{defn}
+
+\begin{rmk}
+Instead of looking at $\cftfamext$ as a morphism from 
+$\ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}}$
+to $\cftalgf{\cftalg{A}}$ in context $\ctxext{\Gamma}{\cftalgc{\cftalg{A}}}$, 
+one could also look at $\cftfamext$ as a 
+morphism \emph{over $\cprojfstf{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}$} 
+in context $\Gamma$, as indicated in the following diagram:
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\cftalgf{\cftalg{A}}
+  \ar[fib]{d}
+& \jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}
+  \ar[fib]{d}
+  \ar{l}[swap]{\cftfamext}
+  \ar{r}
+& \cftalgf{\cftalg{A}}
+  \ar[fib]{d}
+  \\
+\cftalgc{\cftalg{A}}
+& \ctxext{A}{\cftalgf{\cftalg{A}}}
+  \ar{l}{\cprojfstf{A}{\cftalgf{\cftalg{A}}}}
+  \ar{r}[swap]{\cftctxext}
+& \cftalgc{\cftalg{A}}
+\end{tikzcd}
+\end{equation*}
+From this point of view, we see that $\cftfamext$ has an object $X$ and a 
+morphism $f$ into $X$ as parameters, 
+then takes a morphism into the domain of $f$ as an argument, 
+and outputs a morphism into $X$. The projection maps $(X,f)$ to $X$, so we see
+that composition is indeed an operation of this kind.
+\end{rmk}
+
+A category-framework is not a category unless several axioms of the theory of
+categories are satisfied. The domain of a composed arrow $g\circ f$ must be the
+domain of $f$, composition must be associative, the domains of the identity
+morphisms must be the same as their codomains, and identities must satisfy
+the left and right identity laws. However, the axioms expressing these 
+conditions are not very insightful when they're written down directly. Thus, we
+take the usual way and define the notion of functor before we describe the
+actual conditions of being a category.
+
+\begin{defn}
+Let $\cftalg{A}$ and $\cftalg{B}$ be category-frameworks in context $\Gamma$,
+in an E-system $\mathbb{E}$.
+An \emph{internal functor $\cfthom{F}$ from $\extalg{A}$ to
+$\extalg{B}$ in context $\Gamma$} is a pair 
+$(\cfthomc{\cfthom{F}},\cfthomf{\cfthom{F}})$ consisting of
+\begin{align*}
+\jalign\jhom
+  {\Gamma}
+  {\cftalgc{\cftalg{A}}}
+  {\cftalgc{\cftalg{B}}}
+  {\cfthomc{\cfthom{F}}}
+  \\
+\jalign\jfhom
+  {\Gamma}
+  {\cftalgc{\cftalg{A}}}
+  {\cftalgc{\cftalg{B}}}
+  {\cfthomc{\cfthom{F}}}
+  {\cftalgf{\cftalg{A}}}
+  {\cftalgf{\cftalg{B}}}
+  {\cfthomf{\cfthom{F}}}
+\end{align*}
+for which the diagrams
+\begin{equation}\label{eq:exthom1}
+\begin{tikzcd}
+\ctxext{\cftalgc{\cftalg{A}}}{\cftalgf{\cftalg{A}}}
+  \ar{r}{\jvcomp{}{\cfthomc{\cfthom{F}}}{\cfthomf{\cfthom{F}}}}
+  \ar{d}[swap]{\cftctxext[\cftalg{A}]}
+& \ctxext{\cftalgc{\cftalg{B}}}{\cftalgf{\cftalg{B}}}
+  \ar{d}{\cftctxext[\cftalg{B}]}
+  \\
+\cftalgc{\cftalg{A}}
+  \ar{r}[swap]{\cfthomc{\cfthom{F}}}
+& \cftalgc{\cftalg{B}}
+\end{tikzcd}
+\end{equation}
+and
+\begin{equation}\label{eq:exthom2}
+\begin{tikzcd}[column sep=huge]
+\ctxext{\cftalgf{\cftalg{A}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cftalgf{\cftalg{A}}}}
+  \ar{r}{\jvcomp{}{\cfthomf{\cfthom{F}}}{\jcomp{}{\cftctxext[\cftalg{A}]}{\cfthomf{\cfthom{F}}}}}
+  \ar{d}[swap]{\cftfamext[\cftalg{A}]}
+& \jcomp{}{\cfthomc{\cfthom{F}}}{\ctxext{\cftalgf{\cftalg{B}}}{\jcomp{}{\cftctxext[\cftalg{B}]}{\cftalgf{\cftalg{B}}}}}
+  \ar{d}{\jcomp{}{\cfthomc{\cfthom{F}}}{\cftfamext[\cftalg{B}]}}
+  \\
+\cftalgf{\cftalg{A}}
+  \ar{r}[swap]{\cfthomf{\cfthom{F}}}
+& \jcomp{}{\cfthomc{\cfthom{F}}}{\cftalgf{\cftalg{B}}}
+\end{tikzcd}
+\end{equation}
+commute, and for which $\subst{\cftempf{\cftalg{A}}}{\cfthomf{\cfthom{F}}}
+\jdeq\jcomp{}{\cfthomc{\cfthom{F}}}{\cftempf{\cftalg{B}}}$.
+\end{defn}
+
+\begin{defn}
+Let $\cftalg{A}$ be a category-framework. We define the category-framework
+\begin{equation*}
+\cftfamalg{\cftalg{A}}\defeq(\cftalgf{\cftalg{A}},\jcomp{}{\cftctxext}%
+{\cftalgf{\cftalg{A}}},\cftfamext,\jcomp{}{\cftctxext}{\cftfamext},
+\jcomp{}{\cftctxext}{\cftempf{\cftalg{A}}}),
+\end{equation*}
+When $\cftalg{P}$ is a category-framework in context $\ctxext{\Gamma}{A}$, then
+and we define the category-framework
+\begin{equation*}
+\ctxext{\cftalgc{\cftalg{A}}}{\cftalg{P}}
+  \defeq
+( \ctxext{A}{\cftalgc{\cftalg{P}}},
+  \cftalgf{\cftalg{P}},
+  \jvcomp{}{\idtm{A}}{\cftctxext[\cftalg{P}]},
+  \cftfamext[\cftalg{P}],
+  \cftempf{\cftalg{P}}).
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+An internal category $\cftalg{A}$ in an E-system $\mathbb{E}$ consists of a
+category-framework $\cftalg{A}$ satisfying the following conditions:
+\begin{enumerate}
+\item \emph{The domain condition.} The pair 
+$(\cftctxext,\idtm{\jcomp{}{\cftctxext}{\cftalgf{\cftalg{A}}}})$ is a
+functor from $\ctxext{\cftalgc{\cftalg{A}}}{\cftfamalg{\cftalg{A}}}$ to
+$\cftalg{A}$.
+\item \emph{The associativity law.} The pair
+$(\cftfamext,\idtm{\jcomp{}{\cftfamext}{\cftalgf{\cftfamalg{\cftalg{A}}}}})$
+is a functor from $\ctxext{\cftalgf{\cftalg{A}}}{\cftfamalg{\cftfamalg{\cftalg{A}}}}$ to
+$\cftfamalg{\cftalg{A}}$.
+\item \emph{The identity domain condition.} The domain of the identity morphism
+is the same as its codomain:
+\begin{equation*}
+\jtermeq
+  {{\Gamma}{\cftalgc{\cftalg{A}}}}
+  {\ctxwk{\cftalgc{\cftalg{A}}}{\cftalgc{\cftalg{A}}}}
+  {\subst{\cftempf{\cftalg{A}}}{\cftctxext[\cftalg{A}]}}
+  {\idtm{\cftalgc{\cftalg{A}}}}.
+\end{equation*}
+\item \emph{The left identity law.} A morphism precomposed by the identity morphism
+is equal to the original morphism:
+\begin{equation*}
+\jtermeq
+  {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
+  {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+  {\subst{\cftempf{\cftalg{A}}}{\cftfamext}}
+  {\idtm{\cftalgf{\cftalg{A}}}}.
+\end{equation*}
+\item \emph{The right identity law.} A morphism postcomposed by the identity morphism
+is equal to the original morphism:
+\begin{equation*}
+\jtermeq
+  {{{\Gamma}{\cftalgc{\cftalg{A}}}}{\cftalgf{\cftalg{A}}}}
+  {\ctxwk{\cftalgf{\cftalg{A}}}{\cftalgf{\cftalg{A}}}}
+  {\subst{\jcomp{}{\cftctxext}{\cftempf{\cftalg{A}}}}{\cftfamext}}
+  {\idtm{\cftalgf{\cftalg{A}}}}.
+\end{equation*}
+\end{enumerate}
+\end{defn}
+
+\begin{rmk}
+Since we have only used operations of E-systems to define internal categories,
+it immediately follows that if $\cftalg{A}$ is an internal category in
+$\mathbb{E}$ and if $F:\mathbb{E}\to\mathbb{D}$ is an E-homomorphism, then
+$F(\cftalg{A})$ is an internal category in $\mathbb{D}$. In particular, if
+$\cftalg{Q}$ is an internal category in context $\ctxext{\Gamma}{B}$ and
+$f:A\to B$, then the change of base $f_\ast(\cftalg{Q})$ is an internal category
+in context $\ctxext{\Gamma}{A}$. Thus, it is immediate that the notion of
+internal category is stable under change of base.
+\end{rmk}
+\end{comment}
+
+\begin{comment}
+\section{Dependent morphisms}
+
+\begin{defn}
+Let $f_0\in\thom{A}{B}$ be an internal morphism and let $P\in\cat{F}/\ctxext{\Gamma}{A}$ and
+$Q\in\cat{F}/\ctxext{\Gamma}{B}$. We define
+\begin{equation*}
+\thomd{f_0}{P}{Q} \defeq \thom{P}{{f_0}_\ast(Q)}
+\end{equation*}
+We indicate that $f_1\in\thomd{f_0}{P}{Q}$ by drawing the diagram
+\begin{equation*}
+\begin{tikzcd}
+P \arrow[r,"f_1"] \arrow[d,->>] & Q \arrow[d,->>] \\
+A \arrow[r,swap,"f_0"] & B.
+\end{tikzcd}
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+Consider the diagram
+\begin{equation*}
+\begin{tikzcd}
+P \arrow[r,"f_1"] \arrow[d,->>] & Q \arrow[d,->>] \arrow[r,"g_1"] & R \arrow[d,->>] \\
+A \arrow[r,swap,"f_0"] & B \arrow[r,"g_0"] & C.
+\end{tikzcd}
+\end{equation*}
+We define
+\begin{align*}
+\jvcomp{P}{f_0}{f_1} & \defeq\unfold\jvcomp{P}{f_0}{f_1} & & \in \thom{\ctxext{A}{P}}{\ctxext{B}{Q}} \\
+\jfcomp{A}{f_0}{P}{f_1}{g_1} & \defeq \unfold\jfcomp{A}{f_0}{P}{f_1}{g_1} & & \in \thomd{\jcomp{A}{f_0}{g_0}}{P}{R}.
+\end{align*}
+\end{defn}
+
+\begin{rmk}
+Consider
+\begin{equation*}
+\begin{tikzcd}
+P \arrow[r,"f_1"] \arrow[d,->>] & Q \arrow[d,->>] \\
+A \arrow[r,swap,"f_0"] & B.
+\end{tikzcd}
+\end{equation*}
+Then the diagram
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\ctxext{A}{P} \arrow[r,"\jvcomp{P}{f_0}{f_1}"] \arrow[d,swap,"\cprojfstf{A}{P}"] & \ctxext{B}{Q} \arrow[d,"\cprojfstf{B}{Q}"] \\
+A \arrow[r,swap,"f_0"] & B
+\end{tikzcd}
+\end{equation*}
+commutes. Also, we have
+\begin{equation*}
+S_{\tmext{x}{u}}(\jvcomp{P}{f_0}{f_1}) \jdeq \tmext{S_x(f_0)}{S_{\tmext{x}{u}}(f_1)}
+\end{equation*}
+for each $x\in T(A)$ and $u\in T(S_x(P))$.
+\end{rmk}
+
+\section{Natural transformations of E-homomorphisms}
+\begin{rmk}
+When $\mathcal{E}$ is an E-system with empty context, then we have the category
+structure on the contexts given by $\thom{\Gamma}{\Delta}= T(W_\Gamma(\Delta))$.
+\end{rmk}
+
+\begin{defn}
+A \emph{natural transformation} of E-homomorphisms from $F:\mathcal{E}\to\mathcal{D}$
+to $G:\mathcal{E}\to\mathcal{D}$ preserving the empty context consists of
+\begin{enumerate}
+\item A t-morphism $\tau0_A\in\thom{F(\Gamma)}{G(\Gamma)}$ for every $\Gamma\in\mathcal{E}$.
+\item A commuting square square
+\begin{equation*}
+\begin{tikzcd}
+F(A) \arrow[r,"\tau1_A"] \arrow[d,twoheadrightarrow] & G(A) \arrow[d,twoheadrightarrow] \\
+F(\Gamma) \arrow[r,swap,"\tau0_\Gamma"] & G(\Gamma)
+\end{tikzcd}
+\end{equation*}
+for every family $P$ over $A$ of solid arrows, such that the diagram
+\begin{equation*}
+\begin{tikzcd}
+F(A) \arrow[r,"\tau1_A"] & G(A) \\
+F(\Gamma) \arrow[r,swap,"\tau0_\Gamma"] \arrow[densely dotted,u,"F(x)"] & G(\Gamma) \arrow[densely dotted,u,swap,"G(x)"]
+\end{tikzcd}
+\end{equation*}
+commutes for every $x\in T(A)$.
+\end{enumerate}
+such that
+\begin{enumerate}
+\item the square
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+W_{F(A)}(F(B)) \arrow[r,"W_{F(A)}(\tau1_B)"] \arrow[d,->>] & W_{G(A)}(G(B)) \arrow[d,->>] \\
+F(A) \arrow[r,"\tau1_A"] & G(A)
+\end{tikzcd}
+\end{equation*}
+commutes for every $A,B\in\mathcal{E}/\Gamma$. Note that 
+\begin{align*}
+W_{F(A)}(\tau1_B)
+  & \in 
+T(W_{F(A)}(W_{F(B)}(G(B))))
+  \\
+  & =
+T(W_{W_{F(A)}(F(B))}(W_{F(A)}(G(B))))
+\end{align*}
+\end{enumerate}
+\end{defn}
+
+\section{Indexed E-systems}
+\begin{defn}
+Let $\cat{A}$ be a category. An $\cat{A}$-indexed E-system is an internal
+E-system in the category $Psh(\cat{A})$.
+\end{defn}
+
+\section{Examples of adjunctions}
+
+\begin{lem}
+For each $A\in\mathcal{E}/\Gamma$, $W_A$ is left adjoint to $\Pi_A$. 
+\end{lem}
+
+\begin{proof}
+The unit $\eta:1_{\cat{F}/\ctxext{\Gamma}{A}}\Rightarrow W_A\circ\Pi_A$ is given by
+\begin{equation*}
+\eta_P:\lam{f}{x} ev(\lambda(f),x)
+\end{equation*}
+$\eta_P\in\thom{P}{W_A(\Pi_A(P))}$
+\end{proof}
+
+\begin{lem}
+Suppose $\cat{D}$ is a retract of a pre-category $\cat{F}$, i.e. there are functors
+$S:\cat{D}\to\cat{F}$ and $R:\cat{F}\to\cat{D}$ with a natural isomorphism
+$\tau:R\circ S \simeq \catid{\cat{D}}$, and suppose that $\cat{F}$ is a weakening
+category. Then $\cat{D}$ is a weakening system too.
+\end{lem}
+
+\begin{proof}
+Let $f:\Delta\to \Gamma$ be a morphism in $\cat{D}$. Then we define $W_f$ to be the
+composition
+\begin{equation*}
+\begin{tikzcd}[column sep=3.2em]
+\cat{D}/\Gamma
+  \arrow[r,"S/\Gamma"]
+  &
+\cat{F}/S(\Gamma)
+  \arrow[r,"W_{S(f)}"]
+  &
+\cat{F}/S(\Delta)
+  \arrow[r,"R/S(\Delta)"]
+  &
+\cat{D}/R(S(\Delta))
+  \arrow[r,"\tau_\Delta\circ{-}"]
+  &
+\cat{D}/\Delta
+\end{tikzcd}
+\end{equation*}
+We first verify whether this assembles a pre-weakening structure on $\cat{D}$.
+\begin{enumerate}
+\item Let $\Delta$ be an object of $\cat{D}$. Then $W_{\catid{\Delta}}$ is the composition
+\begin{equation*}
+\begin{tikzcd}[column sep=3.2em]
+\cat{D}/\Delta
+  \arrow[r,"S/\Delta"]
+  &
+\cat{F}/S(\Delta)
+  \arrow[r,"R/S(\Delta)"]
+  &
+\cat{D}/R(S(\Delta))
+  \arrow[r,"{-}\circ\tau_\Delta"]
+  &
+\cat{D}/\Delta
+\end{tikzcd}
+\end{equation*}
+This functor maps $g:\Delta'\to \Delta$ consecutively to $S(g)$, to $R(S(g))$, to
+$\tau_\Delta\circ R(S(g))$. Note that $\tau_\Delta\circ R(S(g))=g\circ \tau_{\Delta'}$ by
+naturality.
+\end{enumerate}
+\end{proof}
+
+\section{Weak E-systems}
+
+\begin{rmk}
+Note that $W$ is a strict $2$-functor frm $\cat{F}$ to $\mathbb{Cat}$ of which
+the value at an object $\Gamma$ is specified to be $\cat{F}/\Gamma$, and which
+is required to preserve the final object. We could have considered $W$ to be a 
+pseudo-functor from $\cat{F}$ to $\mathbb{Cat}$ instead. A coherence theorem
+by Power \cite{Power89} then allows for the strictification of this pseudo-functor
+into a (strict) weakening structure. (Does this map $\Gamma$ to $\cat{F}/\Gamma$
+and final to final?). Thus, we know what a weak pre-weakening system has to be.
+The following questions need to be answered:
+\begin{itemize}
+\item What is a weak weakening/projection/substitution system.
+\item What is a weak E-system? I.e.~what are the coherence rules for something
+to be a weakening/projection/substitution homomorphism?
+\item Can they all be strictified? Are there more examples of weak E-systems?
+\end{itemize}
+\end{rmk}
+\end{comment}
