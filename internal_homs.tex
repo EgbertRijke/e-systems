@@ -1,10 +1,10 @@
-\section{The category of internal morphisms of an E-system}\label{sec:esys_props}
+\section{The pre-category of internal morphisms of an E-system}\label{sec:esys_props}
 
 The theory of E-systems could be seen as a sort of category theory with only
 projections and their sections. We elaborate on this point of view by defining
-the category of internal morphisms, which Lawvere might have called the
+the pre-category of internal morphisms, which Lawvere might have called the
 category of terms. 
-In the category of internal morphisms over a context $\Gamma$,
+In the pre-category of internal morphisms over a context $\Gamma$,
 which we define in \autoref{subsec:im_cat},
 a morphism $f:A\to B$ is a term of the constant family $W_A(B)$ over 
 $\ctxext{\Gamma}{A}$. Rather than directly defining composition, we will define
@@ -35,8 +35,8 @@ In \autoref{sec:interchange}, we will show interchange laws between these
 sorts of composition. The interchange laws have as a consequence that if we
 assert the commutativity of a large composed diagram.
 
-The category of internal morphisms forms a category of which the families form
-a subcategory. This, together with the pre-composition operation described
+The pre-category of internal morphisms forms a pre-category of which the families form
+a subpre-category. This, together with the pre-composition operation described
 earlier, gives rise to the auxiliary notion of E'-systems, which we define
 in \autoref{sec:E'}. The thread running through this whole section is proving
 that the notions of E-system and E'-system are the same. In \autoref{sec:E'}
@@ -72,7 +72,7 @@ E'-systems can be thought of as strict versions of tribes%
 \footnote{Tribes are an invention of Joyal, see \url{http://ncatlab.org/homotopytypetheory/files/Joyal.pdf}}.
 
 \begin{defn}\label{defn:E'sys}
-An \emph{E'-system} consists of a category $\cat{C}$ and a subcategory $\cat{F}$ with
+An \emph{E'-system} consists of a pre-category $\cat{C}$ and a subpre-category $\cat{F}$ with
 the same objects as $\cat{C}$, such that
 \begin{enumerate}
 \item $\cat{F}$ has a terminal object.
@@ -113,7 +113,7 @@ $\cat{F}/\Gamma\to\cat{F}/\Delta$.
 \end{defn}
 
 \begin{rmk}
-Without a terminal object in $\cat{F}$, the category $\cat{C}$ does not correspond
+Without a terminal object in $\cat{F}$, the pre-category $\cat{C}$ does not correspond
 directly to anything in an E-system.
 \end{rmk}
 
@@ -135,7 +135,7 @@ essential differences with Joyal's notion of tribes.
 
 \begin{defn}
 For any $\Gamma\in\cat{C}$, define $\cat{C}_\cat{F}/\Gamma$ to be the full
-subcategory of $\cat{C}/\Gamma$ with the same objects as $\cat{F}/\Gamma$. 
+subpre-category of $\cat{C}/\Gamma$ with the same objects as $\cat{F}/\Gamma$. 
 \end{defn}
 
 \begin{lem}\label{lem:pb_selfdistributive}
@@ -243,7 +243,7 @@ to an E-system, just using the algebraic structure of an E-system, and actually
 defining an internal category was the hardest part of that definition.
 \end{comment}
 
-\subsection{The category of internal morphisms}\label{subsec:im_cat}
+\subsection{The pre-category of internal morphisms}\label{subsec:im_cat}
 
 \begin{defn}
 For every $A,B\in\cat{F}/\Gamma$ we define the set 
@@ -271,7 +271,7 @@ $W_{\catid{\ctxext{\Gamma}{A}}}\jdeq \catid{\cat{F}/\ctxext{\Gamma}{A}}$.
 Note also that $\thom{\ctxext{A}{P}}{B}\jdeq \thom{P}{\ctxwk{A}{B}}$ 
 for any $P\in\cat{F}/\ctxext{\Gamma}{A}$ and $B\in\cat{F}/\Gamma$,
 because $W_{\ctxext{A}{P}}\jdeq W_P\circ W_A$.
-Once we have established a category of which the morphisms are given by 
+Once we have established a pre-category of which the morphisms are given by 
 $\thom{\blank}{\blank}$, we therefore get that 
 \begin{equation*}
 \ctxext{A}{(\blank)}\dashv W_A.
@@ -350,7 +350,7 @@ f_\ast\circ g_\ast & \jdeq S_f\circ (W_A/B) \circ S_g \circ (W_B/C)\\
 \end{proof}
 
 \begin{thm}
-For each object $\Gamma$ of an E-system $\mathbb{E}$, we have a category
+For each object $\Gamma$ of an E-system $\mathbb{E}$, we have a pre-category
 $\mathbb{C}_I(\mathbb{E},\Gamma)$ of internal morphisms of $\mathbb{E}$,
 consisting of the same objects as $\cat{F}/\Gamma$ and the hom-sets 
 $\thom{A}{B}$. 

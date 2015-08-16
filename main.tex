@@ -6,7 +6,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{An essentially algebraic formulation of dependent type theory}
-\author{Egbert Rijke\\ {\sc Carnegie Mellon University}}
+\author{Egbert Rijke\footnote{{\sc Carnegie Mellon University}, department of
+philosophy; \url{erijke@andrew.cmu.edu}}}
 \date{\today}
 
 \begin{document}
@@ -32,30 +33,62 @@ to telescopic families.
 
 %\tableofcontents
 
-\section{Introduction}
+\section{Introduction --- Mathematical languages as designed and maintained languages}
+Mathematical research is aided by the development of languages that help 
+researchers to investigate their subject efficiently. Such a development is an
+ongoing process, both for informal and formal languages, that may have both
+mathematical and meta-mathematical aspects. 
 
-\subsection*{Principles of mathematical fuseki}
-Mathematics is the study of abstract concepts such as space or quantity, and
-when we design a language for such a study, we want to be able to efficiently
-express things about the objects under investigation. The subject matter of
-this paper is a logical framework of dependent type theory. 
+There is an amount of attraction and repulsion that works simultaneously
+between formal and informal languages for mathematics, which is a driving force
+for the development of mathematical languages. The use of
+a natural language in mathematical arguments facilitates people to engage
+with mathematical constructs at a conceptual level, while a formal mathematical
+language aims to encode the intuitive development. At the same time and 
+especially nowadays, formal languages aim to possess a high level of rigor and
+precision, so that mathematical arguments and constructions can be executed and
+verified algorithmically, and informal mathematics is usually not considered
+acceptable if it cannot in principle be carried out in a formal system.
 
+It may be the case that formal languages are developed in order to be more
+precise and certain about bodies of existing mathematical work, but there are
+also cases where the conceptual thinking 
+
+The book on Homotopy Type Theory, \cite{TheBook}, was written in informal
+language (maybe `semi-formal' would be a more accurate description), 
+partly because it was conceived that the underlying type theory might
+not always remain the same, while principles and concepts developed starting
+from type theory exist separately from any particular version of type 
+theory, though perhaps not completely independent. 
+
+Today, formal languages for mathematics, logic and computer science, are studied
+under the name logical frameworks.
 Pfenning \cite{PfenningLFintro} defines logical frameworks
 to be meta-languages for the formalization of deductive system. Examples of
 logical framework therefore include propositional logic, first-order predicate 
 logic, Russell's ramified type theory, the lambda-calculus, dependent type 
 theory, and so on. By considering models of a logical framework, it becomes
-itself the subject of mathematical study. 
+itself the subject of mathematical study. Thus, logical frameworks typically
+contain laws for handling logical inferences, the specification of the sorts
+and operations of the language or theory, and axioms the operations are required to
+satisfy. 
 
-It may actually be useful to see logical frameworks themselves
-as objects subject to mathematical investigation. 
+While there are aspects of logical frameworks that are of meta-mathematical 
+nature, such as descriptions of handling inference rules, it may be useful to
+consider a mathematical language as a mathematical object, especially if one
+is interested in models of the theory. For practically any theory there is a
+wish to do so, so it may be useful to keep this in mind in the specification
+of a logical framework. One way to do this, is to make sure that the theory
+belongs to a class of theories of which the model theory is reasonably well-%
+understood. Among such classes of theories are algebraic theories and
+essentially algebraic theories.
 
-Logical frameworks for mathematics are not set in stone. 
-
- and neither to they
-remain the same once they are declared.
-
-When designing and maintaining a logical framework 
+The choices made in the design principles and specification of a logical 
+framework, will determine both the subject of study and how effective we can be
+in its study. Investigations of logical framework can therefore be seen as
+`opening theories for mathematics', in analogy of opening theories for games.
+Logical frameworks for mathematics are not set in stone and 
+neither to they remain the same once they are declared.
 
 \subsection*{Essentially algebraic theories}
 An essentially algebraic theory is an equational theory of partial operations
@@ -63,7 +96,13 @@ which may be ordered, and of which the domain of each operation is declared by
 equations on the preceeding operations. The concept of essentially algebraic
 theories is due to Freyd, who writes that a critical feature of essentially
 algebraic theories is that their models are closed under 
-colimits \cite{Aspects_of_topoi}. 
+colimits \cite{Aspects_of_topoi}. Many classes of theories have been described
+and shown to be equivalent to essentially algebraic theories. Among them are
+Partial Horn Logic and quasi-equational theories \cite{Palmgren_Vickers},
+cartesian theories \cite{Freyd2002}, finite limit sketches 
+\cite{Toposes_triples_theories}, left exact theories
+\cite{McLarty1986}, and they can be equivalently represented as locally
+presentable categories \cite{Adamek_Locally}.
 
 In \cite{Adamek_Locally}, Ad\'amek and Rosicky
 define an essentially algebraic theory to be a list 
@@ -99,11 +138,25 @@ a well-developed toolbox which can be used in its study. Therefore, recognizing
 that the theory of type dependency is essentially algebraic is a critical step
 in the development of its theory of models.
 
-\subsection*{Logical frameworks}
-
 \subsection*{Setting up the essentially algebraic theory of E-systems}
-The theory of type dependency as we present it here, consists of three sorts
-$C$, $F$ and $T$ for contexts, families and terms. There is a map 
+The theory of E-systems we present in the present article is an iteration in the
+development of theory of type
+dependency. The goal has been to describe an essentially algebraic theory of
+type dependency that is in close correspondence to the type theory of
+\cite{TheBook}, while at the same time it is as economic as possible in the
+demand of external resources (such as the natural numbers). Instead of explaning
+what a dependent type is via an infinite hierarchy of universes $\UU_0$,
+$\UU_1$, \ldots, we set out to describe type families using only the three sorts
+that typically occur in type theoretical expressions: contexts, families and 
+terms. Although an infinite hierarchy of universes allows one to consider everything
+to be a term (because every type is a term of some specified universe), and 
+therefore use the literally same mechanisms for handling type expressions as for
+term expressions in the process of compilation and verification of a 
+construction, this specific setup requires the natural numbers to exist in the 
+meta-theory. 
+
+An E-system is therefore an algebra consisting of three sorts: $C$ for contexts,
+$F$ for families, and $T$ for terms. There is a map 
 $\eft:F\to C$ which determines for each family, in which context it is a
 family; and there is a map $\ebd:T\to F$ which determines for each term, of
 which family it is a term. Thus, the backbones of an E-system can be represented
