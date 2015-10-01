@@ -4,9 +4,14 @@
 
 %\includeonly{Algebras/article-models-cat}
 
+\newcommand{\thetitle}{An essentially algebraic formulation of dependent type theory}
+\newcommand{\theauthor}{Egbert Rijke}
+\hypersetup{pdftitle={\thetitle},pdfauthor={\theauthor},pdfhighlight={/I}}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{An essentially algebraic formulation of dependent type theory}
-\author{Egbert Rijke\footnote{{\sc Carnegie Mellon University}, department of
+\title{\thetitle}
+\author{\theauthor\footnote{{\sc Carnegie Mellon University}, department of
 philosophy; \url{erijke@andrew.cmu.edu}}}
 \date{\today}
 
@@ -31,345 +36,9 @@ makes sure that the substitution operation of a category with families extends
 to telescopic families. 
 \end{abstract}
 
-%\tableofcontents
+\tableofcontents
 
-\section{Introduction --- Mathematical languages as designed and maintained languages}
-Mathematical research is aided by the development of languages that help 
-researchers to investigate their subject efficiently. Such a development is an
-ongoing process, both for informal and formal languages, that may have both
-mathematical and meta-mathematical aspects. 
-
-There is an amount of attraction and repulsion that works simultaneously
-between formal and informal languages for mathematics, which is a driving force
-for the development of mathematical languages. The use of
-a natural language in mathematical arguments facilitates people to engage
-with mathematical constructs at a conceptual level, while a formal mathematical
-language aims to encode the intuitive development. At the same time and 
-especially nowadays, formal languages aim to possess a high level of rigor and
-precision, so that mathematical arguments and constructions can be executed and
-verified algorithmically, and informal mathematics is usually not considered
-acceptable if it cannot in principle be carried out in a formal system.
-
-It may be the case that formal languages are developed in order to be more
-precise and certain about bodies of existing mathematical work, but there are
-also cases where the conceptual thinking 
-
-The book on Homotopy Type Theory, \cite{TheBook}, was written in informal
-language (maybe `semi-formal' would be a more accurate description), 
-partly because it was conceived that the underlying type theory might
-not always remain the same, while principles and concepts developed starting
-from type theory exist separately from any particular version of type 
-theory, though perhaps not completely independent. 
-
-Today, formal languages for mathematics, logic and computer science, are studied
-under the name logical frameworks.
-Pfenning \cite{PfenningLFintro} defines logical frameworks
-to be meta-languages for the formalization of deductive system. Examples of
-logical framework therefore include propositional logic, first-order predicate 
-logic, Russell's ramified type theory, the lambda-calculus, dependent type 
-theory, and so on. By considering models of a logical framework, it becomes
-itself the subject of mathematical study. Thus, logical frameworks typically
-contain laws for handling logical inferences, the specification of the sorts
-and operations of the language or theory, and axioms the operations are required to
-satisfy. 
-
-While there are aspects of logical frameworks that are of meta-mathematical 
-nature, such as descriptions of handling inference rules, it may be useful to
-consider a mathematical language as a mathematical object, especially if one
-is interested in models of the theory. For practically any theory there is a
-wish to do so, so it may be useful to keep this in mind in the specification
-of a logical framework. One way to do this, is to make sure that the theory
-belongs to a class of theories of which the model theory is reasonably well-%
-understood. Among such classes of theories are algebraic theories and
-essentially algebraic theories.
-
-The choices made in the design principles and specification of a logical 
-framework, will determine both the subject of study and how effective we can be
-in its study. Investigations of logical framework can therefore be seen as
-`opening theories for mathematics', in analogy of opening theories for games.
-Logical frameworks for mathematics are not set in stone and 
-neither to they remain the same once they are declared.
-
-\subsection*{Essentially algebraic theories}
-An essentially algebraic theory is an equational theory of partial operations
-which may be ordered, and of which the domain of each operation is declared by 
-equations on the preceeding operations. The concept of essentially algebraic
-theories is due to Freyd, who writes that a critical feature of essentially
-algebraic theories is that their models are closed under 
-colimits \cite{Aspects_of_topoi}. Many classes of theories have been described
-and shown to be equivalent to essentially algebraic theories. Among them are
-Partial Horn Logic and quasi-equational theories \cite{Palmgren_Vickers},
-cartesian theories \cite{Freyd2002}, finite limit sketches 
-\cite{Toposes_triples_theories}, left exact theories
-\cite{McLarty1986}, and they can be equivalently represented as locally
-presentable categories \cite{Adamek_Locally}.
-
-In \cite{Adamek_Locally}, Ad\'amek and Rosicky
-define an essentially algebraic theory to be a list 
-\begin{equation*}
-(S,\Sigma,a,d,c,E,\Sigma_t,\mathrm{Def})
-\end{equation*} 
-consisting of a set $S$ of sorts, a set $\Sigma$ of operation symbols,
-an arity function $a:\Sigma\to\mathbf{Set}$ specifying the arity of each operation
-symbol, a map $d_\sigma:a(\sigma)\to S$
-for each $\sigma\in\Sigma$ specifying the sort of the domain of $\sigma$,
-a map $c:\Sigma\to S$ specifying the sort of the codomain of each operation
-symbol,
-a set $E$ of $\Sigma$-equations, a set $\Sigma_t\subseteq\Sigma$ of total
-operation symbols, and a function $\mathrm{Def}$ assigning to each operation
-symbol $\sigma:\Pi_{i\in a(\sigma)} s_i\to s$ in $\Sigma-\Sigma_t$ a set
-$\mathrm{Def}(\sigma)$ of $\Sigma_t$-equations in the standard variables
-$x_i\in V_s$, $i\in a(\sigma)$. Subsequently, they show that a category of models of an
-essentially algebraic theory is the same thing as a locally presentable 
-category.
-
-Every essentially algebraic theory $\mathbb{T}$ in the sense of Ad\'amek and Rosicky
-determines a syntactic category $\mathcal{C}_\mathbb{T}$, which has all finite
-limits, and $\mathbb{T}$ can be seen as a presentation of the category
-$\mathcal{C}_\mathbb{T}$. Then there is a natural equivalence between the
-category of models of $\mathbb{T}$ in a category $\cat{C}$ with finite limits,
-and the category of finite limit preserving functors $\mathcal{C}_\mathbb{T}\to
-\cat{C}$. Thus, in this sense an essentially algebraic theory \emph{is} just
-a category with finite limits. 
-
-Because essentially algebraic theories have a pleasant theory of models, 
-phrasing a theory as an essentially algebraic one gives immediate access to
-a well-developed toolbox which can be used in its study. Therefore, recognizing
-that the theory of type dependency is essentially algebraic is a critical step
-in the development of its theory of models.
-
-\subsection*{Setting up the essentially algebraic theory of E-systems}
-The theory of E-systems we present in the present article is an iteration in the
-development of theory of type
-dependency. The goal has been to describe an essentially algebraic theory of
-type dependency that is in close correspondence to the type theory of
-\cite{TheBook}, while at the same time it is as economic as possible in the
-demand of external resources (such as the natural numbers). Instead of explaning
-what a dependent type is via an infinite hierarchy of universes $\UU_0$,
-$\UU_1$, \ldots, we set out to describe type families using only the three sorts
-that typically occur in type theoretical expressions: contexts, families and 
-terms. Although an infinite hierarchy of universes allows one to consider everything
-to be a term (because every type is a term of some specified universe), and 
-therefore use the literally same mechanisms for handling type expressions as for
-term expressions in the process of compilation and verification of a 
-construction, this specific setup requires the natural numbers to exist in the 
-meta-theory. 
-
-An E-system is therefore an algebra consisting of three sorts: $C$ for contexts,
-$F$ for families, and $T$ for terms. There is a map 
-$\eft:F\to C$ which determines for each family, in which context it is a
-family; and there is a map $\ebd:T\to F$ which determines for each term, of
-which family it is a term. Thus, the backbones of an E-system can be represented
-as
-\begin{equation*}
-\begin{tikzcd}
-T \arrow[d,"\ebd"] \\ F \arrow[d,"\eft"] \\ C
-\end{tikzcd}
-\end{equation*}
-When $A$ is a family in context $\Gamma$, there is also a context $\ctxext{\Gamma}{A}$,
-called the \emph{context extension of $A$}. Context extension allows us to consider
-`families over families', where a family $P$ over $A$ in context $\Gamma$, would
-simply be a family $P$ over $\ctxext{\Gamma}{A}$. Context extension is represented
-by another function $\cftctxext : F\to C$.
-
-Since we want the rules of
-type theory to be valid in any context $\Gamma$, there is also a notion of family
-extension. Thus, for any family $P$ over $A$ in context $\Gamma$, there is a
-family $\ctxext{A}{P}$ in context $\Gamma$. In other words, we have a function
-$\cftfamext : F\times_{\cftctxext,\eft} F\to F$. 
-
-Two associativity laws will require
-that context and family extension are compatible with each other: we have
-the equality $\ctxext{{\Gamma}{A}}{P}\jdeq\ctxext{\Gamma}{{A}{P}}$ of contexts,
-and the equality $\ctxext{{A}{P}}{Q}\jdeq\ctxext{A}{{P}{Q}}$ of families.
-
-Finally, there is an empty context $\emptyc\in C$, and an empty family $\emptyf[\Gamma]$
-in context $\Gamma$, for every $\Gamma\in C$. The empty context is such that context extension
-restricted to families over the empty context is an isomorphism, and the empty
-families are neutral with respect to context and family extension in the sense
-that $\ctxext{\Gamma}{\emptyf[\Gamma]}\jdeq\Gamma$, $\ctxext{\emptyf[\Gamma]}{A}
-\jdeq A$ and $\ctxext{A}{\emptyf[\ctxext{\Gamma}{A}]}\jdeq A$. 
-
-One may recognize in these ingredients of E-systems a category with a
-terminal object, and a set $T(f)$ of terms for every morphism $f$ (satisfying
-no further axioms, so far). Ignoring the set of terms for the moment, $C$ is
-the set of objects and $F$ is the set of morphisms; $\eft$ assigns the codomain
-to each morphism and $\cftctxext$ assigns the domain to each  morphism. The
-operation $\cftfamext$ composes two morphisms. The first associativity rule
-asserts that the domain of the composition $\ctxext{A}{P}$ is the domain of
-$P$, and the second associativity rule asserts that composition is associative
-in the usual sense. The empty context satisfies exactly the properties of the
-terminal object, and the empty family $\emptyf[\Gamma]$ satisfies the properties
-of the identity morphisms. 
-
-Thus, an E-system $\mathbf{E}$ will have an underlying category, which may be called the
-category of families of $\mathbf{E}$. The structure of type dependency will by
-built on top of this category. This structure will consist of an E-homomorphism
-$W_A$ called \emph{weakening by $A$}, for every family $A$ in context $\Gamma$,
-an E-homomorphism $S_x$ called \emph{substitution by $x$}, for every term
-$x$ of $A$ in context $\Gamma$, and units $\idtm{A}\in T(W_A(A))$ for every
-family $A$ in context $\Gamma$, satisfying a handful of further axioms. 
-The weakening and substitution homomorphisms
-will preserve the extension structure we have discussed above; in other words,
-they will be functors preserving the terminal object. 
-
-\subsection*{The pre-categorical nature of E-systems}
-Although we start our definition of E-systems with a category with term structure,
-we do not set out to have a categorical notion of E-systems, in the sense that the structure of
-being an E-system can be transported along equivalences of categories. The goal
-in this paper is to describe the algebraic structures belonging to an essentially
-algebraic theory of type dependency, and this structure turns out to be pre-categorical
-rather than categorical. The fact that we've encountered a category at the outset
-of our definition of E-systems is in a sense coincidence, rather than born out
-of a desire to do type theory categorically and we would consider E-systems to
-be pre-categorical models of type theory rather than categorical models of type
-theory. The difference between pre-categories and categories is that equality
-of objects in a pre-category is considered to be (strict) equality, whereas
-equality of objects in a category is considered to be isomorphism of objects,
-and we have chosen to use the former notion of equality.
-
-\subsection*{Existing notions of categorical models of dependent type theory}
-
-When introducing a new notion of model of dependent type theory, one necessarily
-faces the task of comparing the new notion with existing notions, and there are
-quite a few. 
-
-\begin{itemize}
-\item Contextual categories were introduced by Cartmell \cite{Cartmell1986} and were studied
-extensively by Voevodsky in \cite{VV_Csys_univ,VV_C-systems_monad,VV_C-systems_quotients}
-under the name C-systems.
-\item Categories with families, introduced by Dybjer in \cite{Dybjer1996}, model a
-theory of type dependency with sorts for contexts, context morphisms, types
-and terms. Among the virtues of categories with families are that its theory
-is essentially algebraic, and they are relatively simple to work with.
-
-Categories with families are models of a dependent type theory with a
-category of contexts, for each context $\Gamma$ a sort $\mathrm{Ty}(\Gamma)$ of
-types in context $\Gamma$, and for each type $A\in\mathrm{Ty}(\Gamma)$ a sort
-$\mathrm{Tm}(A)$ of terms of type $A$ in context $\Gamma$. We will see that
-the sorts $\mathrm{Tm}(A)$ are superfluous, because it will always be 
-naturally isomorphic to the set of sections of the projection morphism
-$p_A:\ctxext{\Gamma}{A}\to\Gamma$ in the category of contexts. The evident
-functor from categories with families to E-systems will forget that the contexts
-form a category, and therefore it will not be faithful.
-\item Comprehension categories were introduced by Jacobs in \cite{Jacobs1993}, as
-a minimal notion of categorical model in type theory, without really making
-precise what that means. 
-Comprehension categories are models of a dependent type theory with a
-category of context, and for each context $\Gamma$ a category of types. 
-\end{itemize}
-
-There is a simple test to quickly figure out some basic differences between different
-dependent type theories, asking what kind of structure remains if there are no
-types at all. In a contextual category, only the terminal object remains.
-However, when the presheaf $\mathrm{Ty}$ of a category with families is assumed
-to be empty, or when a category $\cat{E}$ fibered over some category is assumed
-to be empty, the underlying category of context remains. We shall see that
-E-systems are like contextual categories in this respect: only a singleton can
-be an E-system with no types. This complicates a thorough comparison between
-categories with families and comprehension categories on one side, and E-systems
-on the other. We shall construct functors from the categories of categories with
-families and comprehension categories directly preserving type dependency, but
-these functors will not be faithful. 
-
-Thus, it seems that both categories with families and comprehension categories
-have more structure than needed to model dependent type theory.
-
-\subsection*{Overview and conventions}
-In \autoref{sec:esys_defn}, we give the categorical definition of E-system in 
-several stages. First we define weakening systems, then projection systems and
-substitution systems, and finally we bundle them together into the definition
-of E-systems. The structure of the definition of weakening systems is 
-prototypcial: we first define the notion of pre-weakening systems, which are
-categories that come with a pre-weakening structure; then we define the notion
-of pre-weakening homomorphism, which is a functor preserving the weakening
-structure and we note that it makes sense to ask for the property that the
-functors of which the weakening system consists, are also pre-weakening
-homomorphisms; and finally, adding this requirement will be give the definition
-of weakening systems. We go through this process for each of the definitions
-of weakening systems, projection systems, substitution systems and E-systems.
-
-Throughout this section, our focus is on (set-valued) models of the essentially algebraic
-theory of type dependency, and in fact we shall not give the syntactic
-presentation of the theory. A syntactic presentation of type theory in the
-usual type theoretic style and models in arbitrary categories with finite limits
-have been presented by the author during the Homotopy Type Theory workshop in
-Oxford, November 2014%
-\footnote{See \url{http://www.qmac.ox.ac.uk/events/Talk\%20slides/Egbert\%20Rijke.pdf}}.
-
-In \autoref{sec:esys_props}, we introduce the auxiliary notion of E'-system.
-An E'-system consists of a pre-category $\cat{C}$ with a sub-pre-category
-$\cat{F}$ with the same objects as $\cat{C}$, and a functorial choice of
-pullbacks for any morphism $f:\Delta\to\Gamma$ in $\cat{C}$ and any
-$A\in\cat{F}/\Gamma$. The goal of this section is to show that 
-E'-systems and E-systems are different axiomatizations of the same structures,
-and apart from that the goal is to show some equational reasoning in E-systems.
-The properties proven in this section also serve to provide some of the 
-intuition behind the constructions in \autoref{sec:esys_compared}.
-
-Although we have introduced a notion of E-homomorphism, a better behaved category
-of E-systems is the one where E-homomorphisms lift factorizations. The condition
-that a functor lifts factorizations is also algebraic, so we still have an
-essentially algebraic theory of E-systems if we require this.
-In \autoref{sec:esys_compared}, where we introduce the category of E-systems
-with E-homomorphisms lifting factorizations, we construct an embedding from Voevodsky's
-B-systems into E-systems and prove that its image is the (full) subcategory
-of stratified E-systems. 
-
-\begin{rmk}
-In the present article we use $\jdeq$ for equality, because the equality we
-consider here will interpret the judgmental equality of type theory, 
-and we wish to reserve
-the more convenient symbol $=$ for the internal equality of E-systems, i.e.~for
-the identification types, as in \cite{TheBook}. 
-\end{rmk}
-
-\begin{rmk}
-Recall that the slice pre-category $\cat{C}/\Gamma/(\Delta,f)$ is isomorphic to the slice pre-category
-$\cat{C}/\Delta$, in the essentially algebraic theory of pre-categories. In the following,
-we shall usually identify these two categories. Recall also that for every functor
-$F:\cat{C}\to\cat{D}$ and every object $\Delta$ of $\cat{C}$, there is a functor
-$F/\Delta:\cat{C}/\Delta\to \cat{D}/F(\Delta)$ given by the action on morphisms of $F$. 
-\end{rmk}
-
-\begin{rmk}
-When we think of a category $\cat{F}$ as a category of fibrations or families
-over a context -- which will be the outset of the definition of E-systems --
-it will be convenient to denote the objects of the $\cat{F}$ with capital
-greek letters $\Gamma$, $\Delta$, \ldots, and the morphisms by capital latin letters
-$A$, $B$, $P$, $Q$, \ldots. When $A$ is a morphism into $\Gamma$, we will denote
-its domain by $\ctxext{\Gamma}{A}$, so we don't always have to introduce a name
-for the domain. When $A$ is a morphism into $\Gamma$ and
-$P$ is a morphism into $\ctxext{\Gamma}{A}$, it will also be convenient to denote the
-composition of $P$ with $A$ by $\ctxext{A}{P}$. Note that $\ctxext{A}{P}$
-is indeed the domain of $P$ in the slice category $\cat{F}/\Gamma$.
-\end{rmk}
-
-\begin{rmk}
-We have chosen not to use common type theoretical notation involving special
-expressions for judgments and for inference rules, because we want to focus
-on the algebraic structure of type dependency rather than on its syntax.
-
-We would also like to remark that although it appears that we introduce possibly
-large families of operations (a weakening operation $W_A$ for each morphism $A$,
-for instance), E-systems can actually be defined with finitely many
-operations. This becomes clearer when one defines an E-system in an arbitrary
-category with finite limits.
-\end{rmk}
-
-\subsection*{Acknowledgements}
-Several people have been indispensible throughout the research process.
-I would like to thank 
-Richard Garner for the early discussions on the inference rules of type 
-dependency we had in Barcelona and in Paris; 
-Joachim Kock for the many fruitful discussions and for hosting me at the Universitat
-Aut\`onoma de Barcelona during the year 2013-2014;
-Steve Awodey for sharing many insights and useful advice which lead to the
-definition of an E-system in arbitrary categories with finite limits;
-and Vladimir Voevodsky for inviting me to present E-systems at the Homotopy Type
-Theory workshop in Oxford (November 2014) and to visit the Institute for Advanced 
-Study in Princeton (March 2015), where the definition presented here was
-discovered.
+\input{introduction}
 
 %\tableofcontents
 
@@ -676,6 +345,9 @@ $ft^{m-n}:=ft^{n-1}\circ\cdots\circ ft^m(Y)=X$.
 
 \input{compared}
 
+\input{theories}
+
+\begin{comment}
 \section{Type constructors in E-systems}
 
 \begin{defn}
@@ -761,6 +433,7 @@ H(\tfev^{A,P})\jdeq \tfev^{H(A),H(P)}
 \end{equation*}
 \end{enumerate}
 \end{defn}
+\end{comment}
 
 \bibliographystyle{plain}
 %\phantomsection\addcontentsline{toc}{section}{References}
