@@ -103,6 +103,10 @@ a well-developed toolbox which can be used in its study. Therefore, recognizing
 that the theory of type dependency is essentially algebraic is a critical step
 in the development of its theory of models.
 
+An essentially algebraic theory can be built step by step in the following way.
+First, one fixes the set $S$ of sorts. Next, one fixes a set $\Sigma_0$ of total
+operations. 
+
 \subsection*{Setting up the essentially algebraic theory of E-systems}
 The theory of E-systems we present in the present article is an iteration in the
 development of theory of type
@@ -120,6 +124,24 @@ term expressions in the process of compilation and verification of a
 construction, this specific setup requires the natural numbers to exist in the 
 meta-theory. 
 
+In the specification of a formal language of type theory, we would therefore
+have three pairs of kinds of judgments that can be made:
+\begin{align*}
+\jalign\jctx{\Gamma} 
+& \jalign\jctxeq{\Gamma}{\Gamma'}
+  \\
+\jalign\jfam{\Gamma}{A} 
+& \jalign\jfameq{\Gamma}{A}{B}
+  \\
+\jalign\jterm{\Gamma}{A}{x} 
+& \jalign\jtermeq{\Gamma}{A}{x}{y}.
+\end{align*}
+These are asserting that $\Gamma$ is a context; that $\Gamma$ and $\Gamma'$ are
+judgementally equal contexts; that $A$ is a family in context $\Gamma$; that
+$A$ and $B$ are judgmentally equal families in context $\Gamma$; that $x$ is
+a term of $A$ in context $\Gamma$; and that $x$ and $y$ are judgmentally equal
+terms of $A$ in context $\Gamma$. 
+ 
 An E-system is therefore an algebra consisting of three sorts: $C$ for contexts,
 $F$ for families, and $T$ for terms. There is a map 
 $\eft:F\to C$ which determines for each family, in which context it is a
@@ -131,6 +153,106 @@ as
 T \arrow[d,"\ebd"] \\ F \arrow[d,"\eft"] \\ C
 \end{tikzcd}
 \end{equation*}
+This structure is represented by the following set of rules governing judgmental
+equality. First, judgmental equality is postulated to be an equivalence relation
+in all three cases (contexts, families and terms), so we require
+%\bgroup\small
+\begin{align*}
+& \inference
+  { \jctx{\Gamma}
+    }
+  { \jctxeq{\Gamma}{\Gamma}
+    } 
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      }
+    { \jctxeq{\Delta}{\Gamma}
+      } 
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      \jctxeq{\Delta}{\greek{E}}
+      }
+    { \jctxeq{\Gamma}{\greek{E}}
+      }
+    \\
+& \inference
+  { \jfam{\Gamma}{A}
+    }
+  { \jfameq{\Gamma}{A}{A}
+    } 
+& & \inference
+    { \jfameq{\Gamma}{A}{B}
+      }
+    { \jfameq{\Gamma}{B}{A}
+      }
+& & \inference
+    { \jfameq{\Gamma}{A}{B}
+      \jfameq{\Gamma}{B}{C}
+      }
+    { \jfameq{\Gamma}{A}{C}
+      }
+    \\
+& \inference
+  { \jterm{\Gamma}{A}{x}
+    }
+  { \jtermeq{\Gamma}{A}{x}{x}
+    }
+& & \inference
+    { \jtermeq{\Gamma}{A}{x}{y}
+      }
+    { \jtermeq{\Gamma}{A}{y}{x}
+      }
+& & \inference
+    { \jtermeq{\Gamma}{A}{x}{y}
+      \jtermeq{\Gamma}{A}{y}{z}
+      }
+    { \jtermeq{\Gamma}{A}{x}{z}
+      }
+\end{align*}
+%\egroup
+Second, there are convertibility rules assuring that the notion of being a
+family in a certain context, or a term of a family, is compatible with judgmental
+equality.
+\begin{align*}
+& \inference
+  { \jctxeq{\Gamma}{\Delta}
+    \jfam{\Gamma}{A}
+    }
+  { \jfam{\Delta}{A}
+    }
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      \jfameq{\Gamma}{A}{B}
+      }
+    { \jfameq{\Delta}{A}{B}
+      }
+    \\
+& \inference
+  { \jctxeq{\Gamma}{\Delta}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jterm{\Delta}{A}{x}
+    }
+& & \inference
+    { \jctxeq{\Gamma}{\Delta}
+      \jtermeq{\Gamma}{A}{x}{y}
+      }
+    { \jtermeq{\Delta}{A}{x}{y}
+      }
+    \\
+& \inference
+  { \jfameq{\Gamma}{A}{B}
+    \jterm{\Gamma}{A}{x}
+    }
+  { \jterm{\Gamma}{B}{x}
+    }
+& & \inference
+    { \jfameq{\Gamma}{A}{B}
+      \jtermeq{\Gamma}{A}{x}{y}
+      }
+    { \jtermeq{\Gamma}{B}{x}{y}
+      }
+\end{align*}
 When $A$ is a family in context $\Gamma$, there is also a context $\ctxext{\Gamma}{A}$,
 called the \emph{context extension of $A$}. Context extension allows us to consider
 `families over families', where a family $P$ over $A$ in context $\Gamma$, would
