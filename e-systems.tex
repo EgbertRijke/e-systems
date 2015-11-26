@@ -3,7 +3,7 @@
 \subsection{Weakening systems}
 
 \begin{defn}
-A \emph{pre-weakening structure on a pre-category $\cat{F}$} consists of a functor
+A \define{pre-weakening structure on a pre-category $\cat{F}$} consists of a functor
 $W_A:\cat{F}/\Gamma\to \cat{F}/\ctxext{\Gamma}{A}$ for every $A:\ctxext{\Gamma}{A}\to \Gamma$ in $\cat{F}$ such 
 that
 \begin{enumerate}
@@ -11,11 +11,11 @@ that
 \item $W_{\ctxext{A}{P}}\jdeq W_P\circ W_A$ for every $P\in\cat{F}/\ctxext{\Gamma}{A}$ and $A\in\cat{F}/\Gamma$.
 \item $W_A$ preserves the final object, i.e.~$W_A(\catid{\Gamma})\jdeq \catid{\ctxext{\Gamma}{A}}$.
 \end{enumerate}
-A \emph{pre-weakening system} is a pre-category together with a pre-weakening structure.
+A \define{pre-weakening system} is a pre-category together with a pre-weakening structure.
 \end{defn}
 
 \begin{defn}
-A \emph{pre-weakening homomorphism} $F:\cat{F}\to\cat{D}$ between pre-weakening systems
+A \define{pre-weakening homomorphism} $F:\cat{F}\to\cat{D}$ between pre-weakening systems
 is a functor $F:\cat{F}\to\cat{D}$ such that the square
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
@@ -43,8 +43,8 @@ and each $A\in\cat{F}/\Gamma$.
 \end{lem}
 
 \begin{defn}
-A \emph{weakening system} is a pre-weakening system for which every $W_f$ is a
-pre-weakening homomorphism. A \emph{weakening homomorphism} is a pre-weakening 
+A \define{weakening system} is a pre-weakening system for which every $W_f$ is a
+pre-weakening homomorphism. A \define{weakening homomorphism} is a pre-weakening 
 homomorphism between weakening systems.
 \end{defn}
 
@@ -218,8 +218,8 @@ a+(x-b)$.
 
 \subsection{Weakening systems with term structure}
 \begin{defn}
-A \emph{category with a term structure} is a pre-category $\cat{F}$ with a set $T(A)$ for every
-$A\in\cat{F}/\Gamma$ for every $\Gamma\in\cat{F}$. A \emph{functor with term structure} from $\cat{F}$ to $\cat{D}$
+A \define{category with a term structure} is a pre-category $\cat{F}$ with a set $T(A)$ for every
+$A\in\cat{F}/\Gamma$ for every $\Gamma\in\cat{F}$. A \define{functor with term structure} from $\cat{F}$ to $\cat{D}$
 is a functor $F:\cat{F}\to\cat{D}$ with a function $T(A)\to T(F(A))$ for
 every $A\in\cat{F}/\Gamma$, for every $\Gamma\in\cat{F}$.
 \end{defn}
@@ -230,7 +230,7 @@ Then $\cat{F}/\Gamma$ is a pre-category with term structure, where $T_{\cat{F}/\
 \end{defn}
 
 \begin{defn}
-A \emph{weakening system with term term structure} is the same thing as a weakening system,
+A \define{weakening system with term term structure} is the same thing as a weakening system,
 except that the underlying pre-category and the functors $W_A$ are required to
 be functors with term term structure. The equalities are also required to hold on the term structure.
 \end{defn}
@@ -251,12 +251,12 @@ We take $T(a)\defeq X$ for every $a\in G$.
 
 \subsection{Projection systems}
 \begin{defn}
-A \emph{pre-projection system} is a pre-weakening system with term structure with an element
+A \define{pre-projection system} is a pre-weakening system with term structure with an element
 $\tfid{A}\in T(W_A(A))$ for every $A\in\cat{F}/\Gamma$ and $\Gamma\in\cat{F}$. 
 \end{defn}
 
 \begin{defn}
-A \emph{pre-projection homomorphism} $F:\cat{F}\to\cat{D}$ is a pre-weakening homomorphism for which
+A \define{pre-projection homomorphism} $F:\cat{F}\to\cat{D}$ is a pre-weakening homomorphism for which
 \begin{equation*}
 F(\tfid{A})\jdeq \tfid{F(A)}
 \end{equation*}
@@ -273,8 +273,8 @@ Straightforward.
 \end{proof}
 
 \begin{defn}
-A \emph{projection system} is a pre-projection system for which every $W_A$ is
-a pre-projection homomorphism. A \emph{projection homomorphism} is a pre-projection homomorphism
+A \define{projection system} is a pre-projection system for which every $W_A$ is
+a pre-projection homomorphism. A \define{projection homomorphism} is a pre-projection homomorphism
 between projection systems.
 \end{defn}
 
@@ -294,16 +294,16 @@ is a projection system.
 \subsection{Substitution systems}
 
 \begin{defn}
-A \emph{pre-substitution structure} on a pre-category with term structure $\cat{F}$ consists
+A \define{pre-substitution structure} on a pre-category with term structure $\cat{F}$ consists
 of a functor with term structure $S_x:\cat{F}/\ctxext{\Gamma}{A}\to\cat{F}/\Gamma$ for every $x\in T(A)$ and
 $A\in\cat{F}/\Gamma$, such that $S_x(\catid{\ctxext{\Gamma}{A}})\jdeq\catid{\Gamma}$.
 
-A \emph{pre-substitution system} is a pre-category with term structure together with a
+A \define{pre-substitution system} is a pre-category with term structure together with a
 pre-substitution structure. 
 \end{defn}
 
 \begin{defn}
-A \emph{pre-substitution homomorphism} $F:\cat{F}\to\cat{D}$ is a functor with term structure for
+A \define{pre-substitution homomorphism} $F:\cat{F}\to\cat{D}$ is a functor with term structure for
 which the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
@@ -329,8 +329,8 @@ $\cat{F}/\Gamma	$ is a pre-substitution system.
 \end{lem}
 
 \begin{defn}
-A \emph{substitution system} is a pre-substitution system for which each
-$S_t$ is a pre-substitution homomorphism. A \emph{substitution homomorphism} is a
+A \define{substitution system} is a pre-substitution system for which each
+$S_t$ is a pre-substitution homomorphism. A \define{substitution homomorphism} is a
 pre-substitution homomorphism between substitution systems.
 \end{defn}
 
@@ -402,25 +402,25 @@ always be assumed to be unital. In the present context, we shall not need
 unital pre-E-systems or non-unital E-systems.
 
 \begin{defn}
-A \emph{pre-E-system} is a pre-category $\cat{F}$ with term structure
+A \define{pre-E-system} is a pre-category $\cat{F}$ with term structure
 with a pre-weakening structure $W$, a pre-substitution structure $S$ and a terminal
-object. A \emph{unital pre-E-system}, or simply \emph{pre-E-system}, is a non-unital pre-E-system
+object. A \define{unital pre-E-system}, or simply \define{pre-E-system}, is a non-unital pre-E-system
 which also has the structure of a pre-projection system. 
 \end{defn}
 
 \begin{defn}
-A \emph{pre-E-homomorphism} from $\mathbb{E}\to\mathbb{D}$ is a functor
+A \define{pre-E-homomorphism} from $\mathbb{E}\to\mathbb{D}$ is a functor
 $H:\mathbb{C}_\mathbb{E}\to\mathbb{C}_\mathbb{D}$ between the underlying categories
 with term structure, which is a pre-weakening homomorphism, a pre-substitution
 homomorphism, and which preserves the terminal object. 
 
-A \emph{unital} pre-E-homomorphism is a non-unital pre-E-homomorphism which is 
+A \define{unital} pre-E-homomorphism is a non-unital pre-E-homomorphism which is 
 also a pre-projection homomorphism. 
 \end{defn}
 
 \begin{defn}
 \label{defn:esystems}
-An \emph{E-system} is a unital pre-E-system in which 
+An \define{E-system} is a unital pre-E-system in which 
 \begin{enumerate}
 \item each $W_A$ is a unital pre-E-homomorphism,
 \item each $S_x$ is a unital pre-E-homomorphism,
@@ -428,7 +428,7 @@ An \emph{E-system} is a unital pre-E-system in which
 \item $S_x(\tfid{A})\jdeq x$ for any $x\in T(A)$ and $A\in\cat{F}/\Gamma$, and
 \item \label{f:SidfWff_id} $S_{\tfid{A}}\circ W_A/A\jdeq \catid{\cat{F}/\ctxext{\Gamma}{A}}$ for any $A\in\cat{F}/\Gamma$.
 \end{enumerate}
-An \emph{E-homomorphism} $H:\mathbb{E}\to\mathbb{D}$ is a functor from
+An \define{E-homomorphism} $H:\mathbb{E}\to\mathbb{D}$ is a functor from
 $\cat{F}_{\mathbb{E}}$ to $\cat{F}_{\mathbb{D}}$ which is both a projection
 homomorphism and a substitution homomorphism.
 \end{defn}

@@ -72,7 +72,7 @@ E'-systems can be thought of as strict versions of tribes%
 \footnote{Tribes are an invention of Joyal, see \url{http://ncatlab.org/homotopytypetheory/files/Joyal.pdf}}.
 
 \begin{defn}\label{defn:E'sys}
-An \emph{E'-system} consists of a pre-category $\cat{C}$ and a subpre-category $\cat{F}$ with
+An \define{E'-system} consists of a pre-category $\cat{C}$ and a subpre-category $\cat{F}$ with
 the same objects as $\cat{C}$, such that
 \begin{enumerate}
 \item $\cat{F}$ has a terminal object.
@@ -96,7 +96,7 @@ $f_\ast(\catid{\Gamma})\jdeq\catid{\Delta}$ and
 \begin{equation*}
 \pi_2(\catid{\Gamma},A)\jdeq\catid{\ctxext{\Gamma}{A}}
 \end{equation*}
-\item \label{defn:E'sys:c} For any $f:\Delta\to\Gamma$, $g:X\to\Delta$ and $A\in\cat{F}/\Gamma$, one
+\item \label{defn:E'sys:c} For any $f:\Delta\to\Gamma$, $g:\greek{E}\to\Delta$ and $A\in\cat{F}/\Gamma$, one
 has $(f\circ g)_\ast(A)\jdeq g_\ast(f_\ast(A))$ and 
 \begin{equation*}
 \pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ\pi_2(g,f_\ast(A))
@@ -250,7 +250,7 @@ For every $A,B\in\cat{F}/\Gamma$ we define the set
 \begin{equation*}
 \thom{A}{B}\defeq T(\ctxwk{A}{B}).
 \end{equation*}
-An element $f\in \thom{A}{B}$ is called an \emph{internal morphism in context
+An element $f\in \thom{A}{B}$ is called an \define{internal morphism in context
 $\Gamma$}. We sometimes write $\jhom{\Gamma}{A}{B}{f}$ to indicate that $f$ is
 an internal morphism over $\Gamma$, or we may draw a diagram of the form
 \begin{equation*}
@@ -282,7 +282,7 @@ product $\Pi_A$.
 
 \begin{defn}
 Let $A,B\in\cat{F}/\Gamma$.
-For any $f\in\thom{A}{B}$ we define the pre-composition E-homomorphism
+For any $f\in\thom{A}{B}$ we define the \define{pre-composition} E-homomorphism
 \begin{equation*}
 f_\ast \defeq S_f\circ W_A/B : \cat{F}/\ctxext{\Gamma}{B}\to\cat{F}/\ctxext{\Gamma}{A}.
 \end{equation*}
@@ -421,7 +421,7 @@ weakening and substitution operations.
 
 \begin{defn}
 Let $x\in T(A)$ and $u\in T(S_x(P))$ for $A\in\cat{F}/\Gamma$ and $P\in\cat{F}/\ctxext{\Gamma}{A}$. 
-We define the \emph{term extension of $x$ and $u$} to be
+We define the \define{term extension of $x$ and $u$} to be
 \begin{equation*}
 \tmext{x}{u}\defeq \subst{u}{{x}{\tfid{\ctxext{A}{P}}}}\in T(\ctxext{A}{P}).
 \end{equation*}
