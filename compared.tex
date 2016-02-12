@@ -1,4 +1,4 @@
-\section{E-systems compared to other systems of type dependency}\label{sec:esys_compared}
+\section{Telescopic type systems compared to Voevodsky's B-systems}\label{sec:esys_compared}
 In an effort to formalize the simplicial set model of Martin-L\"of type theory
 with the univalence axiom, Voevodsky has studied various notions of models of
 type theory, taking Cartmell's \emph{contextual categories} as a starting
@@ -21,67 +21,9 @@ this is a theorem that tells us that we need no further axioms. It is
 unknown whether the categories of C-systems and B-systems are actually equivalent.
 This question would settle the sufficiency of the conditions of being a B-system.
 
-The category of B-systems will be shown to be equivalent to the category of
-stratified E-systems. However, we do not arrive at the fact that the functor
-$\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys}$ is full without imposing an additional
-condition on the E-homomorphisms. 
-To ensure that the category of stratified E-systems with stratified 
-E-homomorphisms between them is a full subcategory of the category 
-$\mathbf{Esys}$, we will require that the underlying functor of each E-homomorphism
-lifts factorizations. It is
-important to note that this condition is also algebraic, so that the category
-of E-systems remains algebraic.
+\subsection{Stratified telescopic type systems}
 
-\subsection{Lifting factorizations}
-Recall
-that for any morphism $f:X\to Y$ in a category $\cat{C}$ there is a category
-$\mathbf{fact}(f)$ of factorizations of $f$. Also, any functor $F:\cat{C}\to\cat{D}$
-determines a functor $F_{\mathbf{fact}(f)}:\mathbf{fact}(f)\to\mathbf{fact}(H(f))$
-for any morphism $f$ of $\cat{C}$.
-
-\begin{defn}
-A functor $F:\cat{C}\to\cat{D}$ is said to
-\define{lift factorizations} if for any $f\in\cat{C}/X$, the functor
-$F_{\mathbf{fact}(f)}:\mathbf{fact}(f)\to\mathbf{fact}(F(f))$ is an isomorphism
-of categories. 
-\end{defn}
-
-\begin{comment}
-\begin{rmk}
-We may choose the property of lifting factorizations
-to involve either an equivalence or an isomorphism of categories. The
-isomorphism-version, would say that for every factorization $h'\circ g'$
-of $F(f)$ there is a unique factorization $f\jdeq h\circ g$ in $\cat{C}$ such
-that $F(g)\jdeq g'$ and $F(h)\jdeq h'$. In the version with equivalences,
-the uniqueness is replaced by uniqueness up to isomorphism, and the equalites
-are replaced by an isomorphism in $\mathbf{fact}(F(f))$. 
-
-It is easier to state the isomorphism version of lifting factorizations with
-inference rules and it might be easier to explain this condition on type theoretical
-grounds, although the equivalence version has the advantage of being
-categorical (i.e.~invariant under equivalence of categories).
-
-In the present
-context, it doesn't matter very much which one we pick: the categories in which
-we're interested are all posets.
-\end{rmk}
-\end{comment}
-
-\begin{eg}
-For any slice category $\cat{C}/X$, the forgetful functor $\cat{C}/X\to\cat{C}$
-lifts factorizations.
-\end{eg}
-
-\begin{defn}
-We write $\mathbf{Esys}$ for the category of E-systems where the underlying
-functor of each E-homomorphism lifts factorizations.
-\end{defn}
-
-\subsection{Stratified E-systems}
-
-In this subsection we define the notion of stratified E-system. Then we show
-that the category $\mathbf{Esys_s}$ of stratified E-systems with homomorphisms preserving the
-stratification, is a full subcategory of $\mathbf{Esys}$. 
+In this subsection we define the notion of stratified telescopic type system. Then we show that the category $\mathbf{Tel}_s$ of stratified telescopic type systems with homomorphisms preserving the stratification, is a full subcategory of $\mathbf{Tel}$. 
 
 \begin{defn}
 A category $\cat{C}$ with terminal object is said to be \define{stratified} if there exists a 
@@ -156,18 +98,18 @@ functors in a pre-weakening or pre-substitution system are stratified.
 \end{rmk}
 
 \begin{defn}
-A pre-E-system is said to be \define{stratified} if its underlying category is
+A pre-telescopic type system is said to be \define{stratified} if its underlying category is
 stratified and if each $W_A$ and $S_x$ is a stratified functor. The category of
-stratified pre-E-systems with stratified E-homomorphisms between them is denoted by
-$\mathbf{Esys_s}$.
+stratified pre-telescopic type systems with stratified E-homomorphisms between them is denoted by
+$\mathbf{Tel}_s$.
 \end{defn}
 
 \begin{cor}\label{lem:strat_full}
-The category of stratified pre-E-systems is a full subcategory of the category of
-pre-E-systems.
+The category of stratified pre-telescopic type systems is a full subcategory of the category of
+pre-telescopic type systems.
 \end{cor}
 
-\subsection{The embedding of B0-systems into pre-E-systems}
+\subsection{The embedding of B0-systems into pre-telescopic type systems}
 
 Voevodsky distinguishes between pre-B-systems, which is an essentially algebraic theory with
 only operations and no equalities; B0-systems, which is an extension of the
@@ -177,15 +119,15 @@ theory of B0-systems with equalities ensuring that the rest of the operations
 are compatible with each other. Voevodsky, furthermore distinguishes
 non-unital and unital versions of these, and noted that not all B-homomorphisms
 between unital B-systems are unital. The same distinguishment could be made for 
-E-systems by forgetting the projection structure, but we have not been able to construct a
-functor from unital B0-systems to unital pre-E-systems. Therefore, we shall only
+telescopic type systems by forgetting the projection structure, but we have not been able to construct a
+functor from unital B0-systems to unital pre-telescopic type systems. Therefore, we shall only
 consider non-unital B0-systems and unital B-systems. In this section we will
 recall the definition of non-unital B0-systems and construct a full and faithful
-functor from them to the category of pre-E-systems. 
+functor from them to the category of pre-telescopic type systems. 
 
 One reason for introducing B-systems by first introducing pre-B-systems is that
 it is clear in the definition of pre-B-systems that there are only countably
-many operations. Since we are interested in embedding the B-systems into E-systems,
+many operations. Since we are interested in embedding the B-systems into telescopic type systems,
 we shall organize the definition of B-systems a bit differently, but of course
 the resulting definition of B0-systems and B-systems will be (trivially) 
 equivalent.
@@ -276,7 +218,7 @@ by $\mathbf{B0sys}$.
 \end{defn}
 
 Now that we have defined the category of B0systems, we can start defining the
-embedding into pre-E-systems.
+embedding into pre-telescopic type systems.
 
 \begin{defn}
 Let $\mathbb{B}$ be a B-framework. Then $\mathbb{B}$ determines
@@ -317,8 +259,8 @@ and $U(\mathbb{B})/(n,X)$.
 
 \begin{defn}
 Let $\mathbb{B}$ be a B0-system. Then $U(\mathbb{B})$ can be given the structure
-of a pre-E-system. We write $\mathcal{E}(\mathbb{B})$ for the resulting
-pre-E-system. Thus we get a functor $\mathcal{E}:\mathbf{B0sys}\to\mathbf{Esys_s}$.
+of a pre-telescopic type system. We write $\mathcal{E}(\mathbb{B})$ for the resulting
+pre-telescopic type system. Thus we get a functor $\mathcal{E}:\mathbf{B0sys}\to\mathbf{Tel}_s$.
 \end{defn}
 
 \begin{constr}
@@ -387,29 +329,29 @@ $\tilde{H}_n$ that this B0-homomorphism is mapped back to $H$, so we conclude
 that $\mathcal{E}$ is full.
 \end{proof}
 
-\subsection{B-systems are stratified E-systems}
-There are two properties which hold for pre-E-systems of the form $\mathcal{E}
+\subsection{B-systems are stratified telescopic type systems}
+There are two properties which hold for pre-telescopic type systems of the form $\mathcal{E}
 (\mathbb{B})$ for some B0-system $\mathbb{B}$, 
 which stand in the way of proving that the category of stratified
-pre-E-systems is equivalent to the category of B0-systems. The first is that
+pre-telescopic type systems is equivalent to the category of B0-systems. The first is that
 for any $A\in U(\mathbb{B})/\Gamma$ and $P\in U(\mathbb{B})/\ctxext{\Gamma}{A}$,
 we have an isomorphism $T(\ctxext{A}{P})\cong\bigsqcup_{x\in T(A)}T(S_x(P))$.
 The second, which depends on the first, is that for any $(x,u)\in T(\ctxext{A}{P})$
 we have $S(x,u)\jdeq S_u\circ S_x/P$. In other words, both the term structure
 and the pre-substitution structure of $\mathcal{E}(\mathbb{B})$ are compatible
 with the categorical structure of the underlying category $U(\mathbb{B})$.
-However, to prove the corresponding facts for E-systems, we needed the full
-set of conditions on unital E-systems: to prove that the term structure of
+However, to prove the corresponding facts for telescopic type systems, we needed the full
+set of conditions on unital telescopic type systems: to prove that the term structure of
 $U(\mathbb{B})$ is compatible with composition we needed units, and to prove 
 that the operations $S_x$ are compatible with the pairing function we needed
 that they are E-homomorphisms. 
 
-Presumably, we can assume these compatibility conditions on pre-E-systems in order
-to prove the desired equivalence of B0-systems and stratified pre-E-systems. However,
+Presumably, we can assume these compatibility conditions on pre-telescopic type systems in order
+to prove the desired equivalence of B0-systems and stratified pre-telescopic type systems. However,
 that seems somewhat unnatural, especially given that they automatically hold
-for E-systems. Thus, for the remainder of this section we set out to show that
+for telescopic type systems. Thus, for the remainder of this section we set out to show that
 the category of unital B-systems is equivalent to the category of stratified 
-unital E-systems.
+unital telescopic type systems.
 
 \begin{defn}
 A \define{unital B0-system} is a B0-system with maps
@@ -447,7 +389,7 @@ We denote the category of B-systems by $\mathbf{Bsys}$.
 
 \begin{lem}
 For any non-unital B-system $\mathbb{B}$, $\mathcal{E}(\mathbb{B})$ is a 
-stratified non-unital E-system. 
+stratified non-unital telescopic type system. 
 \end{lem}
 
 \begin{proof}
@@ -457,16 +399,16 @@ Straightforward.
 \begin{defn}
 For any unital B-system $\mathbb{B}$, $\mathcal{E}(\mathbb{B})$ has a
 projection structure. We thus obtain a functor 
-$\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys}$ from unital B-systems to E-systems.
+$\mathcal{E}:\mathbf{Bsys}\to\mathbf{Tel}$ from unital B-systems to telescopic type systems.
 \end{defn}
 
 \begin{constr}
 We first need to extend the functor $\mathcal{E}:\mathbf{B0sys}\to\mathbf{Esys_p}$
-from non-unital B0-systems to non-unital pre-E-systems, to a functor from
-unital B-systems to E-systems.
+from non-unital B0-systems to non-unital pre-telescopic type systems, to a functor from
+unital B-systems to telescopic type systems.
 
 We need to give $\mathcal{E}(\mathbb{B})$ the structure of a unital
-pre-E-system. We construct by induction on $m\in \mathbb{N}$, a term of type 
+pre-telescopic type system. We construct by induction on $m\in \mathbb{N}$, a term of type 
 $T(m,W_{(m,X)}(X))$ with the property that that 
 \begin{equation*}
 S_{\tfid{(m,X)}}\circ W_{(m,X)}/X\jdeq\catid{U(\mathbb{B})/X},
@@ -516,25 +458,25 @@ $x\in T(m,X)$.
 \end{constr}
 
 \begin{thm}
-The functor $\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys}$ lifts to an equivalence
-to the subcategory $\mathbf{Esys_s}$ of stratified E-systems: i.e.~we have a
+The functor $\mathcal{E}:\mathbf{Bsys}\to\mathbf{Tel}$ lifts to an equivalence
+to the subcategory $\mathbf{Tel}_s$ of stratified telescopic type systems: i.e.~we have a
 commuting diagram
 \begin{equation*}
 \begin{tikzcd}
-& \mathbf{Esys_s} \arrow[dr,"\subseteq"]\\
-\mathbf{Bsys} \arrow[ur,"\simeq"] \arrow[rr,swap,"\mathcal{E}"] & & \mathbf{Esys}
+& \mathbf{Tel}_s \arrow[dr,"\subseteq"]\\
+\mathbf{Bsys} \arrow[ur,"\simeq"] \arrow[rr,swap,"\mathcal{E}"] & & \mathbf{Tel}
 \end{tikzcd}
 \end{equation*}
 \end{thm}
 
 \begin{proof}
 We already have shown that $\mathcal{E}$ factors through the stratified
-E-systems and that it is full and faithful, so it remains
-to show that every stratified E-system is in the image of $\mathcal{E}$. In
-other words, for every stratified E-system $\mathbb{E}$ we need to construct
+telescopic type systems and that it is full and faithful, so it remains
+to show that every stratified telescopic type system is in the image of $\mathcal{E}$. In
+other words, for every stratified telescopic type system $\mathbb{E}$ we need to construct
 a B0-system $\mathbb{B}$ such that $\mathcal{E}(\mathbb{B})\cong\mathbb{E}$. 
 
-Let $\mathbb{E}$ be a stratified E-system. From the stratification functor
+Let $\mathbb{E}$ be a stratified telescopi type system. From the stratification functor
 $L:\mathbb{C}_{\mathbb{E}}\to (\mathbb{N},\geq)$ we obtain the pre-image
 presheaf $B(\mathbb{E}):\op{(\mathbb{N},\leq)}\to\mathbf{Set}$ given by
 \begin{align*}
@@ -547,14 +489,14 @@ to be given by
 \end{equation*}
 with the projection map $\ebd[n]\defeq\pi_1:\tilde{B}(\mathbb{E})_n\to B(\mathbb{E})_n$.
 This defines the B-framework $B(\mathbb{E})$, and we obtain a functor
-$B:\mathbf{Esys_s}\to\mathbf{B0sys}$. It is immediate that we get isomorphisms
+$B:\mathbf{Tel}_s\to\mathbf{B0sys}$. It is immediate that we get isomorphisms
 $U(B(\mathbb{E}))\cong\cat{F}_{\mathbb{E}}$, natural in $\mathbb{E}$. Also, we
 get natural isomorphisms $B(\mathbb{E}/\Gamma)\cong B(\mathbb{E})/\Gamma$. 
 
 The weakening and substitution structures on
 $B(\mathbb{E})$ are given by $W_X\defeq B(W_{p_X})$ and $S_{(X,x)}\defeq B(S_x)$,
 respectively. Since these functors are assumed to be stratified, they define
-homomorphisms of B-frameworks. Because a weakening system of an E-system is
+homomorphisms of B-frameworks. Because a weakening system of a telescopic type system is
 required to be functorial, i.e.~$W_{\ctxext{A}{P}}\jdeq W_P\circ W_A$ and
 $W_{\catid{\Gamma}}\jdeq\catid{\cat{F}_{\mathbb{E}}/\Gamma}$, it follows
 immediately that the weakening structure on $U(B(\mathbb{E}))$ is isomorphic to
@@ -616,6 +558,7 @@ natural transformation $W_A:B/(B_{n\leq n+1}(A))\Rightarrow B/A$.
 \end{defn}
 \end{comment}
 
+\section{Telescopic type systems compared to comprehension categories and to categories with families}
 \subsection{Telescopic categories with families}
 
 \begin{defn}
@@ -623,24 +566,24 @@ A \define{category with families} consists of
 \begin{enumerate}
 \item A category $\cat{C}$ with a terminal object $1$.
 \item A presheaf $\mathrm{Ty}:\op{\cat{C}}\to\mathbf{Set}$. We will write
-$f_\ast(A)$ for $\mathrm{Ty}(f,A)$.
+$f^\ast(A)$ for $\mathrm{Ty}(f,A)$.
 \item For any $A\in\mathrm{Ty}(\Gamma)$, a morphism
 \begin{equation*}
 p_A : \ctxext{\Gamma}{A}\twoheadrightarrow \Gamma
 \end{equation*}
 in $\cat{C}$.
 \item a preasheaf $\mathrm{Tm}:\op{(\int_\cat{C}\mathrm{Ty})}\to\mathbf{Set}$.
-The action of a morphism $f:(\Delta,f_\ast(A))\to(\Gamma,A)$ of $\int_\cat{C}\mathrm{Ty}$
-on a term $x\in \mathrm{Tm}(A)$ is also written by $f_\ast(x)$.
-\item a term $\delta_A\in\mathrm{Tm}(\ctxext{\Gamma}{A},(p_A)_\ast(A))$ for every
+The action of a morphism $f:(\Delta,f^\ast(A))\to(\Gamma,A)$ of $\int_\cat{C}\mathrm{Ty}$
+on a term $x\in \mathrm{Tm}(A)$ is also written by $f^\ast(x)$.
+\item a term $\delta_A\in\mathrm{Tm}(\ctxext{\Gamma}{A},(p_A)^\ast(A))$ for every
 $A\in\mathrm{Ty}(\Gamma)$, 
 \end{enumerate}
 with the universal property that for every $f:\Delta\to\Gamma$ in $\cat{C}$, 
 the function
 \begin{equation*}
-\theta\mapsto\theta_\ast(\delta_A)
+\theta\mapsto\theta^\ast(\delta_A)
   : \{\theta:\Delta\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq f\}\to
-    \mathrm{Tm}(f_\ast(A))
+    \mathrm{Tm}(f^\ast(A))
 \end{equation*}
 is a bijection. We denote the inverse of this map by $\mu_{A,f}$. 
 \end{defn}
@@ -648,7 +591,7 @@ is a bijection. We denote the inverse of this map by $\mu_{A,f}$.
 There are of course many more sensible examples of categories with families,
 but the following class of examples causes us to doubt whether it is possible
 at all to have a faithful functor from the category of categories
-with families to the category of E-systems. 
+with families to the category of telescopic type systems. 
 
 \begin{eg}
 Every category $\cat{C}$ with a terminal object and the empty presheaf 
@@ -657,9 +600,9 @@ $\mathrm{Ty}$, is a category with families.
 
 \begin{rmk}
 Although a terminal object is usually assumed to exist, not every object 
-of a D-system is assumed to be `fibrant', i.e.~it is
+of a category with families is assumed to be `fibrant', i.e.~it is
 not the case that every $X\to 1$ is a composition of projections $p_A$.
-We could only hope that there is a functor from D-sytems to E-systems without
+We could only hope that there is a functor from D-sytems to telescopic type systems without
 terminal objects.
 \end{rmk}
 
@@ -675,12 +618,12 @@ Let $\mathbb{D}$ be a category with families. Then there is a natural isomorphis
 in the presheaf category $\mathrm{Psh}(\int_{\cat{C}}\mathrm{Ty})$. 
 \begin{comment}
 The
-natural isomorphism $\varphi$ is such that the term $\delta_A\in\mathrm{Tm}((p_A)_\ast(A))$
+natural isomorphism $\varphi$ is such that the term $\delta_A\in\mathrm{Tm}((p_A)^\ast(A))$
 corresponds to the unique arrow $\tilde{q}_A$ which fits in the diagram
 \begin{equation*}
 \begin{tikzcd}
 \ctxext{\Gamma}{A} \arrow[ddr,bend right=15,equals] \arrow[drr,bend left=15,equals] \arrow[dr,"{\tilde \delta_A}"] \\
-& \ctxext{{\Gamma}{A}}{(p_A)_\ast(A)} \arrow[d,fib] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+& \ctxext{{\Gamma}{A}}{(p_A)^\ast(A)} \arrow[d,fib] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
 & \ctxext{\Gamma}{A} \arrow[r,"{p_A}"] & \Gamma
 \end{tikzcd}
 \end{equation*}
@@ -688,17 +631,249 @@ corresponds to the unique arrow $\tilde{q}_A$ which fits in the diagram
 \end{defn}
 
 \begin{constr}
-We define the inverse of $\varphi_A$ by $\theta\mapsto\theta_\ast(\delta_A)$. Verifying
+We define the inverse of $\varphi_A$ by $\theta\mapsto\theta^\ast(\delta_A)$. Verifying
 that these form a natural isomorphism is straightforward.
 \end{constr}
 
+The following two definitions define subclasses of telescopic D-systems and 
+coherent telescopic D-systems, and the latter structure is the same as an E'-system
+(without empty context). In \autoref{defn:comp_to_telescopic}, we will show how
+to obtain a telescopic D-system from any comprehension category. This construction
+will also generate a telescopic D-system out of any D-system, because D-systems
+are comprehension categories.
+
+\begin{defn}
+Let $\cat{C}$ be a D-system. In this definition, we will write
+$\mathrm{Fam}$ for the presheaf of types. The D-system $\cat{C}$
+is said to be \define{telescopic}, if we have elements $\emptyf[\Gamma]\in
+\mathrm{Fam}(\Gamma)$ for each $\Gamma\in\cat{C}$, and maps 
+$P\mapsto\ctxext{A}{P}:\mathrm{Fam}(\ctxext{\Gamma}{A})\to \mathrm{Fam}(\Gamma)$
+such that
+\begin{enumerate}
+\item 
+\begin{enumerate}
+\item for any $A\in\mathrm{Fam}(\Gamma)$ and $P\in\mathrm{Fam}(\ctxext{\Gamma}{A})$,
+one has $\ctxext{\Gamma}{{A}{P}}\jdeq\ctxext{{\Gamma}{A}}{P}$, and
+\begin{equation*}
+p_{\ctxext{A}{P}}\jdeq p_A\circ p_P,
+\end{equation*}
+\item and for any $\Gamma\in\cat{C}$ one has $\ctxext{\Gamma}{\emptyf[\Gamma]}\jdeq\Gamma$, and
+\begin{equation*}
+p_{\emptyf[\Gamma]}\jdeq\catid{\Gamma}.
+\end{equation*}
+\end{enumerate}
+\item 
+\begin{enumerate}
+\item for any $A\in\mathrm{Fam}(\Gamma)$, $P\in\mathrm{Fam}(\ctxext{\Gamma}{A})$
+and $Q\in\mathrm{Fam}(\ctxext{{\Gamma}{A}}{P})$, one has
+\begin{equation*}
+\ctxext{{A}{P}}{Q}\jdeq\ctxext{A}{{P}{Q}},
+\end{equation*}
+\item and for any $A\in\mathrm{Fam}(\Gamma)$, one has
+\begin{equation*}
+\ctxext{\emptyf[\Gamma]}{A}\jdeq\ctxext{A}{\emptyf[\ctxext{\Gamma}{A}]}\jdeq A.
+\end{equation*}
+\end{enumerate}
+\item 
+\begin{enumerate}
+\item for any $A\in\mathrm{Fam}(\Gamma)$, $P\in\mathrm{Fam}(\ctxext{\Gamma}{A})$
+and any $f:\Delta\to\Gamma$ in $\cat{C}$, one has
+\begin{equation*}
+f^\ast(\ctxext{A}{P})\jdeq \ctxext{(f^\ast(A))}{(\pi_2(f,A)^\ast(P))},
+\end{equation*}
+\item and for any $f:\Delta\to\Gamma$ in $\cat{C}$, one has
+\begin{equation*}
+f^\ast(\emptyf[\Gamma])\jdeq\emptyf[\Delta].
+\end{equation*}
+\end{enumerate}
+\end{enumerate} 
+\end{defn}
+
+\begin{lem}
+A D-system is telescopic if and only if  the following two conditions hold:
+\begin{enumerate}
+\item There is a global section $\phi:\cat{C}\to \int_{\cat{C}}\mathrm{Ty}$ of $\pi$.
+\item For every $P\in\mathrm{Ty}(\ctxext{\Gamma}{A})$,
+the morphism $p_A:\ctxext{\Gamma}{A}\to\Gamma$ has a unique cocartesian lift
+at $P$.
+\end{enumerate}
+\end{lem}
+
+\begin{proof}
+Let $\mathbb{D}$ be a telescopic D-system. To show that $\mathbb{D}$ has the two
+stated properties:
+\begin{enumerate}
+\item The choice $\emptyf[\Gamma]\in\mathrm{Ty}(\Gamma)$ together with the fact
+that $f^\ast(\emptyf[\Gamma])\jdeq\emptyf[\Delta]$ for any $f:\Delta\to\Gamma$,
+is a global section of $\mathrm{Ty}$. 
+\item We have to show that each for $P\in\mathrm{Ty}(\ctxext{\Gamma}{A})$,
+the projection $p_A:\ctxext{\Gamma}{A}\to\Gamma$ has a unique cocartesian lift
+at $P$. We first define a morphism $g:(\ctxext{\Gamma}{A},P)\to(\Gamma,\ctxext{A}{P})$
+in $\int_{\cat{C}}\mathrm{Ty}$. Thus, we have to find a morphism
+$g:\ctxext{\Gamma}{A}\to\Gamma$ with the property that $g^\ast(\ctxext{A}{P})
+\jdeq P$. 
+
+In other words, we have to show that there is a unique 
+$Q\in\mathrm{Ty}(\Gamma)$, and a unique morphism $g:(\ctxext{\Gamma}{A},P)\to
+(\Gamma,Q)$ in $\int_C\mathrm{Ty}$, such that $\pi(g)\jdeq p_A$ and such that
+for every $g':(\ctxext{\Gamma}{A},P)\to(\Gamma,Q')$ with the property that
+$\pi(g')\jdeq p_A$, there is a unique $u:Q\to Q'$ such that $g'=u\circ g$ and
+$\pi(u)\jdeq\idfunc[\Gamma]$. 
+
+Note that the morphism $(\ctxext{\Gamma}{A},P)\to (\Gamma,\ctxext{A}{P})$
+in $\int_{\cat{C}}\mathrm{Ty}$.  
+\end{enumerate}
+
+Let $\mathbb{D}$ be a D-system for which the stated two conditions hold. To show
+that $\mathbb{D}$ is a telescopic D-system, we systematically go through each of the
+properties:
+\begin{enumerate}
+\item 
+\end{enumerate} 
+\end{proof}
+
+\begin{conj}
+The notion of being telescopic is a property.
+\end{conj}
+
+\begin{defn}
+A telescopic D-system is said to be \define{coherent}, if for any $A,A'\in\mathrm{Fam}(\Gamma)$
+such that $p_A\jdeq p_{A'}$, and any $f:\Delta\to\Gamma$, we have
+$p_{f^\ast(A)}\jdeq p_{f^\ast(A')}$ and $\pi_2(f,A)\jdeq \pi_2(f,A')$.
+\end{defn}
+
+\begin{thm}
+An E'-system without empty context is the same thing as a coherent telescopic D-system.
+\end{thm}
+
+\begin{proof}
+Let $\mathbb{E}$ be an E'-system without empty context. Then we define the
+presheaf $\mathrm{Fam}$ on $\cat{C}$ on objects by
+\begin{equation*}
+\mathrm{Fam}(\Gamma)\defeq \mathrm{Obj}(\cat{F}/\Gamma)
+\end{equation*}
+and on morphisms by the action on objects of $f^\ast$, for each $f:\Delta\to
+\Gamma$ in $\cat{C}$. By condition (b) and (c) in the definition of E'-systems, it
+follows that this defines a contravariant functor. 
+
+We define a functor $\mathcal{P}:\int_{\cat{C}}\to\cat{C}^\square$ by sending
+the pair $(\Gamma,A)$ to the morphism $A:\ctxext{\Gamma}{A}\to\Gamma$ in
+$\cat{C}$, and by sending $f:(\Delta,f^\ast(A))\to (\Gamma,A)$ to the pullback
+square
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\ctxext{\Delta}{f^\ast(A)} \arrow[d,swap,"{f^\ast(A)}"] \arrow[r,"{\pi_2(f,A)}"] &
+\ctxext{\Gamma}{A} \arrow[d,"A"] \\ \Delta \arrow[r,"f"] & \Gamma
+\end{tikzcd}
+\end{equation*}
+This is also functorial because of conditions (b) and (c) in the definition of
+E'-systems. Thus, we have defined a D-system
+\begin{equation*}
+\begin{tikzcd}
+\int_{\cat{C}}\mathrm{Fam} \arrow[rr,"{\mathcal{P}}"] \arrow[dr,"{\pi}"] & & \cat{C}^\square \arrow[dl,"{\mathrm{cod}}"] \\ & \cat{C}
+\end{tikzcd}
+\end{equation*}
+and it is straightforward to verify that this D-system is telescopic and coherent.
+
+Conversely, suppose $\mathbb{D}$ is a telescopic D-system with underlying category
+$\cat{C}$. Define $\cat{F}$ to be the category with the same objects as
+$\cat{C}$, and morphisms of the form $p_A$. To check that this forms a category,
+note that $p_{\emptyf[\Gamma]}\jdeq\catid{\Gamma}$ and $p_A\circ p_P\jdeq
+p_{\ctxext{A}{P}}$.
+
+Now let $f:\Delta\to\Gamma$ be a morphism in $\cat{C}$. For any $A\in\cat{F}/\Gamma$,
+we have an element $\tilde{A}\in\mathrm{Fam}(\Gamma)$ such that $p_{\tilde{A}}
+\jdeq A$, and we can form a pullback square
+\begin{equation*}
+\begin{tikzcd}[column sep=large]
+\ctxext{\Delta}{f^\ast(\tilde{A})} \arrow[r,"{\pi_2(f,\tilde{A})}"] \arrow[d,fib,swap,"p_{f^\ast(\tilde{A})}"]
+& \ctxext{\Gamma}{\tilde{A}} \arrow[d,fib,"{p_{\tilde{A}}}"] \\
+\Delta \arrow[r,"f"] & \Gamma
+\end{tikzcd}
+\end{equation*}
+By the coherence condition, this choice of pullback square does not depend on the
+choice of $\tilde{A}$ such that $p_{\tilde{A}}\jdeq A$ (having this fact 
+available is precisely what the coherence condition is for). The verification of conditions
+(a) to (d) of \autoref{defn:E'sys} is straightforward.
+\end{proof}
+
+\subsection{Coherent comprehension categories}
+In this section we recall Jacobs' notion of comprehension categories, and 
+Dybjer's notion of categories with families. It is shown in 
+\cite{Hofmann_syntax_semantics} that the category of categoriew with families
+is equivalent to the category of categories with attributes, which forms a
+subcategory of comprehension categories. Thus, for our purpose of comparing
+telescopic type systems with various existing notions of models of type dependency, it suffice
+to make the comparison with comprehension categories.
+
+In this section we do the preparateions for this comparison. After having
+introduced categories with families, we prove that categories with families
+with the extra structure of `being closed under family extension' in a coherent
+way, are E'-systems without empty context. 
+
+\begin{defn}
+Let $p:\cat{E}\to\cat{B}$ be a functor and let $f:\Delta\to \Gamma$ be a morphism in $\cat{B}$.
+A morphism $g:A\to B$ in $\cat{E}$ is said to be \define{cartesian over $f$}, if
+\begin{enumerate}
+\item $p(g)\jdeq f$, and 
+\item For all $g':A'\to B$ with $p(g')\jdeq f$, there is a unique $u:A'\to A$
+such that $g'=g\circ u$ and $p(u)\jdeq\catid{\Delta}$. 
+\end{enumerate}
+Dually, a morphism $g:A\to B$ in $\cat{E}$ is said to be \define{cocartesian over
+$f$}, if
+\begin{enumerate}
+\item $p(g)\jdeq f$, and
+\item For all $g':A\to B'$ with $p(g')\jdeq f$, there is a unique $v:B\to B'$
+such that $g'=v\circ g$ and $p(v)\jdeq\catid{\Gamma}$. 
+\end{enumerate}
+A (co)cartesian morphism over $f$ is also called a \define{(co)cartesian lift of $f$}.
+\end{defn}
+
+\begin{defn}
+A functor $p:\cat{E}\to\cat{B}$ is called a \define{Grothendieck fibration} if
+every morphism into an object of the form $p(A)$ for some object $A$ of $\cat{E}$ 
+has a cartesian lift, and cartesian morphisms are closed under composition.
+\end{defn}
+
+\begin{defn}
+A Grothendieck fibration $p:\cat{E}\to\cat{B}$ is said to be \define{split}, if
+there is a functorial choice of cartesian lifts, i.e.~for every $f:\Delta\to \Gamma$ in 
+$\cat{B}$ and any $B\in \cat{E}$ such that $p(B)\jdeq \Gamma$,
+there is a cartesian lift $j(B,f):A \to B$ for some object $A$ of $\cat{E}$, such that 
+$j(B,\idfunc[\Gamma])\jdeq\catid{B}$ and 
+$j(B, f\circ g)\jdeq j(B,f)\circ j(\mathrm{dom}(j(B,f)),g)$ for each
+$f:\Delta\to\Gamma$ and each $g:\greek{E}\to\Delta$. 
+\end{defn}
+
+\begin{eg}
+For any presheaf $P:\cat{C}\to\mathbb{Set}$, the projection functor
+$\int_\cat{C} P\to\cat{C}$ is a Grothendieck fibration.
+\end{eg}
+
+\begin{defn}
+A \define{comprehension category} $\mathcal{P}$ consists of categories $\cat{E}$, $\cat{C}$ and a
+commuting triangle
+\begin{equation*}
+\begin{tikzcd}
+\cat{E} \arrow[rr,"\mathcal{P}"] \arrow[dr,swap,"p"] & & \cat{C}^{\to} \arrow[dl,"\mathrm{cod}"] \\
+& \cat{C}
+\end{tikzcd}
+\end{equation*}
+of functors, such that $p$ is a Grothendieck fibration, and $\mathcal{P}$ maps
+cartesian morphisms in $\cat{E}$ to pullback squares in $\cat{C}$. We say that
+$\mathcal{P}$ is a \define{full} comprehension category if the functor $\mathcal{P}:
+\cat{E}\to\cat{C}^{\to}$ is full and faithful; and we say that
+$\mathcal{P}$ is \define{split} if $p$ is split.
+\end{defn}
+
 The definition of D-system we give below, is practically the same as the definition
 of category with attributes in \cite[Definition 3.10]{Hofmann_syntax_semantics}.
-Following Voevodsky, we wish to reserve the word `category' for usage in mathematical terms
-for notions which are `categorical' in the sense of being invariant under 
-equivalence of categories. The definition of categories with attributes involves
-an equality of functors (which would have to be replaced by a natural 
-isomorphism), so it is at least not obviously categorical.
+
+\begin{rmk}
+Since any morphism of $\int_{\cat{C}}\mathrm{Ty}$ is cartesian, it follows that D-systems
+are comprehension categories. As D-systems are built up from a presheaf of types
+on the underlying category, they are in fact discrete comprehension categories.
+\end{rmk}
 
 \begin{defn}
 A \define{D-system} (a category with attributes, see \cite{Hofmann_syntax_semantics}) consists of
@@ -715,7 +890,7 @@ A \define{D-system} (a category with attributes, see \cite{Hofmann_syntax_semant
 of functors, where $\cat{C}^\square$ is the sub-pre-category of $\cat{C}^{\to}$ of
 which the morphisms are pullback squares. For any $A\in\mathrm{Ty}(\Gamma)$,
 the morphism $p(\Gamma,A)$ will be denoted by $p_A$; for any
-$(f,A):(\Delta,f_\ast(A))\to(\Gamma,A)$ in $\int_{\cat{C}}\mathrm{Ty}$, the top
+$(f,A):(\Delta,f^\ast(A))\to(\Gamma,A)$ in $\int_{\cat{C}}\mathrm{Ty}$, the top
 morphism of the pullback square $p(f,A)$ will be denoted by $\pi_2(f,A)$.
 \end{enumerate}
 \end{defn}
@@ -724,7 +899,7 @@ morphism of the pullback square $p(f,A)$ will be denoted by $\pi_2(f,A)$.
 For any $f:\Delta\to\Gamma$, $g:X\to\Delta$ and $A\in\mathrm{Ty}(\Gamma)$ in a
 D-system $\mathbb{D}$, one has 
 $\pi_2(\catid{\Gamma},A)\jdeq\catid{\ctxext{\Gamma}{A}}$ and
-$\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ\pi_2(g,f_\ast(A))$.
+$\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ\pi_2(g,f^\ast(A))$.
 \end{rmk}
 
 \begin{defn}
@@ -795,23 +970,23 @@ isomorphism
 \begin{equation*}
 \zeta_{A,f}:\{\theta:\Delta\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq f\}
   \cong
-\{\eta:\Delta\to\ctxext{\Delta}{f_\ast(A)}\mid p_{f_\ast(A)}\circ\eta\jdeq\catid{\Delta}\}
+\{\eta:\Delta\to\ctxext{\Delta}{f^\ast(A)}\mid p_{f^\ast(A)}\circ\eta\jdeq\catid{\Delta}\}
 \end{equation*}
 natural in $f$ in the sense that the equalities
 \begin{align*}
 \zeta_{A,\catid{\Gamma}}(\theta) & \jdeq \theta \\
-\zeta_{A,f\circ g}(\theta\circ g) & \jdeq \zeta_{f_\ast(A),g}(\zeta_{A,f}(\theta)\circ g)
+\zeta_{A,f\circ g}(\theta\circ g) & \jdeq \zeta_{f^\ast(A),g}(\zeta_{A,f}(\theta)\circ g)
 \end{align*}
 hold for any $f:\Delta\to\Gamma$ and $g:X\to\Delta$, and any $\theta:\Delta\to\ctxext{\Gamma}{A}$
 such that $p_A\circ\theta\jdeq f$.
-Furthermore, we get $\zeta_{A,p_A}(\catid{\ctxext{\Gamma}{A}})\jdeq\varphi_{(p_A)_\ast(A)}(\delta_A)$.
+Furthermore, we get $\zeta_{A,p_A}(\catid{\ctxext{\Gamma}{A}})\jdeq\varphi_{(p_A)^\ast(A)}(\delta_A)$.
 
 \medskip
 %(Proof omitted).
 %\begin{comment}
 By \autoref{lem:cwf_to_dsys} we may define
 \begin{equation*}
-\zeta_{A,f}(\theta)\defeq \varphi_{f_\ast(A)}(\theta_\ast(\delta_A))
+\zeta_{A,f}(\theta)\defeq \varphi_{f^\ast(A)}(\theta^\ast(\delta_A))
 \end{equation*}
 for any $\theta\in\{\theta:\Delta\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq f\}$. 
 Since $\zeta_{A,f}$ is a composition of isomorphism, it is itself an isomorphism.
@@ -819,12 +994,12 @@ Also, we get immediately that $\zeta_{A,\catid{\Gamma}}(\theta)\jdeq\theta$. To
 show the remaining identity:
 \begin{align*}
 \zeta_{A,f\circ g}(\theta\circ g)
-& \jdeq \varphi_{g_\ast(f_\ast(A))}((\theta\circ g)_\ast(\delta_A)) \\
-& \jdeq \varphi_{g_\ast(f_\ast(A))}(g_\ast(\theta_\ast(\delta_A))) \\
-& \jdeq \varphi_{g_\ast(f_\ast(A))}(g_\ast(\varphi_{f_\ast(A)}(\theta_\ast(\delta_A))_\ast(\delta_A))) \\
-& \jdeq \varphi_{g_\ast(f_\ast(A))}(g_\ast(\zeta_{A,f}(\theta)_\ast(\delta_A))) \\
-& \jdeq \varphi_{g_\ast(f_\ast(A))}((\zeta_{A,f}(\theta)\circ g)_\ast(\delta_A)) \\
-& \jdeq \zeta_{f_\ast(A),g}(\zeta_{A,f}(\theta)\circ g).
+& \jdeq \varphi_{g^\ast(f^\ast(A))}((\theta\circ g)^\ast(\delta_A)) \\
+& \jdeq \varphi_{g^\ast(f^\ast(A))}(g^\ast(\theta^\ast(\delta_A))) \\
+& \jdeq \varphi_{g^\ast(f^\ast(A))}(g^\ast(\varphi_{f^\ast(A)}(\theta^\ast(\delta_A))^\ast(\delta_A))) \\
+& \jdeq \varphi_{g^\ast(f^\ast(A))}(g^\ast(\zeta_{A,f}(\theta)^\ast(\delta_A))) \\
+& \jdeq \varphi_{g^\ast(f^\ast(A))}((\zeta_{A,f}(\theta)\circ g)^\ast(\delta_A)) \\
+& \jdeq \zeta_{f^\ast(A),g}(\zeta_{A,f}(\theta)\circ g).
 \end{align*}
 This completes the proof that the isomorphisms $\zeta_{A,f}$ satisfy the required
 equalities.
@@ -833,14 +1008,14 @@ equalities.
 %\begin{comment}
 \item
 For any $A\in\mathrm{Ty}(\Gamma)$, we define
-$W_A\defeq (p_A)_\ast:\cat{F}/\Gamma\to\cat{F}/\ctxext{\Gamma}{A}$. Then we get
+$W_A\defeq (p_A)^\ast:\cat{F}/\Gamma\to\cat{F}/\ctxext{\Gamma}{A}$. Then we get
 for any $A,B\in\cat{F}/\Gamma$ an isomorphism
 \begin{equation*}
 \mathrm{hom}_{\cat{C}/\Gamma}(A,B)
   \cong
 T(W_A(B)).
 \end{equation*}
-In particular, we get a term $\idtm{A}\in T((p_A)_\ast(A))$. 
+In particular, we get a term $\idtm{A}\in T((p_A)^\ast(A))$. 
 \medskip
 
 Let $A,B\in\cat{F}/\Gamma$. Then we have the isomorphism
@@ -852,34 +1027,34 @@ T(W_A(B)) & \jdeq \{\eta:\ctxext{\Gamma}{A}\to\ctxext{{\Gamma}{A}}{W_A(B)}\mid W
 so we find $\idtm{A}\defeq\zeta_{A,A}(\catid{\ctxext{\Gamma}{A}})\in T(W_A(A))$.
 
 \item For any $A\in\mathrm{Ty}(\Gamma)$ and $f:\Delta\to\Gamma$ 
-there is a morphism $\pi_2(f,A):\ctxext{\Delta}{f_\ast(A)}\to\ctxext{\Gamma}{A}$
-such that $p_A\circ \pi_2(f,A)\jdeq f\circ p_{f_\ast(A)}$.
+there is a morphism $\pi_2(f,A):\ctxext{\Delta}{f^\ast(A)}\to\ctxext{\Gamma}{A}$
+such that $p_A\circ \pi_2(f,A)\jdeq f\circ p_{f^\ast(A)}$.
 
 \medskip
 %(Proof omitted).
 %\begin{comment}
 Note that we have the isomorphism
 \begin{align*}
-& \{ \theta : \ctxext{\Delta}{f_\ast(A)}\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq f\circ p_{f_\ast(A)} \} \\
+& \{ \theta : \ctxext{\Delta}{f^\ast(A)}\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq f\circ p_{f^\ast(A)} \} \\
   & \cong
-\{ \eta : \ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{f_\ast(A)}}{(f\circ p_{f_\ast(A)})_\ast(A)}
-  \mid (f\circ p_{f_\ast(A)})_\ast(A)\circ\eta\jdeq\catid{\ctxext{\Delta}{f_\ast(A)}}\} \\
+\{ \eta : \ctxext{\Delta}{f^\ast(A)}\to\ctxext{{\Delta}{f^\ast(A)}}{(f\circ p_{f^\ast(A)})^\ast(A)}
+  \mid (f\circ p_{f^\ast(A)})^\ast(A)\circ\eta\jdeq\catid{\ctxext{\Delta}{f^\ast(A)}}\} \\
   & \jdeq
-\{ \eta : \ctxext{\Delta}{f_\ast(A)}\to\ctxext{{\Delta}{f_\ast(A)}}{(p_{f_\ast(A)})_\ast(f_\ast(A))}
-  \mid (f\circ p_{f_\ast(A)})_\ast(A)\circ\eta\jdeq\catid{\ctxext{\Delta}{f_\ast(A)}}\} \\
+\{ \eta : \ctxext{\Delta}{f^\ast(A)}\to\ctxext{{\Delta}{f^\ast(A)}}{(p_{f^\ast(A)})^\ast(f^\ast(A))}
+  \mid (f\circ p_{f^\ast(A)})^\ast(A)\circ\eta\jdeq\catid{\ctxext{\Delta}{f^\ast(A)}}\} \\
   & \jdeq
-T((p_{f_\ast(A)})_\ast(f_\ast(A))).
+T((p_{f^\ast(A)})^\ast(f^\ast(A))).
 \end{align*}
-Since we have $\delta_{f_\ast(A)}\in T((p_{f_\ast(A)})_\ast(f_\ast(A)))$, we obtain 
+Since we have $\delta_{f^\ast(A)}\in T((p_{f^\ast(A)})^\ast(f^\ast(A)))$, we obtain 
 \begin{equation*}
-\pi_2(f,A)\defeq \zeta_{A,f\circ p_{f_\ast(A)}}^{-1}(\delta_{f_\ast(A)}):\ctxext{\Delta}{f_\ast(A)}\to\ctxext{\Gamma}{A}
+\pi_2(f,A)\defeq \zeta_{A,f\circ p_{f^\ast(A)}}^{-1}(\delta_{f^\ast(A)}):\ctxext{\Delta}{f^\ast(A)}\to\ctxext{\Gamma}{A}
 \end{equation*}
-satisfying $p_A\circ\pi_2(f,A)\jdeq f\circ p_{f_\ast(A)}$.
+satisfying $p_A\circ\pi_2(f,A)\jdeq f\circ p_{f^\ast(A)}$.
 %\end{comment}
 %\begin{comment}
 \item For any $f:\Delta\to\Gamma$, $g:X\to\Delta$ and $A\in\mathrm{Ty}(\Gamma)$, one has
 \begin{equation*}
-\pi_2(f,A)\circ\pi_2(g,f_\ast(A))\jdeq\pi_2(f\circ g,A).
+\pi_2(f,A)\circ\pi_2(g,f^\ast(A))\jdeq\pi_2(f\circ g,A).
 \end{equation*}
 
 \medskip
@@ -887,28 +1062,28 @@ satisfying $p_A\circ\pi_2(f,A)\jdeq f\circ p_{f_\ast(A)}$.
 %\begin{comment}
 It suffices to show that
 \begin{equation*}
-\zeta_{A,f\circ g\circ p_{g_\ast(f_\ast(A))}}(\pi_2(f,A)\circ\pi_2(g,f_\ast(A)))\jdeq\delta_{g_\ast(f_\ast(A))}.
+\zeta_{A,f\circ g\circ p_{g^\ast(f^\ast(A))}}(\pi_2(f,A)\circ\pi_2(g,f^\ast(A)))\jdeq\delta_{g^\ast(f^\ast(A))}.
 \end{equation*}
-Because $g\circ p_{g_\ast(f_\ast(A))}\jdeq p_{f_\ast(A)}\circ\pi_2(g,f_\ast(A))$, we get
+Because $g\circ p_{g^\ast(f^\ast(A))}\jdeq p_{f^\ast(A)}\circ\pi_2(g,f^\ast(A))$, we get
 to use the naturality of $\zeta$:
 \begin{align*}
-& \zeta_{A,f\circ g\circ p_{g_\ast(f_\ast(A))}}(\pi_2(f,A)\circ\pi_2(g,f_\ast(A))) \\
+& \zeta_{A,f\circ g\circ p_{g^\ast(f^\ast(A))}}(\pi_2(f,A)\circ\pi_2(g,f^\ast(A))) \\
 & \jdeq
-\zeta_{A,f\circ p_{f_\ast(A)}\circ\pi_2(g,f_\ast(A))}(\pi_2(f,A)\circ\pi_2(g,f_\ast(A))) \\
+\zeta_{A,f\circ p_{f^\ast(A)}\circ\pi_2(g,f^\ast(A))}(\pi_2(f,A)\circ\pi_2(g,f^\ast(A))) \\
 & \jdeq
-\zeta_{(p_{f_\ast(A)})_\ast(f_\ast(A)),\pi_2(g,f_\ast(A))}(\zeta_{A,f\circ p_{f_\ast(A)}}(\pi_2(f,a))\circ\pi_2(g,f_\ast(A))) \\
+\zeta_{(p_{f^\ast(A)})^\ast(f^\ast(A)),\pi_2(g,f^\ast(A))}(\zeta_{A,f\circ p_{f^\ast(A)}}(\pi_2(f,a))\circ\pi_2(g,f^\ast(A))) \\
 & \jdeq
-\zeta_{(p_{f_\ast(A)})_\ast(f_\ast(A)),\pi_2(g,f_\ast(A))}(\delta_{f_\ast(A)}\circ\pi_2(g,f_\ast(A))) \\
+\zeta_{(p_{f^\ast(A)})^\ast(f^\ast(A)),\pi_2(g,f^\ast(A))}(\delta_{f^\ast(A)}\circ\pi_2(g,f^\ast(A))) \\
 & \jdeq
-\zeta_{(p_{f_\ast(A)})_\ast(f_\ast(A)),\pi_2(g,f_\ast(A))}(\zeta_{f_\ast(A),p_{f_\ast(A)}}(\catid{\ctxext{\Delta}{f_\ast(A)}})\circ\pi_2(g,f_\ast(A))) \\
+\zeta_{(p_{f^\ast(A)})^\ast(f^\ast(A)),\pi_2(g,f^\ast(A))}(\zeta_{f^\ast(A),p_{f^\ast(A)}}(\catid{\ctxext{\Delta}{f^\ast(A)}})\circ\pi_2(g,f^\ast(A))) \\
 & \jdeq
-\zeta_{f_\ast(A),p_{f_\ast(A)}\circ\pi_2(g,f_\ast(A))}(\catid{\ctxext{\Delta}{f_\ast(A)}}\circ\pi_2(g,f_\ast(A))) \\
+\zeta_{f^\ast(A),p_{f^\ast(A)}\circ\pi_2(g,f^\ast(A))}(\catid{\ctxext{\Delta}{f^\ast(A)}}\circ\pi_2(g,f^\ast(A))) \\
 & \jdeq
-\zeta_{f_\ast(A),p_{f_\ast(A)}\circ\pi_2(g,f_\ast(A))}(\pi_2(g,f_\ast(A))) \\
+\zeta_{f^\ast(A),p_{f^\ast(A)}\circ\pi_2(g,f^\ast(A))}(\pi_2(g,f^\ast(A))) \\
 & \jdeq
-\zeta_{f_\ast(A),g\circ p_{g_\ast(f_\ast(A))}}(\pi_2(g,f_\ast(A)))\\
+\zeta_{f^\ast(A),g\circ p_{g^\ast(f^\ast(A))}}(\pi_2(g,f^\ast(A)))\\
 & \jdeq
-\delta_{g_\ast(f_\ast(A))}.
+\delta_{g^\ast(f^\ast(A))}.
 \end{align*}
 %\end{comment}\begin{comment}
 \item
@@ -923,7 +1098,7 @@ for any $\theta:\Delta\to\ctxext{\Gamma}{A}$ satisfying $A\circ\theta\jdeq f$.
 %\begin{comment}
 We will write $\tilde\theta\defeq\zeta_{A,f}(\theta)$. Note that
 \begin{equation*}
-p_A\circ\pi_2(f,A)\circ\tilde\theta\jdeq f\circ p_{f_\ast(A)}\circ\tilde\theta\jdeq f.
+p_A\circ\pi_2(f,A)\circ\tilde\theta\jdeq f\circ p_{f^\ast(A)}\circ\tilde\theta\jdeq f.
 \end{equation*} 
 Therefore, we can prove that $\pi_2(f,A)\circ\tilde\theta\jdeq\theta$ by showing
 that $\zeta_{A,f}(\pi_2(f,A)\circ\tilde\theta)\jdeq\tilde\theta$. This is
@@ -931,21 +1106,21 @@ shown using the naturality of $\zeta$:
 \begin{align*}
 \zeta_{A,f}(\pi_2(f,A)\circ\tilde\theta)
   & \jdeq
-\zeta_{A,f\circ p_{f_\ast(A)}\circ\tilde\theta}(\pi_2(f,A)\circ\tilde\theta)
+\zeta_{A,f\circ p_{f^\ast(A)}\circ\tilde\theta}(\pi_2(f,A)\circ\tilde\theta)
   \\
   & \jdeq
-\zeta_{(p_{f_\ast(A)})_\ast(f_\ast(A)),\tilde{\theta}}(\zeta_{A,f\circ p_{f_\ast(A)}}(\pi_2(f,A))\circ\tilde\theta)
+\zeta_{(p_{f^\ast(A)})^\ast(f^\ast(A)),\tilde{\theta}}(\zeta_{A,f\circ p_{f^\ast(A)}}(\pi_2(f,A))\circ\tilde\theta)
   \\
   & \jdeq
-\zeta_{(p_{f_\ast(A)})_\ast(f_\ast(A)),\tilde{\theta}}(\idtm{f_\ast(A)}\circ\tilde\theta)
+\zeta_{(p_{f^\ast(A)})^\ast(f^\ast(A)),\tilde{\theta}}(\idtm{f^\ast(A)}\circ\tilde\theta)
   \\
   & \jdeq
-\zeta_{(p_{f_\ast(A)})_\ast(f_\ast(A)),\tilde{\theta}}(\zeta_{f_\ast(A),p_{f_\ast(A)}}(\catid{\ctxext{\Delta}{f_\ast(A)}})\circ\tilde\theta)
+\zeta_{(p_{f^\ast(A)})^\ast(f^\ast(A)),\tilde{\theta}}(\zeta_{f^\ast(A),p_{f^\ast(A)}}(\catid{\ctxext{\Delta}{f^\ast(A)}})\circ\tilde\theta)
   \\
   & \jdeq
-\zeta_{f_\ast(A),p_{f_\ast(A)}\circ\tilde\theta}(\catid{\ctxext{\Delta}{f_\ast(A)}}\circ\tilde\theta) \\
+\zeta_{f^\ast(A),p_{f^\ast(A)}\circ\tilde\theta}(\catid{\ctxext{\Delta}{f^\ast(A)}}\circ\tilde\theta) \\
   & \jdeq
-\zeta_{f_\ast(A),\catid{\Delta}}(\tilde\theta) \\
+\zeta_{f^\ast(A),\catid{\Delta}}(\tilde\theta) \\
   & \jdeq 
 \theta.
 \end{align*}
@@ -954,7 +1129,7 @@ shown using the naturality of $\zeta$:
 The diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\ctxext{\Delta}{f_\ast(A)} \arrow[d,fib] \arrow[r,"{\pi_2(f,A)}"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+\ctxext{\Delta}{f^\ast(A)} \arrow[d,fib] \arrow[r,"{\pi_2(f,A)}"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
 \Delta \arrow[r,"f"] & \Gamma
 \end{tikzcd}
 \end{equation*}
@@ -968,19 +1143,19 @@ X \arrow[d,swap,"g"] \arrow[r,"h"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
 \Delta \arrow[r,"f"] & \Gamma
 \end{tikzcd}
 \end{equation*}
-Then $h$ corresponds uniquely to a section $k$ of $(f\circ g)_\ast(A)$. Since
-$(f\circ g)_\ast(A)\jdeq g_\ast(f_\ast(A))$, the section $k$ fits in the
+Then $h$ corresponds uniquely to a section $k$ of $(f\circ g)^\ast(A)$. Since
+$(f\circ g)^\ast(A)\jdeq g^\ast(f^\ast(A))$, the section $k$ fits in the
 commuting diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=huge]
-\ctxext{X}{g_\ast(f_\ast(A))} \arrow[d,xshift=.7ex,fib] \arrow[r,"{\pi_2(g,f_\ast(A))}"]
-& \ctxext{\Delta}{f_\ast(A)} \arrow[d,fib] \arrow[r,"{\pi_2(f,A)}"]
+\ctxext{X}{g^\ast(f^\ast(A))} \arrow[d,xshift=.7ex,fib] \arrow[r,"{\pi_2(g,f^\ast(A))}"]
+& \ctxext{\Delta}{f^\ast(A)} \arrow[d,fib] \arrow[r,"{\pi_2(f,A)}"]
 & \ctxext{\Gamma}{A} \arrow[d,fib] \\
 X \arrow[r,swap,"g"] \arrow[u,xshift=-.7ex,"k"] & \Delta \arrow[r,swap,"f"] & \Gamma
 \end{tikzcd}
 \end{equation*}
-so we obtain $u\defeq\pi_2(g,f_\ast(A))\circ k:X\to\ctxext{\Delta}{f_\ast(A)}$. 
-Then we have $p_{f_\ast(A)}\circ u\jdeq g\circ p_{g_\ast(f_\ast(A))}\circ k\jdeq g$ and
+so we obtain $u\defeq\pi_2(g,f^\ast(A))\circ k:X\to\ctxext{\Delta}{f^\ast(A)}$. 
+Then we have $p_{f^\ast(A)}\circ u\jdeq g\circ p_{g^\ast(f^\ast(A))}\circ k\jdeq g$ and
 $\pi_2(f,A)\circ u\jdeq \pi_2(f\circ g,A)\circ k\jdeq h$. Note that
 $u$ corresponds uniquely to $k$, which corresponds uniquely to $h$, so the
 uniqueness of $u$ is automatic.
@@ -994,24 +1169,24 @@ Now let $\mathbb{D}$ be a D-system. We define the presheaf $\mathrm{Tm}:
 \mathrm{Tm}(A) \defeq \{x:\Gamma\to\ctxext{\Gamma}{A}\mid p_A\circ x\jdeq \catid{\Gamma}\}.
 \end{equation*}
 For $f:\Delta\to\Gamma$ and $A\in\mathrm{Ty}(\Gamma)$, we get a function
-$x\mapsto f_\ast(x):\mathrm{Tm}(A)\to\mathrm{Tm}(f_\ast(A))$ by defining $f_\ast(x)$
+$x\mapsto f^\ast(x):\mathrm{Tm}(A)\to\mathrm{Tm}(f^\ast(A))$ by defining $f^\ast(x)$
 to be the unique morphism such that the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=huge] 
-\Delta \arrow[ddr,bend right=15,equals] \arrow[drr,bend left=15,"x\circ f"] \arrow[dr,densely dotted,near end,"{f_\ast(x)}"] \\
-& \ctxext{\Delta}{f_\ast(A)} \arrow[d,fib] \arrow[r,swap,"{\pi_2(f,A)}"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+\Delta \arrow[ddr,bend right=15,equals] \arrow[drr,bend left=15,"x\circ f"] \arrow[dr,densely dotted,near end,"{f^\ast(x)}"] \\
+& \ctxext{\Delta}{f^\ast(A)} \arrow[d,fib] \arrow[r,swap,"{\pi_2(f,A)}"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
 & \Delta \arrow[r,swap,"f"] & \Gamma
 \end{tikzcd}
 \end{equation*}
 commutes. A combination of the assumed uniqueness and the assumed equalities on
 $\pi_2(\blank,\blank)$ gives the functoriality of $\mathrm{Tm}$. 
 
-The term $\delta_A\in\mathrm{Tm}((p_A)_\ast(A))$ is defined to be the unique morphism
+The term $\delta_A\in\mathrm{Tm}((p_A)^\ast(A))$ is defined to be the unique morphism
 such that the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 \ctxext{\Gamma}{A} \arrow[drr,bend left=15,equals] \arrow[ddr,bend right=15,equals] \arrow[dr,densely dotted,near end,"{\delta_{A}}"] \\
-& \ctxext{{\Gamma}{A}}{(p_A)_\ast(A)} \arrow[r,swap,"{\pi_2(A,A)}"] \arrow[d,fib] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+& \ctxext{{\Gamma}{A}}{(p_A)^\ast(A)} \arrow[r,swap,"{\pi_2(A,A)}"] \arrow[d,fib] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
 & \ctxext{\Gamma}{A} \arrow[r,swap,"A"] & \Gamma
 \end{tikzcd}
 \end{equation*}
@@ -1019,233 +1194,10 @@ commutes.
 
 The universality assumption of categories with families is a consequence of
 the universal property of pullbacks: the map $x\mapsto\pi_2(f,X)\circ x$
-from $\{x:\Delta\to\ctxext{\Delta}{f_\ast(A)}\mid p_{f_\ast(A)}\circ x\jdeq\catid{\Delta}\}$
+from $\{x:\Delta\to\ctxext{\Delta}{f^\ast(A)}\mid p_{f^\ast(A)}\circ x\jdeq\catid{\Delta}\}$
 to $\{\theta:\Delta\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq f\}$ is a bijection.
 \end{proof}
 %\end{comment}
-
-The following two definitions define subclasses of telescopic D-systems and 
-coherent telescopic D-systems, and the latter structure is the same as an E'-system
-(without empty context). In \autoref{defn:comp_to_telescopic}, we will show how
-to obtain a telescopic D-system from any comprehension category. This construction
-will also generate a telescopic D-system out of any D-system, because D-systems
-are comprehension categories.
-
-\begin{defn}
-Let $\cat{C}$ be a D-system. In this definition, we will write
-$\mathrm{Fam}$ for the presheaf of types. The D-system $\cat{C}$
-is said to be \define{telescopic}, if we have elements $\emptyf[\Gamma]\in
-\mathrm{Fam}(\Gamma)$ for each $\Gamma\in\cat{C}$, and maps 
-$P\mapsto\ctxext{A}{P}:\mathrm{Fam}(\ctxext{\Gamma}{A})\to \mathrm{Fam}(\Gamma)$
-such that
-\begin{enumerate}
-\item 
-\begin{enumerate}
-\item for any $A\in\mathrm{Fam}(\Gamma)$ and $P\in\mathrm{Fam}(\ctxext{\Gamma}{A})$,
-one has $\ctxext{\Gamma}{{A}{P}}\jdeq\ctxext{{\Gamma}{A}}{P}$, and
-\begin{equation*}
-p_{\ctxext{A}{P}}\jdeq p_A\circ p_P,
-\end{equation*}
-\item and for any $\Gamma\in\cat{C}$ one has $\ctxext{\Gamma}{\emptyf[\Gamma]}\jdeq\Gamma$, and
-\begin{equation*}
-p_{\emptyf[\Gamma]}\jdeq\catid{\Gamma}.
-\end{equation*}
-\end{enumerate}
-\item 
-\begin{enumerate}
-\item for any $A\in\mathrm{Fam}(\Gamma)$, $P\in\mathrm{Fam}(\ctxext{\Gamma}{A})$
-and $Q\in\mathrm{Fam}(\ctxext{{\Gamma}{A}}{P})$, one has
-\begin{equation*}
-\ctxext{{A}{P}}{Q}\jdeq\ctxext{A}{{P}{Q}},
-\end{equation*}
-\item and for any $A\in\mathrm{Fam}(\Gamma)$, one has
-\begin{equation*}
-\ctxext{\emptyf[\Gamma]}{A}\jdeq\ctxext{A}{\emptyf[\ctxext{\Gamma}{A}]}\jdeq A.
-\end{equation*}
-\end{enumerate}
-\item 
-\begin{enumerate}
-\item for any $A\in\mathrm{Fam}(\Gamma)$, $P\in\mathrm{Fam}(\ctxext{\Gamma}{A})$
-and any $f:\Delta\to\Gamma$ in $\cat{C}$, one has
-\begin{equation*}
-f_\ast(\ctxext{A}{P})\jdeq \ctxext{(f_\ast(A))}{(\pi_2(f,A)_\ast(P))},
-\end{equation*}
-\item and for any $f:\Delta\to\Gamma$ in $\cat{C}$, one has
-\begin{equation*}
-f_\ast(\emptyf[\Gamma])\jdeq\emptyf[\Delta].
-\end{equation*}
-\end{enumerate}
-\end{enumerate} 
-\end{defn}
-
-\begin{lem}
-A D-system is telescopic if and only if  the following two conditions hold:
-\begin{enumerate}
-\item There is a section $\phi:\cat{C}\to \int_{\cat{C}}\mathrm{Ty}$ of $\pi$.
-\item For every $P\in\mathrm{Ty}(\ctxext{\Gamma}{A})$,
-the morphism $p_A:\ctxext{\Gamma}{A}\to\Gamma$ has a unique cocartesian lift
-at $P$.
-\end{enumerate}
-\end{lem}
-
-\begin{proof}
-Let $\mathbb{D}$ be a telescopic D-system. To show that $\mathbb{D}$ has the two
-stated properties:
-\begin{enumerate}
-\item
-\item We have to show that each for $P\in\mathrm{Ty}(\ctxext{\Gamma}{A})$,
-the projection $p_A:\ctxext{\Gamma}{A}\to\Gamma$ has a unique cocartesian lift
-at $P$. Note that the morphism $(\ctxext{\Gamma}{A},P)\to (\Gamma,\ctxext{A}{P})$
-in $\int_{\cat{C}}\mathrm{Ty}$ 
-\end{enumerate}
-
-Let $\mathbb{D}$ be a D-system for which the stated two conditions hold. To show
-that $\mathbb{D}$ is a telescopic D-system, we systematically go through each of the
-properties:
-\begin{enumerate}
-\item 
-\end{enumerate} 
-\end{proof}
-
-\begin{conj}
-The notion of being telescopic is a property.
-\end{conj}
-
-\begin{defn}
-A telescopic D-system is said to be \define{coherent}, if for any $A,A'\in\mathrm{Fam}(\Gamma)$
-such that $p_A\jdeq p_{A'}$, and any $f:\Delta\to\Gamma$, we have
-$p_{f_\ast(A)}\jdeq p_{f_\ast(A')}$ and $\pi_2(f,A)\jdeq \pi_2(f,A')$.
-\end{defn}
-
-\begin{thm}
-An E'-system without empty context is the same thing as a coherent telescopic D-system.
-\end{thm}
-
-\begin{proof}
-Let $\mathbb{E}$ be an E'-system without empty context. Then we define the
-presheaf $\mathrm{Fam}$ on $\cat{C}$ on objects by
-\begin{equation*}
-\mathrm{Fam}(\Gamma)\defeq \mathrm{Obj}(\cat{F}/\Gamma)
-\end{equation*}
-and on morphisms by the action on objects of $f_\ast$, for each $f:\Delta\to
-\Gamma$ in $\cat{C}$. By condition (b) and (c) in the definition of E'-systems, it
-follows that this defines a contravariant functor. 
-
-We define a functor $\mathcal{P}:\int_{\cat{C}}\to\cat{C}^\square$ by sending
-the pair $(\Gamma,A)$ to the morphism $A:\ctxext{\Gamma}{A}\to\Gamma$ in
-$\cat{C}$, and by sending $f:(\Delta,f_\ast(A))\to (\Gamma,A)$ to the pullback
-square
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\ctxext{\Delta}{f_\ast(A)} \arrow[d,swap,"{f_\ast(A)}"] \arrow[r,"{\pi_2(f,A)}"] &
-\ctxext{\Gamma}{A} \arrow[d,"A"] \\ \Delta \arrow[r,"f"] & \Gamma
-\end{tikzcd}
-\end{equation*}
-This is also functorial because of conditions (b) and (c) in the definition of
-E'-systems. Thus, we have defined a D-system
-\begin{equation*}
-\begin{tikzcd}
-\int_{\cat{C}}\mathrm{Fam} \arrow[rr,"{\mathcal{P}}"] \arrow[dr,"{\pi}"] & & \cat{C}^\square \arrow[dl,"{\mathrm{cod}}"] \\ & \cat{C}
-\end{tikzcd}
-\end{equation*}
-and it is straightforward to verify that this D-system is telescopic and coherent.
-
-Conversely, suppose $\mathbb{D}$ is a telescopic D-system with underlying category
-$\cat{C}$. Define $\cat{F}$ to be the category with the same objects as
-$\cat{C}$, and morphisms of the form $p_A$. To check that this forms a category,
-note that $p_{\emptyf[\Gamma]}\jdeq\catid{\Gamma}$ and $p_A\circ p_P\jdeq
-p_{\ctxext{A}{P}}$.
-
-Now let $f:\Delta\to\Gamma$ be a morphism in $\cat{C}$. For any $A\in\cat{F}/\Gamma$,
-we have an element $\tilde{A}\in\mathrm{Fam}(\Gamma)$ such that $p_{\tilde{A}}
-\jdeq A$, and we can form a pullback square
-\begin{equation*}
-\begin{tikzcd}[column sep=large]
-\ctxext{\Delta}{f_\ast(\tilde{A})} \arrow[r,"{\pi_2(f,\tilde{A})}"] \arrow[d,fib,swap,"p_{f_\ast(\tilde{A})}"]
-& \ctxext{\Gamma}{\tilde{A}} \arrow[d,fib,"{p_{\tilde{A}}}"] \\
-\Delta \arrow[r,"f"] & \Gamma
-\end{tikzcd}
-\end{equation*}
-By the coherence condition, this choice of pullback square does not depend on the
-choice of $\tilde{A}$ such that $p_{\tilde{A}}\jdeq A$ (having this fact 
-available is precisely what the coherence condition is for). The verification of conditions
-(a) to (d) of \autoref{defn:E'sys} is straightforward.
-\end{proof}
-
-\subsection{Coherent comprehension categories}
-In this section we recall Jacobs' notion of comprehension categories, and 
-Dybjer's notion of categories with families. It is shown in 
-\cite{Hofmann_syntax_semantics} that the category of categoriew with families
-is equivalent to the category of categories with attributes, which forms a
-subcategory of comprehension categories. Thus, for our purpose of comparing
-E-systems with various existing notions of models of type dependency, it suffice
-to make the comparison with comprehension categories.
-
-In this section we do the preparateions for this comparison. After having
-introduced categories with families, we prove that categories with families
-with the extra structure of `being closed under family extension' in a coherent
-way, are E'-systems without empty context. 
-
-\begin{defn}
-Let $p:\cat{E}\to\cat{B}$ be a functor and let $f:\Delta\to \Gamma$ be a morphism in $\cat{B}$.
-A morphism $g:A\to B$ in $\cat{E}$ is said to be \define{cartesian over $f$}, if
-\begin{enumerate}
-\item $p(g)\jdeq f$, and 
-\item For all $g':A'\to B$ with $p(g')\jdeq f$, there is a unique $u:A'\to A$
-such that $g'=g\circ u$ and $p(u)\jdeq\catid{\Delta}$. 
-\end{enumerate}
-Dually, a morphism $g:A\to B$ in $\cat{E}$ is said to be \define{cocartesian over
-$f$}, if
-\begin{enumerate}
-\item $p(g)\jdeq f$, and
-\item For all $g':A\to B'$ with $p(g')\jdeq f$, there is a unique $v:B\to B'$
-such that $g'=v\circ g$ and $p(v)\jdeq\catid{\Gamma}$. 
-\end{enumerate}
-A (co)cartesian morphism over $f$ is also called a \define{(co)cartesian lift of $f$}.
-\end{defn}
-
-\begin{defn}
-A functor $p:\cat{E}\to\cat{B}$ is called a \define{Grothendieck fibration} if
-every morphism into an object of the form $p(A)$ for some object $A$ of $\cat{E}$ 
-has a cartesian lift, and cartesian morphisms are closed under composition.
-\end{defn}
-
-\begin{defn}
-A Grothendieck fibration $p:\cat{E}\to\cat{B}$ is said to be \define{split}, if
-there is a functorial choice of cartesian lifts, i.e.~for every $f:\Delta\to \Gamma$ in 
-$\cat{B}$ and any $B\in \cat{E}$ such that $p(B)\jdeq \Gamma$,
-there is a cartesian lift $j(B,f):A \to B$ for some object $A$ of $\cat{E}$, such that 
-$j(B,\idfunc[\Gamma])\jdeq\catid{B}$ and 
-$j(B, f\circ g)\jdeq j(B,f)\circ j(\mathrm{dom}(j(B,f)),g)$ for each
-$f:\Delta\to\Gamma$ and each $g:\greek{E}\to\Delta$. 
-\end{defn}
-
-\begin{eg}
-For any presheaf $P:\cat{C}\to\mathbb{Set}$, the projection functor
-$\int_\cat{C} P\to\cat{C}$ is a Grothendieck fibration.
-\end{eg}
-
-\begin{defn}
-A \define{comprehension category} $\mathcal{P}$ consists of categories $\cat{E}$, $\cat{C}$ and a
-commuting triangle
-\begin{equation*}
-\begin{tikzcd}
-\cat{E} \arrow[rr,"\mathcal{P}"] \arrow[dr,swap,"p"] & & \cat{C}^{\to} \arrow[dl,"\mathrm{cod}"] \\
-& \cat{C}
-\end{tikzcd}
-\end{equation*}
-of functors, such that $p$ is a Grothendieck fibration, and $\mathcal{P}$ maps
-cartesian morphisms in $\cat{E}$ to pullback squares in $\cat{C}$. We say that
-$\mathcal{P}$ is a \define{full} comprehension category if the functor $\mathcal{P}:
-\cat{E}\to\cat{C}^{\to}$ is full and faithful; and we say that
-$\mathcal{P}$ is \define{split} if $p$ is split.
-\end{defn}
-
-\begin{eg}
-Since any morphism of $\int_{\cat{C}}\mathrm{Ty}$ is cartesian, it follows that D-systems
-are comprehension categories. As D-systems are built up from a presheaf of types
-on the underlying category, they are in fact discrete comprehension categories.
-\end{eg}
 
 Each comprehension category determines a subcategory $\cat{F}$ generated by
 the projections, as we shall see soon. However, there is no reason why
@@ -1259,9 +1211,9 @@ $\cat{F}$, we introduce \emph{coherent} comprehension categories. So we only hav
 from the category $\mathbf{Dsys}$ of coherent D-systems to the category
 $\mathbf{E'sys_{\circ}}$ of E'-systems without empty context.
 We see that it is not evident at all to turn categories with families into
-E-systems, even if we ignore the issue that categories with families map
+telescopic type systems, even if we ignore the issue that categories with families map
 naturally into E'-systems without empty context.
-Thus it seems that the type theories of categories with families and of E-systems
+Thus it seems that the type theories of categories with families and of telescopic type systems
 are not directly comparable.
 
 We end this section by showing that the functor 
@@ -1271,7 +1223,7 @@ composition of projections is a composition of projections in precisely one way.
 We call coherent D-systems with this property
 locally well-founded. Among the locally well-founded D-systems are the B-systems.
 As a by-product, we get that the full and faithful functor from B-systems to
-E-systems factors through D-systems. 
+telescopic type systems factors through D-systems. 
 
 To get from comprehension categories to E'-systems without empty contexts, we
 need to turn comprehension categories into telescopic D-systems. 
@@ -1394,7 +1346,7 @@ diagrams
 \begin{equation*}
 \begin{tikzcd}
 \Lambda(\Gamma) \arrow[d,swap,"\mathcal{P}"] \arrow[r,"\Lambda(f)"] & \Lambda(\Delta) \arrow[d,"\mathcal{P}"] \\
-\cat{F}/\Gamma \arrow[r,densely dotted,"{f_\ast}"] & \cat{F}/\Delta
+\cat{F}/\Gamma \arrow[r,densely dotted,"{f^\ast}"] & \cat{F}/\Delta
 \end{tikzcd}
 \end{equation*}
 of functors, forming an E'-system without empty context, where $\mathcal{P}(A)
@@ -1420,41 +1372,41 @@ assumption that $\pi_2(f,A)\jdeq \pi_2(f,A')$ it follows that the pullback
 squares
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\ctxext{\Delta}{f_\ast(A)} \arrow[d,fib] \arrow[r,"{\pi_2(f,A)}"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+\ctxext{\Delta}{f^\ast(A)} \arrow[d,fib] \arrow[r,"{\pi_2(f,A)}"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
 \Delta \arrow[r,"f"] & \Gamma
 \end{tikzcd}
 \qquad\text{and}\qquad
 \begin{tikzcd}[column sep=large]
-\ctxext{\Delta}{f_\ast(A')} \arrow[d,fib] \arrow[r,"{\pi_2(f,A')}"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+\ctxext{\Delta}{f^\ast(A')} \arrow[d,fib] \arrow[r,"{\pi_2(f,A')}"] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
 \Delta \arrow[r,"f"] & \Gamma
 \end{tikzcd}
 \end{equation*}
 are the same. Since we have this property
 for any object $\Gamma$, it also follows that the morphisms part of
 $p^\Delta\circ\Lambda(f)$ factors through $p^\Gamma$. This defines the functor
-$f_\ast$ in the commuting square
+$f^\ast$ in the commuting square
 \begin{equation*}
 \begin{tikzcd}
 \Lambda(\Gamma) \arrow[d,swap,"p"] \arrow[r,"\Lambda(f)"] & \Lambda(\Delta) \arrow[d,"p"] \\
-\cat{F}/\Gamma \arrow[r,densely dotted,"{f_\ast}"] & \cat{F}/\Delta
+\cat{F}/\Gamma \arrow[r,densely dotted,"{f^\ast}"] & \cat{F}/\Delta
 \end{tikzcd}
 \end{equation*}
-We need to verify that $f_\ast$ is a functorial choice of pullbacks, as in the
-definition of \autoref{defn:E'sys}. Since $f_\ast$ is defined as an extension
+We need to verify that $f^\ast$ is a functorial choice of pullbacks, as in the
+definition of \autoref{defn:E'sys}. Since $f^\ast$ is defined as an extension
 of $\Lambda(f)$, it is enough to verify the analoguous functoriality properties
 for $\Lambda(f)$. We do this by induction on the objects of $\Lambda(\Gamma)$,
 in the same order as in \autoref{defn:E'sys}.
 \begin{enumerate}[label=(\alph*)]
 \item This property holds by definition.
 \item Let $\Gamma\in\cat{C}$. We will prove by induction on $A\in\Lambda(\Gamma)$
-that $(\catid{\Gamma})_\ast(A)\jdeq A$ and that $\pi_2(\catid{\Gamma},A)\jdeq \catid{\ctxext{\Gamma}{A}}$.
+that $(\catid{\Gamma})^\ast(A)\jdeq A$ and that $\pi_2(\catid{\Gamma},A)\jdeq \catid{\ctxext{\Gamma}{A}}$.
 Note that these properties hold by definition for $A\jdeq\catid{\Gamma}$. For the
 inductive step, assume that $A\in\Lambda(\Gamma)$ is such that
-$(\catid{\Gamma})_\ast(A)\jdeq A$ and $\pi_2(\catid{\Gamma},A)\jdeq
+$(\catid{\Gamma})^\ast(A)\jdeq A$ and $\pi_2(\catid{\Gamma},A)\jdeq
 \catid{\ctxext{\Gamma}{A}}$ and let $B\in\mathrm{Ty}(\ctxext{\Gamma}{A})$. Then
 we have
 \begin{align*}
-(\catid{\Gamma})_\ast(A\circ p_B) & \jdeq (\catid{\Gamma})_\ast(A)\circ \pi_2(\catid{\Gamma},A)_\ast(p_B) \\
+(\catid{\Gamma})^\ast(A\circ p_B) & \jdeq (\catid{\Gamma})^\ast(A)\circ \pi_2(\catid{\Gamma},A)^\ast(p_B) \\
 & \jdeq A\circ p_B
 \end{align*}
 Also, we have
@@ -1464,17 +1416,17 @@ Also, we have
 & \jdeq \catid{\ctxext{{\Gamma}{A}}{B}}
 \end{align*}
 \item Let $f:\Delta\to \Gamma$ and $g:X\to \Delta$. We will prove by induction
-on $A\in\Lambda(\Gamma)$ that $(f\circ g)_\ast(A)\jdeq g_\ast(f_\ast(A))$ and
-that $\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ \pi_2(g,f_\ast(A))$. Note that
+on $A\in\Lambda(\Gamma)$ that $(f\circ g)^\ast(A)\jdeq g^\ast(f^\ast(A))$ and
+that $\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ \pi_2(g,f^\ast(A))$. Note that
 these properties hold by definition for $A\jdeq\catid{\Gamma}$. For the inductive
-step, assume that $A\in\Lambda(\Gamma)$ is such that $(f\circ g)_\ast(A)\jdeq g_\ast(f_\ast(A))$ and
-$\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ \pi_2(g,f_\ast(A))$, and let
+step, assume that $A\in\Lambda(\Gamma)$ is such that $(f\circ g)^\ast(A)\jdeq g^\ast(f^\ast(A))$ and
+$\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ \pi_2(g,f^\ast(A))$, and let
 $B\in\mathrm{Ty}(\ctxext{\Gamma}{A})$. Then we have
 \begin{align*}
-(f\circ g)_\ast(A\circ p_B) & \jdeq \pi_2(f\circ g,A)_\ast(p_B) \\
-& \jdeq (\pi_2(f,A)\circ\pi_2(g,f_\ast(A)))_\ast(p_B) \\
-& \jdeq \pi_2(g,f_\ast)_\ast(\pi_2(f,A)_\ast(p_B)) \\
-& \jdeq g_\ast(f_\ast(A\circ p_B))
+(f\circ g)^\ast(A\circ p_B) & \jdeq \pi_2(f\circ g,A)^\ast(p_B) \\
+& \jdeq (\pi_2(f,A)\circ\pi_2(g,f^\ast(A)))^\ast(p_B) \\
+& \jdeq \pi_2(g,f^\ast)^\ast(\pi_2(f,A)^\ast(p_B)) \\
+& \jdeq g^\ast(f^\ast(A\circ p_B))
 \end{align*}
 \item This property holds by definition.\qedhere
 \end{enumerate}
@@ -1489,11 +1441,11 @@ empty context is full and faithful.
 Let $\mathcal{E}$ be an E'-system. Define $\cat{E}$ to be the full subcategory
 of $\cat{C}^\to$ whose objects are the morphisms of $\cat{F}$. Thus, for any
 $\Gamma\in\cat{C}$, the category $p^{-1}(\Gamma)$ is the category of internal
-morphisms the E-system $\mathcal{E}/\Gamma$. 
+morphisms the telescopic type system $\mathcal{E}/\Gamma$. 
 
 We first show that $p$ is a Grothendieck fibration. Let $f:\Delta\to\Gamma$ be
 a morphism in $\cat{C}$ and let $A\in\cat{F}/\Gamma$. Then we have $\catid{\Delta},\catid{\Gamma}\in\cat{E}$,
-and $(f,\pi_2(f,A)):f_\ast(A)\to A$. It is routine to verify that $(f,\pi_2(f,A))$
+and $(f,\pi_2(f,A)):f^\ast(A)\to A$. It is routine to verify that $(f,\pi_2(f,A))$
 is a cartesian lift of $f$, and that this choice of catesian lifts is functorial. 
 
 Now let $g:X\to\Delta$ and $f:\Delta\to \Gamma$, and let $\tilde{f}:\tilde{\Delta}\to\tilde{\Gamma}$ and
@@ -1551,17 +1503,17 @@ square
 \end{tikzcd}
 \end{equation*}
 commutes. Let $A\in\mathrm{Ty}(\Gamma)$. Then we need to show that
-$\mathcal{G}(f)_\ast(\mathcal{G}(A))\jdeq \mathcal{G}(f_\ast(A))$. By the uniqueness
+$\mathcal{G}(f)^\ast(\mathcal{G}(A))\jdeq \mathcal{G}(f^\ast(A))$. By the uniqueness
 assumption of well-founded D-systems, it suffices to show that
-$p_{\mathcal{G}(f)_\ast(\mathcal{G}(A))}\jdeq p_{\mathcal{G}(f_\ast(A))}$. To
+$p_{\mathcal{G}(f)^\ast(\mathcal{G}(A))}\jdeq p_{\mathcal{G}(f^\ast(A))}$. To
 see this, we do a simple calculation
 \begin{align*}
-p_{\mathcal{G}(f)_\ast(\mathcal{G}(A))}
-& \jdeq \mathcal{G}(f)_\ast(p_{\mathcal{G}(A)}) \\
-& \jdeq \mathcal{G}(f)_\ast(\mathcal{G}(p_A)) \\
-& \jdeq \mathcal{G}(f_\ast(p_A)) \\
-& \jdeq \mathcal{G}(p_{f_\ast(A)}) \\
-& \jdeq p_{\mathcal{G}(f_\ast(A))} \qedhere
+p_{\mathcal{G}(f)^\ast(\mathcal{G}(A))}
+& \jdeq \mathcal{G}(f)^\ast(p_{\mathcal{G}(A)}) \\
+& \jdeq \mathcal{G}(f)^\ast(\mathcal{G}(p_A)) \\
+& \jdeq \mathcal{G}(f^\ast(p_A)) \\
+& \jdeq \mathcal{G}(p_{f^\ast(A)}) \\
+& \jdeq p_{\mathcal{G}(f^\ast(A))} \qedhere
 \end{align*}
 \end{proof}
 
@@ -1577,11 +1529,11 @@ E'-system.
 
 Now let $\mathbb{E}$ be a locally stratified E'-system without empty context.
 For $\Gamma\in\cat{C}$, we define $\mathrm{Ty}(\Gamma)$ to be the set of
-families of length one. Since any $f_\ast$ is stratified, it follows that
+families of length one. Since any $f^\ast$ is stratified, it follows that
 $\mathrm{Ty}$ is a presheaf on $\cat{C}$. The choice of pullback squares
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\ctxext{\Delta}{f_\ast(A)} \arrow[r,"{\pi_2(f,A)}"] \arrow[d,fib] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
+\ctxext{\Delta}{f^\ast(A)} \arrow[r,"{\pi_2(f,A)}"] \arrow[d,fib] & \ctxext{\Gamma}{A} \arrow[d,fib] \\
 \Delta \arrow[r,swap,"f"] & \Gamma
 \end{tikzcd}
 \end{equation*}

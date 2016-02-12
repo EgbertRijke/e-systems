@@ -1,4 +1,4 @@
-\section{E-systems}\label{sec:esys_defn}
+\section{Telescopic type systems}\label{sec:esys_defn}
 
 \subsection{Weakening systems}
 
@@ -392,24 +392,23 @@ H
 commute for every $h,k\in H$. 
 \end{eg}
 
-\subsection{The definition of E-systems}
+\subsection{The definition of telescopic type systems}
 
-Although it is now possible to state the definition of an E-system without
+Although it is now possible to state the definition of a telescopic type system without
 any difficulty, it shall be convenient later to also have a category of
-pre-E-systems at our disposal. Pre-E-systems shall by default be non-unital,
-i.e.~they do not come with a pre-projection system, while E-systems shall
+pre-telescopic type systems at our disposal. Pre-telescopic type systems shall by default be non-unital,
+i.e.~they do not come with a pre-projection system, while telescopic type systems shall
 always be assumed to be unital. In the present context, we shall not need
-unital pre-E-systems or non-unital E-systems.
+unital pre-telescopic type systems or non-unital telescopic type systems.
 
 \begin{defn}
-A \define{pre-E-system} is a pre-category $\cat{F}$ with term structure
+A \define{pre-telescopic type system} is a pre-category $\cat{F}$ with term structure
 with a pre-weakening structure $W$, a pre-substitution structure $S$ and a terminal
-object. A \define{unital pre-E-system}, or simply \define{pre-E-system}, is a non-unital pre-E-system
-which also has the structure of a pre-projection system. 
+object. A \define{unital pre-telescopic type system}, or simply \define{pre-telescopic type system}, is a non-unital pre-telescopic type system which also has the structure of a pre-projection system. 
 \end{defn}
 
 \begin{defn}
-A \define{pre-E-homomorphism} from $\mathbb{E}\to\mathbb{D}$ is a functor
+A \define{pre-telescopic homomorphism} from $\mathbb{E}\to\mathbb{D}$ is a functor
 $H:\mathbb{C}_\mathbb{E}\to\mathbb{C}_\mathbb{D}$ between the underlying categories
 with term structure, which is a pre-weakening homomorphism, a pre-substitution
 homomorphism, and which preserves the terminal object. 
@@ -420,7 +419,7 @@ also a pre-projection homomorphism.
 
 \begin{defn}
 \label{defn:esystems}
-An \define{E-system} is a unital pre-E-system in which 
+A \define{telescopic type system} is a unital pre-telescopic type system in which 
 \begin{enumerate}
 \item each $W_A$ is a unital pre-E-homomorphism,
 \item each $S_x$ is a unital pre-E-homomorphism,
@@ -428,7 +427,7 @@ An \define{E-system} is a unital pre-E-system in which
 \item $S_x(\tfid{A})\jdeq x$ for any $x\in T(A)$ and $A\in\cat{F}/\Gamma$, and
 \item \label{f:SidfWff_id} $S_{\tfid{A}}\circ W_A/A\jdeq \catid{\cat{F}/\ctxext{\Gamma}{A}}$ for any $A\in\cat{F}/\Gamma$.
 \end{enumerate}
-An \define{E-homomorphism} $H:\mathbb{E}\to\mathbb{D}$ is a functor from
+An \define{telescopic homomorphism} $H:\mathbb{E}\to\mathbb{D}$ is a functor from
 $\cat{F}_{\mathbb{E}}$ to $\cat{F}_{\mathbb{D}}$ which is both a projection
 homomorphism and a substitution homomorphism.
 \end{defn}
@@ -476,9 +475,14 @@ $Q\in\cat{F}/\ctxext{{\Gamma}{A}}{P}$.
 \end{rmk}
 
 \begin{cor}
-For any object $\Gamma$ of an E-system $\cat{F}$, the slice pre-category $\cat{F}/\Gamma$
-is an E-system.
+For any object $\Gamma$ of a telescopic type system $\cat{F}$, the slice pre-category $\cat{F}/\Gamma$
+is a telescopic type system.
 \end{cor}
+
+\begin{defn}
+We write $\mathbf{Tel}$ for the category of telescopic type systems where the underlying
+functor of each E-homomorphism lifts factorizations.
+\end{defn} 
 
 \begin{comment}
 \begin{rmk}[Needs more precision]

@@ -1,6 +1,6 @@
-\section{Elementary properties of E-systems}\label{sec:esys_props}
+\section{Elementary properties of telescopic type systems}\label{sec:esys_props}
 
-The theory of E-systems could be seen as a sort of category theory with only
+The theory of telescopic type systems could be seen as a sort of category theory with only
 projections and their sections. We elaborate on this point of view by defining
 the pre-category of internal morphisms, which Lawvere might have called the
 category of terms. 
@@ -9,7 +9,7 @@ which we define in \autoref{subsec:im_cat},
 a morphism $f:A\to B$ is a term of the constant family $W_A(B)$ over 
 $\ctxext{\Gamma}{A}$. Rather than directly defining composition, we will define
 for every $f:A\to B$ in context $\Gamma$, a pre-composition operation
-$f_\ast$, which is going to be an E-homomorphism from 
+$f^\ast$, which is going to be an E-homomorphism from 
 $\cat{F}/\ctxext{\Gamma}{B}$ to $\cat{F}/\ctxext{\Gamma}{A}$. This allows us
 to consider diagrams of the following form:
 \begin{equation*}
@@ -19,7 +19,7 @@ A \arrow[r,swap,"f"] & B
 \end{tikzcd}
 \end{equation*}
 where we consider the morphism $g$ over $f$ to be an internal morphism from 
-$P$ to $f_\ast(Q)$ in context $\ctxext{\Gamma}{A}$, capturing the
+$P$ to $f^\ast(Q)$ in context $\ctxext{\Gamma}{A}$, capturing the
 essence of being a morphism from the family $P$ over $A$ to the family
 $Q$ over $B$, reindexed by $f$. 
 Whenever we draw such diagrams, a double headed arrow will always
@@ -39,8 +39,8 @@ The pre-category of internal morphisms forms a pre-category of which the familie
 a subpre-category. This, together with the pre-composition operation described
 earlier, gives rise to the auxiliary notion of E'-systems, which we define
 in \autoref{sec:E'}. The thread running through this whole section is proving
-that the notions of E-system and E'-system are the same. In \autoref{sec:E'}
-we show directly that any E'-system is an E-system. We end this section by
+that the notions of telescopic type system and E'-system are the same. In \autoref{sec:E'}
+we show directly that any E'-system is a telescopic type system. We end this section by
 showing that the converse also holds.
 
 Before we begin this section, we introduce some more convenient notation.
@@ -80,41 +80,41 @@ the same objects as $\cat{C}$, such that
 functorial choice of a pullback square 
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\ctxext{\Delta}{f_\ast(A)} \arrow[r,"{\pi_2(f,A)}"] \arrow[d,fib,swap,"{f_\ast(A)}"] & \ctxext{\Gamma}{A} \arrow[d,fib,"A"] \\
+\ctxext{\Delta}{f^\ast(A)} \arrow[r,"{\pi_2(f,A)}"] \arrow[d,fib,swap,"{f^\ast(A)}"] & \ctxext{\Gamma}{A} \arrow[d,fib,"A"] \\
 \Delta \arrow[r,"f"] & \Gamma
 \end{tikzcd}
 \end{equation*}
-such that $f_\ast(A)\in\cat{F}/\Delta$. Explicitly, the functoriality
+such that $f^\ast(A)\in\cat{F}/\Delta$. Explicitly, the functoriality
 requirement is that
 \begin{enumerate}
 \item For any $f:\Delta\to\Gamma$, one has 
-$f_\ast(\catid{\Gamma})\jdeq\catid{\Delta}$ and
+$f^\ast(\catid{\Gamma})\jdeq\catid{\Delta}$ and
 \begin{equation*}
 \pi_2(f,\catid{\Gamma})\jdeq f.
 \end{equation*}
-\item \label{defn:E'sys:b} For any $A\in\cat{F}/\Gamma$, one has $(\catid{\Gamma})_\ast(A)\jdeq A$ and
+\item \label{defn:E'sys:b} For any $A\in\cat{F}/\Gamma$, one has $(\catid{\Gamma})^\ast(A)\jdeq A$ and
 \begin{equation*}
 \pi_2(\catid{\Gamma},A)\jdeq\catid{\ctxext{\Gamma}{A}}
 \end{equation*}
 \item \label{defn:E'sys:c} For any $f:\Delta\to\Gamma$, $g:\greek{E}\to\Delta$ and $A\in\cat{F}/\Gamma$, one
-has $(f\circ g)_\ast(A)\jdeq g_\ast(f_\ast(A))$ and 
+has $(f\circ g)^\ast(A)\jdeq g^\ast(f^\ast(A))$ and 
 \begin{equation*}
-\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ\pi_2(g,f_\ast(A))
+\pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ\pi_2(g,f^\ast(A))
 \end{equation*}
 \item For any $P\in\cat{F}/\ctxext{\Gamma}{A}$ and $f:\Delta\to\Gamma$, one has
-$f_\ast(P)\jdeq\pi_2(f,A)_\ast(P)$ and 
+$f^\ast(P)\jdeq\pi_2(f,A)^\ast(P)$ and 
 \begin{equation*}
 \pi_2(f,\ctxext{A}{P}) \jdeq \pi_2(\pi_2(f,A),P)
 \end{equation*}
 \end{enumerate}
 \end{enumerate}
-For any $f:\Delta\to\Gamma$ we shall write $f_\ast$ for the induced functor
+For any $f:\Delta\to\Gamma$ we shall write $f^\ast$ for the induced functor
 $\cat{F}/\Gamma\to\cat{F}/\Delta$. 
 \end{defn}
 
 \begin{rmk}
 Without a terminal object in $\cat{F}$, the pre-category $\cat{C}$ does not correspond
-directly to anything in an E-system.
+directly to anything in a telescopic type system.
 \end{rmk}
 
 \begin{rmk}
@@ -139,14 +139,14 @@ subpre-category of $\cat{C}/\Gamma$ with the same objects as $\cat{F}/\Gamma$.
 \end{defn}
 
 \begin{lem}\label{lem:pb_selfdistributive}
-Let $\mathbb{E}$ be an E'-system. Then $f_\ast$ can be extended to a functor from
+Let $\mathbb{E}$ be an E'-system. Then $f^\ast$ can be extended to a functor from
 $\cat{C}_\cat{F}/\Gamma$ to $\cat{C}_\cat{F}/\Delta$, for each $f:\Delta\to\Gamma$, and moreover the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\cat{C}_\cat{F}/\ctxext{\Gamma}{B} \arrow[r,"{f_\ast/B}"] \arrow[d,swap,"{g_\ast}"]
-& \cat{C}_\cat{F}/\ctxext{\Delta}{f_\ast(B)} \arrow[d,"{(f_\ast(g))_\ast}"] \\
-\cat{C}_\cat{F}/\ctxext{\Gamma}{A} \arrow[r,swap,"{f_\ast/A}"]
-& \cat{C}_\cat{F}/\ctxext{\Delta}{f_\ast(A)}
+\cat{C}_\cat{F}/\ctxext{\Gamma}{B} \arrow[r,"{f^\ast/B}"] \arrow[d,swap,"{g^\ast}"]
+& \cat{C}_\cat{F}/\ctxext{\Delta}{f^\ast(B)} \arrow[d,"{(f^\ast(g))^\ast}"] \\
+\cat{C}_\cat{F}/\ctxext{\Gamma}{A} \arrow[r,swap,"{f^\ast/A}"]
+& \cat{C}_\cat{F}/\ctxext{\Delta}{f^\ast(A)}
 \end{tikzcd}
 \end{equation*}
 commutes for every $g:A\to B$ in $\cat{C}_\cat{F}/\Gamma$.
@@ -154,25 +154,25 @@ commutes for every $g:A\to B$ in $\cat{C}_\cat{F}/\Gamma$.
 
 \begin{proof}
 It is straightforward to use the universal property of the pullback to extend
-$f_\ast$ to a functor from $\cat{C}_\cat{F}/\Gamma$ to $\cat{C}_\cat{F}/\Delta$.
+$f^\ast$ to a functor from $\cat{C}_\cat{F}/\Gamma$ to $\cat{C}_\cat{F}/\Delta$.
 To see that the diagram commutes, we calculate
 \begin{align*}
-f_\ast/A\circ g_\ast
+f^\ast/A\circ g^\ast
 & \jdeq
-\pi_2(f,A)_\ast\circ g_\ast \\
+\pi_2(f,A)^\ast\circ g^\ast \\
 & \jdeq
-(g\circ\pi_2(f,A))_\ast \\
+(g\circ\pi_2(f,A))^\ast \\
 & \jdeq
-(\pi_2(f,B)\circ f_\ast(g))_\ast \\
+(\pi_2(f,B)\circ f^\ast(g))^\ast \\
 & \jdeq
-(f_\ast(g))_\ast\circ\pi_2(f,B)_\ast \\
+(f^\ast(g))^\ast\circ\pi_2(f,B)^\ast \\
 & \jdeq
-(f_\ast(g))_\ast\circ f_\ast/B.\qedhere
+(f^\ast(g))^\ast\circ f^\ast/B.\qedhere
 \end{align*}
 \end{proof}
 
 \begin{thm}
-An E-system is the same thing as an E'-system.
+A telescopic type system is the same thing as an E'-system.
 \end{thm}
 
 \begin{proof}
@@ -180,11 +180,11 @@ We define for any $A\in\cat{F}/\Gamma$ the set
 \begin{equation*}
 T(A)\defeq\{x:\Gamma\to\ctxext{\Gamma}{A}\mid A\circ x\jdeq\catid{\Gamma}\}.
 \end{equation*}
-Since each functor $f_\ast$ is extended to all of $\cat{C}_{\cat{F}}/\Gamma$,
+Since each functor $f^\ast$ is extended to all of $\cat{C}_{\cat{F}}/\Gamma$,
 it follows immediately that those are functors with term structure.
 
-We define for any $A\in\cat{F}/\Gamma$, the functor $W_A\defeq A_\ast:\cat{F}/\Gamma\to\cat{F}/\ctxext{\Gamma}{A}$.
-Likewise, we define for any $x\in T(A)$, the functor $S_x\defeq x_\ast:\cat{F}/\ctxext{\Gamma}{A}\to\cat{F}/\Gamma$.
+We define for any $A\in\cat{F}/\Gamma$, the functor $W_A\defeq A^\ast:\cat{F}/\Gamma\to\cat{F}/\ctxext{\Gamma}{A}$.
+Likewise, we define for any $x\in T(A)$, the functor $S_x\defeq x^\ast:\cat{F}/\ctxext{\Gamma}{A}\to\cat{F}/\Gamma$.
 We also define $\tfid{A}:T(W_A(A))$ by the universal property of pullbacks:
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
@@ -198,16 +198,16 @@ each functor $W_A$ and $S_x$ is both a weakening functor and a substitution func
 Since each $W_A$ and $S_x$ preserves identity morphisms, it also preserves the
 terms $\tfid{A}$. 
 
-It remains to verify the rest of the conditions of E-systems.
+It remains to verify the rest of the conditions of telescopic type systems.
 \begin{itemize}
 \item To show that weakened families are constant, note that
 \begin{equation*}
-S_x\circ W_A\jdeq x_\ast\circ A_\ast\jdeq (A\circ x)_\ast\jdeq (\catid{\Gamma})_\ast\jdeq \catid{\cat{C}_{\cat{F}}/\Gamma}.
+S_x\circ W_A\jdeq x^\ast\circ A^\ast\jdeq (A\circ x)^\ast\jdeq (\catid{\Gamma})^\ast\jdeq \catid{\cat{C}_{\cat{F}}/\Gamma}.
 \end{equation*}
 \item The identity terms are neutral for pre-composition:
 \begin{equation*}
-S_{\tfid{A}}\circ W_A/A \jdeq S_{\tfid{A}}\circ \pi_2(A,A)_\ast \jdeq (\pi_2(A,A)\circ\tfid{A})_\ast \jdeq
-(\catid{\ctxext{\Gamma}{A}})_\ast \jdeq \catid{\cat{C}_{\cat{F}}/\ctxext{\Gamma}{A}} 
+S_{\tfid{A}}\circ W_A/A \jdeq S_{\tfid{A}}\circ \pi_2(A,A)^\ast \jdeq (\pi_2(A,A)\circ\tfid{A})^\ast \jdeq
+(\catid{\ctxext{\Gamma}{A}})^\ast \jdeq \catid{\cat{C}_{\cat{F}}/\ctxext{\Gamma}{A}} 
 \end{equation*}
 \item The identity terms behave like identity functions: by the universal property,
 $S_x(\tfid{A})$ is the unique section of $A$ such that the square
@@ -231,15 +231,15 @@ W_A(A)\circ\pi_2(x,W_A(A))\circ x & \jdeq W_A(A)\circ\idtm{A}\circ x \\
 
 
 \begin{comment}
-We then demonstrate how to define a category internal to an E-system. The main
-point of this lies mainly in demonstrating how the operations of E-systems can
+We then demonstrate how to define a category internal to a telescopic type system. The main
+point of this lies mainly in demonstrating how the operations of telescopic type systems can
 be used to define a category, because it is no surprise that a category can be
 defined in type theory. Nevertheless, it is noteworthy that we need no further 
-conditions on E-systems.
+conditions on telescopic type systems.
 This is unlike the situation in category theory, where we need
 to assume that the ambient category has finite limits in order to say what an
-internal category is. In fact, it is possible to define an E-system internal
-to an E-system, just using the algebraic structure of an E-system, and actually
+internal category is. In fact, it is possible to define a telescopic type system internal
+to a telescopic type system, just using the algebraic structure of a telescopic type system, and actually
 defining an internal category was the hardest part of that definition.
 \end{comment}
 
@@ -284,11 +284,11 @@ product $\Pi_A$.
 Let $A,B\in\cat{F}/\Gamma$.
 For any $f\in\thom{A}{B}$ we define the \define{pre-composition} E-homomorphism
 \begin{equation*}
-f_\ast \defeq S_f\circ W_A/B : \cat{F}/\ctxext{\Gamma}{B}\to\cat{F}/\ctxext{\Gamma}{A}.
+f^\ast \defeq S_f\circ W_A/B : \cat{F}/\ctxext{\Gamma}{B}\to\cat{F}/\ctxext{\Gamma}{A}.
 \end{equation*}
-Furthermore, for $g\in\thom{B}{C}$ we may consider $W_B(C)\in\cat{F}/\ctxext{\Gamma}{B}$ as a morphism from $W_B(C)$ to $\catid{\ctxext{\Gamma}{B}}$. Therefore, $f_\ast$ acts on the terms of
-$W_B(C)$, so it makes sense to define $g\circ f\defeq f_\ast(g)$. In fact, it makes
-sense to let $(\blank)\circ f$ be the infix notation for $f_\ast$. 
+Furthermore, for $g\in\thom{B}{C}$ we may consider $W_B(C)\in\cat{F}/\ctxext{\Gamma}{B}$ as a morphism from $W_B(C)$ to $\catid{\ctxext{\Gamma}{B}}$. Therefore, $f^\ast$ acts on the terms of
+$W_B(C)$, so it makes sense to define $g\circ f\defeq f^\ast(g)$. In fact, it makes
+sense to let $(\blank)\circ f$ be the infix notation for $f^\ast$. 
 \end{defn}
 
 \begin{rmk}
@@ -329,28 +329,28 @@ in context $\Gamma$.
 
 \begin{rmk}
 Note that \autoref{f:SidfWff_id} of \autoref{defn:esystems} asserts precisely
-that ${(\tfid{A})}_\ast\jdeq \catid{\cat{F}/\ctxext{\Gamma}{A}}$ for any $A\in\cat{F}/\Gamma$. In
+that ${(\tfid{A})}^\ast\jdeq \catid{\cat{F}/\ctxext{\Gamma}{A}}$ for any $A\in\cat{F}/\Gamma$. In
 particular, it follows that $g\circ\tfid{A}\jdeq g$ for any $g\in\thom{A}{B}$
 \end{rmk}
 
 \begin{lem}\label{lem:compcomp}
-For any $f\in\thom{A}{B}$ and $g\in\thom{B}{C}$ we have $f_\ast\circ g_\ast\jdeq (g\circ f)_\ast$. 
+For any $f\in\thom{A}{B}$ and $g\in\thom{B}{C}$ we have $f^\ast\circ g^\ast\jdeq (g\circ f)^\ast$. 
 \end{lem}
 
 \begin{proof}
 \begin{align*}
-f_\ast\circ g_\ast & \jdeq S_f\circ (W_A/B) \circ S_g \circ (W_B/C)\\
+f^\ast\circ g^\ast & \jdeq S_f\circ (W_A/B) \circ S_g \circ (W_B/C)\\
 & \jdeq S_f\circ S_{W_A(g)}\circ(W_A/\ctxext{B}{W_B(C)})\circ (W_B/C) \\
 & \jdeq S_{S_f(W_A(g))}\circ (S_f/W_A(W_B(C)))\circ (W_A/\ctxext{B}{W_B(C)}) \circ W_B/C \\
 & \jdeq S_{S_f(W_A(g))}\circ ((S_f\circ (W_A/B) \circ W_B)/C) \\
 & \jdeq S_{S_f(W_A(g))}\circ ((S_f\circ W_{W_A(B)}\circ W_A)/C) \\
 & \jdeq S_{S_f(W_A(g))}\circ W_A/C \\
-& \jdeq (g\circ f)_\ast.\qedhere
+& \jdeq (g\circ f)^\ast.\qedhere
 \end{align*}
 \end{proof}
 
 \begin{thm}
-For each object $\Gamma$ of an E-system $\mathbb{E}$, we have a pre-category
+For each object $\Gamma$ of a telescopic type system $\mathbb{E}$, we have a pre-category
 $\mathbb{C}_I(\mathbb{E},\Gamma)$ of internal morphisms of $\mathbb{E}$,
 consisting of the same objects as $\cat{F}/\Gamma$ and the hom-sets 
 $\thom{A}{B}$. 
@@ -358,7 +358,7 @@ $\thom{A}{B}$.
 
 \begin{proof}
 The fact that composition is associative is a direct corollary of
-\autoref{lem:compcomp}. The axiom $(\tfid{A})_\ast\jdeq\catid{\ctxext{\Gamma}{A}}$
+\autoref{lem:compcomp}. The axiom $(\tfid{A})^\ast\jdeq\catid{\ctxext{\Gamma}{A}}$
 implies that the identity morphisms satisfy the right identity law. It remains
 to show that $\tfid{B}\circ f\jdeq f$. This is a simple calculation:
 \begin{equation*}
@@ -375,13 +375,13 @@ f.\qedhere
 \begin{rmk}
 Since any E-homomorphism is both a substitution homomorphism and a weakening
 homomorphism, it follows immediately that any E-homomorphism preserves any
-$f_\ast$, i.e.~for any $f\in\thom{A}{B}$ in $\mathcal{E}$ and any E-homomorphism
+$f^\ast$, i.e.~for any $f\in\thom{A}{B}$ in $\mathcal{E}$ and any E-homomorphism
 $F:\mathcal{E}\to\mathcal{D}$, the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
 \mathcal{E}/\ctxext{\Gamma}{A} \arrow[r,"F/\ctxext{\Gamma}{A}"] & \mathcal{D}/F(\ctxext{\Gamma}{A})
   \\
-\mathcal{E}/\ctxext{\Gamma}{B} \arrow[u,"f_\ast"] \arrow[r,swap,"F/\ctxext{\Gamma}{B}"] & \mathcal{D}/F(\ctxext{\Gamma}{B}) \arrow[u,swap,"F(f)_\ast"]
+\mathcal{E}/\ctxext{\Gamma}{B} \arrow[u,"f^\ast"] \arrow[r,swap,"F/\ctxext{\Gamma}{B}"] & \mathcal{D}/F(\ctxext{\Gamma}{B}) \arrow[u,swap,"F(f)^\ast"]
 \end{tikzcd}
 \end{equation*}
 commutes. This applies to weakening, substitution and pre-composition, and it
@@ -395,14 +395,14 @@ The following fact will be useful:
 \begin{lem}\label{lem:compW_W}
 Let $f\in\thom{A}{B}$ be an internal morphism in context $\Gamma$. Then one has
 \begin{equation*}
-f_\ast\circ W_B\jdeq W_A.
+f^\ast\circ W_B\jdeq W_A.
 \end{equation*}
 \end{lem}
 
 \begin{proof}
 The proof is a simple calculation:
 \begin{equation*}
-f_\ast\circ W_B\jdeq S_f\circ W_A/B\circ W_B\jdeq S_f\circ W_{W_A(B)}\circ W_A
+f^\ast\circ W_B\jdeq S_f\circ W_A/B\circ W_B\jdeq S_f\circ W_{W_A(B)}\circ W_A
 \jdeq W_A.\qedhere
 \end{equation*}
 \end{proof}
@@ -571,13 +571,13 @@ with a first projection.
 \begin{thm}\label{precomp_by_proj}
 Precomposition with $\cprojfstf{A}{P}$ is weakening by $P$, i.e.
 \begin{equation*}
-(\cprojfstf{A}{P})_\ast \jdeq W_P.
+(\cprojfstf{A}{P})^\ast \jdeq W_P.
 \end{equation*}
 \end{thm}
 
 \begin{proof}
 \begin{align*}
-(\cprojfstf{A}{P})_\ast & \jdeq S_{\cprojfstf{A}{P}}\circ W_{\ctxext{A}{P}} \\
+(\cprojfstf{A}{P})^\ast & \jdeq S_{\cprojfstf{A}{P}}\circ W_{\ctxext{A}{P}} \\
 & \jdeq S_{W_P(\tfid{A})}\circ W_P\circ W_A \\
 & \jdeq W_P\circ S_{\tfid{A}}\circ W_A \\
 & \jdeq W_P.\qedhere 
@@ -660,23 +660,23 @@ associative, we have
 Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then we
 define the E-homomorphism 
 \begin{equation*}
-F_\circledast\defeq F_\ast\circ (f_\ast/Q):
+F^\circledast\defeq F^\ast\circ (f^\ast/Q):
 \mathbb{E}/\ctxext{{\Gamma}{B}}{Q}\to\mathbb{E}/\ctxext{{\Gamma}{A}}{P}.
 \end{equation*}
-The infix notation of $F_\circledast$ is taken to be $\jfcomp{\blank}{\blank}{\blank}{F}{\blank}$.
+The infix notation of $F^\circledast$ is taken to be $\jfcomp{\blank}{\blank}{\blank}{F}{\blank}$.
 \end{defn}
 
 \begin{lem}\label{lem:three-composition}
 Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then we
 have the equality
 \begin{equation*}
-F_\circledast\jdeq (\jvcomp{P}{f}{F})_\ast.
+F^\circledast\jdeq (\jvcomp{P}{f}{F})^\ast.
 \end{equation*}
 \end{lem}
 
 \begin{proof}
 \begin{align*}
-F_\ast\circ (f_\ast/Q)
+F^\ast\circ (f^\ast/Q)
   & \jdeq
 S_F\circ W_P\circ S_f/(W_A(Q))\circ W_A/\ctxext{B}{Q}
   \\
@@ -691,7 +691,7 @@ S_{\tmext{W_P(f)}{F}}\circ W_{\ctxext{A}{P}}/\ctxext{B}{Q}
   \tag{By \autoref{subst_by_tmext}}
   \\
   & \jdeq
-(\jvcomp{P}{f}{F})_\ast.\qedhere
+(\jvcomp{P}{f}{F})^\ast.\qedhere
 \end{align*}
 \end{proof}
 
@@ -758,24 +758,24 @@ C
 \end{tikzcd}
 \end{equation*}
 in context $\Gamma$. 
-Then $F_\circledast\circ G_\circledast\jdeq (\jfcomp{A}{f}{P}{F}{G})_\circledast$.
+Then $F^\circledast\circ G^\circledast\jdeq (\jfcomp{A}{f}{P}{F}{G})^\circledast$.
 In other words the composition $\jfcomp{}{}{}{\blank}{\blank}$ is associative.
 \end{thm}
 
 \begin{proof}
 \begin{align*}
-F_\circledast\circ G_\circledast
+F^\circledast\circ G^\circledast
   & \jdeq
-(\jvcomp{P}{f}{F})_\ast\circ(\jvcomp{Q}{g}{G})_\ast 
+(\jvcomp{P}{f}{F})^\ast\circ(\jvcomp{Q}{g}{G})^\ast 
   \tag{By \autoref{lem:three-composition}}\\
   & \jdeq
-(\jcomp{\ctxext{A}{P}}{\jvcomp{P}{f}{F}}{\jvcomp{Q}{g}{G}})_\ast 
+(\jcomp{\ctxext{A}{P}}{\jvcomp{P}{f}{F}}{\jvcomp{Q}{g}{G}})^\ast 
   \tag{By \autoref{lem:compcomp}}\\
   & \jdeq
-(\jvcomp{}{\jcomp{A}{f}{g}}{\jfcomp{A}{f}{P}{F}{G}})_\ast 
+(\jvcomp{}{\jcomp{A}{f}{g}}{\jfcomp{A}{f}{P}{F}{G}})^\ast 
   \tag{By \autoref{thm:interchange}} \\
   & \jdeq
-(\jfcomp{A}{f}{P}{F}{G})_\circledast.
+(\jfcomp{A}{f}{P}{F}{G})^\circledast.
   \tag{By \autoref{lem:three-composition}}
 \end{align*}
 \end{proof}
@@ -840,7 +840,7 @@ G \jdeq \tmext{\jcomp{}{\cprojfstf{A}{P}}{f}}{F}
 \end{equation*}
 \end{proof}
 
-\subsection{E-systems are E'-systems}
+\subsection{Telescopic type systems are E'-systems}
 
 \begin{lem}
 Consider $A\in\cat{F}/\Gamma$ and $Q\in\cat{F}/\ctxext{\Gamma}{B}$. Then there
@@ -866,7 +866,7 @@ Also, we find $\cprojfst{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{h}\jdeq\subst{h}{\ctxwk{A}{
 \end{proof}
 
 \begin{thm}
-E-systems are the same things as E'-systems.
+Telescopic type systems are the same things as E'-systems.
 \end{thm}
 
 \begin{proof}
@@ -887,7 +887,7 @@ morphism $g:X\to A$ in context $\Gamma$. Then we have the isomorphisms
 \begin{equation*}
 \{h\in\thom{X}{\ctxext{B}{Q}}\mid \jcomp{X}{h}{\cprojfstf{B}{Q}}\jdeq\jcomp{X}{g}{f}\}
   \cong
-T((\jcomp{X}{g}{f})_\ast(Q))
+T((\jcomp{X}{g}{f})^\ast(Q))
   \cong
 \{u\in\thom{X}{\ctxext{A}{\jcomp{A}{f}{Q}}}\mid\jcomp{X}{u}{\cprojfstf{A}{\jcomp{A}{f}{Q}}}\jdeq g\}
 \end{equation*}
@@ -899,7 +899,7 @@ that $\jcomp{X}{u}{\pi_2(f,Q)}\jdeq h$, so the universal property of pullbacks
 holds. The functoriality conditions follow immediately from the interchange
 laws proven in \autoref{sec:interchange}.
 
-We have described functors from E'-systems to E-systems and vice versa. It is
+We have described functors from E'-systems to telescopic type systems and vice versa. It is
 a straightforward check that these are mutual inverses.
 \end{proof}
 
@@ -910,7 +910,7 @@ a straightforward check that these are mutual inverses.
 Let $f_0\in\thom{A}{B}$ be an internal morphism and let $P\in\cat{F}/\ctxext{\Gamma}{A}$ and
 $Q\in\cat{F}/\ctxext{\Gamma}{B}$. We define
 \begin{equation*}
-\thomd{f_0}{P}{Q} \defeq \thom{P}{{f_0}_\ast(Q)}
+\thomd{f_0}{P}{Q} \defeq \thom{P}{{f_0}^\ast(Q)}
 \end{equation*}
 We indicate that $f_1\in\thomd{f_0}{P}{Q}$ by drawing the diagram
 \begin{equation*}
@@ -960,7 +960,7 @@ for each $x\in T(A)$ and $u\in T(S_x(P))$.
 
 \section{Natural transformations of E-homomorphisms}
 \begin{rmk}
-When $\mathcal{E}$ is an E-system with empty context, then we have the category
+When $\mathcal{E}$ is a telescopic type system with empty context, then we have the category
 structure on the contexts given by $\thom{\Gamma}{\Delta}= T(W_\Gamma(\Delta))$.
 \end{rmk}
 
@@ -1006,7 +1006,7 @@ T(W_{W_{F(A)}(F(B))}(W_{F(A)}(G(B))))
 \end{enumerate}
 \end{defn}
 
-\section{Indexed E-systems}
+\section{Indexed telescopic type systems}
 \begin{defn}
 Let $\cat{A}$ be a category. An $\cat{A}$-indexed E-system is an internal
 E-system in the category $Psh(\cat{A})$.
@@ -1076,7 +1076,7 @@ naturality.
 \end{enumerate}
 \end{proof}
 
-\section{Weak E-systems}
+\section{Weak telescopic type systems}
 
 \begin{rmk}
 Note that $W$ is a strict $2$-functor frm $\cat{F}$ to $\mathbb{Cat}$ of which
@@ -1091,7 +1091,7 @@ The following questions need to be answered:
 \item What is a weak weakening/projection/substitution system.
 \item What is a weak E-system? I.e.~what are the coherence rules for something
 to be a weakening/projection/substitution homomorphism?
-\item Can they all be strictified? Are there more examples of weak E-systems?
+\item Can they all be strictified? Are there more examples of weak telescopic type systems?
 \end{itemize}
 \end{rmk}
 \end{comment}
