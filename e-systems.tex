@@ -1,4 +1,4 @@
-\section{Telescopic type systems}\label{sec:esys_defn}
+\section{Context algebras}\label{sec:esys_defn}
 
 \subsection{Weakening systems}
 
@@ -392,23 +392,18 @@ H
 commute for every $h,k\in H$. 
 \end{eg}
 
-\subsection{The definition of telescopic type systems}
+\subsection{The definition of context algebras}
 
-Although it is now possible to state the definition of a telescopic type system without
-any difficulty, it shall be convenient later to also have a category of
-pre-telescopic type systems at our disposal. Pre-telescopic type systems shall by default be non-unital,
-i.e.~they do not come with a pre-projection system, while telescopic type systems shall
-always be assumed to be unital. In the present context, we shall not need
-unital pre-telescopic type systems or non-unital telescopic type systems.
+We can now give the definition of context algebras.
 
 \begin{defn}
-A \define{pre-telescopic type system} is a pre-category $\cat{F}$ with term structure
+A \define{pre-context algebra} is a pre-category $\cat{F}$ with term structure
 with a pre-weakening structure $W$, a pre-substitution structure $S$ and a terminal
-object. A \define{unital pre-telescopic type system}, or simply \define{pre-telescopic type system}, is a non-unital pre-telescopic type system which also has the structure of a pre-projection system. 
+object. A \define{unital pre-context algebra}, or simply \define{pre-context algebra}, is a non-unital pre-context algebra which also has the structure of a pre-projection system. 
 \end{defn}
 
 \begin{defn}
-A \define{pre-telescopic homomorphism} from $\mathbb{E}\to\mathbb{D}$ is a functor
+A \define{pre-context homomorphism} from $\mathbb{E}\to\mathbb{D}$ is a functor
 $H:\mathbb{C}_\mathbb{E}\to\mathbb{C}_\mathbb{D}$ between the underlying categories
 with term structure, which is a pre-weakening homomorphism, a pre-substitution
 homomorphism, and which preserves the terminal object. 
@@ -419,7 +414,7 @@ also a pre-projection homomorphism.
 
 \begin{defn}
 \label{defn:esystems}
-A \define{telescopic type system} is a unital pre-telescopic type system in which 
+A \define{context algebra} is a unital pre-context algebra in which 
 \begin{enumerate}
 \item each $W_A$ is a unital pre-E-homomorphism,
 \item each $S_x$ is a unital pre-E-homomorphism,
@@ -427,7 +422,7 @@ A \define{telescopic type system} is a unital pre-telescopic type system in whic
 \item $S_x(\tfid{A})\jdeq x$ for any $x\in T(A)$ and $A\in\cat{F}/\Gamma$, and
 \item \label{f:SidfWff_id} $S_{\tfid{A}}\circ W_A/A\jdeq \catid{\cat{F}/\ctxext{\Gamma}{A}}$ for any $A\in\cat{F}/\Gamma$.
 \end{enumerate}
-An \define{telescopic homomorphism} $H:\mathbb{E}\to\mathbb{D}$ is a functor from
+An \define{context homomorphism} $H:\mathbb{E}\to\mathbb{D}$ is a functor from
 $\cat{F}_{\mathbb{E}}$ to $\cat{F}_{\mathbb{D}}$ which is both a projection
 homomorphism and a substitution homomorphism.
 \end{defn}
@@ -475,12 +470,12 @@ $Q\in\cat{F}/\ctxext{{\Gamma}{A}}{P}$.
 \end{rmk}
 
 \begin{cor}
-For any object $\Gamma$ of a telescopic type system $\cat{F}$, the slice pre-category $\cat{F}/\Gamma$
-is a telescopic type system.
+For any object $\Gamma$ of a context algebra $\cat{F}$, the slice pre-category $\cat{F}/\Gamma$
+is a context algebra.
 \end{cor}
 
 \begin{defn}
-We write $\mathbf{Tel}$ for the category of telescopic type systems where the underlying
+We write $\mathbf{Ctx}$ for the category of context algebras where the underlying
 functor of each E-homomorphism lifts factorizations.
 \end{defn} 
 
