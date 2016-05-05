@@ -1,6 +1,6 @@
-\section{Elementary properties of telescopic type systems}\label{sec:esys_props}
+\section{Elementary properties of context algebras}\label{sec:esys_props}
 
-The theory of telescopic type systems could be seen as a sort of category theory with only
+The theory of context algebras could be seen as a sort of category theory with only
 projections and their sections. We elaborate on this point of view by defining
 the pre-category of internal morphisms, which Lawvere might have called the
 category of terms. 
@@ -39,8 +39,8 @@ The pre-category of internal morphisms forms a pre-category of which the familie
 a subpre-category. This, together with the pre-composition operation described
 earlier, gives rise to the auxiliary notion of E'-systems, which we define
 in \autoref{sec:E'}. The thread running through this whole section is proving
-that the notions of telescopic type system and E'-system are the same. In \autoref{sec:E'}
-we show directly that any E'-system is a telescopic type system. We end this section by
+that the notions of context algebra and E'-system are the same. In \autoref{sec:E'}
+we show directly that any E'-system is a context algebra. We end this section by
 showing that the converse also holds.
 
 Before we begin this section, we introduce some more convenient notation.
@@ -114,7 +114,7 @@ $\cat{F}/\Gamma\to\cat{F}/\Delta$.
 
 \begin{rmk}
 Without a terminal object in $\cat{F}$, the pre-category $\cat{C}$ does not correspond
-directly to anything in a telescopic type system.
+directly to anything in a context algebra.
 \end{rmk}
 
 \begin{rmk}
@@ -172,7 +172,7 @@ f^\ast/A\circ g^\ast
 \end{proof}
 
 \begin{thm}
-A telescopic type system is the same thing as an E'-system.
+A context algebra is the same thing as an E'-system.
 \end{thm}
 
 \begin{proof}
@@ -198,7 +198,7 @@ each functor $W_A$ and $S_x$ is both a weakening functor and a substitution func
 Since each $W_A$ and $S_x$ preserves identity morphisms, it also preserves the
 terms $\tfid{A}$. 
 
-It remains to verify the rest of the conditions of telescopic type systems.
+It remains to verify the rest of the conditions of context algebras.
 \begin{itemize}
 \item To show that weakened families are constant, note that
 \begin{equation*}
@@ -231,15 +231,15 @@ W_A(A)\circ\pi_2(x,W_A(A))\circ x & \jdeq W_A(A)\circ\idtm{A}\circ x \\
 
 
 \begin{comment}
-We then demonstrate how to define a category internal to a telescopic type system. The main
-point of this lies mainly in demonstrating how the operations of telescopic type systems can
+We then demonstrate how to define a category internal to a context algebra. The main
+point of this lies mainly in demonstrating how the operations of context algebras can
 be used to define a category, because it is no surprise that a category can be
 defined in type theory. Nevertheless, it is noteworthy that we need no further 
-conditions on telescopic type systems.
+conditions on context algebras.
 This is unlike the situation in category theory, where we need
 to assume that the ambient category has finite limits in order to say what an
-internal category is. In fact, it is possible to define a telescopic type system internal
-to a telescopic type system, just using the algebraic structure of a telescopic type system, and actually
+internal category is. In fact, it is possible to define a context algebra internal
+to a context algebra, just using the algebraic structure of a context algebra, and actually
 defining an internal category was the hardest part of that definition.
 \end{comment}
 
@@ -350,7 +350,7 @@ f^\ast\circ g^\ast & \jdeq S_f\circ (W_A/B) \circ S_g \circ (W_B/C)\\
 \end{proof}
 
 \begin{thm}
-For each object $\Gamma$ of a telescopic type system $\mathbb{E}$, we have a pre-category
+For each object $\Gamma$ of a context algebra $\mathbb{E}$, we have a pre-category
 $\mathbb{C}_I(\mathbb{E},\Gamma)$ of internal morphisms of $\mathbb{E}$,
 consisting of the same objects as $\cat{F}/\Gamma$ and the hom-sets 
 $\thom{A}{B}$. 
@@ -840,7 +840,7 @@ G \jdeq \tmext{\jcomp{}{\cprojfstf{A}{P}}{f}}{F}
 \end{equation*}
 \end{proof}
 
-\subsection{Telescopic type systems are E'-systems}
+\subsection{Context algebras are E'-systems}
 
 \begin{lem}
 Consider $A\in\cat{F}/\Gamma$ and $Q\in\cat{F}/\ctxext{\Gamma}{B}$. Then there
@@ -866,7 +866,7 @@ Also, we find $\cprojfst{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{h}\jdeq\subst{h}{\ctxwk{A}{
 \end{proof}
 
 \begin{thm}
-Telescopic type systems are the same things as E'-systems.
+Context algebras are the same things as E'-systems.
 \end{thm}
 
 \begin{proof}
@@ -899,7 +899,7 @@ that $\jcomp{X}{u}{\pi_2(f,Q)}\jdeq h$, so the universal property of pullbacks
 holds. The functoriality conditions follow immediately from the interchange
 laws proven in \autoref{sec:interchange}.
 
-We have described functors from E'-systems to telescopic type systems and vice versa. It is
+We have described functors from E'-systems to context algebras and vice versa. It is
 a straightforward check that these are mutual inverses.
 \end{proof}
 
@@ -960,7 +960,7 @@ for each $x\in T(A)$ and $u\in T(S_x(P))$.
 
 \section{Natural transformations of E-homomorphisms}
 \begin{rmk}
-When $\mathcal{E}$ is a telescopic type system with empty context, then we have the category
+When $\mathcal{E}$ is a context algebra with empty context, then we have the category
 structure on the contexts given by $\thom{\Gamma}{\Delta}= T(W_\Gamma(\Delta))$.
 \end{rmk}
 
@@ -1006,7 +1006,7 @@ T(W_{W_{F(A)}(F(B))}(W_{F(A)}(G(B))))
 \end{enumerate}
 \end{defn}
 
-\section{Indexed telescopic type systems}
+\section{Indexed context algebras}
 \begin{defn}
 Let $\cat{A}$ be a category. An $\cat{A}$-indexed E-system is an internal
 E-system in the category $Psh(\cat{A})$.
@@ -1076,7 +1076,7 @@ naturality.
 \end{enumerate}
 \end{proof}
 
-\section{Weak telescopic type systems}
+\section{Weak context algebras}
 
 \begin{rmk}
 Note that $W$ is a strict $2$-functor frm $\cat{F}$ to $\mathbb{Cat}$ of which
@@ -1091,7 +1091,7 @@ The following questions need to be answered:
 \item What is a weak weakening/projection/substitution system.
 \item What is a weak E-system? I.e.~what are the coherence rules for something
 to be a weakening/projection/substitution homomorphism?
-\item Can they all be strictified? Are there more examples of weak telescopic type systems?
+\item Can they all be strictified? Are there more examples of weak context algebras?
 \end{itemize}
 \end{rmk}
 \end{comment}
