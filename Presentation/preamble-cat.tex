@@ -1,1 +1,39 @@
 \newcommand{\cat}{\mathbb}
+
+\makeatletter
+\newcommand{\pullback@test}{%
+  \@ifnextchar\pullback{\@eatdo{\pullback@parens}}{%
+  \@ifnextchar\stesysff{\@eatdo{(\stesysff)}}{}}}
+\newcommand{\pullback@parens}[4]{(\pullback{#1}{#2}{#3}{#4})}
+\newcommand{\pullback}[4]{
+  \pullback@test #1\times_{\pullback@test #3,\pullback@test #4} \pullback@test #2}
+\newcommand{\pullbackpr}[3]{\pi_{#1}(#2,#3)}
+
+\newcommand{\eft}[1][]{\mathrm{ft}_{#1}}
+\newcommand{\ebd}[1][]{\partial_{#1}}
+\newcommand{\esys}[3]{\mathrm{#1#2#3}}
+\newcommand{\stesysc}{C}
+\newcommand{\stesysf}{F}
+\newcommand{\stesyst}{T}
+\newcommand{\stesys}{\esys{\stesysc}{\stesysf}{\stesyst}}
+\newcommand{\stesysff}{\pullback{\stesysf}{\stesysf}{\ectxext}{\eft}}
+\newcommand{\stesysft}{\pullback{\stesysf}{\stesysf}{\ectxext}{\eft\circ\utmb}\to \stesyst}
+\newcommand{\esysc}[1]{\@ifnextchar\esys\esys@c{\@ifnextchar\stesys{\@eatdo{\stesysc}}{}} #1}
+\newcommand{\esys@c}[4]{#2}
+\newcommand{\esysf}[1]{\@ifnextchar\esys\esys@f{\@ifnextchar\stesys{\@eatdo{\stesysf}}{}} #1}
+\newcommand{\esys@f}[4]{#3}
+\newcommand{\esyst}[1]{\@ifnextchar\esys\esys@t{\@ifnextchar\stesys{\@eatdo{\stesyst}}{}} #1}
+\newcommand{\esys@t}[4]{#4}
+\newcommand{\famesys}[1]{\mathbf{F}_{#1}}
+\newcommand{\cobesys}{\pullback} %Change of base
+
+\newcommand{\ehom}{\mathbf}
+\newcommand{\famehom}[1]{\mathbf{F}_{#1}}
+\newcommand{\ehomc}[1]{\@gobble #1_0}
+\newcommand{\ehomf}[1]{\@gobble #1_1}
+\newcommand{\ehomt}[1]{\@gobble #1_2}
+\newcommand{\eext}[1]{\mathrm{e}_{#1}}
+\newcommand{\ectxext}{\eext{0}}
+\newcommand{\efamext}{\eext{1}}
+
+\makeatother

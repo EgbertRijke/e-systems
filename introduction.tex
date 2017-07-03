@@ -112,10 +112,10 @@ operations.
 \end{comment}
 
 \begin{comment}
-The theory of context algebras is a theory of type dependency in which we have a notion of family extension. They are called such because if we try to interpret a category with families as a context algebras, one of the things we have to do is to consider lists of dependent types as our notion of families. These are the objects De Bruijn called telescopes. On the other hand, the theory of context algebras is an (essentially) algebraic theory of the notion of structure. A family over a context $\Gamma$ in a context algebra is a structure in context $\Gamma$. Therefore I am also considering the name `structure algebras'. Types are a defined notion in context algebras. They are the atomic families (or structures), i.e.~the ones which do not decompose as the extension of two non-trivial structures. 
+The theory of E-systems is a theory of type dependency in which we have a notion of family extension. They are called such because if we try to interpret a category with families as a E-systems, one of the things we have to do is to consider lists of dependent types as our notion of families. These are the objects De Bruijn called telescopes. On the other hand, the theory of E-systems is an (essentially) algebraic theory of the notion of structure. A family over a context $\Gamma$ in a E-system is a structure in context $\Gamma$. Therefore I am also considering the name `structure algebras'. Types are a defined notion in E-systems. They are the atomic families (or structures), i.e.~the ones which do not decompose as the extension of two non-trivial structures. 
 \end{comment}
 
-\subsection*{Setting up the essentially algebraic theory of context algebras}
+\subsection*{Setting up the essentially algebraic theory of E-systems}
 The first goal of this paper is to describe an essentially algebraic theory of
 type dependency that is in close correspondence to the type theory of
 \cite{TheBook}, while at the same time it is as economic as possible in the
@@ -148,11 +148,11 @@ $A$ and $B$ are judgmentally equal families in context $\Gamma$; that $x$ is
 a term of $A$ in context $\Gamma$; and that $x$ and $y$ are judgmentally equal
 terms of $A$ in context $\Gamma$. 
  
-a context algebra is therefore an algebra consisting of three sorts: $C$ for contexts,
+a E-system is therefore an algebra consisting of three sorts: $C$ for contexts,
 $F$ for families, and $T$ for terms. There is a map 
 $\eft:F\to C$ which determines for each family, in which context it is a
 family; and there is a map $\ebd:T\to F$ which determines for each term, of
-which family it is a term. Thus, the backbones of a context algebra can be represented
+which family it is a term. Thus, the backbones of a E-system can be represented
 as
 \begin{equation*}
 \begin{tikzcd}
@@ -283,7 +283,7 @@ families are neutral with respect to context and family extension in the sense
 that $\ctxext{\Gamma}{\emptyf[\Gamma]}\jdeq\Gamma$, $\ctxext{\emptyf[\Gamma]}{A}
 \jdeq A$ and $\ctxext{A}{\emptyf[\ctxext{\Gamma}{A}]}\jdeq A$. 
 
-One may recognize in these ingredients of context algebras a category with a
+One may recognize in these ingredients of E-systems a category with a
 terminal object, and a set $T(f)$ of terms for every morphism $f$ (satisfying
 no further axioms, so far). Ignoring the set of terms for the moment, $C$ is
 the set of objects and $F$ is the set of morphisms; $\eft$ assigns the codomain
@@ -295,7 +295,7 @@ in the usual sense. The empty context satisfies exactly the properties of the
 terminal object, and the empty family $\emptyf[\Gamma]$ satisfies the properties
 of the identity morphisms. 
 
-Thus, a context algebra $\mathbf{E}$ will have an underlying category, which may be called the
+Thus, a E-system $\mathbf{E}$ will have an underlying category, which may be called the
 category of families of $\mathbf{E}$. The structure of type dependency will by
 built on top of this category. This structure will consist of a telescopic homomorphism
 $W_A$ called \emph{weakening by $A$}, for every family $A$ in context $\Gamma$,
@@ -307,15 +307,15 @@ will preserve the extension structure we have discussed above; in other words,
 they will be functors preserving the terminal object.
 
 The category of B-systems will be shown to be equivalent to the category of
-stratified context algebras. However, we do not arrive at the fact that the functor
+stratified E-systems. However, we do not arrive at the fact that the functor
 $\mathcal{E}:\mathbf{Bsys}\to\mathbf{Ctx}$ is full without imposing an additional
 condition on the E-homomorphisms. 
-To ensure that the category of stratified context algebras with stratified 
+To ensure that the category of stratified E-systems with stratified 
 E-homomorphisms between them is a full subcategory of the category 
 $\mathbf{Ctx}$, we will require that the underlying functor of each E-homomorphism
 lifts factorizations. It is
 important to note that this condition is also algebraic, so that the category
-of context algebras remains algebraic.
+of E-systems remains algebraic.
 
 Recall that for any morphism $f:X\to Y$ in a category $\cat{C}$ there is a category
 $\mathbf{fact}(f)$ of factorizations of $f$. Also, any functor $F:\cat{C}\to\cat{D}$
@@ -357,15 +357,15 @@ lifts factorizations.
 
 Convention: A functor in this paper is a functor which lifts factorizations.
 
-\subsection*{The pre-categorical nature of context algebras}
-Although we start our definition of context algebras with a category with term structure,
-we do not set out to have a categorical notion of context algebras, in the sense that the structure of
-being a context algebra can be transported along equivalences of categories. The goal
+\subsection*{The pre-categorical nature of E-systems}
+Although we start our definition of E-systems with a category with term structure,
+we do not set out to have a categorical notion of E-systems, in the sense that the structure of
+being a E-system can be transported along equivalences of categories. The goal
 in this paper is to describe the algebraic structures belonging to an essentially
 algebraic theory of type dependency, and this structure turns out to be pre-categorical
 rather than categorical. The fact that we've encountered a category at the outset
-of our definition of context algebras is in a sense coincidence, rather than born out
-of a desire to do type theory categorically and we would consider context algebras to
+of our definition of E-systems is in a sense coincidence, rather than born out
+of a desire to do type theory categorically and we would consider E-systems to
 be pre-categorical models of type theory rather than categorical models of type
 theory. The difference between pre-categories and categories is that equality
 of objects in a pre-category is considered to be (strict) equality, whereas
@@ -394,7 +394,7 @@ $\mathrm{Tm}(A)$ of terms of type $A$ in context $\Gamma$. We will see that
 the sorts $\mathrm{Tm}(A)$ are superfluous, because it will always be 
 naturally isomorphic to the set of sections of the projection morphism
 $p_A:\ctxext{\Gamma}{A}\to\Gamma$ in the category of contexts. The evident
-functor from categories with families to context algebras will forget that the contexts
+functor from categories with families to E-systems will forget that the contexts
 form a category, and therefore it will not be faithful.
 \item Comprehension categories were introduced by Jacobs in \cite{Jacobs1993}, as
 a minimal notion of categorical model in type theory, without really making
@@ -411,9 +411,9 @@ types at all. In a contextual category, only the terminal object remains.
 However, when the presheaf $\mathrm{Ty}$ of a category with families is assumed
 to be empty, or when a category $\cat{E}$ fibered over some category is assumed
 to be empty, the underlying category of context remains. We shall see that
-context algebras are like contextual categories in this respect: only a singleton can
-be a context algebra with no types. This complicates a thorough comparison between
-categories with families and comprehension categories on one side, and context algebras
+E-systems are like contextual categories in this respect: only a singleton can
+be a E-system with no types. This complicates a thorough comparison between
+categories with families and comprehension categories on one side, and E-systems
 on the other. We shall construct functors from the categories of categories with
 families and comprehension categories directly preserving type dependency, but
 these functors will not be faithful. 
@@ -422,10 +422,10 @@ Thus, it seems that both categories with families and comprehension categories
 have more structure than needed to model dependent type theory.
 
 \subsection*{Overview and conventions}
-In \autoref{sec:esys_defn}, we give the categorical definition of context algebras in 
+In \autoref{sec:esys_defn}, we give the categorical definition of E-systems in 
 several stages. First we define weakening systems, then projection systems and
 substitution systems, and finally we bundle them together into the definition
-of context algebras. The structure of the definition of weakening systems is 
+of E-systems. The structure of the definition of weakening systems is 
 prototypcial: we first define the notion of pre-weakening systems, which are
 categories that come with a pre-weakening structure; then we define the notion
 of pre-weakening homomorphism, which is a functor preserving the weakening
@@ -433,7 +433,7 @@ structure and we note that it makes sense to ask for the property that the
 functors of which the weakening system consists, are also pre-weakening
 homomorphisms; and finally, adding this requirement will be give the definition
 of weakening systems. We go through this process for each of the definitions
-of weakening systems, projection systems, substitution systems and context algebras.
+of weakening systems, projection systems, substitution systems and E-systems.
 
 Throughout this section, our focus is on (set-valued) models of the essentially algebraic
 theory of type dependency, and in fact we shall not give the syntactic
@@ -448,25 +448,25 @@ An E'-system consists of a pre-category $\cat{C}$ with a sub-pre-category
 $\cat{F}$ with the same objects as $\cat{C}$, and a functorial choice of
 pullbacks for any morphism $f:\Delta\to\Gamma$ in $\cat{C}$ and any
 $A\in\cat{F}/\Gamma$. The goal of this section is to show that 
-E'-systems and context algebras are different axiomatizations of the same structures,
-and apart from that the goal is to show some equational reasoning in context algebras.
+E'-systems and E-systems are different axiomatizations of the same structures,
+and apart from that the goal is to show some equational reasoning in E-systems.
 The properties proven in this section also serve to provide some of the 
 intuition behind the constructions in \autoref{sec:esys_compared}.
 
 Although we have introduced a notion of E-homomorphism, a better behaved category
-of context algebras is the one where E-homomorphisms lift factorizations. The condition
+of E-systems is the one where E-homomorphisms lift factorizations. The condition
 that a functor lifts factorizations is also algebraic, so we still have an
-essentially algebraic theory of context algebras if we require this.
-In \autoref{sec:esys_compared}, where we introduce the category of context algebras
+essentially algebraic theory of E-systems if we require this.
+In \autoref{sec:esys_compared}, where we introduce the category of E-systems
 with E-homomorphisms lifting factorizations, we construct an embedding from Voevodsky's
-B-systems into context algebras and prove that its image is the (full) subcategory
-of stratified context algebras. 
+B-systems into E-systems and prove that its image is the (full) subcategory
+of stratified E-systems. 
 
 \begin{rmk}
 In the present article we use $\jdeq$ for equality, because the equality we
 consider here will interpret the judgmental equality of type theory, 
 and we wish to reserve
-the more convenient symbol $=$ for the internal equality of context algebras, i.e.~for
+the more convenient symbol $=$ for the internal equality of E-systems, i.e.~for
 the identification types, as in \cite{TheBook}. 
 \end{rmk}
 
@@ -480,7 +480,7 @@ $F/\Delta:\cat{C}/\Delta\to \cat{D}/F(\Delta)$ given by the action on morphisms 
 
 \begin{rmk}
 When we think of a category $\cat{F}$ as a category of fibrations or families
-over a context -- which will be the outset of the definition of context algebras --
+over a context -- which will be the outset of the definition of E-systems --
 it will be convenient to denote the objects of the $\cat{F}$ with capital
 greek letters $\Gamma$, $\Delta$, \ldots, and the morphisms by capital latin letters
 $A$, $B$, $P$, $Q$, \ldots. When $A$ is a morphism into $\Gamma$, we will denote
@@ -498,8 +498,8 @@ on the algebraic structure of type dependency rather than on its syntax.
 
 We would also like to remark that although it appears that we introduce possibly
 large families of operations (a weakening operation $W_A$ for each morphism $A$,
-for instance), context algebras can actually be defined with finitely many
-operations. This becomes clearer when one defines a context algebra in an arbitrary
+for instance), E-systems can actually be defined with finitely many
+operations. This becomes clearer when one defines a E-system in an arbitrary
 category with finite limits.
 \end{rmk}
 
@@ -511,8 +511,8 @@ dependency we had in Barcelona and in Paris;
 Joachim Kock for the many fruitful discussions and for hosting me at the Universitat
 Aut\`onoma de Barcelona during the year 2013-2014;
 Steve Awodey for sharing many insights and useful advice which lead to the
-definition of a context algebra in arbitrary categories with finite limits;
-and Vladimir Voevodsky for inviting me to present context algebras at the Homotopy Type
+definition of a E-system in arbitrary categories with finite limits;
+and Vladimir Voevodsky for inviting me to present E-systems at the Homotopy Type
 Theory workshop in Oxford (November 2014) and to visit the Institute for Advanced 
 Study in Princeton (March 2015), where the definition presented here was
 discovered.

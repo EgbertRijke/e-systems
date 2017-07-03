@@ -1,6 +1,6 @@
-\section{Elementary properties of context algebras}\label{sec:esys_props}
+\section{Elementary properties of E-systems}\label{sec:esys_props}
 
-The theory of context algebras could be seen as a sort of category theory with only
+The theory of E-systems could be seen as a sort of category theory with only
 projections and their sections. We elaborate on this point of view by defining
 the pre-category of internal morphisms, which Lawvere might have called the
 category of terms. 
@@ -37,10 +37,10 @@ assert the commutativity of a large composed diagram.
 
 The pre-category of internal morphisms forms a pre-category of which the families form
 a subpre-category. This, together with the pre-composition operation described
-earlier, gives rise to the auxiliary notion of E'-systems, which we define
-in \autoref{sec:E'}. The thread running through this whole section is proving
-that the notions of context algebra and E'-system are the same. In \autoref{sec:E'}
-we show directly that any E'-system is a context algebra. We end this section by
+earlier, gives rise to the auxiliary notion of CE-systems, which we define
+in \autoref{sec:CE}. The thread running through this whole section is proving
+that the notions of E-system and CE-system are the same. In \autoref{sec:CE}
+we show directly that any CE-system is a E-system. We end this section by
 showing that the converse also holds.
 
 Before we begin this section, we introduce some more convenient notation.
@@ -66,13 +66,13 @@ by $x$ is taken to be $\subst{x}{\blank}$. Thus, we will write
 \end{align*}
 \end{defn}
 
-\subsection{E'-systems}\label{sec:E'}
+\subsection{CE-systems}\label{sec:CE}
 
-E'-systems can be thought of as strict versions of tribes%
+CE-systems can be thought of as strict versions of tribes%
 \footnote{Tribes are an invention of Joyal, see \url{http://ncatlab.org/homotopytypetheory/files/Joyal.pdf}}.
 
-\begin{defn}\label{defn:E'sys}
-An \define{E'-system} consists of a pre-category $\cat{C}$ and a subpre-category $\cat{F}$ with
+\begin{defn}\label{defn:CEsys}
+An \define{CE-system} consists of a pre-category $\cat{C}$ and a subpre-category $\cat{F}$ with
 the same objects as $\cat{C}$, such that
 \begin{enumerate}
 \item $\cat{F}$ has a terminal object.
@@ -92,11 +92,11 @@ $f^\ast(\catid{\Gamma})\jdeq\catid{\Delta}$ and
 \begin{equation*}
 \pi_2(f,\catid{\Gamma})\jdeq f.
 \end{equation*}
-\item \label{defn:E'sys:b} For any $A\in\cat{F}/\Gamma$, one has $(\catid{\Gamma})^\ast(A)\jdeq A$ and
+\item \label{defn:CEsys:b} For any $A\in\cat{F}/\Gamma$, one has $(\catid{\Gamma})^\ast(A)\jdeq A$ and
 \begin{equation*}
 \pi_2(\catid{\Gamma},A)\jdeq\catid{\ctxext{\Gamma}{A}}
 \end{equation*}
-\item \label{defn:E'sys:c} For any $f:\Delta\to\Gamma$, $g:\greek{E}\to\Delta$ and $A\in\cat{F}/\Gamma$, one
+\item \label{defn:CEsys:c} For any $f:\Delta\to\Gamma$, $g:\greek{E}\to\Delta$ and $A\in\cat{F}/\Gamma$, one
 has $(f\circ g)^\ast(A)\jdeq g^\ast(f^\ast(A))$ and 
 \begin{equation*}
 \pi_2(f\circ g,A)\jdeq \pi_2(f,A)\circ\pi_2(g,f^\ast(A))
@@ -114,13 +114,13 @@ $\cat{F}/\Gamma\to\cat{F}/\Delta$.
 
 \begin{rmk}
 Without a terminal object in $\cat{F}$, the pre-category $\cat{C}$ does not correspond
-directly to anything in a context algebra.
+directly to anything in a E-system.
 \end{rmk}
 
 \begin{rmk}
-For E'-systems, we do not require that every pullback of $A\in\cat{F}/\Gamma$ along $f:\Delta\to\Gamma$
+For CE-systems, we do not require that every pullback of $A\in\cat{F}/\Gamma$ along $f:\Delta\to\Gamma$
 is in $\cat{F}/\Delta$, just that there is a choice of such a pullback which is
-in $\cat{F}/\Delta$. Thus, the definition of E'-system is slightly different from
+in $\cat{F}/\Delta$. Thus, the definition of CE-system is slightly different from
 Taylor's notion of display map category. Furthermore, the class of display maps in
 a display map category is not required to be closed under composition, and neither
 is there assumed to exist an object $T$ such that for every object $X$ there is a 
@@ -139,7 +139,7 @@ subpre-category of $\cat{C}/\Gamma$ with the same objects as $\cat{F}/\Gamma$.
 \end{defn}
 
 \begin{lem}\label{lem:pb_selfdistributive}
-Let $\mathbb{E}$ be an E'-system. Then $f^\ast$ can be extended to a functor from
+Let $\mathbb{E}$ be an CE-system. Then $f^\ast$ can be extended to a functor from
 $\cat{C}_\cat{F}/\Gamma$ to $\cat{C}_\cat{F}/\Delta$, for each $f:\Delta\to\Gamma$, and moreover the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
@@ -172,7 +172,7 @@ f^\ast/A\circ g^\ast
 \end{proof}
 
 \begin{thm}
-A context algebra is the same thing as an E'-system.
+A E-system is the same thing as an CE-system.
 \end{thm}
 
 \begin{proof}
@@ -198,7 +198,7 @@ each functor $W_A$ and $S_x$ is both a weakening functor and a substitution func
 Since each $W_A$ and $S_x$ preserves identity morphisms, it also preserves the
 terms $\tfid{A}$. 
 
-It remains to verify the rest of the conditions of context algebras.
+It remains to verify the rest of the conditions of E-systems.
 \begin{itemize}
 \item To show that weakened families are constant, note that
 \begin{equation*}
@@ -231,15 +231,15 @@ W_A(A)\circ\pi_2(x,W_A(A))\circ x & \jdeq W_A(A)\circ\idtm{A}\circ x \\
 
 
 \begin{comment}
-We then demonstrate how to define a category internal to a context algebra. The main
-point of this lies mainly in demonstrating how the operations of context algebras can
+We then demonstrate how to define a category internal to a E-system. The main
+point of this lies mainly in demonstrating how the operations of E-systems can
 be used to define a category, because it is no surprise that a category can be
 defined in type theory. Nevertheless, it is noteworthy that we need no further 
-conditions on context algebras.
+conditions on E-systems.
 This is unlike the situation in category theory, where we need
 to assume that the ambient category has finite limits in order to say what an
-internal category is. In fact, it is possible to define a context algebra internal
-to a context algebra, just using the algebraic structure of a context algebra, and actually
+internal category is. In fact, it is possible to define a E-system internal
+to a E-system, just using the algebraic structure of a E-system, and actually
 defining an internal category was the hardest part of that definition.
 \end{comment}
 
@@ -350,7 +350,7 @@ f^\ast\circ g^\ast & \jdeq S_f\circ (W_A/B) \circ S_g \circ (W_B/C)\\
 \end{proof}
 
 \begin{thm}
-For each object $\Gamma$ of a context algebra $\mathbb{E}$, we have a pre-category
+For each object $\Gamma$ of a E-system $\mathbb{E}$, we have a pre-category
 $\mathbb{C}_I(\mathbb{E},\Gamma)$ of internal morphisms of $\mathbb{E}$,
 consisting of the same objects as $\cat{F}/\Gamma$ and the hom-sets 
 $\thom{A}{B}$. 
@@ -840,7 +840,7 @@ G \jdeq \tmext{\jcomp{}{\cprojfstf{A}{P}}{f}}{F}
 \end{equation*}
 \end{proof}
 
-\subsection{Context algebras are E'-systems}
+\subsection{E-systems are CE-systems}
 
 \begin{lem}
 Consider $A\in\cat{F}/\Gamma$ and $Q\in\cat{F}/\ctxext{\Gamma}{B}$. Then there
@@ -866,7 +866,7 @@ Also, we find $\cprojfst{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{h}\jdeq\subst{h}{\ctxwk{A}{
 \end{proof}
 
 \begin{thm}
-Context algebras are the same things as E'-systems.
+E-systems are the same things as CE-systems.
 \end{thm}
 
 \begin{proof}
@@ -899,7 +899,7 @@ that $\jcomp{X}{u}{\pi_2(f,Q)}\jdeq h$, so the universal property of pullbacks
 holds. The functoriality conditions follow immediately from the interchange
 laws proven in \autoref{sec:interchange}.
 
-We have described functors from E'-systems to context algebras and vice versa. It is
+We have described functors from CE-systems to E-systems and vice versa. It is
 a straightforward check that these are mutual inverses.
 \end{proof}
 
@@ -960,7 +960,7 @@ for each $x\in T(A)$ and $u\in T(S_x(P))$.
 
 \section{Natural transformations of E-homomorphisms}
 \begin{rmk}
-When $\mathcal{E}$ is a context algebra with empty context, then we have the category
+When $\mathcal{E}$ is a E-system with empty context, then we have the category
 structure on the contexts given by $\thom{\Gamma}{\Delta}= T(W_\Gamma(\Delta))$.
 \end{rmk}
 
@@ -1006,7 +1006,7 @@ T(W_{W_{F(A)}(F(B))}(W_{F(A)}(G(B))))
 \end{enumerate}
 \end{defn}
 
-\section{Indexed context algebras}
+\section{Indexed E-systems}
 \begin{defn}
 Let $\cat{A}$ be a category. An $\cat{A}$-indexed E-system is an internal
 E-system in the category $Psh(\cat{A})$.
@@ -1076,7 +1076,7 @@ naturality.
 \end{enumerate}
 \end{proof}
 
-\section{Weak context algebras}
+\section{Weak E-systems}
 
 \begin{rmk}
 Note that $W$ is a strict $2$-functor frm $\cat{F}$ to $\mathbb{Cat}$ of which
@@ -1091,7 +1091,7 @@ The following questions need to be answered:
 \item What is a weak weakening/projection/substitution system.
 \item What is a weak E-system? I.e.~what are the coherence rules for something
 to be a weakening/projection/substitution homomorphism?
-\item Can they all be strictified? Are there more examples of weak context algebras?
+\item Can they all be strictified? Are there more examples of weak E-systems?
 \end{itemize}
 \end{rmk}
 \end{comment}

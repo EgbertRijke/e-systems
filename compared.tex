@@ -1,4 +1,4 @@
-\section{Context algebras compared to Voevodsky's B-systems}\label{sec:esys_compared}
+\section{E-systems compared to Voevodsky's B-systems}\label{sec:esys_compared}
 In an effort to formalize the simplicial set model of Martin-L\"of type theory
 with the univalence axiom, Voevodsky has studied various notions of models of
 type theory, taking Cartmell's \emph{contextual categories} as a starting
@@ -21,9 +21,9 @@ this is a theorem that tells us that we need no further axioms. It is
 unknown whether the categories of C-systems and B-systems are actually equivalent.
 This question would settle the sufficiency of the conditions of being a B-system.
 
-\subsection{Stratified context algebras}
+\subsection{Stratified E-systems}
 
-In this subsection we define the notion of stratified context algebras. Then we show that the category $\mathbf{Tel}_s$ of stratified context algebras with homomorphisms preserving the stratification, is a full subcategory of $\mathbf{Tel}$. 
+In this subsection we define the notion of stratified E-systems. Then we show that the category $\mathbf{Esys}_s$ of stratified E-systems with homomorphisms preserving the stratification, is a full subcategory of $\mathbf{Esys}$. 
 
 \begin{defn}
 A category $\cat{C}$ with terminal object is said to be \define{stratified} if there exists a 
@@ -98,18 +98,18 @@ functors in a pre-weakening or pre-substitution system are stratified.
 \end{rmk}
 
 \begin{defn}
-A pre-Context algebras is said to be \define{stratified} if its underlying category is
+A pre-E-systems is said to be \define{stratified} if its underlying category is
 stratified and if each $W_A$ and $S_x$ is a stratified functor. The category of
-stratified pre-Context algebras with stratified E-homomorphisms between them is denoted by
-$\mathbf{Tel}_s$.
+stratified pre-E-systems with stratified E-homomorphisms between them is denoted by
+$\mathbf{Esys}_s$.
 \end{defn}
 
 \begin{cor}\label{lem:strat_full}
-The category of stratified pre-Context algebras is a full subcategory of the category of
-pre-Context algebras.
+The category of stratified pre-E-systems is a full subcategory of the category of
+pre-E-systems.
 \end{cor}
 
-\subsection{The embedding of B0-systems into pre-Context algebras}
+\subsection{The embedding of B0-systems into pre-E-systems}
 
 Voevodsky distinguishes between pre-B-systems, which is an essentially algebraic theory with
 only operations and no equalities; B0-systems, which is an extension of the
@@ -119,15 +119,15 @@ theory of B0-systems with equalities ensuring that the rest of the operations
 are compatible with each other. Voevodsky, furthermore distinguishes
 non-unital and unital versions of these, and noted that not all B-homomorphisms
 between unital B-systems are unital. The same distinguishment could be made for 
-Context algebras by forgetting the projection structure, but we have not been able to construct a
-functor from unital B0-systems to unital pre-Context algebras. Therefore, we shall only
+E-systems by forgetting the projection structure, but we have not been able to construct a
+functor from unital B0-systems to unital pre-E-systems. Therefore, we shall only
 consider non-unital B0-systems and unital B-systems. In this section we will
 recall the definition of non-unital B0-systems and construct a full and faithful
-functor from them to the category of pre-Context algebras. 
+functor from them to the category of pre-E-systems. 
 
 One reason for introducing B-systems by first introducing pre-B-systems is that
 it is clear in the definition of pre-B-systems that there are only countably
-many operations. Since we are interested in embedding the B-systems into context algebras,
+many operations. Since we are interested in embedding the B-systems into E-systems,
 we shall organize the definition of B-systems a bit differently, but of course
 the resulting definition of B0-systems and B-systems will be (trivially) 
 equivalent.
@@ -218,7 +218,7 @@ by $\mathbf{B0sys}$.
 \end{defn}
 
 Now that we have defined the category of B0systems, we can start defining the
-embedding into pre-Context algebras.
+embedding into pre-E-systems.
 
 \begin{defn}
 Let $\mathbb{B}$ be a B-framework. Then $\mathbb{B}$ determines
@@ -259,8 +259,8 @@ and $U(\mathbb{B})/(n,X)$.
 
 \begin{defn}
 Let $\mathbb{B}$ be a B0-system. Then $U(\mathbb{B})$ can be given the structure
-of a pre-Context algebras. We write $\mathcal{E}(\mathbb{B})$ for the resulting
-pre-Context algebras. Thus we get a functor $\mathcal{E}:\mathbf{B0sys}\to\mathbf{Tel}_s$.
+of a pre-E-systems. We write $\mathcal{E}(\mathbb{B})$ for the resulting
+pre-E-systems. Thus we get a functor $\mathcal{E}:\mathbf{B0sys}\to\mathbf{Esys}_s$.
 \end{defn}
 
 \begin{constr}
@@ -329,29 +329,29 @@ $\tilde{H}_n$ that this B0-homomorphism is mapped back to $H$, so we conclude
 that $\mathcal{E}$ is full.
 \end{proof}
 
-\subsection{B-systems are stratified context algebras}
-There are two properties which hold for pre-Context algebras of the form $\mathcal{E}
+\subsection{B-systems are stratified E-systems}
+There are two properties which hold for pre-E-systems of the form $\mathcal{E}
 (\mathbb{B})$ for some B0-system $\mathbb{B}$, 
 which stand in the way of proving that the category of stratified
-pre-Context algebras is equivalent to the category of B0-systems. The first is that
+pre-E-systems is equivalent to the category of B0-systems. The first is that
 for any $A\in U(\mathbb{B})/\Gamma$ and $P\in U(\mathbb{B})/\ctxext{\Gamma}{A}$,
 we have an isomorphism $T(\ctxext{A}{P})\cong\bigsqcup_{x\in T(A)}T(S_x(P))$.
 The second, which depends on the first, is that for any $(x,u)\in T(\ctxext{A}{P})$
 we have $S(x,u)\jdeq S_u\circ S_x/P$. In other words, both the term structure
 and the pre-substitution structure of $\mathcal{E}(\mathbb{B})$ are compatible
 with the categorical structure of the underlying category $U(\mathbb{B})$.
-However, to prove the corresponding facts for context algebras, we needed the full
-set of conditions on unital context algebras: to prove that the term structure of
+However, to prove the corresponding facts for E-systems, we needed the full
+set of conditions on unital E-systems: to prove that the term structure of
 $U(\mathbb{B})$ is compatible with composition we needed units, and to prove 
 that the operations $S_x$ are compatible with the pairing function we needed
 that they are E-homomorphisms. 
 
-Presumably, we can assume these compatibility conditions on pre-Context algebras in order
-to prove the desired equivalence of B0-systems and stratified pre-Context algebras. However,
+Presumably, we can assume these compatibility conditions on pre-E-systems in order
+to prove the desired equivalence of B0-systems and stratified pre-E-systems. However,
 that seems somewhat unnatural, especially given that they automatically hold
-for context algebras. Thus, for the remainder of this section we set out to show that
+for E-systems. Thus, for the remainder of this section we set out to show that
 the category of unital B-systems is equivalent to the category of stratified 
-unital context algebras.
+unital E-systems.
 
 \begin{defn}
 A \define{unital B0-system} is a B0-system with maps
@@ -389,7 +389,7 @@ We denote the category of B-systems by $\mathbf{Bsys}$.
 
 \begin{lem}
 For any non-unital B-system $\mathbb{B}$, $\mathcal{E}(\mathbb{B})$ is a 
-stratified non-unital context algebras. 
+stratified non-unital E-systems. 
 \end{lem}
 
 \begin{proof}
@@ -399,16 +399,16 @@ Straightforward.
 \begin{defn}
 For any unital B-system $\mathbb{B}$, $\mathcal{E}(\mathbb{B})$ has a
 projection structure. We thus obtain a functor 
-$\mathcal{E}:\mathbf{Bsys}\to\mathbf{Tel}$ from unital B-systems to context algebras.
+$\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys}$ from unital B-systems to E-systems.
 \end{defn}
 
 \begin{constr}
 We first need to extend the functor $\mathcal{E}:\mathbf{B0sys}\to\mathbf{Esys_p}$
-from non-unital B0-systems to non-unital pre-Context algebras, to a functor from
-unital B-systems to context algebras.
+from non-unital B0-systems to non-unital pre-E-systems, to a functor from
+unital B-systems to E-systems.
 
 We need to give $\mathcal{E}(\mathbb{B})$ the structure of a unital
-pre-Context algebras. We construct by induction on $m\in \mathbb{N}$, a term of type 
+pre-E-systems. We construct by induction on $m\in \mathbb{N}$, a term of type 
 $T(m,W_{(m,X)}(X))$ with the property that that 
 \begin{equation*}
 S_{\tfid{(m,X)}}\circ W_{(m,X)}/X\jdeq\catid{U(\mathbb{B})/X},
@@ -458,22 +458,22 @@ $x\in T(m,X)$.
 \end{constr}
 
 \begin{thm}
-The functor $\mathcal{E}:\mathbf{Bsys}\to\mathbf{Tel}$ lifts to an equivalence
-to the subcategory $\mathbf{Tel}_s$ of stratified context algebras: i.e.~we have a
+The functor $\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys}$ lifts to an equivalence
+to the subcategory $\mathbf{Esys}_s$ of stratified E-systems: i.e.~we have a
 commuting diagram
 \begin{equation*}
 \begin{tikzcd}
-& \mathbf{Tel}_s \arrow[dr,"\subseteq"]\\
-\mathbf{Bsys} \arrow[ur,"\simeq"] \arrow[rr,swap,"\mathcal{E}"] & & \mathbf{Tel}
+& \mathbf{Esys}_s \arrow[dr,"\subseteq"]\\
+\mathbf{Bsys} \arrow[ur,"\simeq"] \arrow[rr,swap,"\mathcal{E}"] & & \mathbf{Esys}
 \end{tikzcd}
 \end{equation*}
 \end{thm}
 
 \begin{proof}
 We already have shown that $\mathcal{E}$ factors through the stratified
-Context algebras and that it is full and faithful, so it remains
-to show that every stratified context algebras is in the image of $\mathcal{E}$. In
-other words, for every stratified context algebras $\mathbb{E}$ we need to construct
+E-systems and that it is full and faithful, so it remains
+to show that every stratified E-systems is in the image of $\mathcal{E}$. In
+other words, for every stratified E-systems $\mathbb{E}$ we need to construct
 a B0-system $\mathbb{B}$ such that $\mathcal{E}(\mathbb{B})\cong\mathbb{E}$. 
 
 Let $\mathbb{E}$ be a stratified telescopi type system. From the stratification functor
@@ -489,14 +489,14 @@ to be given by
 \end{equation*}
 with the projection map $\ebd[n]\defeq\pi_1:\tilde{B}(\mathbb{E})_n\to B(\mathbb{E})_n$.
 This defines the B-framework $B(\mathbb{E})$, and we obtain a functor
-$B:\mathbf{Tel}_s\to\mathbf{B0sys}$. It is immediate that we get isomorphisms
+$B:\mathbf{Esys}_s\to\mathbf{B0sys}$. It is immediate that we get isomorphisms
 $U(B(\mathbb{E}))\cong\cat{F}_{\mathbb{E}}$, natural in $\mathbb{E}$. Also, we
 get natural isomorphisms $B(\mathbb{E}/\Gamma)\cong B(\mathbb{E})/\Gamma$. 
 
 The weakening and substitution structures on
 $B(\mathbb{E})$ are given by $W_X\defeq B(W_{p_X})$ and $S_{(X,x)}\defeq B(S_x)$,
 respectively. Since these functors are assumed to be stratified, they define
-homomorphisms of B-frameworks. Because a weakening system of a context algebras is
+homomorphisms of B-frameworks. Because a weakening system of a E-systems is
 required to be functorial, i.e.~$W_{\ctxext{A}{P}}\jdeq W_P\circ W_A$ and
 $W_{\catid{\Gamma}}\jdeq\catid{\cat{F}_{\mathbb{E}}/\Gamma}$, it follows
 immediately that the weakening structure on $U(B(\mathbb{E}))$ is isomorphic to
@@ -558,7 +558,7 @@ natural transformation $W_A:B/(B_{n\leq n+1}(A))\Rightarrow B/A$.
 \end{defn}
 \end{comment}
 
-\section{Context algebras compared to comprehension categories and to categories with families}
+\section{E-systems compared to comprehension categories and to categories with families}
 \subsection{Telescopic categories with families}
 
 \begin{defn}
@@ -591,7 +591,7 @@ is a bijection. We denote the inverse of this map by $\mu_{A,f}$.
 There are of course many more sensible examples of categories with families,
 but the following class of examples causes us to doubt whether it is possible
 at all to have a faithful functor from the category of categories
-with families to the category of context algebras. 
+with families to the category of E-systems. 
 
 \begin{eg}
 Every category $\cat{C}$ with a terminal object and the empty presheaf 
@@ -602,7 +602,7 @@ $\mathrm{Ty}$, is a category with families.
 Although a terminal object is usually assumed to exist, not every object 
 of a category with families is assumed to be `fibrant', i.e.~it is
 not the case that every $X\to 1$ is a composition of projections $p_A$.
-We could only hope that there is a functor from D-sytems to context algebras without
+We could only hope that there is a functor from D-sytems to E-systems without
 terminal objects.
 \end{rmk}
 
@@ -636,7 +636,7 @@ that these form a natural isomorphism is straightforward.
 \end{constr}
 
 The following two definitions define subclasses of telescopic D-systems and 
-coherent telescopic D-systems, and the latter structure is the same as an E'-system
+coherent telescopic D-systems, and the latter structure is the same as an CE-system
 (without empty context). In \autoref{defn:comp_to_telescopic}, we will show how
 to obtain a telescopic D-system from any comprehension category. This construction
 will also generate a telescopic D-system out of any D-system, because D-systems
@@ -743,17 +743,17 @@ $p_{f^\ast(A)}\jdeq p_{f^\ast(A')}$ and $\pi_2(f,A)\jdeq \pi_2(f,A')$.
 \end{defn}
 
 \begin{thm}
-An E'-system without empty context is the same thing as a coherent telescopic D-system.
+An CE-system without empty context is the same thing as a coherent telescopic D-system.
 \end{thm}
 
 \begin{proof}
-Let $\mathbb{E}$ be an E'-system without empty context. Then we define the
+Let $\mathbb{E}$ be an CE-system without empty context. Then we define the
 presheaf $\mathrm{Fam}$ on $\cat{C}$ on objects by
 \begin{equation*}
 \mathrm{Fam}(\Gamma)\defeq \mathrm{Obj}(\cat{F}/\Gamma)
 \end{equation*}
 and on morphisms by the action on objects of $f^\ast$, for each $f:\Delta\to
-\Gamma$ in $\cat{C}$. By condition (b) and (c) in the definition of E'-systems, it
+\Gamma$ in $\cat{C}$. By condition (b) and (c) in the definition of CE-systems, it
 follows that this defines a contravariant functor. 
 
 We define a functor $\mathcal{P}:\int_{\cat{C}}\to\cat{C}^\square$ by sending
@@ -767,7 +767,7 @@ square
 \end{tikzcd}
 \end{equation*}
 This is also functorial because of conditions (b) and (c) in the definition of
-E'-systems. Thus, we have defined a D-system
+CE-systems. Thus, we have defined a D-system
 \begin{equation*}
 \begin{tikzcd}
 \int_{\cat{C}}\mathrm{Fam} \arrow[rr,"{\mathcal{P}}"] \arrow[dr,"{\pi}"] & & \cat{C}^\square \arrow[dl,"{\mathrm{cod}}"] \\ & \cat{C}
@@ -803,13 +803,13 @@ Dybjer's notion of categories with families. It is shown in
 \cite{Hofmann_syntax_semantics} that the category of categoriew with families
 is equivalent to the category of categories with attributes, which forms a
 subcategory of comprehension categories. Thus, for our purpose of comparing
-Context algebras with various existing notions of models of type dependency, it suffice
+E-systems with various existing notions of models of type dependency, it suffice
 to make the comparison with comprehension categories.
 
 In this section we do the preparateions for this comparison. After having
 introduced categories with families, we prove that categories with families
 with the extra structure of `being closed under family extension' in a coherent
-way, are E'-systems without empty context. 
+way, are CE-systems without empty context. 
 
 \begin{defn}
 Let $p:\cat{E}\to\cat{B}$ be a functor and let $f:\Delta\to \Gamma$ be a morphism in $\cat{B}$.
@@ -1202,30 +1202,30 @@ to $\{\theta:\Delta\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq f\}$ is a bijec
 Each comprehension category determines a subcategory $\cat{F}$ generated by
 the projections, as we shall see soon. However, there is no reason why
 this category should possess a terminal object, so we naturally have to retreat
-to E'-systems without empty contex. Even when we make this generalization, 
+to CE-systems without empty contex. Even when we make this generalization, 
 the construction of a canonical functor in which families are represented by 
 compositions of projections is still not possible without a further coherence 
 condition. To make sure that
 the pullback operations of a comprehension category extend to the category
 $\cat{F}$, we introduce \emph{coherent} comprehension categories. So we only have a functor $U$
 from the category $\mathbf{Dsys}$ of coherent D-systems to the category
-$\mathbf{E'sys_{\circ}}$ of E'-systems without empty context.
+$\mathbf{CEsys_{\circ}}$ of CE-systems without empty context.
 We see that it is not evident at all to turn categories with families into
-Context algebras, even if we ignore the issue that categories with families map
-naturally into E'-systems without empty context.
-Thus it seems that the type theories of categories with families and of context algebras
+E-systems, even if we ignore the issue that categories with families map
+naturally into CE-systems without empty context.
+Thus it seems that the type theories of categories with families and of E-systems
 are not directly comparable.
 
 We end this section by showing that the functor 
-$U:\mathbf{Dsys}\to\mathbf{E'sys_{\circ}}$ restricts to a full and faithful 
+$U:\mathbf{Dsys}\to\mathbf{CEsys_{\circ}}$ restricts to a full and faithful 
 functor on the coherent D-systems which satisfy the condition that every 
 composition of projections is a composition of projections in precisely one way.
 We call coherent D-systems with this property
 locally well-founded. Among the locally well-founded D-systems are the B-systems.
 As a by-product, we get that the full and faithful functor from B-systems to
-Context algebras factors through D-systems. 
+E-systems factors through D-systems. 
 
-To get from comprehension categories to E'-systems without empty contexts, we
+To get from comprehension categories to CE-systems without empty contexts, we
 need to turn comprehension categories into telescopic D-systems. 
 
 \begin{defn}
@@ -1331,7 +1331,7 @@ is a pullback square.
 Let $\mathcal{P}$ be a comprehension category. Then the following are equivalent:
 \begin{enumerate}
 \item The choice of functors $\Lambda(f)$ and lifts $q(f,A)$ can be extended to the 
-structure of an E'-system without empty context.
+structure of an CE-system without empty context.
 \item For any
 $A,A'\in\Lambda(\Gamma)$ such that $\mathcal{P}(A)\jdeq\mathcal{P}(A')$
 and for any $f:\Delta\to\Gamma$ in $\cat{C}$, the equalities
@@ -1349,7 +1349,7 @@ diagrams
 \cat{F}/\Gamma \arrow[r,densely dotted,"{f^\ast}"] & \cat{F}/\Delta
 \end{tikzcd}
 \end{equation*}
-of functors, forming an E'-system without empty context, where $\mathcal{P}(A)
+of functors, forming an CE-system without empty context, where $\mathcal{P}(A)
 \defeq \mathcal{P}(A_1)\circ\cdots\circ\mathcal{P}(A_n)$ for any
 $A\jdeq (A_1,\ldots,A_n)\in\Lambda(\Gamma)$. Then it must hold that for any
 $A,A'\in\Lambda(\Gamma)$ such that $\mathcal{P}(A)\jdeq\mathcal{P}(A')$, we have
@@ -1433,15 +1433,15 @@ $B\in\mathrm{Ty}(\ctxext{\Gamma}{A})$. Then we have
 \end{proof}
 
 \begin{conj}
-The functor from coherent split comprehension categories to E'-systems without
+The functor from coherent split comprehension categories to CE-systems without
 empty context is full and faithful.
 \end{conj}
 
 \begin{proof}
-Let $\mathcal{E}$ be an E'-system. Define $\cat{E}$ to be the full subcategory
+Let $\mathcal{E}$ be an CE-system. Define $\cat{E}$ to be the full subcategory
 of $\cat{C}^\to$ whose objects are the morphisms of $\cat{F}$. Thus, for any
 $\Gamma\in\cat{C}$, the category $p^{-1}(\Gamma)$ is the category of internal
-morphisms the context algebras $\mathcal{E}/\Gamma$. 
+morphisms the E-systems $\mathcal{E}/\Gamma$. 
 
 We first show that $p$ is a Grothendieck fibration. Let $f:\Delta\to\Gamma$ be
 a morphism in $\cat{C}$ and let $A\in\cat{F}/\Gamma$. Then we have $\catid{\Delta},\catid{\Gamma}\in\cat{E}$,
@@ -1471,7 +1471,7 @@ are examples of coherent D-systems.
 \end{rmk}
 
 \begin{thm}
-The restriction of the functor $U:\mathbf{Dsys}\to\mathbf{E'sys_{\circ}}$ to the
+The restriction of the functor $U:\mathbf{Dsys}\to\mathbf{CEsys_{\circ}}$ to the
 locally well-founded D-systems is full and faithful.
 \end{thm}
 
@@ -1518,16 +1518,16 @@ p_{\mathcal{G}(f)^\ast(\mathcal{G}(A))}
 \end{proof}
 
 \begin{thm}
-The image of $U$ is the subcategory of locally stratified E'-systems without
+The image of $U$ is the subcategory of locally stratified CE-systems without
 empty context. 
 \end{thm}
 
 \begin{proof}
 For any $\Gamma\in\mathbb{D}$, there is an obvious stratification functor
 $\Lambda(\Gamma)\to (\N,\geq)$, so $U(\mathbb{D})$ is a locally stratified
-E'-system. 
+CE-system. 
 
-Now let $\mathbb{E}$ be a locally stratified E'-system without empty context.
+Now let $\mathbb{E}$ be a locally stratified CE-system without empty context.
 For $\Gamma\in\cat{C}$, we define $\mathrm{Ty}(\Gamma)$ to be the set of
 families of length one. Since any $f^\ast$ is stratified, it follows that
 $\mathrm{Ty}$ is a presheaf on $\cat{C}$. The choice of pullback squares
