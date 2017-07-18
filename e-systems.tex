@@ -397,12 +397,12 @@ commute for every $h,k\in H$.
 We can now give the definition of E-systems.
 
 \begin{defn}
-A \define{pre-E-system} is a pre-category $\cat{F}$ with term structure
+A \define{non-unital pre-E-system} is a pre-category $\cat{F}$ with term structure
 with a pre-weakening structure $W$, a pre-substitution structure $S$ and a terminal
 object. A \define{unital pre-E-system}, or simply \define{pre-E-system}, is a non-unital pre-E-system which also has the structure of a pre-projection system. 
 \end{defn}
 
-\begin{defn}
+\begin{defn}\label{defn:E0sys_cat}
 A \define{pre-E-homomorphism} from $\mathbb{E}\to\mathbb{D}$ is a functor
 $H:\mathbb{C}_\mathbb{E}\to\mathbb{C}_\mathbb{D}$ between the underlying categories
 with term structure, which is a pre-weakening homomorphism, a pre-substitution
@@ -410,11 +410,13 @@ homomorphism, and which preserves the terminal object.
 
 A \define{unital} pre-E-homomorphism is a non-unital pre-E-homomorphism which is 
 also a pre-projection homomorphism. 
+
+We write $\mathbf{E0sys}$ for the category of pre-E-systems. 
 \end{defn}
 
 \begin{defn}
 \label{defn:esystems}
-A \define{E-system} is a unital pre-E-system in which 
+An \define{E-system} is a unital pre-E-system in which 
 \begin{enumerate}
 \item each $W_A$ is a unital pre-E-homomorphism,
 \item each $S_x$ is a unital pre-E-homomorphism,
@@ -474,8 +476,8 @@ For any object $\Gamma$ of a E-system $\cat{F}$, the slice pre-category $\cat{F}
 is a E-system.
 \end{cor}
 
-\begin{defn}
-We write $\mathbf{Ctx}$ for the category of E-systems where the underlying
+\begin{defn}\label{defn:esys_cat}
+We write $\mathbf{Esys}$ for the category of E-systems where the underlying
 functor of each E-homomorphism lifts factorizations.
 \end{defn} 
 
@@ -489,7 +491,7 @@ Any morphism of $E$ can be rewritten in a unique way
 as a composition $\tilde S\circ \tilde W$, where $\tilde S$ is a morphism in
 substitution-normal form, $\tilde W$ is in weakening normal form, every term
 expression is in normal form, and where
-each occurence of $S_x\circ W_A$ and $S_{\tfid{A}}\circ W_A/A$ is eliminated.
+each occurrence of $S_x\circ W_A$ and $S_{\tfid{A}}\circ W_A/A$ is eliminated.
 \end{rmk}
 \end{comment}
 

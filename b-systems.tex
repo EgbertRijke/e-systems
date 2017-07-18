@@ -1,0 +1,285 @@
+\section{B-systems}
+
+\subsection{B-frames and stratified categories with term structure}
+
+\begin{defn}
+A \define{B-frame} is a collection of data of the following form:
+\begin{enumerate}
+\item for all $n\in\mathbb{N}$ two sets $B_n$ and $\tilde{B}_n$. 
+\item for all $n\in\mathbb{N}$ maps of the form
+\begin{align*}
+\eft[n] & : B_{n+1}\to B_n \\
+\ebd[n] & : \tilde{B}_n\to B_n.
+\end{align*}
+For $m,n\in\mathbb{N}$, we denote the composition $\eft[n]\circ\cdots\circ\eft[n+m]:B_{n+m+1}\to B_n$ by $\eft[n]^m$. 
+\item $B_0$ is a singleton $\{\pt\}$.
+\end{enumerate} 
+A \define{homomorphism $H:\mathbb{B}\to\mathbb{A}$ of B-frames} consists of maps
+$H_n:B_n\to A_n$ and $\tilde{H}_n:\tilde{B}_n\to\tilde{A}_n$ such that
+\begin{align*}
+\eft(H(X)) & \jdeq H(\eft(X)) \\
+\ebd(\tilde{H}(x)) & \jdeq H(\ebd(x))
+\end{align*}
+for any $X\in B_n$ and $x\in\tilde{B}_n$. The category of B-frames is
+denoted by $\mathbf{Bfr}$. 
+\end{defn}
+
+There is a forgetful functor from B-frames to rooted trees, which is established in the following definition.
+
+\begin{defn}
+We define a functor $\mathcal{E}:\mathbf{Bfr}\to\mathbf{Cat}$.
+\end{defn}
+
+\begin{constr}
+Let $\mathbb{B}$ be a B-frame.
+The set of objects of $\mathcal{E}(\mathbb{B})$ is taken to be the set $\bigsqcup_{(n\in\mathbb{N})}B_n$. 
+The partial order on $\bigsqcup_{(n\in\mathbb{N})}B_n$ as an inductive family of propositions, by the clauses
+\begin{equation*}
+(n,X)\leq (n,X) \qquad\text{and}\qquad
+((m,\eft(Y))\leq (n,X))\to((m+1,Y)\leq (n,X)).
+\end{equation*}
+This defines a partial order, hence we obtain a category.
+
+For any homomorphism $H:\mathbb{B}\to\mathbb{A}$, an order-preserving map $\mathcal{E}(H):\mathcal{E}(\mathbb{B})\to\mathcal{E}(\mathbb{A})$ is defined in the obvious way. 
+\end{constr}
+
+We introduce \emph{stratified} pre-categories to characterize the image of this forgetful functor.
+
+\begin{defn}
+A pre-category $\cat{C}$ with terminal object is said to be \define{stratified} if there exists a 
+\emph{stratification functor}
+\begin{equation*}
+L : \cat{C}\to (\mathbb{N},\geq)
+\end{equation*}
+such that
+\begin{enumerate}
+\item $L(X)\jdeq 0$ if and only if $X$ is terminal, and for any $f:X\to Y$ we have
+$L(X)\jdeq L(Y)$ if and only if $X\jdeq Y$ and $f\jdeq\catid{X}$. 
+\item every morphism $f:X\to Y$ in $\cat{C}$, where $L(X)\jdeq
+n+m+1$ and $L(Y)\jdeq n$, has a unique factorization 
+\begin{equation*}
+\begin{tikzcd}
+X \arrow[r,"f_m"] & X_m \arrow[r,"f_{m-1}"] & \cdots \arrow[r,"f_1"] & X_1 \arrow[r,"f_0"] & Y
+\end{tikzcd}
+\end{equation*}
+where $L(X_i)\jdeq n+i$.
+\end{enumerate}
+A functor $F:\cat{C}\to\cat{D}$ between stratified pre-categories is said to be stratified 
+if $L_{\cat{C}}\jdeq L_{\cat{D}}\circ F$.
+
+We define $\mathbf{Cat_s}$ to be the category of stratified pre-categories, and stratified functors between them.
+\end{defn}
+
+%\begin{rmk}
+%The categorical version of being stratified, is that there exists a factofibration
+%$L:\cat{C}\to (N,\geq)$ which preserves the terminal object.
+%\end{rmk}
+
+\begin{lem}
+Any stratified pre-category is a rooted tree.
+\end{lem}
+
+\begin{proof}
+Let $\cat{C}$ be a stratified pre-category. The root of the tree is going to be the terminal
+object of $\cat{C}$. Note that objects of $\cat{C}$ have no endomorphisms other
+than the identity morphisms. Therefore, to show that $\cat{C}$ is a tree,
+it suffices to show that for every object $X$ with $L(X)>0$ there is
+a unique object $\eft(X)$ with $L(\eft(X))\jdeq L(X)-1$, with a morphism $p_X:X\to \eft(X)$.
+The existence follows from the existence of the factorization of $X\to 1$. The 
+uniqueness follows from the observation that for any arrow
+$f:X\to Y$ with $L(Y)\jdeq L(X)-1$, we can factorize $X\to 1$ through $Y$. Since
+factorizations are unique, we will have $Y\jdeq \eft(X)$, and $p_X\jdeq f$. 
+\end{proof}
+
+\begin{lem}
+The category of small stratified categories is a full subcategory of the category
+of small pre-categories with terminal objects and between them functors which lift 
+factorizations in the sense of \autoref{defn:lift_factorizations}, and preserve the terminal object.
+\end{lem}
+
+\begin{proof}
+Let $F:\cat{C}\to\cat{D}$ be a functor between stratified pre-categories which lifts
+factorizations and 
+which preserves terminal objects. We show by induction that $F$ is stratified, i.e.~that $L_{\mathcal{C}}(X)\jdeq L_{\mathcal{D}}(F(X))$, for any object $X$ of $\mathcal{C}$.
+
+For the base case, we observe that since $F$ preserves the terminal object, $L(X)\jdeq 0$ implies $L(F(X))\jdeq 0$.
+
+For the inductive step, suppose that for $n\in\mathbb{N}$, we have that $L(X)\jdeq n$ implies
+$L(F(X))\jdeq n$, for any object $X$ of $\mathcal{C}$, and let $Y$ be such that $L(Y)\jdeq n+1$ with
+$p_Y:Y\to\eft(Y)$. Then the poset $\mathbf{fact}(p_Y)$ is isomorphic to the
+poset $\mathbf{2}$ with two objects, one of which is smaller than the other. By the
+assumption that $F$ lifts factorizations, the poset $\mathbf{fact}(F(p_Y))$
+is also isomorphic to $\mathbf{2}$. Thus, the only factorization
+of $F(Y)\to\unit$ starts with $F(p_Y):H(Y)\to F(\eft(Y))$, which implies that
+$L(F(Y))\jdeq n+1$. 
+\end{proof}
+
+\begin{cor}
+A pre-category can only be stratified in at most one way. That is, being stratified is a property of pre-categories.
+\end{cor}
+
+\begin{thm}
+The functor $\mathcal{E}:\mathbf{Bfr}\to\mathbf{Cat}$ factors through the forgetful functor $\mathbf{Cat_s}\to\mathbf{Cat}$.
+\end{thm}
+
+\begin{constr}
+Let $\mathbb{B}$ be a B-frame. Note that for any $X\in B_{n+1}$ there is a unique $\Gamma\in
+B_n$ such that $(n+1,X)\leq (n,\Gamma)$, so $\mathcal{E}(\mathbb{B})$ is stratified.
+
+To show that the functor $\mathcal{E}(H):\mathcal{E}(\mathbb{B})\to \mathcal{E}(\mathbb{A})$ is stratified for
+any homomorphism $H:\mathbb{B}\to\mathbb{A}$ of B-frames, note that
+by \autoref{lem:strat_full} it suffices to show that each $\mathcal{E}(H)$ 
+lifts factorizations.
+Let $H:\mathbb{B}\to\mathbb{A}$ be a homomorphism of B-frames, and let
+$(m,X):(n+m,X)\leq (n,\Gamma)$. Then the pre-category $\mathbf{fact}_{(m,X)}$ of
+factorizations of $(m,X)$ is a finite linear order with
+$m+1$ elements, and so is the category $\mathbf{fact}_{(m,H(X))}$. 
+\end{constr}
+
+\begin{rmk} 
+It is in fact the case that $\mathcal{E}(\mathbb{B})$ is the free pre-category generated by the
+graph with $\bigsqcup_{(n\in\mathbb{N})}B_n$ as the set of vertices, and
+for each object of the form $(n+1,X)$ an edge to $(n,\eft[n](X))$. 
+Essentially all $\mathcal{E}$ does, is forgetting about the term structure 
+$\tilde{B}$ of $\mathbb{B}$.
+%
+%Furthermore, it is useful to note that for any $X\in B_n$, we get an 
+%isomorphism $\mathcal{E}(\mathbb{B}/X)\cong  \mathcal{E}(\mathbb{B})/(n,X)$ of rooted trees,
+%natural in $X$. Therefore we will usually not distinguish between $\mathcal{E}(\mathbb{B})/X$
+%and $\mathcal{E}(\mathbb{B})/(n,X)$. 
+\end{rmk}
+
+\subsection{Non-unital pre-B-systems}
+
+For every B-frame $\mathbb{B}$ and any $X\in B_n$, there is a B-frame
+$\mathbb{B}/X$ given by
+\begin{align*}
+(B/X)_{m} & \jdeq \{Y\in B_{n+m}\mid\eft^{m}(Y)\jdeq X\}\\
+(\tilde{B}/X)_m & \jdeq \{y\in \tilde{B}_{n+m}\mid\eft^m(\ebd(y))\jdeq X\}.
+\end{align*}
+Also, for any homomorphism $H:\mathbb{B}\to\mathbb{A}$ of B-frames and any
+$X\in B_n$, there is a homomorphism $H/X:\mathbb{B}/X\to\mathbb{A}/H(X)$
+defined in the obvious way.
+
+Note that for $X\in B_n$ and $Y\in B_{n+m}$ such that $\eft^m(Y)\jdeq X$, 
+we have an isomorphism $(\mathbb{B}/X)/Y\cong B/Y$ of B-frames, constructed in the obvious way, which is natural in the sense that for any homomorphism $H:\mathbb{B}\to\mathbb{A}$ of B-frames, the square
+\begin{equation*}
+\begin{tikzcd}
+(\mathbb{B}/X)/Y \arrow[r,"\cong"] \arrow[d,swap,"(H/X)/Y"] &  \mathbb{B}/Y \arrow[d,"H/Y"] \\
+(\mathbb{A}/H(X))/H(Y) \arrow[r,"\cong"] & \mathbb{A}/H(Y)
+\end{tikzcd}
+\end{equation*}
+commutes.
+
+\begin{defn}
+A \define{non-unital pre-B-system} $\mathbb{B}$ consists of a B-frame $\mathbb{B}$ and homomorphisms
+\begin{align*}
+W_{X} & : \mathbb{B}/\eft(X)\to\mathbb{B}/X\\
+S_{x} & : \mathbb{B}/\ebd(x)\to\mathbb{B}/\eft(\ebd(x))
+\end{align*}
+of B-frames, for any $X\in B_{n+1}$ and any $x\in\tilde{B}_{n+1}$. 
+
+A \define{non-unital pre-B-homomorphism} $H:\mathbb{B}\to\mathbb{A}$ is a homomorphism of B-frames
+for which the diagrams
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\mathbb{B}/X \arrow[r,"H/X"] & \mathbb{A}/H(X) \\
+\mathbb{B}/\eft(X) \arrow[u,"W_X"] \arrow[r,swap,"H/\eft(X)"] & \mathbb{A}/\eft(H(X)) \arrow[u,swap,"W_{H(X)}"]
+\end{tikzcd}
+\end{equation*}
+and
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\mathbb{B}/\ebd(x) \arrow[r,"H/\ebd(x)"] \arrow[d,swap,"S_x"] & \mathbb{A}/\ebd(H(X)) \arrow[d,"S_{\tilde{H}(x)}"] \\
+\mathbb{B}/\eft(\ebd(x)) \arrow[r,swap,"H/\eft(\ebd(x))"] & \mathbb{A}/\eft(\ebd(H(X)))
+\end{tikzcd}
+\end{equation*}
+of homomorphisms of B-frames commute for every 
+$X\in B_n$ and $x\in\tilde{B}_n$. The category of non-unital pre-B-systems is denoted
+by $\mathbf{B0sys}$.
+\end{defn}
+
+\begin{comment}
+\begin{lem}
+When $\mathbb{B}$ has the structure of a pre-B-system, then so does each $\mathbb{B}/X$.
+\end{lem}
+
+\begin{proof}
+Straightforward.
+\end{proof}
+\end{comment}
+
+\begin{defn}
+Let $\mathbb{B}$ be a pre-B-system. Then $U(\mathbb{B})$ can be given the structure
+of a pre-E-system. We write $\mathcal{E}(\mathbb{B})$ for the resulting
+pre-E-system. Thus we get a functor $\mathcal{E}:\mathbf{B0sys}\to\mathbf{E0sys}_s$.
+\end{defn}
+
+\begin{constr}
+We begin by \emph{simultaneously} defining the term structure and the pre-substitution
+structure on $U(\mathbb{B})$ by induction on the natural numbers. More precisely,
+for any $m\in\mathbb{N}$ we will define, for any $(n+m,X)\leq (n,\Gamma)$ a set
+$T(m,X)$ and for any $x\in T(m,X)$ a homomorphism 
+$S_x:\mathbb{B}/X\to\mathbb{B}/\Gamma$ of B-frames. Then it follows
+immediately that we get stratified functors $U(S_x):U(\mathbb{B})/X\to U(\mathbb{B})/\Gamma$
+defining the pre-substitution structure of $\mathcal{E}(\mathbb{B})$.
+
+In the base case, we define for $(n,X)\in U(\mathbb{B})$, the set
+$T(0,X)\defeq \{\pt[X]\}$ and $S_{\pt[X]}\defeq \catid{\mathbb{B}/X}$. 
+
+%We also define for
+%$(n+1,X)\leq (n,\Gamma)$ the set $T(1,X)\jdeq\{x\in B_{n+1}\mid \ebd(x)\jdeq X\}$.
+%Note that for $x\in T(1,X)$, the homomorphism $S_x:\mathbb{B}/X \to\mathbb{B}/\Gamma$
+%is already assumed to exist, because $\mathbb{B}$ is a pre-B-system.
+
+For the inductive step, suppose that for $m\in\mathbb{N}$ we have sets $T(m,X)$
+for any $(n+m,X)\leq (n,\Gamma)$ and homomorphisms $S_x:\mathbb{B}/X \to \mathbb{B}/\Gamma$
+of B-frames, for any $x\in T(m,X)$. Then we define
+\begin{equation*}
+T(m+1,X)\defeq\bigsqcup_{x\in T(m,\eft(X))} \{u\in \tilde{B}_{n+1}\mid \ebd(u)\jdeq S_x(X)\}.
+\end{equation*}
+For $(x,u)\in T(m+1,X)$ we define the homomorphism $S_{(x,u)}:\mathbb{B}/X\to
+\mathbb{B}/\Gamma$ as
+\begin{equation*}
+S_{(x,u)}\defeq S_u\circ S_x/X,
+\end{equation*}
+where $S_u$ is taken from the structure of $\mathbb{B}$ of being a pre-B-system.
+It remains to define a pre-weakening structure on $U(\mathbb{B})$. To do this,
+it suffices to define homomorphisms $W_{(m,X)}:\mathbb{B}/\Gamma \to\mathbb{B}/X$
+of B-frames, for any $(n+m,X)\leq (n,\Gamma)$. We define
+\begin{equation*}
+W_{(m,X)}\defeq W_X\circ\cdots\circ W_{\eft^{m-1}(X)}.\qedhere
+\end{equation*}
+\end{constr}
+
+\begin{thm}
+The functor $\mathcal{E}$ is full and faithful.
+\end{thm}
+
+\begin{proof}
+We have to show that the map $\mathrm{hom}(\mathbb{B},\mathbb{A})\to
+\mathrm{hom}(\mathcal{E}(\mathbb{B}),\mathcal{E}(\mathbb{A}))$ is a bijection
+for any two pre-B-systems $\mathbb{B}$ and $\mathbb{A}$.
+
+To show that this map is injective, suppose $F,G:\mathbb{B}\to\mathbb{A}$ are 
+pre-B-homomorphisms such that $\mathcal{E}(F)\jdeq\mathcal{E}(G)$. Then we have
+$F_n(X)\jdeq\mathcal{E}(F)(n,X)\jdeq \mathcal{E}(G)(n,X)\jdeq G_n(X)$ for each
+object $x\in B_n$. Also, we have $\tilde{F}_n(x)\jdeq T_{\mathcal{E}(F)}(n,x)
+\jdeq T_{\mathcal{E}(G)}(n,x)\jdeq \tilde{G}_n(x)$ for each
+$x\in\tilde{B}_n$. This shows that $F\jdeq G$, so we conclude that $\mathcal{E}$
+is faithful.  
+
+To show that the map $\mathrm{hom}(\mathbb{B},\mathbb{A})\to
+\mathrm{hom}(\mathcal{E}(\mathbb{B}),\mathcal{E}(\mathbb{A}))$ 
+is surjective, let $H:\mathcal{E}(\mathbb{B})\to
+\mathcal{E}(\mathbb{A})$. Since both $\mathcal{E}(\mathbb{B})$ and
+$\mathcal{E}(\mathbb{A})$ are stratified, we get from
+\autoref{lem:strat_full} that $H$ is a stratified pre-E-homomorphism. 
+Because $H$ is stratified, we get maps $H_n:B_n\to A_n$ for any $n\in\mathbb{N}$.
+The term structure of $H$ gives maps $\tilde{H}_n:
+\tilde{B}_n\to\tilde{A}_n$. This defines a pre-B-homomorphism since $H$ 
+preserves the pre-weakening and pre-substitution structures of $\mathcal{E}(\mathbb{B})$.
+It is immediate from the definition of $H_n$ and
+$\tilde{H}_n$ that this pre-B-homomorphism is mapped back to $H$, so we conclude
+that $\mathcal{E}$ is full.
+\end{proof}

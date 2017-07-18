@@ -23,7 +23,7 @@ This question would settle the sufficiency of the conditions of being a B-system
 
 \subsection{Stratified E-systems}
 
-In this subsection we define the notion of stratified E-systems. Then we show that the category $\mathbf{Esys}_s$ of stratified E-systems with homomorphisms preserving the stratification, is a full subcategory of $\mathbf{Esys}$. 
+In this subsection we define the notion of stratified E-systems. Then we show that the category $\mathbf{Esys}_s$ of stratified E-systems with homomorphisms preserving the stratification, is a full subcategory of $\mathbf{Esys}$. Recall from \autoref{defn:esys_cat}, that we assume that morphisms between E-systems are functors that lift factorizations in the sense of \autoref{defn:lift_factorizations}.
 
 \begin{defn}
 A category $\cat{C}$ with terminal object is said to be \define{stratified} if there exists a 
@@ -35,7 +35,7 @@ such that
 \begin{enumerate}
 \item $L(X)\jdeq 0$ if and only if $X$ is terminal, and for any $f:X\to Y$ we have
 $L(X)\jdeq L(Y)$ if and only if $X\jdeq Y$ and $f\jdeq\catid{X}$. 
-\item every morphism $f:X\to Y$ in $\cat{C}_\mathbb{E}$, where $L(X)\jdeq
+\item every morphism $f:X\to Y$ in $\cat{C}$, where $L(X)\jdeq
 n+m+1$ and $L(Y)\jdeq n$, has a unique factorization 
 \begin{equation*}
 \begin{tikzcd}
@@ -45,7 +45,9 @@ X \arrow[r,"f_m"] & X_m \arrow[r,"f_{m-1}"] & \cdots \arrow[r,"f_1"] & X_1 \arro
 where $L(X_i)\jdeq n+i$.
 \end{enumerate}
 A functor $F:\cat{C}\to\cat{D}$ between stratified categories is said to be stratified 
-if $L_{\cat{C}}\jdeq L_{\cat{D}}\circ F$. 
+if $L_{\cat{C}}\jdeq L_{\cat{D}}\circ F$.
+
+The category of stratified categories is denoted by $\mathbf{Str}$.
 \end{defn}
 
 %\begin{rmk}
@@ -59,46 +61,51 @@ Any stratified category is a rooted tree.
 
 \begin{proof}
 Let $\cat{C}$ be a stratified category. The root of the tree is going to be the terminal
-object of $\cat{C}$. Note that objects of $\cat{C}$ have no automorphisms other
+object of $\cat{C}$. Note that objects of $\cat{C}$ have no endomorphisms other
 than the identity morphisms. Therefore, to show that $\cat{C}$ is a tree,
 it suffices to show that for every object $X$ with $L(X)>0$ there is
-a unique object $\eft(X)$ with $L(\eft(X))\jdeq L(X)-1$, with a morphism $X\to \eft(X)$.
+a unique object $\eft(X)$ with $L(\eft(X))\jdeq L(X)-1$, with a morphism $p_X:X\to \eft(X)$.
 The existence follows from the existence of the factorization of $X\to 1$. The 
 uniqueness follows from the observation that for any arrow
-$X\to Y$ with $L(Y)\jdeq L(X)-1$, we can factorize $X\to 1$ through $Y$. Since
-factorizations are unique, we will have $Y\jdeq \eft(X)$. 
+$f:X\to Y$ with $L(Y)\jdeq L(X)-1$, we can factorize $X\to 1$ through $Y$. Since
+factorizations are unique, we will have $Y\jdeq \eft(X)$, and $p_X\jdeq f$. 
 \end{proof}
 
 \begin{lem}
 The category of small stratified categories is a full subcategory of the category
 of small categories with terminal objects and between them functors which lift 
-factorizations and preserve the terminal object.
+factorizations in the sense of \autoref{defn:lift_factorizations}, and preserve the terminal object.
 \end{lem}
 
 \begin{proof}
 Let $F:\cat{C}\to\cat{D}$ be a functor between stratified categories which lifts
 factorizations and 
-which preserves terminal objects. We show by induction that $F$ is stratified.
-Since $F$ preserves the terminal object, $L(Y)\jdeq 0$ implies $L(F(Y))\jdeq 0$.
-Now suppose that for $n\in\mathbb{N}$, we have that $L(\Gamma)\jdeq n$ implies
-$L(F(Y))\jdeq n$, and let $X$ be such that $L(X)\jdeq n+1$ with
-$p_X:X\to\eft(X)$. Then the poset $\mathbf{fact}(p_X)$ is isomorphic to the
+which preserves terminal objects. We show by induction that $F$ is stratified, i.e.~that $L_{\mathcal{C}}(X)\jdeq L_{\mathcal{D}}(F(X))$, for any object $X$ of $\mathcal{C}$.
+
+For the base case, we observe that since $F$ preserves the terminal object, $L(X)\jdeq 0$ implies $L(F(X))\jdeq 0$.
+
+For the inductive step, suppose that for $n\in\mathbb{N}$, we have that $L(X)\jdeq n$ implies
+$L(F(X))\jdeq n$, for any object $X$ of $\mathcal{C}$, and let $Y$ be such that $L(Y)\jdeq n+1$ with
+$p_Y:Y\to\eft(Y)$. Then the poset $\mathbf{fact}(p_Y)$ is isomorphic to the
 poset $\mathbf{2}$ with two objects, one of which is smaller than the other. By the
-assumption that $F$ lifts factorizations, the poset $\mathbf{fact}(F(p_X))$
+assumption that $F$ lifts factorizations, the poset $\mathbf{fact}(F(p_Y))$
 is also isomorphic to $\mathbf{2}$. Thus, the only factorization
-of $F(X)\to\unit$ starts with $F(p_X):H(X)\to F(\eft(X))$, which implies that
-$L(F(X))\jdeq n+1$. 
+of $F(Y)\to\unit$ starts with $F(p_Y):H(Y)\to F(\eft(Y))$, which implies that
+$L(F(Y))\jdeq n+1$. 
 \end{proof}
 
+\begin{cor}
+A category can only be stratified in at most one way. That is, being stratified is a property of categories.
+\end{cor}
+
 \begin{rmk}
-It is easy to show that a category can only be stratified in at most one way,
-and that if a category is stratified, then so are any of its slices. Therefore,
+It is easy to show that if a category is stratified, then so are any of its slices. Therefore,
 it makes sense to ask for the property that the weakening and substitution
 functors in a pre-weakening or pre-substitution system are stratified.
 \end{rmk}
 
 \begin{defn}
-A pre-E-systems is said to be \define{stratified} if its underlying category is
+A pre-E-system is said to be \define{stratified} if its underlying category is
 stratified and if each $W_A$ and $S_x$ is a stratified functor. The category of
 stratified pre-E-systems with stratified E-homomorphisms between them is denoted by
 $\mathbf{Esys}_s$.
@@ -116,7 +123,8 @@ only operations and no equalities; B0-systems, which is an extension of the
 essentially algebraic theory of pre-B-systems which ensures that all the operations behave
 well with two sets of the operations ($\eft$ and $\ebd$); and B-systems, which extends the 
 theory of B0-systems with equalities ensuring that the rest of the operations 
-are compatible with each other. Voevodsky, furthermore distinguishes
+are compatible with each other. 
+Voevodsky furthermore distinguishes
 non-unital and unital versions of these, and noted that not all B-homomorphisms
 between unital B-systems are unital. The same distinguishment could be made for 
 E-systems by forgetting the projection structure, but we have not been able to construct a
@@ -147,7 +155,7 @@ For $m,n\in\mathbb{N}$, we denote the composition $\eft[n]\circ\cdots\circ\eft[n
 \end{defn}
 
 \begin{rmk}
-Since the indices $n,m\in\mathbb{N}$ can be infered, we will usually omit them
+Since the indices $n,m\in\mathbb{N}$ can be inferred, we will usually omit them
 in the infix form of the operators.
 \end{rmk}
 
@@ -163,70 +171,12 @@ denoted by $\mathbf{Bfr}$.
 \end{defn}
 
 \begin{defn}
-For every B-framework $\mathbb{B}$ and any $X\in B_n$, there is a B-framework
-$\mathbb{B}/X$ given by
-\begin{align*}
-(B/X)_{m} & \jdeq \{Y\in B_{n+m}\mid\eft^{m}(Y)\jdeq X\}\\
-(\tilde{B}/X)_m & \jdeq \{y\in \tilde{B}_{n+m}\mid\eft^m(\ebd(y))\jdeq X\}.
-\end{align*}
-Also, for any homomorphism $H:\mathbb{B}\to\mathbb{A}$ of B-frameworks and any
-$X\in B_n$, there is a homomorphism $H/X:\mathbb{B}/X\to\mathbb{A}/H(X)$
-defined in the obvious way.
-\end{defn}
-
-\begin{rmk}
-Note that for $X\in B_n$ and $Y\in B_{n+m}$ such that $\eft^m(Y)\jdeq X$, 
-we have $(\mathbb{B}/X)/Y\cong B/Y$.
-\end{rmk}
-
-\begin{defn}
-A \define{B0-system} $\mathbb{B}$ consists of a B-framework $\mathbb{B}$ and homomorphisms
-\begin{align*}
-W_{X} & : \mathbb{B}/\eft(X)\to\mathbb{B}/X\\
-S_{x} & : \mathbb{B}/\ebd(x)\to\mathbb{B}/\eft(\ebd(x))
-\end{align*}
-of B-frameworks, for any $X\in B_{n+1}$ and any $x\in\tilde{B}_{n+1}$. 
-\end{defn}
-
-\begin{lem}
-When $\mathbb{B}$ is a B0-system, then so is each $\mathbb{B}/X$.
-\end{lem}
-
-\begin{proof}
-Straightforward.
-\end{proof}
-
-\begin{defn}
-A \define{B0-homomorphism} $H:\mathbb{B}\to\mathbb{A}$ is a homomorphism of B-frameworks
-for which the diagrams
-\begin{equation*}
-\begin{tikzcd}[column sep=huge]
-\mathbb{B}/X \arrow[r,"H/X"] & \mathbb{A}/H(X) \\
-\mathbb{B}/\eft(X) \arrow[u,"W_X"] \arrow[r,swap,"H/\eft(X)"] & \mathbb{A}/\eft(H(X)) \arrow[u,swap,"W_{H(X)}"]
-\end{tikzcd}
-\end{equation*}
-and
-\begin{equation*}
-\begin{tikzcd}[column sep=huge]
-\mathbb{B}/\ebd(x) \arrow[r,"H/\ebd(x)"] \arrow[d,swap,"S_x"] & \mathbb{A}/\ebd(H(X)) \arrow[d,"S_{\tilde{H}(x)}"] \\
-\mathbb{B}/\eft(\ebd(x)) \arrow[r,swap,"H/\eft(\ebd(x))"] & \mathbb{A}/\eft(\ebd(H(X)))
-\end{tikzcd}
-\end{equation*}
-of homomorphisms of B-frameworks commute for every 
-$X\in B_n$ and $x\in\tilde{B}_n$. The category of B0-systems is denoted
-by $\mathbf{B0sys}$.
-\end{defn}
-
-Now that we have defined the category of B0systems, we can start defining the
-embedding into pre-E-systems.
-
-\begin{defn}
-Let $\mathbb{B}$ be a B-framework. Then $\mathbb{B}$ determines
-a stratified category $U(\mathbb{B})$. Also, any homomorphism of B-frameworks
-determines a stratified functor.
+We construct a functor $U:\mathbf{Bfr}\to\mathbf{tCat_s}$ from the category
+of B-frameworks to the category of stratified categories with term structure.
 \end{defn}
 
 \begin{constr}
+Let $\mathbb{B}$ be a B-framework.
 The set of objects of $U(\mathbb{B})$ is taken to be the set
 $\bigsqcup_{(n\in\mathbb{N})}B_n$. Now we define
 $(k,X)\leq (n,Y)$ if and only if $n\leq k$ and $\eft[n]^{k-n}(X)\jdeq Y$.
@@ -253,18 +203,82 @@ $\tilde{B}$ of $\mathbb{B}$.
 
 Furthermore, it is useful to note that for any $X\in B_n$, we get an 
 isomorphism $U(\mathbb{B}/X)\cong  U(\mathbb{B})/(n,X)$ of rooted trees,
-natural in $X$. Therefore we will usually not distinguish between $U(\mathbb{B})/X$
+natural in $X$. Therefore we will usually not distinguish between $U(\mathbb{B}/X)$
 and $U(\mathbb{B})/(n,X)$. 
 \end{rmk}
 
 \begin{defn}
+For every B-framework $\mathbb{B}$ and any $X\in B_n$, there is a B-framework
+$\mathbb{B}/X$ given by
+\begin{align*}
+(B/X)_{m} & \jdeq \{Y\in B_{n+m}\mid\eft^{m}(Y)\jdeq X\}\\
+(\tilde{B}/X)_m & \jdeq \{y\in \tilde{B}_{n+m}\mid\eft^m(\ebd(y))\jdeq X\}.
+\end{align*}
+Also, for any homomorphism $H:\mathbb{B}\to\mathbb{A}$ of B-frameworks and any
+$X\in B_n$, there is a homomorphism $H/X:\mathbb{B}/X\to\mathbb{A}/H(X)$
+defined in the obvious way.
+\end{defn}
+
+\begin{rmk}
+Note that for $X\in B_n$ and $Y\in B_{n+m}$ such that $\eft^m(Y)\jdeq X$, 
+we have an isomorphism $(\mathbb{B}/X)/Y\cong B/Y$ of B-frameworks, constructed in the obvious way, which is natural in the sense that for any homomorphism $H:\mathbb{B}\to\mathbb{A}$ of B-frameworks, the square
+\begin{equation*}
+\begin{tikzcd}
+(\mathbb{B}/X)/Y \arrow[r,"\cong"] \arrow[d,swap,"(H/X)/Y"] &  \mathbb{B}/Y \arrow[d,"H/Y"] \\
+(\mathbb{A}/H(X))/H(Y) \arrow[r,"\cong"] & \mathbb{A}/H(Y)
+\end{tikzcd}
+\end{equation*}
+commutes.
+\end{rmk}
+
+\begin{defn}
+A \define{non-unital B0-system} $\mathbb{B}$ consists of a B-framework $\mathbb{B}$ and homomorphisms
+\begin{align*}
+W_{X} & : \mathbb{B}/\eft(X)\to\mathbb{B}/X\\
+S_{x} & : \mathbb{B}/\ebd(x)\to\mathbb{B}/\eft(\ebd(x))
+\end{align*}
+of B-frameworks, for any $X\in B_{n+1}$ and any $x\in\tilde{B}_{n+1}$. 
+\end{defn}
+
+\begin{comment}
+\begin{lem}
+When $\mathbb{B}$ has the structure of a B0-system, then so does each $\mathbb{B}/X$.
+\end{lem}
+
+\begin{proof}
+Straightforward.
+\end{proof}
+\end{comment}
+
+\begin{defn}
+A \define{non-unital B0-homomorphism} $H:\mathbb{B}\to\mathbb{A}$ is a homomorphism of B-frameworks
+for which the diagrams
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\mathbb{B}/X \arrow[r,"H/X"] & \mathbb{A}/H(X) \\
+\mathbb{B}/\eft(X) \arrow[u,"W_X"] \arrow[r,swap,"H/\eft(X)"] & \mathbb{A}/\eft(H(X)) \arrow[u,swap,"W_{H(X)}"]
+\end{tikzcd}
+\end{equation*}
+and
+\begin{equation*}
+\begin{tikzcd}[column sep=huge]
+\mathbb{B}/\ebd(x) \arrow[r,"H/\ebd(x)"] \arrow[d,swap,"S_x"] & \mathbb{A}/\ebd(H(X)) \arrow[d,"S_{\tilde{H}(x)}"] \\
+\mathbb{B}/\eft(\ebd(x)) \arrow[r,swap,"H/\eft(\ebd(x))"] & \mathbb{A}/\eft(\ebd(H(X)))
+\end{tikzcd}
+\end{equation*}
+of homomorphisms of B-frameworks commute for every 
+$X\in B_n$ and $x\in\tilde{B}_n$. The category of non-unital B0-systems is denoted
+by $\mathbf{B0sys}^\circ$.
+\end{defn}
+
+\begin{defn}
 Let $\mathbb{B}$ be a B0-system. Then $U(\mathbb{B})$ can be given the structure
-of a pre-E-systems. We write $\mathcal{E}(\mathbb{B})$ for the resulting
-pre-E-systems. Thus we get a functor $\mathcal{E}:\mathbf{B0sys}\to\mathbf{Esys}_s$.
+of a pre-E-system. We write $\mathcal{E}(\mathbb{B})$ for the resulting
+pre-E-system. Thus we get a functor $\mathcal{E}:\mathbf{B0sys}\to\mathbf{E0sys}_s$.
 \end{defn}
 
 \begin{constr}
-We begin by simultaneously defining the term structure and the pre-substitution
+We begin by \emph{simultaneously} defining the term structure and the pre-substitution
 structure on $U(\mathbb{B})$ by induction on the natural numbers. More precisely,
 for any $m\in\mathbb{N}$ we will define, for any $(n+m,X)\leq (n,\Gamma)$ a set
 $T(m,X)$ and for any $x\in T(m,X)$ a homomorphism 
@@ -272,23 +286,26 @@ $S_x:\mathbb{B}/X\to\mathbb{B}/\Gamma$ of B-frameworks. Then it follows
 immediately that we get stratified functors $U(S_x):U(\mathbb{B})/X\to U(\mathbb{B})/\Gamma$
 defining the pre-substitution structure of $\mathcal{E}(\mathbb{B})$.
 
-For $(n,X)\in U(\mathbb{B})$, we define $T(0,X)\defeq
-\{\pt[X]\}$ and $S_{\pt[X]}\defeq \catid{\mathbb{B}/X}$. We also define for
-$(n+1,X)\leq (n,\Gamma)$ the set $T(1,X)\jdeq\{x\in B_{n+1}\mid \ebd(x)\jdeq X\}$.
-Note that for $x\in T(1,X)$, the homomorphism $S_x:\mathbb{B}/X \to\mathbb{B}/\Gamma$
-is already assumed to exist, because $\mathbb{B}$ is a B0-system.
+In the base case, we define for $(n,X)\in U(\mathbb{B})$, the set
+$T(0,X)\defeq \{\pt[X]\}$ and $S_{\pt[X]}\defeq \catid{\mathbb{B}/X}$. 
+
+%We also define for
+%$(n+1,X)\leq (n,\Gamma)$ the set $T(1,X)\jdeq\{x\in B_{n+1}\mid \ebd(x)\jdeq X\}$.
+%Note that for $x\in T(1,X)$, the homomorphism $S_x:\mathbb{B}/X \to\mathbb{B}/\Gamma$
+%is already assumed to exist, because $\mathbb{B}$ is a B0-system.
 
 For the inductive step, suppose that for $m\in\mathbb{N}$ we have sets $T(m,X)$
 for any $(n+m,X)\leq (n,\Gamma)$ and homomorphisms $S_x:\mathbb{B}/X \to \mathbb{B}/\Gamma$
 of B-frameworks, for any $x\in T(m,X)$. Then we define
 \begin{equation*}
-T(m+1,X)\defeq\bigsqcup_{x\in T(m,\eft(X))} T(1,S_x(X)).
+T(m+1,X)\defeq\bigsqcup_{x\in T(m,\eft(X))} \{u\in \tilde{B}_{n+1}\mid \ebd(u)\jdeq S_x(X)\}.
 \end{equation*}
 For $(x,u)\in T(m+1,X)$ we define the homomorphism $S_{(x,u)}:\mathbb{B}/X\to
 \mathbb{B}/\Gamma$ as
 \begin{equation*}
-S_{(x,u)}\defeq S_u\circ S_x/X.
+S_{(x,u)}\defeq S_u\circ S_x/X,
 \end{equation*}
+where $S_u$ is taken from the structure of $\mathbb{B}$ of being a B0-system.
 It remains to define a pre-weakening structure on $U(\mathbb{B})$. To do this,
 it suffices to define homomorphisms $W_{(m,X)}:\mathbb{B}/\Gamma \to\mathbb{B}/X$
 of B-frameworks, for any $(n+m,X)\leq (n,\Gamma)$. We define
@@ -373,7 +390,7 @@ subcategory of $\mathbf{B0sys}$.
 \end{rmk}
 
 \begin{defn}
-A \emph{(unital) B-system} is a B0-system for which the following conditions
+A \define{(unital) B-system} is a B0-system for which the following conditions
 hold:
 \begin{enumerate}
 \item Every $W_X$ and $S_x$ is a unital B0-homomorphism.
@@ -383,13 +400,13 @@ hold:
 \item For every $X\in B_{n+1}$ one has $S_{\delta(X)}\circ W_X/X\jdeq
 \catid{\mathbb{B}/X}$. 
 \end{enumerate}
-\emph{B-homomorphisms} are unital B0-homomorphisms between B-systems.
+\define{B-homomorphisms} are unital B0-homomorphisms between B-systems.
 We denote the category of B-systems by $\mathbf{Bsys}$. 
 \end{defn}
 
 \begin{lem}
 For any non-unital B-system $\mathbb{B}$, $\mathcal{E}(\mathbb{B})$ is a 
-stratified non-unital E-systems. 
+stratified non-unital E-system. 
 \end{lem}
 
 \begin{proof}
@@ -397,24 +414,21 @@ Straightforward.
 \end{proof}
 
 \begin{defn}
-For any unital B-system $\mathbb{B}$, $\mathcal{E}(\mathbb{B})$ has a
-projection structure. We thus obtain a functor 
-$\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys}$ from unital B-systems to E-systems.
+We construct a functor $\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys_s}$ from (unital) B-systems to stratified E-systems.
 \end{defn}
 
 \begin{constr}
-We first need to extend the functor $\mathcal{E}:\mathbf{B0sys}\to\mathbf{Esys_p}$
-from non-unital B0-systems to non-unital pre-E-systems, to a functor from
-unital B-systems to E-systems.
+We begin by defining a functor $\mathcal{E'}:\mathbf{Bsys}\to\mathbf{E0sys}$
+from (unital) B-systems to (unital) pre-E-systems.
+In the construction of the pre-projection structure on $\mathcal{E}(\mathbb{B})$ we use equations that are satisfied for B-systems, but not necessarily for B0-systems.
 
 We need to give $\mathcal{E}(\mathbb{B})$ the structure of a unital
-pre-E-systems. We construct by induction on $m\in \mathbb{N}$, a term of type 
-$T(m,W_{(m,X)}(X))$ with the property that that 
+pre-E-system. We construct by induction on $m\in \mathbb{N}$, 
+for every $(n+m,X)\leq (n,\Gamma)$, an element $\tfid{(m,X)}\in T(m,W_{(m,X)}(X))$ with the property that that 
 \begin{equation*}
-S_{\tfid{(m,X)}}\circ W_{(m,X)}/X\jdeq\catid{U(\mathbb{B})/X},
-\end{equation*} 
-for every $(n+m,X)\leq (n,\Gamma)$ by induction on $m$. The extra
-condition is part of the inductive construction, because we need it on the way.
+S_{\tfid{(m,X)}}\circ W_{(m,X)}/X\jdeq\catid{U(\mathbb{B})/X}.
+\end{equation*}
+(This extra condition is needed in the inductive construction.) 
 
 For $m\jdeq 0$ we have but one
 choice, and for $m\jdeq 1$ we can directly use the unital structure of
@@ -423,7 +437,7 @@ $\mathbb{B}$. For the inductive step, recall that
 T(m+1,W_{(m+1,X)}(X))\jdeq\bigsqcup_{x\in T(m,W_{(m+1,X)}(\eft(X)))}T(1,S_x(W_{(m+1,X)}(X))).
 \end{equation*}
 We have the term $x\defeq \tilde{W}_X(\tfid{(m,\eft(X))})\in T(m,W_{(m+1,X)}(\eft(X)))$.
-Now we may observe that 
+Now we observe that 
 \begin{align*}
 S_x(W_{(m+1,X)}(X))
   & \jdeq 
@@ -452,13 +466,14 @@ S_{\delta(X)}\circ W_X/X \\
 \catid{U(\mathbb{B})/X}.
 \end{align*}
 This finishes the definition of the pre-projection structure on $\mathcal{E}(\mathbb{B})$.
-Straightforward proves by induction give that each $W_{(m,X)}$ and $S_x$ is a 
+Straightforward proofs by induction give that each $W_{(m,X)}$ and $S_x$ is a 
 pre-projection homomorphism and that $S_x(\tfid{(m,X)})\jdeq x$, for any 
-$x\in T(m,X)$.
+$x\in T(m,X)$, to show that $\mathcal{E}'(\mathbb{B})$ is in fact an E-system.
 \end{constr}
 
 \begin{thm}
-The functor $\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys}$ lifts to an equivalence
+The functor $\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys_s}$ is an equivalence.
+\begin{comment}
 to the subcategory $\mathbf{Esys}_s$ of stratified E-systems: i.e.~we have a
 commuting diagram
 \begin{equation*}
@@ -467,16 +482,17 @@ commuting diagram
 \mathbf{Bsys} \arrow[ur,"\simeq"] \arrow[rr,swap,"\mathcal{E}"] & & \mathbf{Esys}
 \end{tikzcd}
 \end{equation*}
+\end{comment}
 \end{thm}
 
 \begin{proof}
 We already have shown that $\mathcal{E}$ factors through the stratified
 E-systems and that it is full and faithful, so it remains
-to show that every stratified E-systems is in the image of $\mathcal{E}$. In
+to show that every stratified E-system is in the image of $\mathcal{E}$. In
 other words, for every stratified E-systems $\mathbb{E}$ we need to construct
 a B0-system $\mathbb{B}$ such that $\mathcal{E}(\mathbb{B})\cong\mathbb{E}$. 
 
-Let $\mathbb{E}$ be a stratified telescopi type system. From the stratification functor
+Let $\mathbb{E}$ be a stratified E-system. From the stratification functor
 $L:\mathbb{C}_{\mathbb{E}}\to (\mathbb{N},\geq)$ we obtain the pre-image
 presheaf $B(\mathbb{E}):\op{(\mathbb{N},\leq)}\to\mathbf{Set}$ given by
 \begin{align*}
@@ -567,12 +583,12 @@ A \define{category with families} consists of
 \item A category $\cat{C}$ with a terminal object $1$.
 \item A presheaf $\mathrm{Ty}:\op{\cat{C}}\to\mathbf{Set}$. We will write
 $f^\ast(A)$ for $\mathrm{Ty}(f,A)$.
-\item For any $A\in\mathrm{Ty}(\Gamma)$, a morphism
+\item For any $A\in\mathrm{Ty}(\Gamma)$, an object $\ctxext{\Gamma}{A}$ of $\cat{C}$, and a morphism
 \begin{equation*}
 p_A : \ctxext{\Gamma}{A}\twoheadrightarrow \Gamma
 \end{equation*}
 in $\cat{C}$.
-\item a preasheaf $\mathrm{Tm}:\op{(\int_\cat{C}\mathrm{Ty})}\to\mathbf{Set}$.
+\item a presheaf $\mathrm{Tm}:\op{(\int_\cat{C}\mathrm{Ty})}\to\mathbf{Set}$.
 The action of a morphism $f:(\Delta,f^\ast(A))\to(\Gamma,A)$ of $\int_\cat{C}\mathrm{Ty}$
 on a term $x\in \mathrm{Tm}(A)$ is also written by $f^\ast(x)$.
 \item a term $\delta_A\in\mathrm{Tm}(\ctxext{\Gamma}{A},(p_A)^\ast(A))$ for every
@@ -600,15 +616,13 @@ $\mathrm{Ty}$, is a category with families.
 
 \begin{rmk}
 Although a terminal object is usually assumed to exist, not every object 
-of a category with families is assumed to be `fibrant', i.e.~it is
+of a category with families is assumed to be `fib rant', i.e.~it is
 not the case that every $X\to 1$ is a composition of projections $p_A$.
-We could only hope that there is a functor from D-sytems to E-systems without
+We could only hope that there is a functor from categories with families to E-systems without
 terminal objects.
 \end{rmk}
 
-There is essentially only one choice for the presheaf $\mathrm{Tm}$ and the
-term $\delta_A$, so the extra structure on a setup for categories with families
-is determined essentially uniquely once it exists.
+There is essentially only one choice for the presheaf $\mathrm{Tm}$ and the term $\delta_A$, satisfying the universal property described in the definition of categories with families.
 
 \begin{defn}\label{lem:cwf_to_dsys}
 Let $\mathbb{D}$ be a category with families. Then there is a natural isomorphism
@@ -635,16 +649,64 @@ We define the inverse of $\varphi_A$ by $\theta\mapsto\theta^\ast(\delta_A)$. Ve
 that these form a natural isomorphism is straightforward.
 \end{constr}
 
-The following two definitions define subclasses of telescopic D-systems and 
-coherent telescopic D-systems, and the latter structure is the same as an CE-system
+\begin{defn}
+A \define{category with dependent contexts} consists of
+\begin{enumerate}
+\item A category $\cat{C}$.
+\item A presheaf $\mathcal{F}:\op{\cat{C}}\to\mathbf{Set}$.
+\item For each $A\in\mathcal{F}(\Gamma)$, an object $\ctxext{\Gamma}{A}$, and a morphism $p_A:\ctxext{\Gamma}{A}\to\Gamma$.
+\item For each $\Gamma\in\cat{C}$, an element $\emptyf[\Gamma]\in\mathcal{F}(\Gamma)$ and for each $A\in\mathcal{F}(\Gamma)$ and each $P\in\mathcal{F}(\ctxext{\Gamma}{A})$, an element $\ctxext{A}{P}\in\mathcal{F}(\Gamma)$, such that
+\begin{enumerate}
+\item 
+\begin{itemize}
+\item for any $A\in\mathrm{Fam}(\Gamma)$ and $P\in\mathrm{Fam}(\ctxext{\Gamma}{A})$,
+one has $\ctxext{\Gamma}{{A}{P}}\jdeq\ctxext{{\Gamma}{A}}{P}$, and
+\begin{equation*}
+p_{\ctxext{A}{P}}\jdeq p_A\circ p_P,
+\end{equation*}
+\item and for any $\Gamma\in\cat{C}$ one has $\ctxext{\Gamma}{\emptyf[\Gamma]}\jdeq\Gamma$, and
+\begin{equation*}
+p_{\emptyf[\Gamma]}\jdeq\catid{\Gamma}.
+\end{equation*}
+\end{itemize}
+\item 
+\begin{itemize}
+\item for any $A\in\mathrm{Fam}(\Gamma)$, $P\in\mathrm{Fam}(\ctxext{\Gamma}{A})$
+and $Q\in\mathrm{Fam}(\ctxext{{\Gamma}{A}}{P})$, one has
+\begin{equation*}
+\ctxext{{A}{P}}{Q}\jdeq\ctxext{A}{{P}{Q}},
+\end{equation*}
+\item and for any $A\in\mathrm{Fam}(\Gamma)$, one has
+\begin{equation*}
+\ctxext{\emptyf[\Gamma]}{A}\jdeq\ctxext{A}{\emptyf[\ctxext{\Gamma}{A}]}\jdeq A.
+\end{equation*}
+\end{itemize}
+\item 
+\begin{itemize}
+\item for any $A\in\mathrm{Fam}(\Gamma)$, $P\in\mathrm{Fam}(\ctxext{\Gamma}{A})$
+and any $f:\Delta\to\Gamma$ in $\cat{C}$, one has
+\begin{equation*}
+f^\ast(\ctxext{A}{P})\jdeq \ctxext{(f^\ast(A))}{(\pi_2(f,A)^\ast(P))},
+\end{equation*}
+\item and for any $f:\Delta\to\Gamma$ in $\cat{C}$, one has
+\begin{equation*}
+f^\ast(\emptyf[\Gamma])\jdeq\emptyf[\Delta].
+\end{equation*}
+\end{itemize}
+\end{enumerate} 
+\end{enumerate}
+\end{defn}
+
+The following two definitions define subclasses of \emph{telescopic} categories with families and 
+\emph{coherent} telescopic categories with families, and the latter structure is the same as an CE-system
 (without empty context). In \autoref{defn:comp_to_telescopic}, we will show how
-to obtain a telescopic D-system from any comprehension category. This construction
-will also generate a telescopic D-system out of any D-system, because D-systems
+to obtain a telescopic category with families from any comprehension category. This construction
+will also generate a telescopic categories with families out of any category with families, because categories with families
 are comprehension categories.
 
 \begin{defn}
-Let $\cat{C}$ be a D-system. In this definition, we will write
-$\mathrm{Fam}$ for the presheaf of types. The D-system $\cat{C}$
+Let $\mathbb{D}$ be a category with families with underlying category $\cat{C}$. In this definition, we will write
+$\mathrm{Fam}$ for the presheaf of types. The category with families $\mathbb{D}$
 is said to be \define{telescopic}, if we have elements $\emptyf[\Gamma]\in
 \mathrm{Fam}(\Gamma)$ for each $\Gamma\in\cat{C}$, and maps 
 $P\mapsto\ctxext{A}{P}:\mathrm{Fam}(\ctxext{\Gamma}{A})\to \mathrm{Fam}(\Gamma)$
@@ -689,8 +751,17 @@ f^\ast(\emptyf[\Gamma])\jdeq\emptyf[\Delta].
 \end{enumerate} 
 \end{defn}
 
-\begin{lem}
-A D-system is telescopic if and only if  the following two conditions hold:
+\begin{comment}
+\begin{defn}
+Consider a functor $p:\cat{E}\to\cat{B}$, and let $\phi:e\to e'$ be a morphism in $\cat{E}$. We say that $\phi$ is \define{cocartesian} if for any morphism $\psi:e\to e''$ and any $g:p(e')\to p(e'')$ such that $g\circ p(\phi)=p(\psi)$, there is a unique morphism $h:e'\to e''$ such that $h\circ\phi=\psi$.
+
+A \define{cocartesian lift} at $e$ of a morphism $\pi:p(e)\to b'$ in $\cat{B}$ is a cocartesian morphism $\phi:e\to e'$ for which $p(\phi)=\pi$.
+\end{defn}
+\end{comment}
+
+\begin{comment}
+\begin{lem}[Work in progress]
+A category with families is telescopic if and only if  the following two conditions hold:
 \begin{enumerate}
 \item There is a global section $\phi:\cat{C}\to \int_{\cat{C}}\mathrm{Ty}$ of $\pi$.
 \item For every $P\in\mathrm{Ty}(\ctxext{\Gamma}{A})$,
@@ -699,8 +770,8 @@ at $P$.
 \end{enumerate}
 \end{lem}
 
-\begin{proof}
-Let $\mathbb{D}$ be a telescopic D-system. To show that $\mathbb{D}$ has the two
+\begin{proof}[Work in progress]
+Let $\mathbb{D}$ be a telescopic category with families. To show that $\mathbb{D}$ has the two
 stated properties:
 \begin{enumerate}
 \item The choice $\emptyf[\Gamma]\in\mathrm{Ty}(\Gamma)$ together with the fact
@@ -724,26 +795,42 @@ Note that the morphism $(\ctxext{\Gamma}{A},P)\to (\Gamma,\ctxext{A}{P})$
 in $\int_{\cat{C}}\mathrm{Ty}$.  
 \end{enumerate}
 
-Let $\mathbb{D}$ be a D-system for which the stated two conditions hold. To show
-that $\mathbb{D}$ is a telescopic D-system, we systematically go through each of the
+Let $\mathbb{D}$ be a category with families for which the stated two conditions hold. To show
+that $\mathbb{D}$ is a telescopic category with families, we systematically go through each of the
 properties:
 \begin{enumerate}
 \item 
 \end{enumerate} 
 \end{proof}
+\end{comment}
 
-\begin{conj}
+\begin{conj}[Work in progress]
 The notion of being telescopic is a property.
 \end{conj}
 
 \begin{defn}
-A telescopic D-system is said to be \define{coherent}, if for any $A,A'\in\mathrm{Fam}(\Gamma)$
+A category with dependent contexts is said to be \define{coherent}, if for any $A,A'\in\mathrm{Fam}(\Gamma)$
 such that $p_A\jdeq p_{A'}$, and any $f:\Delta\to\Gamma$, we have
 $p_{f^\ast(A)}\jdeq p_{f^\ast(A')}$ and $\pi_2(f,A)\jdeq \pi_2(f,A')$.
 \end{defn}
 
+\begin{defn}
+A category with dependent contexts is said to be \define{separated}, if for any $A,A'\in\mathrm{Fam}(\Gamma)$, we have
+\begin{equation*}
+((\ctxext{\Gamma}{A},p_A) \jdeq (\ctxext{\Gamma}{A'},p_{A'}))\to (A\jdeq A').
+\end{equation*}
+\end{defn}
+
+\begin{lem}
+Any separated category with dependent contexts is coherent.
+\end{lem}
+
+\begin{proof}
+Straightforward.
+\end{proof}
+
 \begin{thm}
-An CE-system without empty context is the same thing as a coherent telescopic D-system.
+Every CE-system without empty context is a coherent telescopic D-system.
 \end{thm}
 
 \begin{proof}
@@ -756,7 +843,7 @@ and on morphisms by the action on objects of $f^\ast$, for each $f:\Delta\to
 \Gamma$ in $\cat{C}$. By condition (b) and (c) in the definition of CE-systems, it
 follows that this defines a contravariant functor. 
 
-We define a functor $\mathcal{P}:\int_{\cat{C}}\to\cat{C}^\square$ by sending
+We define a functor $\mathcal{P}:\int_{\cat{C}}\mathrm{Fam}\to\cat{C}^\square$ by sending
 the pair $(\Gamma,A)$ to the morphism $A:\ctxext{\Gamma}{A}\to\Gamma$ in
 $\cat{C}$, and by sending $f:(\Delta,f^\ast(A))\to (\Gamma,A)$ to the pullback
 square
@@ -794,19 +881,19 @@ we have an element $\tilde{A}\in\mathrm{Fam}(\Gamma)$ such that $p_{\tilde{A}}
 By the coherence condition, this choice of pullback square does not depend on the
 choice of $\tilde{A}$ such that $p_{\tilde{A}}\jdeq A$ (having this fact 
 available is precisely what the coherence condition is for). The verification of conditions
-(a) to (d) of \autoref{defn:E'sys} is straightforward.
+(a) to (d) of \autoref{defn:CEsys} is straightforward.
 \end{proof}
 
 \subsection{Coherent comprehension categories}
 In this section we recall Jacobs' notion of comprehension categories, and 
 Dybjer's notion of categories with families. It is shown in 
-\cite{Hofmann_syntax_semantics} that the category of categoriew with families
+\cite{Hofmann_syntax_semantics} that the category of categories with families
 is equivalent to the category of categories with attributes, which forms a
 subcategory of comprehension categories. Thus, for our purpose of comparing
 E-systems with various existing notions of models of type dependency, it suffice
 to make the comparison with comprehension categories.
 
-In this section we do the preparateions for this comparison. After having
+In this section we do the preparations for this comparison. After having
 introduced categories with families, we prove that categories with families
 with the extra structure of `being closed under family extension' in a coherent
 way, are CE-systems without empty context. 
@@ -1202,7 +1289,7 @@ to $\{\theta:\Delta\to\ctxext{\Gamma}{A}\mid p_A\circ\theta\jdeq f\}$ is a bijec
 Each comprehension category determines a subcategory $\cat{F}$ generated by
 the projections, as we shall see soon. However, there is no reason why
 this category should possess a terminal object, so we naturally have to retreat
-to CE-systems without empty contex. Even when we make this generalization, 
+to CE-systems without empty context. Even when we make this generalization, 
 the construction of a canonical functor in which families are represented by 
 compositions of projections is still not possible without a further coherence 
 condition. To make sure that
@@ -1249,7 +1336,7 @@ The functor $\mathcal{P}$ induces a functor $\mathcal{P}:\Lambda(\Gamma)\to
 \cdots\circ\mathcal{P}(A_n)$.
 \end{defn}
 
-\begin{defn}\label{defn:comp_to_telescopic}
+\begin{defn}[To do: transport the notion of telescopic from CWFs to D-systems (probably by reading the proof below)]\label{defn:comp_to_telescopic}
 Let $\mathcal{P}$ be a split comprehension category with choice $j$ of cartesian
 lifts. We define a telescopic D-system
 \begin{equation*}
@@ -1296,7 +1383,7 @@ the Grothendieck fibration $\pi:\int_{\cat{C}}\Lambda\to\cat{C}$.
 \begin{comment}
 \begin{defn}
 Let $f_0\defeq f:\Delta\to\Gamma$ be a morphism of $\cat{C}$, the base category of a
-split comprehension category $\mathcal{P}$ wich a choice $j$ of cartesian lifts.
+split comprehension category $\mathcal{P}$ which a choice $j$ of cartesian lifts.
 By induction we define an element $\Lambda(f,A)\in\Lambda(\Delta)$ together with
 a morphism $q(f,A):\mathrm{dom}(\mathcal{P}(\Lambda(f,A)))\to 
 \mathrm{dom}(\mathcal{P}(A))$, for any $A\jdeq (A_1,\ldots,A_n) 
@@ -1328,7 +1415,7 @@ is a pullback square.
 \end{comment}
 
 \begin{thm}
-Let $\mathcal{P}$ be a comprehension category. Then the following are equivalent:
+Let $\mathcal{P}$ be a (extra assumption: split) comprehension category. Then the following are equivalent:
 \begin{enumerate}
 \item The choice of functors $\Lambda(f)$ and lifts $q(f,A)$ can be extended to the 
 structure of an CE-system without empty context.
@@ -1393,7 +1480,7 @@ $f^\ast$ in the commuting square
 \end{equation*}
 We need to verify that $f^\ast$ is a functorial choice of pullbacks, as in the
 definition of \autoref{defn:E'sys}. Since $f^\ast$ is defined as an extension
-of $\Lambda(f)$, it is enough to verify the analoguous functoriality properties
+of $\Lambda(f)$, it is enough to verify the analogous functoriality properties
 for $\Lambda(f)$. We do this by induction on the objects of $\Lambda(\Gamma)$,
 in the same order as in \autoref{defn:E'sys}.
 \begin{enumerate}[label=(\alph*)]
@@ -1446,7 +1533,7 @@ morphisms the E-systems $\mathcal{E}/\Gamma$.
 We first show that $p$ is a Grothendieck fibration. Let $f:\Delta\to\Gamma$ be
 a morphism in $\cat{C}$ and let $A\in\cat{F}/\Gamma$. Then we have $\catid{\Delta},\catid{\Gamma}\in\cat{E}$,
 and $(f,\pi_2(f,A)):f^\ast(A)\to A$. It is routine to verify that $(f,\pi_2(f,A))$
-is a cartesian lift of $f$, and that this choice of catesian lifts is functorial. 
+is a cartesian lift of $f$, and that this choice of cartesian lifts is functorial. 
 
 Now let $g:X\to\Delta$ and $f:\Delta\to \Gamma$, and let $\tilde{f}:\tilde{\Delta}\to\tilde{\Gamma}$ and
 $\tilde{g}:\tilde{X}\to\tilde{\Delta}$ be cartesian lifts of $f$ and $g$, respectively. We have to show
@@ -1538,6 +1625,6 @@ $\mathrm{Ty}$ is a presheaf on $\cat{C}$. The choice of pullback squares
 \end{tikzcd}
 \end{equation*}
 is functorial by assumption, so we have defined a category with families. It
-is straigtforward to verify that this category with families is locally well-founded,
+is straightforward to verify that this category with families is locally well-founded,
 and that its construction is inverse to $U$. 
 \end{proof}

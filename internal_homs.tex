@@ -21,7 +21,7 @@ A \arrow[r,swap,"f"] & B
 where we consider the morphism $g$ over $f$ to be an internal morphism from 
 $P$ to $f^\ast(Q)$ in context $\ctxext{\Gamma}{A}$, capturing the
 essence of being a morphism from the family $P$ over $A$ to the family
-$Q$ over $B$, reindexed by $f$. 
+$Q$ over $B$, re-indexed by $f$. 
 Whenever we draw such diagrams, a double headed arrow will always
 refer to a family, and an ordinary arrow will refer to an internal morphism,
 possibly over another internal morphism.
@@ -172,7 +172,7 @@ f^\ast/A\circ g^\ast
 \end{proof}
 
 \begin{thm}
-A E-system is the same thing as an CE-system.
+Every CE-system is an E-system.
 \end{thm}
 
 \begin{proof}
@@ -244,6 +244,8 @@ defining an internal category was the hardest part of that definition.
 \end{comment}
 
 \subsection{The pre-category of internal morphisms}\label{subsec:im_cat}
+
+In this section we define for every E-system $\mathbb{E}$, and every context $\Gamma$ in $\mathbb{E}$, a category $\mathcal{C}_\mathbb{E}(\Gamma)$. This goal is accomplished in \autoref{thm:internal_hom}. Note that we do not have a category structure on the set of contexts of $\mathbb{E}$, unless $\mathbb{E}$ possesses an empty context $[]$. In this case, the category structure is inherited from the category $\mathcal{C}_{\mathbb{E}}([])$.
 
 \begin{defn}
 For every $A,B\in\cat{F}/\Gamma$ we define the set 
@@ -349,9 +351,9 @@ f^\ast\circ g^\ast & \jdeq S_f\circ (W_A/B) \circ S_g \circ (W_B/C)\\
 \end{align*}
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{thm:internal_hom}
 For each object $\Gamma$ of a E-system $\mathbb{E}$, we have a pre-category
-$\mathbb{C}_I(\mathbb{E},\Gamma)$ of internal morphisms of $\mathbb{E}$,
+$\mathcal{C}_{\mathbb{E}}(\Gamma)$ of internal morphisms of $\mathbb{E}$,
 consisting of the same objects as $\cat{F}/\Gamma$ and the hom-sets 
 $\thom{A}{B}$. 
 \end{thm}
@@ -375,37 +377,20 @@ f.\qedhere
 \begin{rmk}
 Since any E-homomorphism is both a substitution homomorphism and a weakening
 homomorphism, it follows immediately that any E-homomorphism preserves any
-$f^\ast$, i.e.~for any $f\in\thom{A}{B}$ in $\mathcal{E}$ and any E-homomorphism
-$F:\mathcal{E}\to\mathcal{D}$, the diagram
+$f^\ast$, i.e.~for any $f\in\thom{A}{B}$ in $\mathbb{E}$ and any E-homomorphism
+$F:\mathbb{E}\to\mathbb{D}$, the diagram
 \begin{equation*}
 \begin{tikzcd}[column sep=large]
-\mathcal{E}/\ctxext{\Gamma}{A} \arrow[r,"F/\ctxext{\Gamma}{A}"] & \mathcal{D}/F(\ctxext{\Gamma}{A})
+\mathbb{E}/\ctxext{\Gamma}{A} \arrow[r,"F/\ctxext{\Gamma}{A}"] & \mathbb{D}/F(\ctxext{\Gamma}{A})
   \\
-\mathcal{E}/\ctxext{\Gamma}{B} \arrow[u,"f^\ast"] \arrow[r,swap,"F/\ctxext{\Gamma}{B}"] & \mathcal{D}/F(\ctxext{\Gamma}{B}) \arrow[u,swap,"F(f)^\ast"]
+\mathbb{E}/\ctxext{\Gamma}{B} \arrow[u,"f^\ast"] \arrow[r,swap,"F/\ctxext{\Gamma}{B}"] & \mathbb{D}/F(\ctxext{\Gamma}{B}) \arrow[u,swap,"F(f)^\ast"]
 \end{tikzcd}
 \end{equation*}
 commutes. This applies to weakening, substitution and pre-composition, and it
-follows that for any E-homomorphism $F:\mathcal{E}\to\mathcal{D}$ and any
-$\Gamma\in\mathcal{E}$, we have a functor $\mathbb{C}_I(F,\Gamma):
-\mathbb{C}_I(\mathcal{E},\Gamma)\to\mathbb{C}_I(\mathcal{D},F(\Gamma))$.
+follows that for any E-homomorphism $F:\mathbb{E}\to\mathbb{D}$ and any
+$\Gamma\in\mathbb{E}$, we have a functor $\mathcal{C}_F(\Gamma):
+\mathcal{C}_{\mathbb{E}}(\Gamma)\to\mathcal{C}_{\mathbb{D}}(F(\Gamma))$.
 \end{rmk}
-
-The following fact will be useful:
-
-\begin{lem}\label{lem:compW_W}
-Let $f\in\thom{A}{B}$ be an internal morphism in context $\Gamma$. Then one has
-\begin{equation*}
-f^\ast\circ W_B\jdeq W_A.
-\end{equation*}
-\end{lem}
-
-\begin{proof}
-The proof is a simple calculation:
-\begin{equation*}
-f^\ast\circ W_B\jdeq S_f\circ W_A/B\circ W_B\jdeq S_f\circ W_{W_A(B)}\circ W_A
-\jdeq W_A.\qedhere
-\end{equation*}
-\end{proof}
 
 \subsection{Pairing and the projections}
 
@@ -457,7 +442,7 @@ Let $A\in\cat{F}/\Gamma$ and $P\in\cat{F}/\ctxext{\Gamma}{A}$. We define
 \end{defn}
 
 \begin{cor}\label{cor:pairing_ehom}
-Let $F:\mathcal{E}\to\mathcal{D}$ be an E-homomorphism and let $x\in T(A)$ and
+Let $F:\mathbb{E}\to\mathbb{D}$ be an E-homomorphism and let $x\in T(A)$ and
 $u\in T(S_x(P))$. Then we have
 \begin{equation*}
 F(\tmext{x}{u})\jdeq \tmext{F(x)}{F(u)}.
@@ -660,17 +645,17 @@ associative, we have
 Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then we
 define the E-homomorphism 
 \begin{equation*}
-F^\circledast\defeq F^\ast\circ (f^\ast/Q):
+F^\bullet\defeq F^\ast\circ (f^\ast/Q):
 \mathbb{E}/\ctxext{{\Gamma}{B}}{Q}\to\mathbb{E}/\ctxext{{\Gamma}{A}}{P}.
 \end{equation*}
-The infix notation of $F^\circledast$ is taken to be $\jfcomp{\blank}{\blank}{\blank}{F}{\blank}$.
+The infix notation of $F^\bullet$ is taken to be $\jfcomp{\blank}{\blank}{\blank}{F}{\blank}$.
 \end{defn}
 
 \begin{lem}\label{lem:three-composition}
 Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then we
 have the equality
 \begin{equation*}
-F^\circledast\jdeq (\jvcomp{P}{f}{F})^\ast.
+F^\bullet\jdeq (\jvcomp{P}{f}{F})^\ast.
 \end{equation*}
 \end{lem}
 
@@ -695,8 +680,23 @@ S_{\tmext{W_P(f)}{F}}\circ W_{\ctxext{A}{P}}/\ctxext{B}{Q}
 \end{align*}
 \end{proof}
 
-We are now in position to state and prove the interchange law of horizontal
-and vertical composition.
+In the next theorem we prove the interchange law of horizontal and vertical composition.
+Its proof uses the following fact.
+
+\begin{lem}\label{lem:compW_W}
+Let $f\in\thom{A}{B}$ be an internal morphism in context $\Gamma$. Then one has
+\begin{equation*}
+f^\ast\circ W_B\jdeq W_A.
+\end{equation*}
+\end{lem}
+
+\begin{proof}
+The proof is a simple calculation:
+\begin{equation*}
+f^\ast\circ W_B\jdeq S_f\circ W_A/B\circ W_B\jdeq S_f\circ W_{W_A(B)}\circ W_A
+\jdeq W_A.\qedhere
+\end{equation*}
+\end{proof}
 
 \begin{thm}\label{thm:interchange}
 Consider the diagram
@@ -758,13 +758,13 @@ C
 \end{tikzcd}
 \end{equation*}
 in context $\Gamma$. 
-Then $F^\circledast\circ G^\circledast\jdeq (\jfcomp{A}{f}{P}{F}{G})^\circledast$.
+Then $F^\bullet\circ G^\bullet\jdeq (\jfcomp{A}{f}{P}{F}{G})^\bullet$.
 In other words the composition $\jfcomp{}{}{}{\blank}{\blank}$ is associative.
 \end{thm}
 
 \begin{proof}
 \begin{align*}
-F^\circledast\circ G^\circledast
+F^\bullet\circ G^\bullet
   & \jdeq
 (\jvcomp{P}{f}{F})^\ast\circ(\jvcomp{Q}{g}{G})^\ast 
   \tag{By \autoref{lem:three-composition}}\\
@@ -775,12 +775,12 @@ F^\circledast\circ G^\circledast
 (\jvcomp{}{\jcomp{A}{f}{g}}{\jfcomp{A}{f}{P}{F}{G}})^\ast 
   \tag{By \autoref{thm:interchange}} \\
   & \jdeq
-(\jfcomp{A}{f}{P}{F}{G})^\circledast.
+(\jfcomp{A}{f}{P}{F}{G})^\bullet.
   \tag{By \autoref{lem:three-composition}}
 \end{align*}
 \end{proof}
 
-\begin{lem}
+\begin{thm}
 Let $\jhom{\Gamma}{A}{B}{f}$ and $\jfhom{\Gamma}{A}{B}{f}{P}{Q}{F}$. Then
 $\jvcomp{P}{f}{F}$ is the unique morphism from $\ctxext{A}{P}$ to $\ctxext{B}{Q}$
 with the property that both the diagram
@@ -797,7 +797,7 @@ A \ar{r}[swap]{f}
 \end{tikzcd}
 \end{equation*}
 commutes, and $\jcomp{}{\jvcomp{P}{f}{F}}{\cprojsndf{B}{Q}}\jdeq F$.
-\end{lem}
+\end{thm}
 
 \begin{proof}
 We first note that
@@ -866,7 +866,7 @@ Also, we find $\cprojfst{\ctxwk{A}{B}}{\ctxwk{A}{Q}}{h}\jdeq\subst{h}{\ctxwk{A}{
 \end{proof}
 
 \begin{thm}
-E-systems are the same things as CE-systems.
+Every E-system is a CE-system.
 \end{thm}
 
 \begin{proof}
@@ -960,15 +960,15 @@ for each $x\in T(A)$ and $u\in T(S_x(P))$.
 
 \section{Natural transformations of E-homomorphisms}
 \begin{rmk}
-When $\mathcal{E}$ is a E-system with empty context, then we have the category
+When $\mathbb{E}$ is a E-system with empty context, then we have the category
 structure on the contexts given by $\thom{\Gamma}{\Delta}= T(W_\Gamma(\Delta))$.
 \end{rmk}
 
 \begin{defn}
-A \emph{natural transformation} of E-homomorphisms from $F:\mathcal{E}\to\mathcal{D}$
-to $G:\mathcal{E}\to\mathcal{D}$ preserving the empty context consists of
+A \emph{natural transformation} of E-homomorphisms from $F:\mathbb{E}\to\mathbb{D}$
+to $G:\mathbb{E}\to\mathbb{D}$ preserving the empty context consists of
 \begin{enumerate}
-\item A t-morphism $\tau0_A\in\thom{F(\Gamma)}{G(\Gamma)}$ for every $\Gamma\in\mathcal{E}$.
+\item A t-morphism $\tau0_A\in\thom{F(\Gamma)}{G(\Gamma)}$ for every $\Gamma\in\mathbb{E}$.
 \item A commuting square square
 \begin{equation*}
 \begin{tikzcd}
@@ -994,7 +994,7 @@ W_{F(A)}(F(B)) \arrow[r,"W_{F(A)}(\tau1_B)"] \arrow[d,->>] & W_{G(A)}(G(B)) \arr
 F(A) \arrow[r,"\tau1_A"] & G(A)
 \end{tikzcd}
 \end{equation*}
-commutes for every $A,B\in\mathcal{E}/\Gamma$. Note that 
+commutes for every $A,B\in\mathbb{E}/\Gamma$. Note that 
 \begin{align*}
 W_{F(A)}(\tau1_B)
   & \in 
@@ -1015,7 +1015,7 @@ E-system in the category $Psh(\cat{A})$.
 \section{Examples of adjunctions}
 
 \begin{lem}
-For each $A\in\mathcal{E}/\Gamma$, $W_A$ is left adjoint to $\Pi_A$. 
+For each $A\in\mathbb{E}/\Gamma$, $W_A$ is left adjoint to $\Pi_A$. 
 \end{lem}
 
 \begin{proof}

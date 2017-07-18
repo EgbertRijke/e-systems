@@ -220,7 +220,7 @@
 
 %%%% Vertical composition of morphisms.
 \newcommand{\jvcomp}[3]{%
-  \jvcomp@testleft #2 \triangleright \jvcomp@testright #3}
+  \jvcomp@testleft #2 \ltimes \jvcomp@testright #3}
 \newcommand{\jvcomp@testleft}{%
   \@ifnextchar\jvcomp{\@jvcomp@nested}{%
   \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%

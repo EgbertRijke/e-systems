@@ -61,7 +61,7 @@ neither to they remain the same once they are declared.
 An essentially algebraic theory is an equational theory of partial operations
 which may be given the structure of a presheaf over usual ordered set of the
 natural numbers, and of which the domain of each operation is declared by 
-equations on the preceeding operations. The concept of essentially algebraic
+equations on the preceding operations. The concept of essentially algebraic
 theories is due to Freyd, who writes that a critical feature of essentially
 algebraic theories is that their models are closed under 
 colimits \cite{Aspects_of_topoi}. Many classes of theories have been described
@@ -119,7 +119,7 @@ The theory of E-systems is a theory of type dependency in which we have a notion
 The first goal of this paper is to describe an essentially algebraic theory of
 type dependency that is in close correspondence to the type theory of
 \cite{TheBook}, while at the same time it is as economic as possible in the
-demand of requirements of the meta-theory (such as the availability of a type of natural numbers). Instead of explaning
+demand of requirements of the meta-theory (such as the availability of a type of natural numbers). Instead of explaining
 what a dependent type is via an infinite hierarchy of universes $\UU_0$,
 $\UU_1$, \ldots, we describe type dependency using only the three sorts
 that typically occur in type theoretical expressions: contexts, dependent contexts and 
@@ -143,17 +143,16 @@ have three pairs of kinds of judgments that can be made:
 & \jalign\jtermeq{\Gamma}{A}{x}{y}.
 \end{align*}
 These are asserting that $\Gamma$ is a context; that $\Gamma$ and $\Gamma'$ are
-judgementally equal contexts; that $A$ is a family in context $\Gamma$; that
+judgmentally equal contexts; that $A$ is a family in context $\Gamma$; that
 $A$ and $B$ are judgmentally equal families in context $\Gamma$; that $x$ is
 a term of $A$ in context $\Gamma$; and that $x$ and $y$ are judgmentally equal
 terms of $A$ in context $\Gamma$. 
  
-a E-system is therefore an algebra consisting of three sorts: $C$ for contexts,
+An E-system is therefore going to be defined as an algebra consisting of three sorts: $C$ for contexts,
 $F$ for families, and $T$ for terms. There is a map 
 $\eft:F\to C$ which determines for each family, in which context it is a
 family; and there is a map $\ebd:T\to F$ which determines for each term, of
-which family it is a term. Thus, the backbones of a E-system can be represented
-as
+which family it is a term. Thus, an E-system is a structure on top of the following simpler structure:
 \begin{equation*}
 \begin{tikzcd}
 T \arrow[d,"\ebd"] \\ F \arrow[d,"\eft"] \\ C
@@ -308,25 +307,25 @@ they will be functors preserving the terminal object.
 
 The category of B-systems will be shown to be equivalent to the category of
 stratified E-systems. However, we do not arrive at the fact that the functor
-$\mathcal{E}:\mathbf{Bsys}\to\mathbf{Ctx}$ is full without imposing an additional
+$\mathcal{E}:\mathbf{Bsys}\to\mathbf{Esys}$ is full without imposing an additional
 condition on the E-homomorphisms. 
 To ensure that the category of stratified E-systems with stratified 
 E-homomorphisms between them is a full subcategory of the category 
-$\mathbf{Ctx}$, we will require that the underlying functor of each E-homomorphism
+$\mathbf{Esys}$, we will require that the underlying functor of each E-homomorphism
 lifts factorizations. It is
 important to note that this condition is also algebraic, so that the category
 of E-systems remains algebraic.
 
-Recall that for any morphism $f:X\to Y$ in a category $\cat{C}$ there is a category
+Recall that for any morphism $f:X\to Y$ in a pre-category $\cat{C}$ there is a pre-category
 $\mathbf{fact}(f)$ of factorizations of $f$. Also, any functor $F:\cat{C}\to\cat{D}$
 determines a functor $F_{\mathbf{fact}(f)}:\mathbf{fact}(f)\to\mathbf{fact}(H(f))$
 for any morphism $f$ of $\cat{C}$.
 
-\begin{defn}
+\begin{defn}\label{defn:lift_factorizations}
 A functor $F:\cat{C}\to\cat{D}$ is said to
 \define{lift factorizations} if for any $f\in\cat{C}/X$, the functor
 $F_{\mathbf{fact}(f)}:\mathbf{fact}(f)\to\mathbf{fact}(F(f))$ is an isomorphism
-of categories. 
+of pre-categories. 
 \end{defn}
 
 \begin{comment}
@@ -336,7 +335,7 @@ to involve either an equivalence or an isomorphism of categories. The
 isomorphism-version, would say that for every factorization $h'\circ g'$
 of $F(f)$ there is a unique factorization $f\jdeq h\circ g$ in $\cat{C}$ such
 that $F(g)\jdeq g'$ and $F(h)\jdeq h'$. In the version with equivalences,
-the uniqueness is replaced by uniqueness up to isomorphism, and the equalites
+the uniqueness is replaced by uniqueness up to isomorphism, and the equalities
 are replaced by an isomorphism in $\mathbf{fact}(F(f))$. 
 
 It is easier to state the isomorphism version of lifting factorizations with
@@ -426,7 +425,7 @@ In \autoref{sec:esys_defn}, we give the categorical definition of E-systems in
 several stages. First we define weakening systems, then projection systems and
 substitution systems, and finally we bundle them together into the definition
 of E-systems. The structure of the definition of weakening systems is 
-prototypcial: we first define the notion of pre-weakening systems, which are
+prototypical: we first define the notion of pre-weakening systems, which are
 categories that come with a pre-weakening structure; then we define the notion
 of pre-weakening homomorphism, which is a functor preserving the weakening
 structure and we note that it makes sense to ask for the property that the
@@ -482,7 +481,7 @@ $F/\Delta:\cat{C}/\Delta\to \cat{D}/F(\Delta)$ given by the action on morphisms 
 When we think of a category $\cat{F}$ as a category of fibrations or families
 over a context -- which will be the outset of the definition of E-systems --
 it will be convenient to denote the objects of the $\cat{F}$ with capital
-greek letters $\Gamma$, $\Delta$, \ldots, and the morphisms by capital latin letters
+Greek letters $\Gamma$, $\Delta$, \ldots, and the morphisms by capital Latin letters
 $A$, $B$, $P$, $Q$, \ldots. When $A$ is a morphism into $\Gamma$, we will denote
 its domain by $\ctxext{\Gamma}{A}$, so we don't always have to introduce a name
 for the domain. When $A$ is a morphism into $\Gamma$ and
@@ -504,7 +503,7 @@ category with finite limits.
 \end{rmk}
 
 \subsection*{Acknowledgements}
-Several people have been indispensible throughout the research process.
+Several people have been indispensable throughout the research process.
 I would like to thank 
 Richard Garner for the early discussions on the inference rules of type 
 dependency we had in Barcelona and in Paris; 
